@@ -1,0 +1,33 @@
+#!/bin/sh
+set -eu
+
+printf "#[fg=#888888,bg=#222222,nobold,nounderscore,noitalics]#[fg=#eeeeee,bg=#888888,bold]"
+
+printf "#{?client_prefix,"
+
+printf "#[fg=#00aaee]#[bg=#888888]#[bg=#00aaee]#[fg=#eeeeee]"
+printf "#{prefix}"
+printf "#[fg=#00aaee]#[bg=#888888]#[fg=#eeeeee]"
+
+printf ",}"
+
+
+printf "#{?pane_synchronized,"
+
+printf "#[fg=#00ee00]#[bg=#888888]#[bg=#00ee00]#[fg=#eeeeee]"
+printf "sync"
+printf "#[fg=#00ee00]#[bg=#888888]#[fg=#eeeeee]"
+
+printf ",}"
+
+
+printf "#{?pane_in_mode,"
+
+printf "#[fg=#eeaa00]#[bg=#888888]#[bg=#eeaa00]#[fg=#eeeeee]"
+printf "mode"
+printf "#[fg=#eeaa00]#[bg=#888888]#[fg=#eeeeee]"
+
+printf ",}"
+
+
+printf " $(date "+%m/%d/%Y (%a) %H:%M:%S")"

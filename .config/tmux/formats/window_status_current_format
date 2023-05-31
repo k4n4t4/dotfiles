@@ -1,0 +1,11 @@
+#!/bin/sh
+set -eu
+
+window_index="#I"
+
+printf "#[fg=#222222,bg=#eeeeee]#[fg=#559955,bg=#eeeeee]"
+printf " ${window_index}"
+printf " #[fg=#eeeeee,bg=#559955] "
+printf "#{b:pane_current_path} "
+printf "#[fg=#559955,bg=#222222,nobold]"
+
