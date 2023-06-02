@@ -11,6 +11,16 @@ OPTION_FORCE=false
 OPTION_NOT_USE_NERD_FONT=false
 OPTION_UNINSTALL=false
 
+if type "resize" > /dev/null 2>&1; then
+  resize() {
+cat << EOF
+COLUMNS=80;
+LINES=25;
+export COLUMNS LINES;
+EOF
+  }
+fi
+
 # size
 eval "$(resize)"
 
