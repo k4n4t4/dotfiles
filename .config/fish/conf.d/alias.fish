@@ -5,72 +5,63 @@ if type -q nala
 end
 
 if type -q tmux
-  alias tmux "tmux -u"
-  alias t "tmux"
-  alias ta "t a"
-  alias tat "ta -t"
-  alias tnew "t new -d"
-  alias tnews "tnew -s"
-  alias ttree "t choose-tree"
-  alias tsc "t switch-client"
-  alias tsct "tsc -t"
-  alias tnc "tsc -n"
-  alias tpc "tsc -p"
-  alias tlc "tsc -l"
-  alias tmv "t rename"
-  alias tmvt "tmv -t"
-  alias tls "t ls"
-  alias tlsc "t lsc"
-  alias td "t detach-client"
-  alias trm "t kill-session"
-  alias trmt "trm -t"
-  alias tkill "t kill-server"
+  alias tmux  "tmux -u"
+  abbr --add t     "tmux"
+  abbr --add ta    "tmux attach-session"
+  abbr --add tat   "tmux attach-session -t"
+  abbr --add tnew  "tmux new-session -d"
+  abbr --add tnews "tmux new-session -s"
+  abbr --add ttree "tmux choose-tree"
+  abbr --add tsc   "tmux switch-client"
+  abbr --add tsct  "tmux switch-client -t"
+  abbr --add tnc   "tmux switch-client -n"
+  abbr --add tpc   "tmux switch-client -p"
+  abbr --add tlc   "tmux switch-client -l"
+  abbr --add tmv   "tmux rename"
+  abbr --add tmvt  "tmux rename -t"
+  abbr --add tls   "tmux list-sessions"
+  abbr --add tlsc  "tmux list-clients"
+  abbr --add td    "tmux detach-client"
+  abbr --add trm   "tmux kill-session"
+  abbr --add trmt  "tmux kill-session -t"
+  abbr --add tkill "tmux kill-server"
 end
 
 abbr --add '^' "command "
+abbr --add c "clear"
 
-alias c "clear"
-
-alias d    "cd"
-alias d-   "cd -"
-alias cd-  "cd -"
-alias d~   "cd ~"
-alias cd~  "cd ~"
-alias d.   "cd ."
-alias cd.  "cd ."
-alias d..  "cd .."
-alias cd.. "cd .."
-alias pd   "prevd"
-alias pcd  "prevd"
-alias nd   "nextd"
-alias ncd  "nextd"
+abbr --add cd-  "cd -"
+abbr --add cd~  "cd ~"
+abbr --add cd.  "cd ."
+abbr --add cd.. "cd .."
+abbr --add pd   "prevd"
+abbr --add nd   "nextd"
 
 for i in (seq 9)
   set -l p "./"
   for j in (seq $i)
     set p "$p../"
   end
-  alias d.$i "cd $p"
   alias cd.$i "cd $p"
 end
 
 if type -q git
-  alias g    "git"
-  alias ga   "git add"
-  alias gd   "git diff"
-  alias gs   "git status"
-  alias gp   "git push"
-  alias gb   "git branch"
-  alias gbd  "git branch -d"
-  alias gbfd "git branch -D"
-  alias gm   "git merge"
-  alias gst  "git status"
-  alias gco  "git checkout"
-  alias gcob "git checkout -b"
-  alias gf   "git fetch"
-  alias gc   "git commit"
-  alias gr   "git remote"
-  alias gbl  "git blame"
+  abbr --add g    "git"
+  abbr --add ga   "git add"
+  abbr --add gd   "git diff"
+  abbr --add gs   "git status"
+  abbr --add gp   "git push"
+  abbr --add gb   "git branch"
+  abbr --add gbd  "git branch -d"
+  abbr --add gbfd "git branch -D"
+  abbr --add gm   "git merge"
+  abbr --add gst  "git status"
+  abbr --add gco  "git checkout"
+  abbr --add gcob "git checkout -b"
+  abbr --add gf   "git fetch"
+  abbr --add gc   "git commit"
+  abbr --add gr   "git remote"
+  abbr --add gbl  "git blame"
 end
 
 if type -q exa
@@ -134,15 +125,15 @@ else
   alias lla  "ls -Fla"
 end
 
-alias cls  "clearls"
-alias cll  "clearls -Fl"
-alias cla  "clearls -Fa"
-alias clla "clearls -Fla"
-alias cl "cdls"
-alias mc "mkcd"
+abbr --add cls  "clearls"
+abbr --add cll  "clearls -Fl"
+abbr --add cla  "clearls -Fa"
+abbr --add clla "clearls -Fla"
+abbr --add cl "cdls"
+abbr --add mc "mkcd"
 
 if type -q ranger
-  alias r "ranger"
+  abbr --add r "ranger"
 end
 
 if type -q batcat
@@ -181,18 +172,15 @@ end
 alias aptup "sudo apt update && sudo apt upgrade"
 
 if type -q nvim
-  alias vim "nvim"
-  alias vi  "nvim"
-  alias v   "nvim"
-  alias vo  "nvim -o"
-  alias VO  "nvim -O"
-  alias vp  "nvim -p"
-  alias vd  "nvim -d"
+  abbr --add vim "nvim"
+  abbr --add vi  "nvim"
+  abbr --add v   "nvim"
+  abbr --add vo  "nvim -o"
+  abbr --add VO  "nvim -O"
+  abbr --add vp  "nvim -p"
+  abbr --add vd  "nvim -d"
   alias vless "/home/linuxbrew/.linuxbrew/Cellar/neovim/0.9.0/share/nvim/runtime/macros/less.sh"
 end
-
-alias ficonfig "nvim ~/.config/fish/config.fish"
-alias nvconfig "nvim ~/.config/nvim"
 
 if type -q htop
   alias top "htop"
@@ -206,9 +194,9 @@ if type -q xsel
 end
 
 
-alias h "history"
+abbr --add h "history"
 
-alias x "exit"
+abbr --add x "exit"
 abbr --add q "exit"
 
 if type -q codium && not type -q code
