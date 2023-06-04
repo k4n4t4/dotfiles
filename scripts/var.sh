@@ -12,6 +12,8 @@ OPTION_NOT_USE_NERD_FONT=false
 OPTION_UNINSTALL=false
 
 if type "resize" > /dev/null 2>&1; then
+  :
+else
   resize() {
 cat << EOF
 COLUMNS=80;
