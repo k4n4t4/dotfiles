@@ -45,6 +45,9 @@ if "${fish_exist}"; then
     ".config/fish/functions/cdls.fish" \
     ".config/fish/functions/cdls.fish" \
     \
+    ".config/fish/functions/cdgitroot.fish" \
+    ".config/fish/functions/cdgitroot.fish" \
+    \
     ".config/fish/functions/clearls.fish" \
     ".config/fish/functions/clearls.fish" \
     \

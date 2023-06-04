@@ -62,6 +62,7 @@ if type -q git
   abbr --add gc   "git commit"
   abbr --add gr   "git remote"
   abbr --add gbl  "git blame"
+  alias groot "cdgitroot"
 end
 
 if type -q exa
