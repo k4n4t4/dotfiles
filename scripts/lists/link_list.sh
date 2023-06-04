@@ -36,6 +36,9 @@ if "${fish_exist}"; then
     ".config/fish/conf.d/git_func.fish" \
     ".config/fish/conf.d/git_func.fish" \
     \
+    ".config/fish/conf.d/bind.fish" \
+    ".config/fish/conf.d/bind.fish" \
+    \
     ".config/fish/functions/mkcd.fish" \
     ".config/fish/functions/mkcd.fish" \
     \
