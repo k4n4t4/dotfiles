@@ -159,7 +159,7 @@ if type -q thefuck
   abbr --add f "fuck"
 end
 
-alias cp "cp -v"
+alias cp "cp -iv"
 alias mv "mv -iv"
 
 if type -q trash
