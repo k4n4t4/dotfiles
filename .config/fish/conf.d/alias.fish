@@ -60,6 +60,7 @@ if type -q git
   abbr --add gcob "git checkout -b"
   abbr --add gf   "git fetch"
   abbr --add gc   "git commit"
+  abbr --add gcm  "git commit -m"
   abbr --add gr   "git remote"
   abbr --add gbl  "git blame"
   alias groot "cdgitroot"
