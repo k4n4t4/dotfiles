@@ -30,4 +30,4 @@ printf "#[bg=#888888]"
 printf ",}"
 
 
-printf " $(date "+%m/%d/%Y (%a) %H:%M:%S")"
+printf " $(date "+%m/%d/%Y (%a) %H:%M:%S") "

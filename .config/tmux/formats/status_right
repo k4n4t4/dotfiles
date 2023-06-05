@@ -30,4 +30,4 @@ printf "#[fg=#eeaa00]#[bg=#888888]#[fg=#eeeeee]"
 printf ",}"
 
 
-printf " $(date "+%m/%d/%Y (%a) %H:%M:%S")"
+printf " $(date "+%m/%d/%Y (%a) %H:%M:%S") "
