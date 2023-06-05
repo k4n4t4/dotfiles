@@ -42,7 +42,10 @@ for i in (seq 9)
   for j in (seq $i)
     set p "$p../"
   end
-  alias cd.$i "cd $p"
+  alias cd.$i  "cd $p"
+  alias cd..$i "cd $p"
+  alias .$i    "cd $p"
+  alias ..$i   "cd $p"
 end
 
 if type -q git

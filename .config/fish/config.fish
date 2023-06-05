@@ -12,6 +12,10 @@ and not set -q TMUX
     exec tmux -u new-session
   else
     tmux list-session
+    for i in (seq $COLUMNS)
+      printf "="
+    end
+    printf "\n"
     echo ":new :n"
     echo ":exit :quit :q"
     read -p'printf "\033[92mid\033[m>\033[97m "' "ID" ; printf "\033[m"
@@ -32,7 +36,18 @@ and not set -q TMUX
       case ""
         exec tmux -u attach-session
       case "*"
-        exec tmux -u attach-session -t "$ID"
+        set LIST (tmux list-session | cut -d":" -f1)
+        set exist 0
+        for i in $LIST
+          if test "$i" = "$ID"
+            set exist 1
+          end
+        end
+        if test $exist = 1
+          exec tmux -u attach-session -t "$ID"
+        else
+          exec tmux -u new-session -s "$ID"
+        end
     end
   end
 end
