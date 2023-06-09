@@ -2,6 +2,8 @@ function fish_greeting
   if type -q tmux
   and status is-interactive
   and not set -q TMUX
+    printf "%s" (whoami) "@" (hostname)
+    printf "\n"
     for i in (seq $COLUMNS)
       printf "="
     end
