@@ -14,6 +14,8 @@ require("packer").startup(function()
   use 'lewis6991/gitsigns.nvim'
   use 'nvim-treesitter/nvim-treesitter'
   use 'nvim-tree/nvim-tree.lua'
+  use 'nvim-tree/nvim-web-devicons'
+  use 'romgrk/barbar.nvim'
 
 end)
 
