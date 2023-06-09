@@ -2,7 +2,15 @@ function fish_greeting
   if type -q tmux
   and status is-interactive
   and not set -q TMUX
-    :
+    for i in (seq $COLUMNS)
+      printf "="
+    end
+    printf "\n"
+    tmux list-session
+    for i in (seq $COLUMNS)
+      printf "="
+    end
+    printf "\n"
   else
     if type -q figlet && test $COLUMNS -gt 50
       if type -q lolcat

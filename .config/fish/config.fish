@@ -11,13 +11,6 @@ and not set -q TMUX
   if test -z "$LIST"
     exec tmux -u new-session
   else
-    tmux list-session
-    for i in (seq $COLUMNS)
-      printf "="
-    end
-    printf "\n"
-    echo ":new :n"
-    echo ":exit :quit :q"
     read -p'printf "\033[92mid\033[m>\033[97m "' "ID" ; printf "\033[m"
     switch "$ID"
       case ":exit" ":quit" ":q"
