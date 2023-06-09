@@ -12,7 +12,7 @@ require("packer").startup(function()
   use 'preservim/nerdtree'
   use 'nvim-lualine/lualine.nvim'
   use 'xiyaowong/transparent.nvim'
-  use 'airblade/vim-gitgutter'
+  use 'lewis6991/gitsigns.nvim'
 
 end)
 
