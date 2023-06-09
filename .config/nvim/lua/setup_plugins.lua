@@ -18,6 +18,7 @@ require("packer").startup(function()
   use 'romgrk/barbar.nvim'
   use 'dinhhuy258/git.nvim'
   use 'norcalli/nvim-colorizer.lua'
+  use 'lukas-reineke/indent-blankline.nvim'
 
 end)
 
