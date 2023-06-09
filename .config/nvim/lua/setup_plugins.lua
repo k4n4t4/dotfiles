@@ -17,6 +17,7 @@ require("packer").startup(function()
   use 'nvim-tree/nvim-web-devicons'
   use 'romgrk/barbar.nvim'
   use 'dinhhuy258/git.nvim'
+  use 'norcalli/nvim-colorizer.lua'
 
 end)
 
