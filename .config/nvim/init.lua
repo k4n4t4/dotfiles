@@ -14,4 +14,5 @@ require('plugins/gitsigns')
 require('plugins/treesitter')
 require('plugins/tree')
 require('plugins/barbar')
+require('plugins/git')
 
