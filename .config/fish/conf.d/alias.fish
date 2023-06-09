@@ -54,6 +54,7 @@ if type -q git
   abbr --add gd   "git diff"
   abbr --add gs   "git status"
   abbr --add gp   "git push"
+  abbr --add gpl  "git pull"
   abbr --add gb   "git branch"
   abbr --add gbd  "git branch -d"
   abbr --add gbfd "git branch -D"
