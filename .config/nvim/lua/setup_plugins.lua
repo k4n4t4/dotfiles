@@ -9,11 +9,11 @@ require("packer").startup(function()
   use 'Shougo/unite.vim'
   use 'simeji/winresizer'
   use 'nathanaelkane/vim-indent-guides'
-  use 'preservim/nerdtree'
   use 'nvim-lualine/lualine.nvim'
   use 'xiyaowong/transparent.nvim'
   use 'lewis6991/gitsigns.nvim'
   use 'nvim-treesitter/nvim-treesitter'
+  use 'nvim-tree/nvim-tree.lua'
 
 end)
 

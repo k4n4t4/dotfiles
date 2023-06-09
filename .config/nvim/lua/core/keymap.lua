@@ -1,3 +1,3 @@
 
-vim.keymap.set("n", "<C-n>", ":NERDTreeToggle<CR>")
+vim.keymap.set("n", "<C-n>", ":NvimTreeToggle<CR>")
 

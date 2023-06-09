@@ -12,4 +12,5 @@ require('plugins/lualine')
 require('plugins/transparent')
 require('plugins/gitsigns')
 require('plugins/treesitter')
+require('plugins/tree')
 
