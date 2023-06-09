@@ -19,6 +19,7 @@ require("packer").startup(function()
   use 'dinhhuy258/git.nvim'
   use 'norcalli/nvim-colorizer.lua'
   use 'lukas-reineke/indent-blankline.nvim'
+  use 'rafamadriz/friendly-snippets'
 
 end)
 

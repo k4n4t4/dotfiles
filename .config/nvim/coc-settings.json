@@ -24,5 +24,6 @@
             }
         }
     },
-    "python.jediEnabled": false
+    "python.jediEnabled": false,
+    "snippets.ultisnips.pythonPrompt": false
 }
