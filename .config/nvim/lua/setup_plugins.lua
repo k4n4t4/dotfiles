@@ -20,6 +20,8 @@ require("packer").startup(function()
   use 'norcalli/nvim-colorizer.lua'
   use 'lukas-reineke/indent-blankline.nvim'
   use 'rafamadriz/friendly-snippets'
+  use 'nvim-lua/plenary.nvim'
+  use 'nvim-telescope/telescope.nvim'
 
 end)
 

@@ -17,4 +17,5 @@ require('plugins/barbar')
 require('plugins/git')
 require('plugins/colorizer')
 require('plugins/indent_blankline')
+require('plugins/telescope')
 
