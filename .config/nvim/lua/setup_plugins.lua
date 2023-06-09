@@ -13,6 +13,7 @@ require("packer").startup(function()
   use 'nvim-lualine/lualine.nvim'
   use 'xiyaowong/transparent.nvim'
   use 'lewis6991/gitsigns.nvim'
+  use 'nvim-treesitter/nvim-treesitter'
 
 end)
 
