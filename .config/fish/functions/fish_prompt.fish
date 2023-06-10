@@ -8,6 +8,9 @@ function fish_prompt
     set user_status_color (printf "\033[38;5;160m")
   end
   
+  set user_mem_rate (get_mem_rate)
+  set user_mem_rate_color (printf "\033[38;5;110m")
+  
   set reset_color (printf "\033[m")
   set reset_fg_color (printf "\033[39m")
   set reset_bg_color (printf "\033[49m")
@@ -29,7 +32,7 @@ function fish_prompt
       case "High"
         set user_battery_capacity_color (set_color "green")
       case "Normal"
-        set user_battery_capacity_color (set_color "white")
+        set user_battery_capacity_color (printf "\033[38;5;120m")
       case "Low"
         set user_battery_capacity_color (set_color "yellow")
       case "Critical"
@@ -50,7 +53,7 @@ function fish_prompt
         set user_battery_status_color (set_color "yellow")
       case "Not charging"
         set user_battery_status_symbol "="
-        set user_battery_status_color (set_color "white")
+        set user_battery_status_color (printf "\033[38;5;120m")
       case '*'
         set user_battery_status_symbol "?"
         set user_battery_status_color (set_color "purple")
@@ -97,6 +100,14 @@ function fish_prompt
   printf " \033[48;5;238m\033[38;5;236m "
   
   printf "%s" $user_battery_capacity_color $user_battery_capacity "%" $user_battery_status_color $user_battery_status_symbol
+  
+  printf " \033[48;5;236m\033[38;5;238m "
+  
+  printf "%s" $user_mem_rate_color $user_mem_rate "%"
+  
+  printf " \033[48;5;238m\033[38;5;236m "
+  
+  printf "%s" $user_mem_rate_color $user_mem_rate "%"
   
   printf " \033[48;5;236m\033[38;5;238m "
   
