@@ -58,4 +58,4 @@ printf " bat$bat_status_symbol$bat_capacity%%"
 printf " $(awk 'BEGIN{total=0;used=0;available=0;rate=0}/^MemTotal:/{total=$2}/^MemAvailable:/{available=$2}END{used=total-available;rate=100*used/total;print "mem:"int(rate)}' /proc/meminfo)"
 printf "%%"
 
-printf " $(date "+%m/%d/%Y(%a)%H:%M:%S") "
+printf " $(date "+%H:%M:%S") "
