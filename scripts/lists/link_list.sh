@@ -39,6 +39,9 @@ if "${fish_exist}"; then
     ".config/fish/conf.d/bind.fish" \
     ".config/fish/conf.d/bind.fish" \
     \
+    ".config/fish/conf.d/var.fish" \
+    ".config/fish/conf.d/var.fish" \
+    \
     ".config/fish/functions/mkcd.fish" \
     ".config/fish/functions/mkcd.fish" \
     \
@@ -56,6 +59,9 @@ if "${fish_exist}"; then
     \
     ".config/fish/functions/title.fish" \
     ".config/fish/functions/title.fish" \
+    \
+    ".config/fish/functions/get_battery_info.fish" \
+    ".config/fish/functions/get_battery_info.fish" \
     \
     ".config/fish/functions/fish_greeting.fish" \
     ".config/fish/functions/fish_greeting.fish"

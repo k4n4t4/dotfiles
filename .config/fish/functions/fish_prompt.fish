@@ -1,8 +1,4 @@
 
-#variable
-set _power_supply_path "/sys/class/power_supply"
-set _battery_path (command find $_power_supply_path | command grep BAT)
-
 function fish_prompt
   set last_status $status
   
@@ -23,9 +19,9 @@ function fish_prompt
     set user_pwd_color (printf "\033[38;5;196m")
   end
   
-  set user_battery_capacity       (cat "$_battery_path/capacity")
-  set user_battery_capacity_level (cat "$_battery_path/capacity_level")
-  set user_battery_status         (cat "$_battery_path/status")
+  set user_battery_capacity       (get_battery_info "capacity")
+  set user_battery_capacity_level (get_battery_info "capacity_level")
+  set user_battery_status         (get_battery_info "status")
   
   switch "$user_battery_capacity_level"
       case "Full"
