@@ -136,7 +136,7 @@ abbr --add cls  "clearls"
 abbr --add cll  "clearls -Fl"
 abbr --add cla  "clearls -Fa"
 abbr --add clla "clearls -Fla"
-abbr --add cl "cdls"
+abbr --add cdl "cdls"
 abbr --add mc "mkcd"
 
 if type -q ranger
