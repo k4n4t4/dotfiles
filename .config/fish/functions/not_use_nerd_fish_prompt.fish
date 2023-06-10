@@ -8,9 +8,6 @@ function fish_prompt
     set user_status_color (printf "\033[38;5;160m")
   end
   
-  set user_mem_rate (get_mem_rate)
-  set user_mem_rate_color (printf "\033[38;5;110m")
-  
   set reset_color (printf "\033[m")
   set reset_fg_color (printf "\033[39m")
   set reset_bg_color (printf "\033[49m")
@@ -20,43 +17,6 @@ function fish_prompt
     set user_pwd_color (printf "\033[38;5;214m")
   else
     set user_pwd_color (printf "\033[38;5;196m")
-  end
-  
-  set user_battery_capacity       (get_battery_info "capacity")
-  set user_battery_capacity_level (get_battery_info "capacity_level")
-  set user_battery_status         (get_battery_info "status")
-  
-  switch "$user_battery_capacity_level"
-      case "Full"
-        set user_battery_capacity_color (set_color "blue")
-      case "High"
-        set user_battery_capacity_color (set_color "green")
-      case "Normal"
-        set user_battery_capacity_color (printf "\033[38;5;120m")
-      case "Low"
-        set user_battery_capacity_color (set_color "yellow")
-      case "Critical"
-        set user_battery_capacity_color (set_color "red")
-      case '*'
-        set user_battery_capacity_color (set_color "purple")
-  end
-  
-  switch "$user_battery_status"
-      case "Full"
-        set user_battery_status_symbol "~"
-        set user_battery_status_color (set_color "blue")
-      case "Charging"
-        set user_battery_status_symbol "+"
-        set user_battery_status_color (set_color "green")
-      case "Discharging"
-        set user_battery_status_symbol "-"
-        set user_battery_status_color (set_color "yellow")
-      case "Not charging"
-        set user_battery_status_symbol "="
-        set user_battery_status_color (printf "\033[38;5;120m")
-      case '*'
-        set user_battery_status_symbol "?"
-        set user_battery_status_color (set_color "purple")
   end
   
   set user_date (date "+%H:%M:%S")
@@ -93,21 +53,9 @@ function fish_prompt
     end
   end
   
-  printf "\033[48;5;236m "
+  printf "\033[48;5;238m "
   
   printf "%s" $user_date_color $user_date
-  
-  printf " \033[48;5;238m\033[38;5;236m "
-  
-  printf "%s" $user_battery_capacity_color $user_battery_capacity "%" $user_battery_status_color $user_battery_status_symbol
-  
-  printf " \033[48;5;236m\033[38;5;238m "
-  
-  printf "%s" $user_mem_rate_color $user_mem_rate "%"
-  
-  printf " \033[48;5;238m\033[38;5;236m "
-  
-  printf "%s" $user_mem_rate_color $user_mem_rate "%"
   
   printf " \033[48;5;236m\033[38;5;238m "
   
