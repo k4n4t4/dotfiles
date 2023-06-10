@@ -27,7 +27,7 @@ if type -q tmux
   abbr --add tkill "tmux kill-server"
 end
 
-abbr --add '^' "command "
+abbr --add '^' "command"
 abbr --add c "clear"
 
 abbr --add cd-  "cd -"
