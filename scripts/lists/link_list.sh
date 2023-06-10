@@ -63,6 +63,12 @@ if "${fish_exist}"; then
     ".config/fish/functions/get_battery_info.fish" \
     ".config/fish/functions/get_battery_info.fish" \
     \
+    ".config/fish/functions/get_mem_info.fish" \
+    ".config/fish/functions/get_mem_info.fish" \
+    \
+    ".config/fish/functions/get_mem_rate.fish" \
+    ".config/fish/functions/get_mem_rate.fish" \
+    \
     ".config/fish/functions/fish_greeting.fish" \
     ".config/fish/functions/fish_greeting.fish"
     
