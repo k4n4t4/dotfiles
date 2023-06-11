@@ -1,0 +1,7 @@
+#!/bin/sh
+set -eu
+
+for i in "${@}"; do
+  cat "$(find /sys/class/power_supply | grep "BAT" | tail -1)/${i}"
+done
+

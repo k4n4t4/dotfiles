@@ -1,6 +1,19 @@
 #!/bin/sh
 set -eu
 
+LINK \
+  "bin/get_battery_info" \
+  "bin/get_battery_info" \
+  \
+  "bin/get_mem_info" \
+  "bin/get_mem_info" \
+  \
+  "bin/get_mem_rate" \
+  "bin/get_mem_rate" \
+  \
+  "bin/get_cpu_info" \
+  "bin/get_cpu_info"
+
 if "${sh_exist}"; then
   LINK \
     ".config/sh/.profile" \

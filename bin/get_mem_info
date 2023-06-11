@@ -1,0 +1,7 @@
+#!/bin/sh
+set -eu
+
+for i in "${@}"; do
+  cat /proc/meminfo | grep -E "${i}" | awk '{print $2}'
+done
+

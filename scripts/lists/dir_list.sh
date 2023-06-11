@@ -1,6 +1,8 @@
 #!/bin/sh
 set -eu
 
+DIR "bin"
+
 if "${fish_exist}"; then
   DIR \
     ".config/fish" \
