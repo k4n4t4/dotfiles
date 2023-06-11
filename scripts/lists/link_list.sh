@@ -1,21 +1,12 @@
 #!/bin/sh
 set -eu
 
-LINK \
-  "bin/get_battery_info" \
-  "bin/get_battery_info" \
-  \
-  "bin/get_mem_info" \
-  "bin/get_mem_info" \
-  \
-  "bin/get_mem_rate" \
-  "bin/get_mem_rate" \
-  \
-  "bin/get_cpu_info" \
-  "bin/get_cpu_info" \
-  \
-  "bin/print_prompt" \
-  "bin/print_prompt"
+while read file ; do
+  filename="$(basename "${file}")"
+  LINK "bin/${filename}" "bin/${filename}"
+done << EOF
+$(ls -1 "${dotfiles_root}/bin/")
+EOF
 
 if "${sh_exist}"; then
   LINK \
