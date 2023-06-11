@@ -1,5 +1,10 @@
 #!/bin/sh
 set -eu
 
-printf "$(whoami)@$(hostname):$(pwd)\$ "
+date_format="$(date "+%H:%M:%S")"
+
+printf "[${date_format}]"
+
+printf "$(whoami)@$(hostname)"
+printf ":$(pwd)\$ "
 
