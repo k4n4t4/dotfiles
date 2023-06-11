@@ -12,7 +12,10 @@ LINK \
   "bin/get_mem_rate" \
   \
   "bin/get_cpu_info" \
-  "bin/get_cpu_info"
+  "bin/get_cpu_info" \
+  \
+  "bin/print_prompt" \
+  "bin/print_prompt"
 
 if "${sh_exist}"; then
   LINK \
