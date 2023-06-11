@@ -1,16 +1,6 @@
 #!/bin/sh
 set -eu
 
-if ! type "git" > /dev/null 2>&1; then
-  printf "\033[91m"git" command is not found.\033[m\n"
-  exit 1
-fi
-
-if ! is_git_repo ; then
-  printf "\033[91mNot in git repo.\033[m\n"
-  exit 1
-fi
-
 if [ "$(git status -s --ignore-submodules=dirty 2>/dev/null)" = "" ]; then
   exit 1
 else
