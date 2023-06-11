@@ -90,32 +90,53 @@ end
 
 function fish_right_prompt
   
-  set -l last_pipestatus $pipestatus
-  set -lx __fish_last_status $status
+  set last_pipestatus $pipestatus
+  set last_status $status
   
-  set -q fish_color_status
-  or set -g fish_color_status --background=red white
-
-  set -l bold_flag --bold
-  set -q __fish_prompt_status_generation; or set -g __fish_prompt_status_generation $status_generation
+  set reset_color (printf "\033[m")
+  set reset_fg_color (printf "\033[39m")
+  set reset_bg_color (printf "\033[49m")
+  
+  set -q __fish_prompt_status_generation
+    or set -g __fish_prompt_status_generation $status_generation
+  
   if test $__fish_prompt_status_generation = $status_generation
-      set bold_flag
+    set status_style ""
+  else
+    set status_style (printf "\033[1m")
   end
-  set __fish_prompt_status_generation $status_generation
-  set -l status_color (set_color $fish_color_status)
-  set -l statusb_color (set_color $bold_flag $fish_color_status)
-  set -l prompt_status (__fish_print_pipestatus "[" "]" "|" "$status_color" "$statusb_color" $last_pipestatus)
   
-  printf "%s%s%s" \
-    (set_color white) \
-    $prompt_status \
-    (set_color white)
+  set __fish_prompt_status_generation $status_generation
+  
+  set status_text $reset_fg_color
+  set status_suc_color (printf "\033[38;5;46m")
+  set status_err_color (printf "\033[38;5;160m")
+  set status_comma ""
+  for s in $last_pipestatus
+    if [ $s = 0 ]
+      set status_text "$status_text$status_comma$status_suc_color$s$reset_fg_color"
+    else
+      set status_text "$status_text$status_comma$status_err_color$s$reset_fg_color"
+    end
+    set status_comma ","
+  end
+  
   if test $CMD_DURATION
     set duration (printf "$CMD_DURATION 1000" | awk '{printf "%.3fs", $1 / $2}')
-    printf "[%s%s%s]" \
-      (set_color brblue) \
-      $duration \
-      (set_color white)
+    set duration_color (printf "\033[38;5;27m")
   end
+  
+  printf "\033[A"
+  
+  printf "\033[38;5;236m\033[48;5;236m "
+  printf "%s" $status_style $status_text " " $reset_color
+  
+  if test $CMD_DURATION
+    printf "\033[48;5;236m\033[38;5;238m\033[48;5;238m "
+    printf "%s" $duration_color $duration " " $reset_color
+  end
+  
+  printf "\033[B"
+  
 end
 
