@@ -72,6 +72,9 @@ if "${fish_exist}"; then
     ".config/fish/functions/get_cpu_info.fish" \
     ".config/fish/functions/get_cpu_info.fish" \
     \
+    ".config/fish/functions/fish_force_preexec.fish" \
+    ".config/fish/functions/fish_force_preexec.fish" \
+    \
     ".config/fish/functions/fish_greeting.fish" \
     ".config/fish/functions/fish_greeting.fish"
     
