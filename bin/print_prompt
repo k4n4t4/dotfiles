@@ -1,5 +1,5 @@
 #!/bin/sh
 set -eu
 
-printf "$(pwd) > "
+printf "$(whoami)@$(hostname):$(pwd)\$ "
 
