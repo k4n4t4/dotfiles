@@ -2,9 +2,10 @@
 set -eu
 
 window_index="#I"
+pane_current_command="#{pane_current_command}"
 
 printf "#[fg=#666666,bg=#333333]"
 printf " ${window_index}"
 printf " | "
-printf "#{b:pane_current_path} "
+printf "${pane_current_command} "
 
