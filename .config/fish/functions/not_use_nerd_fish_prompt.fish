@@ -33,7 +33,7 @@ function fish_prompt
     
     if set repo_type (_repo_type)
       if [ "$repo_type" = "git" ]
-        set repo_type_color (printf "\033[38;5;232m")
+        set repo_type_color (printf "\033[38;5;240m")
       else
         set repo_type_color (printf "\033[38;5;255m")
       end
@@ -54,16 +54,16 @@ function fish_prompt
       end
     end
     
-    printf "\033[48;5;238m "
+    printf "\033[48;5;234m "
     
     printf "%s" $user_date_color $user_date
     
-    printf " \033[48;5;236m\033[38;5;238m "
+    printf " \033[48;5;235m\033[38;5;234m "
     
     printf "%s" $user_pwd_color $user_pwd
     
     if _is_git_repo
-      printf " \033[48;5;238m\033[38;5;236m "
+      printf " \033[48;5;234m\033[38;5;235m "
       
       printf "%s" $repo_type_color $repo_type
       printf "%s" $reset_fg_color "(" $repo_branch_color $repo_branch $reset_fg_color ")"
@@ -72,11 +72,11 @@ function fish_prompt
       printf " "
       
       printf "%s" $reset_color
-      printf "\033[38;5;238m"
+      printf "\033[38;5;234m"
     else
       printf " "
       printf "%s" $reset_color
-      printf "\033[38;5;236m"
+      printf "\033[38;5;235m"
     end
     
     printf "\n"
@@ -132,11 +132,11 @@ function fish_right_prompt
     
     printf "\033[A"
     
-    printf "\033[38;5;236m\033[48;5;236m "
+    printf "\033[38;5;235m\033[48;5;235m "
     printf "%s" $status_style $status_text " " $reset_color
     
     if test $CMD_DURATION
-      printf "\033[48;5;236m\033[38;5;238m\033[48;5;238m "
+      printf "\033[48;5;235m\033[38;5;234m\033[48;5;234m "
       printf "%s" $duration_color $duration " " $reset_color
     end
     
