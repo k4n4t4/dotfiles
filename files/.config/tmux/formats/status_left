@@ -1,0 +1,10 @@
+#!/bin/sh
+set -eu
+
+session_name="#S"
+
+printf "#[fg=#eeeeee,bg=#444444,bold]"
+printf " ${session_name} "
+printf "#[fg=#444444,bg=#888888,nobold,nounderscore,noitalics]#[fg=#eeeeee,bg=#888888,bold]"
+printf " $(whoami) "
+printf "#[fg=#888888,bg=#222222]"

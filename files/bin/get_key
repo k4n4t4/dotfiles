@@ -1,0 +1,10 @@
+#!/bin/sh
+set -eu
+
+old="$(stty -g)"
+trap 'stty "$old"' 1 2 3 15
+
+stty -raw -icanon
+printf "$(head -c1)"
+stty "$old"
+

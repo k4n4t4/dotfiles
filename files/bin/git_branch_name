@@ -1,0 +1,10 @@
+#!/bin/sh
+set -eu
+
+branch="$(git symbolic-ref --quiet HEAD 2>/dev/null)"
+
+if [ "${branch}" != "" ]; then
+  basename "${branch}"
+else
+  echo $(git rev-parse --short HEAD 2>/dev/null)
+fi

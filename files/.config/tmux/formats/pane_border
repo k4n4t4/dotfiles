@@ -1,0 +1,13 @@
+#!/bin/sh
+set -eu
+
+pane_index="#P"
+pane_title="#T"
+
+printf "#[fg=#222222,bg=default]#[fg=#eeeeee,bg=#222222]"
+printf " ${pane_index} "
+printf "#[fg=#666666]#[fg=default,bold]"
+printf " ${pane_title} "
+printf "#[fg=#666666,nobold]#[fg=#eeeeee]"
+printf " $(hostname) "
+printf "#[fg=#222222,bg=default]"

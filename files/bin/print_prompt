@@ -1,0 +1,14 @@
+#!/bin/sh
+set -eu
+
+date_format="$(date "+%H:%M:%S")"
+
+printf "["
+printf "\033[36m${date_format}"
+printf "\033[m]"
+printf "\033[34m$(whoami)@$(hostname)"
+printf "\033[m:"
+printf "\033[33m$(pwd)"
+printf "\033[97m\$"
+printf "\033[m "
+

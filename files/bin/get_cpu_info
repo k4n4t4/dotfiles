@@ -1,0 +1,11 @@
+#!/bin/sh
+set -eu
+
+if ! [ -e /proc/stat ]; then
+  exit 1
+fi
+
+for i in "${@}"; do
+  cat /proc/stat | grep -E "${i}"
+done
+

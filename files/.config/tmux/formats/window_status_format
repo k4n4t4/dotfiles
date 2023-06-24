@@ -1,0 +1,12 @@
+#!/bin/sh
+set -eu
+
+window_index="#I"
+pane_current_command="#{pane_current_command}"
+
+printf "#[fg=#222222,bg=#333333]#[fg=#666666,bg=#333333]"
+printf " ${window_index}"
+printf "  "
+printf "${pane_current_command} "
+printf "#[fg=#333333,bg=#222222,nobold,nounderscore,noitalics]"
+
