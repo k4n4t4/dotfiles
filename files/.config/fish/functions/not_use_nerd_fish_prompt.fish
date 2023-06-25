@@ -87,7 +87,7 @@ function fish_prompt
     printf "%s" $reset_color $user_status_color $user_symbol $reset_color
     printf " "
   else
-    printf "\033[0J> "
+    printf "\033[0J\033[95m>\033[m "
   end
 end
 
