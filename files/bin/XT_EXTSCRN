@@ -1,0 +1,11 @@
+#!/bin/sh
+set -eu
+
+case "${1:-true}" in
+  "true" )
+    printf "\033[?1049h"
+    clear
+    ;;
+  "false" ) printf "\033[?1049l" ;;
+esac
+
