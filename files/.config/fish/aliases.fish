@@ -1,5 +1,3 @@
-# alias
-
 if type -q nala
   alias apt "sudo nala"
 end
@@ -219,4 +217,3 @@ alias poweroff "systemctl poweroff"
 
 abbr --add rbt "reboot"
 abbr --add pof "poweroff"
-
