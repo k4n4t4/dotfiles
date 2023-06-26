@@ -5,7 +5,6 @@
 ".config/fish/conf.d/color.fish"
 ".config/fish/conf.d/path.fish"
 ".config/fish/conf.d/git_func.fish"
-".config/fish/conf.d/bind.fish"
 ".config/fish/conf.d/var.fish"
 ".config/fish/conf.d/event_functions.fish"
 ".config/fish/functions/mkcd.fish"
@@ -22,3 +21,4 @@
 ".config/fish/functions/fish_greeting.fish"
 ".config/fish/functions/fish_command_not_found.fish"
 ".config/fish/functions/fish_prompt.fish"
+".config/fish/functions/fish_user_key_bindings.fish"
