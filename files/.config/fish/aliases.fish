@@ -115,7 +115,9 @@ cd=38;5;226:\
 *.lua=38;2;120;120;200:\
 *.json=38;2;200;120;50:\
 *.vsix=38;2;255;100;100:\
-*.log=38;2;150;50;200"
+*.log=38;2;150;50;200:\
+*license*=38;2;200;100;255:\
+*LICENSE*=38;2;200;100;255"
   alias exa  "exa --icons --git -g -H -s type"
   alias ls   "exa"
   alias ll   "exa -Fl"
