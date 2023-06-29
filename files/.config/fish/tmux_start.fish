@@ -5,6 +5,13 @@ and not set -q TMUX
   if test -z "$LIST"
     exec tmux -u new-session
   else
+    printf "%s" (whoami) "@" (hostname)
+    echo
+    yes = | head -n $COLUMNS | tr -d "\n"
+    echo
+    tmux list-session
+    yes = | head -n $COLUMNS | tr -d "\n"
+    echo
     read -p'printf "\033[92mid\033[m>\033[97m "' "ID" ; printf "\033[m"
     switch "$ID"
       case ":exit" ":quit" ":q"
