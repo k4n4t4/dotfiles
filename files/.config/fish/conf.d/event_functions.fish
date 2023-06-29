@@ -8,6 +8,9 @@ function fish_preexec --on-event fish_preexec
 end
 
 function fish_postexec --on-event fish_postexec
+  if test "$argv[1]" = "clear"
+    return
+  end
   printf "\033[m"
   yes = | head -n $COLUMNS | tr -d "\n"
   echo
