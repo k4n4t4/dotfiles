@@ -3,8 +3,8 @@ set -eu
 
 session_name="#S"
 
-printf "#[fg=#eeeeee,bg=#444444,bold]"
+printf "#[fg=#eeeeee,bg=#333333,bold]"
 printf " ${session_name} "
-printf "#[fg=#444444,bg=#888888,nobold,nounderscore,noitalics]#[fg=#eeeeee,bg=#888888,bold]"
+printf "#[fg=#333333,bg=#444444,nobold,nounderscore,noitalics]#[fg=#eeeeee,bg=#444444,bold]"
 printf " $(whoami) "
-printf "#[fg=#888888,bg=#222222]"
+printf "#[fg=#444444,bg=#222222]"

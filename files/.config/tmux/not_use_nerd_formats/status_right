@@ -1,13 +1,13 @@
 #!/bin/sh
 set -eu
 
-printf "#[fg=#eeeeee,bg=#888888,bold]"
+printf "#[fg=#eeeeee,bg=#444444,bold]"
 
 printf "#{?client_prefix,"
 
 printf "#[bg=#00aaee]#[fg=#eeeeee]"
 printf "#{prefix}"
-printf "#[bg=#888888]"
+printf "#[bg=#444444]"
 
 printf ",}"
 
@@ -16,7 +16,7 @@ printf "#{?pane_synchronized,"
 
 printf "#[bg=#00ee00]#[fg=#eeeeee]"
 printf "sync"
-printf "#[bg=#888888]"
+printf "#[bg=#444444]"
 
 printf ",}"
 
@@ -25,7 +25,7 @@ printf "#{?pane_in_mode,"
 
 printf "#[bg=#eeaa00]#[fg=#eeeeee]"
 printf "mode"
-printf "#[bg=#888888]"
+printf "#[bg=#444444]"
 
 printf ",}"
 
