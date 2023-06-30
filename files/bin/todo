@@ -48,7 +48,7 @@ add_todo() {
   todo_stat="t"
   todo_date="$(date "+%y-%m-%d_%H:%M:%S")"
   todo_tag="#"
-  todo_text="$(echo " $2" | sed -z "s/\n//g" | cut -c2-)"
+  todo_text="$(echo " $2" | tr -d "\n" | cut -c2-)"
   todo_line="$todo_stat $todo_date $todo_tag $todo_text"
   
   if [ $# -eq 3 ]; then
@@ -73,7 +73,7 @@ change_tag_todo() {
     echo "Is NaN."
     exit 1
   fi
-  tag_text="$(echo "=$2" | sed -z "s/[\n ]//g" | cut -c2-)"
+  tag_text="$(echo "=$2" | tr -d "\n" | tr -d " " | cut -c2-)"
   edit_line="$(echo "$(cat "$TODO" | sed -n "${3}p")")"
   
   todo_stat="$(echo "$edit_line" | cut -d" " -f1)"
