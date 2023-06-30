@@ -192,14 +192,23 @@ list_todo() {
     todo_text="$(echo "$line" | cut -d" " -f4-)"
     [ -z "$todo_text" ] && continue
     
-    printf "($idx)"
-    printf "[$todo_stat]"
-    printf "{$todo_text"
+    printf " $idx"
+
+    printf " | "
+    case "$todo_stat" in
+      t ) printf "-" ;;
+      d ) printf "*" ;;
+      * ) : ;;
+    esac
+
+    printf " | "
+    echo "=$todo_text" | cut -c2- | tr -d "\n"
     yes " " | head -n $(($max_len-${#todo_text})) | tr -d "\n"
-    printf "}"
-    printf "<$todo_date>"
+    printf " | "
+
+    printf "$todo_date | "
     if ! [ -z "$todo_tag" ]; then
-      printf "# $todo_tag"
+      echo "=# $todo_tag" | cut -c2- | tr -d "\n"
     fi
     echo
     
