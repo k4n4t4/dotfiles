@@ -9,3 +9,4 @@
 "bin/print_prompt"
 "bin/get_key"
 "bin/XT_EXTSCRN"
+"bin/todo"
