@@ -56,7 +56,8 @@ add_todo() {
       echo "Is NaN."
       exit 1
     fi
-    echo "$(cat "$TODO" | sed "${3}i$todo_line")" > "$TODO"
+    DATA="$(cat "$TODO" | sed "${3}i$todo_line")"
+    echo "$DATA" > "$TODO"
   else
     echo "$todo_line" >> "$TODO"
   fi
@@ -85,7 +86,8 @@ change_tag_todo() {
   
   todo_line="$todo_stat $todo_date #$todo_tag $todo_text"
   
-  echo "$(cat "$TODO" | sed "${3}c$todo_line")" > "$TODO"
+  DATA="$(cat "$TODO" | sed "${3}c$todo_line")"
+  echo "$DATA" > "$TODO"
   
 }
 
@@ -96,7 +98,8 @@ del_todo() {
     exit 1
   fi
   if is_number "$2"; then
-    echo "$(cat "$TODO" | sed "${2}d")" > "$TODO"
+    DATA="$(cat "$TODO" | sed "${2}d")"
+    echo "$DATA" > "$TODO"
   else
     echo "Is NaN."
     exit 1
@@ -113,11 +116,15 @@ move_todo() {
     if ! [ $2 -eq $3 ]; then
       move_line="$(echo "$(cat "$TODO" | sed -n "${2}p")")"
       if [ $2 -gt $3 ]; then
-        echo "$(cat "$TODO" | sed "${2}d")" > "$TODO"
-        echo "$(cat "$TODO" | sed "${3}i${move_line}")" > "$TODO"
+        DATA="$(cat "$TODO" | sed "${2}d")"
+        echo "$DATA" > "$TODO"
+        DATA="$(cat "$TODO" | sed "${3}i${move_line}")"
+        echo "$DATA" > "$TODO"
       else
-        echo "$(cat "$TODO" | sed "${3}a${move_line}")" > "$TODO"
-        echo "$(cat "$TODO" | sed "${2}d")" > "$TODO"
+        DATA="$(cat "$TODO" | sed "${3}a${move_line}")"
+        echo "$DATA" > "$TODO"
+        DATA="$(cat "$TODO" | sed "${2}d")"
+        echo "$DATA" > "$TODO"
       fi
     fi
   else
@@ -135,10 +142,12 @@ status_todo() {
   if is_number "$2"; then
     case "$3" in
       [dD]* )
-        echo "$(cat "$TODO" | sed "${2}s/^t/d/")" > "$TODO"
+        DATA="$(cat "$TODO" | sed "${2}s/^t/d/")"
+        echo "$DATA" > "$TODO"
         ;;
       [tT]* )
-        echo "$(cat "$TODO" | sed "${2}s/^d/t/")" > "$TODO"
+        DATA="$(cat "$TODO" | sed "${2}s/^d/t/")"
+        echo "$DATA" > "$TODO"
         ;;
       * )
         echo "Error!"
@@ -188,10 +197,10 @@ list_todo() {
     printf "{$todo_text"
     yes " " | head -n $(($max_len-${#todo_text})) | tr -d "\n"
     printf "}"
-    if ! [ -z "$todo_tag" ]; then
-      printf "#$todo_tag#"
-    fi
     printf "<$todo_date>"
+    if ! [ -z "$todo_tag" ]; then
+      printf "# $todo_tag"
+    fi
     echo
     
     idx=$(($idx+1))
