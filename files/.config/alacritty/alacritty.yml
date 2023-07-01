@@ -51,6 +51,8 @@ env:
 
 key_bindings:
   - { key: F11, command: { program: "fullscreen" } }
+  - { key: Up,   mods: Control, action: IncreaseFontSize }
+  - { key: Down, mods: Control, action: DecreaseFontSize }
 
 import:
  - ~/.config/alacritty/themes/themes/konsole_linux.yaml
