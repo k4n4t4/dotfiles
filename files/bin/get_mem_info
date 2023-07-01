@@ -2,7 +2,8 @@
 set -eu
 
 if ! [ -e /proc/meminfo ]; then
-  exit 1
+  echo "null"
+  exit
 fi
 
 for i in "${@}"; do
