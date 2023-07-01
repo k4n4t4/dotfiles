@@ -18,12 +18,13 @@ if type -q todo
   abbr --add tcl  "todo clear"
 end
 
-if type -q peco
+if type -q pecoa
   alias cdgp 'cd (ghq list --full-path | peco --prompt "ghq >" --query "$argv")'
 end
 
-if type -q fzf
+if type -q fzfa
   alias cdg 'cd (ghq list --full-path | fzf --prompt "ghq > " --query "$argv")'
+  alias cdf 'cd (fd -H -t d | fzf --prompt "fd > " --query "$argv[1]")'
 end
 
 if type -q tmux
