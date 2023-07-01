@@ -57,5 +57,6 @@ fi
 
 PS1="\$(print_prompt)"
 
-#eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
+if type "starship" > /dev/null 2>&1 ; then
+  eval "$(starship init bash)"
+fi
