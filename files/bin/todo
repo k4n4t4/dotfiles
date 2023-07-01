@@ -169,13 +169,16 @@ clear_todo() {
 
 # list todo
 list_todo() {
-  max_len=0
+  max_text_len=0
+  max_num_len=0
   while read line ; do
     todo_text="$(echo "$line" | cut -d" " -f4-)"
-    if [ ${#todo_text} -gt $max_len ]; then
-      max_len=${#todo_text}
+    if [ ${#todo_text} -gt $max_text_len ]; then
+      max_text_len=${#todo_text}
     fi
+    max_num_len=$(($max_num_len+1))
   done < "$TODO"
+  max_num_len=${#max_num_len}
   
   idx=1
   while read line ; do
@@ -192,6 +195,7 @@ list_todo() {
     todo_text="$(echo "$line" | cut -d" " -f4-)"
     [ -z "$todo_text" ] && continue
     
+    yes " " | head -n $(($max_num_len-${#idx})) | tr -d "\n"
     printf " \033[35m$idx\033[m"
 
     printf " | "
@@ -205,7 +209,7 @@ list_todo() {
     printf "\033[97m"
     echo "=$todo_text" | cut -c2- | tr -d "\n"
     printf "\033[m"
-    yes " " | head -n $(($max_len-${#todo_text})) | tr -d "\n"
+    yes " " | head -n $(($max_text_len-${#todo_text})) | tr -d "\n"
     printf " | "
 
     printf "\033[33m$todo_date\033[m"
