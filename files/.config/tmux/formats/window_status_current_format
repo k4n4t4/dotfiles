@@ -4,9 +4,9 @@ set -eu
 window_index="#I"
 pane_current_command="#{pane_current_command}"
 
-printf "#[fg=#222222,bg=#eeeeee]#[fg=#559955,bg=#eeeeee]"
+printf "#[fg=#222222,bg=#333333]#[fg=#555599,bg=#333333]"
 printf " ${window_index}"
-printf " #[fg=#eeeeee,bg=#559955] "
+printf " #[fg=#333333,bg=#555599] #[fg=#eeeeee]"
 printf "${pane_current_command} "
-printf "#[fg=#559955,bg=#222222,nobold]"
+printf "#[fg=#555599,bg=#222222,nobold]"
 
