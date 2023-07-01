@@ -43,3 +43,8 @@ if cmd_exist codium ; then
   info "===== codium (total: $(cat "lists/codium" | wc -l)) ====="
   read_link_list "lists/codium"
 fi
+
+if cmd_exist alacritty ; then
+  info "===== alacritty (total: $(cat "lists/alacritty" | wc -l)) ====="
+  read_link_list "lists/alacritty"
+fi
