@@ -18,6 +18,10 @@ if type -q todo
   abbr --add tcl  "todo clear"
 end
 
+if type -q peco
+  alias gcd 'cd (ghq list --full-path | peco --prompt "ghq >" --query "$argv")'
+end
+
 if type -q tmux
   alias tmux  "tmux -u"
   abbr --add tm      "tmux"
