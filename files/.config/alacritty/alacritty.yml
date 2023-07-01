@@ -34,6 +34,15 @@ font:
     x: 0
     y: 0
 
+cursor:
+  style:
+    shape: Beam
+    blinking: On
+  vi_mode_style: Block
+  blink_interval: 500
+  unfocused_hollow: true
+  thickness: 0.01
+
 shell:
   program: /usr/bin/fish
 
@@ -42,3 +51,6 @@ env:
 
 key_bindings:
   - { key: F11, command: { program: "fullscreen" } }
+
+import:
+ - ~/.config/alacritty/themes/themes/konsole_linux.yaml
