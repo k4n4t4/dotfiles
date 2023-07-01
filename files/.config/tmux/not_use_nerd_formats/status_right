@@ -29,11 +29,8 @@ printf "#[bg=#444444]"
 
 printf ",}"
 
-
-bat_path="$(find /sys/class/power_supply | grep BAT)"
-
-bat_capacity="$(cat "$bat_path/capacity")"
-bat_status="$(cat "$bat_path/status")"
+bat_capacity="$(get_battery_info "capacity")"
+bat_status="$(get_battery_info "status")"
 
 case "$bat_status" in
     "Full" )
@@ -55,7 +52,8 @@ esac
 
 printf " bat$bat_status_symbol$bat_capacity%%"
 
-printf " $(awk 'BEGIN{total=0;used=0;available=0;rate=0}/^MemTotal:/{total=$2}/^MemAvailable:/{available=$2}END{used=total-available;rate=100*used/total;print "mem:"int(rate)}' /proc/meminfo)"
+printf " mem:"
+get_mem_rate
 printf "%%"
 
 printf " $(date "+%H:%M:%S") "

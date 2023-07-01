@@ -29,9 +29,6 @@ printf "#[fg=#eeaa00]#[bg=#444444]#[fg=#eeeeee]"
 
 printf ",}"
 
-
-bat_path="$(find /sys/class/power_supply | grep BAT)"
-
 bat_capacity="$(get_battery_info "capacity")"
 bat_status="$(get_battery_info "status")"
 
