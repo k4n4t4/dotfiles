@@ -19,11 +19,11 @@ if type -q todo
 end
 
 if type -q peco
-  alias gcdp 'cd (ghq list --full-path | peco --prompt "ghq >" --query "$argv")'
+  alias cdgp 'cd (ghq list --full-path | peco --prompt "ghq >" --query "$argv")'
 end
 
 if type -q fzf
-  alias gcd 'cd (ghq list --full-path | fzf --prompt "ghq > " --query "$argv")'
+  alias cdg 'cd (ghq list --full-path | fzf --prompt "ghq > " --query "$argv")'
 end
 
 if type -q tmux
