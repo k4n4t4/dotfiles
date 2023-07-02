@@ -50,8 +50,8 @@ custom_cursor_colors: false
 
 cursor:
   style:
-    shape: Beam
-    blinking: On
+    shape: Block
+    blinking: Off
   vi_mode_style: Block
   blink_interval: 500
   unfocused_hollow: true
@@ -70,6 +70,21 @@ key_bindings:
 
 mouse_bindings:
   - { mouse: Middle, action: PasteSelection }
+
+mouse:
+  double_click: { threshold: 300 }
+  triple_click: { threshold: 300 }
+  hide_when_typing: true
+
+selection:
+  semantic_escape_chars: ",│`|:\"' ()[]{}<>"
+  save_to_clipboard: false
+
+dynamic_title: true
+
+unfocused_hollow_cursor: true
+
+live_config_reload: true
 
 import:
  - ~/.config/alacritty/themes/themes/konsole_linux.yaml
