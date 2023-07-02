@@ -48,3 +48,8 @@ if cmd_exist alacritty ; then
   info "===== alacritty (total: $(cat "lists/alacritty" | wc -l)) ====="
   read_link_list "lists/alacritty"
 fi
+
+if cmd_exist picom ; then
+  info "===== picom (total: $(cat "lists/picom" | wc -l)) ====="
+  read_link_list "lists/picom"
+fi
