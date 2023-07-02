@@ -46,8 +46,6 @@ render_timer: false
 
 draw_bold_text_with_bright_colors: true
 
-custom_cursor_colors: false
-
 cursor:
   style:
     shape: Block
@@ -87,4 +85,8 @@ unfocused_hollow_cursor: true
 live_config_reload: true
 
 import:
- - ~/.config/alacritty/themes/themes/konsole_linux.yaml
+ # - ~/.config/alacritty/themes/themes/konsole_linux.yaml
+ # - ~/.config/alacritty/themes/themes/hyper.yaml
+ # - ~/.config/alacritty/themes/themes/terminal_app.yaml
+  - ~/.config/alacritty/themes/themes/xterm.yaml
+ # - ~/.config/alacritty/themes/themes/argonaut.yaml
