@@ -15,6 +15,10 @@ window:
 scrolling:
   history: 5000
   multiplier: 4
+  faux_multiplier: 4
+  auto_scroll: false
+
+tabspaces: 2
 
 font:
   normal:
@@ -33,6 +37,16 @@ font:
   offset:
     x: 0
     y: 0
+  glyph_offset:
+    x: 0
+    y: 0
+  scale_with_dpi: true
+
+render_timer: false
+
+draw_bold_text_with_bright_colors: true
+
+custom_cursor_colors: false
 
 cursor:
   style:
@@ -53,6 +67,9 @@ key_bindings:
   - { key: F11, command: { program: "fullscreen" } }
   - { key: Up,   mods: Control, action: IncreaseFontSize }
   - { key: Down, mods: Control, action: DecreaseFontSize }
+
+mouse_bindings:
+  - { mouse: Middle, action: PasteSelection }
 
 import:
  - ~/.config/alacritty/themes/themes/konsole_linux.yaml
