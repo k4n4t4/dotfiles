@@ -54,6 +54,10 @@ function fish_prompt
       end
     end
     
+    printf "\033[38;5;239m"
+    yes "─" | head -n $COLUMNS | tr -d "\n"
+    printf "\033[m\r"
+    
     printf "\033[48;5;234m "
     
     printf "%s" $user_date_color $user_date
