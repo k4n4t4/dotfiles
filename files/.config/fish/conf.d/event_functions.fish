@@ -4,7 +4,10 @@ function fish_exit --on-event fish_exit
 end
 
 function fish_preexec --on-event fish_preexec
-  :
+  printf "\033[38;5;239m"
+  yes "─" | head -n $COLUMNS | tr -d "\n"
+  printf "\033[m\r"
+  echo
 end
 
 function fish_postexec --on-event fish_postexec
