@@ -1,0 +1,89 @@
+#!/bin/sh
+set -eu
+
+trap '' 1 2 3 15
+
+NOTES="${HOME}/.notes"
+EXTENSION="md"
+DEFAULT_CMD="list"
+EDITOR="vi"
+
+usage() {
+cat << EOF
+  usage:
+    $0 [command] [args]
+  commands:
+    help list add
+EOF
+}
+
+setup_note() {
+  if [ -e "$NOTES" ] || [ -L "$NOTES" ]; then
+    if ! [ -d "$NOTES" ]; then
+      echo "Could not create notes folder."
+      exit 1
+    fi
+  else
+    mkdir -p "$NOTES"
+  fi
+}
+
+list_notes() {
+  if [ -z "${2:-}" ]; then
+    ls "$NOTES"
+  else
+    ls "$2" "$NOTES"
+  fi
+}
+
+add_note() {
+  if [ -z "${2:-}" ]; then
+    echo "Error!"
+    exit 1
+  else
+    if [ -e "$NOTES/$2.$EXTENSION" ]; then
+      echo "Already exist."
+      exit 1
+    else
+      : > "$NOTES/$2.$EXTENSION"
+    fi
+  fi
+}
+
+del_note() {
+  if [ -z "${2:-}" ]; then
+    echo "Error!"
+    exit 1
+  else
+    if ! [ -e "$NOTES/$2.$EXTENSION" ]; then
+      echo "Already delete."
+      exit 1
+    else
+      rm "$NOTES/$2.$EXTENSION"
+    fi
+  fi
+}
+
+open_note() {
+  $EDITOR "$NOTES/$2.$EXTENSION"
+}
+
+main() {
+  setup_note
+  case "${1:-$DEFAULT_CMD}" in
+    h* | -h* | --h* ) usage ;;
+    l* ) list_notes "$@" ;;
+    a* ) add_note "$@" ;;
+    d* ) del_note "$@" ;;
+    o* ) open_note "$@" ;;
+    * )
+      echo "Did not find command: \"${1}\""
+      usage
+      exit 1
+      ;;
+  esac
+}
+
+main "$@"
+
+exit
