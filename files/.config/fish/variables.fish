@@ -1,4 +1,6 @@
 
+set -g fish_handle_reflow 0
+
 if type -q exa
 export EXA_COLORS="\
 ur=38;2;255;255;0:\
