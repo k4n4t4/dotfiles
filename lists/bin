@@ -12,3 +12,5 @@
 "bin/fullscreen"
 "bin/todo"
 "bin/note"
+"bin/get_ls_colors"
+"bin/ls_colors"

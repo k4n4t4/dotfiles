@@ -1,0 +1,5 @@
+#!/bin/sh
+set -eu
+cd "$(dirname "$0")"
+cat ./ls_colors/LS_COLORS | tr -d "\n"
+exit
