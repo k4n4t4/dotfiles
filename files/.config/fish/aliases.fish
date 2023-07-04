@@ -88,7 +88,17 @@ if type -q git
   alias grt "cdgitroot"
 end
 
-if type -q exa
+if type -q lsd
+  alias ls   "lsd"
+  alias ll   "lsd -Fl"
+  alias la   "lsd -Fa"
+  alias lla  "lsd -Fla"
+  alias l    "lsd -F"
+  alias lt   "lsd -F --tree"
+  alias lta  "lsd -Fa --tree"
+  alias llt  "lsd -Fl --tree"
+  alias llta "lsd -Fla --tree"
+else if type -q exa
   alias exa  "exa --icons --git -g -H -s type"
   alias ls   "exa"
   alias ll   "exa -Fl"
