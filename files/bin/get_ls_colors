@@ -1,5 +1,8 @@
 #!/bin/sh
 set -eu
 cd "$(dirname "$0")"
-cat ./ls_colors/LS_COLORS | tr -d "\n"
+case "${1:-ls}" in
+  "ls" ) cat ./ls_colors/LS_COLORS | tr -d "\n" ;;
+  "exa" ) cat ./ls_colors/EXA_COLORS | tr -d "\n" ;;
+esac
 exit
