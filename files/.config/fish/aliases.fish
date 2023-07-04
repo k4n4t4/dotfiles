@@ -167,6 +167,11 @@ if type -q nvim
   abbr --add nv  "nvim"
   abbr --add v   "nvim"
   alias vless "/home/linuxbrew/.linuxbrew/Cellar/neovim/0.9.0/share/nvim/runtime/macros/less.sh"
+else if type -q vim
+  abbr --add v "vim"
+  abbr --add vi "vim"
+else
+  abbr --add v "vi"
 end
 
 if type -q htop
