@@ -95,7 +95,7 @@ function fish_prompt
     printf "%s" $reset_color $user_status_color $user_symbol $reset_color
     printf " "
   else
-    printf "\033[0J"
+    printf "\033[0J\033[90m"
     printf "($_transient_prompt_date)"
     printf ":"
     printf "[$_transient_prompt_pwd]"
@@ -157,6 +157,7 @@ function fish_right_prompt
     
     printf "\033[B"
   else
+    printf "\033[90m"
     printf "[$_transient_prompt_last_pipestatus]"
     printf ":"
     printf "($_transient_prompt_duration)"
