@@ -25,4 +25,11 @@ export LANG=C
 
 set _power_supply_path "/sys/class/power_supply"
 set _battery_path (command find $_power_supply_path | command grep BAT)
+
 set _transient_prompt false
+
+set _transient_prompt_last_status
+set _transient_prompt_last_pipestatus
+set _transient_prompt_pwd
+set _transient_prompt_date
+set _transient_prompt_duration

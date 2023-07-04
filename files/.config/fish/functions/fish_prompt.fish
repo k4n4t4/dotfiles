@@ -54,6 +54,10 @@ function fish_prompt
       end
     end
     
+    set _transient_prompt_last_status $last_status
+    set _transient_prompt_pwd $user_pwd
+    set _transient_prompt_date $user_date
+    
     printf "\033[38;5;239m"
     yes "─" | head -n $COLUMNS | tr -d "\n"
     printf "\033[m\r"
@@ -91,7 +95,11 @@ function fish_prompt
     printf "%s" $reset_color $user_status_color $user_symbol $reset_color
     printf " "
   else
-    printf "\033[0J\033[95m>\033[m "
+    printf "\033[0J"
+    printf "($_transient_prompt_date)"
+    printf ":"
+    printf "[$_transient_prompt_pwd]"
+    printf "\033[95m>\033[m "
   end
 end
 
@@ -134,6 +142,9 @@ function fish_right_prompt
       set duration_color (printf "\033[38;5;27m")
     end
     
+    set _transient_prompt_last_pipestatus $last_pipestatus
+    set _transient_prompt_duration $duration
+    
     printf "\033[A"
     
     printf "\033[38;5;235m\033[48;5;235m "
@@ -146,6 +157,9 @@ function fish_right_prompt
     
     printf "\033[B"
   else
+    printf "[$_transient_prompt_last_pipestatus]"
+    printf ":"
+    printf "($_transient_prompt_duration)"
     set _transient_prompt false
   end
   
