@@ -89,7 +89,7 @@ if type -q git
 end
 
 if type -q exa
-  alias exa  "exa --icons --git -g -H -s type"
+  alias exa  "exa --icons --git -g -H -s type --time-style=long-iso"
   alias ls   "exa"
   alias ll   "exa -Fl"
   alias la   "exa -Fa"
