@@ -12,4 +12,5 @@ function fish_user_key_bindings
   bind \cr '__fzf_reverse_isearch'
   bind \cf '__fzf_cd'
   bind \c] 'cdg (commandline)'
+  bind \cv 'commandline -i (set | awk \'{print $1}\' | fzf)'
 end
