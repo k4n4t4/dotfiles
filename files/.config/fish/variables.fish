@@ -1,7 +1,7 @@
 
 set -g fish_handle_reflow 0
 
-export LS_COLORS=(cat /home/kanata/dotfiles/files/.config/fish/LS_COLORS | tr -d "\n")
+export LS_COLORS=(get_ls_colors)
 
 export EDITOR="nvim"
 export LANG=C
