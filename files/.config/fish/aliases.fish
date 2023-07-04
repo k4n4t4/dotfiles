@@ -89,7 +89,7 @@ if type -q git
 end
 
 if type -q exa
-  alias exa  "exa --icons --git -g -H -s type --time-style=long-iso"
+  alias exa  "exa --icons --git -H -s type --time-style=long-iso"
   alias ls   "exa"
   alias ll   "exa -Fl"
   alias la   "exa -Fa"
@@ -163,13 +163,8 @@ end
 alias aptup "sudo apt update && sudo apt upgrade"
 
 if type -q nvim
-  abbr --add vim "nvim"
   abbr --add vi  "nvim"
   abbr --add v   "nvim"
-  abbr --add vo  "nvim -o"
-  abbr --add VO  "nvim -O"
-  abbr --add vp  "nvim -p"
-  abbr --add vd  "nvim -d"
   alias vless "/home/linuxbrew/.linuxbrew/Cellar/neovim/0.9.0/share/nvim/runtime/macros/less.sh"
 end
 
