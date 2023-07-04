@@ -1,7 +1,11 @@
 
 set -g fish_handle_reflow 0
 
-export LS_COLORS=(get_ls_colors)
+if type -q exa
+  export EXA_COLORS=(get_ls_colors exa)
+else
+  export LS_COLORS=(get_ls_colors)
+end
 
 export LESS='-i -M -R -S -W -z-4 -x4'
 export PAGER="less"
