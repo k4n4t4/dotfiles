@@ -13,4 +13,5 @@ function fish_user_key_bindings
   bind \cf '__fzf_cd'
   bind \c] 'cdg (commandline)'
   bind \cv 'commandline -i (set | awk \'{print $1}\' | fzf)'
+  bind \cb 'commandline -i (fd -H | fzf --preview \'bat --style=numbers --color=always --line-range :300 {}\')'
 end
