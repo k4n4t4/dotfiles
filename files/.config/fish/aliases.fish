@@ -163,7 +163,8 @@ end
 alias aptup "sudo apt update && sudo apt upgrade"
 
 if type -q nvim
-  abbr --add vi  "nvim"
+  abbr --add n   "nvim"
+  abbr --add nv  "nvim"
   abbr --add v   "nvim"
   alias vless "/home/linuxbrew/.linuxbrew/Cellar/neovim/0.9.0/share/nvim/runtime/macros/less.sh"
 end
