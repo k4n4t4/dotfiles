@@ -9,4 +9,7 @@ function fish_user_key_bindings
   bind \n 'fish_force_preexec && commandline -f execute'
   bind \r 'fish_force_preexec && commandline -f execute'
   bind \eR 'commandline -f repaint'
+  bind \cr '__fzf_reverse_isearch'
+  bind \cf '__fzf_cd'
+  bind \c] 'cdg (commandline)'
 end
