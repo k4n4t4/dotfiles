@@ -1,17 +1,6 @@
 function fish_greeting
-  if type -q figlet && test $COLUMNS -gt 50
-    if type -q lolcat
-      figlet (date +%m/%d/%y) | lolcat
-    else
-      figlet (date +%m/%d/%y)
-    end
-  else
-    echo
-    if type -q lolcat
-      date +%m/%d/%y | lolcat
-    else
-      date +%m/%d/%y
-    end
-    echo
+  for i in (seq 0 7)
+    printf "\033[4%sm  \033[10%sm  " $i $i
   end
+  printf "\033[m\n"
 end
