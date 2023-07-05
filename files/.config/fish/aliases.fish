@@ -1,5 +1,8 @@
-if type -q nala
-  alias apt "sudo nala"
+if type -q apt
+  alias aptup "sudo apt update && sudo apt upgrade"
+  if type -q nala
+    alias apt "sudo nala"
+  end
 end
 
 if type -q todo
@@ -94,7 +97,9 @@ if type -q exa
   alias ls   "exa"
   alias ll   "exa -Fl"
   alias la   "exa -Fa"
+  alias lA   "exa -FA"
   alias lla  "exa -Fla"
+  alias llA  "exa -FlA"
   alias l    "exa -F"
   alias lt   "exa -FT"
   alias lta  "exa -FTa"
@@ -104,7 +109,9 @@ else if type -q lsd
   alias ls   "lsd"
   alias ll   "lsd -Fl"
   alias la   "lsd -Fa"
+  alias lA   "lsd -FA"
   alias lla  "lsd -Fla"
+  alias llA  "lsd -FlA"
   alias l    "lsd -F"
   alias lt   "lsd -F --tree"
   alias lta  "lsd -Fa --tree"
@@ -161,8 +168,6 @@ else
   alias rm "stopUseRm"
 end
 
-alias aptup "sudo apt update && sudo apt upgrade"
-
 if type -q nvim
   abbr --add n   "nvim"
   abbr --add nv  "nvim"
@@ -189,7 +194,6 @@ end
 
 abbr --add h "history"
 
-abbr --add x "exit"
 abbr --add q "exit"
 
 if type -q codium && not type -q code
