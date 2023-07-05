@@ -23,9 +23,6 @@ export LESS_TERMCAP_ue=(printf "\e[m")
 export EDITOR="nvim"
 export LANG=C
 
-set _power_supply_path "/sys/class/power_supply"
-set _battery_path (command find $_power_supply_path | command grep BAT)
-
 set _transient_prompt false
 
 set _transient_prompt_last_status
