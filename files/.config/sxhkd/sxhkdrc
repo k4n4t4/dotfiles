@@ -1,0 +1,11 @@
+super + t
+  alacritty
+
+super + e
+  dolphin
+
+super + b
+  firefox
+
+super + v
+  code || codium
