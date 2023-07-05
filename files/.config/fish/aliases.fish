@@ -44,6 +44,7 @@ if type -q tmux
 end
 
 abbr --add '^' "command"
+abbr --add cmd "command"
 abbr --add c "clear"
 
 abbr --add cd-  "cd -"
