@@ -8,7 +8,7 @@ set listchars=tab:>-,trail:-,eol:$,extends:>,precedes:<,nbsp:+
 set list
 set relativenumber
 set completeopt=menuone,noinsert
-set cursorcolumn
+" set cursorcolumn
 set cursorline
 set background=dark
 
