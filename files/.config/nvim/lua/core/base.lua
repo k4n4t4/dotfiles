@@ -31,6 +31,8 @@ vim.opt.list = true
 vim.opt.listchars = "tab:»-,trail:-,eol:↲,extends:»,precedes:«,nbsp:%"
 vim.opt.clipboard = "unnamedplus"
 vim.opt.completeopt = "menuone,noinsert"
+vim.opt.cursorline = true
+vim.opt.cursorcolumn = false
 
 vim.wo.number = true
 vim.wo.relativenumber = true
