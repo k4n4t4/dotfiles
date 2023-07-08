@@ -21,5 +21,11 @@ XF86AudioMute
 super + Escape
   pkill -USR1 -x sxhkd
 
+super + {c,k}
+  bspc node -{c,k}
+
+super + button1 + drag
+  bspc node -t floating 
+
 super + alt + {q,r}
   bspc {quit,wm -r}
