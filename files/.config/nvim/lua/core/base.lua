@@ -30,6 +30,7 @@ vim.opt.wildignore:append { "*/node_modules/*" }
 vim.opt.list = true
 vim.opt.listchars = "tab:»-,trail:-,eol:↲,extends:»,precedes:«,nbsp:%"
 vim.opt.clipboard = "unnamedplus"
+vim.opt.completeopt = "menuone,noinsert"
 
 vim.wo.number = true
 vim.wo.relativenumber = true
