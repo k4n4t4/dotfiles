@@ -55,7 +55,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-PS1="\$(print_prompt)"
+export PS1=" \w \$? \\\$ "
 
 if type "starship" > /dev/null 2>&1 ; then
   eval "$(starship init bash)"

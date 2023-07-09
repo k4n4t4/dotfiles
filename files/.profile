@@ -12,7 +12,5 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-PS1="\$(print_prompt)"
-
-#eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+export PS1=" > "
 
