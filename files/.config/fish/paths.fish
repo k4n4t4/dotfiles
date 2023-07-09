@@ -1,7 +1,7 @@
 fish_add_path \
-  "~/bin" \
-  "~/.cargo/bin" \
-  "~/.local/bin" \
+  "$HOME/bin" \
+  "$HOME/.cargo/bin" \
+  "$HOME/.local/bin" \
   "/snap/bin" \
   "/usr/sandbox/" \
   "/usr/local/bin" \
