@@ -47,9 +47,6 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
-alias c="clear"
-alias q="exit"
-
 alias l="ls -F"
 alias la="ls -Fa"
 alias ll="ls -Fl"
@@ -58,6 +55,8 @@ alias lla="ls -Fla"
 alias ..="cd .."
 
 alias h='printf "\033[?25l\033[0;0H\033[2J"&& read && printf "\033[?25h"'
+alias c='printf "\033[0;0H\033[2J"'
+alias q="exit"
 
 PROMPT=" %F{green}%~ %F{yellow}%? %F{cyan}%#%f "
 
