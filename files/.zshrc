@@ -39,9 +39,25 @@ else
   alias rm "stopUseRm"
 fi
 
-zsh_prompt() {
-  printf " %%F{green}%%~ %%F{yellow}%%? %%F{cyan}%%#%%f "
-}
 
-PROMPT="$(zsh_prompt)"
+alias ls='ls --color=auto'
+alias dir='dir --color=auto'
+alias vdir='vdir --color=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+alias c="clear"
+alias q="exit"
+
+alias l="ls -F"
+alias la="ls -Fa"
+alias ll="ls -Fl"
+alias lla="ls -Fla"
+
+alias ..="cd .."
+
+alias h='printf "\033[?25l\033[0;0H\033[2J"&& read && printf "\033[?25h"'
+
+PROMPT=" %F{green}%~ %F{yellow}%? %F{cyan}%#%f "
 
