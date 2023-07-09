@@ -1,0 +1,31 @@
+#!/bin/sh
+set -eu
+
+PWD="$(pwd)"
+SPWD="$PWD"
+
+case "$PWD" in
+  "$HOME"* ) SPWD="~${PWD#$HOME}" ;;
+  * ) : ;;
+esac
+
+OLD_IFS="$IFS"
+
+IFS="/"
+
+TMP=""
+for name in $SPWD; do
+  TMP="$TMP$name/"
+done
+
+case "$TMP" in
+  "/"|"//" ) TMP="$TMP/" ;;
+esac
+
+IFS="$OLD_IFS"
+
+SPWD="${TMP%\/}"
+
+echo "$SPWD"
+
+exit
