@@ -52,6 +52,12 @@ PATH="/usr/sbin:$PATH"
 PATH="/sbin:$PATH"
 PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 
+export CLICOLOR=1
+export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
+export LS_COLORS="$(get_ls_colors)"
+export PROMPT=" %F{green}%~ %F{yellow}%? %F{cyan}%#%f "
+
+
 alias ls='ls --color=auto'
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
@@ -69,6 +75,4 @@ alias ..="cd .."
 alias h='printf "\033[?25l\033[0;0H\033[2J"&& read && printf "\033[?25h"'
 alias c='printf "\033[0;0H\033[2J"'
 alias q="exit"
-
-PROMPT=" %F{green}%~ %F{yellow}%? %F{cyan}%#%f "
 
