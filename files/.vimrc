@@ -16,8 +16,16 @@ if exists("syntax_on")
   syntax reset
 endif
 hi clear
-hi Comment ctermfg=8
+
 hi LineNr ctermfg=240
 hi CursorLineNr ctermfg=252
 hi MatchParen ctermbg=242
 
+hi Statement ctermfg=135
+hi Type ctermfg=205
+hi Special ctermfg=117
+
+hi Comment ctermfg=8
+hi String ctermfg=120
+hi Number ctermfg=63
+hi Function ctermfg=208
