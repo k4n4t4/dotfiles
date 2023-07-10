@@ -30,16 +30,6 @@ autoload -Uz colors
 colors
 
 
-if type trash > /dev/null 2>&1; then
-  alias rm="trash"
-else
-  stopUseRm() {
-    printf "\033[91mStop!\033[m\n\033[36mPlease install \"trash\" command.\033[m\n"
-  }
-  alias rm="stopUseRm"
-fi
-
-
 PATH="$HOME/bin:$PATH"
 PATH="$HOME/.cargo/bin:$PATH"
 PATH="$HOME/.local/bin:$PATH"
@@ -64,6 +54,19 @@ alias vdir='vdir --color=auto'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
+
+alias rm="rm -iv"
+alias mv="mv -iv"
+alias cp="cp -iv"
+
+if type trash > /dev/null 2>&1; then
+  alias rm="trash"
+else
+  stopUseRm() {
+    printf "\033[91mStop!\033[m\n\033[36mPlease install \"trash\" command.\033[m\n"
+  }
+  alias rm="stopUseRm"
+fi
 
 alias ..="cd .."
 
