@@ -31,12 +31,12 @@ colors
 
 
 if type trash > /dev/null 2>&1; then
-  alias rm "trash"
+  alias rm="trash"
 else
   stopUseRm() {
     printf "\033[91mStop!\033[m\n\033[36mPlease install \"trash\" command.\033[m\n"
   }
-  alias rm "stopUseRm"
+  alias rm="stopUseRm"
 fi
 
 
