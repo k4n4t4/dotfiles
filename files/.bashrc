@@ -55,7 +55,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export PS1=" \w \$? \\\$ "
+export PS1=" \e[32m\w \e[33m\$? \e[36m\\\$\e[m "
 
 if type "starship" > /dev/null 2>&1 ; then
   eval "$(starship init bash)"
