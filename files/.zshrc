@@ -40,6 +40,18 @@ else
 fi
 
 
+PATH="$HOME/bin:$PATH"
+PATH="$HOME/.cargo/bin:$PATH"
+PATH="$HOME/.local/bin:$PATH"
+PATH="/snap/bin:$PATH"
+PATH="/usr/sandbox/:$PATH"
+PATH="/usr/local/bin:$PATH"
+PATH="/usr/share/games:$PATH"
+PATH="/usr/local/sbin:$PATH"
+PATH="/usr/sbin:$PATH"
+PATH="/sbin:$PATH"
+PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+
 alias ls='ls --color=auto'
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
