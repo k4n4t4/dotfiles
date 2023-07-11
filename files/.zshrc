@@ -74,7 +74,7 @@ fi
 alias ..="cd .."
 
 alias l="ls -F"
-alias la="ls -Fa"
+alias la="ls -FA"
 alias ll="ls -Fl"
 alias lla="ls -Fla"
 
