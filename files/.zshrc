@@ -45,6 +45,7 @@ PATH="/usr/sbin:$PATH"
 PATH="/sbin:$PATH"
 PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 
+export LANG=C
 export CLICOLOR=1
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 export LS_COLORS="$(get_ls_colors)"
