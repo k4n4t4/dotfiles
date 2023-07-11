@@ -21,7 +21,7 @@ hi LineNr ctermfg=240
 hi CursorLineNr ctermfg=252
 hi MatchParen ctermbg=242
 
-hi Statement ctermfg=135
+hi Statement ctermfg=161
 hi Type ctermfg=205
 hi Special ctermfg=117
 
