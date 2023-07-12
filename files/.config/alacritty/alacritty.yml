@@ -62,7 +62,7 @@ env:
   TERM: xterm-256color
 
 key_bindings:
-  - { key: F11, command: { program: "fullscreen" } }
+  - { key: F11,  action: ToggleFullScreen }
   - { key: Up,   mods: Control, action: IncreaseFontSize }
   - { key: Down, mods: Control, action: DecreaseFontSize }
 
