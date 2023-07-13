@@ -138,7 +138,7 @@ function fish_right_prompt
     end
     
     if test $CMD_DURATION
-      set duration (printf "$CMD_DURATION 1000" | awk '{printf "%.3fs", $1 / $2}')
+      set duration (math $CMD_DURATION / 1000)
       set duration_color (printf "\033[38;5;27m")
     end
     
@@ -150,10 +150,8 @@ function fish_right_prompt
     printf "\033[38;5;235m\033[48;5;235m "
     printf "%s" $status_style $status_text " " $reset_color
     
-    if test $CMD_DURATION
-      printf "\033[48;5;235m\033[38;5;234m\033[48;5;234m "
-      printf "%s" $duration_color $duration " " $reset_color
-    end
+    printf "\033[48;5;235m\033[38;5;234m\033[48;5;234m "
+    printf "%s" $duration_color $duration " " $reset_color
     
     printf "\033[B"
   else
@@ -163,6 +161,5 @@ function fish_right_prompt
     printf "($_transient_prompt_duration)"
     set _transient_prompt false
   end
-  
 end
 
