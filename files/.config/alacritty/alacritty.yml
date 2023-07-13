@@ -22,16 +22,16 @@ tabspaces: 2
 
 font:
   normal:
-    family: ComicShannsMono Nerd Font Mono
+    family: Hurmit Nerd Font Mono
     style: Regular
   bold:
-    family: ComicShannsMono Nerd Font Mono
+    family: Hurmit Nerd Font Mono
     style: Bold
   italic:
-    family: ComicShannsMono Nerd Font Mono
+    family: Hurmit Nerd Font Mono
     style: Italic
   bold_italic:
-    family: ComicShannsMono Nerd Font Mono
+    family: Hurmit Nerd Font Mono
     style: Bold Italic
   size: 9.5
   offset:
