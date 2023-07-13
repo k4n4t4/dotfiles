@@ -97,7 +97,14 @@ if type zoxide > /dev/null 2>&1; then
   eval "$(zoxide init zsh)"
 fi
 
-alias h='printf "\033[?25l\033[0;0H\033[2J"&& read && printf "\033[?25h"'
+hide() {
+  printf "\033[?25l"
+  XT_EXTSCRN true
+  read
+  XT_EXTSCRN false
+  printf "\033[?25h"
+}
+
 alias c='printf "\033[0;0H\033[2J"'
 alias q="exit"
 
