@@ -28,4 +28,3 @@ SPWD="${TMP%\/}"
 
 echo "$SPWD"
 
-exit
