@@ -7,6 +7,11 @@ if ! [ -e /sys/class/power_supply ]; then
 fi
 
 for i in "${@}"; do
-  cat "$(find /sys/class/power_supply | grep "BAT" | tail -1)/${i}"
+  bat_path="$(find /sys/class/power_supply | grep "BAT" | tail -1)/${i}"
+  if ! [ -e "$bat_path" ]; then
+    echo "null"
+    exit
+  fi
+  cat "$bat_path"
 done
 
