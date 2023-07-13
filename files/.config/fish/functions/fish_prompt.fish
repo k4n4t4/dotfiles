@@ -2,7 +2,7 @@
 function fish_prompt
   set last_status $status
   
-  if ! $_transient_prompt
+  if $_transient_prompt
     if [ $last_status = 0 ]
       set user_status_color (printf "\033[38;5;226m")
     else
@@ -108,7 +108,7 @@ function fish_right_prompt
   set last_pipestatus $pipestatus
   set last_status $status
   
-  if ! $_transient_prompt
+  if $_transient_prompt
     set reset_color (printf "\033[m")
     set reset_fg_color (printf "\033[39m")
     set reset_bg_color (printf "\033[49m")
@@ -159,7 +159,7 @@ function fish_right_prompt
     printf "[$_transient_prompt_last_pipestatus]"
     printf ":"
     printf "($_transient_prompt_duration)"
-    set _transient_prompt false
+    set _transient_prompt true
   end
 end
 

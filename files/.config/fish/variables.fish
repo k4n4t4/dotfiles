@@ -23,7 +23,7 @@ export LESS_TERMCAP_ue=(printf "\e[m")
 export EDITOR="nvim"
 export LANG=C
 
-set _transient_prompt false
+set _transient_prompt true
 
 set _transient_prompt_last_status
 set _transient_prompt_last_pipestatus
