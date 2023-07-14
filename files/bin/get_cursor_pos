@@ -1,6 +1,8 @@
 #!/bin/sh
 set -eu
 
+exec > /dev/tty
+
 old="$(stty -g)"
 trap 'stty "$old"' 1 2 3 15
 stty raw -echo
