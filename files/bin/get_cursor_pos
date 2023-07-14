@@ -1,13 +1,17 @@
 #!/bin/sh
 set -eu
 
-exec > /dev/tty
+exec < /dev/tty
 
 old="$(stty -g)"
 trap 'stty "$old"' 1 2 3 15
 stty raw -echo
-printf "\033[6n"
-pos="$(dd count=1 2>/dev/null | cut -c3- | tr -d -- "R")"
+
+printf "\033[6n" > /dev/tty
+
+pos="$(dd count=1 2>/dev/null)"
+
 stty "$old"
 
-printf "$pos"
+printf "$pos" | cut -c3- | tr -d -- "R"
+
