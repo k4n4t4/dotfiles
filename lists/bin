@@ -16,3 +16,4 @@
 "bin/get_ls_colors"
 "bin/ls_colors"
 "bin/spwd"
+"bin/rm_esc_seq"

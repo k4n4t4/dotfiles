@@ -1,0 +1,4 @@
+#!/bin/sh
+set -eu
+ESC="$(printf "\033")"
+printf "%s" "${1:-}" | sed -r "s/$ESC\[[^a-zA-Z]*[a-zA-Z]//g"
