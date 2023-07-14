@@ -1,0 +1,11 @@
+#!/bin/sh
+set -eu
+
+old="$(stty -g)"
+trap 'stty "$old"' 1 2 3 15
+stty raw -echo
+printf "\033[6n"
+pos="$(dd count=1 2>/dev/null | cut -c3- | tr -d -- "R")"
+stty "$old"
+
+printf "$pos"

@@ -9,6 +9,7 @@
 "bin/print_prompt"
 "bin/get_key"
 "bin/XT_EXTSCRN"
+"bin/get_cursor_pos"
 "bin/fullscreen"
 "bin/todo"
 "bin/note"
