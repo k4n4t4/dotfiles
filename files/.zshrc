@@ -49,8 +49,20 @@ export LANG=C
 export CLICOLOR=1
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 export LS_COLORS="$(get_ls_colors)"
-export PROMPT=" %F{green}%~ %F{yellow}%? %F{cyan}%#%f "
 
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd prompt_precmd
+prompt_precmd() {
+  if is_git_repo; then
+    repo_color="blue"
+    if is_git_dirty; then
+      repo_color="red"
+    fi
+    export PROMPT=" %F{green}%~ %F{yellow}%? %F{$repo_color}$(git_branch_name) %F{cyan}%#%f "
+  else
+    export PROMPT=" %F{green}%~ %F{yellow}%? %F{cyan}%#%f "
+  fi
+}
 
 alias ls='ls --color=auto'
 alias dir='dir --color=auto'
