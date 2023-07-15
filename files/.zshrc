@@ -91,6 +91,12 @@ alias la="ls -FA"
 alias ll="ls -Fl"
 alias lla="ls -Fla"
 
+if type sl > /dev/null 2>&1; then
+  alias al=sl -a
+  alias lal=sl -al
+  alias all=sl -al
+fi
+
 if type git > /dev/null 2>&1; then
   alias g="git"
   alias ga="git add"
