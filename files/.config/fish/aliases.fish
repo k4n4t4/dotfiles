@@ -122,6 +122,13 @@ else
   alias lla  "ls -Fla"
 end
 
+if type -q sl
+  alias al "sl -a"
+  alias ala "sl -al"
+  alias all "sl -al"
+  alias lal "sl -al"
+end
+
 abbr --add cls  "clearls"
 abbr --add cll  "clearls -Fl"
 abbr --add cla  "clearls -Fa"
