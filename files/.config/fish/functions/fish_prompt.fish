@@ -127,6 +127,15 @@ function _fish_right_prompt
   set reset_color (printf "\033[m")
   set reset_fg_color (printf "\033[39m")
   
+  set -g _transient_prompt_pipestatus $last_pipestatus
+  
+  if test $CMD_DURATION
+    set duration (math $CMD_DURATION / 1000)
+    set duration_color (printf "\033[38;5;27m")
+  end
+  
+  set -g _transient_prompt_duration $duration
+  
   set -q __fish_prompt_status_generation
     or set -g __fish_prompt_status_generation $status_generation
   if test $__fish_prompt_status_generation = $status_generation
@@ -148,14 +157,6 @@ function _fish_right_prompt
     end
     set status_comma ","
   end
-  
-  if test $CMD_DURATION
-    set duration (math $CMD_DURATION / 1000)
-    set duration_color (printf "\033[38;5;27m")
-  end
-  
-  set -g _transient_prompt_pipestatus $last_pipestatus
-  set -g _transient_prompt_duration $duration
   
   printf "\033[38;5;235m\033[48;5;235m "
   printf "%s" $status_style $status_text " " $reset_color
