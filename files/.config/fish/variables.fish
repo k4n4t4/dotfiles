@@ -25,4 +25,3 @@ export LANG=C
 export WHICH_FISH=(which fish)
 
 set _transient_prompt true
-
