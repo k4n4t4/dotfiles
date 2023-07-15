@@ -92,7 +92,8 @@ function fish_transient_prompt
   end
   
   set right_prompt (_fish_right_prompt)
-  printf "\033[%sG" (math $COLUMNS - (string length (rm_esc_seq "$right_prompt")) + 1)
+  set right_prompt_rm_esc (rm_esc_seq "$right_prompt")
+  printf "\033[%sG" (math $COLUMNS - (string length "$right_prompt_rm_esc") + 1)
   printf "%s" $right_prompt
   
   printf "\n"
