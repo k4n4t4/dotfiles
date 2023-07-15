@@ -26,8 +26,3 @@ export WHICH_FISH=(which fish)
 
 set _transient_prompt true
 
-set _transient_prompt_last_status
-set _transient_prompt_last_pipestatus
-set _transient_prompt_pwd
-set _transient_prompt_date
-set _transient_prompt_duration
