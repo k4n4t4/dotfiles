@@ -48,6 +48,8 @@ end
 
 abbr --add '^' "command"
 abbr --add cmd "command"
+
+alias clear "printf \"\033[0;0H\033[2J\""
 abbr --add c "clear"
 
 abbr --add cd-  "cd -"
