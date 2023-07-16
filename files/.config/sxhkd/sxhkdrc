@@ -10,6 +10,9 @@ super + b
 super + v
   code || codium
 
+super + r
+  rofi -show drun
+
 # AudioVolume
 XF86AudioRaiseVolume
     pactl set-sink-volume 0 +3%
