@@ -1,0 +1,43 @@
+[global/wm]
+margin-bottom = 2
+margin-top = 2
+
+[colors]
+background = #333333
+foreground = #dddddd
+
+[bar/main]
+background = ${colors.background}
+foreground = ${colors.foreground}
+bottom = false
+width = 98%
+height = 30
+offset-x = 1%
+offset-y = 5
+padding-left = 1
+padding-right = 1
+radius = 0.0
+modules-left = bspwm
+modules-center = xwindow
+modules-right = battery date
+font-0 = ComicShannsMono Nerd Font Mono:size=15;5
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:60:...%
+
+[module/bspwm]
+type = internal/bspwm
+pin-workspaces = true
+
+[module/date]
+type = internal/date
+date = "(%H:%M:%S %y-%m-%d)"
+
+[module/battery]
+type = custom/script
+exec = get_battery_info capacity
+label = "[bat:%output:0:4:...%%]"
+
+[settings]
+screenchange-reload = true
