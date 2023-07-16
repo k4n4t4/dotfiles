@@ -27,16 +27,16 @@ function fish_transient_prompt
   set -g _transient_prompt_date (date "+%H:%M:%S")
   
   if [ $_transient_prompt_status = 0 ]
-    set status_color (printf "\033[38;5;226m")
+    set status_color (printf "\033[38;5;247m")
   else
     set status_color (printf "\033[38;5;160m")
   end
   
   if [ "$USER" = "root" ]
-    set user_symbol "#"
+    set user_symbol "❯"
     set user_color (printf "\033[38;5;196m")
   else
-    set user_symbol "\$"
+    set user_symbol "❯"
     set user_color (printf "\033[38;5;63m")
   end
   
@@ -98,7 +98,7 @@ function fish_transient_prompt
   
   printf "\n"
   
-  printf "%s" $user_color $USER "@" (prompt_hostname)
+  printf "%s" $user_color $USER
   printf " "
   printf "%s" $reset_color $status_color $user_symbol $reset_color
   printf " "
