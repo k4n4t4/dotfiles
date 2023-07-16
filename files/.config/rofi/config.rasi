@@ -1,0 +1,9 @@
+configuration {
+ modi: "window,drun,ssh,combi";
+ font: "ComicShannsMono Nerd Font Mono 15";
+ combi-modi: "window,drun,ssh";
+ display-drun: "App";
+ drun-display-format: "{icon} {name}";
+ show-icons: true;
+}
+@theme "Monokai"
