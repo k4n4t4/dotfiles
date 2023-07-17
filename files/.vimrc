@@ -17,7 +17,7 @@ if exists("syntax_on")
 endif
 hi clear
 
-hi LineNr ctermfg=240
+hi LineNr ctermfg=240 ctermbg=234
 hi CursorLineNr ctermfg=252
 hi MatchParen ctermbg=242
 
