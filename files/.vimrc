@@ -18,7 +18,7 @@ endif
 hi clear
 
 hi LineNr ctermfg=240 ctermbg=234
-hi CursorLineNr ctermfg=252
+hi CursorLineNr ctermfg=252 ctermbg=236
 hi MatchParen ctermbg=242
 
 hi Statement ctermfg=161
