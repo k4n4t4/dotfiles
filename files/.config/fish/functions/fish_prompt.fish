@@ -33,7 +33,7 @@ function fish_transient_prompt
   end
   
   if [ "$USER" = "root" ]
-    set user_symbol "❯"
+    set user_symbol ">"
     set user_color (printf "\033[38;5;124m")
   else
     set user_symbol "❯"
