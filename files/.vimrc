@@ -54,3 +54,7 @@ if ! empty(glob('~/.vim/plugged/onedark.vim'))
   colorscheme onedark
 endif
 
+if ! empty(glob('~/.vim/plugged/vim-anyfold'))
+  autocmd Filetype * AnyFoldActivate
+  set foldlevel=99
+endif
