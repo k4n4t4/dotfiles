@@ -25,6 +25,7 @@ require("packer").startup(function()
   use 'pseewald/vim-anyfold'
   use 'tpope/vim-surround'
   use 'machakann/vim-highlightedyank'
+  use 'mattn/emmet-vim'
 
 end)
 
