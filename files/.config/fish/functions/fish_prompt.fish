@@ -73,7 +73,7 @@ function fish_transient_prompt
   yes "─" | head -n $COLUMNS | tr -d "\n"
   printf "\033[m\r"
   
-  printf "\033[48;5;234m "
+  printf "\033[38;5;234m\033[48;5;234m "
   printf "%s" (printf "\033[38;5;129m") $_transient_prompt_date
   printf " \033[48;5;235m\033[38;5;234m "
   printf "%s" $pwd_color $_transient_prompt_pwd
@@ -162,4 +162,6 @@ function _fish_right_prompt
   printf "%s" $status_style $status_text " " $reset_color
   printf "\033[48;5;235m\033[38;5;234m\033[48;5;234m "
   printf "%s" $duration_color $duration " " $reset_color
+  printf "\033[38;5;234m"
+  printf "%s" $reset_color
 end
