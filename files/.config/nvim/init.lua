@@ -14,6 +14,7 @@ require('plugins/git')
 require('plugins/colorizer')
 require('plugins/indent_blankline')
 require('plugins/telescope')
+require('plugins/anyfold')
 
 require("core/base")
 require("core/keymap")

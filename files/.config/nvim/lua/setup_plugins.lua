@@ -22,6 +22,9 @@ require("packer").startup(function()
   use 'rafamadriz/friendly-snippets'
   use 'nvim-lua/plenary.nvim'
   use 'nvim-telescope/telescope.nvim'
+  use 'pseewald/vim-anyfold'
+  use 'tpope/vim-surround'
+  use 'machakann/vim-highlightedyank'
 
 end)
 
