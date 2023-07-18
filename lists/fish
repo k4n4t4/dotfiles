@@ -20,4 +20,5 @@
 ".config/fish/functions/fish_greeting.fish"
 ".config/fish/functions/fish_command_not_found.fish"
 ".config/fish/functions/fish_prompt.fish"
+".config/fish/functions/search.fish"
 ".config/fish/functions/fish_user_key_bindings.fish"

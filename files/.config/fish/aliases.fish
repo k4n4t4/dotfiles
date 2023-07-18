@@ -163,6 +163,8 @@ if type -q thefuck
   abbr --add f "fuck"
 end
 
+abbr --add s "search"
+
 alias cp "cp -iv"
 alias mv "mv -iv"
 
