@@ -45,6 +45,7 @@ Plug 'preservim/nerdtree'
 Plug 'vim-airline/vim-airline'
 Plug 'machakann/vim-highlightedyank'
 Plug 'tpope/vim-surround'
+Plug 'sheerun/vim-polyglot'
 
 call plug#end()
 
