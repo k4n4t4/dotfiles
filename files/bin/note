@@ -1,23 +1,24 @@
 #!/bin/sh
 set -eu
 
-trap '' 1 2 3 15
+ESC="$(printf "\033")"
 
-NOTES="${HOME}/.notes"
-EXTENSION="md"
-DEFAULT_CMD="list"
-EDITOR="vi"
+NOTES="$HOME/.notes"
+EDITOR="vim"
 
 usage() {
 cat << EOF
-  usage:
-    $0 [command] [args]
+  usage: $ESC[94m$0$ESC[m [args]
   commands:
-    help list add
+    open
+    add
+    del
+    list
+    help
 EOF
 }
 
-setup_note() {
+_setup() {
   if [ -e "$NOTES" ] || [ -L "$NOTES" ]; then
     if ! [ -d "$NOTES" ]; then
       echo "Could not create notes folder."
@@ -26,64 +27,52 @@ setup_note() {
   else
     mkdir -p "$NOTES"
   fi
+  : >> "$NOTES/.note.conf"
+  . "$NOTES/.note.conf"
 }
 
-list_notes() {
-  if [ -z "${2:-}" ]; then
-    ls "$NOTES"
+_open() {
+  shift
+  if [ "$(echo "${1:-note}" | cut -c1)" = "." ]; then
+    $EDITOR "$NOTES/_${1#.}.md"
   else
-    ls "$2" "$NOTES"
+    $EDITOR "$NOTES/${1:-note}.md"
   fi
 }
 
-add_note() {
-  if [ -z "${2:-}" ]; then
-    echo "Error!"
-    exit 1
+_add() {
+  shift
+  if [ "$(echo "${1:-note}" | cut -c1)" = "." ]; then
+    : >> "$NOTES/_${1#.}.md"
   else
-    if [ -e "$NOTES/$2.$EXTENSION" ]; then
-      echo "Already exist."
-      exit 1
-    else
-      : > "$NOTES/$2.$EXTENSION"
-    fi
+    : >> "$NOTES/${1:-note}.md"
   fi
 }
 
-del_note() {
-  if [ -z "${2:-}" ]; then
-    echo "Error!"
-    exit 1
+_del() {
+  shift
+  if [ -e "$NOTES/${1:-note}.md" ] ; then
+    rm -f "$NOTES/${1:-note}.md"
   else
-    if ! [ -e "$NOTES/$2.$EXTENSION" ]; then
-      echo "Already delete."
-      exit 1
-    else
-      rm "$NOTES/$2.$EXTENSION"
-    fi
+    echo "Alredy deleted."
   fi
 }
 
-open_note() {
-  $EDITOR "$NOTES/$2.$EXTENSION"
+_list() {
+  shift
+  ls "$NOTES"
 }
 
 main() {
-  setup_note
-  case "${1:-$DEFAULT_CMD}" in
-    h* | -h* | --h* ) usage ;;
-    l* ) list_notes "$@" ;;
-    a* ) add_note "$@" ;;
-    d* ) del_note "$@" ;;
-    o* ) open_note "$@" ;;
-    * )
-      echo "Did not find command: \"${1}\""
-      usage
-      exit 1
-      ;;
+  case "${1:-h}" in
+    h* ) usage ;;
+    o* ) _open "$@" ;;
+    a* ) _add "$@" ;;
+    d* ) _del "$@" ;;
+    l* ) _list "$@" ;;
+    * ) usage ; exit 1 ;;
   esac
 }
 
+_setup
 main "$@"
-
-exit
