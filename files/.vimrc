@@ -46,6 +46,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'machakann/vim-highlightedyank'
 Plug 'tpope/vim-surround'
 Plug 'sheerun/vim-polyglot'
+Plug 'pseewald/vim-anyfold'
 
 call plug#end()
 
