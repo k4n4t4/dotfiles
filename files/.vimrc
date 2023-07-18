@@ -12,6 +12,14 @@ set completeopt=menuone,noinsert
 set cursorline
 set background=dark
 
+if empty(glob("~/.vim/tmp"))
+  silent !mkdir ~/.vim/tmp
+endif
+
+set directory=~/.vim/tmp
+set backupdir=~/.vim/tmp
+set undodir=~/.vim/tmp
+
 if exists("syntax_on")
   syntax reset
 endif
