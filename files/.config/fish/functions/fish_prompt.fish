@@ -98,6 +98,7 @@ function fish_transient_prompt
   
   printf "\n"
   
+  printf " "
   printf "%s" $user_color $USER
   printf " "
   printf "%s" $reset_color $status_color $user_symbol $reset_color
