@@ -56,7 +56,7 @@ cursor:
   thickness: 0.01
 
 shell:
-  program: /usr/bin/fish
+  program: fish
 
 env:
   TERM: xterm-256color
