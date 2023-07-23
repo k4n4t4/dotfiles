@@ -39,5 +39,12 @@ type = custom/script
 exec = get_battery_info capacity
 label = "[bat:%output:0:4:...%%]"
 
+[module/bluetooth]
+type = custom/script
+exec = get_bluetooth_status
+click-left = exec blueman-manager 
+click-right = exec toggle_bluetooth
+interval = 2
+
 [settings]
 screenchange-reload = true
