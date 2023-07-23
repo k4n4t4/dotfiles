@@ -19,7 +19,7 @@ padding-right = 1
 radius = 0.0
 modules-left = bspwm
 modules-center = xwindow
-modules-right = battery date
+modules-right = bluetooth battery date
 font-0 = ComicShannsMono Nerd Font Mono:size=15;5
 
 [module/xwindow]

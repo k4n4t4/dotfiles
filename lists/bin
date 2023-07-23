@@ -18,3 +18,5 @@
 "bin/ls_colors"
 "bin/spwd"
 "bin/rm_esc_seq"
+"bin/get_bluetooth_status"
+"bin/toggle_bluetooth"
