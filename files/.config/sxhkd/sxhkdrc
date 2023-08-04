@@ -24,7 +24,7 @@ XF86AudioMute
 super + Escape
   pkill -USR1 -x sxhkd
 
-super + button1 + drag
+super + button1
   bspc node -t floating 
 
 super + button3
