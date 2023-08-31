@@ -5,5 +5,5 @@ function sudo -d "sudo wrapper that handles aliases"
     set argv fish -c "$new_args"
   end
 
-  command sudo $argv
+  command sudo -p "Password: " $argv
 end

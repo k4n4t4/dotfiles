@@ -250,7 +250,7 @@
     "editorGroupHeader.border": "#333333",
     "panel.border": "#333333",
     "panel.background": "#111111",
-    "editorCursor.foreground": "#00dfff",
+    "editorCursor.foreground": "#dddddd",
     "editor.lineHighlightBackground": "#202020",
     "editor.lineHighlightBorder": "#353535",
     "editor.selectionBackground": "#aa00ff70",
