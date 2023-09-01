@@ -123,6 +123,15 @@
     ////Hello
     //TODO Hello
     //FIXME Hello
+    //HACK Hello
+    //XXX Hello
+    //REVIEW Hello
+    //OPTIMIZE Hello
+    //CHANGED Hello
+    //NOTE Hello
+    //WARNING Hello
+    //IDEA Hello
+    //BUG Hello
     //DEBUG Hello
     {
       "tag": "!",
@@ -182,8 +191,44 @@
       "color": "#8C2DFF",
     },
     {
+      "tag": "warning",
+      "color": "#ffff00",
+    },
+    {
+      "tag": "idea",
+      "color": "#66ff66",
+    },
+    {
+      "tag": "bug",
+      "color": "#ff0000",
+    },
+    {
+      "tag": "hack",
+      "color": "#22bb22",
+    },
+    {
+      "tag": "optimize",
+      "color": "#22bbbb",
+    },
+    {
+      "tag": "changed",
+      "color": "#bbbb00",
+    },
+    {
+      "tag": "xxx",
+      "color": "#bb2222",
+    },
+    {
+      "tag": "review",
+      "color": "#2222bb",
+    },
+    {
       "tag": "debug",
       "color": "#8CFF2D",
+    },
+    {
+      "tag": "note",
+      "color": "#bbbbbb",
     },
     {
       "tag": "[",
