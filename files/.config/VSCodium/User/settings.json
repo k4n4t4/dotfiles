@@ -46,8 +46,7 @@
   "workbench.editor.untitled.hint"            : "hidden",
   "window.dialogStyle"                        : "custom",
   "window.title"                              : "[${appName}] ${dirty}${separator}[${rootName}]:[${activeFolderLong}/${activeEditorShort}]${separator}",
-  "window.titleSeparator"                     : " | ",
-  "window.menuBarVisibility"                  : "compact",
+  "window.titleSeparator": " | ",
   "window.titleBarStyle"                      : "custom",
   "zenMode.centerLayout"                      : false,
   "zenMode.hideLineNumbers"                   : false,
@@ -586,5 +585,6 @@
   "cSpell.userWords": [
     "nice"
   ],
-  "workbench.iconTheme": "vscode-icons"
+  "workbench.iconTheme": "vscode-icons",
+  "workbench.editor.empty.hint": "hidden"
 }
