@@ -295,5 +295,15 @@
     {
         "key": "alt+z",
         "command": "-editor.action.toggleWordWrap"
+    },
+    {
+        "key": "ctrl+shift+/",
+        "command": "editor.action.blockComment",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+shift+a",
+        "command": "-editor.action.blockComment",
+        "when": "editorTextFocus && !editorReadonly"
     }
 ]
