@@ -37,4 +37,3 @@ vim.opt.cursorcolumn = false
 vim.wo.number = true
 vim.wo.relativenumber = true
 
-
