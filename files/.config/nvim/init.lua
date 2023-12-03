@@ -3,7 +3,6 @@
 
 require("setup_plugins")
 
-require('plugins/coc')
 require('plugins/lualine')
 require('plugins/transparent')
 require('plugins/gitsigns')
@@ -12,7 +11,6 @@ require('plugins/tree')
 require('plugins/barbar')
 require('plugins/git')
 require('plugins/colorizer')
-require('plugins/indent_blankline')
 require('plugins/telescope')
 require('plugins/anyfold')
 

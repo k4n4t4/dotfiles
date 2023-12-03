@@ -4,7 +4,6 @@ require("packer").startup(function()
 
   use { 'wbthomason/packer.nvim', opt = true}
   use 'navarasu/onedark.nvim'
-  use 'neoclide/coc.nvim'
   use 'khaveesh/vim-fish-syntax'
   use 'Shougo/unite.vim'
   use 'simeji/winresizer'
@@ -18,7 +17,6 @@ require("packer").startup(function()
   use 'romgrk/barbar.nvim'
   use 'dinhhuy258/git.nvim'
   use 'norcalli/nvim-colorizer.lua'
-  use 'lukas-reineke/indent-blankline.nvim'
   use 'rafamadriz/friendly-snippets'
   use 'nvim-lua/plenary.nvim'
   use 'nvim-telescope/telescope.nvim'
