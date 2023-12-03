@@ -5,12 +5,12 @@ window:
     general: Alacritty
   decorations: None
   dimensions:
-    columns: 80
-    lines: 24
+    columns: 100
+    lines: 30
   padding:
     x: 0
     y: 0
-  opacity: 0.5
+  opacity: 0.9
 
 scrolling:
   history: 5000
@@ -22,18 +22,18 @@ tabspaces: 2
 
 font:
   normal:
-    family: Hurmit Nerd Font Mono
+    family: Terminess Nerd Font
     style: Regular
   bold:
-    family: Hurmit Nerd Font Mono
+    family: Terminess Nerd Font
     style: Bold
   italic:
-    family: Hurmit Nerd Font Mono
+    family: Terminess Nerd Font
     style: Italic
   bold_italic:
-    family: Hurmit Nerd Font Mono
+    family: Terminess Nerd Font
     style: Bold Italic
-  size: 9.5
+  size: 13
   offset:
     x: 0
     y: 0
@@ -56,7 +56,7 @@ cursor:
   thickness: 0.01
 
 shell:
-  program: fish
+  program: /home/linuxbrew/.linuxbrew/bin/fish
 
 env:
   TERM: xterm-256color
@@ -85,8 +85,8 @@ unfocused_hollow_cursor: true
 live_config_reload: true
 
 import:
- # - ~/.config/alacritty/themes/themes/konsole_linux.yaml
- # - ~/.config/alacritty/themes/themes/hyper.yaml
- # - ~/.config/alacritty/themes/themes/terminal_app.yaml
-  - ~/.config/alacritty/themes/themes/xterm.yaml
- # - ~/.config/alacritty/themes/themes/argonaut.yaml
+ # - ~/.config/alacritty/themes/konsole_linux.yaml
+ # - ~/.config/alacritty/themes/hyper.yaml
+ # - ~/.config/alacritty/themes/terminal_app.yaml
+  - ~/.config/alacritty/themes/xterm.yaml
+ # - ~/.config/alacritty/themes/argonaut.yaml

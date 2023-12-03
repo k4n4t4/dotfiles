@@ -189,7 +189,9 @@ else
   abbr --add v "vi"
 end
 
-if type -q htop
+if type -q gotop
+  alias top "gotop"
+else if type -q htop
   alias top "htop"
 end
 
@@ -197,6 +199,9 @@ alias ed "ed -p (printf \"\033[94m:\033[92m\")"
 
 if type -q xsel
   alias pbcopy "xsel --clipboard --input"
+  alias pbpaste "xsel --clipboard --output"
+  abbr --add pbc "pbcopy"
+  abbr --add pbp "pbpaste"
   alias pwdc 'pwd | tr -d "\n" | xsel --clipboard --input'
 end
 

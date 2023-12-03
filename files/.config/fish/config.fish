@@ -8,3 +8,6 @@ source $fish_dir/aliases.fish
 
 # tmux
 source $fish_dir/tmux_start.fish
+
+cd "$HOME"
+

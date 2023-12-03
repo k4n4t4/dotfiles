@@ -64,7 +64,8 @@ _list() {
 }
 
 main() {
-  case "${1:-h}" in
+  case "${1:-default}" in
+    default ) _open "note" ;;
     h* ) usage ;;
     o* ) _open "$@" ;;
     a* ) _add "$@" ;;

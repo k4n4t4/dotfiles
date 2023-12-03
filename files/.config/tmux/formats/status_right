@@ -50,10 +50,12 @@ case "$bat_status" in
       ;;
 esac
 
-printf " bat$bat_status_symbol$bat_capacity%%"
+printf " "
 
-printf " mem:"
+printf "#[fg=#eeaeae]🔋:$bat_status_symbol$bat_capacity%%"
+
+printf "#[fg=#999999]|#[fg=#aeeeee]🖴 :"
 get_mem_rate
 printf "%%"
 
-printf " $(date "+%H:%M:%S") "
+printf "#[fg=#999999]|#[fg=#aeaeee]$(date "+%H:%M:%S") "
