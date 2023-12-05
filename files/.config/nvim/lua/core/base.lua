@@ -37,3 +37,5 @@ vim.opt.cursorcolumn = true
 vim.wo.number = true
 vim.wo.relativenumber = true
 
+--vim.opt.highlight
+
