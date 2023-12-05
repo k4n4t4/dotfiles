@@ -1,6 +1,2 @@
-
--- init.lua
-
-require("core")
-require("lazyvim")
-
+-- bootstrap lazy.nvim, LazyVim and your plugins
+require("config.lazy")
