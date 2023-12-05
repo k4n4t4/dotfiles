@@ -36,6 +36,6 @@ vim.opt.cursorcolumn = true
 
 vim.wo.number = true
 vim.wo.relativenumber = true
+vim.wo.signcolumn = "yes"
 
 --vim.opt.highlight
-
