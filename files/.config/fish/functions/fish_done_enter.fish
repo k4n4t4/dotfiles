@@ -1,7 +1,6 @@
 function fish_done_enter
   if test -z (commandline)
-  else
+    emit fish_preexec
   end
-  fish_force_preexec
   commandline -f execute
 end

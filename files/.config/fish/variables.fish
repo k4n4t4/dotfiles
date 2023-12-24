@@ -23,5 +23,3 @@ export LESS_TERMCAP_ue=(printf "\e[m")
 export EDITOR="nvim"
 export LANG=C
 export WHICH_FISH=(which fish)
-
-set _transient_prompt true
