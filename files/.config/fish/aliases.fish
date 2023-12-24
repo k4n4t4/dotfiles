@@ -1,24 +1,42 @@
+
+abbr --add '^' "command"
+abbr --add cmd "command"
+
+alias clear "echo \"Cleared!\"; printf \"\033[0;0H\033[2J\""
+abbr --add c "clear"
+
+abbr --add cd-  "cd -"
+abbr --add cd~  "cd ~"
+abbr --add cd.  "cd ."
+abbr --add cd.. "cd .."
+abbr --add pd   "prevd"
+abbr --add nd   "nextd"
+
+for i in (seq 9)
+  set -l p "./"
+  for j in (seq $i)
+    set p "$p../"
+  end
+  alias cd.$i  "cd $p"
+  alias cd..$i "cd $p"
+  alias .$i    "cd $p"
+  alias ..$i   "cd $p"
+end
+
+abbr --add h "history"
+abbr --add q "exit"
+
+alias reboot   "systemctl reboot"
+alias poweroff "systemctl poweroff"
+
+abbr --add rbt "reboot"
+abbr --add pof "poweroff"
+
 if type -q apt
   alias aptup "sudo apt update && sudo apt upgrade"
   if type -q nala
     alias apt "sudo nala"
   end
-end
-
-if type -q todo
-  abbr --add t "todo"
-  abbr --add ta  "todo add"
-  abbr --add tad  "todo add"
-  abbr --add td  "todo del"
-  abbr --add trm  "todo del"
-  abbr --add tmv  "todo move"
-  abbr --add tt "todo tag"
-  abbr --add ttag "todo tag"
-  abbr --add ts  "todo status"
-  abbr --add tst  "todo status"
-  abbr --add tl  "todo list"
-  abbr --add tls  "todo list"
-  abbr --add tcl  "todo clear"
 end
 
 if type -q tmux
@@ -44,30 +62,6 @@ if type -q tmux
   abbr --add tmrm    "tmux kill-session"
   abbr --add tmrmt   "tmux kill-session -t"
   abbr --add tmkill  "tmux kill-server"
-end
-
-abbr --add '^' "command"
-abbr --add cmd "command"
-
-alias clear "printf \"\033[0;0H\033[2J\""
-abbr --add c "clear"
-
-abbr --add cd-  "cd -"
-abbr --add cd~  "cd ~"
-abbr --add cd.  "cd ."
-abbr --add cd.. "cd .."
-abbr --add pd   "prevd"
-abbr --add nd   "nextd"
-
-for i in (seq 9)
-  set -l p "./"
-  for j in (seq $i)
-    set p "$p../"
-  end
-  alias cd.$i  "cd $p"
-  alias cd..$i "cd $p"
-  alias .$i    "cd $p"
-  alias ..$i   "cd $p"
 end
 
 if type -q git
@@ -131,13 +125,6 @@ if type -q sl
   alias lal "sl -al"
 end
 
-abbr --add cls  "clearls"
-abbr --add cll  "clearls -Fl"
-abbr --add cla  "clearls -Fa"
-abbr --add clla "clearls -Fla"
-abbr --add cdl "cdls"
-abbr --add mc "mkcd"
-
 if type -q ranger
   abbr --add r "ranger"
 end
@@ -171,10 +158,15 @@ alias mv "mv -iv"
 if type -q trash
   alias rm "trash"
 else
-  function stopUseRm
+  function _stopUseRm
     printf "\033[91mStop!\033[m\n\033[36mPlease install \"trash\" command.\033[m\n"
+    read -lP "Use \"rm\" command [y/N]: " ans
+    if test $ans = y; or test $ans = Y
+      printf "\"rm\" command is enabled!\n"
+      alias rm "command rm"
+    end
   end
-  alias rm "stopUseRm"
+  alias rm "_stopUseRm"
 end
 
 if type -q nvim
@@ -205,18 +197,22 @@ if type -q xsel
   alias pwdc 'pwd | tr -d "\n" | xsel --clipboard --input'
 end
 
-
-abbr --add h "history"
-
-abbr --add q "exit"
+if type -q todo
+  abbr --add t "todo"
+  abbr --add ta  "todo add"
+  abbr --add tad  "todo add"
+  abbr --add td  "todo del"
+  abbr --add trm  "todo del"
+  abbr --add tmv  "todo move"
+  abbr --add tt "todo tag"
+  abbr --add ttag "todo tag"
+  abbr --add ts  "todo status"
+  abbr --add tst  "todo status"
+  abbr --add tl  "todo list"
+  abbr --add tls  "todo list"
+  abbr --add tcl  "todo clear"
+end
 
 if type -q codium && not type -q code
   alias code "codium"
 end
-
-
-alias reboot   "systemctl reboot"
-alias poweroff "systemctl poweroff"
-
-abbr --add rbt "reboot"
-abbr --add pof "poweroff"

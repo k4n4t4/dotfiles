@@ -22,3 +22,4 @@
 ".config/fish/functions/fish_prompt.fish"
 ".config/fish/functions/search.fish"
 ".config/fish/functions/fish_user_key_bindings.fish"
+".config/fish/functions/fish_done_enter.fish"

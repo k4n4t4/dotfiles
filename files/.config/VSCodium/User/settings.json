@@ -594,7 +594,7 @@
     "nice",
     "numbuf"
   ],
-  "workbench.iconTheme": "vs-seti",
+  "workbench.iconTheme": "simple-icons",
   "workbench.editor.empty.hint": "hidden",
   "vsicons.dontShowNewVersionMessage": true,
   "[html]": {

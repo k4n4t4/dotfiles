@@ -1,7 +1,8 @@
 if type -q tmux
 and status is-interactive
 and not set -q TMUX
-  set LIST (tmux list-session) ; clear
+  function fish_greeting; end
+  set LIST (tmux list-session)
   if test -z "$LIST"
     exec tmux -u new-session
   else
