@@ -56,9 +56,9 @@ function fish_prompt
   set -f right_prompt (printf "\033[%sG%s" (math $COLUMNS - (string length "$right_prompt_rm_esc") + 1) $right_prompt)
   
   echo -n " "
-  echo -n "$user_color"(hostname)"@$USER$reset_fg_color"
-  echo -n " "
   echo -n "$date_color$prompt_date$reset_fg_color"
+  echo -n " "
+  echo -n "$user_color"(hostname)"@$USER$reset_fg_color"
   echo -n " "
   echo -n "$pwd_color"(prompt_pwd)"$reset_fg_color"
   if _is_git_repo
