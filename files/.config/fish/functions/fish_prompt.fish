@@ -116,3 +116,7 @@ function _fish_right_prompt
   echo -n $reset_color
   echo -n " "
 end
+
+function fish_right_prompt
+  :
+end
