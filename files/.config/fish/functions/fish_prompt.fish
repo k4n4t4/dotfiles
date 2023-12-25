@@ -51,6 +51,10 @@ function fish_prompt
     end
   end
   
+  set -f right_prompt (_fish_right_prompt "$last_pipestatus")
+  set -f right_prompt_rm_esc (rm_esc_seq "$right_prompt")
+  set -f right_prompt (printf "\033[%sG%s" (math $COLUMNS - (string length "$right_prompt_rm_esc") + 1) $right_prompt)
+  
   echo -n " "
   echo -n "$user_color"(hostname)"@$USER$reset_fg_color"
   echo -n " "
@@ -66,9 +70,6 @@ function fish_prompt
     echo -n $reset_fg_color
   end
   
-  set -f right_prompt (_fish_right_prompt "$last_pipestatus")
-  set -f right_prompt_rm_esc (rm_esc_seq "$right_prompt")
-  printf "\033[%sG" (math $COLUMNS - (string length "$right_prompt_rm_esc") + 1)
   echo $right_prompt
   
   echo -n " "
