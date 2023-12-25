@@ -6,7 +6,6 @@ function fish_user_key_bindings
   bind \ec 'beginning-of-line' 'kill-word'
   bind \ek 'commandline ""'
   bind \t 'commandline -f complete'
-  bind \cm 'fish_done_enter'
   bind \eR 'commandline -f repaint'
   bind \cr '__fzf_reverse_isearch'
   bind \cf '__fzf_cd'
