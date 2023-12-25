@@ -20,7 +20,7 @@ set fish_color_cwd            blue
 set fish_color_cwd_root       red
 
 set fish_pager_color_selected_background -r
-set fish_pager_color_completion          brwhite
-set fish_pager_color_description         brblue
-set fish_pager_color_prefix              bryellow
-set fish_pager_color_progress            brpurple
+set fish_pager_color_completion          brblack
+set fish_pager_color_prefix              white
+set fish_pager_color_description         cyan
+set fish_pager_color_progress            brwhite
