@@ -70,7 +70,7 @@ function fish_prompt
   echo $right_prompt
   
   echo -n " "
-  echo -n "$user_color$USER$reset_fg_color"
+  echo -n "$user_color"(hostname)"@$USER$reset_fg_color"
   echo -n " "
   echo -n "$status_color"(printf "\033[1m")">$reset_color"
   echo -n " "
