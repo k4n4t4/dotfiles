@@ -58,7 +58,7 @@ function fish_prompt
   echo -n " "
   echo -n "$date_color$prompt_date$reset_fg_color"
   echo -n " "
-  echo -n "$user_color"(hostname)"@$USER$reset_fg_color"
+  echo -n "$user_color$USER@"(hostname)"$reset_fg_color"
   echo -n " "
   echo -n "$pwd_color"(prompt_pwd)"$reset_fg_color"
   if _is_git_repo
