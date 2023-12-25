@@ -73,7 +73,7 @@ function fish_prompt
   echo $right_prompt
   
   echo -n " "
-  echo -n "$status_color"(printf "\033[1m")">$reset_color"
+  echo -n "$status_color"(printf "\033[1m")"❱$reset_color"
   echo -n " "
 end
 
