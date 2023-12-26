@@ -40,7 +40,7 @@ if type -q apt
 end
 
 if type -q tmux
-  alias tmux  "tmux -u"
+  alias tmux "tmux -u"
   abbr --add tm      "tmux"
   abbr --add tma     "tmux attach-session"
   abbr --add tmat    "tmux attach-session -t"
@@ -112,10 +112,10 @@ else if type -q lsd
   alias llt  "lsd -Fl --tree"
   alias llta "lsd -Fla --tree"
 else
-  alias l    "ls -F"
-  alias ll   "ls -Fl"
-  alias la   "ls -Fa"
-  alias lla  "ls -Fla"
+  alias l   "ls -F"
+  alias ll  "ls -Fl"
+  alias la  "ls -Fa"
+  alias lla "ls -Fla"
 end
 
 if type -q sl
@@ -170,12 +170,12 @@ else
 end
 
 if type -q nvim
-  abbr --add n   "nvim"
-  abbr --add nv  "nvim"
-  abbr --add v   "nvim"
+  abbr --add n  "nvim"
+  abbr --add nv "nvim"
+  abbr --add v  "nvim"
   alias vless "/home/linuxbrew/.linuxbrew/Cellar/neovim/0.9.0/share/nvim/runtime/macros/less.sh"
 else if type -q vim
-  abbr --add v "vim"
+  abbr --add v  "vim"
   abbr --add vi "vim"
 else
   abbr --add v "vi"
@@ -199,16 +199,16 @@ end
 
 if type -q todo
   abbr --add t "todo"
-  abbr --add ta  "todo add"
+  abbr --add ta   "todo add"
   abbr --add tad  "todo add"
-  abbr --add td  "todo del"
+  abbr --add td   "todo del"
   abbr --add trm  "todo del"
   abbr --add tmv  "todo move"
-  abbr --add tt "todo tag"
+  abbr --add tt   "todo tag"
   abbr --add ttag "todo tag"
-  abbr --add ts  "todo status"
+  abbr --add ts   "todo status"
   abbr --add tst  "todo status"
-  abbr --add tl  "todo list"
+  abbr --add tl   "todo list"
   abbr --add tls  "todo list"
   abbr --add tcl  "todo clear"
 end
