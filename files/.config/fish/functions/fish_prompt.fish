@@ -55,25 +55,28 @@ function fish_prompt
   set -f right_prompt_rm_esc (rm_esc_seq "$right_prompt")
   set -f right_prompt (printf "\033[%sG%s" (math $COLUMNS - (string length "$right_prompt_rm_esc") + 1) $right_prompt)
   
+  echo -n (printf "\033[48;5;232m")
   echo -n " "
   echo -n "$date_color$prompt_date$reset_fg_color"
-  echo -n " "
+  echo -n " "(printf "\033[38;5;232m\033[48;5;233m")" "
   echo -n "$user_color$USER@"(hostname)"$reset_fg_color"
-  echo -n " "
+  echo -n " "(printf "\033[38;5;233m\033[48;5;232m")" "
   echo -n "$pwd_color"(prompt_pwd)"$reset_fg_color"
   if _is_git_repo
-    echo -n " "
+    echo -n " "(printf "\033[38;5;232m\033[48;5;233m")" "
     echo -n $repo_type_color$repo_type
     echo -n $reset_fg_color"("$repo_branch_color$repo_branch$reset_fg_color")"
-    echo -n $repo_dirty_color$repo_dirty
-    echo -n " "
-    echo -n $reset_fg_color
+    echo -n $repo_dirty_color$repo_dirty$reset_fg_color
+    echo -n " "$reset_bg_color(printf "\033[38;5;233m")""
+  else
+    echo -n " "$reset_bg_color(printf "\033[38;5;232m")""
   end
   
   echo $right_prompt
+  echo -n $reset_color
   
   echo -n " "
-  echo -n "$status_color"(printf "\033[1m")"❱$reset_color"
+  echo -n "$status_color"(printf "\033[1m")"$reset_color"
   echo -n " "
 end
 
@@ -110,10 +113,10 @@ function _fish_right_prompt
     set -f status_comma ","
   end
   
+  echo -n (printf "\033[38;5;233m\033[48;5;233m ")
   echo -n $status_style$status_text$reset_fg_color
-  echo -n " "
+  echo -n (printf " \033[38;5;232m\033[48;5;232m ")
   echo -n $duration_color$duration$reset_fg_color
-  echo -n $reset_color
   echo -n " "
 end
 
