@@ -10,6 +10,7 @@
 ".config/fish/conf.d/fish_preexec.fish"
 ".config/fish/conf.d/fish_change_pwd.fish"
 ".config/fish/conf.d/fish_exit.fish"
+".config/fish/conf.d/cd.fish"
 ".config/fish/functions/mkcd.fish"
 ".config/fish/functions/cdls.fish"
 ".config/fish/functions/cdr.fish"
