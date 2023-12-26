@@ -1,7 +1,7 @@
 
 function fish_prompt
-  set -f last_pipestatus $pipestatus
-  set -f last_status $status
+  set -f last_pipestatus $transient_pipestatus
+  set -f last_status $last_pipestatus[-1]
   set -f prompt_date (date "+%H:%M:%S")
   
   set -f reset_color (printf "\033[m")
@@ -126,55 +126,24 @@ function transient_prompt_func
   
   set -f date_color (printf "\033[38;5;129m")
   
-  if [ "$USER" = "root" ]
-    set -f user_color (printf "\033[38;5;124m")
-  else
-    set -f user_color (printf "\033[38;5;20m")
-  end
-  
   if [ -w (pwd) ]
     set -f pwd_color (printf "\033[38;5;214m")
   else
     set -f pwd_color (printf "\033[38;5;196m")
   end
   
-  if set -f repo_type (_repo_type)
-    if [ "$repo_type" = "git" ]
-      set -f repo_type_color (printf "\033[38;5;240m")
-    else
-      set -f repo_type_color (printf "\033[38;5;255m")
-    end
-    
-    set -f repo_branch (_repo_branch_name $repo_type)
-    if [ "$repo_branch" = "master" ]; or [ "$repo_branch" = "main" ]
-      set -f repo_branch_color (printf "\033[38;5;164m")
-    else
-      set -f repo_branch_color (printf "\033[38;5;75m")
-    end
-    
-    if [ -n (_is_repo_dirty $repo_type) ]
-      set -f repo_dirty "!"
-      set -f repo_dirty_color (printf "\033[38;5;196m")
-    else
-      set -f repo_dirty ""
-      set -f repo_dirty_color ""
-    end
-  end
-  
   echo -n (printf "\033[48;5;232m")
   echo -n " "
   echo -n "$date_color$prompt_date$reset_fg_color"
   echo -n " "(printf "\033[38;5;232m\033[48;5;233m")" "
-  echo -n "$user_color$USER@"(hostname)"$reset_fg_color"
-  echo -n " "(printf "\033[38;5;233m\033[48;5;232m")" "
   echo -n "$pwd_color"(prompt_pwd)"$reset_fg_color"
   
-  echo -n " "$reset_bg_color(printf "\033[38;5;232m")""
+  echo -n " "$reset_bg_color(printf "\033[38;5;233m")""
   
   echo -n "$reset_color"
   echo -n " "
 end
 
 function transient_rprompt_func
-  _fish_right_prompt $transient_pipestatus
+  _fish_right_prompt "$transient_pipestatus"
 end
