@@ -33,9 +33,10 @@ abbr --add rbt "reboot"
 abbr --add pof "poweroff"
 
 if type -q apt
-  alias aptup "sudo apt update && sudo apt upgrade"
+  abbr --add aptup "sudo apt update && sudo apt upgrade"
   if type -q nala
-    alias apt "sudo nala"
+    abbr --add apt "sudo nala"
+    abbr --add aptup "sudo nala update && sudo nala upgrade"
   end
 end
 
