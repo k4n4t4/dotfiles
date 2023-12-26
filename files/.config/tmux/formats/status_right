@@ -33,21 +33,21 @@ bat_capacity="$(get_battery_info "capacity")"
 bat_status="$(get_battery_info "status")"
 
 case "$bat_status" in
-    "Full" )
-      bat_status_symbol="~"
-      ;;
-    "Charging" )
-      bat_status_symbol="+"
-      ;;
-    "Discharging" )
-      bat_status_symbol="-"
-      ;;
-    "Not charging" )
-      bat_status_symbol="="
-      ;;
-    * )
-      bat_status_symbol="?"
-      ;;
+"Full")
+  bat_status_symbol="~"
+  ;;
+"Charging")
+  bat_status_symbol="+"
+  ;;
+"Discharging")
+  bat_status_symbol="-"
+  ;;
+"Not charging")
+  bat_status_symbol="="
+  ;;
+*)
+  bat_status_symbol="?"
+  ;;
 esac
 
 printf " "
@@ -58,4 +58,4 @@ printf "#[fg=#999999]|#[fg=#aeeeee]🖴 :"
 get_mem_rate
 printf "%%"
 
-printf "#[fg=#999999]|#[fg=#aeaeee]$(date "+%H:%M:%S") "
+printf "#[fg=#999999]|#[fg=#aeaeee]$(date "+%Y-%m-%d %H:%M:%S") "
