@@ -667,5 +667,6 @@
     "sml": "cd $dir && sml $fileName",
     "mojo": "mojo run"
   },
-  "terminal.integrated.enableMultiLinePasteWarning": false
+  "terminal.integrated.enableMultiLinePasteWarning": false,
+  "git.openRepositoryInParentFolders": "never"
 }
