@@ -146,4 +146,5 @@ end
 
 function transient_rprompt_func
   _fish_right_prompt "$transient_pipestatus"
+  printf "\033[m"
 end
