@@ -21,26 +21,27 @@ scrolling:
 tabspaces: 2
 
 font:
+  use_thin_stroke: true
   normal:
-    family: ComicShannsMono Nerd Font
+    family: Terminess Nerd Font
     style: Regular
   bold:
-    family: ComicShannsMono Nerd Font
+    family: Terminess Nerd Font
     style: Bold
   italic:
-    family: ComicShannsMono Nerd Font
+    family: Terminess Nerd Font
     style: Italic
   bold_italic:
-    family: ComicShannsMono Nerd Font
+    family: Terminess Nerd Font
     style: Bold Italic
   size: 12
   offset:
     x: 0
-    y: 0
+    y: -2
   glyph_offset:
     x: 0
     y: 0
-  scale_with_dpi: true
+  scale_with_dpi: false
 
 render_timer: false
 
