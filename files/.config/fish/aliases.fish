@@ -134,14 +134,6 @@ if type -q batcat
   alias bat "batcat"
 end
 
-if type -q rg
-  alias grep "rg"
-end
-
-if type -q fd
-  alias find "fd"
-end
-
 if type -q zoxide
   zoxide init fish --cmd z | source
 end
