@@ -2,6 +2,9 @@ local overrides = require("custom.configs.overrides")
 
 ---@type NvPluginSpec[]
 local plugins = {
+  {
+    "anuvyklack/pretty-fold.nvim",
+  },
 
   -- Override plugin definition options
 
