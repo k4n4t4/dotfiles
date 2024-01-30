@@ -10,6 +10,6 @@ if [ -f $fish_dir/local_config.fish ]
 end
 
 if type -q tmux
-  source $fish_dir/tmux_start.fish
+  source $fish_dir/tmux_setup.fish
 end
 

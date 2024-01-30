@@ -3,7 +3,7 @@
 ".config/fish/paths.fish"
 ".config/fish/colors.fish"
 ".config/fish/aliases.fish"
-".config/fish/tmux_start.fish"
+".config/fish/tmux_setup.fish"
 ".config/fish/fish_plugins"
 ".config/fish/conf.d/git_func.fish"
 ".config/fish/conf.d/fish_postexec.fish"
