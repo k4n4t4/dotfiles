@@ -1,4 +1,3 @@
-
 set fish_dir (dirname (status --current-filename))
 
 source $fish_dir/paths.fish
