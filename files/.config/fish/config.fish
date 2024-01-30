@@ -5,6 +5,10 @@ source $fish_dir/variables.fish
 source $fish_dir/colors.fish
 source $fish_dir/aliases.fish
 
+if [ -f $fish_dir/local_config.fish ]
+  source $fish_dir/local_config.fish
+end
+
 # tmux
 source $fish_dir/tmux_start.fish
 
