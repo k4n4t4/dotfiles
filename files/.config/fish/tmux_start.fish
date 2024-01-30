@@ -1,6 +1,4 @@
-if type -q tmux
-and status is-interactive
-and not set -q TMUX
+if status is-interactive; and not set -q TMUX
   function fish_greeting; end
   set LIST (tmux list-session)
   if test -z "$LIST"
