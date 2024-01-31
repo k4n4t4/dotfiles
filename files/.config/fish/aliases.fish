@@ -174,7 +174,9 @@ else
   abbr --add v "vi"
 end
 
-if type -q gotop
+if type -q btop
+  alias top "btop"
+else if type -q gotop
   alias top "gotop"
 else if type -q htop
   alias top "htop"
