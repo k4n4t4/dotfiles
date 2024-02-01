@@ -11,6 +11,7 @@
 "bin/XT_EXTSCRN"
 "bin/cursor_style"
 "bin/get_cursor_pos"
+"bin/get_size"
 "bin/fullscreen"
 "bin/todo"
 "bin/note"
