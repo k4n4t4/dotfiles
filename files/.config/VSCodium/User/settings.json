@@ -329,7 +329,7 @@
     "diffEditorGutter.insertedLineBackground": "#AAAA00",
     "diffEditorGutter.removedLineBackground": "#AA0000",
     "editorBracketMatch.border": "#900000",
-    "editor.foldBackground": "#ff00ff10",
+    "editor.foldBackground": "#ff009927",
     "editor.snippetFinalTabstopHighlightBackground": "#00FF0050",
     "editor.snippetFinalTabstopHighlightBorder": "#00FF00",
     "editor.snippetTabstopHighlightBackground": "#00FFCC50",
