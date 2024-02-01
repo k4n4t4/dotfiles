@@ -6,7 +6,7 @@ old="$(stty -g)"
 trap 'stty "$old"; exit 1' 1 2 3 9 15
 stty raw -echo -icanon
 
-printf "$(dd count=1 2>/dev/null)"
+printf "$(dd count=${1:-1} 2>/dev/null)"
 
 stty "$old"
 
