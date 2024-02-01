@@ -582,7 +582,7 @@
   "terminal.external.linuxExec": "konsole",
   "workbench.colorTheme": "Atom One Dark",
   "editor.inlineSuggest.enabled": false,
-  "explorer.sortOrder": "modified",
+  "explorer.sortOrder": "default",
   "cSpell.enableFiletypes": [
     "lua",
     "shellscript"
