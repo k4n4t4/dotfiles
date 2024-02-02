@@ -1,6 +1,0 @@
-".config/tmux/.tmux.conf" ".tmux.conf"
-".config/tmux/style.conf"
-".config/tmux/bind.conf"
-".config/tmux/popup.sh"
-".config/tmux/format.conf"
-".config/tmux/formats"
