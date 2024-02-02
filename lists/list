@@ -1,0 +1,162 @@
+
+info "bin"
+dot "bin/gen_color"
+dot "bin/get_battery_info"
+dot "bin/get_cpu_info"
+dot "bin/get_mem_info"
+dot "bin/get_mem_rate"
+dot "bin/git_branch_name"
+dot "bin/is_git_dirty"
+dot "bin/is_git_repo"
+dot "bin/print_prompt"
+dot "bin/get_key"
+dot "bin/XT_EXTSCRN"
+dot "bin/cursor_style"
+dot "bin/get_cursor_pos"
+dot "bin/get_size"
+dot "bin/fullscreen"
+dot "bin/todo"
+dot "bin/note"
+dot "bin/get_ls_colors"
+dot "bin/ls_colors"
+dot "bin/spwd"
+dot "bin/rm_esc_seq"
+dot "bin/get_bluetooth_status"
+dot "bin/toggle_bluetooth"
+echo
+
+info "shell"
+dot ".profile"
+echo
+
+if cmd_exist bash; then
+  info "bash"
+  dot ".bashrc"
+  dot ".bash_aliases"
+  echo
+fi
+
+if cmd_exist zsh; then
+  info "zsh"
+  dot ".zshrc"
+  echo
+fi
+
+if cmd_exist fish; then
+  info "fish"
+  dot ".config/fish/config.fish"
+  dot ".config/fish/variables.fish"
+  dot ".config/fish/paths.fish"
+  dot ".config/fish/colors.fish"
+  dot ".config/fish/aliases.fish"
+  dot ".config/fish/tmux_setup.fish"
+  dot ".config/fish/fish_plugins"
+  dot ".config/fish/conf.d/git_func.fish"
+  dot ".config/fish/conf.d/fish_postexec.fish"
+  dot ".config/fish/conf.d/fish_preexec.fish"
+  dot ".config/fish/conf.d/fish_change_pwd.fish"
+  dot ".config/fish/conf.d/fish_exit.fish"
+  dot ".config/fish/conf.d/cd.fish"
+  dot ".config/fish/functions/mkcd.fish"
+  dot ".config/fish/functions/cdls.fish"
+  dot ".config/fish/functions/cdr.fish"
+  dot ".config/fish/functions/cdf.fish"
+  dot ".config/fish/functions/cdg.fish"
+  dot ".config/fish/functions/cdgitroot.fish"
+  dot ".config/fish/functions/clearls.fish"
+  dot ".config/fish/functions/sudo.fish"
+  dot ".config/fish/functions/title.fish"
+  dot ".config/fish/functions/fish_greeting.fish"
+  dot ".config/fish/functions/fish_command_not_found.fish"
+  dot ".config/fish/functions/fish_prompt.fish"
+  dot ".config/fish/functions/search.fish"
+  dot ".config/fish/functions/fish_user_key_bindings.fish"
+  echo
+fi
+
+if cmd_exist codium; then
+  info "codium"
+  dot ".config/VSCodium/User/keybindings.json"
+  dot ".config/VSCodium/User/settings.json"
+  dot ".config/VSCodium/User/snippets"
+  echo
+fi
+
+if cmd_exist vim; then
+  info "vim"
+  dot ".vimrc"
+  echo
+fi
+
+if cmd_exist nvim; then
+  info "nvim"
+  dot ".config/nvim/init.lua"
+  dot ".config/nvim/lua"
+  echo
+fi
+
+if cmd_exist tmux; then
+  info "tmux"
+  dot ".config/tmux/.tmux.conf" ".tmux.conf"
+  dot ".config/tmux/style.conf"
+  dot ".config/tmux/bind.conf"
+  dot ".config/tmux/popup.sh"
+  dot ".config/tmux/format.conf"
+  dot ".config/tmux/formats"
+  echo
+fi
+
+if cmd_exist alacritty; then
+  info "alacritty"
+  dot ".config/alacritty/alacritty.yml"
+  echo
+fi
+
+if cmd_exist neofetch; then
+  info "neofetch"
+  dot ".config/neofetch/config.conf"
+  echo
+fi
+
+if cmd_exist lsd; then
+  info "lsd"
+  dot ".config/lsd/config.yaml"
+  dot ".config/lsd/themes/main.yaml"
+  echo
+fi
+
+if cmd_exist picom; then
+  info "picom"
+  dot ".config/picom/picom.conf"
+  echo
+fi
+
+if cmd_exist polybar; then
+  info "polybar"
+  dot ".config/polybar/config"
+  echo
+fi
+
+if cmd_exist sxhkd; then
+  info "sxhkd"
+  dot ".config/sxhkd/sxhkdrc"
+  echo
+fi
+
+if cmd_exist rofi; then
+  info "rofi"
+  dot ".config/rofi/config.rasi"
+  echo
+fi
+
+case "$mode" in
+  check )
+    info "Total: $_check_count"
+    ;;
+  install )
+    info "Total: $_install_count"
+    ;;
+  uninstall )
+    info "Total: $_uninstall_count"
+    ;;
+esac
