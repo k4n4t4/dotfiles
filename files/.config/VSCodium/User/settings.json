@@ -5,7 +5,6 @@
   "editor.inlayHints.fontFamily"   : "'CaskaydiaCove Nerd Font', 'Hurmit Nerd Font', 'Source Code Pro', 'Fira Code', 'Ricty Diminished', 'FreeMono', 'monospace'",
   "editor.codeLensFontFamily"      : "'CaskaydiaCove Nerd Font', 'Hurmit Nerd Font', 'Source Code Pro', 'Fira Code', 'Ricty Diminished', 'FreeMono', 'monospace'",
   "errorLens.fontFamily"           : "'CaskaydiaCove Nerd Font', 'Hurmit Nerd Font', 'Source Code Pro', 'Fira Code', 'Ricty Diminished', 'FreeMono', 'monospace'",
-  "notebook.outputFontFamily"      : "'CaskaydiaCove Nerd Font', 'Hurmit Nerd Font', 'Source Code Pro', 'Fira Code', 'Ricty Diminished', 'FreeMono', 'monospace'",
   "chat.editor.fontFamily"         : "'CaskaydiaCove Nerd Font', 'Hurmit Nerd Font', 'Source Code Pro', 'Fira Code', 'Ricty Diminished', 'FreeMono', 'monospace'",
   "markdown.preview.fontFamily"    : "'CaskaydiaCove Nerd Font', 'Hurmit Nerd Font', 'Source Code Pro', 'Fira Code', 'Ricty Diminished', 'FreeMono', 'monospace'",
   "debug.console.fontFamily"       : "'CaskaydiaCove Nerd Font', 'Hurmit Nerd Font', 'Source Code Pro', 'Fira Code', 'Ricty Diminished', 'FreeMono', 'monospace'",
@@ -31,6 +30,7 @@
   "window.density.editorTabHeight" : "default",
   "window.menuBarVisibility"       : "compact",
   "window.titleBarStyle"           : "custom",
+  "window.customMenuBarAltFocus"   : false,
   // #endregion window
   
   // #region zenMode
@@ -782,7 +782,10 @@
   
   // #region cSpell
   "cSpell.enableFiletypes": [],
-  "cSpell.userWords": [],
+  "cSpell.userWords": [
+    "codepaths",
+    "tsbuildinfo"
+  ],
   "cSpell.ignoreWords": [
     "rgba",
     "endregion",
