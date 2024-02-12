@@ -305,13 +305,5 @@
         "key": "ctrl+shift+a",
         "command": "-editor.action.blockComment",
         "when": "editorTextFocus && !editorReadonly"
-    },
-    {
-        "key": "ctrl+shift+enter",
-        "command": "code-runner.runCustomCommand"
-    },
-    {
-        "key": "ctrl+alt+k",
-        "command": "-code-runner.runCustomCommand"
     }
 ]

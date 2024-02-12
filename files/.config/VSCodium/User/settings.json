@@ -59,7 +59,7 @@
   "workbench.colorTheme": "Atom One Dark",
   "workbench.iconTheme": "simple-icons",
   "workbench.editor.empty.hint": "hidden",
-  "workbench.productIconTheme": "fluent-icons",
+  "workbench.productIconTheme": "icons-carbon",
   "workbench.activityBar.location": "top",
   "workbench.sideBar.location": "left",
   "workbench.colorCustomizations": {
@@ -390,12 +390,12 @@
   "editor.cursorWidth"                        : 2,
   "editor.tabSize"                            : 2,
   "editor.fontSize"                           : 18,
+  "editor.inlayHints.fontSize"                : 10,
+  "editor.codeLensFontSize"                   : 10,
   "editor.suggestFontSize"                    : 14,
   "editor.suggestLineHeight"                  : 14,
   "editor.suggest.showInlineDetails"          : true,
   "editor.inlineSuggest.enabled"              : false,
-  "editor.inlayHints.fontSize"                : 10,
-  "editor.codeLensFontSize"                   : 10,
   "editor.lineHeight"                         : 21,
   "editor.letterSpacing"                      : 0,
   "editor.maxTokenizationLineLength"          : 500,
@@ -405,6 +405,15 @@
   "editor.insertSpaces"                       : true,
   "editor.scrollBeyondLastLine"               : false,
   "editor.dragAndDrop"                        : false,
+  
+  // #region editor.hover
+  "editor.hover.above": true,
+  "editor.hover.enabled": true,
+  "editor.hover.delay": 500,
+  "editor.hover.hidingDelay": 0,
+  "editor.hover.sticky": true,
+  // #endregion
+  
   
   "editor.quickSuggestions": {
     "other": true,
