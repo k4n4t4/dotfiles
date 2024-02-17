@@ -46,6 +46,8 @@ fi
 
 export PS1=" \[\e[34m\]\w \[\e[33m\]\$? \[\e[90m\]\\\$\[\e[m\] "
 
+PATH="$PATH":/home/linuxbrew/.linuxbrew/bin
+
 if type "starship" > /dev/null 2>&1 ; then
   eval "$(starship init bash)"
 fi
