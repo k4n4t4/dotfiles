@@ -109,6 +109,7 @@ fi
 if cmd_exist alacritty; then
   info "alacritty"
   dot ".config/alacritty/alacritty.yml"
+  dot ".config/alacritty/alacritty.toml"
   echo
 fi
 
