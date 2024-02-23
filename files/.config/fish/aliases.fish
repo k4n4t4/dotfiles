@@ -92,14 +92,14 @@ end
 if type -q eza
   alias eza  "eza --icons --git -H --sort=type --time-style=long-iso"
   alias ls   "eza"
-  alias ll   "eza -l"
-  alias la   "eza -a"
-  alias lla  "eza -la"
+  alias ll   "eza -F -l"
+  alias la   "eza -F -a"
+  alias lla  "eza -F -la"
   alias l    "eza -F"
-  alias lt   "eza -T"
-  alias lta  "eza -Ta"
-  alias llt  "eza -Tl"
-  alias llta "eza -Tla"
+  alias lt   "eza -F -T"
+  alias lta  "eza -F -Ta"
+  alias llt  "eza -F -Tl"
+  alias llta "eza -F -Tla"
   export EXA_COLORS=(get_ls_colors exa)
 else if type -q exa
   alias exa  "exa --icons --git -H -s type --time-style=long-iso"
