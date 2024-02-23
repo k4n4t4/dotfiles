@@ -18,7 +18,7 @@ shape = "Block"
 TERM = "xterm-256color"
 
 [font]
-size = 9
+size = 15
 
 [font.bold]
 family = "ComicShannsMono Nerd Font"
