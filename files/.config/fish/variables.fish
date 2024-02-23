@@ -23,3 +23,4 @@ export EDITOR="nvim"
 export LANG=C
 
 export WHICH_FISH=(which fish)
+export CONFIG_FISH="$HOME/.config/fish"
