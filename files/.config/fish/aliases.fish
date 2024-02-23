@@ -89,7 +89,19 @@ if type -q git
   alias grt "cdgitroot"
 end
 
-if type -q exa
+if type -q eza
+  alias eza  "eza --icons --git -H --sort=type --time-style=long-iso"
+  alias ls   "eza"
+  alias ll   "eza -l"
+  alias la   "eza -a"
+  alias lla  "eza -la"
+  alias l    "eza -F"
+  alias lt   "eza -T"
+  alias lta  "eza -Ta"
+  alias llt  "eza -Tl"
+  alias llta "eza -Tla"
+  export EXA_COLORS=(get_ls_colors exa)
+else if type -q exa
   alias exa  "exa --icons --git -H -s type --time-style=long-iso"
   alias ls   "exa"
   alias ll   "exa -Fl"
