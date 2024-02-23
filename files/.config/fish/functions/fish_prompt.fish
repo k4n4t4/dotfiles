@@ -30,7 +30,7 @@ function _fish_right_prompt
   echo -n " "
 end
 
-if [ -e "$CONFIG_FISH/functions/__transient.fish" ]
+if [ -e "$fish_dir/functions/__transient.fish" ]
   function fish_prompt
     set -f last_pipestatus $transient_pipestatus
     set -f last_status $last_pipestatus[-1]
