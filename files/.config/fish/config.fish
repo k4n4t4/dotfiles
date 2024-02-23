@@ -1,5 +1,5 @@
-set fish_dir (dirname (status --current-filename))
-export WHICH_FISH=(which fish)
+export fish_dir=(dirname (status --current-filename))
+export fish_bin=(which fish)
 
 if type -q tmux
   source $fish_dir/tmux_setup.fish
