@@ -35,6 +35,7 @@ if [ -e "$fish_dir/functions/__transient.fish" ]
     set -f last_pipestatus $transient_pipestatus
     set -f last_status $last_pipestatus[-1]
     set -f prompt_date (date "+%H:%M:%S")
+    set -f pwd (pwd)
     
     set -f reset_color (printf "\033[m")
     set -f reset_fg_color (printf "\033[39m")
@@ -54,7 +55,13 @@ if [ -e "$fish_dir/functions/__transient.fish" ]
       set -f user_color (printf "\033[38;5;20m")
     end
     
-    if [ -w (pwd) ]
+    if string match "$HOME/*" "$pwd/" >/dev/null 2>&1
+      printf "]"
+    else
+      printf "A"
+    end
+    
+    if [ -w "$pwd" ]
       set -f pwd_color (printf "\033[38;5;214m")
     else
       set -f pwd_color (printf "\033[38;5;196m")
@@ -154,6 +161,7 @@ else
     set -f last_pipestatus $pipestatus
     set -f last_status $last_pipestatus[-1]
     set -f prompt_date (date "+%H:%M:%S")
+    set -f pwd (pwd)
     
     set -f reset_color (printf "\033[m")
     set -f reset_fg_color (printf "\033[39m")
@@ -173,7 +181,13 @@ else
       set -f user_color (printf "\033[38;5;20m")
     end
     
-    if [ -w (pwd) ]
+    if string match "$HOME/*" "$pwd/" >/dev/null 2>&1
+      printf "]"
+    else
+      printf "A"
+    end
+    
+    if [ -w "$pwd" ]
       set -f pwd_color (printf "\033[38;5;214m")
     else
       set -f pwd_color (printf "\033[38;5;196m")
