@@ -57,7 +57,7 @@ if [ -e "$fish_dir/functions/__transient.fish" ]
     
     if [ -w "$pwd" ]
       if string match "$HOME/dotfiles/*" "$pwd/" >/dev/null 2>&1
-        set -f pwd_color (printf "\033[38;5;147m")
+        set -f pwd_color (printf "\033[38;5;105m")
       else
         set -f pwd_color (printf "\033[38;5;214m")
       end
@@ -181,7 +181,7 @@ else
     
     if [ -w "$pwd" ]
       if string match "$HOME/dotfiles/*" "$pwd/" >/dev/null 2>&1
-        set -f pwd_color (printf "\033[38;5;147m")
+        set -f pwd_color (printf "\033[38;5;105m")
       else
         set -f pwd_color (printf "\033[38;5;214m")
       end
