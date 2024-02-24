@@ -124,6 +124,7 @@ if [ -e "$fish_dir/functions/__transient.fish" ]
   function transient_prompt_func
     set -f last_pipestatus $transient_pipestatus
     set -f prompt_date (date "+%H:%M:%S")
+    set -f pwd (pwd)
     
     set -f reset_color (printf "\033[m")
     set -f reset_fg_color (printf "\033[39m")
@@ -132,8 +133,12 @@ if [ -e "$fish_dir/functions/__transient.fish" ]
     
     set -f date_color (printf "\033[38;5;129m")
     
-    if [ -w (pwd) ]
-      set -f pwd_color (printf "\033[38;5;214m")
+    if [ -w "$pwd" ]
+      if string match "$HOME/dotfiles/*" "$pwd/" >/dev/null 2>&1
+        set -f pwd_color (printf "\033[38;5;105m")
+      else
+        set -f pwd_color (printf "\033[38;5;214m")
+      end
     else
       set -f pwd_color (printf "\033[38;5;196m")
     end
