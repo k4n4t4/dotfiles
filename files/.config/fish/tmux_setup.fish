@@ -43,4 +43,5 @@ if status is-interactive; and not set -q TMUX
         end
     end
   end
+  exit 1
 end
