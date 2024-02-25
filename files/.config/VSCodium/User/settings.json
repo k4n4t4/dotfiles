@@ -804,6 +804,5 @@
     "donot",
     "autohide"
   ],
-  "tabnine.experimentalAutoImports": true
   // #endregion
 }
