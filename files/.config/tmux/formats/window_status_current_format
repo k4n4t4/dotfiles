@@ -1,12 +1,10 @@
 #!/bin/sh
-set -eu
 
-window_index="#I"
-pane_current_command="#{pane_current_command}"
-
-printf "#[fg=#222222,bg=#333333]#[fg=#555599,bg=#333333]"
-printf " ${window_index}"
-printf " #[fg=#333333,bg=#555599] #[fg=#eeeeee]"
-printf "${pane_current_command} "
-printf "#[fg=#555599,bg=#222222,nobold]"
+echo -n "\
+#[fg=#222222,bg=#333333]#[fg=#555599,bg=#333333]\
+ #I\
+ #[fg=#333333,bg=#555599] #[fg=#eeeeee]\
+#{pane_current_command} \
+#[fg=#555599,bg=#222222,nobold]\
+"
 
