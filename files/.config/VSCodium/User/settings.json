@@ -183,7 +183,7 @@
     // #region tab
     "tab.activeBackground": "#101010",
     "tab.activeForeground": "#dedede",
-    "tab.border": "#333333", 
+    "tab.border": "#333333",
     "tab.activeBorder": "#666666",
     "tab.activeBorderTop": "#666666",
     "tab.hoverBorder": "#e7e7e7",
@@ -341,7 +341,7 @@
     "activityBar.activeFocusBorder": "#ababab",
     "activityBar.border": "#333333",
     "activityBar.activeBackground": "#222222",
-    "activityBarBadge.background": "#404040", 
+    "activityBarBadge.background": "#404040",
     "activityBarBadge.foreground": "#afafaf",
     // #endregion
     
@@ -376,7 +376,7 @@
   "editor.renderFinalNewline"                 : "on",
   "editor.renderLineHighlight"                : "line",
   "editor.fontLigatures"                      : true,
-  "editor.trimAutoWhitespace"                 : false,
+  "editor.trimAutoWhitespace"                 : true,
   "editor.acceptSuggestionOnCommitCharacter"  : false,
   "editor.mouseWheelZoom"                     : true,
   "editor.cursorSmoothCaretAnimation"         : "on",
@@ -607,6 +607,13 @@
   ],
   
   "liveServer.settings.donotShowInfoMsg": true,
+
+  "trailing-spaces.logLevel": "warn",
+  "trailing-spaces.backgroundColor": "rgba(255,0,0,0.3)",
+  "trailing-spaces.borderColor": "rgba(255,100,100,0.15)",
+  "trailing-spaces.trimOnSave": true,
+  "trailing-spaces.highlightCurrentLine": false,
+  "trailing-spaces.includeEmptyLines": true,
   
   "commands.commands": {
     "Folder": {
