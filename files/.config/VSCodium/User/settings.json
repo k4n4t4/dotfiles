@@ -1,17 +1,17 @@
 {
-  
+
   // #region fontFamily
-  "editor.fontFamily"              : "'CaskaydiaCove Nerd Font', 'Hurmit Nerd Font', 'Source Code Pro', 'Fira Code', 'Ricty Diminished', 'FreeMono', 'monospace'",
-  "editor.inlayHints.fontFamily"   : "'CaskaydiaCove Nerd Font', 'Hurmit Nerd Font', 'Source Code Pro', 'Fira Code', 'Ricty Diminished', 'FreeMono', 'monospace'",
-  "editor.codeLensFontFamily"      : "'CaskaydiaCove Nerd Font', 'Hurmit Nerd Font', 'Source Code Pro', 'Fira Code', 'Ricty Diminished', 'FreeMono', 'monospace'",
-  "errorLens.fontFamily"           : "'CaskaydiaCove Nerd Font', 'Hurmit Nerd Font', 'Source Code Pro', 'Fira Code', 'Ricty Diminished', 'FreeMono', 'monospace'",
-  "chat.editor.fontFamily"         : "'CaskaydiaCove Nerd Font', 'Hurmit Nerd Font', 'Source Code Pro', 'Fira Code', 'Ricty Diminished', 'FreeMono', 'monospace'",
-  "markdown.preview.fontFamily"    : "'CaskaydiaCove Nerd Font', 'Hurmit Nerd Font', 'Source Code Pro', 'Fira Code', 'Ricty Diminished', 'FreeMono', 'monospace'",
-  "debug.console.fontFamily"       : "'CaskaydiaCove Nerd Font', 'Hurmit Nerd Font', 'Source Code Pro', 'Fira Code', 'Ricty Diminished', 'FreeMono', 'monospace'",
-  "terminal.integrated.fontFamily" : "'CaskaydiaCove Nerd Font', 'Hurmit Nerd Font', 'Source Code Pro', 'Fira Code', 'Ricty Diminished', 'FreeMono', 'monospace'",
-  "notebook.output.fontFamily"     : "'CaskaydiaCove Nerd Font', 'Hurmit Nerd Font', 'Source Code Pro', 'Fira Code', 'Ricty Diminished', 'FreeMono', 'monospace'",
+  "editor.fontFamily"              : "'ComicShannsMono Nerd Font Mono', 'CaskaydiaCove Nerd Font', 'Hurmit Nerd Font', 'Source Code Pro', 'Fira Code', 'Ricty Diminished', 'FreeMono', 'monospace'",
+  "editor.inlayHints.fontFamily"   : "'ComicShannsMono Nerd Font Mono', 'CaskaydiaCove Nerd Font', 'Hurmit Nerd Font', 'Source Code Pro', 'Fira Code', 'Ricty Diminished', 'FreeMono', 'monospace'",
+  "editor.codeLensFontFamily"      : "'ComicShannsMono Nerd Font Mono', 'CaskaydiaCove Nerd Font', 'Hurmit Nerd Font', 'Source Code Pro', 'Fira Code', 'Ricty Diminished', 'FreeMono', 'monospace'",
+  "errorLens.fontFamily"           : "'ComicShannsMono Nerd Font Mono', 'CaskaydiaCove Nerd Font', 'Hurmit Nerd Font', 'Source Code Pro', 'Fira Code', 'Ricty Diminished', 'FreeMono', 'monospace'",
+  "chat.editor.fontFamily"         : "'ComicShannsMono Nerd Font Mono', 'CaskaydiaCove Nerd Font', 'Hurmit Nerd Font', 'Source Code Pro', 'Fira Code', 'Ricty Diminished', 'FreeMono', 'monospace'",
+  "markdown.preview.fontFamily"    : "'ComicShannsMono Nerd Font Mono', 'CaskaydiaCove Nerd Font', 'Hurmit Nerd Font', 'Source Code Pro', 'Fira Code', 'Ricty Diminished', 'FreeMono', 'monospace'",
+  "debug.console.fontFamily"       : "'ComicShannsMono Nerd Font Mono', 'CaskaydiaCove Nerd Font', 'Hurmit Nerd Font', 'Source Code Pro', 'Fira Code', 'Ricty Diminished', 'FreeMono', 'monospace'",
+  "terminal.integrated.fontFamily" : "'ComicShannsMono Nerd Font Mono', 'CaskaydiaCove Nerd Font', 'Hurmit Nerd Font', 'Source Code Pro', 'Fira Code', 'Ricty Diminished', 'FreeMono', 'monospace'",
+  "notebook.output.fontFamily"     : "'ComicShannsMono Nerd Font Mono', 'CaskaydiaCove Nerd Font', 'Hurmit Nerd Font', 'Source Code Pro', 'Fira Code', 'Ricty Diminished', 'FreeMono', 'monospace'",
   // #endregion
-  
+
   // #region editor.minimap
   "editor.minimap.enabled"          : true,
   "editor.minimap.autohide"         : true,
@@ -22,7 +22,7 @@
   "editor.minimap.side"             : "right",
   "editor.minimap.size"             : "proportional",
   // #endregion
-  
+
   // #region window
   "window.dialogStyle"             : "custom",
   "window.title"                   : "[${appName}] ${dirty}${separator}[${rootName}]:[${activeFolderLong}/${activeEditorShort}]${separator}",
@@ -32,7 +32,7 @@
   "window.titleBarStyle"           : "custom",
   "window.customMenuBarAltFocus"   : false,
   // #endregion window
-  
+
   // #region zenMode
   "zenMode.centerLayout"        : false,
   "zenMode.hideLineNumbers"     : false,
@@ -43,7 +43,7 @@
   "zenMode.restore"             : true,
   "zenMode.showTabs"            :"multiple",
   // #endregion
-  
+
   // #region editor.guides
   "editor.guides.indentation"                 : false,
   "editor.guides.bracketPairs"                : false,
@@ -51,7 +51,7 @@
   "editor.guides.highlightActiveBracketPair"  : true,
   "editor.guides.highlightActiveIndentation"  : "always",
   // #endregion
-  
+
   // #region workbench
   "workbench.startupEditor"    : "none",
   "workbench.editor.tabSizing" : "fit",
@@ -59,22 +59,21 @@
   "workbench.colorTheme": "Atom One Dark",
   "workbench.iconTheme": "simple-icons",
   "workbench.editor.empty.hint": "hidden",
-  "workbench.productIconTheme": "icons-carbon",
-  "workbench.activityBar.location": "top",
+  "workbench.activityBar.location": "side",
   "workbench.sideBar.location": "left",
   "workbench.colorCustomizations": {
-    
+
     // #region window
     "window.activeBorder": "#333333",
     "window.inactiveBorder": "#222222",
     // #endregion
-    
+
     // #region checkbox
     "checkbox.background": "#000000",
     "checkbox.border": "#a7a7a7",
     "checkbox.foreground": "#dfdfdf",
     // #endregion
-    
+
     // #region menu
     "menu.background": "#000000d0",
     "menu.foreground": "#ffffff",
@@ -84,91 +83,91 @@
     "menu.selectionForeground": "#7866c4",
     "menu.separatorBackground": "#666666",
     // #endregion
-    
+
     // #region menubar
     "menubar.selectionBorder": "#5d67ff",
     "menubar.selectionBackground": "#242424",
     "menubar.selectionForeground": "#7b61c2",
     // #endregion
-    
+
     // #region scrollbar
     "scrollbar.shadow": "#000000",
     "scrollbarSlider.background": "#aaaaaa50",
     "scrollbarSlider.activeBackground": "#65656599",
     "scrollbarSlider.hoverBackground": "#656565cc",
     // #endregion
-    
+
     // #region minimap
     "minimap.background": "#050505",
     "minimapSlider.activeBackground": "#cfcfcf80",
     "minimapSlider.background": "#90909080",
     "minimapSlider.hoverBackground": "#a0a0a080",
     // #endregion
-    
+
     "foreground": "#00EDAA",
-    
+
     "focusBorder": "#858585",
-    
+
     "widget.shadow": "#3d3d3d",
-    
+
     "selection.background": "#0000ffc0",
-    
+
     "panel.border": "#333333",
     "panel.background": "#111111",
-    
+
     "editorOverviewRuler.background": "#000000a0",
-    "editorRuler.foreground": "#333333",
-    
+    "editorRuler.foreground": "#131313",
+
     "editor.findMatchBackground": "#ffff00",
     "editor.findMatchHighlightBackground": "#ffff0070",
-    
-    "editor.background": "#000011",
+
+    "editor.background": "#0c0c0c",
     "editor.foreground":"#DDDDDD",
-    
+
     "editorGroup.border": "#444444",
     "editorGroup.dropBackground": "#ff00ff40",
     "editorGroup.emptyBackground": "#00000090",
-    
+
     "editorGroupHeader.tabsBackground": "#151515",
     "editorGroupHeader.tabsBorder": "#333333",
     "editorGroupHeader.border": "#333333",
-    
+
     "editor.lineHighlightBackground": "#101010",
     "editor.lineHighlightBorder": "#00000000",
-    
+
     "editor.selectionBackground": "#f700ffaa",
-    
+
     "editor.inactiveSelectionBackground": "#d660cc70",
-    
+
     "editor.selectionForeground": "#4c00ff",
     "editor.selectionHighlightBackground": "#347434aa",
     "editor.selectionHighlightBorder": "#347434",
-    
+
     "editor.foldBackground": "#ff009927",
-    
+
     "editor.snippetFinalTabstopHighlightBackground": "#00FF0050",
     "editor.snippetFinalTabstopHighlightBorder": "#00FF00",
     "editor.snippetTabstopHighlightBackground": "#00FFCC50",
     "editor.snippetTabstopHighlightBorder": "#00FFCC",
-    
+
     "editorCursor.foreground": "#ffffffd0",
     "editorCursor.background": "#000000",
-    
+
     "editorLineNumber.activeForeground": "#ffffff",
     "editorLineNumber.foreground": "#545454",
-    
+
     "editorGutter.background": "#000000",
     "editorGutter.foldingControlForeground": "#909090",
     "editorGutter.addedBackground": "#009900",
     "editorGutter.deletedBackground": "#990000",
     "editorGutter.modifiedBackground": "#999900",
-    
+
     "diffEditorGutter.insertedLineBackground": "#AAAA00",
     "diffEditorGutter.removedLineBackground": "#AA0000",
-    
-    "editorBracketMatch.background":"#90000093",
-    "editorBracketMatch.border": "#900000",
-    
+
+    "editorBracketMatch.background":"#40404099",
+    "editorBracketMatch.border": "#404040",
+
     // #region sideBar
     "sideBar.background": "#020202",
     "sideBar.foreground": "#b6b6b6",
@@ -179,7 +178,7 @@
     "sideBarSectionHeader.foreground": "#ffffff",
     "sideBarTitle.foreground": "#000099",
     // #endregion
-    
+
     // #region tab
     "tab.activeBackground": "#101010",
     "tab.activeForeground": "#dedede",
@@ -193,23 +192,23 @@
     "tab.lastPinnedBorder": "#666666",
     "tab.hoverForeground": "#ffffff",
     // #endregion
-    
+
     // #region badge
     "badge.background": "#993333",
     "badge.foreground": "#ffffff",
     // #endregion
-    
+
     // #region button
     "button.background": "#000099",
     "button.foreground": "#ffffff",
     "button.border": "#909090",
     "button.hoverBackground": "#0000cc",
     // #endregion
-    
+
     "icon.foreground": "#9999cc",
     "contrastActiveBorder": "#909090",
     "contrastBorder": "#333333",
-    
+
     // #region notifications
     "notifications.border": "#ff0000",
     "notifications.background": "#00000060",
@@ -220,35 +219,35 @@
     "notificationLink.foreground": "#0077ff",
     "notificationToast.border": "#ff0000",
     // #endregion
-    
+
     // #region dropdown
     "dropdown.background": "#000000",
     "dropdown.border": "#909090",
     "dropdown.listBackground": "#000000",
     "dropdown.foreground": "#77ff00",
     // #endregion
-    
+
     // #region quickInput
     "quickInput.background": "#000000c0",
     "quickInput.foreground": "#00ff00",
     "quickInputList.focusBackground": "#000000",
     "quickInputList.focusForeground": "#ff00ff",
     // #endregion
-    
+
     // #region editorWidget
     "editorWidget.border": "#999999",
     "editorWidget.background": "#000000c0",
     "editorWidget.foreground": "#00ff00",
     "editorWidget.resizeBorder": "#00ffaa",
     // #endregion
-    
+
     // #region editorHoverWidget
     "editorHoverWidget.background": "#000000a0",
     "editorHoverWidget.border": "#909090",
     "editorHoverWidget.foreground": "#ebebeb",
     "editorHoverWidget.highlightForeground": "#aaaaff",
     // #endregion
-  
+
     // #region editorSuggestWidget
     "editorSuggestWidget.background": "#000000b0",
     "editorSuggestWidget.border": "#909090",
@@ -260,48 +259,48 @@
     "editorSuggestWidgetStatus.foreground": "#0000ff",
     "editorSuggestWidget.highlightForeground": "#ffffff",
     // #endregion
-    
-    
+
+
     "editorHint.border": "#eded00",
-    
+
     "editorInfo.border": "#0099ff",
     "editorInfo.background": "#00709070",
     "editorInfo.foreground": "#efefef",
-    
+
     "editorError.border": "#ff0000",
     "editorError.background": "#90000070",
     "editorError.foreground": "#efefef",
-    
+
     "editorWarning.border": "#ff9900",
     "editorWarning.background": "#90700070",
     "editorWarning.foreground": "#efefef",
-    
+
     "editorGhostText.border": "#dfdfdf",
     "editorGhostText.background": "#33333390",
     "editorGhostText.foreground": "#dfdfdf",
-    
-    
+
+
     "editorWhitespace.foreground": "#77777777",
-    
+
     // #region textLink
     "textLink.activeForeground": "#0000ff",
     "textLink.foreground": "#3900bd",
     // #endregion
-    
+
     // #region input
     "input.border": "#AA33AA",
     "input.background": "#000000",
     "input.foreground": "#8899DD",
     "input.placeholderForeground": "#AA55AA",
     // #endregion
-    
+
     // #region inputOption
     "inputOption.activeBorder": "#ff0000",
     "inputOption.activeForeground": "#00ff00",
     "inputOption.activeBackground": "#ff000090",
     "inputOption.hoverBackground": "#555555",
     // #endregion
-    
+
     // #region statusBar
     "statusBar.background": "#000000",
     "statusBar.foreground": "#ababab",
@@ -311,7 +310,7 @@
     "statusBarItem.prominentBackground": "#113311",
     "statusBar.focusBorder": "#252525",
     // #endregion
-    
+
     // #region list
     "list.focusBackground": "#222222",
     "list.hoverBackground": "#333333",
@@ -323,7 +322,7 @@
     "list.inactiveSelectionForeground": "#f0f0f0",
     "list.focusOutline":"#efefef",
     // #endregion
-    
+
     // #region breadcrumb
     "breadcrumb.background":"#000000",
     "breadcrumb.foreground": "#888888",
@@ -332,7 +331,7 @@
     "breadcrumbPicker.background": "#000000",
     "breadcrumbPicker.foreground":"#00ffff",
     // #endregion
-    
+
     // #region activityBar
     "activityBar.background": "#000000",
     "activityBar.foreground": "#909090",
@@ -344,7 +343,7 @@
     "activityBarBadge.background": "#404040",
     "activityBarBadge.foreground": "#afafaf",
     // #endregion
-    
+
     // #region titleBar
     "titleBar.activeBackground": "#000000",
     "titleBar.activeForeground": "#d0d0d0",
@@ -352,20 +351,20 @@
     "titleBar.inactiveBackground": "#000000",
     "titleBar.inactiveForeground": "#888888",
     // #endregion
-    
+
     // #region settings
     "settings.headerBorder": "#af50af",
     "settings.headerForeground": "#00ff00",
     // #endregion
-    
+
     // #region terminal
     "terminal.background": "#000000",
     "terminal.foreground": "#9999ff"
     // #endregion
-    
+
   },
   // #endregion
-  
+
   "editor.lineNumbers"                        : "on",
   "editor.inlayHints.enabled"                 : "off",
   "editor.indentSize"                         : "tabSize",
@@ -400,12 +399,12 @@
   "editor.letterSpacing"                      : 0,
   "editor.maxTokenizationLineLength"          : 500,
   "editor.cursorSurroundingLines"             : 10,
-  "editor.rulers"                             : [0, 80],
+  "editor.rulers"                             : [80],
   "editor.suggest.preview"                    : false,
   "editor.insertSpaces"                       : true,
   "editor.scrollBeyondLastLine"               : false,
   "editor.dragAndDrop"                        : false,
-  
+
   // #region editor.hover
   "editor.hover.above": true,
   "editor.hover.enabled": true,
@@ -413,30 +412,29 @@
   "editor.hover.hidingDelay": 0,
   "editor.hover.sticky": true,
   // #endregion
-  
-  
+
   "editor.quickSuggestions": {
     "other": true,
     "comments": false,
     "strings": false
   },
   "editor.quickSuggestionsDelay": 10,
-    
+
   "update.mode"                               : "none",
   "update.showReleaseNotes"                   : true,
-  
+
   "diffEditor.wordWrap"                       : "off",
   "scm.inputFontFamily"                       : "'editor'",
   "insert-unicode.enableRecentlyUsed"         : false,
   "open-in-browser.default"                   : "firefox",
   "color-highlight.markerType"                : "underline",
   "livePreview.notifyOnOpenLooseFile"         : false,
-  
+
   "terminal.integrated.fontSize"              : 16,
   "terminal.integrated.enablePersistentSessions": false,
   "terminal.integrated.defaultProfile.linux": "fish",
   "terminal.integrated.enableMultiLinePasteWarning": false,
-  
+
   "files.autoSave": "off",
   "files.exclude": {
     "**/.git": true,
@@ -446,13 +444,13 @@
     "**/.DS_Store": true,
     "**/Thumbs.db": true
   },
-  
+
   "debug.console.fontSize"                    : 16,
   "liveServer.settings.CustomBrowser" : "firefox",
   "explorer.sortOrder": "default",
   "extensions.autoUpdate": false,
   "breadcrumbs.enabled": true,
-  
+
   "better-comments.tags": [
     //!Hello
     //?Hello
@@ -605,7 +603,7 @@
       "color": "#9988ff",
     }
   ],
-  
+
   "liveServer.settings.donotShowInfoMsg": true,
 
   "trailing-spaces.logLevel": "warn",
@@ -614,7 +612,28 @@
   "trailing-spaces.trimOnSave": true,
   "trailing-spaces.highlightCurrentLine": false,
   "trailing-spaces.includeEmptyLines": true,
-  
+
+  "BracketHighlighter.enableExtension": true,
+  "BracketHighlighter.border": "",
+  "BracketHighlighter.blurOutOfScopeText": false,
+  "BracketHighlighter.blurOpacity": "0.8",
+  "BracketHighlighter.textColor": "#9f9f9f",
+  "BracketHighlighter.ignoreContent": true,
+  "BracketHighlighter.customSymbols": [
+    {
+      "open": "(",
+      "close": ")"
+    },
+    {
+      "open": "[",
+      "close": "]"
+    },
+    {
+      "open": "{",
+      "close": "}"
+    },
+  ],
+
   "commands.commands": {
     "Folder": {
       "nestedItems": {
@@ -678,7 +697,7 @@
       }
     }
   },
-  
+
   // #region bracket-pair-colorizer-2
   "bracket-pair-colorizer-2.colors": [
     "#BF4444",
@@ -686,8 +705,17 @@
     "#4444BF",
   ],
   "bracket-pair-colorizer-2.unmatchedScopeColor": "gray",
+  "bracket-pair-colorizer-2.activeScopeCSS": [
+    "borderStyle : solid",
+    "borderWidth : 1px",
+    "borderColor : {color}",
+    "opacity: 0.5"
+  ],
   // #endregion
-  
+
+
+
+
   // #region indentRainbow
   "indentRainbow.colors": [
     "#88888819",
@@ -695,14 +723,14 @@
   ],
   "indentRainbow.errorColor": "rgba(44,44,44,0.6)",
   // #endregion
-  
+
   // #region vscodeWorkspaceSwitcher
   "vscodeWorkspaceSwitcher.showTreeView": false,
   "vscodeWorkspaceSwitcher.paths": [
     "~/Documents/VSCode/workspaces"
   ],
   // #endregion
-  
+
   // #region git
   "git.enableSmartCommit": true,
   "git.confirmSync": false,
@@ -710,7 +738,7 @@
   "git.openRepositoryInParentFolders": "never",
   "github.gitProtocol": "https",
   // #endregion
-  
+
   // #region code-runner
   "code-runner.runInTerminal": true,
   "code-runner.executorMap": {
@@ -769,7 +797,7 @@
     "mojo": "mojo run"
   },
   // #endregion
-  
+
   // #region colorIdentifiersMode
   "colorIdentifiersMode.ignoredLanguages": [],
   "colorIdentifiersMode.manualColors": [
@@ -795,7 +823,7 @@
     "method"
   ],
   // #endregion
-  
+
   // #region cSpell
   "cSpell.enableFiletypes": [],
   "cSpell.userWords": [
