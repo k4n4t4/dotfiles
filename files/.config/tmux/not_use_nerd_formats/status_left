@@ -1,9 +1,0 @@
-#!/bin/sh
-set -eu
-
-session_name="#S"
-
-printf "#[fg=#eeeeee,bg=#333333,bold]"
-printf " ${session_name} "
-printf "#[fg=#eeeeee,bg=#444444,bold]"
-printf " $(whoami) "
