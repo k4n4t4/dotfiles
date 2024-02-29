@@ -12,17 +12,6 @@
   "notebook.output.fontFamily"     : "'ComicShannsMono Nerd Font Mono', 'CaskaydiaCove Nerd Font', 'Hurmit Nerd Font', 'Source Code Pro', 'Fira Code', 'Ricty Diminished', 'FreeMono', 'monospace'",
   // #endregion
 
-  // #region editor.minimap
-  "editor.minimap.enabled"          : true,
-  "editor.minimap.autohide"         : true,
-  "editor.minimap.renderCharacters" : false,
-  "editor.minimap.showSlider"       : "mouseover",
-  "editor.minimap.maxColumn"        : 100,
-  "editor.minimap.scale"            : 1,
-  "editor.minimap.side"             : "right",
-  "editor.minimap.size"             : "proportional",
-  // #endregion
-
   // #region window
   "window.dialogStyle"             : "custom",
   "window.title"                   : "[${appName}] ${dirty}${separator}[${rootName}]:[${activeFolderLong}/${activeEditorShort}]${separator}",
@@ -44,19 +33,11 @@
   "zenMode.showTabs"            :"multiple",
   // #endregion
 
-  // #region editor.guides
-  "editor.guides.indentation"                 : false,
-  "editor.guides.bracketPairs"                : false,
-  "editor.guides.bracketPairsHorizontal"      : "active",
-  "editor.guides.highlightActiveBracketPair"  : true,
-  "editor.guides.highlightActiveIndentation"  : "always",
-  // #endregion
-
   // #region workbench
   "workbench.startupEditor"    : "none",
   "workbench.editor.tabSizing" : "fit",
   "workbench.statusBar.visible": true,
-  "workbench.colorTheme": "Atom One Dark",
+  "workbench.colorTheme": "Default Dark+",
   "workbench.iconTheme": "simple-icons",
   "workbench.editor.empty.hint": "hidden",
   "workbench.activityBar.location": "side",
@@ -365,6 +346,7 @@
   },
   // #endregion
 
+  // #region Editor
   "editor.lineNumbers"                        : "on",
   "editor.inlayHints.enabled"                 : "off",
   "editor.indentSize"                         : "tabSize",
@@ -378,9 +360,10 @@
   "editor.trimAutoWhitespace"                 : true,
   "editor.acceptSuggestionOnCommitCharacter"  : false,
   "editor.mouseWheelZoom"                     : true,
+  "editor.smoothScrolling"                    : true,
   "editor.cursorSmoothCaretAnimation"         : "on",
   "editor.roundedSelection"                   : true,
-  "editor.glyphMargin"                        : false,
+  "editor.glyphMargin"                        : true,
   "editor.snippetSuggestions"                 : "top",
   "editor.multiCursorModifier"                : "ctrlCmd",
   "editor.fontWeight"                         : "normal",
@@ -402,39 +385,48 @@
   "editor.rulers"                             : [80],
   "editor.suggest.preview"                    : false,
   "editor.insertSpaces"                       : true,
-  "editor.scrollBeyondLastLine"               : false,
+  "editor.scrollBeyondLastLine"               : true,
+  "editor.scrollPredominantAxis"              : true,
   "editor.dragAndDrop"                        : false,
-
-  // #region editor.hover
   "editor.hover.above": true,
   "editor.hover.enabled": true,
   "editor.hover.delay": 500,
   "editor.hover.hidingDelay": 0,
   "editor.hover.sticky": true,
-  // #endregion
-
   "editor.quickSuggestions": {
     "other": true,
     "comments": false,
     "strings": false
   },
   "editor.quickSuggestionsDelay": 10,
+  "editor.guides.indentation"                 : false,
+  "editor.guides.bracketPairs"                : false,
+  "editor.guides.bracketPairsHorizontal"      : "active",
+  "editor.guides.highlightActiveBracketPair"  : true,
+  "editor.guides.highlightActiveIndentation"  : "always",
+  "editor.minimap.enabled"          : true,
+  "editor.minimap.autohide"         : true,
+  "editor.minimap.renderCharacters" : false,
+  "editor.minimap.showSlider"       : "mouseover",
+  "editor.minimap.maxColumn"        : 100,
+  "editor.minimap.scale"            : 1,
+  "editor.minimap.side"             : "right",
+  "editor.minimap.size"             : "proportional",
+  // #endregion
 
-  "update.mode"                               : "none",
-  "update.showReleaseNotes"                   : true,
-
+  // #region etc
+  "update.mode"             : "none",
+  "update.showReleaseNotes" : true,
   "diffEditor.wordWrap"                       : "off",
   "scm.inputFontFamily"                       : "'editor'",
   "insert-unicode.enableRecentlyUsed"         : false,
   "open-in-browser.default"                   : "firefox",
   "color-highlight.markerType"                : "underline",
   "livePreview.notifyOnOpenLooseFile"         : false,
-
   "terminal.integrated.fontSize"              : 16,
   "terminal.integrated.enablePersistentSessions": false,
-  "terminal.integrated.defaultProfile.linux": "fish",
-  "terminal.integrated.enableMultiLinePasteWarning": false,
-
+  "terminal.integrated.defaultProfile.linux": "zsh",
+  "terminal.integrated.enableMultiLinePasteWarning": "auto",
   "files.autoSave": "off",
   "files.exclude": {
     "**/.git": true,
@@ -444,18 +436,33 @@
     "**/.DS_Store": true,
     "**/Thumbs.db": true
   },
-
   "debug.console.fontSize"                    : 16,
-  "liveServer.settings.CustomBrowser" : "firefox",
   "explorer.sortOrder": "default",
-  "extensions.autoUpdate": false,
   "breadcrumbs.enabled": true,
+  // #endregion
 
+  // #region Extensions
+  "extensions.autoUpdate": false,
+
+  // #region betterSnippets
+  "betterSnippets.typingSnippets": [
+    {
+        "sequence": "cb ",
+        "body":"($1) => $2"
+    }
+  ],
+  // #endregion
+
+  // #region liveServer
+  "liveServer.settings.CustomBrowser" : "firefox",
+  "liveServer.settings.donotShowInfoMsg": true,
+  // #endregion
+
+  // #region better-comments
   "better-comments.tags": [
     //!Hello
     //?Hello
     //*Hello
-    //#Hello
     //$Hello
     //&Hello
     //%Hello
@@ -482,43 +489,43 @@
     //DEBUG Hello
     {
       "tag": "!",
-      "color": "#FF2D00",
+      "color": "#992D00",
     },
     {
       "tag": "?",
-      "color": "#2D2DFF",
+      "color": "#2D2D99",
     },
     {
       "tag": "*",
-      "color": "#2DFF2D",
+      "color": "#2D992D",
     },
     {
       "tag": "$",
-      "color": "#2DFFFF",
+      "color": "#2D9999",
     },
     {
       "tag": "&",
-      "color": "#FF8C8C",
+      "color": "#996C6C",
     },
     {
       "tag": "%",
-      "color": "#8C8CFF",
+      "color": "#6C899C",
     },
     {
       "tag": "~",
-      "color": "#FFFF2D",
+      "color": "#99992D",
     },
     {
       "tag": "=",
-      "color": "#2DFF8C",
+      "color": "#2D996C",
     },
     {
       "tag": "+",
-      "color": "#FF2D8C",
+      "color": "#992D6C",
     },
     {
       "tag": "-",
-      "color": "#2D8CFF",
+      "color": "#2D899C",
     },
     {
       "tag": "_",
@@ -603,37 +610,18 @@
       "color": "#9988ff",
     }
   ],
+  // #endregion
 
-  "liveServer.settings.donotShowInfoMsg": true,
-
+  // #region trailing-spaces
   "trailing-spaces.logLevel": "warn",
   "trailing-spaces.backgroundColor": "rgba(255,0,0,0.3)",
   "trailing-spaces.borderColor": "rgba(255,100,100,0.15)",
   "trailing-spaces.trimOnSave": true,
   "trailing-spaces.highlightCurrentLine": false,
   "trailing-spaces.includeEmptyLines": true,
+  // #endregion
 
-  "BracketHighlighter.enableExtension": true,
-  "BracketHighlighter.border": "",
-  "BracketHighlighter.blurOutOfScopeText": false,
-  "BracketHighlighter.blurOpacity": "0.8",
-  "BracketHighlighter.textColor": "#9f9f9f",
-  "BracketHighlighter.ignoreContent": true,
-  "BracketHighlighter.customSymbols": [
-    {
-      "open": "(",
-      "close": ")"
-    },
-    {
-      "open": "[",
-      "close": "]"
-    },
-    {
-      "open": "{",
-      "close": "}"
-    },
-  ],
-
+  // #region commands
   "commands.commands": {
     "Folder": {
       "nestedItems": {
@@ -697,31 +685,52 @@
       }
     }
   },
+  // #endregion
 
   // #region bracket-pair-colorizer-2
   "bracket-pair-colorizer-2.colors": [
-    "#BF4444",
-    "#44BF44",
-    "#4444BF",
+    "#AAAAAA",
+    "#888888",
+    "#666666",
   ],
-  "bracket-pair-colorizer-2.unmatchedScopeColor": "gray",
-  "bracket-pair-colorizer-2.activeScopeCSS": [
-    "borderStyle : solid",
-    "borderWidth : 1px",
-    "borderColor : {color}",
-    "opacity: 0.5"
+  "bracket-pair-colorizer-2.unmatchedScopeColor"     : "gray",
+  "bracket-pair-colorizer-2.colorMode"               : "Independent",
+  "bracket-pair-colorizer-2.highlightActiveScope"    : true,
+  "bracket-pair-colorizer-2.showHorizontalScopeLine" : true,
+  "bracket-pair-colorizer-2.showBracketsInGutter"    : false,
+  "bracket-pair-colorizer-2.showBracketsInRuler"     : true,
+  "bracket-pair-colorizer-2.showVerticalScopeLine"   : true,
+  // #endregion
+
+  // #region BracketHighlighter
+  "BracketHighlighter.enableExtension": true,
+  "BracketHighlighter.border": "",
+  "BracketHighlighter.blurOutOfScopeText": false,
+  "BracketHighlighter.blurOpacity": "0.8",
+  "BracketHighlighter.textColor": "#CECECE",
+  "BracketHighlighter.ignoreContent": true,
+  "BracketHighlighter.customSymbols": [
+    {
+      "open": "(",
+      "close": ")"
+    },
+    {
+      "open": "[",
+      "close": "]"
+    },
+    {
+      "open": "{",
+      "close": "}"
+    },
   ],
   // #endregion
 
-
-
-
   // #region indentRainbow
   "indentRainbow.colors": [
-    "#88888819",
-    "#55555519"
+    "#88888805",
+    "#55555505"
   ],
-  "indentRainbow.errorColor": "rgba(44,44,44,0.6)",
+  "indentRainbow.errorColor": "rgba(44,44,44,0.2)",
   // #endregion
 
   // #region vscodeWorkspaceSwitcher
@@ -737,65 +746,6 @@
   "git.autofetch": true,
   "git.openRepositoryInParentFolders": "never",
   "github.gitProtocol": "https",
-  // #endregion
-
-  // #region code-runner
-  "code-runner.runInTerminal": true,
-  "code-runner.executorMap": {
-    "javascript": "node",
-    "java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
-    "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-    "zig": "zig run",
-    "cpp": "cd $dir && g++ $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-    "objective-c": "cd $dir && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-    "php": "php",
-    "python": "python3 -u",
-    "perl": "perl",
-    "perl6": "perl6",
-    "ruby": "ruby",
-    "go": "go run",
-    "lua": "lua",
-    "groovy": "groovy",
-    "powershell": "powershell -ExecutionPolicy ByPass -File",
-    "bat": "cmd /c",
-    "shellscript": "bash",
-    "fsharp": "fsi",
-    "csharp": "scriptcs",
-    "vbscript": "cscript //Nologo",
-    "typescript": "ts-node",
-    "coffeescript": "coffee",
-    "scala": "scala",
-    "swift": "swift",
-    "julia": "julia",
-    "crystal": "crystal",
-    "ocaml": "ocaml",
-    "r": "Rscript",
-    "applescript": "osascript",
-    "clojure": "lein exec",
-    "haxe": "haxe --cwd $dirWithoutTrailingSlash --run $fileNameWithoutExt",
-    "rust": "cd $dir && rustc $fileName && $dir$fileNameWithoutExt",
-    "racket": "racket",
-    "scheme": "csi -script",
-    "ahk": "autohotkey",
-    "autoit": "autoit3",
-    "dart": "dart",
-    "pascal": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
-    "d": "cd $dir && dmd $fileName && $dir$fileNameWithoutExt",
-    "haskell": "runghc",
-    "nim": "nim compile --verbosity:0 --hints:off --run",
-    "lisp": "sbcl --script",
-    "kit": "kitc --run",
-    "v": "v run",
-    "sass": "sass --style expanded",
-    "scss": "scss --style expanded",
-    "less": "cd $dir && lessc $fileName $fileNameWithoutExt.css",
-    "FortranFreeForm": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-    "fortran-modern": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-    "fortran_fixed-form": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-    "fortran": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-    "sml": "cd $dir && sml $fileName",
-    "mojo": "mojo run"
-  },
   // #endregion
 
   // #region colorIdentifiersMode
@@ -839,5 +789,26 @@
     "donot",
     "autohide"
   ],
+  "cSpell.diagnosticLevel": "Hint",
   // #endregion
+
+  // #region errorLens
+  "errorLens.decorations": {
+    "errorRange": {},
+    "warningRange": {},
+    "infoRange": {},
+    "hintRange": {}
+  },
+  "errorLens.alignMessage": {
+    "start": 0,
+    "end": 0,
+    "minimumMargin": 0
+  },
+  "errorLens.fontStyleItalic": true,
+  "errorLens.margin": "0.5ch",
+  "errorLens.gutterIconsEnabled": true
+  // #endregion
+
+  // #endregion Extensions
+
 }
