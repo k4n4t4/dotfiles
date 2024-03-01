@@ -1,6 +1,8 @@
 set number
 set relativenumber
 
+set signcolumn=yes
+
 set confirm
 
 set expandtab
