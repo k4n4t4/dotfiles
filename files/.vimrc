@@ -1,14 +1,21 @@
 set number
 set relativenumber
+set numberwidth=1
+set signcolumn=yes
+
+set ruler
+
+set mouse=a
+set clipboard=unnamedplus
+
+set encoding=utf-8
 
 set showmode
 set showcmd
+set showmatch
 
 set autoread
 set hidden
-
-" gutter
-set signcolumn=yes
 
 set confirm
 
@@ -31,16 +38,14 @@ set completeopt=menuone,noinsert
 set cursorline
 set cursorcolumn
 
-set virtualedit=onemore
-
+set wildmenu
 set wildmode=list:longest
 
 set background=dark
 
-" nmap k gk
-" nmap j gj
-
-
+" set virtualedit=onemore
+" nnoremap k gk
+" nnoremap j gj
 
 
 if empty(glob("~/.vim/tmp"))
