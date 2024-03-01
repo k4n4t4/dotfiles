@@ -1,19 +1,36 @@
 set number
 set relativenumber
+
 set confirm
+
 set expandtab
 set autoindent
 set tabstop=2
 set shiftwidth=2
+
+" ==========
+"   search
+" ==========
 set hlsearch
+set incsearch
+
 set listchars=tab:>-,trail:-,eol:$,extends:>,precedes:<,nbsp:+
 set list
+
+" set tabline=
+
 set completeopt=menuone,noinsert
 
 set cursorline
 set cursorcolumn
 
 set background=dark
+
+set showmode
+set showcmd
+
+" nmap k gk
+" nmap j gj
 
 if empty(glob("~/.vim/tmp"))
   silent !mkdir ~/.vim/tmp
