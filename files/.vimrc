@@ -1,6 +1,12 @@
 set number
 set relativenumber
 
+set showmode
+set showcmd
+
+set autoread
+set hidden
+
 " gutter
 set signcolumn=yes
 
@@ -11,9 +17,7 @@ set autoindent
 set tabstop=2
 set shiftwidth=2
 
-" ==========
-"   search
-" ==========
+" search
 set hlsearch
 set incsearch
 
@@ -29,11 +33,11 @@ set cursorcolumn
 
 set background=dark
 
-set showmode
-set showcmd
-
 " nmap k gk
 " nmap j gj
+
+
+
 
 if empty(glob("~/.vim/tmp"))
   silent !mkdir ~/.vim/tmp
