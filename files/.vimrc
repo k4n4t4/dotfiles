@@ -1,6 +1,7 @@
 set number
 set relativenumber
 
+" gutter
 set signcolumn=yes
 
 set confirm
@@ -42,6 +43,7 @@ set directory=~/.vim/tmp
 set backupdir=~/.vim/tmp
 set undodir=~/.vim/tmp
 
+syntax enable
 if exists("syntax_on")
   syntax reset
 endif
