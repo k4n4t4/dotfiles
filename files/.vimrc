@@ -1,4 +1,6 @@
 set number
+set relativenumber
+set confirm
 set expandtab
 set autoindent
 set tabstop=2
@@ -6,10 +8,11 @@ set shiftwidth=2
 set hlsearch
 set listchars=tab:>-,trail:-,eol:$,extends:>,precedes:<,nbsp:+
 set list
-set relativenumber
 set completeopt=menuone,noinsert
-" set cursorcolumn
+
 set cursorline
+set cursorcolumn
+
 set background=dark
 
 if empty(glob("~/.vim/tmp"))
