@@ -31,6 +31,10 @@ set completeopt=menuone,noinsert
 set cursorline
 set cursorcolumn
 
+set virtualedit=onemore
+
+set wildmode=list:longest
+
 set background=dark
 
 " nmap k gk
