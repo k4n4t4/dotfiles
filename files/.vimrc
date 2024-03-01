@@ -41,9 +41,10 @@ set cursorcolumn
 set wildmenu
 set wildmode=list:longest
 
+" set virtualedit=onemore
+
 set background=dark
 
-" set virtualedit=onemore
 " nnoremap k gk
 " nnoremap j gj
 
