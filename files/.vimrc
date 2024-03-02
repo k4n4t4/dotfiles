@@ -84,7 +84,6 @@ if empty(plug_exist)
 endif
 
 call plug#begin('~/.vim/plugged')
-
 Plug 'joshdick/onedark.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'preservim/nerdtree'
@@ -93,10 +92,20 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'tpope/vim-surround'
 Plug 'sheerun/vim-polyglot'
 Plug 'pseewald/vim-anyfold'
-
 call plug#end()
 
 if ! empty(glob('~/.vim/plugged/onedark.vim'))
+  if (has("autocmd") && ! has("gui_running"))
+    augroup colorset
+      autocmd!
+      let s:white = {"gui": "#ABB2BF", "cterm": "145", "cterm16": "7"}
+      autocmd ColorScheme * call onedark#set_highlight("Normal", {"fg": s:white })
+    augroup END
+    let g:onedark_color_overrides = {
+      \ "background": {"gui": "#2F343F", "cterm": "235", "cterm16": "0"},
+      \ "purple": {"gui": "#C678DF", "cterm": "170", "cterm16": "5"},
+      \}
+  endif
   colorscheme onedark
 endif
 
