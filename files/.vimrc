@@ -45,6 +45,9 @@ set wildmode=list:longest
 
 set background=dark
 
+let mapleader = " "
+nnoremap <SPACE> <NOP>
+
 " nnoremap k gk
 " nnoremap j gj
 
@@ -113,3 +116,8 @@ if ! empty(glob('~/.vim/plugged/vim-anyfold'))
   autocmd Filetype * AnyFoldActivate
   set foldlevel=99
 endif
+
+if ! empty(glob('~/.vim/plugged/nerdtree'))
+  nnoremap <LEADER>n :NERDTreeToggle<CR>
+endif
+
