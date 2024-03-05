@@ -25,7 +25,7 @@ get_key() {
   stty "$old"
 }
 
-get_distro(){
+get_distro() {
   if [ -f "/etc/os-release" ]; then
     . /etc/os-release
     if [ "${NAME:-}" != "" ]; then
