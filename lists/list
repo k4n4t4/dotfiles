@@ -50,11 +50,7 @@ fi
 if cmd_exist tmux; then
   info "tmux"
   dot ".config/tmux/.tmux.conf" ".tmux.conf"
-  dot ".config/tmux/style.conf"
-  dot ".config/tmux/bind.conf"
-  dot ".config/tmux/popup.sh"
-  dot ".config/tmux/format.conf"
-  dot ".config/tmux/formats"
+  dot ".config/tmux" -r
   echo
 fi
 
