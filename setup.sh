@@ -7,9 +7,9 @@ cd "`dirname "\`readlink -f "$0"\`"`"
 ##      set variables      ##
 #############################
 
-. ./lib/utils.sh
-. ./lib/var.sh
-. ./lib/func.sh
+. ./scripts/lib/utils.sh
+. ./scripts/lib/var.sh
+. ./scripts/lib/func.sh
 
 
 #############################
