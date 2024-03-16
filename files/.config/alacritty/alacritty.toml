@@ -86,8 +86,8 @@ general = "Alacritty"
 instance = "Alacritty"
 
 [window.dimensions]
-columns = 120
-lines = 40
+columns = 80
+lines = 24
 
 [window.padding]
 x = 0
