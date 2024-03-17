@@ -37,7 +37,6 @@
   "workbench.startupEditor"    : "none",
   "workbench.editor.tabSizing" : "fit",
   "workbench.statusBar.visible": true,
-  "workbench.colorTheme": "One Dark Pro",
   "workbench.iconTheme": "simple-icons",
   "workbench.editor.empty.hint": "hidden",
   "workbench.activityBar.location": "side",
@@ -806,7 +805,9 @@
   },
   "errorLens.fontStyleItalic": true,
   "errorLens.margin": "0.5ch",
-  "errorLens.gutterIconsEnabled": true
+  "errorLens.gutterIconsEnabled": true,
+  "workbench.productIconTheme": "icons-carbon",
+  "workbench.colorTheme": "Tokyo Night Storm"
   // #endregion
 
   // #endregion Extensions
