@@ -1,0 +1,14 @@
+#!/bin/dash 
+
+[ $# -eq 0 ] && exit 1
+
+for i in `seq ${#1}`; do
+  case "`echo "$1" | cut -c $i`" in
+    [!0-9] )
+      exit 1
+      ;;
+  esac
+done
+
+exit 0
+
