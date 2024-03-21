@@ -70,34 +70,9 @@ if cmd_exist neofetch; then
   echo
 fi
 
-if cmd_exist lsd; then
-  info "lsd"
-  dot ".config/lsd/config.yaml"
-  dot ".config/lsd/themes/main.yaml"
-  echo
-fi
-
-if cmd_exist picom; then
-  info "picom"
-  dot ".config/picom/picom.conf"
-  echo
-fi
-
 if cmd_exist polybar; then
   info "polybar"
   dot ".config/polybar/config"
-  echo
-fi
-
-if cmd_exist sxhkd; then
-  info "sxhkd"
-  dot ".config/sxhkd/sxhkdrc"
-  echo
-fi
-
-if cmd_exist rofi; then
-  info "rofi"
-  dot ".config/rofi/config.rasi"
   echo
 fi
 
