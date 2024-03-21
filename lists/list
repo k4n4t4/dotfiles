@@ -1,3 +1,6 @@
+info "fonts"
+dot ".fonts.conf"
+echo
 
 info "bin"
 dot "bin" -r
