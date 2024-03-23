@@ -37,7 +37,7 @@
   "workbench.startupEditor"    : "none",
   "workbench.editor.tabSizing" : "fit",
   "workbench.statusBar.visible": true,
-  "workbench.iconTheme": "simple-icons",
+  "workbench.iconTheme": "vscode-icons",
   "workbench.editor.empty.hint": "hidden",
   "workbench.activityBar.location": "side",
   "workbench.sideBar.location": "left",
@@ -807,7 +807,7 @@
   "errorLens.margin": "0.5ch",
   "errorLens.gutterIconsEnabled": true,
   "workbench.productIconTheme": "icons-carbon",
-  "workbench.colorTheme": "Tokyo Night Storm"
+  "workbench.colorTheme": "Night Owl"
   // #endregion
 
   // #endregion Extensions
