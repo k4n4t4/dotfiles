@@ -14,7 +14,7 @@
 
   // #region window
   "window.dialogStyle"             : "custom",
-  "window.title"                   : "[${appName}] ${dirty}${separator}[${rootName}]:[${activeFolderLong}/${activeEditorShort}]${separator}",
+  "window.title"                   : "${appName} ${dirty}${separator}${rootName}:${activeFolderLong}/${activeEditorShort}${separator}",
   "window.titleSeparator"          : " | ",
   "window.density.editorTabHeight" : "default",
   "window.menuBarVisibility"       : "compact",
@@ -41,6 +41,10 @@
   "workbench.editor.empty.hint": "hidden",
   "workbench.activityBar.location": "side",
   "workbench.sideBar.location": "left",
+  "workbench.tree.indent": 16,
+  "workbench.tree.expandMode": "singleClick",
+  "workbench.tree.enableStickyScroll": true,
+  "workbench.tree.renderIndentGuides": "always",
   "workbench.colorCustomizations": {
 
     // #region window
@@ -49,9 +53,11 @@
     // #endregion
 
     // #region checkbox
-    "checkbox.background": "#000000",
-    "checkbox.border": "#a7a7a7",
     "checkbox.foreground": "#dfdfdf",
+    "checkbox.border": "#a7a7a7",
+    "checkbox.background": "#202020",
+    "checkbox.selectBorder": "#999999",
+    "checkbox.selectBackground": "#101010",
     // #endregion
 
     // #region menu
@@ -84,9 +90,10 @@
     "minimapSlider.hoverBackground": "#a0a0a080",
     // #endregion
 
-    "foreground": "#00EDAA",
-
+    "foreground": "#EFEFEF",
     "focusBorder": "#858585",
+    "contrastActiveBorder": "#909090",
+    "contrastBorder": "#333333",
 
     "widget.shadow": "#3d3d3d",
 
@@ -186,8 +193,6 @@
     // #endregion
 
     "icon.foreground": "#9999cc",
-    "contrastActiveBorder": "#909090",
-    "contrastBorder": "#333333",
 
     // #region notifications
     "notifications.border": "#ff0000",
@@ -325,22 +330,43 @@
     // #endregion
 
     // #region titleBar
-    "titleBar.activeBackground": "#000000",
+    "titleBar.activeBackground": "#050505",
     "titleBar.activeForeground": "#d0d0d0",
     "titleBar.border": "#333333",
-    "titleBar.inactiveBackground": "#000000",
+    "titleBar.inactiveBackground": "#050505",
     "titleBar.inactiveForeground": "#888888",
     // #endregion
 
     // #region settings
-    "settings.headerBorder": "#af50af",
-    "settings.headerForeground": "#00ff00",
+    "settings.headerBorder": "#ADADAD",
+    "settings.headerForeground": "#efefef",
+    "settings.checkboxBackground": "#404040",
+    "settings.checkboxBorder": "#909090",
+    "settings.checkboxForeground": "#EFEFEF",
+    "settings.dropdownBackground": "#303030",
+    "settings.dropdownBorder": "#909090",
+    "settings.dropdownForeground": "#EFEFEF",
+    "settings.dropdownListBorder": "#303030",
+    "settings.focusedRowBackground": "#202020",
+    "settings.focusedRowBorder": "#909090",
+    "settings.textInputBackground": "#151515",
+    "settings.modifiedItemIndicator": "#777777",
+    "settings.numberInputBackground": "#151515",
+    "settings.numberInputBorder": "#909090",
+    "settings.numberInputForeground": "#EFEFEF",
+    "settings.rowHoverBackground": "#353535",
+    "settings.sashBorder": "#656565",
+    "settings.settingsHeaderHoverForeground": "#E0E0E0",
+    "settings.textInputBorder": "#909090",
+    "settings.textInputForeground": "#EFEFEF",
     // #endregion
 
     // #region terminal
     "terminal.background": "#000000",
-    "terminal.foreground": "#9999ff"
+    "terminal.foreground": "#9999ff",
     // #endregion
+
+    "search.resultsInfoForeground": "#ff00ff",
 
   },
   // #endregion
