@@ -91,10 +91,7 @@ Plug 'joshdick/onedark.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'preservim/nerdtree'
 Plug 'vim-airline/vim-airline'
-Plug 'machakann/vim-highlightedyank'
-Plug 'tpope/vim-surround'
 Plug 'sheerun/vim-polyglot'
-Plug 'pseewald/vim-anyfold'
 call plug#end()
 
 if ! empty(glob('~/.vim/plugged/onedark.vim'))
