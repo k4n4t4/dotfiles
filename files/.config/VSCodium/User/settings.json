@@ -39,7 +39,7 @@
   "workbench.statusBar.visible": true,
   "workbench.iconTheme": "vscode-icons",
   "workbench.editor.empty.hint": "hidden",
-  "workbench.activityBar.location": "side",
+  "workbench.activityBar.location": "default",
   "workbench.sideBar.location": "left",
   "workbench.tree.indent": 16,
   "workbench.tree.expandMode": "singleClick",
