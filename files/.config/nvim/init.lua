@@ -1,4 +1,4 @@
 
-require("settings/commons")
-require("settings/keymaps")
+require 'settings/commons'
+require 'settings/keymaps'
 
