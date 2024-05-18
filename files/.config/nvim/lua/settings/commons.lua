@@ -9,7 +9,7 @@ vim.opt.confirm = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 
-vim.ambiwidth = 'double'
+vim.ambiwidth = 'single'
 
 vim.opt.wrap = true
 
@@ -28,6 +28,7 @@ vim.opt.autoindent = true
 
 vim.opt.visualbell = true
 vim.opt.hlsearch = true
+vim.opt.showcmd = true
 
 vim.opt.showmatch = true
 
@@ -39,3 +40,6 @@ vim.opt.showtabline = 2
 
 vim.opt.backspace = [[indent,eol,start]]
 
+vim.opt.wildmenu = true
+vim.opt.cmdheight = 1
+vim.opt.laststatus = 2
