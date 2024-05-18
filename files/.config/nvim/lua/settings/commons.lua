@@ -5,7 +5,14 @@ vim.opt.fileencoding = 'utf-8'
 vim.opt.confirm = true
 
 vim.opt.number = true
-vim.opt.relativenumber = true
+vim.opt.relativenumber = false
+vim.opt.signcolumn = 'yes'
+
+vim.opt.cursorline = true
+vim.opt.cursorcolumn = false
+
+
+vim.opt.splitright = true
 
 vim.ambiwidth = 'single'
 
