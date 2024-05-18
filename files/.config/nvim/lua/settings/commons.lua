@@ -41,7 +41,7 @@ vim.opt.confirm = true
 vim.opt.wildmenu = true
 
 vim.opt.cmdheight = 1
-vim.opt.laststatus = 2
+vim.opt.laststatus = 3
 vim.opt.showtabline = 2
 
 vim.opt.winblend = 20
