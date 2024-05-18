@@ -43,3 +43,7 @@ vim.opt.backspace = [[indent,eol,start]]
 vim.opt.wildmenu = true
 vim.opt.cmdheight = 1
 vim.opt.laststatus = 2
+
+vim.opt.winblend = 20
+vim.opt.pumblend = 20
+vim.opt.termguicolors=true
