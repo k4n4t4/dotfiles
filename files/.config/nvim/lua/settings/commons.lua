@@ -35,5 +35,5 @@ vim.opt.hidden = true
 
 vim.opt.showtabline = 2
 
-vim.opt.backspace = 'indent,eol,start'
+vim.opt.backspace = [[indent,eol,start]]
 
