@@ -55,3 +55,7 @@ vim.opt.laststatus = 2
 vim.opt.winblend = 20
 vim.opt.pumblend = 20
 vim.opt.termguicolors=true
+vim.opt.background = 'dark'
+vim.cmd 'colorscheme lunaperche'
+vim.cmd 'hi Normal guibg = None'
+
