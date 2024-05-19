@@ -11,6 +11,7 @@ return {
     },
     config = function()
       vim.cmd "colorscheme onedark"
+      vim.cmd "hi Normal guibg = None"
     end,
   },
 }
