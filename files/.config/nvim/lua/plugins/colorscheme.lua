@@ -9,7 +9,14 @@ return {
       },
     },
     config = function()
-      vim.cmd "colorscheme onedark"
+      require('onedark').load()
+      vim.cmd [[
+        highlight Normal guibg=none, ctermbg=none
+        highlight NonText guibg=none, ctermbg=none
+        highlight LineNr guibg=none, ctermbg=none
+        highlight Folded guibg=none, ctermbg=none
+        highlight EndOfBuffer guibg=none, ctermbg=none
+      ]]
     end,
   },
 }
