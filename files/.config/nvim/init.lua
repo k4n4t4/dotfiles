@@ -1,4 +1,4 @@
 
-require "lazynvim"
 require "settings"
+require "lazynvim"
 
