@@ -48,6 +48,6 @@ vim.opt.winblend = 20
 vim.opt.pumblend = 20
 vim.opt.termguicolors=true
 vim.opt.background = "dark"
-vim.cmd "colorscheme habamax"
+vim.cmd "colorscheme onedark"
 vim.cmd "hi Normal guibg = None"
 
