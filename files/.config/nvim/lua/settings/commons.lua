@@ -1,22 +1,22 @@
-vim.scriptencoding = 'utf-8'
-vim.opt.encoding = 'utf-8'
-vim.opt.fileencoding = 'utf-8'
+vim.scriptencoding = "utf-8"
+vim.opt.encoding = "utf-8"
+vim.opt.fileencoding = "utf-8"
 
 vim.opt.number = true
 vim.opt.relativenumber = false
-vim.opt.signcolumn = 'yes'
+vim.opt.signcolumn = "yes"
 vim.opt.list = true
-vim.opt.listchars = {tab = '>-', trail = '-', nbsp = '+'}
+vim.opt.listchars = {tab = ">-", trail = "-", nbsp = "+"}
 vim.opt.cursorline = true
 vim.opt.cursorcolumn = false
 vim.opt.visualbell = true
 
-vim.ambiwidth = 'single'
+vim.ambiwidth = "single"
 vim.opt.wrap = true
 
-vim.opt.mouse = 'a'
+vim.opt.mouse = "a"
 vim.opt.title = true
-vim.opt.clipboard:append 'unnamedplus'
+vim.opt.clipboard:append "unnamedplus"
 
 vim.opt.expandtab = true
 vim.opt.tabstop = 2
@@ -47,7 +47,7 @@ vim.opt.showtabline = 2
 vim.opt.winblend = 20
 vim.opt.pumblend = 20
 vim.opt.termguicolors=true
-vim.opt.background = 'dark'
-vim.cmd 'colorscheme habamax'
-vim.cmd 'hi Normal guibg = None'
+vim.opt.background = "dark"
+vim.cmd "colorscheme habamax"
+vim.cmd "hi Normal guibg = None"
 
