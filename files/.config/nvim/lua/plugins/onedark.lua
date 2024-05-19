@@ -4,7 +4,6 @@ return {
     opts = {
       style = "darker",
       transparent = true,
-      ending_tildes = false,
       lualine = {
           transparent = true,
       },
