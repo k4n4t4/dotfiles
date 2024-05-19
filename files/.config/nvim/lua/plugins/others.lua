@@ -1,3 +1,0 @@
-return {
-  { "joshdick/onedark.vim" },
-}
