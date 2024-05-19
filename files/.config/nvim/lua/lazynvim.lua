@@ -13,3 +13,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup("plugins", {})
 
+require("notify").setup {
+  background_colour = "#ff0000"
+}
+
