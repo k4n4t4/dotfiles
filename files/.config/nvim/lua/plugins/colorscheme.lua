@@ -14,6 +14,9 @@ return {
         highlight Normal guibg=none, ctermbg=none
         highlight NonText guibg=none, ctermbg=none
         highlight LineNr guibg=none, ctermbg=none
+        highlight SignColumn guibg=none, ctermbg=none
+        highlight TabLine guibg=none, ctermbg=none
+        highlight TabLineFill guibg=none, ctermbg=none
         highlight Folded guibg=none, ctermbg=none
         highlight EndOfBuffer guibg=none, ctermbg=none
       ]]
