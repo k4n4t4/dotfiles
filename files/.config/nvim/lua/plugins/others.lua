@@ -1,0 +1,3 @@
+return {
+  { "joshdick/onedark.vim" },
+}
