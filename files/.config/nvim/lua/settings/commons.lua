@@ -5,7 +5,6 @@ vim.opt.fileencoding = "utf-8"
 vim.opt.number = true
 vim.opt.relativenumber = false
 vim.opt.ruler = true
--- vim.opt.colorcolumn = 80
 vim.opt.signcolumn = "yes"
 vim.opt.list = true
 vim.opt.listchars = {
