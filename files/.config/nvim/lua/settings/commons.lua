@@ -79,3 +79,10 @@ vim.opt.background = "dark"
 vim.opt.whichwrap=b,s,h,l
 
 vim.opt.scrolloff = 10
+
+vim.cmd "colorscheme habamax"
+vim.cmd [[
+highlight Normal guibg=none, ctermbg=none
+highlight LineNr guibg=none, ctermbg=none
+]]
+
