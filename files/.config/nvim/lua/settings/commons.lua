@@ -14,7 +14,7 @@ vim.opt.listchars = {
   nbsp = "+",
   extends = ">",
   precedes = "<",
-  eol = "$",
+  -- eol = "$",
 }
 vim.opt.cursorline = true
 vim.opt.cursorcolumn = false
