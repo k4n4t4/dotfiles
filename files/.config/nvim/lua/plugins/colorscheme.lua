@@ -20,6 +20,9 @@ return {
         highlight TabLineFill guibg=none, ctermbg=none
         highlight Folded guibg=none, ctermbg=none
         highlight EndOfBuffer guibg=none, ctermbg=none
+
+        highlight NvimTreeNormal guibg=none, ctermbg=none
+        highlight NvimTreeEndOfBuffer guibg=none, ctermbg=none
       ]]
     end,
   },
