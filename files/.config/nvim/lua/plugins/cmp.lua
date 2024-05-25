@@ -2,7 +2,7 @@ return {
   {
     "hrsh7th/nvim-cmp",
     config = function()
-      local lspkind = require 'lspkind'
+      local lspkind = require "lspkind"
       local cmp = require("cmp")
       cmp.setup({
         snippet = {
