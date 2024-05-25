@@ -85,4 +85,3 @@ vim.cmd [[
 highlight Normal guibg=none, ctermbg=none
 highlight LineNr guibg=none, ctermbg=none
 ]]
-
