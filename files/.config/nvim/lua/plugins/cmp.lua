@@ -12,15 +12,15 @@ return {
         },
         sources = {
           { name = "nvim_lsp" },
-          { name = 'vsnip' },
+          { name = "vsnip" },
           { name = "buffer" },
           { name = "path" },
         },
         mapping = cmp.mapping.preset.insert({
           ["<C-p>"] = cmp.mapping.select_prev_item(),
           ["<C-n>"] = cmp.mapping.select_next_item(),
-          ['<C-l>'] = cmp.mapping.complete(),
-          ['<C-e>'] = cmp.mapping.abort(),
+          ["<C-l>"] = cmp.mapping.complete(),
+          ["<C-e>"] = cmp.mapping.abort(),
           ["<C-y>"] = cmp.mapping.confirm({ select = true }),
         }),
         experimental = {
@@ -28,16 +28,16 @@ return {
         },
         formatting = {
           format = lspkind.cmp_format({
-            mode = 'symbol',
+            mode = "symbol",
             maxwidth = 50,
-            ellipsis_char = '...',
+            ellipsis_char = "...",
           })
         }
       })
-      cmp.setup.cmdline('/', {
+      cmp.setup.cmdline("/", {
         mapping = cmp.mapping.preset.cmdline(),
         sources = {
-          { name = 'buffer' }
+          { name = "buffer" }
         }
       })
       cmp.setup.cmdline(":", {

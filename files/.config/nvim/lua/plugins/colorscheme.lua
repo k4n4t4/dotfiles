@@ -10,7 +10,7 @@ return {
       },
     },
     config = function()
-      require('onedark').load()
+      require("onedark").load()
       vim.cmd [[
         highlight Normal guibg=none, ctermbg=none
         highlight NonText guibg=none, ctermbg=none
