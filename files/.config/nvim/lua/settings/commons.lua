@@ -85,7 +85,9 @@ vim.opt.pumblend = 20
 vim.opt.termguicolors=true
 vim.opt.background = "dark"
 
-vim.opt.whichwrap=b,s,h,l
+vim.opt.whichwrap="b,s,h,l"
+
+vim.opt.completeopt = { "menuone", "preview" }
 
 vim.opt.scrolloff = 10
 
