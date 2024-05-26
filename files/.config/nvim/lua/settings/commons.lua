@@ -30,7 +30,8 @@ vim.opt.foldmethod = "marker"
 
 vim.opt.visualbell = true
 vim.opt.ruler = true
-vim.opt.pumheight = 0
+
+vim.opt.pumheight = 10
 
 
 vim.opt.mouse = "a"
