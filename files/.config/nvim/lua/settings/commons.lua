@@ -25,7 +25,6 @@ vim.opt.cursorcolumn = true
 
 vim.opt.wrap = true
 vim.opt.display = "lastline"
-vim.opt.pumheight = 10
 
 vim.opt.foldmethod = "marker"
 
@@ -57,6 +56,7 @@ vim.opt.gdefault = false
 vim.opt.showmatch = true
 vim.opt.matchtime = 1
 
+vim.opt.visualedit = "block"
 
 vim.opt.undofile = true
 vim.opt.undodir = vim.fn.stdpath("data") .. "/undo"
@@ -68,6 +68,8 @@ vim.opt.hidden = true
 vim.opt.backspace = "indent,eol,start"
 vim.opt.splitright = true
 vim.opt.confirm = true
+
+vim.opt.pumheight = 10
 
 vim.opt.wildmenu = true
 vim.opt.wildignorecase = true
