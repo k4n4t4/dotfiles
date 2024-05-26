@@ -52,6 +52,7 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.gdefault = false
 
+vim.opt.inccommand = "split"
 
 vim.opt.showmatch = true
 vim.opt.matchtime = 1
