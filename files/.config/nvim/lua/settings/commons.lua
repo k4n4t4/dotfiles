@@ -25,19 +25,18 @@ vim.opt.cursorcolumn = true
 
 vim.opt.wrap = true
 vim.opt.display = "lastline"
+vim.opt.pumheight = 10
 
 vim.opt.foldmethod = "marker"
 
 vim.opt.visualbell = true
 vim.opt.ruler = true
 
-vim.opt.pumheight = 10
-
-
 vim.opt.mouse = "a"
 vim.opt.title = true
 vim.opt.clipboard:append "unnamedplus"
 
+-- indent --
 vim.opt.smarttab = true
 vim.opt.expandtab = true
 vim.opt.tabstop = 2
