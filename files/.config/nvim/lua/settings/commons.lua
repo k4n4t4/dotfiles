@@ -56,7 +56,7 @@ vim.opt.gdefault = false
 vim.opt.showmatch = true
 vim.opt.matchtime = 1
 
-vim.opt.visualedit = "block"
+vim.opt.virtualedit = "block"
 
 vim.opt.undofile = true
 vim.opt.undodir = vim.fn.stdpath("data") .. "/undo"
