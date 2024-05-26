@@ -3,28 +3,35 @@ vim.opt.encoding = "utf-8"
 vim.opt.fileencoding = "utf-8"
 
 vim.opt.number = true
-vim.opt.relativenumber = false
-vim.opt.ruler = true
+vim.opt.relativenumber = true
 vim.opt.signcolumn = "yes"
+
 vim.opt.list = true
 vim.opt.listchars = {
-  tab = ">-",
-  trail = "-",
-  nbsp = "+",
-  extends = ">",
+  tab      = ">-",
+  extends  = ">",
   precedes = "<",
-  -- eol = "$",
+  -- space    = ".",
+  trail    = "-",
+  nbsp     = "+",
+  conceal  = "@",
+  -- eol      = "$",
 }
-vim.opt.cursorline = true
-vim.opt.cursorcolumn = false
-vim.opt.visualbell = true
-
-vim.opt.pumheight = 0
 
 vim.ambiwidth = "single"
+
+vim.opt.cursorline = true
+vim.opt.cursorcolumn = true
+
 vim.opt.wrap = true
 
 vim.opt.foldmethod = "marker"
+
+vim.opt.visualbell = true
+vim.opt.ruler = true
+vim.opt.pumheight = 0
+
+
 
 vim.opt.mouse = "a"
 vim.opt.title = true
