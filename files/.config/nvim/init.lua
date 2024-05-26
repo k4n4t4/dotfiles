@@ -1,2 +1,2 @@
 require "settings"
-require "lazynvim"
+require "lazy-nvim"
