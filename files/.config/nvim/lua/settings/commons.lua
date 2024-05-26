@@ -24,13 +24,13 @@ vim.opt.cursorline = true
 vim.opt.cursorcolumn = true
 
 vim.opt.wrap = true
+vim.opt.display = "lastline"
 
 vim.opt.foldmethod = "marker"
 
 vim.opt.visualbell = true
 vim.opt.ruler = true
 vim.opt.pumheight = 0
-
 
 
 vim.opt.mouse = "a"
@@ -48,9 +48,9 @@ vim.opt.autoindent = true
 -- search --
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
+vim.opt.wrapscan = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
-vim.opt.wrapscan = true
 vim.opt.gdefault = false
 
 
