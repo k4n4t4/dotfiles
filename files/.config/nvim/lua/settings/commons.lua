@@ -56,7 +56,7 @@ vim.opt.gdefault = false
 
 
 vim.opt.showmatch = true
-vim.opt.matchtime = 3
+vim.opt.matchtime = 1
 
 
 vim.opt.undofile = true
