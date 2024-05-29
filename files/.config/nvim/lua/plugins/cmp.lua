@@ -22,7 +22,7 @@ return {
           ["<C-l>"] = cmp.mapping.complete(),
           ["<C-e>"] = cmp.mapping.abort(),
           ["<C-y>"] = cmp.mapping.confirm({ select = true }),
-          ['<CR>'] = cmp.mapping.confirm({ select = false }),
+          ["<CR>" ] = cmp.mapping.confirm({ select = false }),
         }),
         experimental = {
           ghost_text = false,
