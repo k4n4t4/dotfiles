@@ -10,7 +10,7 @@ return {
         local set = vim.keymap.set
         set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
         set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
-        set("n", "<C-m>", "<cmd>lua vim.lsp.buf.signature_help()<CR>")
+        --set("n", "<C-m>", "<cmd>lua vim.lsp.buf.signature_help()<CR>")
         set("n", "gy", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
         set("n", "rn", "<cmd>lua vim.lsp.buf.rename()<CR>")
         set("n", "ma", "<cmd>lua vim.lsp.buf.code_action()<CR>")
