@@ -35,18 +35,18 @@ return {
           })
         }
       })
-      cmp.setup.cmdline("/", {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = {
-          { name = "buffer" }
-        }
-      })
-      cmp.setup.cmdline(":", {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = {
-          { name = "path" },
-        },
-      })
+--      cmp.setup.cmdline("/", {
+--        mapping = cmp.mapping.preset.cmdline(),
+--        sources = {
+--          { name = "buffer" }
+--        }
+--      })
+--      cmp.setup.cmdline(":", {
+--        mapping = cmp.mapping.preset.cmdline(),
+--        sources = {
+--          { name = "path" },
+--        },
+--      })
     end,
   },
   { "hrsh7th/cmp-nvim-lsp" },
