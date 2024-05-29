@@ -8,5 +8,7 @@ fish_add_path \
   "/usr/share/games" \
   "/usr/local/sbin" \
   "/usr/sbin" \
-  "/sbin" \
-  "/home/linuxbrew/.linuxbrew/bin"
+  "/sbin"
+
+eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+

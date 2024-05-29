@@ -46,7 +46,7 @@ fi
 
 export PS1=" \[\e[34m\]\w \[\e[33m\]\$? \[\e[90m\]\\\$\[\e[m\] "
 
-PATH="$PATH":/home/linuxbrew/.linuxbrew/bin
+eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 
 eval "$(zoxide init bash)"
 

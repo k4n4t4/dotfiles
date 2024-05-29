@@ -43,7 +43,8 @@ PATH="/usr/share/games:$PATH"
 PATH="/usr/local/sbin:$PATH"
 PATH="/usr/sbin:$PATH"
 PATH="/sbin:$PATH"
-PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+
+eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 
 export LANG=C
 export CLICOLOR=1
