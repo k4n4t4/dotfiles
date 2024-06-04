@@ -144,3 +144,5 @@ autoload -Uz _zinit
 
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-syntax-highlighting
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
