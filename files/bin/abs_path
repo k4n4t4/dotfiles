@@ -1,5 +1,30 @@
 #!/bin/sh
 set -eu
 
-echo "$(cd "$(dirname -- "$1")"; pwd)/$(basename -- "$1")"
+[ $# -eq 0 ] && set -- "$(pwd)"
+
+DIR="$(cd "$(dirname -- "$1")"; pwd)"
+SEPARATOR="/"
+BASE="$(basename -- "$1")"
+
+case "$DIR" in ( "/" | "//" )
+  SEPARATOR=""
+esac
+
+case "$BASE" in
+  ( "/" )
+    BASE=""
+  ;;
+  ( "." )
+    BASE=""
+    SEPARATOR=""
+  ;;
+  ( ".." )
+    BASE=""
+    SEPARATOR=""
+    DIR="$(dirname -- "$DIR")"
+  ;;
+esac
+
+echo "$DIR$SEPARATOR$BASE"
 
