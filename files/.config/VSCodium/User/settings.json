@@ -833,7 +833,7 @@
   "errorLens.margin": "0.5ch",
   "errorLens.gutterIconsEnabled": true,
   "workbench.productIconTheme": "icons-carbon",
-  "workbench.colorTheme": "Solarized Dark"
+  "workbench.colorTheme": "Monokai Dimmed"
   // #endregion
 
   // #endregion Extensions
