@@ -394,7 +394,7 @@
   "editor.fontWeight"                         : "normal",
   "editor.cursorBlinking"                     : "smooth",
   "editor.cursorStyle"                        : "line",
-  "editor.cursorWidth"                        : 2,
+  "editor.cursorWidth"                        : 4,
   "editor.tabSize"                            : 2,
   "editor.fontSize"                           : 18,
   "editor.inlayHints.fontSize"                : 10,
