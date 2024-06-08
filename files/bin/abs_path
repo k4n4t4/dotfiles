@@ -3,7 +3,7 @@ set -eu
 
 [ $# -eq 0 ] && set -- "$(pwd)"
 
-DIR="$(cd "$(dirname -- "$1")"; pwd)"
+DIR="$(cd "$(dirname -- "$1")" && pwd)"
 SEPARATOR="/"
 BASE="$(basename -- "$1")"
 
