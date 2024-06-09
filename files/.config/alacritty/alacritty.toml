@@ -1,6 +1,10 @@
 import = ["~/.config/alacritty/themes/xterm.yaml"]
 live_config_reload = true
 
+[shell]
+program = "/home/linuxbrew/.linuxbrew/bin/fish"
+args = []
+
 [colors]
 draw_bold_text_with_bright_colors = true
 
@@ -76,9 +80,6 @@ multiplier = 4
 [selection]
 save_to_clipboard = false
 semantic_escape_chars = ",│`|:\"' ()[]{}<>"
-
-[shell]
-program = "/home/linuxbrew/.linuxbrew/bin/fish"
 
 [window]
 decorations = "None"
