@@ -20,8 +20,8 @@ vim.opt.listchars = {
 
 vim.ambiwidth = "single"
 
-vim.opt.cursorline = true
-vim.opt.cursorcolumn = true
+vim.opt.cursorline = false
+vim.opt.cursorcolumn = false
 
 vim.opt.wrap = true
 vim.opt.display = "lastline"
