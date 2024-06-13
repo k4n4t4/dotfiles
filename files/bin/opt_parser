@@ -1,6 +1,9 @@
 #!/bin/sh
 set -eu
 
+LF='
+'
+
 _OLD_IFS="$IFS"
 _SEPARATOR="$LF"
 
