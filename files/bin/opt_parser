@@ -1,0 +1,108 @@
+#!/bin/sh
+set -eu
+
+_OLD_IFS="$IFS"
+_SEPARATOR="$LF"
+
+_option_has_arg=""
+while [ $# -gt 0 ]; do
+  case "$1" in
+    ( "--" )
+      shift
+      break
+      ;;
+    ( ?*":"?* )
+      _option_has_arg="$_option_has_arg$1$_SEPARATOR"
+      shift
+      ;;
+    ( * )
+      shift
+      ;;
+  esac
+done
+_option_has_arg="${_option_has_arg%"$LF"}"
+
+_normal_args=""
+_option_args=""
+_scan_option=true
+while [ $# -gt 0 ]; do
+  if $_scan_option; then
+    case "$1" in ( "-"?* )
+      case "$1" in
+        ( "--" )
+          _scan_option=false
+          shift
+          ;;
+        ( "--"* | "-"? )
+
+          case "$1" in ( "--"*"="?* )
+            _opt_name="${1%%"="*}"
+            _opt_val="${1#*"="}"
+            shift
+            set -- "$_opt_name" "$_opt_val" "$@"
+            continue
+          esac
+
+          _arg_count=0
+          IFS="$_SEPARATOR"
+          for a in $_option_has_arg; do
+            if [ "$1" = "$(printf "%s" "$a" | awk -F ":" '{print $1}')" ]; then
+              _arg_count="$(printf "%s" "$a" | awk -F ":" '{print $2}')"
+              break
+            fi
+          done
+          IFS="$_OLD_IFS"
+          _option_args="$_option_args$1$_SEPARATOR"
+          shift
+          while [ $_arg_count -gt 0 ]; do
+            if [ $# -gt 0 ]; then
+              _option_args="$_option_args$1$_SEPARATOR"
+              shift
+            fi
+            _arg_count=$(($_arg_count - 1))
+          done
+          ;;
+        ( * )
+          IFS="$_SEPARATOR"
+          for i in $(printf "%s" "$1" | awk -v FS="" '{for (i = NF; i >= 2; i--) print "-" $i;}'); do
+            case "$i" in
+              ( "--" ) : ;;
+              ( * )
+                _invalid_arg=false
+                for a in $_option_has_arg; do
+                  if [ "$i" = "$(printf "%s" "$a" | awk -F ":" '{print $1}')" ]; then
+                    _invalid_arg=true
+                    break
+                  fi
+                done
+                if $_invalid_arg; then
+                  :
+                else
+                  _option_args="$_option_args$i$_SEPARATOR"
+                fi
+                ;;
+            esac
+          done
+          IFS="$_OLD_IFS"
+          shift
+          ;;
+      esac
+      continue
+    esac
+  fi
+  _normal_args="$_normal_args$1$_SEPARATOR"
+  shift
+done
+
+_normal_args="${_normal_args%"$LF"}"
+_option_args="${_option_args%"$LF"}"
+
+IFS="$_SEPARATOR"
+for i in $_option_args; do
+  printf "%s$LF" "$i"
+done
+printf "%s$LF" "--"
+for i in $_normal_args; do
+  printf "%s$LF" "$i"
+done
+IFS="$_OLD_IFS"
