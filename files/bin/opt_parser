@@ -38,7 +38,7 @@ while [ $# -gt 0 ]; do
           ;;
         ( "--"* | "-"? )
 
-          case "$1" in ( "--"*"="?* )
+          case "$1" in ( "--"?*"="?* )
             _opt_name="${1%%"="*}"
             _opt_val="${1#*"="}"
             shift
@@ -57,17 +57,19 @@ while [ $# -gt 0 ]; do
           IFS="$_OLD_IFS"
           _option_args="$_option_args$1$_SEPARATOR"
           shift
-          while [ $_arg_count -gt 0 ]; do
-            if [ $# -gt 0 ]; then
+          if [ $# -ge $_arg_count ]; then
+            while [ $_arg_count -gt 0 ]; do
               _option_args="$_option_args$1$_SEPARATOR"
               shift
-            fi
-            _arg_count=$(($_arg_count - 1))
-          done
+              _arg_count=$(($_arg_count - 1))
+            done
+          else
+            : error point
+          fi
           ;;
         ( * )
           IFS="$_SEPARATOR"
-          for i in $(printf "%s" "$1" | awk -v FS="" '{for (i = NF; i >= 2; i--) print "-" $i;}'); do
+          for i in $(printf "%s" "$1" | awk -v FS="" '{for (i = 2; i <= NF; i++) print "-" $i;}'); do
             case "$i" in
               ( "--" ) : ;;
               ( * )
@@ -79,7 +81,7 @@ while [ $# -gt 0 ]; do
                   fi
                 done
                 if $_invalid_arg; then
-                  :
+                  : error point
                 else
                   _option_args="$_option_args$i$_SEPARATOR"
                 fi
