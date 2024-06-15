@@ -70,7 +70,7 @@ while [ $# -gt 0 ]; do
           ;;
         ( * )
           IFS="$_SEPARATOR"
-          for i in $(printf "%s" "$1" | awk -v FS="" '{for (i = 2; i <= NF; i++) print "-" $i;}'); do
+          for i in $(printf "%s" "$1" | awk -v FS="" '{for (i = 2; i <= NF; i++) printf "-%s" "\r", $i;}'); do
             case "$i" in
               ( "--" ) : ;;
               ( * )
