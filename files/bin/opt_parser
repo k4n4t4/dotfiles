@@ -55,9 +55,10 @@ while [ $# -gt 0 ]; do
             fi
           done
           IFS="$_OLD_IFS"
-          _option_args="$_option_args$1$_SEPARATOR"
-          shift
+
           if [ $# -ge $_arg_count ]; then
+            _option_args="$_option_args$1$_SEPARATOR"
+            shift
             while [ $_arg_count -gt 0 ]; do
               _option_args="$_option_args$1$_SEPARATOR"
               shift
