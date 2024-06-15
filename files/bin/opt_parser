@@ -1,11 +1,10 @@
 #!/bin/sh
 set -eu
 
-LF='
-'
+CR="$(printf "\r")"
 
 _OLD_IFS="$IFS"
-_SEPARATOR="$LF"
+_SEPARATOR="$CR"
 
 _option_has_arg=""
 while [ $# -gt 0 ]; do
@@ -23,7 +22,7 @@ while [ $# -gt 0 ]; do
       ;;
   esac
 done
-_option_has_arg="${_option_has_arg%"$LF"}"
+_option_has_arg="${_option_has_arg%"$_SEPARATOR"}"
 
 _normal_args=""
 _option_args=""
@@ -38,7 +37,7 @@ while [ $# -gt 0 ]; do
           ;;
         ( "--"* | "-"? )
 
-          case "$1" in ( "--"?*"="?* )
+          case "$1" in ( "--"?*"="* )
             _opt_name="${1%%"="*}"
             _opt_val="${1#*"="}"
             shift
@@ -101,15 +100,15 @@ while [ $# -gt 0 ]; do
   shift
 done
 
-_normal_args="${_normal_args%"$LF"}"
-_option_args="${_option_args%"$LF"}"
+_normal_args="${_normal_args%"$_SEPARATOR"}"
+_option_args="${_option_args%"$_SEPARATOR"}"
 
 IFS="$_SEPARATOR"
 for i in $_option_args; do
-  printf "%s$LF" "$i"
+  printf "%s$_SEPARATOR" "$i"
 done
-printf "%s$LF" "--"
+printf "%s$_SEPARATOR" "--"
 for i in $_normal_args; do
-  printf "%s$LF" "$i"
+  printf "%s$_SEPARATOR" "$i"
 done
 IFS="$_OLD_IFS"
