@@ -48,8 +48,8 @@ while [ $# -gt 0 ]; do
           _arg_count=0
           IFS="$_SEPARATOR"
           for a in $_option_has_arg; do
-            if [ "$1" = "$(printf "%s" "$a" | awk -F ":" '{print $1}')" ]; then
-              _arg_count="$(printf "%s" "$a" | awk -F ":" '{print $2}')"
+            if [ "$1" = "${a%":"*}" ]; then
+              _arg_count="${a##*":"}"
               break
             fi
           done
@@ -76,7 +76,7 @@ while [ $# -gt 0 ]; do
               ( * )
                 _invalid_arg=false
                 for a in $_option_has_arg; do
-                  if [ "$i" = "$(printf "%s" "$a" | awk -F ":" '{print $1}')" ]; then
+                  if [ "$i" = "${a%":"*}" ]; then
                     _invalid_arg=true
                     break
                   fi
