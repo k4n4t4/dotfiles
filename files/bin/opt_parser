@@ -100,15 +100,12 @@ while [ $# -gt 0 ]; do
   shift
 done
 
-_normal_args="${_normal_args%"$_SEPARATOR"}"
-_option_args="${_option_args%"$_SEPARATOR"}"
-
-IFS="$_SEPARATOR"
-for i in $_option_args; do
-  printf "%s\n" "$i"
+while [ ${#_option_args} -gt 0 ]; do
+  printf "%s\n" "${_option_args%%"$_SEPARATOR"*}"
+  _option_args="${_option_args#*"$_SEPARATOR"}"
 done
 printf "%s\n" "--"
-for i in $_normal_args; do
-  printf "%s\n" "$i"
+while [ ${#_normal_args} -gt 0 ]; do
+  printf "%s\n" "${_normal_args%%"$_SEPARATOR"*}"
+  _normal_args="${_normal_args#*"$_SEPARATOR"}"
 done
-IFS="$_OLD_IFS"
