@@ -73,8 +73,7 @@ deque_has() {
 
 
 
-opt_parse() {
-
+opt_parser() {
   deque_set _option_has_arg
   while [ $# -gt 0 ]; do
     case "$1" in
@@ -92,7 +91,6 @@ opt_parse() {
         ;;
     esac
   done
-
   deque_set _normal_args
   deque_set _option_args
   _scan_option=true
@@ -166,5 +164,4 @@ opt_parse() {
   done
 }
 
-opt_parse "$@"
-
+opt_parser "$@"
