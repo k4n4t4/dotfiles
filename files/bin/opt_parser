@@ -132,7 +132,7 @@ opt_parser() {
           ( * )
             deque_set _multi_short_opt "$CR$(printf "%s" "$1" | awk -v CR="$CR" -v FS="" '{for (i = 2; i <= NF; i++) printf "-%s" CR, $i;}')"
             while deque_pop_front _multi_short_opt i; do
-              case "$1" in
+              case "$i" in
                 ( "--" ) : ;;
                 ( * )
                   case "$_option_has_arg" in
