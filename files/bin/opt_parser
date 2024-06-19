@@ -158,10 +158,9 @@ opt_parser() {
   deque_set _result "${_option_args}--${_normal_args}"
   if [ "${_variable_name:-}" != "" ]; then
     deque_set "$_variable_name" "$_result"
+  else
+    deque_raw _result
   fi
-  while deque_pop_front _result i; do
-    printf "%s\n" "$i"
-  done
 }
 
 opt_parser "$@"
