@@ -26,4 +26,4 @@ case "$BASE" in
   ;;
 esac
 
-printf "%s" "$DIR$SEPARATOR$BASE"
+printf "%s\n" "$DIR$SEPARATOR$BASE"
