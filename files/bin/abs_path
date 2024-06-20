@@ -12,5 +12,4 @@ case "$3" in
   ( "." )  set -- "$1" "" "" ;;
   ( ".." ) set -- "$(dirname -- "$1")" "" "" ;;
 esac
-RET="$1$2$3"
-printf "%s\n" "$RET"
+printf "%s\n" "$1$2$3"
