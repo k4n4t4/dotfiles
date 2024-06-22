@@ -26,7 +26,7 @@ vim.opt.cursorcolumn = false
 vim.opt.wrap = true
 vim.opt.display = "lastline"
 
-vim.opt.foldenable = true
+vim.opt.foldenable = false
 vim.opt.foldmethod = "indent"
 
 vim.opt.visualbell = true
