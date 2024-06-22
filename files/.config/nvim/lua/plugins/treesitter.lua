@@ -6,12 +6,17 @@ return {
     },
     build = ":TSUpdate",
     main = "nvim-treesitter.configs",
-    opts = {
-      highlight = {
-        enable = true,
-        disable = {},
-      },
-    },
+    config = function ()
+      require("nvim-treesitter").setup {
+        highlight = {
+          enable = true,
+          disable = {},
+        },
+      }
+      vim.opt.foldenable = true
+      vim.opt.foldmethod = "expr"
+      vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+    end
   },
   {
     {
