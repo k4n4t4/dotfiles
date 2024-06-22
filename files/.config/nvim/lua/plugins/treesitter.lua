@@ -5,9 +5,8 @@ return {
       "nvim-treesitter/nvim-treesitter-textobjects",
     },
     build = ":TSUpdate",
-    main = "nvim-treesitter.configs",
     config = function ()
-      require("nvim-treesitter").setup {
+      require("nvim-treesitter.configs").setup {
         highlight = {
           enable = true,
           disable = {},
