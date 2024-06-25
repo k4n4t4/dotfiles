@@ -1,3 +1,16 @@
 #!/bin/sh
 set -eu
-printf "\033[${1:-0}\040q"
+
+set -- "${1:-0}"
+
+case "$1" in
+  ( 7 )
+    printf "\033[?25l"
+    ;;
+  ( 8 )
+    printf "\033[?25h"
+    ;;
+  ( * )
+    printf "\033[$1\040q"
+    ;;
+esac
