@@ -1,0 +1,41 @@
+dot ".fonts.conf"
+dot "bin" -r
+dot ".profile"
+
+cmd_exist bash && {
+  dot ".bashrc"
+  dot ".bash_aliases"
+}
+
+cmd_exist zsh && {
+  dot ".zshrc"
+}
+
+cmd_exist fish && {
+  dot ".config/fish" -r
+}
+
+cmd_exist codium && {
+  dot ".config/VSCodium/User/keybindings.json"
+  dot ".config/VSCodium/User/settings.json"
+  dot ".config/VSCodium/User/snippets"
+}
+
+cmd_exist vim && {
+  dot ".vimrc"
+}
+
+cmd_exist nvim && {
+  dot ".config/nvim/init.lua"
+  dot ".config/nvim/lua"
+}
+
+cmd_exist tmux && {
+  dot ".config/tmux/.tmux.conf" ".tmux.conf"
+  dot ".config/tmux" -r
+}
+
+cmd_exist alacritty && {
+  dot ".config/alacritty/alacritty.yml"
+  dot ".config/alacritty/alacritty.toml"
+}

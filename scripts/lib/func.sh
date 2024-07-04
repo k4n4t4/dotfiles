@@ -1,371 +1,456 @@
-usage() {
-if [ $# -eq 0 ]; then
-cat << EOL
-$ESC[m
-Usage$ESC[90m:
-  $ESC[32m$0 [cmd] [opt]
-$ESC[m
-Options$ESC[90m:
-  $ESC[32m--help, -h     help
-$ESC[m
-Commands$ESC[90m:
-  $ESC[32minstall, uninstall, check
-$ESC[m
-EOL
-else
-  case "$1" in
-    install )
-cat << EOL
-$ESC[m
-Usage$ESC[90m:
-  $ESC[32m$0 install [opt]
-$ESC[m
-Options$ESC[90m:
-  $ESC[32m--help, -h     help
-  $ESC[32m--force, -f    force
-$ESC[m
-EOL
+_move() {
+  dir_name "$2"
+  if _mkdir "$RET"; then
+    if mv -- "$1" "$2"; then
+      log "move: \"$1\" --> \"$2\""
+      return 0
+    fi
+    fatal "Could not move \"$1\" to \"$2\""
+    return 1
+  fi
+  return 1
+}
+
+_link() {
+  dir_name "$2"
+  if _mkdir "$RET"; then
+    if ln -s -- "$1" "$2"; then
+      log "link: \"$1\" --> \"$2\""
+      return 0
+    fi
+    fatal "Could not link \"$1\" to \"$2\""
+    return 1
+  fi
+  return 1
+}
+
+_unlink() {
+  if unlink -- "$1"; then
+    log "unlink: \"$1\""
+    return 0
+  fi
+  fatal "Could not unlink \"$1\""
+  return 1
+}
+
+_restore_link() {
+  RET="${2:-"$(realpath "$1")"}"
+  if unlink -- "$1"; then
+    if mv -- "$RET" "$1"; then
+      log "restore: \"$RET\" to \"$1\""
+      return 0
+    else
+      fatal "Could not move \"$RET\" to \"$1\""
+      return 1
+    fi
+  fi
+  fatal "Could not restore \"$1\""
+  return 1
+}
+
+_del_file() {
+  if rm -f -- "$1"; then
+    log "rm f: \"$1\""
+    return 0
+  fi
+  fatal "Could not remove file \"$1\""
+  return 1
+}
+
+_del_r() {
+  if rm -rf -- "$1"; then
+    log "rm rf: \"$1\""
+    return 0
+  fi
+  fatal "Could not remove \"$1\""
+  return 1
+}
+
+_rmdir() {
+  if rmdir -- "$1"; then
+    log "rmdir: \"$1\""
+    return 0
+  fi
+  fatal "Could not remove \"$1\""
+  return 1
+}
+
+_mkdir() {
+  if [ ! -d "$1" ]; then
+    if file_exist "$1"; then
+      error "Already Exist: \"$1\""
+      return 1
+    fi
+    if mkdir -p -- "$1"; then
+      log "mkdir: \"$1\""
+      return 0
+    fi
+    fatal "Could not make directory \"$1\""
+    return 1
+  fi
+  return 0
+}
+
+_mkfile() {
+  dir_name "$1"
+  if _mkdir "$RET"; then
+    if [ ! -f "$1" ]; then
+      if file_exist "$1"; then
+        error "Already Exist: \"$1\""
+        return 1
+      fi
+      if touch -- "$1"; then
+        log "mkfile: \"$1\""
+        return 0
+      fi
+      fatal "Could not make file \"$1\""
+      return 1
+    fi
+    return 0
+  fi
+  return 1
+}
+
+# 1 target
+# 2 origin
+# 3 solved
+# 4 isforce?
+_store() {
+  set -- "$1" "$2" "${3:-"$(realpath "$1")"}" "${4:-false}"
+  if [ -L "$1" ] && [ -e "$2" ] && [ "$3" = "$2" ]; then
+    info "Already managed."
+  else
+    [ -L "$1" ] && _restore_link "$1" "$3"
+    if file_exist "$2"; then
+      if $4; then
+        _del_r "$2"
+      else
+        error "\"$2\" is already in use."
+        ask "Replace? [y/N]: "
+        case "$RET" in
+          ( [Yy] )
+            _del_r "$2"
+            ;;
+          ( * )
+            log "Canceled."
+            return 0
+            ;;
+        esac
+      fi
+    fi
+    _move "$1" "$2"
+    _link "$2" "$1"
+  fi
+}
+
+# 1 target
+# 2 origin
+# 3 depth
+# 4 isforce?
+_store_recursive() {
+  _target="$1"
+  _origin="$2"
+  _counter="$3"
+  _opt_force="${4:-false}"
+
+  set -- "$_target"
+  while [ "$_counter" -gt 0 ] && [ $# -gt 0 ]; do
+    _counter=$((_counter - 1))
+    _temp_dirs=""
+    while [ $# -gt 0 ]; do
+      for t in "$1"/* "$1"/.*; do
+        base_name "$t"
+        case "$RET" in
+          ( "*" | ".*" | "." | ".." ) continue ;;
+          ( * )
+            if [ ! -e "$t" ]; then
+              error "File Not Found: \"$t\""
+              [ -L "$t" ] && info "File is broken symlink."
+              return 1
+            fi
+            t_s="$t"
+            [ -L "$t" ] && t_s="$(realpath "$t")"
+            path_without "$t" "$_target"
+            o="$_origin/$RET"
+            if [ "$_counter" -gt 0 ] && [ -d "$t" ]; then
+              [ -L "$t" ] && _restore_link "$t" "$t_s"
+              qesc "$t"
+              _temp_dirs="$_temp_dirs $RET"
+            else
+              _store "$t" "$o" "$t_s" "$_opt_force"
+            fi
+            ;;
+        esac
+      done
+      shift
+    done
+    eval "set -- $_temp_dirs"
+  done
+}
+
+# 1 target
+# 2 origin
+# 3 solved
+_restore() {
+  set -- "$1" "$2" "${3:-"$(realpath "$1")"}"
+  if [ -L "$1" ] && [ -e "$2" ] && [ "$3" = "$2" ]; then
+    info "Already managed."
+    _restore_link "$1" "$2"
+  else
+    info "\"$1\" is not managed."
+  fi
+}
+
+# 1 target
+# 2 origin
+# 3 depth
+_restore_recursive() {
+  _target="$1"
+  _origin="$2"
+  _counter="$3"
+
+  set -- "$_target"
+  while [ "$_counter" -gt 0 ] && [ $# -gt 0 ]; do
+    _counter=$((_counter - 1))
+    _temp_dirs=""
+    while [ $# -gt 0 ]; do
+      for t in "$1"/* "$1"/.*; do
+        base_name "$t"
+        case "$RET" in
+          ( "*" | ".*" | "." | ".." ) continue ;;
+          ( * )
+            if [ ! -e "$t" ]; then
+              error "File Not Found: \"$t\""
+              [ -L "$t" ] && info "File is broken symlink."
+              return 1
+            fi
+            t_s="$t"
+            [ -L "$t" ] && t_s="$(realpath "$t")"
+            path_without "$t" "$_target"
+            o="$_origin/$RET"
+            if [ $_counter -gt 0 ] && [ -d "$t" ]; then
+              [ -L "$t" ] && _restore_link "$t" "$t_s"
+              qesc "$t"
+              _temp_dirs="$_temp_dirs $RET"
+            else
+              _restore "$t" "$o" "$t_s"
+            fi
+            ;;
+        esac
+      done
+      shift
+    done
+    eval "set -- $_temp_dirs"
+  done
+}
+
+# 1 origin
+# 2 target
+# 3 solved
+# 4 isforce?
+_install_link() {
+  set -- "$1" "$2" "${3:-"$(realpath "$2")"}" "${4:-false}"
+  case "$3" in
+    ( "$1" )
+      info "\"$2\" is managed."
       ;;
-    uninstall )
-cat << EOL
-$ESC[m
-Usage$ESC[90m:
-  $ESC[32m$0 uninstall [opt]
-$ESC[m
-Options$ESC[90m:
-  $ESC[32m--help, -h     help
-  $ESC[32m--force, -f    force
-$ESC[m
-EOL
-      ;;
-    check )
-cat << EOL
-$ESC[m
-Usage$ESC[90m:
-  $ESC[32m$0 check [opt]
-$ESC[m
-Options$ESC[90m:
-  $ESC[32m--help, -h     help
-$ESC[m
-EOL
-      ;;
-    * )
-      error "Unknown Mode"
-      exit 8
+    ( * )
+      if file_exist "$2"; then
+        if $4; then
+          if [ -L "$2" ]; then
+            _unlink "$2"
+          else
+            _del_r "$2"
+          fi
+        else
+          error "\"$2\" is already in use."
+          ask "Replace? [y/N]: "
+          case "$RET" in
+            ( [Yy] )
+              if [ -L "$2" ]; then
+                _unlink "$2"
+              else
+                _del_r "$2"
+              fi
+              ;;
+            ( * )
+              log "Canceled."
+              return 0
+              ;;
+          esac
+        fi
+      fi
+      _link "$1" "$2"
       ;;
   esac
-fi
 }
 
-print_banner() {
-  if [ $COLUMNS -gt 49 ]; then
-    printf "$ESC[m"
-cat << EOL
-$ESC[38;2;050;100;200m ▄▄▄▄   ▄▄▄  ▄▄▄▄▄ ▄▄▄▄▄ ▄▄▄▄▄ ▄     ▄▄▄▄▄  ▄▄▄  
-$ESC[38;2;100;100;200m █   █ █   █   █   █       █   █     █     █   ▀ 
-$ESC[38;2;150;100;200m █   █ █   █   █   █▀▀▀    █   █     █▀▀▀   ▀▀▀▄ 
-$ESC[38;2;200;100;200m █▄▄▄▀ ▀▄▄▄▀   █   █     ▄▄█▄▄ █▄▄▄▄ █▄▄▄▄ ▀▄▄▄▀ 
-EOL
-    printf "$ESC[m"
-  else
-    echo " DOTFILES "
-  fi
-}
+# 1 origin
+# 2 target
+# 3 depth
+# 4 isforce?
+_install_link_recursive() {
+  _origin="$1"
+  _target="$2"
+  _counter="$3"
+  _opt_force="${4:-false}"
 
-log() {
-  printf " $ESC[90m[$ESC[37mL$ESC[90m] $ESC[m%s$ESC[m\n" "$*"
-}
-info() {
-  printf " $ESC[90m[$ESC[36mI$ESC[90m] $ESC[m%s$ESC[m\n" "$*"
-}
-success() {
-  printf " $ESC[90m[$ESC[32mS$ESC[90m] $ESC[m%s$ESC[m\n" "$*"
-}
-warn() {
-  printf " $ESC[90m[$ESC[33mW$ESC[90m] $ESC[m%s$ESC[m\n" "$*"
-}
-error() {
-  printf " $ESC[90m[$ESC[31mE$ESC[90m] $ESC[m%s$ESC[m\n" "$*"
-}
-unknown() {
-  printf " $ESC[90m[$ESC[35mU$ESC[90m] $ESC[m%s$ESC[m\n" "$*"
-}
-
-
-
-add_link() {
-  dir="`dirname "$2"`"
-  if [ ! -d "$dir" ]; then
-    mkdir -p "$dir"
-    success "mk dir: \"$dir\""
-  fi
-  ln -s "$1" "$2"
-  success "mk link: \"$1\" ---> \"$2\""
-}
-del_link() {
-  unlink "$1"
-  success "rm link: \"$1\""
-}
-del_file() {
-  rm -f "$1"
-  success "rm file: \"$1\""
-}
-del_dir() {
-  rm -rf "$1"
-  success "rm dir: \"$1\""
-}
-
-
-dot() {
-  first_path=""
-  second_path=""
-  
-  opt_recursive=false
-  
-  mode_opt_install=true
-  mode_opt_uninstall=true
-  mode_opt_check=true
-  mode_opt_need_reset=true
-  
-  reset_mode_opt() {
-    mode_opt_install=false
-    mode_opt_uninstall=false
-    mode_opt_check=false
-    mode_opt_need_reset=false
-  }
-  
-  for opt in "$@"; do
-    opt="`echo $opt`"
-    if [ ${#opt} -ne 0 ]; then
-      case "$opt" in
-        --install | -i )
-          if $mode_opt_need_reset; then
-            reset_mode_opt
-          fi
-          mode_opt_install=true
-          ;;
-        --uninstall | -u )
-          if $mode_opt_need_reset; then
-            reset_mode_opt
-          fi
-          mode_opt_uninstall=true
-          ;;
-        --check | -c )
-          if $mode_opt_need_reset; then
-            reset_mode_opt
-          fi
-          mode_opt_check=true
-          ;;
-        --recursive | -r )
-          opt_recursive=true
-          ;;
-        -* )
-          _opt="`echo "$opt" | cut -c 2-`"
-          for i in `seq ${#_opt}`; do
-            o="`echo $_opt | cut -c $i`"
-            case "$o" in
-              i )
-                if $mode_opt_need_reset; then
-                  reset_mode_opt
-                fi
-                mode_opt_install=true
-                ;;
-              u )
-                if $mode_opt_need_reset; then
-                  reset_mode_opt
-                fi
-                mode_opt_uninstall=true
-                ;;
-              c )
-                if $mode_opt_need_reset; then
-                  reset_mode_opt
-                fi
-                mode_opt_check=true
-                ;;
-              r )
-                opt_recursive=true
-                ;;
-              * )
-                error "invalid argument"
-                info "dot : $*"
-                exit 7
-                ;;
-            esac
-          done
-          ;;
-        * )
-          if [ "$first_path" = "" ]; then
-            first_path="$opt"
-          elif [ "$second_path" = "" ]; then
-            second_path="$opt"
-          else
-            error "invalid argument"
-            info "dot : $*"
-            exit 6
-          fi
-          ;;
-      esac
-    fi
-  done
-  if [ "$first_path" = "" ]; then
-    error "invalid argument"
-    info "dot : $*"
-    exit 6
-  elif [ "$second_path" = "" ]; then
-    second_path="$first_path"
-  fi
-  
-  [ $mode_opt_install = false -a "$mode" = "install" ] && return 0
-  [ $mode_opt_uninstall = false -a "$mode" = "uninstall" ] && return 0
-  [ $mode_opt_check = false -a "$mode" = "check" ] && return 0
-  
-  first_full_path="$DOTFILES_DIR/files/$first_path"
-  second_full_path="$TARGET_DIR/$second_path"
-  
-  if $opt_recursive; then
-    if [ ! -d "$first_full_path" ]; then
-      error "\"$first_full_path\" is not dir."
-      exit 10
-    else
-      for file in "$first_full_path"/*; do
-        push first_path second_path
-        file_basename="`basename "$file"`"
-        _first_path="$first_path/$file_basename"
-        _second_path="$second_path/$file_basename"
-        _first_full_path="$DOTFILES_DIR/files/$_first_path"
-        _second_full_path="$TARGET_DIR/$_second_path"
-        if [ -d "$_first_full_path" ]; then
-          dot "$_first_path" "$_second_path" -r
-        else
-          dot "$_first_path" "$_second_path"
-        fi
-        pop first_path second_path
+  set -- "$_origin"
+  while [ "$_counter" -gt 0 ] && [ $# -gt 0 ]; do
+    _counter=$((_counter - 1))
+    _temp_dirs=""
+    while [ $# -gt 0 ]; do
+      for o in "$1"/* "$1"/.*; do
+        base_name "$o"
+        case "$RET" in
+          ( "*" | ".*" | "." | ".." ) continue ;;
+          ( * )
+            if [ ! -e "$o" ]; then
+              error "File Not Found: \"$o\""
+              [ -L "$o" ] && info "File is broken symlink."
+              return 1
+            fi
+            path_without "$o" "$_origin"
+            t="$_target/$RET"
+            if [ -L "$t" ]; then
+              t_s="$(realpath "$t")"
+            else
+              t_s="$t"
+            fi
+            if [ $_counter -gt 0 ] && [ -d "$o" ]; then
+              qesc "$o"
+              _temp_dirs="$_temp_dirs $RET"
+            else
+              _install_link "$o" "$t" "$t_s" "$_opt_force"
+            fi
+            ;;
+        esac
       done
-      return
-    fi
-  fi
-  
-  if [ "$mode" = "check" ]; then
-    check "$first_full_path" "$second_full_path"
-  elif [ "$mode" = "install" ]; then
-    install "$first_full_path" "$second_full_path"
-  elif [ "$mode" = "uninstall" ]; then
-    uninstall "$first_full_path" "$second_full_path"
-  fi
-  
+      shift
+    done
+    eval "set -- $_temp_dirs"
+  done
 }
 
-_check_count=0
-check() {
-  if [ ! -e "$1" ]; then
-    error "\"$1\" is not found."
-    exit 100
-  elif [ -e "$2" -o -L "$2" ]; then
-    if [ -L "$2" ]; then
-      _link="`readlink -n "$2"`"
-      if [ "$1" = "$_link" ]; then
-        success "\"$2\" is installed."
-      else
-        warn "\"$2\" is unknown symlink."
-      fi
-    else
-      warn "\"$2\" is not symlink."
-    fi
-  else
-    warn "\"$2\" is not found."
-  fi
-  _check_count="`expr $_check_count + 1`"
+
+# 1 origin
+# 2 target
+# 3 solved
+_uninstall_unlink() {
+  set -- "$1" "$2" "${3:-"$(realpath "$2")"}"
+  case "$3" in
+    ( "$1" )
+      info "\"$2\" is managed."
+      _unlink "$2"
+      ;;
+    ( * )
+      info "\"$2\" is not managed."
+      ;;
+  esac
 }
 
-_install_count=0
-install() {
-  if [ ! -e "$1" ]; then
-    error "\"$1\" is not found."
-    exit 100
-  elif [ -e "$2" -o -L "$2" ]; then
-    if [ -L "$2" ]; then
-      _link="`readlink -n "$2"`"
-      if [ "$1" = "$_link" ]; then
-        success "\"$2\" is already installed."
-      else
-        warn "\"$2\" is already exist."
-        info "\"$2\" is symlink."
-        printf "Overwrite? [y/n]: "
-        if $opt_force; then
-          _KEY="y"
-        else
-          _KEY="`get_key`"
-        fi
-        if [ "$_KEY" = "y" ]; then
-          echo "OVERWRITE!"
-          del_link "$2"
-          add_link "$1" "$2"
-        else
-          echo "SKIP!"
-        fi
-      fi
-    elif [ -f "$2" ]; then
-      warn "\"$2\" is already exist."
-      info "\"$2\" is file."
-      printf "Overwrite? [y/n]: "
-      if $opt_force; then
-        _KEY="y"
-      else
-        _KEY="`get_key`"
-      fi
-      if [ "$_KEY" = "y" ]; then
-        echo "OVERWRITE!"
-        del_file "$2"
-        add_link "$1" "$2"
-      else
-        echo "SKIP!"
-      fi
-    elif [ -d "$2" ]; then
-      warn "\"$2\" is already exist."
-      info "\"$2\" is dir."
-      printf "Overwrite? [y/n]: "
-      if $opt_force; then
-        _KEY="y"
-      else
-        _KEY="`get_key`"
-      fi
-      if [ "$_KEY" = "y" ]; then
-        echo "OVERWRITE!"
-        del_dir "$2"
-        add_link "$1" "$2"
-      else
-        echo "SKIP!"
-      fi
-    else
-      warn "\"$2\" is already exist."
-      info "\"$2\" is not file or dir or symlink."
-      info " < SKIPPED > "
-    fi
-  else
-    add_link "$1" "$2"
-  fi
-  _install_count="`expr $_install_count + 1`"
+# 1 origin
+# 2 target
+# 3 depth
+_uninstall_unlink_recursive() {
+  _origin="$1"
+  _target="$2"
+  _counter="$3"
+
+  set -- "$_origin"
+  while [ "$_counter" -gt 0 ] && [ $# -gt 0 ]; do
+    _counter=$((_counter - 1))
+    _temp_dirs=""
+    while [ $# -gt 0 ]; do
+      for o in "$1"/* "$1"/.*; do
+        base_name "$o"
+        case "$RET" in
+          ( "*" | ".*" | "." | ".." ) continue ;;
+          ( * )
+            if [ ! -e "$o" ]; then
+              error "File Not Found: \"$o\""
+              [ -L "$o" ] && info "File is broken symlink."
+              return 1
+            fi
+            path_without "$o" "$_origin"
+            t="$_target/$RET"
+            if [ -L "$t" ]; then
+              t_s="$(realpath "$t")"
+            else
+              t_s="$t"
+            fi
+            if [ $_counter -gt 0 ] && [ -d "$o" ]; then
+              qesc "$o"
+              _temp_dirs="$_temp_dirs $RET"
+            else
+              _uninstall_unlink "$o" "$t" "$t_s"
+            fi
+            ;;
+        esac
+      done
+      shift
+    done
+    eval "set -- $_temp_dirs"
+  done
 }
 
-_uninstall_count=0
-uninstall() {
-  if [ ! -e "$1" ]; then
-    error "\"$1\" is not found."
-    exit 100
-  elif [ -e "$2" -o -L "$2" ]; then
-    if [ -L "$2" ]; then
-      _link="`readlink -n "$2"`"
-      if [ "$1" = "$_link" ]; then
-        del_link "$2"
-      else
-        warn "\"$2\" is unknown symlink."
-      fi
-    else
-      warn "\"$2\" is not symlink."
-    fi
-  else
-    success "\"$2\" is already uninstalled."
-  fi
-  _uninstall_count="`expr $_uninstall_count + 1`"
+
+# 1 origin
+# 2 target
+# 3 solved
+_verify_check() {
+  set -- "$1" "$2" "${3:-"$(realpath "$2")"}"
+  case "$3" in
+    ( "$1" )
+      info "\"$2\" is managed."
+      ;;
+    ( * )
+      info "\"$2\" is not managed."
+      ;;
+  esac
 }
 
+# 1 origin
+# 2 target
+# 3 depth
+_verify_check_recursive() {
+  _origin="$1"
+  _target="$2"
+  _counter="$3"
+
+  set -- "$_origin"
+  while [ "$_counter" -gt 0 ] && [ $# -gt 0 ]; do
+    _counter=$((_counter - 1))
+    _temp_dirs=""
+    while [ $# -gt 0 ]; do
+      for o in "$1"/* "$1"/.*; do
+        base_name "$o"
+        case "$RET" in
+          ( "*" | ".*" | "." | ".." ) continue ;;
+          ( * )
+            if [ ! -e "$o" ]; then
+              error "File Not Found: \"$o\""
+              [ -L "$o" ] && info "File is broken symlink."
+              return 1
+            fi
+            path_without "$o" "$_origin"
+            t="$_target/$RET"
+            if [ -L "$t" ]; then
+              t_s="$(realpath "$t")"
+            else
+              t_s="$t"
+            fi
+            if [ $_counter -gt 0 ] && [ -d "$o" ]; then
+              qesc "$o"
+              _temp_dirs="$_temp_dirs $RET"
+            else
+              _verify_check "$o" "$t" "$t_s"
+            fi
+            ;;
+        esac
+      done
+      shift
+    done
+    eval "set -- $_temp_dirs"
+  done
+}
