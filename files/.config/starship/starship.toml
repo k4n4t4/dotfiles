@@ -12,8 +12,8 @@ disabled = true
 
 [username]
 show_always = true
-style_user = 'fg:#509050'
-style_root = 'fg:#905050'
+style_user = 'green'
+style_root = 'red'
 format = '[$user]($style)'
 disabled = false
 
@@ -23,13 +23,19 @@ truncate_to_repo = false
 truncation_symbol = '.../'
 read_only_style = 'red'
 read_only = '#'
-style = 'bold cyan'
+style = 'bold yellow'
 format = '[$read_only]($read_only_style)[$path]($style)'
 disabled = false
 
+[git_branch]
+always_show_remote = false
+symbol = '@'
+format = '[$symbol$branch(:$remote_branch)]($style)'
+disabled = false
+
 [character]
-success_symbol = '[=>](bold green)'
-error_symbol   = '[->](bold red)'
+success_symbol = '[>](bold black)'
+error_symbol   = '[>](bold red)'
 format = '$symbol'
 disabled = false
 
