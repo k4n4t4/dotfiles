@@ -65,6 +65,8 @@ _install() {
       error "To specify a directory, you must use the -r option."
       return 1
   fi
+  abs_path "$origin"
+  origin="$RET"
 
   # (target)
   target="${2:-"$1"}"
@@ -81,6 +83,8 @@ _install() {
     error "To use the -r option, it must be a directory."
     return 1
   fi
+  abs_path "$target"
+  target="$RET"
 
 
   if $opt_recursive; then

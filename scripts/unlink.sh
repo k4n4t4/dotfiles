@@ -61,6 +61,8 @@ _uninstall() {
       error "To specify a directory, you must use the -r option."
       return 1
   fi
+  abs_path "$origin"
+  origin="$RET"
 
   # (target)
   target="${2:-"$1"}"
@@ -77,6 +79,8 @@ _uninstall() {
     info "To use the -r option, it must be a directory."
     return 0
   fi
+  abs_path "$target"
+  target="$RET"
 
 
   if $opt_recursive; then
