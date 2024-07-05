@@ -1,5 +1,7 @@
-dot ".fonts.conf"
 dot "bin" -r
+dot "../dm" "bin/dm"
+
+dot ".fonts.conf"
 dot ".profile"
 
 cmd_exist bash && {
