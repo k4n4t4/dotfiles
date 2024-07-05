@@ -1,0 +1,43 @@
+format = '''
+$username $directory $all
+ $character '''
+
+add_newline     = false
+scan_timeout    = 30
+command_timeout = 500
+follow_symlinks = true
+
+[line_break]
+disabled = true
+
+[username]
+show_always = true
+style_user = 'fg:#509050'
+style_root = 'fg:#905050'
+format = '[$user]($style)'
+disabled = false
+
+[directory]
+truncation_length = 5
+truncate_to_repo = false
+truncation_symbol = '.../'
+read_only_style = 'red'
+read_only = '#'
+style = 'bold cyan'
+format = '[$read_only]($read_only_style)[$path]($style)'
+disabled = false
+
+[character]
+success_symbol = '[=>](bold green)'
+error_symbol   = '[->](bold red)'
+format = '$symbol'
+disabled = false
+
+[cmd_duration]
+min_time = 1_000
+show_milliseconds = true
+show_notifications = false
+min_time_to_notify = 30_000
+style = 'italic blue'
+format = '[$duration]($style)'
+disabled = false

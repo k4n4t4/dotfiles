@@ -39,3 +39,8 @@ cmd_exist alacritty && {
   dot ".config/alacritty/alacritty.yml"
   dot ".config/alacritty/alacritty.toml"
 }
+
+cmd_exist starship && {
+  dot '.config/starship/starship.toml' '.config/starship.toml'
+}
+
