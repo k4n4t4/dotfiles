@@ -1,5 +1,5 @@
 format = '''
-$username $directory $all
+$username $directory $git_branch $all
  $character '''
 
 add_newline     = false
