@@ -160,6 +160,9 @@ main() {
       usage "$@"
       return $?
       ;;
+    ( config )
+      $EDITOR "$WORK_PATH/config.sh"
+      ;;
 
     ( new  | n )
       shift
