@@ -44,9 +44,14 @@ if ! shopt -oq posix; then
   fi
 fi
 
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
-eval "$(zoxide init bash)"
+if [ -e /home/linuxbrew/.linuxbrew/bin/brew ]; then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+if type zoxide > /dev/null 2>&1; then
+  eval "$(zoxide init bash)"
+fi
 
 if [ -f ~/.fzf.bash ]; then
   source ~/.fzf.bash
