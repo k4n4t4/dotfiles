@@ -133,4 +133,6 @@ zinit light zsh-users/zsh-syntax-highlighting
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-eval "$(starship init zsh)"
+if type starship > /dev/null 2>&1 ; then
+  eval "$(starship init zsh)"
+fi

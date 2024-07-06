@@ -44,14 +44,18 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export PS1=" \[\e[34m\]\w \[\e[33m\]\$? \[\e[90m\]\\\$\[\e[m\] "
-
-eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 eval "$(zoxide init bash)"
 
-if type "starship" > /dev/null 2>&1 ; then
+if type starship > /dev/null 2>&1; then
   eval "$(starship init bash)"
 fi
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+if [ -f ~/.fzf.bash ]; then
+  source ~/.fzf.bash
+fi
+
+if [ -e ~/.local/share/blesh/ble.sh ]; then
+  source ~/.local/share/blesh/ble.sh
+fi
