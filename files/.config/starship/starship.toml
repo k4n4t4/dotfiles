@@ -18,19 +18,19 @@ format = '[$symbol]($style)'
 disabled = false
 
 [status]
-symbol = '-'
-success_symbol = '+'
-not_executable_symbol = '='
-not_found_symbol = '?'
-sigint_symbol = '/'
-signal_symbol = '%'
+symbol = ''
+success_symbol = ''
+not_executable_symbol = ''
+not_found_symbol = ''
+sigint_symbol = ''
+signal_symbol = ''
 recognize_signal_code = true
 map_symbol = true
 pipestatus = true
 pipestatus_separator = '|'
-pipestatus_format = '$pipestatus [$symbol$common_meaning$signal_name$maybe_int]($style)'
 style = 'bold red'
-format = '[$symbol$status]($style)'
+format = '[$status](red)[([:](dimmed white)$common_meaning$signal_name)]($style)'
+pipestatus_format = '[$pipestatus](dimmed white)'
 disabled = false
 
 [jobs]
@@ -129,8 +129,12 @@ format = '[$symbol$branch(:$remote_branch)]($style)'
 disabled = false
 
 [character]
-success_symbol = '[>](bold black)'
-error_symbol   = '[>](bold red)'
+success_symbol = '[>](dimmed white)'
+error_symbol   = '[>](dimmed red)'
+vimcmd_symbol              = '[V](dimmed green)'
+vimcmd_replace_one_symbol  = '[V](dimmed yellow)'
+vimcmd_replace_symbol      = '[V](dimmed bright-yellow)'
+vimcmd_visual_symbol       = '[V](dimmed bright-purple)'
 format = '$symbol'
 disabled = false
 

@@ -12,6 +12,7 @@ function fish_user_key_bindings
   bind \c] 'cdg (commandline)'
   bind \cv 'commandline -i (set | awk \'{print $1}\' | fzf)'
   bind \cb 'commandline -i (fd -H | fzf --preview \'bat --style=numbers --color=always --line-range :300 {}\')'
-end
 
-fzf --fish | source
+  fish_hybrid_key_bindings
+  fzf --fish | source
+end
