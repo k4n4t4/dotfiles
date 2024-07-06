@@ -1,6 +1,6 @@
 format = """
-$hostname$username$directory $git_branch$git_commit$git_state$git_metrics$git_status $all
-$os$container$shell$shlvl $sudo$character """
+$os$container$shell$shlvl$directory $git_branch$git_commit$git_state$git_metrics$git_status $all
+$hostname$username $sudo$character """
 
 right_format = """
 $custom$battery$cmd_duration$jobs$status$time"""
