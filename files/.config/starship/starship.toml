@@ -1,11 +1,100 @@
-format = '''
-$username $directory $git_branch $all
- $character '''
+format = """
+$hostname$username$directory $git_branch$git_commit$git_state$git_metrics$git_status $all
+$os$container$shell$shlvl $sudo$character """
+
+right_format = """
+$custom$battery$cmd_duration$jobs$status$time"""
 
 add_newline     = false
 scan_timeout    = 30
 command_timeout = 500
 follow_symlinks = true
+
+
+[sudo]
+symbol = '*'
+style = 'bold bright-red'
+format = '[$symbol]($style)'
+disabled = false
+
+[status]
+symbol = '-'
+success_symbol = '+'
+not_executable_symbol = '='
+not_found_symbol = '?'
+sigint_symbol = '/'
+signal_symbol = '%'
+recognize_signal_code = true
+map_symbol = true
+pipestatus = true
+pipestatus_separator = '|'
+pipestatus_format = '$pipestatus [$symbol$common_meaning$signal_name$maybe_int]($style)'
+style = 'bold red'
+format = '[$symbol$status]($style)'
+disabled = false
+
+[jobs]
+threshold = 1
+symbol_threshold = 1
+number_threshold = 2
+symbol = '+'
+style = "bold blue"
+format = '[$symbol$number]($style)'
+disabled = false
+
+[time]
+use_12hr = false
+style = 'purple'
+format = '[$time]($style)'
+disabled = false
+
+[battery]
+full_symbol = '='
+charging_symbol = '+'
+discharging_symbol = '-'
+unknown_symbol = '?'
+empty_symbol = '_'
+format = '[$symbol$percentage]($style)'
+disabled = false
+
+[[battery.display]]
+threshold = 10
+style = 'bold red'
+
+[[battery.display]]
+threshold = 30
+style = 'bold yellow'
+
+[[battery.display]]
+threshold = 50
+style = 'bold green'
+
+[[battery.display]]
+threshold = 100
+style = 'bold bright-green'
+
+[os]
+style = 'white'
+format = '[$name]($style)'
+disabled = false
+
+[container]
+disabled = false
+
+[shell]
+bash_indicator = 'bash'
+fish_indicator = 'fish'
+unknown_indicator = '?'
+style = 'bright-green'
+format = '[$indicator]($style)'
+disabled = false
+
+[shlvl]
+threshold = 2
+symbol = '*'
+style = 'yellow'
+format = '[$symbol]($style)[$shlvl](bold $style)'
+disabled = false
 
 [line_break]
 disabled = true
@@ -15,6 +104,12 @@ show_always = true
 style_user = 'green'
 style_root = 'red'
 format = '[$user]($style)'
+disabled = false
+
+[hostname]
+ssh_only = false
+style = 'dimmed green'
+format = '[$ssh_symbol$hostname]($style)'
 disabled = false
 
 [directory]
@@ -46,4 +141,10 @@ show_notifications = false
 min_time_to_notify = 30_000
 style = 'italic blue'
 format = '[$duration]($style)'
+disabled = false
+
+[package]
+display_private = true
+version_format = 'v$raw'
+format = '[$symbol$varsion]($style)'
 disabled = false
