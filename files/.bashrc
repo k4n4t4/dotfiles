@@ -48,14 +48,14 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 eval "$(zoxide init bash)"
 
-if type starship > /dev/null 2>&1; then
-  eval "$(starship init bash)"
-fi
-
 if [ -f ~/.fzf.bash ]; then
   source ~/.fzf.bash
 fi
 
 if [ -e ~/.local/share/blesh/ble.sh ]; then
   source ~/.local/share/blesh/ble.sh
+fi
+
+if type starship > /dev/null 2>&1; then
+  eval "$(starship init bash)"
 fi
