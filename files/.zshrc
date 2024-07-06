@@ -44,7 +44,9 @@ PATH="/usr/local/sbin:$PATH"
 PATH="/usr/sbin:$PATH"
 PATH="/sbin:$PATH"
 
-eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+if [ -e /home/linuxbrew/.linuxbrew/bin/brew ]; then
+  eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+fi
 
 export LANG=C
 export CLICOLOR=1
