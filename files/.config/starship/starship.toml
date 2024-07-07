@@ -1,9 +1,9 @@
 format = """
-$os$container$shell$shlvl$directory$git_branch$git_commit$git_state$git_status$git_metrics$package
+$container$shell$shlvl$directory$git_branch$git_commit$git_state$git_status$git_metrics$package
 $hostname$username $sudo$character """
 
 right_format = """
-$custom$battery$cmd_duration$jobs$status$time"""
+$battery$cmd_duration$jobs$status$time"""
 
 continuation_prompt = '[ > ](dimmed blue)'
 
@@ -78,7 +78,7 @@ style = 'bold bright-green'
 [os]
 style = 'white'
 format = '[$name]($style)'
-disabled = false
+disabled = true
 
 [container]
 disabled = false
@@ -109,7 +109,7 @@ format = '[$user]($style)'
 disabled = false
 
 [hostname]
-ssh_only = false
+ssh_only = true
 style = 'dimmed green'
 format = '[$ssh_symbol$hostname]($style)'
 disabled = false
