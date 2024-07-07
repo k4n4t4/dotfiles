@@ -5,7 +5,8 @@ format = """
 ($directory )\
 $git_branch$git_commit$git_state$git_status$git_metrics\
 $package\
-\n( $username)( $sudo) $character \
+$line_break\
+( $username)( $sudo) $character \
 """
 
 right_format = """
@@ -109,7 +110,7 @@ format = '[$symbol](dimmed white)[$shlvl](bold $style)'
 disabled = false
 
 [line_break]
-disabled = true
+disabled = false
 
 [username]
 show_always = false
