@@ -131,9 +131,9 @@ disabled = false
 [character]
 success_symbol = '[>](dimmed white)'
 error_symbol   = '[>](dimmed red)'
-vimcmd_symbol              = '[V](dimmed green)'
-vimcmd_replace_one_symbol  = '[V](dimmed yellow)'
-vimcmd_replace_symbol      = '[V](dimmed bright-yellow)'
+vimcmd_symbol              = '[N](dimmed green)'
+vimcmd_replace_one_symbol  = '[R](dimmed yellow)'
+vimcmd_replace_symbol      = '[R](dimmed bright-yellow)'
 vimcmd_visual_symbol       = '[V](dimmed bright-purple)'
 format = '$symbol'
 disabled = false
