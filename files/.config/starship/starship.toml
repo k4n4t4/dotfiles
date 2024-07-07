@@ -147,9 +147,9 @@ commit_hash_length = 7
 only_detached = true
 tag_disabled = false
 tag_max_candidates = 0
-tag_symbol = '^'
+tag_symbol = ''
 style = 'bold green'
-format = '[$hash]($style)[$tag](bold dimmed green)'
+format = '([<](dimmed white)[$hash]($style)([:](dimmed white)[$tag](bold dimmed green))[>](dimmed white))'
 disabled = false
 
 [git_state]
@@ -160,8 +160,8 @@ cherry_pick  = 'CP'
 bisect       = 'BI'
 am           = 'AM'
 am_or_rebase = 'AM/RB'
-style = 'bold white'
-format = '[$state($progress_current/$progress_total)]($style)'
+style = 'bold cyan'
+format = '([{](dimmed white)[$state([:](dimmed white)[$progress_current/$progress_total](white))]($style)[}](dimmed white))'
 disabled = false
 
 [git_status]
@@ -169,8 +169,8 @@ conflicted  = '[=](bold bright-red)'
 ahead       = '[↑](bright-green)'
 behind      = '[↓](bright-red)'
 diverged    = '[↕](bright-blue)({([↑$ahead_count](green))([↓$behind_count](red))})'
-untracked   = '[?$count](bright-blue)'
-stashed     = '[\$$count](bright-blue)'
+untracked   = '[?](bright-blue)'
+stashed     = '[\$](bright-blue)'
 staged      = '[+](bright-green)'
 modified    = '[!](bright-yellow)'
 renamed     = '[→](bright-yellow)'
@@ -179,7 +179,7 @@ up_to_date  = ''
 typechanged = 't'
 ignore_submodules = false
 style = 'dimmed white'
-format = '[(\[[$all_status$ahead_behind]($style)\])]($style)'
+format = '([\[[$all_status$ahead_behind]($style)\]]($style))'
 disabled = false
 
 [git_metrics]
@@ -187,7 +187,7 @@ only_nonzero_diffs = true
 ignore_submodules = false
 added_style = 'dimmed green'
 deleted_style = 'dimmed red'
-format = '[(\([$added]($added_style))([$deleted]($deleted_style)\))](dimmed white)'
+format = '([\([$added]($added_style)[$deleted]($deleted_style)\)](dimmed white))'
 disabled = false
 
 [character]
