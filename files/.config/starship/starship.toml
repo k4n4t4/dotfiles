@@ -1,9 +1,11 @@
 format = """
-$os$container$shell$shlvl$directory $git_branch$git_commit$git_state$git_metrics$git_status $all
+$os$container$shell$shlvl$directory$git_branch$git_commit$git_state$git_status$git_metrics$package
 $hostname$username $sudo$character """
 
 right_format = """
 $custom$battery$cmd_duration$jobs$status$time"""
+
+continuation_prompt = '[ > ](dimmed blue)'
 
 add_newline     = false
 scan_timeout    = 30
@@ -38,7 +40,7 @@ threshold = 1
 symbol_threshold = 1
 number_threshold = 2
 symbol = '+'
-style = "bold blue"
+style = 'bold blue'
 format = '[$symbol$number]($style)'
 disabled = false
 
@@ -128,6 +130,54 @@ symbol = '@'
 format = '[$symbol$branch(:$remote_branch)]($style)'
 disabled = false
 
+[git_commit]
+commit_hash_length = 7
+only_detached = true
+tag_disabled = false
+tag_max_candidates = 0
+tag_symbol = '^'
+style = 'bold green'
+format = '[$hash]($style)[$tag](bold dimmed green)'
+disabled = false
+
+[git_state]
+rebase       = 'RB'
+merge        = 'MR'
+revert       = 'RV'
+cherry_pick  = 'CP'
+bisect       = 'BI'
+am           = 'AM'
+am_or_rebase = 'AM/RB'
+style = 'bold white'
+format = '[$state($progress_current/$progress_total)]($style)'
+disabled = false
+
+[git_status]
+conflicted  = '=$count'
+ahead       = '↑$count'
+behind      = '↓$count'
+diverged    = '↕(\[(↑$ahead_count)(↓$behind_count)\])'
+untracked   = '?$count'
+stashed     = '\$$count'
+modified    = '!$count'
+staged      = '+$count'
+renamed     = '→$count'
+deleted     = 'x$count'
+up_to_date  = 'u'
+typechanged = 't'
+ignore_submodules = false
+style = 'bold red'
+format = '([$all_status$ahead_behind]($style))'
+disabled = false
+
+[git_metrics]
+only_nonzero_diffs = true
+ignore_submodules = false
+added_style = 'dimmed green'
+deleted_style = 'dimmed red'
+format = '([+$added]($added_style))([-$deleted]($deleted_style))'
+disabled = false
+
 [character]
 success_symbol = '[>](dimmed white)'
 error_symbol   = '[>](dimmed red)'
@@ -148,7 +198,9 @@ format = '[$duration]($style)'
 disabled = false
 
 [package]
-display_private = true
-version_format = 'v$raw'
+display_private = false
+version_format = '$raw'
+symbol = '&'
+style = 'bold dimmed yellow'
 format = '[$symbol$varsion]($style)'
 disabled = false
