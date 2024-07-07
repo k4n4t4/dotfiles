@@ -65,7 +65,7 @@ discharging_symbol = '-'
 unknown_symbol     = '?'
 empty_symbol       = '_'
 format = '[$symbol$percentage]($style)'
-disabled = false
+disabled = true
 
 [[battery.display]]
 threshold = 10
