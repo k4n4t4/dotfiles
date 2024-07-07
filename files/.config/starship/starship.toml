@@ -81,6 +81,9 @@ format = '[$name]($style)'
 disabled = true
 
 [container]
+symbol = ''
+style = 'bold dimmed blue'
+format = '[$name]($style)'
 disabled = false
 
 [shell]
