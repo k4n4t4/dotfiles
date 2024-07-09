@@ -21,6 +21,10 @@ command_timeout = 500
 follow_symlinks = true
 
 
+[profiles]
+transient_prompt = """ $character """
+transient_rprompt = """ $time """
+
 [sudo]
 symbol = '*'
 style = 'bold bright-red'

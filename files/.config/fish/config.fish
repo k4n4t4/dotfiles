@@ -12,10 +12,10 @@ end
 
 if type -q starship
   function starship_transient_prompt_func
-    starship module character
+    starship prompt --profile transient_prompt
   end
   function starship_transient_rprompt_func
-    starship module time
+    starship prompt --profile transient_rprompt
   end
   starship init fish | source
   enable_transience
