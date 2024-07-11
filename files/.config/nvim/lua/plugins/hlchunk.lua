@@ -10,7 +10,7 @@ return {
       enable = false
     },
     line_num = {
-      enable = true
+      enable = false
     },
     blank = {
       enable = false
