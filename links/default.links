@@ -28,8 +28,7 @@ cmd_exist vim && {
 }
 
 cmd_exist nvim && {
-  dot ".config/nvim/init.lua"
-  dot ".config/nvim/lua"
+  dot ".config/nvim" -r -d 1
 }
 
 cmd_exist tmux && {

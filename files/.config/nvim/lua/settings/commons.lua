@@ -1,11 +1,15 @@
+
+-- encoding
 vim.scriptencoding = "utf-8"
 vim.opt.encoding = "utf-8"
 vim.opt.fileencoding = "utf-8"
 
+-- number
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.signcolumn = "yes"
 
+-- characters
 vim.opt.list = true
 vim.opt.listchars = {
   tab      = ">-",
