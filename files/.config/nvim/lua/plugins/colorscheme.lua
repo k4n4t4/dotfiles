@@ -11,19 +11,18 @@ return {
     },
     config = function()
       require("onedark").load()
-      vim.cmd [[
-        highlight Normal guibg=none, ctermbg=none
-        highlight NonText guibg=none, ctermbg=none
-        highlight LineNr guibg=none, ctermbg=none
-        highlight SignColumn guibg=none, ctermbg=none
-        highlight TabLine guibg=none, ctermbg=none
-        highlight TabLineFill guibg=none, ctermbg=none
-        highlight Folded guibg=none, ctermbg=none
-        highlight EndOfBuffer guibg=none, ctermbg=none
 
-        highlight NvimTreeNormal guibg=none, ctermbg=none
-        highlight NvimTreeEndOfBuffer guibg=none, ctermbg=none
-      ]]
+      vim.cmd.highlight { "Normal",              "guibg=none", "ctermbg=none" }
+      vim.cmd.highlight { "NonText",             "guibg=none", "ctermbg=none" }
+      vim.cmd.highlight { "LineNr",              "guibg=none", "ctermbg=none" }
+      vim.cmd.highlight { "SignColumn",          "guibg=none", "ctermbg=none" }
+      vim.cmd.highlight { "TabLine",             "guibg=none", "ctermbg=none" }
+      vim.cmd.highlight { "TabLineFill",         "guibg=none", "ctermbg=none" }
+      vim.cmd.highlight { "Folded",              "guibg=none", "ctermbg=none" }
+      vim.cmd.highlight { "EndOfBuffer",         "guibg=none", "ctermbg=none" }
+
+      vim.cmd.highlight { "NvimTreeNormal",      "guibg=none", "ctermbg=none" }
+      vim.cmd.highlight { "NvimTreeEndOfBuffer", "guibg=none", "ctermbg=none" }
     end,
   },
 }
