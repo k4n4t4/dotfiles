@@ -67,6 +67,7 @@ vim.opt.belloff = "all"
 vim.opt.visualbell = true
 vim.opt.errorbells = false
 
+vim.opt.shortmess:append 'I'
 
 vim.opt.smarttab = true
 vim.opt.expandtab = true
