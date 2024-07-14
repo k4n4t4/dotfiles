@@ -162,7 +162,7 @@ function status_line()
   local mode = status_mode()
   return (
     "%#"..mode.color.."#"..mode.name.."%*" ..
-    ":%f%h%m%r" ..
+    " %f%h%m%r" ..
     " "..status_diagnostic() ..
     "%=%<" ..
     status_encoding().." " ..
