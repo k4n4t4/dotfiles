@@ -86,6 +86,10 @@ if type sl > /dev/null 2>&1; then
   alias all=sl -al
 fi
 
+if type tmux > /dev/null 2>&1; then
+  export TMUX_SHELL="$(which zsh)"
+fi
+
 if type git > /dev/null 2>&1; then
   alias g="git"
   alias ga="git add"

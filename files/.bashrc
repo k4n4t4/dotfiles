@@ -44,6 +44,9 @@ if ! shopt -oq posix; then
   fi
 fi
 
+if type tmux > /dev/null 2>&1; then
+  export TMUX_SHELL="$(which bash)"
+fi
 
 PATH="$HOME/bin:$PATH"
 PATH="$HOME/.local/bin:$PATH"

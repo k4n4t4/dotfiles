@@ -1,4 +1,3 @@
-
 set fish_handle_reflow 0
 
 export PAGER="less"
@@ -15,3 +14,7 @@ export LESS_TERMCAP_ue=(printf "\e[m")
 export EDITOR="nvim"
 
 export LANG=C
+
+if type -q tmux
+  export TMUX_SHELL=(which fish)
+end
