@@ -90,8 +90,8 @@ vim.opt.inccommand = "split"
 
 
 vim.opt.directory = vim.fn.stdpath("data") .. "/swap"
-vim.opt.backupdir = vim.fn.stdpath("data") .. "/backup"
 vim.opt.undodir   = vim.fn.stdpath("data") .. "/undo"
+vim.opt.backupdir = vim.fn.stdpath("data") .. "/backup"
 
 vim.opt.swapfile = false
 vim.opt.undofile = true

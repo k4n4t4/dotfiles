@@ -1,64 +1,119 @@
+set encoding=utf-8
+scriptencoding utf-8
+set fileencoding=utf-8
+set fileencodings=utf-8,sjis
+set fileformats=unix,dos
+
 set number
 set relativenumber
-set numberwidth=1
-set signcolumn=yes
+set numberwidth=4
 
-set ruler
+set cursorline
+set cursorlineopt=number
 
-set mouse=a
-set clipboard=unnamedplus
+set list
+set listchars=tab:>-,extends:>,precedes:<,trail:-,nbsp:+,conceal:@
+set fillchars=eob:\ 
 
-set encoding=utf-8
+set ambiwidth=single
+
+set wrap
+set display=lastline
+set breakat=\ ^I!@*-+;:,./?
+set linebreak
+set breakindent
+set showbreak=
+
+set wildmenu
+set wildignorecase
+set wildmode=list:full
+
+set scroll=10
+set scrolloff=3
 
 set showmode
 set showcmd
-set showmatch
+
+set ruler
+
+set belloff=all
+set visualbell
+set errorbells
+
+set shortmess+=I
+
+set smarttab
+set expandtab
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+set smartindent
+set autoindent
+
+set hlsearch
+set incsearch
+set wrapscan
+set ignorecase
+set smartcase
+
+set directory=~/.vim/swap
+set backupdir=~/.vim/backup
+set undodir=~/.vim/undo
+
+set noswapfile
+set undofile
+set nobackup
+set nowritebackup
+set backupext=.bak
+
+set mouse=
+set title
+set clipboard+=unnamedplus
 
 set autoread
+
 set hidden
 
 set confirm
 
-set expandtab
-set autoindent
-set tabstop=2
-set shiftwidth=2
+set splitbelow
+set splitright
 
-" search
-set hlsearch
-set incsearch
+set virtualedit=block
 
-set listchars=tab:>-,trail:-,eol:$,extends:>,precedes:<,nbsp:+
-set list
+set nogdefault
 
-" set tabline=
+set whichwrap=b,s,h,l,~,<,>,[,]
 
-set completeopt=menuone,noinsert
+set backspace=indent,eol,nostop
 
-set cursorline
-set cursorcolumn
+set nrformats=bin,octal,hex
 
-set wildmenu
-set wildmode=list:longest
+set showmatch
+set matchtime=1
+set matchpairs=(:),{:},[:],<:>
 
-" set virtualedit=onemore
+set completeopt=menuone,preview
 
+set notermguicolors
 set background=dark
 
 let mapleader = " "
 nnoremap <SPACE> <NOP>
 
-" nnoremap k gk
-" nnoremap j gj
-
-
 if empty(glob("~/.vim/tmp"))
   silent !mkdir ~/.vim/tmp
 endif
+if empty(glob("~/.vim/swap"))
+  silent !mkdir ~/.vim/swap
+endif
+if empty(glob("~/.vim/backup"))
+  silent !mkdir ~/.vim/backup
+endif
+if empty(glob("~/.vim/undo"))
+  silent !mkdir ~/.vim/undo
+endif
 
-set directory=~/.vim/tmp
-set backupdir=~/.vim/tmp
-set undodir=~/.vim/tmp
 
 syntax enable
 if exists("syntax_on")
@@ -78,43 +133,3 @@ hi Comment ctermfg=8
 hi String ctermfg=120
 hi Number ctermfg=63
 hi Function ctermfg=208
-
-
-let plug_exist = glob('~/.vim/autoload/plug.vim')
-
-if empty(plug_exist)
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-endif
-
-call plug#begin('~/.vim/plugged')
-Plug 'joshdick/onedark.vim'
-Plug 'airblade/vim-gitgutter'
-Plug 'preservim/nerdtree'
-Plug 'vim-airline/vim-airline'
-Plug 'sheerun/vim-polyglot'
-call plug#end()
-
-if ! empty(glob('~/.vim/plugged/onedark.vim'))
-  if (has("autocmd") && ! has("gui_running"))
-    augroup colorset
-      autocmd!
-      let s:white = {"gui": "#ABB2BF", "cterm": "145", "cterm16": "7"}
-      autocmd ColorScheme * call onedark#set_highlight("Normal", {"fg": s:white })
-    augroup END
-    let g:onedark_color_overrides = {
-      \ "background": {"gui": "#2F343F", "cterm": "235", "cterm16": "0"},
-      \ "purple": {"gui": "#C678DF", "cterm": "170", "cterm16": "5"},
-      \}
-  endif
-  colorscheme onedark
-endif
-
-if ! empty(glob('~/.vim/plugged/vim-anyfold'))
-  autocmd Filetype * AnyFoldActivate
-  set foldlevel=99
-endif
-
-if ! empty(glob('~/.vim/plugged/nerdtree'))
-  nnoremap <LEADER>n :NERDTreeToggle<CR>
-endif
-
