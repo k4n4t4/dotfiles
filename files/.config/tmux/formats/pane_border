@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo -n "\
+printf "%s" "\
 #[fg=#222222,bg=default]#[fg=#eeeeee,bg=#222222]\
  #P \
 #[fg=#666666]#[fg=default,bold]\

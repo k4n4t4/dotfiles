@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo -n "\
+printf "%s" "\
 #[fg=#eeeeee,bg=#333333,bold]\
  #S \
 #[fg=#333333,bg=#444444,nobold,nounderscore,noitalics]#[fg=#eeeeee,bg=#444444,bold]\
