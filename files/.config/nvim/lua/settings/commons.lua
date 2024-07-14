@@ -49,13 +49,12 @@ vim.opt.scroll = 10
 vim.opt.scrolloff = 3
 
 vim.opt.laststatus = 3
-vim.opt.showmode = true
+vim.opt.showmode = false
 vim.opt.showcmd = true
-vim.opt.showtabline = 2
+vim.opt.showtabline = 1
 
-vim.opt.ruler = true
+vim.opt.ruler = false
 vim.opt.rulerformat = "%15(%l,%c%V%=%P%)"
-vim.opt.statusline = "%<%f%h%m%r%=%B %l,%c%V %P"
 
 vim.opt.spell = false
 vim.opt.spelllang = "en"

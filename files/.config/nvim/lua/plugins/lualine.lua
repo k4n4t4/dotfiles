@@ -3,7 +3,7 @@ return {
   dependencies = {
     "nvim-tree/nvim-web-devicons",
   },
-  enabled = true,
+  enabled = false,
   opts = {
     options = {
       icons_enabled = true,
