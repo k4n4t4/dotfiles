@@ -50,10 +50,13 @@ vim.opt.pumheight = 10
 
 vim.opt.scroll = 10
 vim.opt.scrolloff = 3
+vim.opt.sidescroll = 1
+vim.opt.sidescrolloff = 3
 
 vim.opt.laststatus = 3
 vim.opt.showmode = false
-vim.opt.showcmd = false
+vim.opt.showcmd = true
+vim.opt.showcmdloc = 'statusline'
 vim.opt.showtabline = 1
 
 vim.opt.ruler = false

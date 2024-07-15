@@ -158,13 +158,27 @@ local function status_diagnostic()
   return table.concat(d, ' ')
 end
 
+local function status_macro_recording()
+  return vim.fn.reg_recording()
+end
+
 function status_line()
+  local macro = status_macro_recording()
   local mode = status_mode()
+
+  local macro_format = ""
+  if macro ~= "" then
+    macro_format = "@"..macro.." "
+  end
+  local mode_format = "%#"..mode.color.."#"..mode.name.."%*"
+
   return (
-    "%#"..mode.color.."#"..mode.name.."%*" ..
+    macro_format ..
+    mode_format ..
     " %f%h%m%r" ..
     " "..status_diagnostic() ..
     "%=%<" ..
+    "%S "..
     status_encoding().." " ..
     status_fileformat().." " ..
     status_filetype().." " ..
