@@ -10,13 +10,8 @@ require("lazy").setup("plugins", {
     { import = "plugins" },
   },
   default = {
-    lazy = false,
+    lazy = true,
     version = false,
-  },
-  install = {
-    colorscheme = {
-      "tokyonight"
-    }
   },
   checker = {
     enabled = false

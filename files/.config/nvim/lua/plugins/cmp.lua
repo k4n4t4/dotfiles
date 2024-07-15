@@ -1,6 +1,7 @@
 return {
   {
     "hrsh7th/nvim-cmp",
+    event = "InsertEnter",
     config = function()
       local lspkind = require "lspkind"
       local cmp = require("cmp")
@@ -37,18 +38,6 @@ return {
           })
         }
       })
---      cmp.setup.cmdline("/", {
---        mapping = cmp.mapping.preset.cmdline(),
---        sources = {
---          { name = "buffer" }
---        }
---      })
---      cmp.setup.cmdline(":", {
---        mapping = cmp.mapping.preset.cmdline(),
---        sources = {
---          { name = "path" },
---        },
---      })
     end,
   },
   { "hrsh7th/cmp-nvim-lsp" },

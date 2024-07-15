@@ -2,6 +2,14 @@ return {
   {
     "williamboman/mason.nvim",
     config = true,
+    cmd = {
+      "Mason",
+      "MasonInstall",
+      "MasonUninstall",
+      "MasonUninstallAll",
+      "MasonLog",
+      "MasonUpdate",
+    },
   },
   {
     "williamboman/mason-lspconfig.nvim",
