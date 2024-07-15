@@ -147,15 +147,31 @@ local function status_filetype()
   return (not ft or ft == '') and '' or (filetype_name[ft] or ft)
 end
 
+local function status_lsp()
+  local clients = {}
+  for _, client in ipairs(vim.lsp.get_active_clients { bufnr = 0 }) do
+    if client.name == 'null-ls' then
+      local sources = {}
+      for _, source in ipairs(require('null-ls.sources').get_available(vim.bo.filetype)) do
+        table.insert(sources, source.name)
+      end
+      table.insert(clients, 'null-ls(' .. table.concat(sources, ', ') .. ')')
+    else
+      table.insert(clients, client.name)
+    end
+  end
+  return clients
+end
+
 local function status_diagnostic()
-  local d = {}
+  local diagnoses = {}
   for _, v in pairs({ 'ERROR', 'WARN', 'INFO' }) do
     local t = vim.diagnostic.get(0, { severity = vim.diagnostic.severity[v] })
     if t ~= nil and #t > 0 then
-      table.insert(d, '%#StatusLineDiagnostic' .. v .. '#' .. tostring(#t) .. '%*')
+      table.insert(diagnoses, '%#StatusLineDiagnostic' .. v .. '#' .. tostring(#t) .. '%*')
     end
   end
-  return table.concat(d, ' ')
+  return diagnoses
 end
 
 local function status_macro_recording()
@@ -171,6 +187,8 @@ function status_line()
   local macro = status_macro_recording()
   local mode = status_mode()
   local search = status_search_count()
+  local lsp = status_lsp()
+  local diagnostic = status_diagnostic()
 
   local macro_format = ""
   if macro ~= "" then
@@ -184,11 +202,23 @@ function status_line()
     search_format = "["..search.current.."/"..search.total.."] "
   end
 
+  local lsp_format = ""
+  if #lsp > 0 then
+    lsp_format = " "..table.concat(lsp, ", ")
+  end
+
+  local diagnostic_format = ""
+  if #diagnostic > 0 then
+    diagnostic_format = " "..table.concat(diagnostic, ", ")
+  end
+
+
   return (
     macro_format ..
     mode_format ..
     " %f%h%m%r%w" ..
-    " "..status_diagnostic() ..
+    lsp_format..
+    diagnostic_format..
     "%=%<" ..
     "%S "..
     search_format ..
@@ -201,11 +231,7 @@ end
 function status_line_inactive()
   return (
     "%f%h%m%r%w" ..
-    " "..status_diagnostic() ..
     "%=%<" ..
-    status_encoding().." " ..
-    status_fileformat().." " ..
-    status_filetype().." " ..
     "%B %l/%L,%c%V %P"
   )
 end
