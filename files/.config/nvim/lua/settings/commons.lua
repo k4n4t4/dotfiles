@@ -43,7 +43,7 @@ vim.opt.wildmenu = true
 vim.opt.wildignorecase = true
 vim.opt.wildmode = "list:full"
 
-vim.opt.cmdheight = 1
+vim.opt.cmdheight = 0
 vim.opt.cmdwinheight = 10
 
 vim.opt.pumheight = 10
@@ -53,7 +53,7 @@ vim.opt.scrolloff = 3
 
 vim.opt.laststatus = 3
 vim.opt.showmode = false
-vim.opt.showcmd = true
+vim.opt.showcmd = false
 vim.opt.showtabline = 1
 
 vim.opt.ruler = false
