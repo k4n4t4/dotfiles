@@ -34,13 +34,3 @@ autocmd("InsertLeave", {
     vim.opt.relativenumber = true
   end
 })
-autocmd("CmdlineEnter", {
-  callback = function()
-    vim.opt.cmdheight = 1
-  end
-})
-autocmd("CmdlineLeave", {
-  callback = function()
-    vim.opt.cmdheight = 0
-  end
-})
