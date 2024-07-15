@@ -1,5 +1,6 @@
 fish_add_path \
   "$HOME/bin" \
+  "$HOME/go/bin" \
   "$HOME/.cargo/bin" \
   "$HOME/.local/bin" \
   "/snap/bin" \
