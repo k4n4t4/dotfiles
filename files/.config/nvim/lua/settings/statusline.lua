@@ -162,23 +162,36 @@ local function status_macro_recording()
   return vim.fn.reg_recording()
 end
 
+local function status_search_count()
+  return vim.fn.searchcount()
+end
+
+
 function status_line()
   local macro = status_macro_recording()
   local mode = status_mode()
+  local search = status_search_count()
 
   local macro_format = ""
   if macro ~= "" then
     macro_format = "@"..macro.." "
   end
+
   local mode_format = "%#"..mode.color.."#"..mode.name.."%*"
+
+  local search_format = ""
+  if vim.v.hlsearch == 1 then
+    search_format = "["..search.current.."/"..search.total.."] "
+  end
 
   return (
     macro_format ..
     mode_format ..
-    " %f%h%m%r" ..
+    " %f%h%m%r%w" ..
     " "..status_diagnostic() ..
     "%=%<" ..
     "%S "..
+    search_format ..
     status_encoding().." " ..
     status_fileformat().." " ..
     status_filetype().." " ..
@@ -187,7 +200,7 @@ function status_line()
 end
 function status_line_inactive()
   return (
-    "%f%h%m%r" ..
+    "%f%h%m%r%w" ..
     " "..status_diagnostic() ..
     "%=%<" ..
     status_encoding().." " ..
