@@ -1,4 +1,4 @@
-require "settings.commons"
+require "settings.options"
 require "settings.disable_plugins"
 require "settings.keymaps"
 require "settings.autocmd"

@@ -136,3 +136,7 @@ vim.opt.matchpairs = {
 }
 
 vim.opt.completeopt = {"menuone", "preview"}
+
+
+vim.opt.termguicolors = true
+vim.opt.background = "dark"

@@ -139,23 +139,24 @@ local function status_fileformat()
 end
 
 local filetype_name = {
-  ['javascript'] = 'js',
-  ['typescript'] = 'ts',
+  ['javascript'] = "js",
+  ['typescript'] = "ts",
+  ['python']     = "py",
 }
 local function status_filetype()
   local ft = vim.o.ft
-  return (not ft or ft == '') and '' or (filetype_name[ft] or ft)
+  return (not ft or ft == "") and "" or (filetype_name[ft] or ft)
 end
 
 local function status_lsp()
   local clients = {}
   for _, client in ipairs(vim.lsp.get_active_clients { bufnr = 0 }) do
-    if client.name == 'null-ls' then
+    if client.name == "null-ls" then
       local sources = {}
-      for _, source in ipairs(require('null-ls.sources').get_available(vim.bo.filetype)) do
+      for _, source in ipairs(require("null-ls.sources").get_available(vim.bo.filetype)) do
         table.insert(sources, source.name)
       end
-      table.insert(clients, 'null-ls(' .. table.concat(sources, ', ') .. ')')
+      table.insert(clients, "null-ls(" .. table.concat(sources, ", ") .. ")")
     else
       table.insert(clients, client.name)
     end
@@ -168,7 +169,7 @@ local function status_diagnostic()
   for _, v in pairs({ 'ERROR', 'WARN', 'INFO' }) do
     local t = vim.diagnostic.get(0, { severity = vim.diagnostic.severity[v] })
     if t ~= nil and #t > 0 then
-      table.insert(diagnoses, '%#StatusLineDiagnostic' .. v .. '#' .. tostring(#t) .. '%*')
+      table.insert(diagnoses, "%#StatusLineDiagnostic" .. v .. "#" .. tostring(#t) .. "%*")
     end
   end
   return diagnoses
