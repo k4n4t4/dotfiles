@@ -23,4 +23,4 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   callback = TransparentBackground
 })
 
-vim.cmd.colorscheme "retrobox"
+vim.cmd.colorscheme "habamax"

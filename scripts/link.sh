@@ -83,6 +83,10 @@ _install() {
     error "To use the -r option, it must be a directory."
     return 1
   fi
+  dir_name "$target"
+  if [ ! -d "$RET" ]; then
+    _mkdir "$RET"
+  fi
   abs_path "$target"
   target="$RET"
 

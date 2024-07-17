@@ -199,7 +199,7 @@ function status_line()
   local mode_format = "%#"..mode.color.."#"..mode.name.."%*"
 
   local search_format = ""
-  if vim.v.hlsearch == 1 then
+  if search.total ~= nil and vim.v.hlsearch == 1 then
     search_format = "["..search.current.."/"..search.total.."] "
   end
 
