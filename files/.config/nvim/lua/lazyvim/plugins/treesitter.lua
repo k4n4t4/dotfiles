@@ -6,17 +6,22 @@ return {
       "nvim-treesitter/nvim-treesitter-textobjects",
     },
     build = ":TSUpdate",
-    config = function ()
+    config = function()
       require("nvim-treesitter.configs").setup {
-        ensure_installed = { "lua", "vim", "vimdoc", "query" },
+        ensure_installed = {
+          "lua",
+          "vim",
+          "vimdoc",
+          "query",
+        },
         highlight = {
           enable = true,
           disable = {},
         },
+        indent = {
+          enable = true,
+        },
       }
-      vim.opt.foldenable = false
-      vim.opt.foldmethod = "expr"
-      vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
     end
   },
   {

@@ -1,10 +1,11 @@
 return {
   "goolord/alpha-nvim",
-  event = "VimEnter",
   dependencies = {
     "nvim-tree/nvim-web-devicons",
     "nvim-lua/plenary.nvim"
   },
+  enabled = false,
+  event = "VimEnter",
   config = function()
     local dashboard = require("alpha.themes.dashboard")
 

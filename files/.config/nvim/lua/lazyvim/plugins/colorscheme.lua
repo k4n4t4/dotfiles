@@ -1,7 +1,7 @@
 return {
   {
     "navarasu/onedark.nvim",
-    enabled = true,
+    enabled = false,
     opts = {
       style = "darker",
       transparent = true,
@@ -13,4 +13,13 @@ return {
       require("onedark").load()
     end,
   },
+  {
+    "catppuccin/nvim",
+    enabled = true,
+    name = "catppuccin",
+    priority = 1000,
+    config = function()
+      vim.cmd.colorscheme "catppuccin"
+    end,
+  }
 }

@@ -1,6 +1,16 @@
 return {
   {
     "hrsh7th/nvim-cmp",
+    dependencies = {
+      { "neovim/nvim-lspconfig" },
+      { "hrsh7th/cmp-nvim-lsp" },
+      { "hrsh7th/cmp-buffer" },
+      { "hrsh7th/cmp-path" },
+      { "hrsh7th/cmp-cmdline" },
+      { "hrsh7th/vim-vsnip" },
+      { "hrsh7th/cmp-vsnip" },
+      { "onsails/lspkind.nvim" },
+    },
     event = "InsertEnter",
     config = function()
       local lspkind = require "lspkind"
@@ -38,12 +48,21 @@ return {
           })
         }
       })
+      cmp.setup.cmdline({ '/', '?' }, {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = {
+          { name = 'buffer' }
+        }
+      })
+      cmp.setup.cmdline(':', {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({
+          { name = 'path' }
+        }, {
+          { name = 'cmdline' }
+        }),
+        matching = { disallow_symbol_nonprefix_matching = false }
+      })
     end,
   },
-  { "hrsh7th/cmp-nvim-lsp" },
-  { "hrsh7th/cmp-buffer" },
-  { "hrsh7th/cmp-path"  },
-  { "hrsh7th/vim-vsnip" },
-  { "hrsh7th/cmp-vsnip" },
-  { "onsails/lspkind.nvim" },
 }
