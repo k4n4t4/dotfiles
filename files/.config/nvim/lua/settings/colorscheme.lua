@@ -13,6 +13,7 @@ function TransparentBackground()
   vim.cmd.highlight {"EndOfBuffer",    "guibg=none", "ctermbg=none"}
 
   vim.cmd.highlight {"NvimTreeNormal",      "guibg=none", "ctermbg=none"}
+  vim.cmd.highlight {"NvimTreeNormalNC",    "guibg=none", "ctermbg=none"}
   vim.cmd.highlight {"NvimTreeEndOfBuffer", "guibg=none", "ctermbg=none"}
 
 end
