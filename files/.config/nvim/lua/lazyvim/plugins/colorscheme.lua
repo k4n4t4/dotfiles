@@ -4,22 +4,24 @@ return {
     enabled = false,
     opts = {
       style = "darker",
-      transparent = true,
-      lualine = {
-          transparent = true,
-      },
     },
     config = function()
-      require("onedark").load()
+      vim.cmd.colorscheme "onedark"
     end,
   },
   {
     "catppuccin/nvim",
-    enabled = true,
+    enabled = false,
     name = "catppuccin",
-    priority = 1000,
     config = function()
       vim.cmd.colorscheme "catppuccin"
     end,
-  }
+  },
+  {
+    "folke/tokyonight.nvim",
+    enabled = true,
+    config = function()
+      vim.cmd.colorscheme "tokyonight"
+    end,
+  },
 }
