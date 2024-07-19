@@ -1,7 +1,6 @@
 return {
   {
     "williamboman/mason.nvim",
-    config = true,
     cmd = {
       "Mason",
       "MasonInstall",
@@ -10,9 +9,13 @@ return {
       "MasonLog",
       "MasonUpdate",
     },
+    config = true,
   },
   {
     "williamboman/mason-lspconfig.nvim",
+    dependencies = {
+      "neovim/nvim-lspconfig",
+    },
     config = function()
       local on_attach = function(client, bufnr)
         local set = vim.keymap.set
@@ -28,7 +31,12 @@ return {
         set("n", "<leader>l]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>")
       end
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
-      require("mason-lspconfig").setup()
+      require("mason-lspconfig").setup {
+        ensure_installed = {
+          "lua_ls",
+          "vimls",
+        }
+      }
       require("mason-lspconfig").setup_handlers {
         function(server_name)
           require("lspconfig")[server_name].setup {
@@ -37,15 +45,6 @@ return {
           }
         end,
       }
-    end,
-  },
-  {
-    "neovim/nvim-lspconfig",
-    config = function()
-      local lspconfig = require("lspconfig")
-      lspconfig.lua_ls.setup {}
-      lspconfig.pylsp.setup {}
-      lspconfig.bashls.setup {}
     end,
   },
 }
