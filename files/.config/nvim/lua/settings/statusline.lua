@@ -203,7 +203,7 @@ function status_line()
     macro_format = "@"..macro.." "
   end
 
-  local mode_format = "%#"..mode.color.."#"..mode.name.."%*"
+  local mode_format = "%#"..mode.color.."#"..mode.name.."%*".." "
 
   local search_format = ""
   if search.total ~= nil and vim.v.hlsearch == 1 then
@@ -224,7 +224,7 @@ function status_line()
   return (
     macro_format ..
     mode_format ..
-    " %f%h%m%r%w" ..
+    "%f%m%r%h%w" ..
     lsp_format..
     diagnostic_format..
     "%=%<" ..
@@ -233,14 +233,14 @@ function status_line()
     status_encoding().." " ..
     status_fileformat().." " ..
     status_filetype().." " ..
-    "%B %l/%L,%c%V %P"
+    "%n %l/%L,%c%V %P"
   )
 end
 function status_line_inactive()
   return (
-    "%f%h%m%r%w" ..
+    "%f%m%r%h%w" ..
     "%=%<" ..
-    "%B %l/%L,%c%V %P"
+    "%l/%L,%c%V %P"
   )
 end
 
