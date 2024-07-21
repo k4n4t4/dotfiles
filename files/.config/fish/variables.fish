@@ -1,5 +1,7 @@
 set fish_handle_reflow 0
 
+export fish_bin=(which fish)
+
 export PAGER="less"
 
 export LESS='-i -M -R -S -W -z-4 -x4'

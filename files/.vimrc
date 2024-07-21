@@ -102,16 +102,16 @@ let mapleader = " "
 nnoremap <SPACE> <NOP>
 
 if empty(glob("~/.vim/tmp"))
-  silent !mkdir ~/.vim/tmp
+  silent !mkdir -p ~/.vim/tmp
 endif
 if empty(glob("~/.vim/swap"))
-  silent !mkdir ~/.vim/swap
+  silent !mkdir -p ~/.vim/swap
 endif
 if empty(glob("~/.vim/backup"))
-  silent !mkdir ~/.vim/backup
+  silent !mkdir -p ~/.vim/backup
 endif
 if empty(glob("~/.vim/undo"))
-  silent !mkdir ~/.vim/undo
+  silent !mkdir -p ~/.vim/undo
 endif
 
 

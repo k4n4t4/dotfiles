@@ -1,4 +1,3 @@
-import = ["~/.config/alacritty/themes/xterm.yaml"]
 live_config_reload = true
 
 [shell]
@@ -34,22 +33,18 @@ y = 0
 
 [font.normal]
 family = "ComicShannsMono Nerd Font Mono"
-# family = "Terminess Nerd Font Mono"
 style = "Regular"
 
 [font.bold]
 family = "ComicShannsMono Nerd Font Mono"
-# family = "Terminess Nerd Font Mono"
 style = "Bold"
 
 [font.bold_italic]
 family = "ComicShannsMono Nerd Font Mono"
-# family = "Terminess Nerd Font Mono"
 style = "Bold Italic"
 
 [font.italic]
 family = "ComicShannsMono Nerd Font Mono"
-# family = "Terminess Nerd Font Mono"
 style = "Italic"
 
 [[keyboard.bindings]]
@@ -97,3 +92,27 @@ lines = 24
 [window.padding]
 x = 0
 y = 0
+
+[colors.primary]
+background = '#000000'
+foreground = '#ffffff'
+
+[colors.normal]
+black   = '#000000'
+red     = '#990000'
+green   = '#009900'
+yellow  = '#999900'
+blue    = '#0000AA'
+magenta = '#990099'
+cyan    = '#009999'
+white   = '#AAAAAA'
+
+[colors.bright]
+black   = '#777777'
+red     = '#FF0000'
+green   = '#00FF00'
+yellow  = '#FFFF00'
+blue    = '#55FFFF'
+magenta = '#FF00FF'
+cyan    = '#00FFFF'
+white   = '#FFFFFF'

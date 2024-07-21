@@ -11,7 +11,10 @@ return {
       { "hrsh7th/cmp-vsnip" },
       { "onsails/lspkind.nvim" },
     },
-    event = "InsertEnter",
+    event = {
+      "InsertEnter",
+      "CmdlineEnter",
+    },
     config = function()
       local lspkind = require "lspkind"
       local cmp = require "cmp"

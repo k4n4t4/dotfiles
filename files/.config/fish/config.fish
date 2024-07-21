@@ -1,5 +1,4 @@
 export fish_dir=(dirname (status --current-filename))
-export fish_bin=(which fish)
 
 source $fish_dir/paths.fish
 source $fish_dir/variables.fish
