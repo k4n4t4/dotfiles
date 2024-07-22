@@ -41,6 +41,10 @@ if cmd_exist alacritty; then
   dot ".config/alacritty/alacritty.toml"
 fi
 
+if cmd_exist wezterm; then
+  dot -- ".wezterm.lua"
+fi
+
 if cmd_exist starship; then
-  dot '.config/starship/starship.toml' '.config/starship.toml'
+  dot ".config/starship/starship.toml" ".config/starship.toml"
 fi
