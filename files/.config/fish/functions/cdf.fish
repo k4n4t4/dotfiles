@@ -1,4 +1,3 @@
-
 function cdf
   if type -q fd
     if type -q fzf
@@ -21,4 +20,3 @@ function cdf
   end
   cd $find_dir
 end
-

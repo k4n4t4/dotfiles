@@ -1,4 +1,3 @@
-
 function cdr
   if type -q fzf
     set z_dir (zoxide query -l | fzf --prompt "z > " --query "$argv")
@@ -10,4 +9,3 @@ function cdr
   end
   cd $z_dir
 end
-

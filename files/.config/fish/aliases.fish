@@ -1,4 +1,3 @@
-
 abbr --add '^' "command"
 abbr --add cmd "command"
 
@@ -177,15 +176,9 @@ else
 end
 
 if type -q nvim
-  abbr --add n  "nvim"
-  abbr --add nv "nvim"
   abbr --add v  "nvim"
-  alias vless "/home/linuxbrew/.linuxbrew/Cellar/neovim/0.9.0/share/nvim/runtime/macros/less.sh"
 else if type -q vim
   abbr --add v  "vim"
-  abbr --add vi "vim"
-else
-  abbr --add v "vi"
 end
 
 if type -q btop
@@ -195,8 +188,6 @@ else if type -q gotop
 else if type -q htop
   alias top "htop"
 end
-
-alias ed "ed -p (printf \"\033[94m:\033[92m\")"
 
 if type -q xsel
   alias pbcopy "xsel --clipboard --input"

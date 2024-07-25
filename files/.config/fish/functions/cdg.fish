@@ -1,4 +1,3 @@
-
 function cdg
   if not type -q ghq
     echo "Please install ghq."
@@ -14,4 +13,3 @@ function cdg
   end
   cd $git_dir
 end
-

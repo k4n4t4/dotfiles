@@ -12,4 +12,3 @@ fish_add_path \
   "/sbin"
 
 eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-

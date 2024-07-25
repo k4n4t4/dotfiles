@@ -4,7 +4,7 @@ functions --copy cd __cd
 function cd
   set -f old_pwd $PWD
   __cd $argv
-  if [ "$old_pwd" != "$PWD" ]
+  if test "$old_pwd" != "$PWD"
     printf "\033[48;5;94m\033[38;5;214m\033[1m "
     printf "CD"
     printf " \033[38;5;94m\033[48;5;58m\033[38;5;214m\033[1m "
