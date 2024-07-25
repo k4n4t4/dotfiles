@@ -2,13 +2,11 @@
 
 [ $# -eq 0 ] && exit 1
 
-for i in `seq ${#1}`; do
-  case "`echo "$1" | cut -c $i`" in
-    [!0-9] )
-      exit 1
-      ;;
-  esac
-done
-
-exit 0
-
+case "$1" in
+  ( *[!0123456789]* )
+    exit 1
+    ;;
+  ( * )
+    exit 0
+    ;;
+esac

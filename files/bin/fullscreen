@@ -1,8 +1,0 @@
-#!/bin/sh
-set -eu
-
-if type "wmctrl" > /dev/null 2>&1 && type "xdotool" > /dev/null 2>&1; then
-  wmctrl -ir `xdotool getwindowfocus` -b toggle,fullscreen
-else
-  exit 1
-fi
