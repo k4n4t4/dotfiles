@@ -4,7 +4,7 @@ fish_add_path \
   "$HOME/.cargo/bin" \
   "$HOME/.local/bin" \
   "/snap/bin" \
-  "/usr/sandbox/" \
+  "/usr/sandbox" \
   "/usr/local/bin" \
   "/usr/share/games" \
   "/usr/local/sbin" \
