@@ -15,7 +15,7 @@ export LESS_TERMCAP_ue=(printf "\e[m")
 
 export EDITOR="nvim"
 
-export LANG=C
+export LANG=C.UTF-8
 
 if type -q tmux
   export TMUX_SHELL=$fish_bin

@@ -56,9 +56,25 @@ if cmd_exist alacritty; then
 fi
 
 if cmd_exist wezterm; then
-  dot -- ".wezterm.lua"
+  dot ".wezterm.lua"
 fi
 
 if cmd_exist starship; then
   dot ".config/starship/starship.toml" ".config/starship.toml"
+fi
+
+if cmd_exist bspwm; then
+  dot ".config/bspwm" -r
+fi
+
+if cmd_exist picom; then
+  dot ".config/picom" -r
+fi
+
+if cmd_exist sxhkd; then
+  dot ".config/sxhkd" -r
+fi
+
+if cmd_exist polybar; then
+  dot ".config/polybar" -r
 fi
