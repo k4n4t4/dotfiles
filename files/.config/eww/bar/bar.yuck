@@ -73,8 +73,11 @@
 )
 
 (defwidget battery []
-  (box :class "battery"
-    (label :text "${round(EWW_BATTERY.total_avg, 1)}%")
+  (box
+    :class "battery battery-${EWW_BATTERY.BAT0.status == "Charging" ? "charging" : "discharging"}"
+    (label
+      :text "${round(EWW_BATTERY.total_avg, 1)}%"
+    )
   )
 )
 
