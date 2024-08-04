@@ -78,3 +78,7 @@ fi
 if cmd_exist polybar; then
   dot ".config/polybar" -r
 fi
+
+if cmd_exist eww; then
+  dot ".config/eww" -r
+fi

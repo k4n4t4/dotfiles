@@ -22,5 +22,12 @@ pgrep -x sxhkd > /dev/null || sxhkd &
 pgrep -x picom > /dev/null || picom &
 pgrep -x polybar > /dev/null || polybar &
 
+if ! pgrep -x eww > /dev/null; then
+  {
+    eww daemon
+    eww open bar
+  } &
+fi
+
 ## background ##
 ~/.fehbg

@@ -1,0 +1,123 @@
+(defwindow bar
+  :monitor 0
+  :windowtype "dock"
+  :reserve (struts
+    :side "bottom"
+    :distance "41px"
+  )
+  :geometry (geometry
+    :anchor "bottom left"
+    :x "0.5%"
+    :y "-3px"
+    :width "99%"
+    :height "40px"
+  )
+  (box :class "bar"
+    :orientation "h"
+    (bar-left)
+    (bar-center)
+    (bar-right)
+  )
+)
+
+(defwidget bar-left []
+  (box :class "bar-left"
+    :halign "start"
+    :space-evenly false
+    (workspaces)
+  )
+)
+
+(defwidget bar-center []
+  (box :class "bar-center"
+    :halign "center"
+    :space-evenly false
+    (window-name)
+  )
+)
+
+(defwidget bar-right []
+  (box :class "bar-right"
+    :halign "end"
+    :space-evenly false
+    (bluetooth-status)
+    (battery)
+    (time :fmt "%H:%M:%S")
+  )
+)
+
+(defwidget time [fmt]
+  (box :class "time"
+    (button :onclick "${EWW_CMD} open --toggle calendar"
+      (label :text "${formattime(EWW_TIME, fmt)}")
+    )
+  )
+)
+
+(defwindow calendar
+  :monitor 0
+  :windowtype "dialog"
+  :wm-ignore true
+  :reserve (struts
+    :side "bottom"
+    :distance "41px"
+  )
+  :geometry (geometry
+    :anchor "bottom right"
+    :x "-0.5%"
+    :y "-43px"
+    :width "10%"
+    :height "10%"
+  )
+  (calendar :class "calendar")
+)
+
+(defwidget battery []
+  (box :class "battery"
+    (label :text "${round(EWW_BATTERY.total_avg, 1)}%")
+  )
+)
+
+(defwidget workspaces []
+  (box :class "workspaces"
+    (button :onclick "bspc desktop -f I"
+      (label :text "I")
+    )
+    (button :onclick "bspc desktop -f II"
+      (label :text "II")
+    )
+    (button :onclick "bspc desktop -f III"
+      (label :text "III")
+    )
+  )
+)
+
+(defpoll window-name
+  :interval "1s"
+  :initial ""
+  `xdotool getwindowname $(bspc query -N -n)`
+)
+
+(defwidget window-name []
+  (box :class "window-name"
+    (label
+      :truncate true
+      :show-truncated true
+      :text "${window-name}"
+    )
+  )
+)
+
+(defpoll bluetooth-status
+  :interval "1s"
+  :initial ""
+  `[ -n "$(bluetoothctl show | grep "Powered: yes")" ] && echo on || echo off`
+)
+
+(defwidget bluetooth-status []
+  (box :class "bluetooth-status"
+    (button :onclick "bluetoothctl power ${bluetooth-status == "on" ? "off" : "on"}"
+      (label :text "${bluetooth-status == "on" ? "ON" : "OFF"}")
+    )
+  )
+)
