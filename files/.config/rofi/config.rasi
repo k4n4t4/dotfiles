@@ -1,0 +1,4 @@
+configuration {
+  modi: "window,drun,run,system:~/.config/rofi/system.sh";
+  sidebar-mode: true;
+}

@@ -82,3 +82,7 @@ fi
 if cmd_exist eww; then
   dot ".config/eww" -r
 fi
+
+if cmd_exist rofi; then
+  dot ".config/rofi" -r
+fi

@@ -17,6 +17,9 @@ super + b
 super + p
     floorp --private-window
 
+## run rofi
+super + r
+    rofi -show drun
 
 # audio volume
 XF86AudioRaiseVolume
