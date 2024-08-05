@@ -21,11 +21,11 @@ else
       ;;
     ( "Poweroff" )
       notify-send "poweroff"
-      systemctl poweroff
+      poweroff
       ;;
     ( "Reboot" )
       notify-send "reboot"
-      systemctl reboot
+      reboot
       ;;
   esac
 fi
