@@ -82,29 +82,17 @@
 )
 
 
-(defvar workspaces '["I", "II", "III"]')
-
-(defpoll current-workspace
-  :interval "1s"
-  :initial ""
-  `bspc query -D -d --names`
-)
 
 (defwidget workspaces []
   (box :class "workspaces"
-    (for workspace in workspaces
-      (button :onclick "bspc desktop -f ${workspace}"
-        :class "${current-workspace == "${workspace}" ? "workspace current-workspace" : "workspace"}"
-        (label :text "${workspace}")
-      )
-    )
+    "N"
   )
 )
 
 (defpoll window-name
   :interval "1s"
   :initial ""
-  `xdotool getwindowname $(bspc query -N -n)`
+  `echo N`
 )
 
 (defwidget window-name []
