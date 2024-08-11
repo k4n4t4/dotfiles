@@ -21,6 +21,10 @@ super + p
 super + r
     rofi -show drun
 
+## show info
+super + s
+    conky
+
 # audio volume
 XF86AudioRaiseVolume
     pactl set-sink-volume 0 +5%
@@ -31,9 +35,9 @@ XF86AudioMute
 
 # brightness
 XF86MonBrightnessDown
-    xbacklight -dec 10%
+    brightnessctl s 10%-
 XF86MonBrightnessUp
-    xbacklight -inc 10%
+    brightnessctl s +10%
 
 
 # Bspwm Shortcuts

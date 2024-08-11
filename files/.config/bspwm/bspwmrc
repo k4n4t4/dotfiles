@@ -16,6 +16,7 @@ bspc config presel_feedback_color "#4488aa"
 bspc config urgent_border_color   "#aa4444"
 
 
+
 simple=true
 
 killall -q sxhkd
@@ -26,8 +27,7 @@ pgrep -x dunst > /dev/null || dunst &
 
 if $simple; then
 
-  killall -q polybar
-  pgrep -x polybar > /dev/null || polybar &
+  :
 
 else
 
@@ -42,6 +42,6 @@ else
     } &
   fi
 
-fi
+  ~/.fehbg
 
-~/.fehbg
+fi

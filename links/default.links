@@ -86,3 +86,15 @@ fi
 if cmd_exist rofi; then
   dot ".config/rofi" -r
 fi
+
+if cmd_exist conky; then
+  dot ".config/conky" -r
+fi
+
+if cmd_exist dunst; then
+  dot ".config/dunst" -r
+fi
+
+if cmd_exist Hyprland; then
+  dot ".config/hypr" -r
+fi
