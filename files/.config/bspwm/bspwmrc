@@ -17,7 +17,7 @@ bspc config urgent_border_color   "#aa4444"
 
 
 
-simple=true
+simple=false
 
 killall -q sxhkd
 pgrep -x sxhkd > /dev/null || sxhkd &
@@ -25,23 +25,24 @@ pgrep -x sxhkd > /dev/null || sxhkd &
 killall -q dunst
 pgrep -x dunst > /dev/null || dunst &
 
+killall -q eww
+if ! pgrep -x eww > /dev/null; then
+  {
+    eww daemon
+    eww open bar
+  } &
+fi
+
 if $simple; then
 
   :
 
 else
 
+  # https://github.com/FT-Labs/picom
   killall -q picom
-  pgrep -x picom > /dev/null || picom &
-
-  killall -q eww
-  if ! pgrep -x eww > /dev/null; then
-    {
-      eww daemon
-      eww open bar
-    } &
-  fi
-
-  ~/.fehbg
+  pgrep -x picom > /dev/null || picom --animations -b &
 
 fi
+
+~/.fehbg

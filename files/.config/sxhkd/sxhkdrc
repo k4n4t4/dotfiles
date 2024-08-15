@@ -35,9 +35,9 @@ XF86AudioMute
 
 # brightness
 XF86MonBrightnessDown
-    brightnessctl s 10%-
+    brightnessctl s 5%-
 XF86MonBrightnessUp
-    brightnessctl s +10%
+    brightnessctl s +5%
 
 
 # Bspwm Shortcuts

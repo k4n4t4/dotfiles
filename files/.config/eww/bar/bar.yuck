@@ -1,16 +1,18 @@
 (defwindow bar
   :monitor 0
   :windowtype "dock"
-  :reserve (struts
-    :side "bottom"
-    :distance "41px"
-  )
+  :wm-ignore false
+  :stacking "fg"
   :geometry (geometry
-    :anchor "bottom left"
+    :anchor "top left"
     :x "0.5%"
-    :y "-3px"
+    :y "3px"
     :width "99%"
     :height "40px"
+  )
+  :reserve (struts
+    :side "top"
+    :distance "41px"
   )
   (box :class "bar"
     :orientation "h"
@@ -41,6 +43,7 @@
     :halign "end"
     :space-evenly false
     (bluetooth-status)
+    (net)
     (battery)
     (time :fmt "%H:%M:%S")
   )
@@ -81,6 +84,24 @@
   )
 )
 
+(defpoll net
+  :interval "10s"
+  :initial `N/A`
+  `nmcli -c no -g SIGNAL,ACTIVE device wifi \
+    | awk -F':' '{if($2=="yes")print$1}'`
+)
+
+(defwidget net []
+  (box
+    :class "net"
+    (button
+      :onclick "alacritty -e nmtui"
+      (label
+        :text "${net}"
+      )
+    )
+  )
+)
 
 
 (defwidget workspaces []

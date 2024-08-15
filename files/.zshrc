@@ -109,6 +109,10 @@ if type zoxide > /dev/null 2>&1; then
   eval "$(zoxide init zsh)"
 fi
 
+if type broot > /dev/null 2>&1; then
+  eval "$(broot --print-shell-function zsh)"
+fi
+
 hide() {
   printf "\033[?25l"
   XT_EXTSCRN true

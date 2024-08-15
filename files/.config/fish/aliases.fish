@@ -151,6 +151,10 @@ if type -q zoxide
   zoxide init fish --cmd z | source
 end
 
+if type -q broot
+  broot --print-shell-function fish | source
+end
+
 if type -q thefuck
   eval (thefuck --alias | tr '\n' ';')
   abbr --add f "fuck"
