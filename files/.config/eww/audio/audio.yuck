@@ -12,10 +12,35 @@
     :height "10%"
   )
 
-  (box :class "audio"
-    :orientation "h"
+  (box
+    :class "audio-window"
+    :orientation "v"
+
     (label
-      :text { mute != "" ?  mute == "yes" ? "is mute" : "is not mute"  : "${volume}%" }
+      :class "audio-title"
+      :text "Audio Volume"
+    )
+
+    (label
+      :class "audio-volume"
+      :text {
+        mute != "" ? (
+          mute == "yes" ? (
+            "is mute"
+          ) : (
+            "is not mute"
+          )
+        ) : (
+          "${volume}%"
+        )
+      }
+    )
+
+    (progress
+      :class "audio-progress"
+      :flipped false
+      :orientation "h"
+      :value volume
     )
   )
 )
