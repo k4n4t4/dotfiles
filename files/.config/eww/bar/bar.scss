@@ -5,10 +5,8 @@
 
 .time {
   color: #DDDD00;
-  background: #333388;
   font-weight: bold;
-  padding: 0 1rem 0 1rem;
-  border-radius: 0.5rem;
+  padding: 0 0.5rem 0 0.5rem;
 }
 
 .calendar {
@@ -18,27 +16,34 @@
   border-radius: 0.5rem;
 }
 
+
 .battery {
-  color: #9999DD;
+  color: #EEEEEE;
   font-weight: bold;
-  padding: 0 1rem 0 1rem;
-  border-radius: 0.5rem;
+  padding: 0 0.5rem 0 0.5rem;
 }
 
-.battery-charging {
-  background: #008822;
+.battery-critical {
+  color: #EE2222;
 }
 
-.battery-discharging {
-  background: #005500;
+.battery-low {
+  color: #EEAA22;
 }
+
+.battery-middle {
+  color: #22AA22;
+}
+
+.battery-high {
+  color: #22EE22;
+}
+
 
 .net {
-  color: #444444;
-  background: #6666DD;
+  color: #6666DD;
   font-weight: bold;
-  padding: 0 1rem 0 1rem;
-  border-radius: 0.5rem;
+  padding: 0 0.5rem 0 0.5rem;
 }
 
 .workspaces > .workspace {

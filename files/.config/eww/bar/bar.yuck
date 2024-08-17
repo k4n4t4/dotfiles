@@ -60,32 +60,85 @@
   )
 )
 
+
 (defwindow calendar
   :monitor 0
   :windowtype "dialog"
   :wm-ignore true
-  :reserve (struts
-    :side "bottom"
-    :distance "41px"
-  )
+
   :geometry (geometry
-    :anchor "bottom right"
+    :anchor "top right"
     :x "-0.5%"
-    :y "-43px"
+    :y "33px"
     :width "10%"
     :height "10%"
   )
+
   (calendar :class "calendar")
 )
 
+
 (defwidget battery []
+
   (box
-    :class "battery battery-${EWW_BATTERY.BAT0.status == "Charging" ? "charging" : "discharging"}"
+    :class "battery ${
+      EWW_BATTERY.BAT0.status == "Charging" ? (
+        "battery-charging"
+      ) : (
+        "battery-discharging"
+      )
+    } ${
+      EWW_BATTERY.BAT0.capacity < 10 ? (
+        "battery-critical"
+      ) : EWW_BATTERY.BAT0.capacity < 30 ? (
+        "battery-low"
+      ) : EWW_BATTERY.BAT0.capacity < 60 ? (
+        "battery-middle"
+      ) : (
+        "battery-high"
+      )
+    }"
+
+    :tooltip "battery on ${EWW_BATTERY.BAT0.capacity}%"
+
     (label
-      :text "${round(EWW_BATTERY.total_avg, 1)}%"
+      :text "${
+        EWW_BATTERY.BAT0.capacity >= 100 ? (
+          "󰁹"
+        ) : EWW_BATTERY.BAT0.capacity >= 90 ? (
+          "󰂂"
+        ) : EWW_BATTERY.BAT0.capacity >= 80 ? (
+          "󰂁"
+        ) : EWW_BATTERY.BAT0.capacity >= 70 ? (
+          "󰂀"
+        ) : EWW_BATTERY.BAT0.capacity >= 60 ? (
+          "󰁿"
+        ) : EWW_BATTERY.BAT0.capacity >= 50 ? (
+          "󰁾"
+        ) : EWW_BATTERY.BAT0.capacity >= 40 ? (
+          "󰁽"
+        ) : EWW_BATTERY.BAT0.capacity >= 30 ? (
+          "󰁼"
+        ) : EWW_BATTERY.BAT0.capacity >= 20 ? (
+          "󰁻"
+        ) : EWW_BATTERY.BAT0.capacity >= 10 ? (
+          "󰁺"
+        ) : (
+          "󰂎"
+        )
+      }${
+        EWW_BATTERY.BAT0.status == "Charging" ? (
+          "󱐋"
+        ) : (
+          ""
+        )
+      }"
     )
+
   )
+
 )
+
 
 (defpoll net
   :interval "1h"
@@ -97,14 +150,21 @@
 (defwidget net []
   (box
     :class "net"
-    (button
-      :onclick "alacritty -e nmtui"
-      (label
-        :text "${net}"
-      )
+
+    :tooltip "net: ${net}"
+
+    (label
+      :text "${
+        net == "N/A" ? (
+          "󰤮"
+        ) : (
+          "󰤨"
+        )
+      }"
     )
   )
 )
+
 
 (defpoll workspace_number
   :interval "2s"
