@@ -1,0 +1,29 @@
+.brightness-window {
+  color: #DDDD00;
+  background: rgba(20, 20, 20, 0.2);
+}
+
+.brightness-title {
+  color: #DDDDDD;
+  font-weight: bold;
+}
+
+.brightness-percentage {
+  color: #DDDD00;
+}
+
+.brightness-progress {
+  margin: 0 1rem 1rem 1rem;
+}
+
+.brightness-progress > trough {
+  background: #303030;
+  border-radius: 1rem;
+  min-height: 1rem;
+}
+
+.brightness-progress > trough > progress {
+  background: #AAAADD;
+  border-radius: 1rem;
+  min-height: 1rem;
+}
