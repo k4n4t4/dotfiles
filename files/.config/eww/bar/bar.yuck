@@ -106,17 +106,22 @@
   )
 )
 
+(defpoll workspace_number
+  :interval "2s"
+  :initial "0"
+  `xdotool get_desktop`
+)
 
 (defwidget workspaces []
   (box :class "workspaces"
-    "N"
+    workspace_number
   )
 )
 
 (defpoll window-name
-  :interval "1s"
+  :interval "2s"
   :initial ""
-  `echo N`
+  `xdotool getwindowname $(xdotool getwindowfocus)`
 )
 
 (defwidget window-name []
