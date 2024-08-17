@@ -3,17 +3,20 @@
   :windowtype "dock"
   :wm-ignore false
   :stacking "fg"
+
   :geometry (geometry
     :anchor "top left"
     :x "0.5%"
     :y "3px"
     :width "99%"
-    :height "40px"
+    :height "30px"
   )
+
   :reserve (struts
     :side "top"
-    :distance "41px"
+    :distance "31px"
   )
+
   (box :class "bar"
     :orientation "h"
     (bar-left)
@@ -85,7 +88,7 @@
 )
 
 (defpoll net
-  :interval "10s"
+  :interval "1h"
   :initial `N/A`
   `nmcli -c no -g SIGNAL,ACTIVE device wifi \
     | awk -F':' '{if($2=="yes")print$1}'`

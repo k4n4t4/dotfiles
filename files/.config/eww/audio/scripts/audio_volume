@@ -1,0 +1,39 @@
+#!/bin/sh
+
+if ! command -v pactl > /dev/null 2>&1; then
+  echo "\`pactl\` is not found." >&2
+  exit 1
+fi
+
+get_volume() {
+  pactl get-sink-volume @DEFAULT_SINK@ | awk 'NR==1 {
+    match($0, /[0-9]*%/)
+    printf substr($0, RSTART, RLENGTH-1)
+  }'
+}
+
+is_mute() {
+  pactl get-sink-mute @DEFAULT_SINK@ | awk '{
+    printf substr($0, index($0, " ")+1)
+  }'
+}
+
+case "$1" in
+  ( get-volume )
+    get_volume
+    echo
+    ;;
+  ( is-mute )
+    is_mute
+    echo
+    ;;
+  ( json )
+    printf "{\n  volume: "
+    get_volume
+    printf ",\n  mute: \""
+    is_mute
+    printf "\",\n}\n"
+    ;;
+esac
+
+exit 0
