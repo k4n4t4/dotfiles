@@ -201,9 +201,27 @@
 )
 
 (defwidget bluetooth-status []
-  (box :class "bluetooth-status"
-    (button :onclick "bluetoothctl power ${bluetooth-status == "on" ? "off" : "on"}"
-      (label :text "${bluetooth-status == "on" ? "ON" : "OFF"}")
+  (box
+    :class "bluetooth-status"
+
+    (button
+      :onclick "bluetoothctl power ${
+        bluetooth-status == "on" ? (
+          "off"
+        ) : (
+          "on"
+        )
+      }"
+
+      (label
+        :text "${
+          bluetooth-status == "on" ? (
+            "󰂯"
+          ) : (
+            "󰂲"
+          )
+        }"
+      )
     )
   )
 )
