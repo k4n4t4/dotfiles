@@ -48,14 +48,19 @@
     (bluetooth-status)
     (net)
     (battery)
-    (time :fmt "%H:%M:%S")
+    (time :fmt "%H:%M")
   )
 )
 
 (defwidget time [fmt]
-  (box :class "time"
-    (button :onclick "${EWW_CMD} open --toggle calendar"
-      (label :text "${formattime(EWW_TIME, fmt)}")
+  (box
+    :class "time"
+    :tooltip "${formattime(EWW_TIME, "%m/%d/%Y[%a]%H:%M:%S")}"
+    (button
+      :onclick "${EWW_CMD} open --toggle calendar"
+      (label
+        :text "${formattime(EWW_TIME, fmt)}"
+      )
     )
   )
 )
@@ -166,17 +171,36 @@
 )
 
 
-(defpoll workspace_number
+(defpoll num_workspaces
+  :interval "1h"
+  :initial "0"
+  `seq -s ", " $(xdotool get_num_desktops)`
+)
+
+(defpoll current_workspace
   :interval "2s"
   :initial "0"
   `xdotool get_desktop`
 )
 
 (defwidget workspaces []
-  (box :class "workspaces"
-    workspace_number
+  (box
+    :class "workspaces"
+    (for i in "[${num_workspaces}]"
+      (label
+        :class "workspace ${
+          i == current_workspace + 1 ? (
+            "current-workspace"
+          ) : (
+            ""
+          )
+        }"
+        :text "${i}"
+      )
+    )
   )
 )
+
 
 (defpoll window-name
   :interval "2s"
@@ -193,6 +217,7 @@
     )
   )
 )
+
 
 (defpoll bluetooth-status
   :interval "1s"
