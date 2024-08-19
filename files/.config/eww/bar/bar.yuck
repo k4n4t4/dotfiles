@@ -17,8 +17,10 @@
     :distance "31px"
   )
 
-  (box :class "bar"
+  (box
+    :class "bar"
     :orientation "h"
+
     (bar-left)
     (bar-center)
     (bar-right)
@@ -26,58 +28,78 @@
 )
 
 (defwidget bar-left []
-  (box :class "bar-left"
+  (box
+    :class "bar-left"
     :halign "start"
     :space-evenly false
+
     (workspaces)
   )
 )
 
 (defwidget bar-center []
-  (box :class "bar-center"
+  (box
+    :class "bar-center"
     :halign "center"
     :space-evenly false
+
     (window-name)
   )
 )
 
 (defwidget bar-right []
-  (box :class "bar-right"
+  (box
+    :class "bar-right"
     :halign "end"
     :space-evenly false
-    (audio-volume)
-    (bluetooth-status)
-    (net)
+
+    (audio)
+    (bluetooth)
+    (network)
     (battery)
     (time :fmt "%H:%M")
   )
 )
 
 
-(defvar show-audio-volume false)
+(defvar show-audio-volume-scale false)
 
-(defwidget audio-volume []
+(defwidget audio []
   (box
-    :class "audio-volume"
-    :tooltip "Audio"
+    :class "bar-audio"
+    :tooltip "volume: ${audio.volume}"
     (eventbox
-      :onhover "${EWW_CMD} update show-audio-volume=true"
-      :onhoverlost "${EWW_CMD} update show-audio-volume=false"
+      :onhover "${EWW_CMD} update show-audio-volume-scale=true"
+      :onhoverlost "${EWW_CMD} update show-audio-volume-scale=false"
       (box
         :space-evenly false
-        :spacing 3
+        :spacing 5
         (button
-          :onclick "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+          :onrightclick "pactl set-sink-mute @DEFAULT_SINK@ toggle"
           (label
-            :text ""
+            :class "bar-audio-label"
+            :text {
+              audio.mute ? (
+                "󰝟"
+              ) : (
+                audio.volume >= 60 ? (
+                  "󰕾"
+                ) : audio.volume >= 20 ? (
+                  "󰖀"
+                ) : (
+                  "󰕿"
+                )
+              )
+            }
           )
         )
         (revealer
           :transition "slideleft"
-          :reveal show-audio-volume
+          :reveal show-audio-volume-scale
           :duration 300
           (scale
-            :value 50
+            :class "bar-audio-scale"
+            :value {audio.volume}
             :min 0
             :max 101
             :onchange "pactl set-sink-volume @DEFAULT_SINK@ {}%"
@@ -183,22 +205,16 @@
 )
 
 
-(defpoll net
-  :interval "1h"
-  :initial `N/A`
-  `nmcli -c no -g SIGNAL,ACTIVE device wifi \
-    | awk -F':' '{if($2=="yes")print$1}'`
-)
 
-(defwidget net []
+(defwidget network []
   (box
     :class "net"
-    :tooltip "net: ${net}"
+    :tooltip "net: ${network-signal}"
     (button
       :onclick "st nmtui &"
       (label
         :text "${
-          net == "N/A" ? (
+          network-signal == "N/A" ? (
             "󰤮"
           ) : (
             "󰤨"
@@ -209,26 +225,13 @@
   )
 )
 
-
-(defpoll num_workspaces
-  :interval "1h"
-  :initial "0"
-  `seq -s ", " $(xdotool get_num_desktops)`
-)
-
-(defpoll current_workspace
-  :interval "2s"
-  :initial "0"
-  `xdotool get_desktop`
-)
-
 (defwidget workspaces []
   (box
     :class "workspaces"
-    (for i in "[${num_workspaces}]"
+    (for i in "[${number-of-workspaces}]"
       (label
         :class "workspace ${
-          i == current_workspace + 1 ? (
+          i == current-workspace + 1 ? (
             "current-workspace"
           ) : (
             ""
@@ -241,30 +244,21 @@
 )
 
 
-(defpoll window-name
-  :interval "2s"
-  :initial ""
-  `xdotool getwindowname $(xdotool getwindowfocus)`
-)
 
 (defwidget window-name []
-  (box :class "window-name"
+  (box
+    :class "window-name"
+
     (label
       :truncate true
       :show-truncated true
-      :text "${window-name}"
+      :text "${current-window-name}"
     )
   )
 )
 
 
-(defpoll bluetooth-status
-  :interval "1s"
-  :initial ""
-  `[ -n "$(bluetoothctl show | grep "Powered: yes")" ] && echo on || echo off`
-)
-
-(defwidget bluetooth-status []
+(defwidget bluetooth []
   (box
     :class "bluetooth-status"
 

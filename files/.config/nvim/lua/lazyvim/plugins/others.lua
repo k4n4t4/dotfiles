@@ -1,7 +1,7 @@
 return {
   {
     "norcalli/nvim-colorizer.lua",
-    enabled = false,
+    enabled = true,
     event = "VeryLazy",
     config = true,
   },

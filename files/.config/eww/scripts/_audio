@@ -27,13 +27,6 @@ case "$1" in
     is_mute
     echo
     ;;
-  ( json )
-    printf "{\n  volume: "
-    get_volume
-    printf ",\n  mute: \""
-    is_mute
-    printf "\",\n}\n"
-    ;;
 esac
 
 exit 0

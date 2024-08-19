@@ -1,3 +1,68 @@
+(defpoll audio
+  :interval "1s"
+  :initial "{}"
+  `scripts/audio json`
+)
+
+(defpoll brightness-value
+  :interval "1s"
+  :initial 0
+  `brightnessctl g`
+)
+
+(defpoll network-signal
+  :interval "1m"
+  :initial `N/A`
+  `nmcli -c no -g SIGNAL,ACTIVE device wifi \
+    | awk -F':' '{if($2=="yes")print$1}'`
+)
+
+(defpoll number-of-workspaces
+  :interval "1h"
+  :initial "0"
+  `seq -s ", " $(xdotool get_num_desktops)`
+)
+
+(defpoll current-workspace
+  :interval "2s"
+  :initial "0"
+  `xdotool get_desktop`
+)
+
+(defpoll current-window-name
+  :interval "2s"
+  :initial ""
+  `xdotool getwindowname $(xdotool getwindowfocus)`
+)
+
+(defpoll bluetooth-status
+  :interval "1s"
+  :initial ""
+  `[ -n "$(bluetoothctl show | grep "Powered: yes")" ] && echo on || echo off`
+)
+
+
 (include "bar/bar.yuck")
 (include "audio/audio.yuck")
 (include "brightness/brightness.yuck")
+
+
+; this is debug
+(defwindow debug
+  :geometry (geometry
+    :anchor "top right"
+    :y "30px"
+    :width "10%"
+  )
+  (box
+    :orientation "v"
+    :style "background: black;"
+    (label :text "
+  audio-volume: ${audio.volume}
+  audio-mute: ${audio.mute}
+  brightness: ${brightness-value}
+  bluetooth: ${bluetooth-status}
+  network: ${network-signal}
+    ")
+  )
+)

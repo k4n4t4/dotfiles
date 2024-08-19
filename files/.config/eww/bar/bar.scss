@@ -74,21 +74,25 @@
 }
 
 
-.audio-volume scale > contents > trough {
+.bar-audio-label {
+  color: #EEEEAA;
+}
+
+.bar-audio-scale > contents > trough {
   background: #303030;
   border-radius: 1rem;
-  min-width: 70px;
+  min-width: 100px;
   min-height: 1rem;
 }
 
-.audio-volume scale > contents > trough > highlight {
-  background: #AAAADD;
+.bar-audio-scale > contents > trough > highlight {
+  background: #EEEEAA;
   border-radius: 1rem;
   min-height: 1rem;
 }
 
-.audio-volume scale > contents > trough > slider {
-  background: #EE0000;
+.bar-audio-scale > contents > trough > slider {
+  background: #EEEEEE;
   border-radius: 1rem;
   min-width: 1rem;
   min-height: 1rem;

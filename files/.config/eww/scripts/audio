@@ -1,0 +1,53 @@
+#!/bin/sh
+
+if ! command -v pactl > /dev/null 2>&1; then
+  echo "\`pactl\` is not found." >&2
+  exit 1
+fi
+
+get_volume() {
+  amixer sget Master | awk '/Left:/ {
+    match($0, /[0-9]*%/)
+    printf substr($0, RSTART, RLENGTH-1)
+  }'
+}
+
+is_mute() {
+  amixer sget Master | awk '/Left:/ {
+    if (match($0, /\[on\]/)) {
+      printf "no"
+    } else {
+      printf "yes"
+    }
+  }'
+}
+
+json() {
+  amixer sget Master | awk '/Left:/ {
+    printf "{\n"
+    match($0, /[0-9]*%/)
+    printf "  \"volume\": " substr($0, RSTART, RLENGTH-1) ",\n"
+    if (match($0, /\[on\]/)) {
+      printf "  \"mute\": false\n"
+    } else {
+      printf "  \"mute\": true\n"
+    }
+    printf "}\n"
+  }'
+}
+
+case "$1" in
+  ( get-volume )
+    get_volume
+    echo
+    ;;
+  ( is-mute )
+    is_mute
+    echo
+    ;;
+  ( json )
+    json
+    echo
+esac
+
+exit 0
