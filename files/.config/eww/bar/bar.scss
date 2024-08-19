@@ -46,7 +46,7 @@
   padding: 0 0.5rem 0 0.5rem;
 }
 
-.workspaces > .workspace {
+.bar-workspaces > .bar-workspace {
   color: #DD9999;
   background: #664400;
   font-weight: bold;
@@ -54,7 +54,7 @@
   border-radius: 0.5rem;
 }
 
-.workspaces > .current-workspace {
+.bar-workspaces > .bar-current-workspace {
   color: #DD5555;
   background: #886600;
 }

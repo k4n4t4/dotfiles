@@ -227,17 +227,18 @@
 
 (defwidget workspaces []
   (box
-    :class "workspaces"
+    :class "bar-workspaces"
     (for i in "[${number-of-workspaces}]"
-      (label
-        :class "workspace ${
+      (button
+        :class "bar-workspace ${
           i == current-workspace + 1 ? (
-            "current-workspace"
+            "bar-current-workspace"
           ) : (
             ""
           )
         }"
-        :text "${i}"
+        :onclick "xdotool set_desktop ${i - 1}"
+        (label :text "${i}")
       )
     )
   )
