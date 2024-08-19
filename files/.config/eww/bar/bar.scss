@@ -72,3 +72,24 @@
   font-weight: bold;
   padding: 0 0.5rem 0 0.5rem;
 }
+
+
+.audio-volume scale > contents > trough {
+  background: #303030;
+  border-radius: 1rem;
+  min-width: 70px;
+  min-height: 1rem;
+}
+
+.audio-volume scale > contents > trough > highlight {
+  background: #AAAADD;
+  border-radius: 1rem;
+  min-height: 1rem;
+}
+
+.audio-volume scale > contents > trough > slider {
+  background: #EE0000;
+  border-radius: 1rem;
+  min-width: 1rem;
+  min-height: 1rem;
+}

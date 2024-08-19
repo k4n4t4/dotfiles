@@ -45,12 +45,50 @@
   (box :class "bar-right"
     :halign "end"
     :space-evenly false
+    (audio-volume)
     (bluetooth-status)
     (net)
     (battery)
     (time :fmt "%H:%M")
   )
 )
+
+
+(defvar show-audio-volume false)
+
+(defwidget audio-volume []
+  (box
+    :class "audio-volume"
+    :tooltip "Audio"
+    (eventbox
+      :onhover "${EWW_CMD} update show-audio-volume=true"
+      :onhoverlost "${EWW_CMD} update show-audio-volume=false"
+      (box
+        :space-evenly false
+        :spacing 3
+        (button
+          :onclick "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+          (label
+            :text ""
+          )
+        )
+        (revealer
+          :transition "slideleft"
+          :reveal show-audio-volume
+          :duration 300
+          (scale
+            :value 50
+            :min 0
+            :max 101
+            :onchange "pactl set-sink-volume @DEFAULT_SINK@ {}%"
+            :orientation "h"
+          )
+        )
+      )
+    )
+  )
+)
+
 
 (defwidget time [fmt]
   (box
@@ -155,17 +193,18 @@
 (defwidget net []
   (box
     :class "net"
-
     :tooltip "net: ${net}"
-
-    (label
-      :text "${
-        net == "N/A" ? (
-          "󰤮"
-        ) : (
-          "󰤨"
-        )
-      }"
+    (button
+      :onclick "st nmtui &"
+      (label
+        :text "${
+          net == "N/A" ? (
+            "󰤮"
+          ) : (
+            "󰤨"
+          )
+        }"
+      )
     )
   )
 )
