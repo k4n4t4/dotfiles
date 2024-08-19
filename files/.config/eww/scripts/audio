@@ -1,29 +1,29 @@
 #!/bin/sh
 
-if ! command -v pactl > /dev/null 2>&1; then
-  echo "\`pactl\` is not found." >&2
+if ! command -v amixer > /dev/null 2>&1; then
+  echo "\`amixer\` is not found." >&2
   exit 1
 fi
 
 get_volume() {
-  amixer sget Master | awk '/Left:/ {
+  amixer sget "$1" | awk '/Left:/ {
     match($0, /[0-9]*%/)
     printf substr($0, RSTART, RLENGTH-1)
   }'
 }
 
 is_mute() {
-  amixer sget Master | awk '/Left:/ {
+  amixer sget "$1" | awk '/Left:/ {
     if (match($0, /\[on\]/)) {
-      printf "no"
+      printf "false"
     } else {
-      printf "yes"
+      printf "true"
     }
   }'
 }
 
 json() {
-  amixer sget Master | awk '/Left:/ {
+  amixer sget "$1" | awk '/Left:/ {
     printf "{\n"
     match($0, /[0-9]*%/)
     printf "  \"volume\": " substr($0, RSTART, RLENGTH-1) ",\n"
@@ -36,17 +36,17 @@ json() {
   }'
 }
 
-case "$1" in
-  ( get-volume )
-    get_volume
+case "$2" in
+  ( volume )
+    get_volume "$1"
     echo
     ;;
-  ( is-mute )
-    is_mute
+  ( mute )
+    is_mute "$1"
     echo
     ;;
   ( json )
-    json
+    json "$1"
     echo
 esac
 

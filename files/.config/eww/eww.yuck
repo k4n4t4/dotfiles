@@ -1,7 +1,13 @@
 (defpoll audio
   :interval "1s"
   :initial "{}"
-  `scripts/audio json`
+  `scripts/audio Master json`
+)
+
+(defpoll mic
+  :interval "1s"
+  :initial "{}"
+  `scripts/audio Capture json`
 )
 
 (defpoll brightness-value
@@ -60,6 +66,8 @@
     (label :text "
   audio-volume: ${audio.volume}
   audio-mute: ${audio.mute}
+  mic-volume: ${mic.volume}
+  mic-mute: ${mic.mute}
   brightness: ${brightness-value}
   bluetooth: ${bluetooth-status}
   network: ${network-signal}
