@@ -33,6 +33,9 @@ XF86AudioLowerVolume
 XF86AudioMute
     amixer sset Master toggle && eww open audio --duration 1000 --arg volume=$(~/.config/eww/scripts/audio get-volume) --arg mute=$(~/.config/eww/scripts/audio is-mute)
 
+XF86AudioMicMute
+    amixer sset Capture toggle
+
 # brightness
 XF86MonBrightnessDown
     brightnessctl s 5%- && eww open brightness --duration 1000 --arg brightness=$(brightnessctl g)
