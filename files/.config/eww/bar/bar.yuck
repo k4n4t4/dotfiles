@@ -57,7 +57,7 @@
     (bluetooth)
     (network)
     (battery)
-    (time :fmt "%H:%M")
+    (clock :fmt "%H:%M")
   )
 )
 
@@ -112,9 +112,9 @@
 )
 
 
-(defwidget time [fmt]
+(defwidget clock [fmt]
   (box
-    :class "time"
+    :class "bar-clock"
     :tooltip "${formattime(EWW_TIME, "%m/%d/%Y[%a]%H:%M:%S")}"
     (button
       :onclick "${EWW_CMD} open --toggle calendar"
@@ -146,21 +146,21 @@
 (defwidget battery []
 
   (box
-    :class "battery ${
+    :class "bar-battery ${
       EWW_BATTERY.BAT0.status == "Charging" ? (
-        "battery-charging"
+        "bar-battery-charging"
       ) : (
-        "battery-discharging"
+        "bar-battery-discharging"
       )
     } ${
       EWW_BATTERY.BAT0.capacity < 10 ? (
-        "battery-critical"
+        "bar-battery-critical"
       ) : EWW_BATTERY.BAT0.capacity < 30 ? (
-        "battery-low"
+        "bar-battery-low"
       ) : EWW_BATTERY.BAT0.capacity < 60 ? (
-        "battery-middle"
+        "bar-battery-middle"
       ) : (
-        "battery-high"
+        "bar-battery-high"
       )
     }"
 
@@ -208,18 +208,19 @@
 
 (defwidget network []
   (box
-    :class "net"
+    :class "bar-network"
     :tooltip "net: ${network-signal}"
+
     (button
       :onclick "st nmtui &"
       (label
-        :text "${
+        :text {
           network-signal == "N/A" ? (
             "󰤮"
           ) : (
             "󰤨"
           )
-        }"
+        }
       )
     )
   )
@@ -228,6 +229,8 @@
 (defwidget workspaces []
   (box
     :class "bar-workspaces"
+    :tooltip "${current-workspace + 1}"
+
     (for i in "[${number-of-workspaces}]"
       (button
         :class "bar-workspace ${
@@ -249,11 +252,12 @@
 (defwidget window-name []
   (box
     :class "bar-window-name"
+    :tooltip "${current-window-name}"
 
     (label
       :truncate true
       :show-truncated true
-      :text "${current-window-name}"
+      :text current-window-name
     )
   )
 )
@@ -273,13 +277,13 @@
       }"
 
       (label
-        :text "${
+        :text {
           bluetooth-status == "on" ? (
             "󰂯"
           ) : (
             "󰂲"
           )
-        }"
+        }
       )
     )
   )

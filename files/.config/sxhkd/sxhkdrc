@@ -27,11 +27,11 @@ super + s
 
 # audio volume
 XF86AudioRaiseVolume
-    amixer sset Master 5%+ && eww open audio --duration 1000 --arg volume=$(~/.config/eww/scripts/audio get-volume) --arg mute=
+    amixer sset Master 5%+ && eww open audio --duration 1000 --arg volume=$(~/.config/eww/scripts/audio Master volume) --arg mute=
 XF86AudioLowerVolume
-    amixer sset Master 5%- && eww open audio --duration 1000 --arg volume=$(~/.config/eww/scripts/audio get-volume) --arg mute=
+    amixer sset Master 5%- && eww open audio --duration 1000 --arg volume=$(~/.config/eww/scripts/audio Master volume) --arg mute=
 XF86AudioMute
-    amixer sset Master toggle && eww open audio --duration 1000 --arg volume=$(~/.config/eww/scripts/audio get-volume) --arg mute=$(~/.config/eww/scripts/audio is-mute)
+    amixer sset Master toggle && eww open audio --duration 1000 --arg volume=$(~/.config/eww/scripts/audio Master volume) --arg mute=$(~/.config/eww/scripts/audio Master mute)
 
 XF86AudioMicMute
     amixer sset Capture toggle

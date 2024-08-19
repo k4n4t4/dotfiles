@@ -3,8 +3,8 @@
   background: rgba(20, 20, 20, 0.7);
 }
 
-.time {
-  color: #DDDD00;
+.bar-clock {
+  color: #AAEEDD;
   font-weight: bold;
   padding: 0 0.5rem 0 0.5rem;
 }
@@ -17,30 +17,29 @@
 }
 
 
-.battery {
-  color: #EEEEEE;
+.bar-battery {
   font-weight: bold;
   padding: 0 0.5rem 0 0.5rem;
 }
 
-.battery-critical {
+.bar-battery-critical {
   color: #EE2222;
 }
 
-.battery-low {
+.bar-battery-low {
   color: #EEAA22;
 }
 
-.battery-middle {
+.bar-battery-middle {
   color: #22AA22;
 }
 
-.battery-high {
+.bar-battery-high {
   color: #22EE22;
 }
 
 
-.net {
+.bar-network {
   color: #6666DD;
   font-weight: bold;
   padding: 0 0.5rem 0 0.5rem;

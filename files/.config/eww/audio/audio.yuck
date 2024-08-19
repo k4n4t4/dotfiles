@@ -25,7 +25,7 @@
       :class "audio-volume"
       :text {
         mute != "" ? (
-          mute == "yes" ? (
+          mute ? (
             "is mute"
           ) : (
             "is not mute"
