@@ -27,11 +27,11 @@ super + s
 
 # audio volume
 XF86AudioRaiseVolume
-    pactl set-sink-volume @DEFAULT_SINK@ +5% && eww open audio --duration 1000 --arg volume=$(~/.config/eww/scripts/audio get-volume) --arg mute=
+    amixer sset Master 5%+ && eww open audio --duration 1000 --arg volume=$(~/.config/eww/scripts/audio get-volume) --arg mute=
 XF86AudioLowerVolume
-    pactl set-sink-volume @DEFAULT_SINK@ -5% && eww open audio --duration 1000 --arg volume=$(~/.config/eww/scripts/audio get-volume) --arg mute=
+    amixer sset Master 5%- && eww open audio --duration 1000 --arg volume=$(~/.config/eww/scripts/audio get-volume) --arg mute=
 XF86AudioMute
-    pactl set-sink-mute @DEFAULT_SINK@ toggle && eww open audio --duration 1000 --arg volume=$(~/.config/eww/scripts/audio get-volume) --arg mute=$(~/.config/eww/scripts/audio is-mute)
+    amixer sset Master toggle && eww open audio --duration 1000 --arg volume=$(~/.config/eww/scripts/audio get-volume) --arg mute=$(~/.config/eww/scripts/audio is-mute)
 
 # brightness
 XF86MonBrightnessDown
