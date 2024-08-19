@@ -51,7 +51,8 @@
   background: #664400;
   font-weight: bold;
   padding: 0 1rem 0 1rem;
-  border-radius: 0.5rem;
+  margin: 0.1 0.1rem 0.1 0.1rem;
+  border-radius: 0.3rem;
 }
 
 .bar-workspaces > .bar-current-workspace {
@@ -59,15 +60,15 @@
   background: #886600;
 }
 
-.window-name {
+.bar-window-name {
   color: #DDDDDD;
-  background: #504060;
+  background: #302040;
   font-weight: bold;
   padding: 0 1rem 0 1rem;
   border-radius: 0.5rem;
 }
 
-.bluetooth-status {
+.bar-bluetooth-status {
   color: #2222BB;
   font-weight: bold;
   padding: 0 0.5rem 0 0.5rem;
