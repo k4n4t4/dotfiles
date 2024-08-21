@@ -1,0 +1,52 @@
+* {
+  font-family: "ComicShannsMono Nerd Font Mono";
+  font-size: 1.4rem;
+}
+
+window {
+  margin: 0;
+  padding: 10px;
+  border: 1px solid #E0A0A0;
+  border-radius: 0.5rem;
+  background: none;
+}
+
+#inner-box {
+  margin: 5px;
+  padding: 10px;
+  border: none;
+  background: none;
+}
+
+#outer-box {
+  margin: 5px;
+  padding: 10px;
+  border: none;
+  background: rgba(20, 20, 20, 0.6);
+}
+
+#scroll {
+  margin: 0px;
+  padding: 10px;
+  border: none;
+}
+
+#input {
+  margin: 5px;
+  padding: 10px;
+  border: none;
+  color: #E0A0A0;
+  background: #404040;
+}
+
+#entry {
+  border-radius: 0.5rem;
+}
+
+#entry:selected {
+  background: #E0A0A0;
+}
+
+#entry:selected #text {
+  color: #202020;
+}
