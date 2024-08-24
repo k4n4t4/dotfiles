@@ -102,3 +102,7 @@ fi
 if cmd_exist wofi; then
   dot ".config/wofi" -r
 fi
+
+if cmd_exist ags; then
+  dot ".config/ags" -r
+fi

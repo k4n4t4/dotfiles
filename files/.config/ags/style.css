@@ -1,0 +1,34 @@
+* {
+  all: unset;
+  font-family: "ComicShannsMono Nerd Font Mono";
+  font-size: 1.5rem;
+}
+
+.bar {
+  background: #202020;
+  color: #E0E0E0;
+}
+
+.bar box {
+  padding: 0.05rem 0 0.05rem 0;
+}
+
+.bar scale > contents > trough {
+  background: #303030;
+  border-radius: 1rem;
+  min-width: 100px;
+  min-height: 1rem;
+}
+
+.bar scale > contents > trough > highlight {
+  background: #EEEEAA;
+  border-radius: 1rem;
+  min-height: 1rem;
+}
+
+.bar scale > contents > trough > slider {
+  background: #EEEEEE;
+  border-radius: 1rem;
+  min-width: 1rem;
+  min-height: 1rem;
+}
