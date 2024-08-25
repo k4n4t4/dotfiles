@@ -13,6 +13,52 @@
   padding: 0.05rem 0 0.05rem 0;
 }
 
+
+.bar-clock {
+  color: #AAEEDD;
+  font-weight: bold;
+  padding: 0 0.5rem 0 0.5rem;
+}
+
+
+.calendar {
+  color: #DDDD00;
+  background: rgba(20, 20, 20, 0.7);
+  font-weight: bold;
+  border-radius: 0.5rem;
+}
+
+
+.bar-battery {
+  font-weight: bold;
+  padding: 0 0.5rem 0 0.5rem;
+}
+
+.bar-battery-critical {
+  color: #EE2222;
+}
+
+.bar-battery-low {
+  color: #EEAA22;
+}
+
+.bar-battery-middle {
+  color: #22AA22;
+}
+
+.bar-battery-high {
+  color: #22EE22;
+}
+
+
+.bar-network {
+  color: #6666DD;
+  font-weight: bold;
+  padding: 0 0.5rem 0 0.5rem;
+}
+
+
+
 .bar scale > contents > trough {
   background: #303030;
   border-radius: 1rem;
