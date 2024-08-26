@@ -58,6 +58,34 @@
 }
 
 
+.bar-bluetooth {
+  color: #3636EE;
+  font-weight: bold;
+  padding: 0 0.5rem 0 0.5rem;
+}
+
+
+.bar-audio {
+  color: #CCAA36;
+  font-weight: bold;
+  padding: 0 0.5rem 0 0.5rem;
+}
+
+
+.bar-title {
+  color: #2244AA;
+  font-weight: bold;
+  padding: 0 0.5rem 0 0.5rem;
+}
+
+
+.bar-workspace {
+  color: #EECCAA;
+  font-weight: bold;
+  padding: 0 0.5rem 0 0.5rem;
+  margin: 0 0.2rem 0 0.2rem;
+}
+
 
 .bar scale > contents > trough {
   background: #303030;
