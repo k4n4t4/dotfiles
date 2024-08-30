@@ -18,20 +18,14 @@
   color: #AAEEDD;
   font-weight: bold;
   padding: 0 0.5rem 0 0.5rem;
-}
-
-
-.calendar {
-  color: #DDDD00;
-  background: rgba(20, 20, 20, 0.7);
-  font-weight: bold;
-  border-radius: 0.5rem;
+  margin: 0 0.4rem 0 0.4rem;
 }
 
 
 .bar-battery {
   font-weight: bold;
   padding: 0 0.5rem 0 0.5rem;
+  margin: 0 0.4rem 0 0.4rem;
 }
 
 .bar-battery-critical {
@@ -55,6 +49,7 @@
   color: #6666DD;
   font-weight: bold;
   padding: 0 0.5rem 0 0.5rem;
+  margin: 0 0.4rem 0 0.4rem;
 }
 
 
@@ -62,6 +57,7 @@
   color: #3636EE;
   font-weight: bold;
   padding: 0 0.5rem 0 0.5rem;
+  margin: 0 0.4rem 0 0.4rem;
 }
 
 
@@ -69,6 +65,7 @@
   color: #CCAA36;
   font-weight: bold;
   padding: 0 0.5rem 0 0.5rem;
+  margin: 0 0.4rem 0 0.4rem;
 }
 
 
@@ -79,11 +76,18 @@
 }
 
 
-.bar-workspace {
+.bar-workspaces box {
+  background: #303030;
   color: #EECCAA;
   font-weight: bold;
-  padding: 0 0.5rem 0 0.5rem;
+  padding: 0 1rem 0 1rem;
   margin: 0 0.2rem 0 0.2rem;
+  border-radius: 0.5rem;
+}
+
+.bar-current-workspace {
+  border: 1px solid #EEAA99;
+  border-radius: 0.5rem;
 }
 
 

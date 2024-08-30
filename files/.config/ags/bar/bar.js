@@ -260,11 +260,22 @@ const BarWorkspaces = Widget.Box({
   children: hyprland.bind('workspaces').as(workspaces => {
     const children = []
     for (let workspace of workspaces) {
-      children.push(Widget.Box({
-        class_name: "bar-workspace",
-        children: [
-          Widget.Label(workspace.name)
-        ]
+      children.push(Widget.Button({
+        class_name: hyprland.bind('active').as(active => {
+          let class_name = "bar-workspace"
+          if (active.workspace.id === workspace.id) {
+            class_name += " bar-current-workspace"
+          }
+          return class_name
+        }),
+        onClicked: () => {
+          hyprland.messageAsync(`dispatch workspace ${workspace.id}`)
+        },
+        child: Widget.Box({
+          children: [
+            Widget.Label(workspace.name)
+          ]
+        })
       }))
     }
     return children
