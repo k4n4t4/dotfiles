@@ -1,19 +1,8 @@
-const hyprland = await Service.import('hyprland')
-const audio = await Service.import('audio')
+const hyprland  = await Service.import('hyprland')
+const audio     = await Service.import('audio')
 const bluetooth = await Service.import('bluetooth')
-const network = await Service.import('network')
-const battery = await Service.import('battery')
-
-
-/*
-
-  # get speaker volume
-  audio[('speaker' | 'microphone')].volume
-
-  # bind speaker volume
-  audio[('speaker' | 'microphone')].bind('volume')
-
-*/
+const network   = await Service.import('network')
+const battery   = await Service.import('battery')
 
 
 function clock(interval) {
@@ -174,7 +163,7 @@ const BarNetworkWired = Widget.Box({
         network.wifi.bind('internet'),
         network.wifi.bind('state'),
       ], (internet, state) => {
-        if (internet === "connected") {
+        if (internet === 'connected') {
           return ""
         } else {
           return ""
@@ -218,6 +207,15 @@ const BarBluetooth = Widget.Box({
 
 const BarAudio = Widget.Box({
   class_name: "bar-audio",
+  tooltipText: Utils.merge([
+    audio.speaker.bind('volume'),
+    audio.speaker.bind('is-muted'),
+    audio.microphone.bind('volume'),
+    audio.microphone.bind('is-muted'),
+  ], (volume, isMuted, mic_volume, mic_isMuted) => {
+    return `volume: ${Math.round(volume * 100)}%${isMuted ? " mute" : ""}\n`
+         + `mic-volume: ${Math.round(mic_volume * 100)}%${mic_isMuted ? " mute" : ""}`
+  }),
   children: [
     Widget.Label({
       label: Utils.merge([
@@ -289,35 +287,32 @@ const Bar = monitor => Widget.Window({
   name: `bar-${monitor}`,
   anchor: ['top', 'left', 'right'],
   exclusivity: 'exclusive',
-  layer: "bottom",
+  layer: 'bottom',
   margins: [5, 5, 5, 5],
-  keymode: "none",
-  child: Widget.Box({
-    children: [
-      BarStart,
-      BarCenter,
-      BarEnd,
-    ]
+  keymode: 'none',
+  child: Widget.CenterBox({
+    startWidget: BarStart,
+    centerWidget: BarCenter,
+    endWidget: BarEnd,
   })
 })
 
 const BarStart = Widget.Box({
-  hpack: "start",
+  hpack: 'start',
   children: [
     BarWorkspaces,
   ]
 })
 
 const BarCenter = Widget.Box({
-  hpack: "center",
-  hexpand: true,
+  hpack: 'center',
   children: [
     BarTitle,
   ]
 })
 
 const BarEnd = Widget.Box({
-  hpack: "end",
+  hpack: 'end',
   children: [
     BarAudio,
     BarBluetooth,
