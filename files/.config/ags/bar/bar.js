@@ -6,12 +6,12 @@ const battery   = await Service.import('battery')
 
 
 function clock(interval) {
-  return Variable(0, {
+  return Variable({}, {
     poll: [interval, () => {
       const date = new Date()
       return {
-        get date()    { return ("00"   + date.getDate()     ).slice(-2) },
         get month()   { return ("00"   + (date.getMonth()+1)).slice(-2) },
+        get date()    { return ("00"   + date.getDate()     ).slice(-2) },
         get year()    { return ("0000" + date.getFullYear() ).slice(-4) },
         get hours()   { return ("00"   + date.getHours()    ).slice(-2) },
         get minutes() { return ("00"   + date.getMinutes()  ).slice(-2) },
@@ -21,28 +21,60 @@ function clock(interval) {
   })
 }
 
+const CLOCK = clock(1000)
+const SHOW_CLOCK_DETAIL = false
+
 const BarClock = Widget.Box({
   class_name: "bar-clock",
-  tooltipText: clock(1000).bind().as(({
-    month: M,
-    date: D,
-    year: Y,
-    hours: h,
-    minutes: m,
-    seconds: s,
-  }) => {
-    return `${M}-${D}-${Y} ${h}:${m}:${s}`
-  }),
-  children: [
-    Widget.Label({
-      label: clock(1000 * 30).bind().as(({
-        hours: h,
-        minutes: m,
-      }) => {
-        return `${h}:${m}`
-      })
-    })
-  ]
+  child: Widget.EventBox({
+    onPrimaryClick: self => {
+      let reveal_child = !self.child.children[0].reveal_child
+      self.child.children[0].reveal_child = reveal_child
+      self.child.children[2].reveal_child = reveal_child
+    },
+    child: Widget.Box({
+      children: [
+        Widget.Revealer(
+          {
+            revealChild: SHOW_CLOCK_DETAIL,
+            transitionDuration: 500,
+            transition: 'slide_left',
+          },
+          Widget.Label({
+            label: CLOCK.bind().as(({
+              month: M,
+              date: D,
+              year: Y,
+            }) => {
+              return `${M}-${D}-${Y} `
+            })
+          })
+        ),
+        Widget.Label({
+          label: CLOCK.bind().as(({
+            hours: h,
+            minutes: m,
+          }) => {
+            return `${h}:${m}`
+          })
+        }),
+        Widget.Revealer(
+          {
+            revealChild: SHOW_CLOCK_DETAIL,
+            transitionDuration: 500,
+            transition: 'slide_right',
+          },
+          Widget.Label({
+            label: CLOCK.bind().as(({
+              seconds: s,
+            }) => {
+              return `:${s}`
+            })
+          })
+        ),
+      ]
+    }),
+  })
 })
 
 
