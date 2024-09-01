@@ -106,3 +106,7 @@ fi
 if cmd_exist ags; then
   dot ".config/ags" -r
 fi
+
+if cmd_exist fastfetch; then
+  dot ".config/fastfetch" -r
+fi
