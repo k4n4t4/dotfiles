@@ -4,7 +4,7 @@
     "source": "~/.config/fastfetch/logo.txt",
     "padding": {
       "top": 1,
-      "right": 1,
+      "right": 2,
       "left": 2
     },
     "color": {
@@ -36,11 +36,6 @@
       "length": 20
     },
     {
-      "type": "os",
-      "keyColor": "\u001b[38;5;199m",
-      "outputColor": "\u001b[38;5;212m"
-    },
-    {
       "type": "memory",
       "keyColor": "\u001b[38;5;199m",
       "outputColor": "\u001b[38;5;212m"
@@ -62,7 +57,7 @@
     },
     {
       "type": "custom",
-      "format": "\u001b[m"
+      "format": "\u001b[30m*\u001b[31m*\u001b[32m*\u001b[33m*\u001b[34m*\u001b[35m*\u001b[36m*\u001b[37m*\u001b[90m*\u001b[91m*\u001b[92m*\u001b[93m*\u001b[94m*\u001b[95m*\u001b[96m*\u001b[97m*\u001b[m"
     }
   ]
 }
