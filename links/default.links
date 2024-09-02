@@ -110,3 +110,7 @@ fi
 if cmd_exist fastfetch; then
   dot ".config/fastfetch" -r
 fi
+
+if cmd_exist vimb; then
+  dot ".config/vimb" -r
+fi

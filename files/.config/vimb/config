@@ -1,0 +1,50 @@
+set home-page=about:blank
+
+set download-path=~/tmp/
+
+set editor-command=termite -e "nvim %s"
+
+set input-autohide=true
+
+set spell-checking=false
+
+set spell-checking-languages=en,de
+
+set webgl=true
+
+set incsearch=true
+
+set default-font=Noto Sans
+
+set monospace-font=monospace
+
+set sans-serif-font=Noto Sans
+
+set serif-font=Noto Sans
+
+set font-size=16
+
+set monospace-font-size=13
+
+set default-zoom=100
+
+shortcut-add duck=https://duckduckgo.com/?q=$0
+shortcut-add d=http://dict.cc/?s=$0
+shortcut-add g=https://encrypted.google.com/search?q=$0
+shortcut-add y=http://www.youtube.com/results?search_query=$0
+shortcut-add s=https://www.startpage.com/do/dsearch?query=$0
+
+shortcut-default duck
+
+nmap + zI
+nmap - zO
+nmap = zz
+
+set completion-css=color:#d3d0c8;background-color:#393939;font:12pt DejaVu Sans Mono;
+set completion-hover-css=color:#d3d0c8;background-color:#393939;font:12pt DejaVu Sans Mono;
+set completion-selected-css=color:#d3d0c8;background-color:#515151;font:12pt DejaVu Sans Mono;
+set input-css=color:#d3d0c8;background-color:#393939;font:12pt DejaVu Sans Mono;
+set input-error-css=color:#f2777a;background-color:#393939;font:12pt DejaVu Sans Mono;
+set status-css=color:#ffcc66;background-color:#393939;font:12pt DejaVu Sans Mono;
+set status-ssl-css=color:#99cc99;background-color:#393939;font:12pt DejaVu Sans Mono;
+set status-ssl-invalid-css=color:#f2777a;background-color:#393939;font:12pt DejaVu Sans Mono;
