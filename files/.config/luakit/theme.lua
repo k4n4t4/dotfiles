@@ -1,99 +1,93 @@
---------------------------
--- Default luakit theme --
---------------------------
+return {
+  -- Default settings,
+  font = "20px monospace",
+  fg   = "#fff",
+  bg   = "#449",
 
-local theme = {}
+  -- Genaral colours,
+  success_fg = "#0f0",
+  loaded_fg  = "#33AADD",
+  error_fg = "#FFF",
+  error_bg = "#F00",
 
--- Default settings
-theme.font = "20px monospace"
-theme.fg   = "#fff"
-theme.bg   = "#000"
+  -- Warning colours,
+  warning_fg = "#F00",
+  warning_bg = "#FFF",
 
--- Genaral colours
-theme.success_fg = "#0f0"
-theme.loaded_fg  = "#33AADD"
-theme.error_fg = "#FFF"
-theme.error_bg = "#F00"
+  -- Notification colours,
+  notif_fg = "#444",
+  notif_bg = "#FFF",
 
--- Warning colours
-theme.warning_fg = "#F00"
-theme.warning_bg = "#FFF"
+  -- Menu colours,
+  menu_fg                   = "#000",
+  menu_bg                   = "#fff",
+  menu_selected_fg          = "#000",
+  menu_selected_bg          = "#FF0",
+  menu_title_bg             = "#fff",
+  menu_primary_title_fg     = "#f00",
+  menu_secondary_title_fg   = "#666",
 
--- Notification colours
-theme.notif_fg = "#444"
-theme.notif_bg = "#FFF"
+  menu_disabled_fg = "#999",
+  menu_disabled_bg = "#fff",
+  menu_enabled_fg = "#fff",
+  menu_enabled_bg = "#fff",
+  menu_active_fg = "#060",
+  menu_active_bg = "#fff",
 
--- Menu colours
-theme.menu_fg                   = "#000"
-theme.menu_bg                   = "#fff"
-theme.menu_selected_fg          = "#000"
-theme.menu_selected_bg          = "#FF0"
-theme.menu_title_bg             = "#fff"
-theme.menu_primary_title_fg     = "#f00"
-theme.menu_secondary_title_fg   = "#666"
+  -- Proxy manager,
+  proxy_active_menu_fg      = '#000',
+  proxy_active_menu_bg      = '#FFF',
+  proxy_inactive_menu_fg    = '#888',
+  proxy_inactive_menu_bg    = '#FFF',
 
-theme.menu_disabled_fg = "#999"
-theme.menu_disabled_bg = theme.menu_bg
-theme.menu_enabled_fg = theme.menu_fg
-theme.menu_enabled_bg = theme.menu_bg
-theme.menu_active_fg = "#060"
-theme.menu_active_bg = theme.menu_bg
+  -- Statusbar specific,
+  sbar_fg         = "#fff",
+  sbar_bg         = "#000",
 
--- Proxy manager
-theme.proxy_active_menu_fg      = '#000'
-theme.proxy_active_menu_bg      = '#FFF'
-theme.proxy_inactive_menu_fg    = '#888'
-theme.proxy_inactive_menu_bg    = '#FFF'
+  -- Downloadbar specific,
+  dbar_fg         = "#fff",
+  dbar_bg         = "#000",
+  dbar_error_fg   = "#F00",
 
--- Statusbar specific
-theme.sbar_fg         = "#fff"
-theme.sbar_bg         = "#000"
+  -- Input bar specific,
+  ibar_fg           = "#000",
+  ibar_bg           = "rgba(0,0,0,0)",
 
--- Downloadbar specific
-theme.dbar_fg         = "#fff"
-theme.dbar_bg         = "#000"
-theme.dbar_error_fg   = "#F00"
+  -- Tab label,
+  tab_fg            = "#888",
+  tab_bg            = "#222",
+  tab_hover_bg      = "#292929",
+  tab_ntheme        = "#ddd",
+  selected_fg       = "#fff",
+  selected_bg       = "#000",
+  selected_ntheme   = "#ddd",
+  loading_fg        = "#33AADD",
+  loading_bg        = "#000",
 
--- Input bar specific
-theme.ibar_fg           = "#000"
-theme.ibar_bg           = "rgba(0,0,0,0)"
+  selected_private_tab_bg = "#3d295b",
+  private_tab_bg    = "#22254a",
 
--- Tab label
-theme.tab_fg            = "#888"
-theme.tab_bg            = "#222"
-theme.tab_hover_bg      = "#292929"
-theme.tab_ntheme        = "#ddd"
-theme.selected_fg       = "#fff"
-theme.selected_bg       = "#000"
-theme.selected_ntheme   = "#ddd"
-theme.loading_fg        = "#33AADD"
-theme.loading_bg        = "#000"
+  -- Trusted/untrusted ssl colours,
+  trust_fg          = "#0F0",
+  notrust_fg        = "#F00",
 
-theme.selected_private_tab_bg = "#3d295b"
-theme.private_tab_bg    = "#22254a"
+  -- Follow mode hints,
+  hint_font = "10px monospace, courier, sans-serif",
+  hint_fg = "#fff",
+  hint_bg = "#000088",
+  hint_border = "1px dashed #000",
+  hint_opacity = "0.3",
+  hint_overlay_bg = "rgba(255,255,153,0.3)",
+  hint_overlay_border = "1px dotted #000",
+  hint_overlay_selected_bg = "rgba(0,255,0,0.3)",
+  hint_overlay_selected_border = "1px dotted #000",
 
--- Trusted/untrusted ssl colours
-theme.trust_fg          = "#0F0"
-theme.notrust_fg        = "#F00"
+  -- General colour pairings,
+  ok = { fg = "#000", bg = "#FFF" },
+  warn = { fg = "#F00", bg = "#FFF" },
+  error = { fg = "#FFF", bg = "#F00" },
 
--- Follow mode hints
-theme.hint_font = "10px monospace, courier, sans-serif"
-theme.hint_fg = "#fff"
-theme.hint_bg = "#000088"
-theme.hint_border = "1px dashed #000"
-theme.hint_opacity = "0.3"
-theme.hint_overlay_bg = "rgba(255,255,153,0.3)"
-theme.hint_overlay_border = "1px dotted #000"
-theme.hint_overlay_selected_bg = "rgba(0,255,0,0.3)"
-theme.hint_overlay_selected_border = theme.hint_overlay_border
-
--- General colour pairings
-theme.ok = { fg = "#000", bg = "#FFF" }
-theme.warn = { fg = "#F00", bg = "#FFF" }
-theme.error = { fg = "#FFF", bg = "#F00" }
-
--- Gopher page style (override defaults)
-theme.gopher_light = { bg = "#E8E8E8", fg = "#17181C", link = "#03678D" }
-theme.gopher_dark  = { bg = "#17181C", fg = "#E8E8E8", link = "#f90" }
-
-return theme
+  -- Gopher page style (override defaults),
+  gopher_light = { bg = "#E8E8E8", fg = "#17181C", link = "#03678D" },
+  gopher_dark  = { bg = "#17181C", fg = "#E8E8E8", link = "#f90" },
+}
