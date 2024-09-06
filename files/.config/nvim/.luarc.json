@@ -1,6 +1,9 @@
 {
   "diagnostics": {
-    "globals": ["vim"],
+    "globals": [
+      "luakit",
+      "vim"
+    ],
     "hint.enable": false
   }
 }
