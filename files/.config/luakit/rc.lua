@@ -1,11 +1,15 @@
 msg.info [[Loaded "rc.lua"]]
+
+require "lfs"
 require "unique_instance"
 
+
+luakit.process_limit = 4
+soup.cookies_storage = luakit.data_dir .. "/cookies.db"
 
 -- Lousy
 
 local lousy = require "lousy"
-
 lousy.theme.init(lousy.util.find_config("theme.lua"))
 
 
