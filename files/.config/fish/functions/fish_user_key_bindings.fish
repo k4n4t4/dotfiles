@@ -14,5 +14,9 @@ function fish_user_key_bindings
   bind \cb 'commandline -i (fd -H | fzf --preview \'bat --style=numbers --color=always --line-range :300 {}\')'
 
   fish_hybrid_key_bindings
-  fzf --fish | source
+
+  if type -q fzf
+    fzf --fish | source
+  end
+
 end
