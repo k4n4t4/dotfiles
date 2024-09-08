@@ -1,5 +1,13 @@
 msg.info [[Loaded "rc.lua"]]
 
+-- local config = {
+--   private = false
+-- }
+
+-- if os.getenv("LUAKIT_PRIVATE") == "1" then
+--   msg.info [[is private mode]]
+--   config.private = true
+-- end
 
 -- Unique Instance
 
@@ -141,7 +149,7 @@ window.add_signal("build", function (w)
     w.sbar.r.layout:pack(lousy.widget.ssl())
     w.sbar.r.layout:pack(lousy.widget.tabi())
     w.sbar.r.layout:pack(lousy.widget.scroll())
+
 end)
 
-
-window.new { }
+window.new {}
