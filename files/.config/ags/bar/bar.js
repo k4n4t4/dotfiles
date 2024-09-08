@@ -299,7 +299,7 @@ const BarWorkspaces = Widget.Box({
           return class_name
         }),
         onClicked: () => {
-          hyprland.messageAsync(`dispatch workspace ${workspace.id}`)
+          hyprland.messageAsync(`dispatch workspace ${workspace.name}`)
         },
         child: Widget.Box({
           children: [

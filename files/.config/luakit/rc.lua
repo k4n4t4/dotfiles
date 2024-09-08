@@ -1,7 +1,5 @@
 msg.info [[Loaded "rc.lua"]]
 
-require "lfs"
-
 
 -- Unique Instance
 
@@ -62,6 +60,8 @@ settings.window.close_with_last_tab = true
 settings.window.search_engines.duckduckgo = "https://duckduckgo.com/?q=%s"
 settings.window.search_engines.default = settings.window.search_engines.duckduckgo
 
+settings.webview.user_agent = "Mozilla/5.0 (Windows NT 10.0; rv:102.0) Gecko/20100101 Firefox/102.0"
+
 
 ----------------------------------------------
 
@@ -107,7 +107,7 @@ local open_editor = require "open_editor"
 local editor = require "editor"
 editor.editor_cmd = "st -f 'ComicShannsMono Nerd Font Mono-14' -i -t nvim nvim"
 
-require "noscript"
+-- local noscript = require "noscript"
 
 local follow_selected = require "follow_selected"
 local go_input = require "go_input"
