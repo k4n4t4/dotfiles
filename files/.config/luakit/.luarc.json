@@ -1,0 +1,10 @@
+{
+  "diagnostics": {
+    "globals": [
+      "luakit",
+      "msg",
+      "soup"
+    ],
+    "hint.enable": true
+  }
+}
