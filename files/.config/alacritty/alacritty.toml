@@ -13,6 +13,14 @@ thickness = 0.01
 unfocused_hollow = true
 vi_mode_style = "Block"
 
+smooth_motion = true
+smooth_motion_factor = 1.0
+smooth_motion_spring = 0.5
+smooth_motion_max_stretch_x = 2.0
+smooth_motion_max_stretch_y = 1.5
+block_replace_shape = "Block"
+
+
 [cursor.style]
 blinking = "Off"
 shape = "Block"
