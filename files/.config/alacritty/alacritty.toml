@@ -33,26 +33,26 @@ size = 12
 
 [font.offset]
 x = 0
-y = -3
+y = -4
 
 [font.glyph_offset]
 x = 0
 y = 0
 
 [font.normal]
-family = "Terminess Nerd Font Mono"
+family = "Hack Nerd Font Mono"
 style = "Regular"
 
 [font.bold]
-family = "Terminess Nerd Font Mono"
+family = "Hack Nerd Font Mono"
 style = "Bold"
 
 [font.bold_italic]
-family = "Terminess Nerd Font Mono"
+family = "Hack Nerd Font Mono"
 style = "Bold Italic"
 
 [font.italic]
-family = "Terminess Nerd Font Mono"
+family = "Hack Nerd Font Mono"
 style = "Italic"
 
 [[keyboard.bindings]]

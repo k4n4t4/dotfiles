@@ -1,4 +1,5 @@
 import Bar from "./bar/bar.js"
+import Popups from "./popups/popups.js"
 import NotificationPopups from "./notifications/notifications.js"
 
 
@@ -9,5 +10,6 @@ App.config({
   windows: [
     Bar(MONITOR),
     NotificationPopups(MONITOR),
+    Popups(MONITOR),
   ]
 })

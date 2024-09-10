@@ -68,6 +68,7 @@ if type -q git
   abbr --add g    "git"
   abbr --add ga   "git add"
   abbr --add gd   "git diff"
+  abbr --add gdc  "git diff --cached"
   abbr --add gs   "git status"
   abbr --add gst  "git status"
   abbr --add gss  "git status -s"
