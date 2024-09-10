@@ -114,3 +114,7 @@ fi
 if cmd_exist luakit; then
   dot ".config/luakit" -r
 fi
+
+if cmd_exist kitty; then
+  dot ".config/kitty" -r
+fi
