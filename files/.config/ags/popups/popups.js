@@ -72,14 +72,14 @@ const PopupsBacklight = Widget.Box({
       hexpand: true,
       drawValue: false,
       onChange: ({value}) => {
-        //audio.microphone.volume = value
+        backlight.screen_value = value
       },
       value: backlight.bind('screen-value')
     }),
     Widget.Label({
       class_name: "popups-backlight-label",
-      label: backlight.bind('screen-value').as((self, screenValue) => {
-        return `${Math.round(volume * 100)}%${isMuted ? " mute" : ""}`
+      label: backlight.bind('screen-value').as(value => {
+        return `${Math.round(value * 100)}%`
       })
     })
   ]
