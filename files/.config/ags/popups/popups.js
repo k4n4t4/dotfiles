@@ -108,11 +108,22 @@ const Popups = monitor => Widget.Window({
         self.visible = true
       }
 
-      self.child.child.shown = name
+      self.child.child.child.shown = name
 
       if (timer !== undefined) {
         clearTimeout(timer)
       }
+      timer = setTimeout(() => {
+        self.visible = false
+        timer = undefined
+      }, 1500)
+    }
+    self.child.child.on_hover = e => {
+      if (timer !== undefined) {
+        clearTimeout(timer)
+      }
+    }
+    self.child.child.on_hover_lost = e => {
       timer = setTimeout(() => {
         self.visible = false
         timer = undefined
@@ -132,13 +143,15 @@ const Popups = monitor => Widget.Window({
   },
   child: Widget.Box({
     class_name: "popups",
-    child: Widget.Stack({
-      transitionType: "slide_up",
-      children: {
-        audio_speaker: PopupsAudioSpeaker,
-        audio_mic: PopupsAudioMic,
-        backlight: PopupsBacklight,
-      }
+    child: Widget.EventBox({
+      child: Widget.Stack({
+        transitionType: "slide_up",
+        children: {
+          audio_speaker: PopupsAudioSpeaker,
+          audio_mic: PopupsAudioMic,
+          backlight: PopupsBacklight,
+        }
+      })
     })
   })
 })
