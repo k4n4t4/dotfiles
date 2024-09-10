@@ -1,5 +1,5 @@
 const audio = await Service.import('audio')
-
+import backlight from "../services/backlight.js"
 
 const PopupsAudioSpeaker = Widget.Box({
   class_name: "popups-audio-speaker",
@@ -65,24 +65,21 @@ const PopupsBacklight = Widget.Box({
   children: [
     Widget.Label({
       class_name: "popups-backlight-label",
-      label: "Microphone"
+      label: "Backlight"
     }),
     Widget.Slider({
       class_name: "popups-backlight-slider",
       hexpand: true,
       drawValue: false,
       onChange: ({value}) => {
-        audio.microphone.volume = value
+        //audio.microphone.volume = value
       },
-      value: audio.microphone.bind('volume'),
+      value: backlight.bind('screen-value')
     }),
     Widget.Label({
       class_name: "popups-backlight-label",
-      label: Utils.merge([
-        audio.microphone.bind('volume'),
-        audio.microphone.bind('is-muted'),
-      ], (volume, isMuted) => {
-          return `${Math.round(volume * 100)}%${isMuted ? " mute" : ""}`
+      label: backlight.bind('screen-value').as((self, screenValue) => {
+        return `${Math.round(volume * 100)}%${isMuted ? " mute" : ""}`
       })
     })
   ]
@@ -128,6 +125,9 @@ const Popups = monitor => Widget.Window({
     audio.connect('microphone-changed', audio => {
       show('audio_mic')
     })
+    backlight.connect('screen-changed', backlight => {
+      show('backlight')
+    })
 
   },
   child: Widget.Box({
@@ -136,7 +136,8 @@ const Popups = monitor => Widget.Window({
       transitionType: "slide_up",
       children: {
         audio_speaker: PopupsAudioSpeaker,
-        audio_mic: PopupsAudioMic
+        audio_mic: PopupsAudioMic,
+        backlight: PopupsBacklight,
       }
     })
   })
