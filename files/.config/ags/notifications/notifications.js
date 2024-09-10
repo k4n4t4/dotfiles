@@ -86,7 +86,7 @@ function NotificationPopup(notification) {
 
 
 const NotificationPopups = monitor => Widget.Window({
-  class_name: "notifications",
+  class_name: "notifications-window",
   monitor,
   name: `notifications-${monitor}`,
   anchor: ['top', 'right'],

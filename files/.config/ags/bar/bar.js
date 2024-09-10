@@ -275,6 +275,8 @@ const BarTitle = Widget.Box({
   class_name: "bar-title",
   children: [
     Widget.Label({
+      truncate: "end",
+      maxWidthChars: 50,
       label: Utils.merge([
         hyprland.bind('active')
       ], (active) => {
@@ -314,15 +316,15 @@ const BarWorkspaces = Widget.Box({
 
 
 const Bar = monitor => Widget.Window({
-  class_name: "bar",
+  class_name: "bar-window",
   monitor,
   name: `bar-${monitor}`,
   anchor: ['top', 'left', 'right'],
   exclusivity: 'exclusive',
   layer: 'bottom',
-  margins: [5, 5, 5, 5],
   keymode: 'none',
   child: Widget.CenterBox({
+    class_name: "bar",
     startWidget: BarStart,
     centerWidget: BarCenter,
     endWidget: BarEnd,
@@ -330,6 +332,7 @@ const Bar = monitor => Widget.Window({
 })
 
 const BarStart = Widget.Box({
+  class_name: "bar-left",
   hpack: 'start',
   children: [
     BarWorkspaces,
@@ -337,6 +340,7 @@ const BarStart = Widget.Box({
 })
 
 const BarCenter = Widget.Box({
+  class_name: "bar-center",
   hpack: 'center',
   children: [
     BarTitle,
@@ -344,6 +348,7 @@ const BarCenter = Widget.Box({
 })
 
 const BarEnd = Widget.Box({
+  class_name: "bar-right",
   hpack: 'end',
   children: [
     BarAudio,

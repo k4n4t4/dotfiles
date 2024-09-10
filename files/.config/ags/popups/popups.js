@@ -127,7 +127,7 @@ const Popups = monitor => Widget.Window({
       timer = setTimeout(() => {
         self.visible = false
         timer = undefined
-      }, 1500)
+      }, 500)
     }
 
     audio.connect('speaker-changed', audio => {

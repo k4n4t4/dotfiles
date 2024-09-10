@@ -8,7 +8,11 @@
   background: rgba(20, 20, 20, 0.7);
   color: #E0E0E0;
   border-radius: 0.4rem;
+  min-height: 2.5rem;
+  padding: 0.25rem;
+  margin: 3px;
 }
+
 
 .bar-clock {
   color: #AAEEDD;
@@ -107,9 +111,6 @@
   min-height: 1rem;
 }
 
-
-.notifications {
-}
 
 .notification-popups {
   background: transparent;
