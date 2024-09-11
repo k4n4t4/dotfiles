@@ -108,6 +108,9 @@ ZSH_HIGHLIGHT_STYLES[named-fd]='none'
 ZSH_HIGHLIGHT_STYLES[numeric-fd]='none'
 ZSH_HIGHLIGHT_STYLES[arg0]='fg=green'
 
+alias reboot   "systemctl reboot"
+alias poweroff "systemctl poweroff"
+
 alias ls='ls --color=auto'
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
@@ -128,21 +131,58 @@ else
   alias rm="stopUseRm"
 fi
 
-alias ..="cd .."
+alias ".."="cd .."
 
-alias l="ls -F"
-alias la="ls -FA"
-alias ll="ls -Fl"
-alias lla="ls -Fla"
-
-if type sl > /dev/null 2>&1; then
-  alias al=sl -a
-  alias lal=sl -al
-  alias all=sl -al
+if type eza > /dev/null 2>&1; then
+  alias eza="eza --icons --git -H --sort=type --time-style=long-iso"
+  alias ls="eza"
+  alias ll="eza -F -l"
+  alias la="eza -F -a"
+  alias lla="eza -F -la"
+  alias l="eza -F"
+  alias lt="eza -F -T"
+  alias lta="eza -F -Ta"
+  alias llt="eza -F -Tl"
+  alias llta="eza -F -Tla"
+  export EXA_COLORS=(get_ls_colors exa)
+elif type exa > /dev/null 2>&1; then
+  alias exa="exa --icons --git -H -s type --time-style=long-iso"
+  alias ls="exa"
+  alias ll="exa -Fl"
+  alias la="exa -Fa"
+  alias lla="exa -Fla"
+  alias l="exa -F"
+  alias lt="exa -FT"
+  alias lta="exa -FTa"
+  alias llt="exa -FTl"
+  alias llta="exa -FTla"
+  export EXA_COLORS=(get_ls_colors exa)
+elif type lsd > /dev/null 2>&1; then
+  alias ls="lsd"
+  alias ll="lsd -Fl"
+  alias la="lsd -Fa"
+  alias lA="lsd -FA"
+  alias lla="lsd -Fla"
+  alias llA="lsd -FlA"
+  alias l="lsd -F"
+  alias lt="lsd -F --tree"
+  alias lta="lsd -Fa --tree"
+  alias llt="lsd -Fl --tree"
+  alias llta="lsd -Fla --tree"
+else
+  alias l="ls -F"
+  alias ll="ls -Fl"
+  alias la="ls -Fa"
+  alias lla="ls -Fla"
+  export LS_COLORS=(get_ls_colors)
 fi
+
+alias c='printf "\033[0;0H\033[2J"'
+alias q="exit"
 
 if type tmux > /dev/null 2>&1; then
   export TMUX_SHELL="$(which zsh)"
+  alias tmux "tmux -u"
 fi
 
 if type git > /dev/null 2>&1; then
@@ -167,18 +207,6 @@ if type broot > /dev/null 2>&1; then
   eval "$(broot --print-shell-function zsh)"
 fi
 
-hide() {
-  printf "\033[?25l"
-  XT_EXTSCRN true
-  read
-  XT_EXTSCRN false
-  printf "\033[?25h"
-}
-
-alias c='printf "\033[0;0H\033[2J"'
-alias q="exit"
-
-
 if type abbr > /dev/null 2>&1; then
 
   abbr -q -S c="clear"
@@ -188,6 +216,36 @@ if type abbr > /dev/null 2>&1; then
   abbr -q -S "cd~"="cd ~"
   abbr -q -S "cd."="cd ."
   abbr -q -S "cd.."="cd .."
+
+  abbr -q -S h="history"
+  abbr -q -S q="exit"
+
+  abbr -q -S rbt="reboot"
+  abbr -q -S pof="poweroff"
+
+  if type tmux > /dev/null 2>&1; then
+    abbr -q -S tm="tmux"
+    abbr -q -S tma="tmux attach-session"
+    abbr -q -S tmat="tmux attach-session -t"
+    abbr -q -S tmnew="tmux new-session -d"
+    abbr -q -S tmnews="tmux new-session -s"
+    abbr -q -S tmtree="tmux choose-tree"
+    abbr -q -S tmcd="tmux switch-client"
+    abbr -q -S tmcdt="tmux switch-client -t"
+    abbr -q -S tmcdn="tmux switch-client -n"
+    abbr -q -S tmcdp="tmux switch-client -p"
+    abbr -q -S tmcdl="tmux switch-client -l"
+    abbr -q -S tmmv="tmux rename"
+    abbr -q -S tmmvt="tmux rename -t"
+    abbr -q -S tmls="tmux list-sessions"
+    abbr -q -S tmlsc="tmux list-clients"
+    abbr -q -S tmd="tmux detach-client"
+    abbr -q -S tmcl="tmux clear-history"
+    abbr -q -S tmclear="clear ; tmux clear-history"
+    abbr -q -S tmrm="tmux kill-session"
+    abbr -q -S tmrmt="tmux kill-session -t"
+    abbr -q -S tmkill="tmux kill-server"
+  fi
 
   if type git > /dev/null 2>&1; then
     abbr -q -S g="git"
@@ -210,6 +268,28 @@ if type abbr > /dev/null 2>&1; then
     abbr -q -S gcm="git commit -m"
     abbr -q -S gr="git remote"
     abbr -q -S gbl="git blame"
+  fi
+
+  if type nvim > /dev/null 2>&1; then
+    abbr -q -S v="nvim"
+  elif type vim > /dev/null 2>&1; then
+    abbr -q -S v="vim"
+  fi
+
+  if type todo > /dev/null 2>&1; then
+    abbr -q -S t="todo"
+    abbr -q -S ta="todo add"
+    abbr -q -S tad="todo add"
+    abbr -q -S td="todo del"
+    abbr -q -S trm="todo del"
+    abbr -q -S tmv="todo move"
+    abbr -q -S tt="todo tag"
+    abbr -q -S ttag="todo tag"
+    abbr -q -S ts="todo status"
+    abbr -q -S tst="todo status"
+    abbr -q -S tl="todo list"
+    abbr -q -S tls="todo list"
+    abbr -q -S tcl="todo clear"
   fi
 
 fi
