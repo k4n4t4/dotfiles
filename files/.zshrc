@@ -37,6 +37,8 @@ autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey "^[v" edit-command-line
 
+zle -N dir_forward
+zle -N dir_back
 
 PATH="$HOME/bin:$PATH"
 PATH="$HOME/go/bin:$PATH"
@@ -141,6 +143,15 @@ alias q="exit"
 
 
 if type abbr > /dev/null 2>&1; then
+
+  abbr -q -S c="clear"
+  abbr -q -S "^"="command"
+
+  abbr -q -S "cd-"="cd -"
+  abbr -q -S "cd~"="cd ~"
+  abbr -q -S "cd."="cd ."
+  abbr -q -S "cd.."="cd .."
+
   if type git > /dev/null 2>&1; then
     abbr -q -S g="git"
     abbr -q -S ga="git add"
@@ -163,4 +174,5 @@ if type abbr > /dev/null 2>&1; then
     abbr -q -S gr="git remote"
     abbr -q -S gbl="git blame"
   fi
+
 fi
