@@ -29,8 +29,13 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*' ignore-parents parent pwd ..
 zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin
 zstyle ':completion:*' menu yes select
+
 autoload -Uz colors
 colors
+
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey "^[v" edit-command-line
 
 
 PATH="$HOME/bin:$PATH"
@@ -47,6 +52,16 @@ PATH="/sbin:$PATH"
 
 if [ -e /home/linuxbrew/.linuxbrew/bin/brew ]; then
   eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+fi
+
+if type sheldon > /dev/null 2>&1 ; then
+  eval "$(sheldon source)"
+fi
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+if type starship > /dev/null 2>&1 ; then
+  eval "$(starship init zsh)"
 fi
 
 export LANG=C
@@ -125,25 +140,27 @@ alias c='printf "\033[0;0H\033[2J"'
 alias q="exit"
 
 
-### Added by Zinit's installer
-if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
-    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
-    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
-    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
-        print -P "%F{33} %F{34}Installation successful.%f%b" || \
-        print -P "%F{160} The clone has failed.%f%b"
-fi
-
-source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
-### End of Zinit's installer chunk
-
-zinit light zsh-users/zsh-autosuggestions
-zinit light zsh-users/zsh-syntax-highlighting
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-if type starship > /dev/null 2>&1 ; then
-  eval "$(starship init zsh)"
+if type abbr > /dev/null 2>&1; then
+  if type git > /dev/null 2>&1; then
+    abbr -q -S g="git"
+    abbr -q -S ga="git add"
+    abbr -q -S gd="git diff"
+    abbr -q -S gdc="git diff --cached"
+    abbr -q -S gs="git status"
+    abbr -q -S gst="git status"
+    abbr -q -S gss="git status -s"
+    abbr -q -S gp="git push"
+    abbr -q -S gpl="git pull"
+    abbr -q -S gb="git branch"
+    abbr -q -S gbd="git branch -d"
+    abbr -q -S gbfd="git branch -D"
+    abbr -q -S gm="git merge"
+    abbr -q -S gco="git checkout"
+    abbr -q -S gcob="git checkout -b"
+    abbr -q -S gf="git fetch"
+    abbr -q -S gc="git commit"
+    abbr -q -S gcm="git commit -m"
+    abbr -q -S gr="git remote"
+    abbr -q -S gbl="git blame"
+  fi
 fi
