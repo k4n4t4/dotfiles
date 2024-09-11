@@ -118,3 +118,7 @@ fi
 if cmd_exist kitty; then
   dot ".config/kitty" -r
 fi
+
+if cmd_exist sheldon; then
+  dot ".config/sheldon" -r
+fi
