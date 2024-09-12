@@ -3,6 +3,7 @@ const audio     = await Service.import('audio')
 const bluetooth = await Service.import('bluetooth')
 const network   = await Service.import('network')
 const battery   = await Service.import('battery')
+const mpris     = await Service.import('mpris')
 
 
 function clock(interval) {
@@ -315,6 +316,24 @@ const BarWorkspaces = Widget.Box({
 })
 
 
+const BarMpris = Widget.Box({
+  class_name: mpris.bind("players").as(players => {
+    let class_name = "bar-mpris"
+    if (players.length > 0) {
+      class_name += " bar-mpris-exist-player"
+    }
+    return class_name
+  }),
+  children: [
+    Widget.Button({
+      child: Widget.Label({
+        label: "󰎆"
+      })
+    })
+  ]
+})
+
+
 const Bar = monitor => Widget.Window({
   class_name: "bar-window",
   monitor,
@@ -351,6 +370,7 @@ const BarEnd = Widget.Box({
   class_name: "bar-right",
   hpack: 'end',
   children: [
+    BarMpris,
     BarAudio,
     BarBluetooth,
     BarNetwork,

@@ -80,6 +80,13 @@
   border-radius: 0.5rem;
 }
 
+.bar-mpris {
+  color: red;
+}
+
+.bar-mpris-exist-player {
+  color: lime;
+}
 
 .popups {
   background: rgba(30, 30, 30, 0.8);
