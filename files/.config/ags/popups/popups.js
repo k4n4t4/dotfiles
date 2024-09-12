@@ -130,8 +130,12 @@ const Popups = monitor => Widget.Window({
       }, 500)
     }
 
+    let speaker_tmp_volume = 0
     audio.connect('speaker-changed', audio => {
-      show('audio_speaker')
+      if (speaker_tmp_volume !== audio.speaker.volume) {
+        speaker_tmp_volume = audio.speaker.volume
+        show('audio_speaker')
+      }
     })
     audio.connect('microphone-changed', audio => {
       show('audio_mic')
