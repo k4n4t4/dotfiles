@@ -324,6 +324,13 @@ const BarMpris = Widget.Box({
     }
     return class_name
   }),
+  tooltipText: mpris.bind("players").as(players => {
+    let str = ""
+    for (let player of players) {
+      str += player['track-title'] + "\n"
+    }
+    return str
+  }),
   children: [
     Widget.Button({
       child: Widget.Label({
