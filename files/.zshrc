@@ -37,8 +37,6 @@ autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey "^[v" edit-command-line
 
-zle -N dir_forward
-zle -N dir_back
 
 PATH="$HOME/bin:$PATH"
 PATH="$HOME/go/bin:$PATH"
