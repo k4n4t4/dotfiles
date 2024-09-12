@@ -80,26 +80,26 @@ const BarClock = Widget.Box({
 
 
 const BarBattery = Widget.Box({
-  class_name: Utils.merge([
+  class_names: Utils.merge([
     battery.bind('charging'),
     battery.bind('percent'),
   ], (charging, percent) => {
-    let class_name = "bar-battery"
+    const class_names = ["bar-battery"]
     if (charging) {
-      class_name += " bar-battery-charging"
+      class_names.push("bar-battery-charging")
     } else {
-      class_name += " bar-battery-not-charging"
+      class_names.push("bar-battery-not-charging")
     }
     if (percent < 10) {
-      class_name += " bar-battery-critical"
+      class_names.push("bar-battery-critical")
     } else if (percent < 30) {
-      class_name += " bar-battery-low"
+      class_names.push("bar-battery-low")
     } else if (percent < 60) {
-      class_name += " bar-battery-middle"
+      class_names.push("bar-battery-middle")
     } else {
-      class_name += " bar-battery-high"
+      class_names.push("bar-battery-high")
     }
-    return class_name
+    return class_names
   }),
   tooltipText: Utils.merge([
     battery.bind('charging'),
@@ -317,12 +317,12 @@ const BarWorkspaces = Widget.Box({
 
 
 const BarMpris = Widget.Box({
-  class_name: mpris.bind("players").as(players => {
-    let class_name = "bar-mpris"
+  class_names: mpris.bind("players").as(players => {
+    const class_names = ["bar-mpris"]
     if (players.length > 0) {
-      class_name += " bar-mpris-exist-player"
+      class_names.push("bar-mpris-exist-player")
     }
-    return class_name
+    return class_names
   }),
   tooltipText: mpris.bind("players").as(players => {
     let str = ""
