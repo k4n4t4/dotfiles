@@ -93,6 +93,7 @@ const NotificationPopups = monitor => Widget.Window({
   exclusivity: 'ignore',
   layer: 'top',
   margins: [30, 0, 0, 0],
+  css: "min-height: 2px; min-width: 2px;",
   keymode: 'none',
   child: Widget.Box({
     class_name: "notification-popups",

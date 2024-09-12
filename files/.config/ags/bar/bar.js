@@ -333,6 +333,9 @@ const BarMpris = Widget.Box({
   }),
   children: [
     Widget.Button({
+      onClicked: () => {
+        App.toggleWindow("media-0")
+      },
       child: Widget.Label({
         label: "󰎆"
       })
