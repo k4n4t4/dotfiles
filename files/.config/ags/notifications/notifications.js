@@ -5,7 +5,6 @@ notifications.forceTimeout = false
 notifications.cacheActions = false
 notifications.clearDelay = 100
 
-
 function notificationIcon({ app_entry, app_icon, image }) {
   if (image) {
     return Widget.Box({

@@ -1,89 +1,122 @@
 const audio = await Service.import('audio')
 import backlight from "../services/backlight.js"
 
-const PopupsAudioSpeaker = Widget.Box({
-  class_name: "popups-audio-speaker",
-  vertical: true,
-  children: [
-    Widget.Label({
-      class_name: "popups-audio-speaker-label",
-      label: "Speaker"
-    }),
-    Widget.Slider({
-      class_name: "popups-audio-speaker-slider",
-      hexpand: true,
-      drawValue: false,
-      onChange: ({value}) => {
-        audio.speaker.volume = value
-      },
-      value: audio.speaker.bind('volume'),
-    }),
-    Widget.Label({
-      class_name: "popups-audio-speaker-label",
-      label: Utils.merge([
-        audio.speaker.bind('volume'),
-        audio.speaker.bind('is-muted'),
-      ], (volume, isMuted) => {
-          return `${Math.round(volume * 100)}%${isMuted ? " mute" : ""}`
-      })
-    })
-  ]
-})
+function popupsAudioSpeaker() {
 
-const PopupsAudioMic = Widget.Box({
-  class_name: "popups-audio-mic",
-  vertical: true,
-  children: [
-    Widget.Label({
-      class_name: "popups-audio-mic-label",
-      label: "Microphone"
-    }),
-    Widget.Slider({
-      class_name: "popups-audio-mic-slider",
-      hexpand: true,
-      drawValue: false,
-      onChange: ({value}) => {
-        audio.microphone.volume = value
-      },
-      value: audio.microphone.bind('volume'),
-    }),
-    Widget.Label({
-      class_name: "popups-audio-mic-label",
-      label: Utils.merge([
-        audio.microphone.bind('volume'),
-        audio.microphone.bind('is-muted'),
-      ], (volume, isMuted) => {
-          return `${Math.round(volume * 100)}%${isMuted ? " mute" : ""}`
-      })
-    })
-  ]
-})
+  const title_label = Widget.Label({
+    class_name: "popups-audio-speaker-label",
+    label: "Speaker"
+  })
 
-const PopupsBacklight = Widget.Box({
-  class_name: "popups-backlight",
-  vertical: true,
-  children: [
-    Widget.Label({
-      class_name: "popups-backlight-label",
-      label: "Backlight"
-    }),
-    Widget.Slider({
-      class_name: "popups-backlight-slider",
-      hexpand: true,
-      drawValue: false,
-      onChange: ({value}) => {
-        backlight.screen_value = value
-      },
-      value: backlight.bind('screen-value')
-    }),
-    Widget.Label({
-      class_name: "popups-backlight-label",
-      label: backlight.bind('screen-value').as(value => {
-        return `${Math.round(value * 100)}%`
-      })
+  const volume_slider = Widget.Slider({
+    class_name: "popups-audio-speaker-slider",
+    hexpand: true,
+    drawValue: false,
+    onChange: ({value}) => {
+      audio.speaker.volume = value
+    },
+    value: audio.speaker.bind('volume'),
+  })
+
+  const status_label = Widget.Label({
+    class_name: "popups-audio-speaker-label",
+    label: Utils.merge([
+      audio.speaker.bind('volume'),
+      audio.speaker.bind('is-muted'),
+    ], (volume, isMuted) => {
+      return `${Math.round(volume * 100)}%${isMuted ? " mute" : ""}`
     })
-  ]
-})
+  })
+
+  const PopupsAudioSpeaker = Widget.Box({
+    class_name: "popups-audio-speaker",
+    vertical: true,
+    children: [
+      title_label,
+      volume_slider,
+      status_label,
+    ]
+  })
+
+  return PopupsAudioSpeaker
+}
+
+function popupsAudioMic() {
+
+  const title_label = Widget.Label({
+    class_name: "popups-audio-mic-label",
+    label: "Microphone"
+  })
+
+  const volume_slider = Widget.Slider({
+    class_name: "popups-audio-mic-slider",
+    hexpand: true,
+    drawValue: false,
+    onChange: ({value}) => {
+      audio.microphone.volume = value
+    },
+    value: audio.microphone.bind('volume'),
+  })
+
+  const status_label = Widget.Label({
+    class_name: "popups-audio-mic-label",
+    label: Utils.merge([
+      audio.microphone.bind('volume'),
+      audio.microphone.bind('is-muted'),
+    ], (volume, isMuted) => {
+      return `${Math.round(volume * 100)}%${isMuted ? " mute" : ""}`
+    })
+  })
+
+  const PopupsAudioMic = Widget.Box({
+    class_name: "popups-audio-mic",
+    vertical: true,
+    children: [
+      title_label,
+      volume_slider,
+      status_label,
+    ]
+  })
+
+  return PopupsAudioMic
+}
+
+function popupsBacklight() {
+
+  const title_label = Widget.Label({
+    class_name: "popups-backlight-label",
+    label: "Backlight"
+  })
+
+  const value_slider = Widget.Slider({
+    class_name: "popups-backlight-slider",
+    hexpand: true,
+    drawValue: false,
+    onChange: ({value}) => {
+      backlight.screen_value = value
+    },
+    value: backlight.bind('screen-value')
+  })
+
+  const status_label = Widget.Label({
+    class_name: "popups-backlight-label",
+    label: backlight.bind('screen-value').as(value => {
+      return `${Math.round(value * 100)}%`
+    })
+  })
+
+  const PopupsBacklight = Widget.Box({
+    class_name: "popups-backlight",
+    vertical: true,
+    children: [
+      title_label,
+      value_slider,
+      status_label,
+    ]
+  })
+
+  return PopupsBacklight
+}
 
 
 const Popups = monitor => Widget.Window({
@@ -131,9 +164,11 @@ const Popups = monitor => Widget.Window({
     }
 
     let speaker_tmp_volume = 0
+    let speaker_tmp_mute = false
     audio.connect('speaker-changed', audio => {
-      if (speaker_tmp_volume !== audio.speaker.volume) {
+      if (speaker_tmp_volume !== audio.speaker.volume || speaker_tmp_mute !== audio.speaker.isMuted) {
         speaker_tmp_volume = audio.speaker.volume
+        speaker_tmp_mute = audio.speaker.isMuted
         show('audio_speaker')
       }
     })
@@ -151,9 +186,9 @@ const Popups = monitor => Widget.Window({
       child: Widget.Stack({
         transitionType: "slide_up",
         children: {
-          audio_speaker: PopupsAudioSpeaker,
-          audio_mic: PopupsAudioMic,
-          backlight: PopupsBacklight,
+          audio_speaker: popupsAudioSpeaker(),
+          audio_mic: popupsAudioMic(),
+          backlight: popupsBacklight(),
         }
       })
     })

@@ -22,326 +22,379 @@ function clock(interval) {
   })
 }
 
-const CLOCK = clock(1000)
-const SHOW_CLOCK_DETAIL = false
+function barClock(show_clock_detail = false) {
 
-const BarClock = Widget.Box({
-  class_name: "bar-clock",
-  child: Widget.EventBox({
-    onPrimaryClick: self => {
-      let reveal_child = !self.child.children[0].reveal_child
-      self.child.children[0].reveal_child = reveal_child
-      self.child.children[2].reveal_child = reveal_child
+  const CLOCK = clock(1000)
+
+  const left_revealer = Widget.Revealer(
+    {
+      revealChild: show_clock_detail,
+      transitionDuration: 500,
+      transition: 'slide_left',
     },
-    child: Widget.Box({
-      children: [
-        Widget.Revealer(
-          {
-            revealChild: SHOW_CLOCK_DETAIL,
-            transitionDuration: 500,
-            transition: 'slide_left',
-          },
-          Widget.Label({
-            label: CLOCK.bind().as(({
-              month: M,
-              date: D,
-              year: Y,
-            }) => {
-              return `${M}-${D}-${Y} `
-            })
-          })
-        ),
-        Widget.Label({
-          label: CLOCK.bind().as(({
-            hours: h,
-            minutes: m,
-          }) => {
-            return `${h}:${m}`
-          })
-        }),
-        Widget.Revealer(
-          {
-            revealChild: SHOW_CLOCK_DETAIL,
-            transitionDuration: 500,
-            transition: 'slide_right',
-          },
-          Widget.Label({
-            label: CLOCK.bind().as(({
-              seconds: s,
-            }) => {
-              return `:${s}`
-            })
-          })
-        ),
-      ]
-    }),
-  })
-})
-
-
-const BarBattery = Widget.Box({
-  class_names: Utils.merge([
-    battery.bind('charging'),
-    battery.bind('percent'),
-  ], (charging, percent) => {
-    const class_names = ["bar-battery"]
-    if (charging) {
-      class_names.push("bar-battery-charging")
-    } else {
-      class_names.push("bar-battery-not-charging")
-    }
-    if (percent < 10) {
-      class_names.push("bar-battery-critical")
-    } else if (percent < 30) {
-      class_names.push("bar-battery-low")
-    } else if (percent < 60) {
-      class_names.push("bar-battery-middle")
-    } else {
-      class_names.push("bar-battery-high")
-    }
-    return class_names
-  }),
-  tooltipText: Utils.merge([
-    battery.bind('charging'),
-    battery.bind('percent'),
-  ], (charging, percent) => {
-    return `${percent}% (${charging ? "charging": "not charging"})`
-  }),
-  children: [
     Widget.Label({
-      label: Utils.merge([
-        battery.bind('charging'),
-        battery.bind('percent'),
-      ], (charging, percent) => {
-        let label = ""
-        if (percent >= 100) {
-          label += "󰁹"
-        } else if (percent >= 90) {
-          label += "󰂂"
-        } else if (percent >= 80) {
-          label += "󰂁"
-        } else if (percent >= 70) {
-          label += "󰂀"
-        } else if (percent >= 60) {
-          label += "󰁿"
-        } else if (percent >= 50) {
-          label += "󰁾"
-        } else if (percent >= 40) {
-          label += "󰁽"
-        } else if (percent >= 30) {
-          label += "󰁼"
-        } else if (percent >= 20) {
-          label += "󰁻"
-        } else if (percent >= 10) {
-          label += "󰁺"
-        } else {
-          label += "󰂎"
-        }
-        if (charging) {
-          label += "󱐋"
-        } else {
-          label += ""
-        }
-        return label
+      label: CLOCK.bind().as(({
+        month: M,
+        date: D,
+        year: Y,
+      }) => {
+        return `${M}-${D}-${Y} `
       })
-    }),
-  ]
-})
+    })
+  )
 
-
-const BarNetworkWifi = Widget.Box({
-  class_name: "bar-network-wifi",
-  tooltipText: Utils.merge([
-    network.wifi.bind('ssid'),
-    network.wifi.bind('strength'),
-  ], (ssid, strength) => {
-    return `${ssid || "Unknown"} (${strength})`
-  }),
-  children: [
+  const right_revealer = Widget.Revealer(
+    {
+      revealChild: show_clock_detail,
+      transitionDuration: 500,
+      transition: 'slide_right',
+    },
     Widget.Label({
-      label: Utils.merge([
-        network.wifi.bind('strength'),
-        network.wifi.bind('internet'),
-        network.wifi.bind('enabled'),
-      ], (strength, internet, enabled) => {
-        if (enabled) {
-          if (internet === "connected") {
-            if (strength >= 80) {
-              return "󰤨"
-            } else if (strength >= 60) {
-              return "󰤥"
-            } else if (strength >= 30) {
-              return "󰤢"
-            } else if (strength >= 10) {
-              return "󰤟"
+      label: CLOCK.bind().as(({
+        seconds: s,
+      }) => {
+        return `:${s}`
+      })
+    })
+  )
+
+  const BarClock = Widget.Box({
+    class_name: "bar-clock",
+    child: Widget.EventBox({
+      onPrimaryClick: self => {
+        let reveal_child = !left_revealer.reveal_child
+        left_revealer.reveal_child = reveal_child
+        right_revealer.reveal_child = reveal_child
+      },
+      child: Widget.Box({
+        children: [
+          left_revealer,
+          Widget.Label({
+            label: CLOCK.bind().as(({
+              hours: h,
+              minutes: m,
+            }) => {
+              return `${h}:${m}`
+            })
+          }),
+          right_revealer,
+        ]
+      }),
+    })
+  })
+
+  return BarClock
+}
+
+
+function barBattery() {
+
+  const BarBattery = Widget.Box({
+    class_names: Utils.merge([
+      battery.bind('charging'),
+      battery.bind('percent'),
+    ], (charging, percent) => {
+      const class_names = ["bar-battery"]
+      if (charging) {
+        class_names.push("bar-battery-charging")
+      } else {
+        class_names.push("bar-battery-not-charging")
+      }
+      if (percent < 10) {
+        class_names.push("bar-battery-critical")
+      } else if (percent < 30) {
+        class_names.push("bar-battery-low")
+      } else if (percent < 60) {
+        class_names.push("bar-battery-middle")
+      } else {
+        class_names.push("bar-battery-high")
+      }
+      return class_names
+    }),
+    tooltipText: Utils.merge([
+      battery.bind('charging'),
+      battery.bind('percent'),
+    ], (charging, percent) => {
+      return `${percent}% (${charging ? "charging": "not charging"})`
+    }),
+    children: [
+      Widget.Label({
+        label: Utils.merge([
+          battery.bind('charging'),
+          battery.bind('percent'),
+        ], (charging, percent) => {
+          let label = ""
+          if (percent >= 100) {
+            label += "󰁹"
+          } else if (percent >= 90) {
+            label += "󰂂"
+          } else if (percent >= 80) {
+            label += "󰂁"
+          } else if (percent >= 70) {
+            label += "󰂀"
+          } else if (percent >= 60) {
+            label += "󰁿"
+          } else if (percent >= 50) {
+            label += "󰁾"
+          } else if (percent >= 40) {
+            label += "󰁽"
+          } else if (percent >= 30) {
+            label += "󰁼"
+          } else if (percent >= 20) {
+            label += "󰁻"
+          } else if (percent >= 10) {
+            label += "󰁺"
+          } else {
+            label += "󰂎"
+          }
+          if (charging) {
+            label += "󱐋"
+          } else {
+            label += ""
+          }
+          return label
+        })
+      }),
+    ]
+  })
+
+  return BarBattery
+}
+
+
+function barNetworkWifi() {
+
+  const BarNetworkWifi = Widget.Box({
+    class_name: "bar-network-wifi",
+    tooltipText: Utils.merge([
+      network.wifi.bind('ssid'),
+      network.wifi.bind('strength'),
+    ], (ssid, strength) => {
+      return `${ssid || "Unknown"} (${strength})`
+    }),
+    children: [
+      Widget.Label({
+        label: Utils.merge([
+          network.wifi.bind('strength'),
+          network.wifi.bind('internet'),
+          network.wifi.bind('enabled'),
+        ], (strength, internet, enabled) => {
+          if (enabled) {
+            if (internet === "connected") {
+              if (strength >= 80) {
+                return "󰤨"
+              } else if (strength >= 60) {
+                return "󰤥"
+              } else if (strength >= 30) {
+                return "󰤢"
+              } else if (strength >= 10) {
+                return "󰤟"
+              } else {
+                return "󰤯"
+              }
             } else {
-              return "󰤯"
+              return "󰤮"
             }
           } else {
-            return "󰤮"
+            return "󰤫"
           }
-        } else {
-          return "󰤫"
-        }
-      })
-    })
-  ]
-})
-
-const BarNetworkWired = Widget.Box({
-  class_name: "bar-network-wired",
-  children: [
-    Widget.Label({
-      label: Utils.merge([
-        network.wifi.bind('internet'),
-        network.wifi.bind('state'),
-      ], (internet, state) => {
-        if (internet === 'connected') {
-          return ""
-        } else {
-          return ""
-        }
-      })
-    })
-  ]
-})
-
-const BarNetwork = Widget.Box({
-  class_name: "bar-network",
-  children: [
-    Widget.Stack({
-      children: {
-        wifi: BarNetworkWifi,
-        wired: BarNetworkWired,
-      },
-      shown: network.bind('primary').as(primary => primary || 'wifi')
-    })
-  ]
-})
-
-
-const BarBluetooth = Widget.Box({
-  class_name: "bar-bluetooth",
-  children: [
-    Widget.Label({
-      label: Utils.merge([
-        bluetooth.bind('enabled'),
-      ], (enabled) => {
-        if (enabled) {
-          return "󰂯"
-        } else {
-          return "󰂲"
-        }
-      })
-    })
-  ]
-})
-
-
-const BarAudio = Widget.Box({
-  class_name: "bar-audio",
-  tooltipText: Utils.merge([
-    audio.speaker.bind('volume'),
-    audio.speaker.bind('is-muted'),
-    audio.microphone.bind('volume'),
-    audio.microphone.bind('is-muted'),
-  ], (volume, isMuted, mic_volume, mic_isMuted) => {
-    return `volume: ${Math.round(volume * 100)}%${isMuted ? " mute" : ""}\n`
-         + `mic-volume: ${Math.round(mic_volume * 100)}%${mic_isMuted ? " mute" : ""}`
-  }),
-  children: [
-    Widget.Label({
-      label: Utils.merge([
-        audio.speaker.bind('volume'),
-        audio.speaker.bind('is-muted'),
-      ], (volume, isMuted) => {
-        if (isMuted) {
-          return "󰝟"
-        } else {
-          if (volume >= 0.6) {
-            return "󰕾"
-          } else if (volume >= 0.2) {
-            return "󰖀"
-          } else {
-            return "󰕿"
-          }
-        }
-      })
-    })
-  ]
-})
-
-
-const BarTitle = Widget.Box({
-  class_name: "bar-title",
-  children: [
-    Widget.Label({
-      truncate: "end",
-      maxWidthChars: 50,
-      label: Utils.merge([
-        hyprland.bind('active')
-      ], (active) => {
-          return `${active.client.title}`
-      })
-    })
-  ]
-})
-
-
-const BarWorkspaces = Widget.Box({
-  class_name: "bar-workspaces",
-  children: hyprland.bind('workspaces').as(workspaces => {
-    const children = []
-    for (let workspace of workspaces) {
-      children.push(Widget.Button({
-        class_name: hyprland.bind('active').as(active => {
-          let class_name = "bar-workspace"
-          if (active.workspace.id === workspace.id) {
-            class_name += " bar-current-workspace"
-          }
-          return class_name
-        }),
-        onClicked: () => {
-          hyprland.messageAsync(`dispatch workspace ${workspace.name}`)
-        },
-        child: Widget.Box({
-          children: [
-            Widget.Label(workspace.name)
-          ]
         })
-      }))
-    }
-    return children
-  })
-})
-
-
-const BarMpris = Widget.Box({
-  class_names: mpris.bind("players").as(players => {
-    const class_names = ["bar-mpris"]
-    if (players.length > 0) {
-      class_names.push("bar-mpris-exist-player")
-    }
-    return class_names
-  }),
-  tooltipText: mpris.bind("players").as(players => {
-    let str = ""
-    for (let player of players) {
-      str += player['track-title'] + "\n"
-    }
-    return str
-  }),
-  children: [
-    Widget.Button({
-      onClicked: () => {
-        App.toggleWindow("media-0")
-      },
-      child: Widget.Label({
-        label: "󰎆"
       })
+    ]
+  })
+
+  return BarNetworkWifi
+}
+
+function barNetworkWired() {
+
+  const BarNetworkWired = Widget.Box({
+    class_name: "bar-network-wired",
+    children: [
+      Widget.Label({
+        label: Utils.merge([
+          network.wifi.bind('internet'),
+          network.wifi.bind('state'),
+        ], (internet, state) => {
+          if (internet === 'connected') {
+            return ""
+          } else {
+            return ""
+          }
+        })
+      })
+    ]
+  })
+
+  return BarNetworkWired
+}
+
+function barNetwork() {
+
+  const BarNetwork = Widget.Box({
+    class_name: "bar-network",
+    children: [
+      Widget.Stack({
+        children: {
+          wifi: barNetworkWifi(),
+          wired: barNetworkWired(),
+        },
+        shown: network.bind('primary').as(primary => primary || 'wifi')
+      })
+    ]
+  })
+
+  return BarNetwork
+}
+
+
+function barBluetooth() {
+
+  const BarBluetooth = Widget.Box({
+    class_name: "bar-bluetooth",
+    children: [
+      Widget.Label({
+        label: Utils.merge([
+          bluetooth.bind('enabled'),
+        ], (enabled) => {
+          if (enabled) {
+            return "󰂯"
+          } else {
+            return "󰂲"
+          }
+        })
+      })
+    ]
+  })
+
+  return BarBluetooth
+}
+
+
+function barAudio() {
+
+  const BarAudio = Widget.Box({
+    class_name: "bar-audio",
+    tooltipText: Utils.merge([
+      audio.speaker.bind('volume'),
+      audio.speaker.bind('is-muted'),
+      audio.microphone.bind('volume'),
+      audio.microphone.bind('is-muted'),
+    ], (volume, isMuted, mic_volume, mic_isMuted) => {
+      return `volume: ${Math.round(volume * 100)}%${isMuted ? " mute" : ""}\n`
+           + `mic-volume: ${Math.round(mic_volume * 100)}%${mic_isMuted ? " mute" : ""}`
+    }),
+    children: [
+      Widget.Label({
+        label: Utils.merge([
+          audio.speaker.bind('volume'),
+          audio.speaker.bind('is-muted'),
+        ], (volume, isMuted) => {
+          if (isMuted) {
+            return "󰝟"
+          } else {
+            if (volume >= 0.6) {
+              return "󰕾"
+            } else if (volume >= 0.2) {
+              return "󰖀"
+            } else {
+              return "󰕿"
+            }
+          }
+        })
+      })
+    ]
+  })
+
+  return BarAudio
+}
+
+
+function barTitle() {
+
+  const BarTitle = Widget.Box({
+    class_name: "bar-title",
+    children: [
+      Widget.Label({
+        truncate: "end",
+        maxWidthChars: 50,
+        label: Utils.merge([
+          hyprland.bind('active')
+        ], (active) => {
+            return `${active.client.title}`
+        })
+      })
+    ]
+  })
+
+  return BarTitle
+}
+
+
+function barWorkspaces() {
+
+  const BarWorkspaces = Widget.Box({
+    class_name: "bar-workspaces",
+    children: hyprland.bind('workspaces').as(workspaces => {
+      const children = []
+      for (let workspace of workspaces) {
+        children.push(Widget.Button({
+          class_name: hyprland.bind('active').as(active => {
+            let class_name = "bar-workspace"
+            if (active.workspace.id === workspace.id) {
+              class_name += " bar-current-workspace"
+            }
+            return class_name
+          }),
+          onClicked: () => {
+            hyprland.messageAsync(`dispatch workspace ${workspace.name}`)
+          },
+          child: Widget.Box({
+            children: [
+              Widget.Label(workspace.name)
+            ]
+          })
+        }))
+      }
+      return children
     })
-  ]
-})
+  })
+
+  return BarWorkspaces
+}
+
+
+function barMpris() {
+
+  const BarMpris = Widget.Box({
+    class_names: mpris.bind("players").as(players => {
+      const class_names = ["bar-mpris"]
+      if (players.length > 0) {
+        class_names.push("bar-mpris-exist-player")
+      }
+      return class_names
+    }),
+    tooltipText: mpris.bind("players").as(players => {
+      let str = ""
+      for (let player of players) {
+        str += player['track-title'] + "\n"
+      }
+      return str
+    }),
+    children: [
+      Widget.Button({
+        onClicked: () => {
+          App.toggleWindow("media-0")
+        },
+        child: Widget.Label({
+          label: "󰎆"
+        })
+      })
+    ]
+  })
+
+  return BarMpris
+}
 
 
 const Bar = monitor => Widget.Window({
@@ -364,7 +417,7 @@ const BarStart = Widget.Box({
   class_name: "bar-left",
   hpack: 'start',
   children: [
-    BarWorkspaces,
+    barWorkspaces(),
   ]
 })
 
@@ -372,7 +425,7 @@ const BarCenter = Widget.Box({
   class_name: "bar-center",
   hpack: 'center',
   children: [
-    BarTitle,
+    barTitle(),
   ]
 })
 
@@ -380,12 +433,12 @@ const BarEnd = Widget.Box({
   class_name: "bar-right",
   hpack: 'end',
   children: [
-    BarMpris,
-    BarAudio,
-    BarBluetooth,
-    BarNetwork,
-    BarBattery,
-    BarClock,
+    barMpris(),
+    barAudio(),
+    barBluetooth(),
+    barNetwork(),
+    barBattery(),
+    barClock(false),
   ]
 })
 
