@@ -50,6 +50,10 @@ if cmd_exist tmux; then
   dot ".config/tmux" -r
 fi
 
+if cmd_exist zellij; then
+  dot ".config/zellij" -r
+fi
+
 if cmd_exist alacritty; then
   dot ".config/alacritty/alacritty.yml"
   dot ".config/alacritty/alacritty.toml"
