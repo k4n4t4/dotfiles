@@ -8,10 +8,10 @@ autocmd("BufWinLeave", {
     end
   end
 })
-autocmd("BufRead", {
+autocmd("BufWinEnter", {
   callback = function()
     if vim.fn.expand("%") ~= "" then
-      vim.api.nvim_exec('loadview', false)
+      vim.api.nvim_exec('silent! loadview', false)
     end
   end
 })

@@ -66,7 +66,7 @@ vim.opt.spell = false
 vim.opt.spelllang = "en"
 
 vim.opt.foldenable = true
-vim.opt.foldmethod = "manual"
+vim.opt.foldmethod = "syntax"
 vim.opt.foldmarker = "{{{,}}}"
 
 vim.opt.belloff = "all"
