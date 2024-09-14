@@ -1,0 +1,61 @@
+
+@media (prefers-color-scheme: light) {
+  :root {
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+  }
+}
+
+
+#titlebar {
+}
+
+#nav-bar {
+}
+
+#PersonalToolbar {
+  padding-inline: 0px;
+}
+
+@keyframes anim-spawn {
+  0% {
+    transform: scale(0.0);
+  }
+  80% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1.0);
+  }
+}
+
+@keyframes anim-spawn-1 {
+  0% {
+    transform: scale(0.8);
+  }
+  80% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1.0);
+  }
+}
+
+tab.tabbrowser-tab {
+  animation: anim-spawn 0.3s linear;
+}
+
+toolbarbutton[open="true"] > menupopup {
+  animation: anim-spawn-1 0.1s linear;
+}
+
+#appMenu-popup[animating="true"], #appMenu-popup[panelopen="true"] {
+  animation: anim-spawn-1 0.2s linear;
+}
+
+#tab-preview-panel[animating="true"], #tab-preview-panel[panelopen="true"] {
+  animation: anim-spawn-1 0.2s linear;
+}
