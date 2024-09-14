@@ -1,10 +1,19 @@
 local autocmd = vim.api.nvim_create_autocmd
 
-autocmd("BufReadPost", {
-  pattern = "*",
+
+autocmd("BufWinLeave", {
   callback = function()
-    vim.api.nvim_exec('silent! normal! g`"zv', false)
-  end,
+    if vim.fn.expand("%") ~= "" then
+      vim.api.nvim_exec('mkview', false)
+    end
+  end
+})
+autocmd("BufRead", {
+  callback = function()
+    if vim.fn.expand("%") ~= "" then
+      vim.api.nvim_exec('loadview', false)
+    end
+  end
 })
 
 autocmd("InsertEnter", {

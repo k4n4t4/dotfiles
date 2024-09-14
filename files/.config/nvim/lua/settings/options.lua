@@ -137,6 +137,8 @@ vim.opt.matchpairs = {
 
 vim.opt.completeopt = {"menuone", "preview"}
 
+vim.opt.viewoptions = {"folds", "cursor", "curdir"}
+
 
 vim.opt.termguicolors = true
 vim.opt.background = "dark"
