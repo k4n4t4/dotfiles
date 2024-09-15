@@ -74,5 +74,7 @@ if type starship > /dev/null 2>&1; then
 fi
 
 if type broot > /dev/null 2>&1; then
-  source ~/.config/broot/launcher/bash/br
+  if [ -e ~/.config/broot/launcher/bash/br ]; then
+    source ~/.config/broot/launcher/bash/br
+  fi
 fi
