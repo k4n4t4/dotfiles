@@ -1,8 +1,6 @@
 
-case $- in
-    *i*) ;;
-      *) return;;
-esac
+[[ $- != *i* ]] && return
+
 
 HISTCONTROL=ignoreboth
 HISTSIZE=1000
@@ -32,10 +30,6 @@ fi
 
 unset color_prompt force_color_prompt
 
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
-
 if ! shopt -oq posix; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then
     . /usr/share/bash-completion/bash_completion
@@ -44,17 +38,23 @@ if ! shopt -oq posix; then
   fi
 fi
 
-if type tmux > /dev/null 2>&1; then
-  export TMUX_SHELL="$(which bash)"
-fi
+
 
 PATH="$HOME/bin:$PATH"
 PATH="$HOME/.local/bin:$PATH"
 PATH="$HOME/.cargo/bin:$PATH"
 PATH="$HOME/go/bin:$PATH"
 
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
 if [ -e /home/linuxbrew/.linuxbrew/bin/brew ]; then
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+if type tmux > /dev/null 2>&1; then
+  export TMUX_SHELL="$(which bash)"
 fi
 
 if type zoxide > /dev/null 2>&1; then
