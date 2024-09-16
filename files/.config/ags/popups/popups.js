@@ -172,8 +172,14 @@ const Popups = monitor => Widget.Window({
         show('audio_speaker')
       }
     })
+    let mic_tmp_volume = 0
+    let mic_tmp_mute = false
     audio.connect('microphone-changed', audio => {
-      show('audio_mic')
+      if (mic_tmp_volume !== audio.microphone.volume || mic_tmp_mute !== audio.microphone.isMuted) {
+        mic_tmp_volume = audio.microphone.volume
+        mic_tmp_mute = audio.microphone.isMuted
+        show('audio_mic')
+      }
     })
     backlight.connect('screen-changed', backlight => {
       show('backlight')

@@ -1,9 +1,10 @@
-const hyprland  = await Service.import('hyprland')
-const audio     = await Service.import('audio')
-const bluetooth = await Service.import('bluetooth')
-const network   = await Service.import('network')
-const battery   = await Service.import('battery')
-const mpris     = await Service.import('mpris')
+const hyprland       = await Service.import('hyprland')
+const audio          = await Service.import('audio')
+const bluetooth      = await Service.import('bluetooth')
+const network        = await Service.import('network')
+const battery        = await Service.import('battery')
+const mpris          = await Service.import('mpris')
+const systemtray     = await Service.import('systemtray')
 
 
 function clock(interval) {
@@ -396,6 +397,40 @@ function barMpris() {
   return BarMpris
 }
 
+function barSystemTray() {
+
+  const systemTrayItem = item => Widget.Box({
+    class_name: "bar-systemtray-item",
+    child: Widget.Button({
+      tooltipMarkup: item.bind('tooltip_markup'),
+      onPrimaryClick: (_, event) => item.activate(event),
+      onSecondaryClick: (_, event) => item.openMenu(event),
+      child: Widget.Icon().bind('icon', item, 'icon'),
+    })
+  })
+
+  const BarSystemTray = Widget.Box({
+    class_names: systemtray.bind('items').as(items => {
+      let class_names = ["bar-systemtray"]
+      if (items.length === 0) {
+        class_names.push("bar-systemtray-empty")
+      } else {
+        class_names.push("bar-systemtray-exist")
+      }
+      return class_names
+    }),
+    children: systemtray.bind('items').as(items => {
+      let itemsWidgets = []
+      for (let item of items) {
+        itemsWidgets.push(systemTrayItem(item))
+      }
+      return itemsWidgets
+    })
+  })
+
+  return BarSystemTray
+}
+
 
 const Bar = monitor => Widget.Window({
   class_name: "bar-window",
@@ -433,6 +468,7 @@ const BarEnd = Widget.Box({
   class_name: "bar-right",
   hpack: 'end',
   children: [
+    barSystemTray(),
     barMpris(),
     barAudio(),
     barBluetooth(),
