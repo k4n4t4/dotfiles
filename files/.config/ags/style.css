@@ -88,6 +88,27 @@
   color: #DD99EE;
 }
 
+menu {
+  background: rgba(30, 30, 30, 0.8);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+menu menuitem {
+  color: #E0C0E0;
+}
+
+menu menuitem:hover {
+  color: #E080E0;
+}
+
+tooltip {
+  background: rgba(30, 30, 30, 0.8);
+  padding: 0.1rem;
+  border-radius: 0.5rem;
+  color: #E0C0E0;
+}
+
 .bar-systemtray-exist {
   background: #202020;
   border-radius: 0.5rem;
@@ -123,7 +144,7 @@
 }
 
 .popups scale > contents > trough > highlight {
-  background: #EEEEAA;
+  background: #EEAAEE;
   border-radius: 1rem 0 0 1rem;
   min-height: 1rem;
 }
@@ -163,7 +184,7 @@
 
 .notification-popup {
   min-width: 350px;
-  border-radius: 11px;
+  border-radius: 1rem;
   padding: 1rem;
   margin: 0.5rem;
   border: 1px solid #EEAAEE;
@@ -201,6 +222,7 @@
   padding: 10px;
   min-width: 350px;
   background: rgba(20, 20, 20, 0.5);
+  border-radius: 1rem;
 }
 
 .player .img {
