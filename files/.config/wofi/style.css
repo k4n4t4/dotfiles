@@ -6,9 +6,7 @@
 window {
   margin: 0;
   padding: 10px;
-  border: 1px solid #E0A0E0;
-  border-radius: 0.5rem;
-  background: none;
+  background: rgba(20, 20, 20, 0.6);
 }
 
 #inner-box {
@@ -22,7 +20,6 @@ window {
   margin: 5px;
   padding: 10px;
   border: none;
-  background: rgba(20, 20, 20, 0.6);
 }
 
 #scroll {
