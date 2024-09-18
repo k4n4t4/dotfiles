@@ -58,7 +58,8 @@
   font-weight: bold;
 }
 
-.bar-workspaces box {
+
+.bar-workspace {
   background: #202020;
   color: #EECCAA;
   border-radius: 0.5rem;
@@ -66,12 +67,13 @@
   margin: 0.1rem 0.2rem 0.1rem 0.2rem;
 }
 
-.bar-current-workspace box {
+.bar-current-workspace {
   background: #303030;
   font-weight: bold;
   border: 1px solid #EEAA99;
   border-radius: 0.5rem;
 }
+
 
 .bar-mpris {
   color: #404040;
@@ -80,6 +82,7 @@
 .bar-mpris-exist-player {
   color: #DD99EE;
 }
+
 
 .bar-systemtray-exist {
   background: #202020;
