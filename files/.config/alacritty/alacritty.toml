@@ -1,7 +1,7 @@
 live_config_reload = true
 
 [shell]
-program = "/home/linuxbrew/.linuxbrew/bin/fish"
+program = "fish"
 args = []
 
 [colors]
