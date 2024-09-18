@@ -1,0 +1,29 @@
+.popups {
+  background: rgba(30, 30, 30, 0.8);
+  padding: 1rem;
+  border-radius: 1rem;
+}
+
+.popups scale {
+  padding: 0 0.5rem 0 0.5rem;
+}
+
+.popups scale > contents > trough {
+  background: #303030;
+  border-radius: 1rem;
+  min-width: 100px;
+  min-height: 1rem;
+}
+
+.popups scale > contents > trough > highlight {
+  background: #EEAAEE;
+  border-radius: 1rem 0 0 1rem;
+  min-height: 1rem;
+}
+
+.popups scale > contents > trough > slider {
+  background: #EEEEEE;
+  border-radius: 1rem;
+  min-width: 1rem;
+  min-height: 1rem;
+}
