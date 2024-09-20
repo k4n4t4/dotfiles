@@ -143,8 +143,8 @@ function Player(player) {
 
 const Media = monitor => Widget.Window({
   class_name: "media",
-  name: `media-${monitor}`,
   monitor,
+  name: "media",
   visible: false,
   anchor: ['top', 'right'],
   child: Widget.Box({

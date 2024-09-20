@@ -123,7 +123,7 @@ const Popups = monitor => Widget.Window({
   class_name: "popups-window",
   monitor,
   visible: false,
-  name: `popups-${monitor}`,
+  name: "popups",
   anchor: [],
   exclusivity: 'exclusive',
   layer: 'overlay',

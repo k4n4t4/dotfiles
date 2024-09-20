@@ -386,7 +386,7 @@ function barMpris() {
     children: [
       Widget.Button({
         onClicked: () => {
-          App.toggleWindow("media-0")
+          App.toggleWindow("media")
         },
         child: Widget.Label({
           label: "󰎆"
@@ -450,7 +450,7 @@ function barNotifications() {
     children: [
       Widget.Button({
         onClicked: () => {
-          App.toggleWindow("notifications-notifications-0")
+          App.toggleWindow("notifications-notifications")
         },
         child: Widget.Label({
           label: ""

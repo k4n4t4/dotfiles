@@ -182,7 +182,7 @@ function notificationNotification(notification) {
 const NotificationPopups = monitor => Widget.Window({
   class_name: "notifications-popups-window",
   monitor,
-  name: `notifications-popups-${monitor}`,
+  name: "notifications-popups",
   anchor: ['top', 'right'],
   exclusivity: 'ignore',
   layer: 'top',
@@ -213,7 +213,7 @@ const NotificationNotifications = monitor => Widget.Window({
   class_name: "notifications-notifications-window",
   monitor,
   visible: false,
-  name: `notifications-notifications-${monitor}`,
+  name: "notifications-notifications",
   anchor: ['top', 'right'],
   exclusivity: 'ignore',
   layer: 'top',
