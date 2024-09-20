@@ -126,7 +126,7 @@ const Popups = monitor => Widget.Window({
   name: `popups-${monitor}`,
   anchor: [],
   exclusivity: 'exclusive',
-  layer: 'top',
+  layer: 'overlay',
   margins: [0, 0, 0, 0],
   keymode: 'none',
   setup: self => {

@@ -34,7 +34,7 @@ function notificationIcon({ app_name, app_entry, app_icon, image }) {
 function notificationPopup(notification) {
 
   const title = Widget.Label({
-    class_name: "notification-popup-title",
+    class_name: "notifications-popup-title",
     tooltipText: notification.summary,
     xalign: 0,
     justification: 'left',
@@ -46,7 +46,7 @@ function notificationPopup(notification) {
   })
 
   const body = Widget.Label({
-    class_name: "notification-popup-body",
+    class_name: "notifications-popup-body",
     xalign: 0,
     justification: 'left',
     hexpand: true,
@@ -71,14 +71,14 @@ function notificationPopup(notification) {
     },
     Widget.Box({
       class_names: [
-          "notification-popup",
-          `notification-popup-${notification.urgency}`,
+          "notifications-popup",
+          `notifications-popup-${notification.urgency}`,
       ],
       vertical: true,
       children: [
         Widget.Box([
           Widget.Box({
-            class_name: "notification-popup-icon",
+            class_name: "notifications-popup-icon",
             tooltipText: notification.app_name,
             vpack: 'start',
             child: notificationIcon(notification),
@@ -92,12 +92,82 @@ function notificationPopup(notification) {
           }),
         ]),
         Widget.Box({
-          class_name: "notification-popup-actions",
+          class_name: "notifications-popup-actions",
           children: notification.actions.map(({ id, label }) => Widget.Button({
-            class_name: "notification-popup-action-button",
+            class_name: "notifications-popup-action-button",
             on_clicked: () => {
               notification.invoke(id)
               notification.dismiss()
+            },
+            hexpand: true,
+            child: Widget.Label(label),
+          })),
+        }),
+      ]
+    })
+  )
+}
+
+function notificationNotification(notification) {
+
+  const title = Widget.Label({
+    class_name: "notifications-notification-title",
+    tooltipText: notification.summary,
+    xalign: 0,
+    justification: 'left',
+    hexpand: true,
+    use_markup: true,
+    max_width_chars: 30,
+    truncate: 'end',
+    label: notification.summary,
+  })
+
+  const body = Widget.Label({
+    class_name: "notifications-notification-body",
+    xalign: 0,
+    justification: 'left',
+    hexpand: true,
+    use_markup: true,
+    max_width_chars: 30,
+    truncate: 'end',
+    label: notification.body,
+  })
+
+  return Widget.EventBox({
+      attribute: {
+        id: notification.id
+      },
+      on_primary_click: notification.close,
+    },
+    Widget.Box({
+      class_names: [
+          "notifications-notification",
+          `notifications-notification-${notification.urgency}`,
+      ],
+      vertical: true,
+      children: [
+        Widget.Box([
+          Widget.Box({
+            class_name: "notifications-notification-icon",
+            tooltipText: notification.app_name,
+            vpack: 'start',
+            child: notificationIcon(notification),
+          }),
+          Widget.Box({
+            vertical: true,
+            children: [
+              title,
+              body,
+            ]
+          }),
+        ]),
+        Widget.Box({
+          class_name: "notifications-notification-actions",
+          children: notification.actions.map(({ id, label }) => Widget.Button({
+            class_name: "notifications-notification-action-button",
+            on_clicked: () => {
+              notification.invoke(id)
+              notification.close()
             },
             hexpand: true,
             child: Widget.Label(label),
@@ -119,7 +189,7 @@ const NotificationPopups = monitor => Widget.Window({
   margins: [0, 0, 0, 0],
   keymode: 'none',
   child: Widget.Box({
-    class_name: "notification-popups",
+    class_name: "notifications-popups",
     vertical: true,
     children: notifications.popups.map(notificationPopup),
     setup: self => {
@@ -139,4 +209,41 @@ const NotificationPopups = monitor => Widget.Window({
   })
 })
 
-export default NotificationPopups
+const NotificationNotifications = monitor => Widget.Window({
+  class_name: "notifications-notifications-window",
+  monitor,
+  visible: false,
+  name: `notifications-notifications-${monitor}`,
+  anchor: ['top', 'right'],
+  exclusivity: 'ignore',
+  layer: 'top',
+  margins: [0, 0, 0, 0],
+  keymode: 'none',
+  child: Widget.Box({
+    class_names: notifications.bind("notifications").as(notifications => {
+      const class_names = ["notifications-notifications"]
+      if (notifications.length > 0) {
+        class_names.push("notifications-notifications-exist")
+      }
+      return class_names
+    }),
+    vertical: true,
+    children: notifications.notifications.map(notificationNotification),
+    setup: self => {
+
+      self.hook(notifications, (self, id) => {
+        const notification = notifications.getNotification(id)
+        if (notification) {
+          self.children = [notificationNotification(notification), ...self.children]
+        }
+      }, 'notified')
+
+      self.hook(notifications, (self, id) => {
+        self.children.find(notification => notification.attribute.id === id)?.destroy()
+      }, 'closed')
+
+    }
+  }),
+})
+
+export default { NotificationPopups, NotificationNotifications }

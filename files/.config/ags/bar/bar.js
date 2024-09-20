@@ -5,6 +5,7 @@ const network        = await Service.import('network')
 const battery        = await Service.import('battery')
 const mpris          = await Service.import('mpris')
 const systemtray     = await Service.import('systemtray')
+const notifications   = await Service.import('notifications')
 
 
 function clock(interval) {
@@ -183,21 +184,21 @@ function barNetworkWifi() {
           if (enabled) {
             if (internet === "connected") {
               if (strength >= 80) {
-                return "󰤨"
+                return "󰤨 "
               } else if (strength >= 60) {
-                return "󰤥"
+                return "󰤥 "
               } else if (strength >= 30) {
-                return "󰤢"
+                return "󰤢 "
               } else if (strength >= 10) {
-                return "󰤟"
+                return "󰤟 "
               } else {
-                return "󰤯"
+                return "󰤯 "
               }
             } else {
-              return "󰤮"
+              return "󰤮 "
             }
           } else {
-            return "󰤫"
+            return "󰤫 "
           }
         })
       })
@@ -218,7 +219,7 @@ function barNetworkWired() {
           network.wifi.bind('state'),
         ], (internet, state) => {
           if (internet === 'connected') {
-            return ""
+            return " "
           } else {
             return ""
           }
@@ -433,13 +434,42 @@ function barSystemTray() {
 }
 
 
+function barNotifications() {
+
+  const BarNotifications = Widget.Box({
+    class_names: notifications.bind("notifications").as(notifications => {
+      const class_names = ["bar-notifications"]
+      if (notifications.length > 0) {
+        class_names.push("bar-notifications-exist")
+      }
+      return class_names
+    }),
+    tooltipText: notifications.bind("notifications").as(notifications => {
+      return `${notifications.length}`
+    }),
+    children: [
+      Widget.Button({
+        onClicked: () => {
+          App.toggleWindow("notifications-notifications-0")
+        },
+        child: Widget.Label({
+          label: ""
+        })
+      })
+    ]
+  })
+
+  return BarNotifications
+}
+
+
 const Bar = monitor => Widget.Window({
   class_name: "bar-window",
   monitor,
   name: `bar-${monitor}`,
   anchor: ['top', 'left', 'right'],
   exclusivity: 'exclusive',
-  layer: 'bottom',
+  layer: 'overlay',
   keymode: 'none',
   child: Widget.CenterBox({
     class_name: "bar",
@@ -476,6 +506,7 @@ const BarEnd = Widget.Box({
     barNetwork(),
     barBattery(),
     barClock(false),
+    barNotifications(),
   ]
 })
 
