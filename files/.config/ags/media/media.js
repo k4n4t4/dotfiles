@@ -14,7 +14,7 @@ function lengthStr(length) {
   return `${min}:${sec0}${sec}`
 }
 
-function Player(player) {
+function mediaPlayer(player) {
   const img = Widget.Box({
     class_name: "player-img",
     vpack: "start",
@@ -142,7 +142,7 @@ function Player(player) {
 }
 
 const Media = monitor => Widget.Window({
-  class_name: "media",
+  class_name: "media-window",
   monitor,
   name: "media",
   visible: false,
@@ -153,9 +153,8 @@ const Media = monitor => Widget.Window({
   keymode: 'none',
   child: Widget.Box({
     vertical: true,
-    css: "min-height: 2px; min-width: 2px;",
     visible: players.as(p => p.length > 0),
-    children: players.as(p => p.map(Player)),
+    children: players.as(p => p.map(mediaPlayer)),
   })
 })
 
