@@ -3,9 +3,10 @@ const audio          = await Service.import('audio')
 const bluetooth      = await Service.import('bluetooth')
 const network        = await Service.import('network')
 const battery        = await Service.import('battery')
+const powerProfiles  = await Service.import('powerprofiles')
 const mpris          = await Service.import('mpris')
 const systemtray     = await Service.import('systemtray')
-const notifications   = await Service.import('notifications')
+const notifications  = await Service.import('notifications')
 
 
 function clock(interval) {
@@ -91,73 +92,92 @@ function barClock(show_clock_detail = false) {
 
 function barBattery() {
 
-  const BarBattery = Widget.Box({
-    class_names: Utils.merge([
-      battery.bind('charging'),
-      battery.bind('percent'),
-    ], (charging, percent) => {
-      const class_names = ["bar-battery"]
-      if (charging) {
-        class_names.push("bar-battery-charging")
-      } else {
-        class_names.push("bar-battery-not-charging")
-      }
-      if (percent < 10) {
-        class_names.push("bar-battery-critical")
-      } else if (percent < 30) {
-        class_names.push("bar-battery-low")
-      } else if (percent < 60) {
-        class_names.push("bar-battery-middle")
-      } else {
-        class_names.push("bar-battery-high")
-      }
-      return class_names
-    }),
-    tooltipText: Utils.merge([
-      battery.bind('charging'),
-      battery.bind('percent'),
-    ], (charging, percent) => {
-      return `${percent}% (${charging ? "charging": "not charging"})`
-    }),
-    children: [
-      Widget.Label({
-        label: Utils.merge([
-          battery.bind('charging'),
-          battery.bind('percent'),
-        ], (charging, percent) => {
-          let label = ""
-          if (percent >= 100) {
-            label += "󰁹"
-          } else if (percent >= 90) {
-            label += "󰂂"
-          } else if (percent >= 80) {
-            label += "󰂁"
-          } else if (percent >= 70) {
-            label += "󰂀"
-          } else if (percent >= 60) {
-            label += "󰁿"
-          } else if (percent >= 50) {
-            label += "󰁾"
-          } else if (percent >= 40) {
-            label += "󰁽"
-          } else if (percent >= 30) {
-            label += "󰁼"
-          } else if (percent >= 20) {
-            label += "󰁻"
-          } else if (percent >= 10) {
-            label += "󰁺"
-          } else {
-            label += "󰂎"
-          }
-          if (charging) {
-            label += "󱐋"
-          } else {
-            label += ""
-          }
-          return label
-        })
+  const BarBattery = Widget.Button({
+    onClicked: () => {
+      switch (powerProfiles.active_profile) {
+          case 'balanced':
+              powerProfiles.active_profile = 'power-saver';
+              break;
+          default:
+              powerProfiles.active_profile = 'balanced';
+              break;
+      };
+    },
+    child: Widget.Box({
+      class_names: Utils.merge([
+        battery.bind('charging'),
+        battery.bind('percent'),
+        powerProfiles.bind('active_profile'),
+      ], (charging, percent, profile) => {
+        const class_names = ["bar-battery"]
+        if (charging) {
+          class_names.push("bar-battery-charging")
+        } else {
+          class_names.push("bar-battery-not-charging")
+        }
+        if (percent < 10) {
+          class_names.push("bar-battery-critical")
+        } else if (percent < 30) {
+          class_names.push("bar-battery-low")
+        } else if (percent < 60) {
+          class_names.push("bar-battery-middle")
+        } else {
+          class_names.push("bar-battery-high")
+        }
+        class_names.push(`bar-battery-profile-${profile}`)
+        return class_names
       }),
-    ]
+      tooltipText: Utils.merge([
+        battery.bind('charging'),
+        battery.bind('percent'),
+        powerProfiles.bind('active_profile'),
+      ], (charging, percent, profile) => {
+        return `${percent}% (${charging ? "charging": "not charging"})\n${profile}`
+      }),
+      children: [
+        Widget.Label({
+          label: Utils.merge([
+            battery.bind('charging'),
+            battery.bind('percent'),
+            powerProfiles.bind('active_profile'),
+          ], (charging, percent, profile) => {
+            let label = ""
+            if (profile === 'power-saver') {
+              label += "󰌪 "
+            }
+            if (percent >= 100) {
+              label += "󰁹"
+            } else if (percent >= 90) {
+              label += "󰂂"
+            } else if (percent >= 80) {
+              label += "󰂁"
+            } else if (percent >= 70) {
+              label += "󰂀"
+            } else if (percent >= 60) {
+              label += "󰁿"
+            } else if (percent >= 50) {
+              label += "󰁾"
+            } else if (percent >= 40) {
+              label += "󰁽"
+            } else if (percent >= 30) {
+              label += "󰁼"
+            } else if (percent >= 20) {
+              label += "󰁻"
+            } else if (percent >= 10) {
+              label += "󰁺"
+            } else {
+              label += "󰂎"
+            }
+            if (charging) {
+              label += "󱐋"
+            } else {
+              label += ""
+            }
+            return label
+          })
+        }),
+      ]
+    })
   })
 
   return BarBattery
