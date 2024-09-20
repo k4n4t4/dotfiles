@@ -219,7 +219,7 @@ const NotificationNotifications = monitor => Widget.Window({
   layer: 'top',
   margins: [0, 0, 0, 0],
   keymode: 'none',
-  child: Widget.Box({
+  child: Widget.Scrollable({
     class_names: notifications.bind("notifications").as(notifications => {
       const class_names = ["notifications-notifications"]
       if (notifications.length > 0) {
@@ -227,22 +227,26 @@ const NotificationNotifications = monitor => Widget.Window({
       }
       return class_names
     }),
-    vertical: true,
-    children: notifications.notifications.map(notificationNotification),
-    setup: self => {
+    hscroll: 'automatic',
+    vscroll: 'automatic',
+    child: Widget.Box({
+      vertical: true,
+      children: notifications.notifications.map(notificationNotification),
+      setup: self => {
 
-      self.hook(notifications, (self, id) => {
-        const notification = notifications.getNotification(id)
-        if (notification) {
-          self.children = [notificationNotification(notification), ...self.children]
-        }
-      }, 'notified')
+        self.hook(notifications, (self, id) => {
+          const notification = notifications.getNotification(id)
+          if (notification) {
+            self.children = [notificationNotification(notification), ...self.children]
+          }
+        }, 'notified')
 
-      self.hook(notifications, (self, id) => {
-        self.children.find(notification => notification.attribute.id === id)?.destroy()
-      }, 'closed')
+        self.hook(notifications, (self, id) => {
+          self.children.find(notification => notification.attribute.id === id)?.destroy()
+        }, 'closed')
 
-    }
+      }
+    }),
   }),
 })
 
