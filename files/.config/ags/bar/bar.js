@@ -405,8 +405,8 @@ function barSystemTray() {
     class_name: "bar-systemtray-item",
     child: Widget.Button({
       tooltipMarkup: item.bind('tooltip_markup'),
-      onPrimaryClick: (_, event) => item.activate(event),
-      onSecondaryClick: (_, event) => item.openMenu(event),
+      onPrimaryClick: (_, event) => item?.activate(event),
+      onSecondaryClick: (_, event) => item?.openMenu(event),
       child: Widget.Icon().bind('icon', item, 'icon'),
     })
   })
@@ -453,7 +453,7 @@ function barNotifications() {
           App.toggleWindow("notifications-notifications")
         },
         child: Widget.Label({
-          label: ""
+          label: " "
         })
       })
     ]
