@@ -389,7 +389,7 @@ function barMpris() {
           App.toggleWindow("media")
         },
         child: Widget.Label({
-          label: "󰎆"
+          label: "󰎆 "
         })
       })
     ]
