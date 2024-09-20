@@ -56,6 +56,15 @@ function notificationPopup(notification) {
     label: notification.body,
   })
 
+  const time = Widget.Label({
+    class_name: "notifications-popup-time",
+    xalign: 0,
+    justification: 'left',
+    hexpand: true,
+    use_markup: true,
+    label: `${(new Date(notification.time * 1000)).toLocaleString()}`,
+  })
+
   return Widget.EventBox({
       attribute: {
         id: notification.id
@@ -86,6 +95,7 @@ function notificationPopup(notification) {
           Widget.Box({
             vertical: true,
             children: [
+              time,
               title,
               body,
             ]
@@ -117,8 +127,6 @@ function notificationNotification(notification) {
     justification: 'left',
     hexpand: true,
     use_markup: true,
-    max_width_chars: 30,
-    truncate: 'end',
     label: notification.summary,
   })
 
@@ -128,9 +136,16 @@ function notificationNotification(notification) {
     justification: 'left',
     hexpand: true,
     use_markup: true,
-    max_width_chars: 30,
-    truncate: 'end',
     label: notification.body,
+  })
+
+  const time = Widget.Label({
+    class_name: "notifications-notification-time",
+    xalign: 0,
+    justification: 'left',
+    hexpand: true,
+    use_markup: true,
+    label: `${(new Date(notification.time * 1000)).toLocaleString()}`,
   })
 
   return Widget.EventBox({
@@ -156,6 +171,7 @@ function notificationNotification(notification) {
           Widget.Box({
             vertical: true,
             children: [
+              time,
               title,
               body,
             ]

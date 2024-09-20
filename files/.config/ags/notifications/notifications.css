@@ -48,6 +48,10 @@
   color: #EE55EE;
 }
 
+.notifications-popup-time {
+  color: #A090F0;
+}
+
 .notifications-popup-body {
   color: #A090C0;
 }
@@ -128,6 +132,10 @@
 
 .notifications-notification-title {
   color: #EE55EE;
+}
+
+.notifications-notification-time {
+  color: #A090F0;
 }
 
 .notifications-notification-body {

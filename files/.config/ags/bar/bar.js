@@ -452,6 +452,9 @@ function barNotifications() {
         onClicked: () => {
           App.toggleWindow("notifications-notifications")
         },
+        onSecondaryClick: () => {
+          notifications.clear()
+        },
         child: Widget.Label({
           label: " "
         })
