@@ -1,6 +1,6 @@
 .notifications-popups {
   background: transparent;
-  margin: 50px 10px 0 0;
+  margin: 0.1rem 0.1rem 0 0;
   min-width: 0;
   min-height: 0;
 }
@@ -79,7 +79,7 @@
 
 .notifications-notifications {
   background: rgba(10, 10, 10, 0.8);
-  margin: 50px 10px 0 0;
+  margin: 0.1rem 0.1rem 0 0;
   min-width: 0;
   min-height: 0;
   padding: 1rem;

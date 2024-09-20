@@ -147,6 +147,10 @@ const Media = monitor => Widget.Window({
   name: "media",
   visible: false,
   anchor: ['top', 'right'],
+  exclusivity: 'normal',
+  layer: 'top',
+  margins: [0, 0, 0, 0],
+  keymode: 'none',
   child: Widget.Box({
     vertical: true,
     css: "min-height: 2px; min-width: 2px;",
