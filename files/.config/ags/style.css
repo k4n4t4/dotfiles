@@ -1,7 +1,7 @@
 @import "./bar/bar.css";
 @import "./popups/popups.css";
-@import "./media/media.css";
 @import "./notifications/notifications.css";
+@import "./media/media.css";
 
 * {
   all: unset;

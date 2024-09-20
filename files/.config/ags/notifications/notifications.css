@@ -1,59 +1,78 @@
 .notification-popups {
   background: transparent;
-  margin: 1rem;
+  margin: 50px 10px 0 0;
   min-width: 0;
   min-height: 0;
 }
 
-.notification-icon {
+.notification-popup {
+  min-width: 25rem;
+  min-height: 5rem;
+  border-radius: 1rem;
+  padding: 1rem;
+  border: 1px solid #EEAAEE;
+  background: rgba(20, 20, 20, 0.8);
+}
+
+.notification-popup-icon {
   min-width: 68px;
   min-height: 68px;
   margin-right: 1em;
 }
 
-.notification-icon image {
+.notification-popup-icon image {
   font-size: 4rem;
   margin: 5px;
   color: #EEAAEE;
 }
 
-.notification-icon box {
+.notification-popup-icon box {
   min-width: 68px;
   min-height: 68px;
   border-radius: 7px;
 }
 
-.notification-popup {
-  min-width: 350px;
-  border-radius: 1rem;
-  padding: 1rem;
-  margin: 0.5rem;
-  border: 1px solid #EEAAEE;
-  background: #202020;
+.notification-popup-low {
+  border: 1px solid #AA77AA;
 }
 
-.notification-critical {
-  border: 1px solid #EE9999;
+.notification-popup-normal {
+  border: 1px solid #EE99DD;
 }
 
-.notification-title {
+.notification-popup-critical {
+  border: 1px solid #EE7788;
+}
+
+.notification-popup-title {
   color: #EE55EE;
-  font-size: 1.4rem;
 }
 
-.notification-body {
+.notification-popup-body {
   color: #A090C0;
 }
 
-.notification-actions .notification-action-button {
-  margin: 0 0.4rem;
-  margin-top: 0.8rem;
+.notification-popup-actions {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 1rem;
 }
 
-.notification-actions .notification-action-button:first-child {
+.notification-popup-action-button {
+  background: #404040;
+  margin: 0 0.4rem 0 0.4rem;
+  padding: 0.3rem;
+  border-radius: 0.2rem;
+}
+
+.notification-popup-action-button:hover {
+  background: #885088;
+}
+
+.notification-popup-action-button:first-child {
   margin-left: 0;
 }
 
-.notification-actions .notification-action-button:last-child {
+.notification-popup-action-button:last-child {
   margin-right: 0;
 }

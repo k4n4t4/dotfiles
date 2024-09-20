@@ -10,8 +10,8 @@ App.config({
   style: "./style.css",
   windows: [
     Bar(MONITOR),
+    Popups(MONITOR),
     NotificationPopups(MONITOR),
     Media(MONITOR),
-    Popups(MONITOR),
   ]
 })
