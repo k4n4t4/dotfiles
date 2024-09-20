@@ -397,6 +397,7 @@ function barMpris() {
   return BarMpris
 }
 
+
 function barSystemTray() {
 
   const systemTrayItem = item => Widget.Box({

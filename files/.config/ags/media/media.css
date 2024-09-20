@@ -5,7 +5,7 @@
   border-radius: 1rem;
 }
 
-.player .img {
+.player .player-img {
   min-width: 100px;
   min-height: 100px;
   background-size: cover;
@@ -14,11 +14,11 @@
   margin-right: 1em;
 }
 
-.player .title {
+.player .player-title {
   font-size: 1.2em;
 }
 
-.player .artist {
+.player .player-artist {
   font-size: 1.1em;
   color: #DDEEDD;
 }
@@ -47,6 +47,6 @@
   padding: .3em;
 }
 
-.player button.play-pause {
+.player button.player-play-pause {
   margin: 0 .3em;
 }

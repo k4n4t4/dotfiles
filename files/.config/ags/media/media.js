@@ -16,7 +16,7 @@ function lengthStr(length) {
 
 function Player(player) {
   const img = Widget.Box({
-    class_name: "img",
+    class_name: "player-img",
     vpack: "start",
     css: player.bind("cover_path").transform(p => `
       background-image: url('${p}');
@@ -24,21 +24,21 @@ function Player(player) {
   })
 
   const title = Widget.Label({
-    class_name: "title",
+    class_name: "player-title",
     wrap: true,
     hpack: "start",
     label: player.bind("track_title"),
   })
 
   const artist = Widget.Label({
-    class_name: "artist",
+    class_name: "player-artist",
     wrap: true,
     hpack: "start",
     label: player.bind("track_artists").transform(a => a.join(", ")),
   })
 
   const positionSlider = Widget.Slider({
-    class_name: "position",
+    class_name: "player-position",
     draw_value: false,
     on_change: ({ value }) => player.position = value * player.length,
     visible: player.bind("length").as(l => l > 0),
@@ -54,7 +54,7 @@ function Player(player) {
   })
 
   const positionLabel = Widget.Label({
-    class_name: "position",
+    class_name: "player-position",
     hpack: "start",
     setup: self => {
       const update = (_, time) => {
@@ -68,14 +68,14 @@ function Player(player) {
   })
 
   const lengthLabel = Widget.Label({
-    class_name: "length",
+    class_name: "player-length",
     hpack: "end",
     visible: player.bind("length").transform(l => l > 0),
     label: player.bind("length").transform(lengthStr),
   })
 
   const icon = Widget.Icon({
-    class_name: "icon",
+    class_name: "player-icon",
     hexpand: true,
     hpack: "end",
     vpack: "start",
@@ -87,7 +87,7 @@ function Player(player) {
   })
 
   const playPause = Widget.Button({
-    class_name: "play-pause",
+    class_name: "player-play-pause",
     on_clicked: () => player.playPause(),
     visible: player.bind("can_play"),
     child: Widget.Icon({
