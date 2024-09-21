@@ -66,8 +66,6 @@ fi
 
 export LANG=C
 export CLICOLOR=1
-export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
-export LS_COLORS="$(get_ls_colors)"
 
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor root line)
 typeset -A ZSH_HIGHLIGHT_STYLES
@@ -142,7 +140,7 @@ if type eza > /dev/null 2>&1; then
   alias lta="eza -F -Ta"
   alias llt="eza -F -Tl"
   alias llta="eza -F -Tla"
-  export EXA_COLORS=(get_ls_colors exa)
+  export EXA_COLORS="$(get_ls_colors exa)"
 elif type exa > /dev/null 2>&1; then
   alias exa="exa --icons --git -H -s type --time-style=long-iso"
   alias ls="exa"
@@ -154,7 +152,7 @@ elif type exa > /dev/null 2>&1; then
   alias lta="exa -FTa"
   alias llt="exa -FTl"
   alias llta="exa -FTla"
-  export EXA_COLORS=(get_ls_colors exa)
+  export EXA_COLORS="$(get_ls_colors exa)"
 elif type lsd > /dev/null 2>&1; then
   alias ls="lsd"
   alias ll="lsd -Fl"
@@ -172,7 +170,9 @@ else
   alias ll="ls -Fl"
   alias la="ls -Fa"
   alias lla="ls -Fla"
-  export LS_COLORS=(get_ls_colors)
+
+  export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
+  export LS_COLORS="$(get_ls_colors)"
 fi
 
 alias c='printf "\033[0;0H\033[2J"'
