@@ -1,8 +1,8 @@
 vim.opt.encoding     = "utf-8"
 vim.scriptencoding   = "utf-8"
 vim.opt.fileencoding = "utf-8"
-vim.opt.fileencodings = {"utf-8", "sjis"}
-vim.opt.fileformats   = {"unix", "dos"}
+vim.opt.fileencodings = { "utf-8", "sjis" }
+vim.opt.fileformats   = { "unix", "dos" }
 
 
 vim.opt.number = true
@@ -127,22 +127,17 @@ vim.opt.gdefault = false
 
 vim.opt.whichwrap = "b,s,h,l,~,<,>,[,]"
 
-vim.opt.backspace = {"indent", "eol", "nostop"}
+vim.opt.backspace = { "indent", "eol", "nostop" }
 
-vim.opt.nrformats = {"bin", "octal", "hex"}
+vim.opt.nrformats = { "bin", "octal", "hex" }
 
 vim.opt.showmatch = true
 vim.opt.matchtime = 1
-vim.opt.matchpairs = {
-  "(:)",
-  "{:}",
-  "[:]",
-  "<:>",
-}
+vim.opt.matchpairs = { "(:)", "{:}", "[:]", "<:>" }
 
-vim.opt.completeopt = {"menuone", "preview"}
+vim.opt.completeopt = { "menuone", "preview" }
 
-vim.opt.viewoptions = {"folds", "cursor", "curdir"}
+vim.opt.viewoptions = { "folds", "cursor", "curdir" }
 
 
 vim.opt.termguicolors = true
