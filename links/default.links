@@ -133,3 +133,19 @@ if cmd_exist firefox; then
     dot "firefox/userChrome.css" "$folder/chrome/userChrome.css"
   done
 fi
+
+if cmd_exist greetd && cmd_exist Hyprland && cmd_exist ags; then
+  if [ -d "/etc/greetd" ]; then
+    warn "sudo required"
+    ask "Continue? [y/N]: "
+    case "$RET" in
+      ( [Yy] )
+        sudo chown -R "$USER" "/etc/greetd"
+        dot "greetd" "/etc/greetd/" -r
+        ;;
+      ( * )
+        log "Skiped."
+        ;;
+    esac
+  fi
+fi

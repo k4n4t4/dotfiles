@@ -1,0 +1,49 @@
+.greeter-window {
+  background: #101010;
+  background-image:  linear-gradient(135deg, #202020 25%, transparent 25%), linear-gradient(225deg, #202020 25%, transparent 25%), linear-gradient(45deg, #202020 25%, transparent 25%), linear-gradient(315deg, #202020 25%, #401040 25%);
+  background-position:  20px 0, 20px 0, 0 0, 0 0;
+  background-size: 20px 20px;
+  background-repeat: repeat;
+}
+
+.greeter-title {
+  color: #EE77EE;
+  font-size: 5rem;
+  font-weight: bold;
+  margin: 0 0 4rem 0;
+}
+
+.greeter-username entry {
+  background: rgba(20, 20, 20, 0.8);
+  color: #EEAAEE;
+  caret-color: #EEDDDD;
+  border: 1px solid #775599;
+  min-width: 30rem;
+  font-size: 2rem;
+  margin: 1rem 0 0 0;
+  padding: 1rem;
+}
+
+.greeter-username entry:focus {
+  border: 1px solid #AA88DD;
+}
+
+.greeter-password entry {
+  background: rgba(20, 20, 20, 0.8);
+  color: #EEAAEE;
+  caret-color: #EEDDDD;
+  border: 1px solid #775599;
+  min-width: 30rem;
+  font-size: 2rem;
+  margin: 1rem 0 0 0;
+  padding: 1rem;
+}
+
+.greeter-password entry:focus {
+  border: 1px solid #AA88DD;
+}
+
+.greeter-responce label {
+  color: #EE77EE;
+  margin: 3rem 0 0 0;
+}
