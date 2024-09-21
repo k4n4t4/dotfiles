@@ -140,8 +140,7 @@ if cmd_exist greetd && cmd_exist Hyprland && cmd_exist ags; then
     ask "Continue? [y/N]: "
     case "$RET" in
       ( [Yy] )
-        sudo chown -R "$USER" "/etc/greetd"
-        dot "greetd" "/etc/greetd/" -r
+        sudo cp "$WORK_PATH"/files/greetd/* /etc/greetd/ -riv
         ;;
       ( * )
         log "Skiped."
