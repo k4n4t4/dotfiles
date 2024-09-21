@@ -492,7 +492,7 @@ const Bar = monitor => Widget.Window({
   name: `bar-${monitor}`,
   anchor: ['top', 'left', 'right'],
   exclusivity: 'exclusive',
-  layer: 'overlay',
+  layer: 'top',
   keymode: 'none',
   child: Widget.CenterBox({
     class_name: "bar",

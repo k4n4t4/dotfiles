@@ -14,22 +14,20 @@ return {
           sign = {
             name = { "Diagnostic.*" },
             maxwidth = 1,
+            colwidth = 0,
           },
         },
         {
           sign = {
             namespace = { "gitsigns" },
             maxwidth = 1,
-            colwidth = 1,
+            colwidth = 0,
             wrap = true,
           },
         },
         {
           text = { builtin.lnumfunc },
           condition = { true, builtin.not_empty },
-        },
-        {
-          text = { " " }
         },
         {
           text = { builtin.foldfunc },

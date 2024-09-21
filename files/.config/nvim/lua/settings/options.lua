@@ -70,7 +70,7 @@ vim.opt.spell = false
 vim.opt.spelllang = "en"
 
 vim.opt.foldenable = true
-vim.opt.foldcolumn = '2'
+vim.opt.foldcolumn = '1'
 vim.opt.foldmethod = "manual"
 vim.opt.foldmarker = "{{{,}}}"
 

@@ -3,4 +3,4 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   callback = TransparentBackground
 })
 
-vim.cmd.colorscheme "onedark"
+vim.cmd.colorscheme "tokyonight-moon"
