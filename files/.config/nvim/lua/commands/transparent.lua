@@ -1,6 +1,8 @@
 function TransparentBackground()
   vim.cmd.highlight {"Normal",         "guibg=none", "ctermbg=none"}
   vim.cmd.highlight {"NormalNC",       "guibg=none", "ctermbg=none"}
+  vim.cmd.highlight {"Folded",         "guibg=none", "ctermbg=none"}
+  vim.cmd.highlight {"FoldColumn",     "guibg=none", "ctermbg=none"}
   vim.cmd.highlight {"NonText",        "guibg=none", "ctermbg=none"}
   vim.cmd.highlight {"LineNr",         "guibg=none", "ctermbg=none"}
   vim.cmd.highlight {"CursorLineNr",   "guibg=none", "ctermbg=none"}
