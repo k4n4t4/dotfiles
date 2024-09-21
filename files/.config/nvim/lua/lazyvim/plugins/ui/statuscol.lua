@@ -6,16 +6,12 @@ return {
     require("statuscol").setup {
       bt_ignore = { "terminal", "nofile", "ddu-ff", "ddu-ff-filter" },
       foldfunc = "buildin",
+      relculright = true,
       setopt = true,
 
-      relculright = true,
       segments = {
         {
-          sign = {
-            name = { "Diagnostic.*" },
-            maxwidth = 1,
-            colwidth = 0,
-          },
+          text = { "%s" }
         },
         {
           sign = {
