@@ -69,6 +69,7 @@ vim.opt.rulerformat = "%15(%l,%c%V%=%P%)"
 vim.opt.spell = false
 vim.opt.spelllang = "en"
 
+vim.opt.foldtext = ""
 vim.opt.foldenable = true
 vim.opt.foldcolumn = '1'
 vim.opt.foldmethod = "manual"

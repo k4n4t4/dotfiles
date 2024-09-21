@@ -10,7 +10,6 @@ function TransparentBackground()
   vim.cmd.highlight {"CursorLineSign", "guibg=none", "ctermbg=none"}
   vim.cmd.highlight {"TabLine",        "guibg=none", "ctermbg=none"}
   vim.cmd.highlight {"TabLineFill",    "guibg=none", "ctermbg=none"}
-  vim.cmd.highlight {"Folded",         "guibg=none", "ctermbg=none"}
   vim.cmd.highlight {"EndOfBuffer",    "guibg=none", "ctermbg=none"}
 
   vim.cmd.highlight {"NvimTreeNormal",      "guibg=none", "ctermbg=none"}

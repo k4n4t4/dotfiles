@@ -1,58 +1,60 @@
+local function status_line_highlights()
+  vim.api.nvim_set_hl(0, 'StatusLine', {
+    fg = "#EEEEEE",
+    bg = "none",
+  })
+  vim.api.nvim_set_hl(0, 'StatusLineNC', {
+    fg = "#AAAAAA",
+    bg = "none",
+  })
+
+  vim.api.nvim_set_hl(0, 'StatusLineModeNormal', {
+    fg = "#99EE99",
+    bg = "none",
+  })
+  vim.api.nvim_set_hl(0, 'StatusLineModeInsert', {
+    fg = "#EE9999",
+    bg = "none",
+  })
+  vim.api.nvim_set_hl(0, 'StatusLineModeReplace', {
+    fg = "#EEEE99",
+    bg = "none",
+  })
+  vim.api.nvim_set_hl(0, 'StatusLineModeVisual', {
+    fg = "#9999EE",
+    bg = "none",
+  })
+  vim.api.nvim_set_hl(0, 'StatusLineModeConfirm', {
+    fg = "#999999",
+    bg = "none",
+  })
+  vim.api.nvim_set_hl(0, 'StatusLineModeTerminal', {
+    fg = "#999999",
+    bg = "none",
+  })
+  vim.api.nvim_set_hl(0, 'StatusLineModeOther', {
+    fg = "#EE99EE",
+    bg = "none",
+  })
+
+  vim.api.nvim_set_hl(0, 'StatusLineDiagnosticINFO', {
+    fg = "#99EEEE",
+    bg = "none",
+  })
+  vim.api.nvim_set_hl(0, 'StatusLineDiagnosticWARN', {
+    fg = "#EEEE99",
+    bg = "none",
+  })
+  vim.api.nvim_set_hl(0, 'StatusLineDiagnosticERROR', {
+    fg = "#EE9999",
+    bg = "none",
+  })
+end
+
 vim.api.nvim_create_autocmd("ColorScheme", {
   pattern = "*",
   callback = function()
-
-    vim.api.nvim_set_hl(0, 'StatusLine', {
-      fg = "#EEEEEE",
-      bg = "none",
-    })
-    vim.api.nvim_set_hl(0, 'StatusLineNC', {
-      fg = "#AAAAAA",
-      bg = "none",
-    })
-
-    vim.api.nvim_set_hl(0, 'StatusLineModeNormal', {
-      fg = "#99EE99",
-      bg = "#202020",
-    })
-    vim.api.nvim_set_hl(0, 'StatusLineModeInsert', {
-      fg = "#EE9999",
-      bg = "#202020",
-    })
-    vim.api.nvim_set_hl(0, 'StatusLineModeReplace', {
-      fg = "#EEEE99",
-      bg = "#202020",
-    })
-    vim.api.nvim_set_hl(0, 'StatusLineModeVisual', {
-      fg = "#9999EE",
-      bg = "#202020",
-    })
-    vim.api.nvim_set_hl(0, 'StatusLineModeConfirm', {
-      fg = "#999999",
-      bg = "#202020",
-    })
-    vim.api.nvim_set_hl(0, 'StatusLineModeTerminal', {
-      fg = "#999999",
-      bg = "#202020",
-    })
-    vim.api.nvim_set_hl(0, 'StatusLineModeOther', {
-      fg = "#EE99EE",
-      bg = "#202020",
-    })
-
-    vim.api.nvim_set_hl(0, 'StatusLineDiagnosticINFO', {
-      fg = "#99EEEE",
-      bg = "#202020",
-    })
-    vim.api.nvim_set_hl(0, 'StatusLineDiagnosticWARN', {
-      fg = "#EEEE99",
-      bg = "#202020",
-    })
-    vim.api.nvim_set_hl(0, 'StatusLineDiagnosticERROR', {
-      fg = "#EE9999",
-      bg = "#202020",
-    })
-
+    status_line_highlights()
   end
 })
 
