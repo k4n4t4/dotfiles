@@ -192,8 +192,7 @@ local function status_search_count()
   return vim.fn.searchcount()
 end
 
-
-function status_line()
+function StatusLine()
   local macro = status_macro_recording()
   local mode = status_mode()
   local search = status_search_count()
@@ -238,7 +237,7 @@ function status_line()
     "%n %l/%L,%c%V %P"
   )
 end
-function status_line_inactive()
+function StatusLineInactive()
   return (
     "%f%m%r%h%w" ..
     "%=%<" ..
@@ -246,20 +245,4 @@ function status_line_inactive()
   )
 end
 
-vim.api.nvim_create_autocmd({
-  'BufEnter',
-  'WinEnter',
-  'TabEnter',
-}, {
-  group = vim.api.nvim_create_augroup('StatusLine', {}),
-  pattern = '*',
-  callback = function ()
-    for _, id in pairs(vim.api.nvim_list_wins()) do
-      if vim.api.nvim_get_current_win() == id then
-        vim.opt.statusline = "%!v:lua.status_line()"
-      elseif vim.api.nvim_buf_get_name(0) ~= '' then
-        vim.opt.statusline = "%!v:lua.status_line_inactive()"
-      end
-    end
-  end,
-})
+vim.opt.statusline = "%{% g:actual_curwin == win_getid() ? v:lua.StatusLine() : v:lua.StatusLineInactive() %}"
