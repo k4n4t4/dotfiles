@@ -7,7 +7,7 @@ vim.opt.fileformats   = { "unix", "dos" }
 
 vim.opt.number = true
 vim.opt.relativenumber = true
-vim.opt.numberwidth = 4
+vim.opt.numberwidth = 1
 vim.opt.signcolumn = "yes"
 
 vim.opt.cursorline = true
