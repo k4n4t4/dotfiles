@@ -18,11 +18,11 @@ autocmd("BufWinEnter", {
 
 autocmd("InsertEnter", {
   callback = function()
-    vim.opt.relativenumber = false
+    vim.wo.relativenumber = false
   end
 })
 autocmd("InsertLeave", {
   callback = function()
-    vim.opt.relativenumber = true
+    vim.wo.relativenumber = true
   end
 })

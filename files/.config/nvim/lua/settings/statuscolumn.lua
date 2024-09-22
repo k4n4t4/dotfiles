@@ -1,17 +1,34 @@
 local function status_line_number()
-  return (
-    [[%{ &rnu ? ( v:lnum == line(".") ? (v:lnum) : (v:relnum) ) : (v:lnum) }]]
-  )
+  local line_number = ""
+  if vim.wo.relativenumber then
+    if vim.v.lnum == vim.fn.line(".") then
+      line_number = line_number .. vim.v.lnum
+    else
+      line_number = line_number .. vim.v.relnum
+    end
+  else
+    line_number = line_number .. vim.v.lnum
+  end
+  return line_number
+end
+
+local function status_separator()
+  if vim.v.lnum == vim.fn.line(".") then
+    return "▌"
+  else
+    return "│"
+  end
 end
 
 function StatusColumn()
   local line_number = status_line_number()
+  local separator = status_separator()
   return (
     "%s" ..
     "%=" ..
     line_number ..
     "%C" ..
-    [[%{v:lnum == line(".") ? "▌" : "│" }]]
+    separator
   )
 end
 
