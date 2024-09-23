@@ -4,6 +4,7 @@ vim.opt.fileencoding = "utf-8"
 vim.opt.fileencodings = { "utf-8", "sjis" }
 vim.opt.fileformats   = { "unix", "dos" }
 
+vim.opt.debug = 'throw'
 
 vim.opt.number = true
 vim.opt.relativenumber = true

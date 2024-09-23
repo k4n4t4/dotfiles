@@ -2,7 +2,10 @@ function FoldText()
   local foldtext = ""
   local line = vim.fn.getline(vim.v.foldstart)
 
-  foldtext = foldtext .. line .. " [" .. vim.v.foldlevel .. "] " .. vim.v.foldstart .. " - " .. vim.v.foldend .. " "
+  foldtext = foldtext .. line
+  foldtext = foldtext .. " [" .. vim.v.foldlevel .. "] "
+  foldtext = foldtext .. vim.v.foldstart .. " - " .. vim.v.foldend .. " "
+
   return foldtext
 end
 
