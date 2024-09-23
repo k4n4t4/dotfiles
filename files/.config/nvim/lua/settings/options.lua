@@ -8,7 +8,7 @@ vim.opt.debug = 'throw'
 
 vim.opt.number = true
 vim.opt.relativenumber = true
-vim.opt.numberwidth = 3
+vim.opt.numberwidth = 4
 vim.opt.signcolumn = "yes"
 
 vim.opt.cursorline = true
