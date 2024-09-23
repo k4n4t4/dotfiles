@@ -20,14 +20,24 @@ local function status_separator()
   end
 end
 
+local function status_separator_hl()
+  if vim.v.lnum == vim.fn.line(".") then
+    return "%#CursorLineNr#"
+  else
+    return "%#LineNr#"
+  end
+end
+
 function StatusColumn()
   local line_number = status_line_number()
   local separator = status_separator()
+  local separator_hl = status_separator_hl()
   return (
     "%s" ..
     "%=" ..
     line_number ..
     "%C" ..
+    separator_hl ..
     separator
   )
 end

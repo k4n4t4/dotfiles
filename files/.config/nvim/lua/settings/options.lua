@@ -140,6 +140,7 @@ vim.opt.completeopt = { "menuone", "preview" }
 
 vim.opt.viewoptions = { "folds", "cursor", "curdir" }
 
+vim.opt.synmaxcol = 1000
 
 vim.opt.termguicolors = true
 vim.opt.background = "dark"

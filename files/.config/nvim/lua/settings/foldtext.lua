@@ -6,7 +6,9 @@ vim.opt.foldtext = "v:lua.FoldText()"
 -- vim.opt.foldtext = ""
 
 
-vim.api.nvim_create_autocmd("CursorMoved", {
+vim.api.nvim_create_autocmd({
+  'CursorMoved',
+}, {
   callback = function()
 
     local bnr = vim.fn.bufnr('%')
@@ -19,13 +21,19 @@ vim.api.nvim_create_autocmd("CursorMoved", {
         local fold_closed = vim.fn.foldclosed(i)
         if fold_closed ~= -1 then
 
-          local text = " FOLD TEST "
+          local text = {}
+
+          for j = 1, #vim.fn.getline(fold_closed) do
+              local syn_id = vim.fn.synID(fold_closed, j, 1)
+              local name = vim.fn.synIDattr(syn_id, 'name')
+              local hl = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.synID(fold_closed, j, 1)), 'name')
+              table.insert(text , {'@', hl or 'Comment'})
+          end
 
           local opts = {
             id = fold_closed,
-            virt_text = {
-              {text, "Comment"}
-            },
+            -- virt_text = {{vim.fn.getline(fold_closed), "type"}},
+            virt_text = text,
             virt_text_pos = 'overlay',
           }
 
