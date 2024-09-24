@@ -1,13 +1,17 @@
 local function status_line_number()
   local line_number = ""
-  if vim.wo.relativenumber then
-    if vim.v.lnum == vim.fn.line(".") then
-      line_number = line_number .. vim.v.lnum
+  if vim.v.virtnum == 0 then
+    if vim.wo.relativenumber then
+      if vim.v.lnum == vim.fn.line(".") then
+        line_number = line_number .. vim.v.lnum
+      else
+        line_number = line_number .. vim.v.relnum
+      end
     else
-      line_number = line_number .. vim.v.relnum
+      line_number = line_number .. vim.v.lnum
     end
   else
-    line_number = line_number .. vim.v.lnum
+    line_number = line_number .. "|"
   end
   return line_number
 end
