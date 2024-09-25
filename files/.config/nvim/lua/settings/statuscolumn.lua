@@ -11,7 +11,7 @@ local function status_line_number()
       line_number = line_number .. vim.v.lnum
     end
   else
-    line_number = line_number .. "|"
+    line_number = line_number .. "▕"
   end
   return line_number
 end
