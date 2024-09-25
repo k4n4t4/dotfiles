@@ -51,7 +51,10 @@ local function status_line_highlights()
   })
 end
 
-vim.api.nvim_create_autocmd("ColorScheme", {
+vim.api.nvim_create_autocmd({
+  "VimEnter",
+  "ColorScheme",
+}, {
   pattern = "*",
   callback = function()
     status_line_highlights()
