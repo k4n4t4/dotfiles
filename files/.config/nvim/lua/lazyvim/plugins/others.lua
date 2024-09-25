@@ -1,4 +1,5 @@
 return {
+  { "dstein64/vim-startuptime" },
   {
     "norcalli/nvim-colorizer.lua",
     enabled = true,
