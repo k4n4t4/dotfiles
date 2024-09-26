@@ -1,6 +1,7 @@
 return {
   {
     "williamboman/mason.nvim",
+    event = "VeryLazy",
     cmd = {
       "Mason",
       "MasonInstall",
@@ -13,6 +14,7 @@ return {
   },
   {
     "williamboman/mason-lspconfig.nvim",
+    event = "VeryLazy",
     dependencies = {
       "neovim/nvim-lspconfig",
     },
