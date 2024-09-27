@@ -439,9 +439,9 @@ list() {
     env_func() {
       eval "set -- $1"
       if $2; then
-        todo_complete_symbol="+"
+        todo_complete_symbol="${ESC}[32m+${ESC}[m"
       else
-        todo_complete_symbol="-"
+        todo_complete_symbol="${ESC}[31m-${ESC}[m"
       fi
       todo_index_text="$todo_index"
       todo_index_digit=${#todo_index}
@@ -450,7 +450,7 @@ list() {
         todo_index_text="0$todo_index_text"
         todo_zero=$((todo_zero - 1))
       done
-      printf "%s\n" "$todo_index_text|$1|$todo_complete_symbol|$3| $4"
+      printf "%s\n" "${ESC}[34m$todo_index_text${ESC}[m|${ESC}[33m$1${ESC}[m|$todo_complete_symbol|${ESC}[35m$3${ESC}[m| ${ESC}[36m$4${ESC}[m"
     }
     env_func "$1"
     shift
