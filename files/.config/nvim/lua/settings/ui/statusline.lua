@@ -248,4 +248,8 @@ function StatusLineInactive()
   )
 end
 
+
+vim.opt.ruler = false
+vim.opt.rulerformat = "%15(%l,%c%V%=%P%)"
+
 vim.opt.statusline = "%{% g:actual_curwin == win_getid() ? v:lua.StatusLine() : v:lua.StatusLineInactive() %}"

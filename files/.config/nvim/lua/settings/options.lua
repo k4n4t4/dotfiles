@@ -19,23 +19,6 @@ vim.opt.cursorcolumn = false
 vim.opt.winblend = 20
 vim.opt.pumblend = 20
 
-vim.opt.list = true
-vim.opt.listchars = {
-  tab      = ">-",
-  extends  = ">",
-  precedes = "<",
-  trail    = "-",
-  nbsp     = "+",
-  conceal  = "@",
-}
-vim.opt.fillchars = {
-  eob = " ",
-  fold = "·",
-  foldopen = "v",
-  foldsep = "¦",
-  foldclose = ">",
-}
-
 vim.opt.ambiwidth = "single"
 
 vim.opt.wrap = true
@@ -64,9 +47,6 @@ vim.opt.showmode = false
 vim.opt.showcmd = true
 vim.opt.showcmdloc = 'statusline'
 vim.opt.showtabline = 1
-
-vim.opt.ruler = false
-vim.opt.rulerformat = "%15(%l,%c%V%=%P%)"
 
 vim.opt.spell = false
 vim.opt.spelllang = "en"
