@@ -16,6 +16,7 @@ autocmd("BufWinEnter", {
   end
 })
 
+
 if vim.opt.number and vim.opt.relativenumber then
   autocmd("InsertEnter", {
     callback = function()
@@ -33,7 +34,8 @@ if vim.opt.number and vim.opt.relativenumber then
   })
 end
 
-if vim.opt.cmdheight == 0 then
+
+if vim.opt.cmdheight._value == 0 then
   autocmd("CmdlineEnter", {
     callback = function()
       vim.opt_local.cmdheight = 1
@@ -45,6 +47,7 @@ if vim.opt.cmdheight == 0 then
     end
   })
 end
+
 
 autocmd("TermOpen", {
   callback = function()
