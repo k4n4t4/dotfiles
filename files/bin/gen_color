@@ -1,4 +1,0 @@
-#!/bin/sh
-set -eu
-
-printf "\033[${*}m"

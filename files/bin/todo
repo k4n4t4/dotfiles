@@ -1,252 +1,525 @@
 #!/bin/sh
 set -eu
 
-trap '' 1 2 3 15
+#
+# Useful functions
+#
 
-TODO="$HOME/.todo"
-DEFAULT_CMD="list"
-
-# functions
+# check is number
 is_number() {
-  for i in $(seq "${#1}") ; do
-    case "$(echo "$1" | cut -c$i)" in
-      [^0123456789] ) return 1 ;;
+  case "$1" in
+    ( *[!0123456789]* )
+      return 1
+      ;;
+    ( * )
+      return 0
+      ;;
+  esac
+}
+
+# escape quotes
+# * The return value is in RET
+# e.g.
+# qesc "ABC" -> RET="'ABC'"
+# qesc "AB'C" -> RET="'AB'"'"'C'"
+qesc() {
+  RET="$1"
+  set -- ""
+  while : ; do
+    case "$RET" in
+      ( *"'"* )
+        set -- "$1${RET%%"'"*}'\"'\"'"
+        RET="${RET#*"'"}"
+        ;;
+      ( * )
+        RET="'$1$RET'"
+        break
+        ;;
     esac
   done
 }
 
+# helper of opt_parser
+opt_parser_get_arg_count() {
+  RET="$1"
+  eval "set -- $2"
+  while [ $# -gt 0 ]; do
+    case "$1" in ( "$RET:"?* )
+      RET="${1#"$RET:"}"
+      return 0
+    esac
+    shift
+  done
+  RET=0
+  return 0
+}
 
-# usage
+# option parser
+# e.g.
+# opt_parser --A:1 -- "$@"
+# eval "set -- $RET"
+# while [ $# -gt 0 ]; do
+#   case "$1" in
+#     ( -- )
+#       shift 1
+#       break
+#       ;;
+#     ( --A )
+#       arg_of_A="$2"
+#       shift 2
+#       ;;
+#     ( -a )
+#       : a option
+#       shift 1
+#       ;;
+#     ( -b )
+#       : b option
+#       shift 1
+#       ;;
+#     ( * )
+#       error "Invalid Option: \"$1\""
+#       return 1
+#       ;;
+#   esac
+# done
+opt_parser() {
+  _option_has_arg=""
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      ( "--" )
+        shift
+        break
+        ;;
+      ( ?*":"?* )
+        qesc "$1"
+        _option_has_arg="$_option_has_arg $RET"
+        shift
+        ;;
+      ( * )
+        _variable_name="$1"
+        shift
+        ;;
+    esac
+  done
+  _normal_args=""
+  _option_args=""
+  _scan_option=true
+  while [ $# -gt 0 ]; do
+    if $_scan_option; then
+      case "$1" in ( "-"?* )
+        case "$1" in
+          ( "--" )
+            _scan_option=false
+            shift
+            ;;
+          ( "--"* | "-"? )
+            case "$1" in ( "--"?*"="* )
+              _opt_name="${1%%"="*}"
+              _opt_val="${1#*"="}"
+              shift
+              set -- "$_opt_name" "$_opt_val" "$@"
+              continue
+            esac
+            opt_parser_get_arg_count "$1" "$_option_has_arg"
+            _arg_count="$RET"
+            if [ $# -gt "$_arg_count" ]; then
+              qesc "$1"
+              _option_args="$_option_args $RET"
+              shift
+              while [ "$_arg_count" -gt 0 ]; do
+                qesc "$1"
+                _option_args="$_option_args $RET"
+                shift
+                _arg_count=$((_arg_count - 1))
+              done
+            else
+              : error point
+              shift
+            fi
+            ;;
+          ( * )
+            _multi_short_opt="${1#?}"
+            while [ "$_multi_short_opt" != "" ]; do
+              s="-${_multi_short_opt%"${_multi_short_opt#?}"*}"
+              _multi_short_opt="${_multi_short_opt#?}"
+              case "$s" in
+                ( "--" ) : ;;
+                ( * )
+                  opt_parser_get_arg_count "$s" "$_option_has_arg"
+                  _arg_count="$RET"
+                  if [ "$_arg_count" -ne 0 ]; then
+                    : error point
+                  else
+                    qesc "$s"
+                    _option_args="$_option_args $RET"
+                  fi
+                  ;;
+              esac
+            done
+            shift
+            ;;
+        esac
+        continue
+      esac
+    fi
+    qesc "$1"
+    _normal_args="$_normal_args $RET"
+    shift
+  done
+  _normal_args="${_normal_args#" "}"
+  _option_args="${_option_args#" "}"
+  RET="${_option_args} '--' ${_normal_args}"
+  if [ "${_variable_name:-}" != "" ]; then
+    eval "$_variable_name"'="$RET"'
+  fi
+}
+
+
+ESC="$(printf "\033")"
+LF='
+'
+
+get_todo_list() {
+  todo_list=""
+  while read -r line; do
+    eval "set -- $line"
+
+    qesc "$1"
+    todo_line="$RET"
+    qesc "$2"
+    todo_line="$todo_line $RET"
+    qesc "$3"
+    todo_line="$todo_line $RET"
+    qesc "$4"
+    todo_line="$todo_line $RET"
+
+    qesc "$todo_line"
+    todo_list="$todo_list$RET "
+  done < "$TODO_FILE"
+  RET="$todo_list"
+}
+
+
 usage() {
-cat << EOF
-  usage:
-    $0 [command] [args]
-  commands:
-    help list add del move status tag clear
-EOF
+  echo " [ Usage ]"
 }
 
-# set up todo file
-setup_todo() {
-  if ! [ -f "$TODO" ]; then
-    if [ -e "$TODO" ] || [ -L "$TODO" ]; then
-      echo "Could not create todo file."
-      exit 1
+add() {
+  opt_parser -p:1 --priority:1 -- "$@"
+  eval "set -- $RET"
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      ( -- )
+        shift 1
+        break
+        ;;
+      ( -p | --priority )
+        if is_number "$2"; then
+          opt_priority="$2"
+          shift 2
+        else
+          echo "\"$1\" is not number" >&2
+          return 1
+        fi
+        ;;
+      ( -c | --complete )
+        opt_complete=true
+        shift 1
+        ;;
+      ( * )
+        echo "Invalid Option: \"$1\"" >&2
+        return 1
+        ;;
+    esac
+  done
+
+  todo_priority=${opt_priority:-0}
+  todo_complete=${opt_complete:-false}
+  todo_date="$(date "+%y-%m-%d %H:%M:%S")"
+
+  while [ $# -gt 0 ]; do
+    qesc "$1"
+    echo "'$todo_priority' '$todo_complete' '$todo_date' $RET" >> "$TODO_FILE"
+    shift
+  done
+}
+
+del() {
+  opt_parser -- "$@"
+  eval "set -- $RET"
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      ( -- )
+        shift 1
+        break
+        ;;
+      ( * )
+        echo "Invalid Option: \"$1\"" >&2
+        return 1
+        ;;
+    esac
+  done
+  if [ $# -ne 1 ]; then
+    echo "Invalid arguments." >&2
+    return 1
+  fi
+  if ! is_number "$1"; then
+    echo "\"$1\" is not number." >&2
+    return 1
+  fi
+  todo_del_index="$1"
+
+  get_todo_list
+  eval "set -- $RET"
+  : > "$TODO_FILE"
+  todo_index=0
+  while [ $# -gt 0 ]; do
+    if [ $todo_index -eq $todo_del_index ]; then
+      shift
+      todo_index=$((todo_index + 1))
+      continue
+    fi
+    printf "%s\n" "$1" >> "$TODO_FILE"
+    shift
+    todo_index=$((todo_index + 1))
+  done
+}
+
+move() {
+  opt_parser -- "$@"
+  eval "set -- $RET"
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      ( -- )
+        shift 1
+        break
+        ;;
+      ( * )
+        echo "Invalid Option: \"$1\"" >&2
+        return 1
+        ;;
+    esac
+  done
+  if [ $# -ne 2 ]; then
+    echo "Invalid arguments." >&2
+    return 1
+  fi
+  if ! is_number "$1"; then
+    echo "\"$1\" is not number." >&2
+    return 1
+  fi
+  if ! is_number "$2"; then
+    echo "\"$2\" is not number." >&2
+    return 1
+  fi
+  if [ $1 -eq $2 ]; then
+    return 0
+  fi
+  todo_move_from_index=$1
+  todo_move_to_index=$2
+
+  get_todo_list
+  eval "set -- $RET"
+
+  if [ $todo_move_from_index -lt 0 ] || [ $((todo_move_from_index + 1)) -gt $# ]; then
+    echo "Invalid number." >&2
+    return 1
+  fi
+  if [ $todo_move_to_index -lt 0 ] || [ $((todo_move_to_index)) -gt $# ]; then
+    echo "Invalid number." >&2
+    return 1
+  fi
+
+  : > "$TODO_FILE"
+  eval "todo_move_from_text=\"\${$((todo_move_from_index + 1))}\""
+  todo_index=0
+  while [ $# -gt 0 ]; do
+    if [ $todo_index -eq $todo_move_to_index ]; then
+      printf "%s\n" "$todo_move_from_text" >> "$TODO_FILE"
+      printf "%s\n" "$1" >> "$TODO_FILE"
+      shift
     else
-      : > "$TODO"
-    fi
-  fi
-}
-
-# add todo
-add_todo() {
-  if [ $# -lt 2 ] || [ $# -gt 3 ] ; then
-    echo "Wrong number of arguments."
-    exit 1
-  fi
-  
-  todo_stat="t"
-  todo_date="$(date "+%y-%m-%d_%H:%M:%S")"
-  todo_tag="#"
-  todo_text="$(echo " $2" | tr -d "\n" | cut -c2-)"
-  todo_line="$todo_stat $todo_date $todo_tag $todo_text"
-  
-  if [ $# -eq 3 ]; then
-    if ! is_number "$3" ; then
-      echo "Is NaN."
-      exit 1
-    fi
-    DATA="$(cat "$TODO" | sed "${3}i$todo_line")"
-    echo "$DATA" > "$TODO"
-  else
-    echo "$todo_line" >> "$TODO"
-  fi
-}
-
-# change todo tag
-change_tag_todo() {
-  if ! [ $# -eq 3 ]; then
-    echo "Wrong number of arguments."
-    exit 1
-  fi
-  if ! is_number "$3" ; then
-    echo "Is NaN."
-    exit 1
-  fi
-  tag_text="$(echo "=$2" | tr -d "\n" | tr -d " " | cut -c2-)"
-  edit_line="$(echo "$(cat "$TODO" | sed -n "${3}p")")"
-  
-  todo_stat="$(echo "$edit_line" | cut -d" " -f1)"
-  
-  todo_date="$(echo "$edit_line" | cut -d" " -f2)"
-  
-  todo_tag="$tag_text"
-  
-  todo_text="$(echo "$edit_line" | cut -d" " -f4-)"
-  
-  todo_line="$todo_stat $todo_date #$todo_tag $todo_text"
-  
-  DATA="$(cat "$TODO" | sed "${3}c$todo_line")"
-  echo "$DATA" > "$TODO"
-  
-}
-
-# delete todo
-del_todo() {
-  if ! [ $# -eq 2 ]; then
-    echo "Wrong number of arguments."
-    exit 1
-  fi
-  if is_number "$2"; then
-    DATA="$(cat "$TODO" | sed "${2}d")"
-    echo "$DATA" > "$TODO"
-  else
-    echo "Is NaN."
-    exit 1
-  fi
-}
-
-# move todo
-move_todo() {
-  if ! [ $# -eq 3 ]; then
-    echo "Wrong number of arguments."
-    exit 1
-  fi
-  if is_number "$2" && is_number "$3"; then
-    if ! [ $2 -eq $3 ]; then
-      move_line="$(echo "$(cat "$TODO" | sed -n "${2}p")")"
-      if [ $2 -gt $3 ]; then
-        DATA="$(cat "$TODO" | sed "${2}d")"
-        echo "$DATA" > "$TODO"
-        DATA="$(cat "$TODO" | sed "${3}i${move_line}")"
-        echo "$DATA" > "$TODO"
+      if [ $todo_index -eq $todo_move_from_index ]; then
+        shift
       else
-        DATA="$(cat "$TODO" | sed "${3}a${move_line}")"
-        echo "$DATA" > "$TODO"
-        DATA="$(cat "$TODO" | sed "${2}d")"
-        echo "$DATA" > "$TODO"
+        printf "%s\n" "$1" >> "$TODO_FILE"
+        shift
       fi
     fi
-  else
-    echo "Is NaN."
-    exit 1
+    todo_index=$((todo_index + 1))
+  done
+  if [ $todo_index -eq $todo_move_to_index ]; then
+    printf "%s\n" "$todo_move_from_text" >> "$TODO_FILE"
   fi
 }
 
-# change status todo
-status_todo() {
-  if ! [ $# -eq 3 ]; then
-    echo "Wrong number of arguments."
-    exit 1
-  fi
-  if is_number "$2"; then
-    case "$3" in
-      [dD]* )
-        DATA="$(cat "$TODO" | sed "${2}s/^t/d/")"
-        echo "$DATA" > "$TODO"
+complete() {
+  opt_parser -- "$@"
+  eval "set -- $RET"
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      ( -- )
+        shift 1
+        break
         ;;
-      [tT]* )
-        DATA="$(cat "$TODO" | sed "${2}s/^d/t/")"
-        echo "$DATA" > "$TODO"
-        ;;
-      * )
-        echo "Error!"
-        exit 1
+      ( * )
+        echo "Invalid Option: \"$1\"" >&2
+        return 1
         ;;
     esac
-  else
-    echo "Is NaN."
-    exit 1
+  done
+  if [ $# -ne 1 ]; then
+    echo "Invalid arguments." >&2
+    return 1
   fi
+  if ! is_number "$1"; then
+    echo "\"$1\" is not number." >&2
+    return 1
+  fi
+  todo_complete_index=$1
+
+  get_todo_list
+  eval "set -- $RET"
+  : > "$TODO_FILE"
+  todo_index=0
+  while [ $# -gt 0 ]; do
+    env_func() {
+      eval "set -- $1"
+
+      qesc "$1"
+      todo_line="$RET"
+
+      if [ $todo_index -eq $todo_complete_index ]; then
+        if $2; then
+          todo_line="$todo_line 'false'"
+        else
+          todo_line="$todo_line 'true'"
+        fi
+      else
+        qesc "$2"
+        todo_line="$todo_line $RET"
+      fi
+
+      qesc "$3"
+      todo_line="$todo_line $RET"
+      qesc "$4"
+      todo_line="$todo_line $RET"
+
+      printf "%s\n" "$todo_line" >> "$TODO_FILE"
+    }
+    env_func "$1"
+    shift
+    todo_index=$((todo_index + 1))
+  done
 }
 
-# clear todo
-clear_todo() {
-  if [ -f "$TODO" ]; then
-    : > "$TODO"
-  fi
-}
-
-# list todo
-list_todo() {
-  max_text_len=0
-  max_num_len=0
-  while read line ; do
-    todo_text="$(echo "$line" | cut -d" " -f4-)"
-    if [ ${#todo_text} -gt $max_text_len ]; then
-      max_text_len=${#todo_text}
-    fi
-    max_num_len=$(($max_num_len+1))
-  done < "$TODO"
-  max_num_len=${#max_num_len}
-  
-  idx=1
-  while read line ; do
-    todo_stat="$(echo "$line" | cut -d" " -f1)"
-    [ -z "$todo_stat" ] && continue
-    
-    todo_date="$(echo "$line" | cut -d" " -f2)"
-    [ -z "$todo_date" ] && continue
-    
-    todo_tag="$(echo "$line" | cut -d" " -f3)"
-    [ -z "$todo_tag" ] && continue
-    todo_tag="$(echo "$todo_tag" | cut -c2-)"
-    
-    todo_text="$(echo "$line" | cut -d" " -f4-)"
-    [ -z "$todo_text" ] && continue
-    
-    yes " " | head -n $(($max_num_len-${#idx})) | tr -d "\n"
-    printf " \033[35m$idx\033[m"
-
-    printf " | "
-    case "$todo_stat" in
-      t ) printf "\033[31m-\033[m" ;;
-      d ) printf "\033[32m*\033[m" ;;
-      * ) : ;;
+list() {
+  opt_parser -- "$@"
+  eval "set -- $RET"
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      ( -- )
+        shift 1
+        break
+        ;;
+      ( * )
+        echo "Invalid Option: \"$1\"" >&2
+        return 1
+        ;;
     esac
+  done
 
-    printf " | "
-    printf "\033[97m"
-    echo "=$todo_text" | cut -c2- | tr -d "\n"
-    printf "\033[m"
-    yes " " | head -n $(($max_text_len-${#todo_text})) | tr -d "\n"
-    printf " | "
-
-    printf "\033[33m$todo_date\033[m"
-    if ! [ -z "$todo_tag" ]; then
-      printf " | "
-      printf "\033[34m"
-      echo "=# $todo_tag" | cut -c2- | tr -d "\n"
-      printf "\033[m"
-    fi
-    echo
-    
-    idx=$(($idx+1))
-  done < "$TODO"
+  get_todo_list
+  eval "set -- $RET"
+  todo_length=$#
+  todo_digit=$((todo_length - 1))
+  todo_length_digit=${#todo_digit}
+  todo_index=0
+  while [ $# -gt 0 ]; do
+    env_func() {
+      eval "set -- $1"
+      if $2; then
+        todo_complete_symbol="+"
+      else
+        todo_complete_symbol="-"
+      fi
+      todo_index_text="$todo_index"
+      todo_index_digit=${#todo_index}
+      todo_zero=$((todo_length_digit - todo_index_digit))
+      while [ $todo_zero -gt 0 ]; do
+        todo_index_text="0$todo_index_text"
+        todo_zero=$((todo_zero - 1))
+      done
+      printf "%s\n" "$todo_index_text|$1|$todo_complete_symbol|$3| $4"
+    }
+    env_func "$1"
+    shift
+    todo_index=$((todo_index + 1))
+  done
 }
 
-# todo command
+
+########################
+#   Todo File Format   #
+########################
+#                      #
+# >> '1' '2' '3' '4'   #
+#                      #
+# [1] priority: int    #
+# [2] complete: bool   #
+# [3] date: date       #
+# [4] text: str        #
+#                      #
+########################
+TODO_FILE="$HOME/.todo"
+
 main() {
-  setup_todo
-  case "${1:-$DEFAULT_CMD}" in
-    h* | -h* | --h* ) usage ;;
-    a* ) add_todo "$@" ;;
-    d* ) del_todo "$@" ;;
-    m* ) move_todo "$@" ;;
-    s* ) status_todo "$@" ;;
-    t* ) change_tag_todo "$@" ;;
-    c* ) clear_todo ;;
-    l* ) list_todo ;;
-    * )
-      echo "Did not find command: \"${1}\""
-      usage
-      exit 1
+  [ $# -eq 0 ] && set -- list
+  case "$1" in
+
+    ( help )
+      shift
+      usage "$@"
+      return $?
       ;;
+
+    ( add | a )
+      shift
+      add "$@"
+      return $?
+      ;;
+
+    ( del | d )
+      shift
+      del "$@"
+      return $?
+      ;;
+
+    ( move | m )
+      shift
+      move "$@"
+      return $?
+      ;;
+
+    ( complete | c )
+      shift
+      complete "$@"
+      return $?
+      ;;
+
+    ( list | l )
+      shift
+      list "$@"
+      return $?
+      ;;
+
+    ( * )
+      echo "${ESC}[31mInvalid Sub Command: \"$1\"${ESC}[m" >&2
+      usage
+      return 1
+      ;;
+
   esac
-  echo "$(cat "$TODO" | sed "/^\$/d")" > "$TODO"
 }
 
 main "$@"
-
-exit
-
