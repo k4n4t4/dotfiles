@@ -33,27 +33,35 @@ local function status_separator_hl()
 end
 
 function StatusColumn()
-  local line_number = status_line_number()
-  local separator = status_separator()
-  local separator_hl = status_separator_hl()
-  return (
-    "%s" ..
-    "%=" ..
-    line_number ..
-    "%C" ..
-    separator_hl ..
-    separator
-  )
+  if vim.wo.number then
+    local line_number = status_line_number()
+    local separator = status_separator()
+    local separator_hl = status_separator_hl()
+    return (
+      "%s" ..
+      "%=" ..
+      line_number ..
+      "%C" ..
+      separator_hl ..
+      separator
+    )
+  else
+    return ""
+  end
 end
 
 function StatusColumnInactive()
-  return (
-    "%s" ..
-    "%=" ..
-    "%l" ..
-    "%C" ..
-    "│"
-  )
+  if vim.wo.number then
+    return (
+      "%s" ..
+      "%=" ..
+      "%l" ..
+      "%C" ..
+      "│"
+    )
+  else
+    return ""
+  end
 end
 
 vim.opt.statuscolumn = "%{% g:actual_curwin == win_getid() ? v:lua.StatusColumn() : v:lua.StatusColumnInactive() %}"

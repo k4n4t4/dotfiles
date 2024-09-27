@@ -16,13 +16,19 @@ autocmd("BufWinEnter", {
   end
 })
 
-autocmd("InsertEnter", {
-  callback = function()
-    vim.wo.relativenumber = false
-  end
-})
-autocmd("InsertLeave", {
-  callback = function()
-    vim.wo.relativenumber = true
-  end
-})
+if vim.opt.number and vim.opt.relativenumber then
+  autocmd("InsertEnter", {
+    callback = function()
+      if vim.wo.number then
+        vim.wo.relativenumber = false
+      end
+    end
+  })
+  autocmd("InsertLeave", {
+    callback = function()
+      if vim.wo.number then
+        vim.wo.relativenumber = true
+      end
+    end
+  })
+end
