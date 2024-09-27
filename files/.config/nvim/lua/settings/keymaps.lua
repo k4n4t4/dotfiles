@@ -3,11 +3,6 @@ local keymap = vim.keymap
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- aaaa
-
--- aaaa
-
--- aaaa
 
 keymap.set("n", "<ESC><ESC>", "<CMD>noh<CR>")
 keymap.set("t", "<ESC>", "<C-\\><C-N>")
