@@ -14,4 +14,4 @@ keymap.set("n", "<LEADER>m", "<CMD>messages<CR>")
 
 
 keymap.set("n", "<LEADER>s", "viwo<CMD>let @/=getregion(getpos('v'), getpos('.'))[0]<CR><CMD>set hlsearch<CR><ESC>")
-keymap.set("v", "<LEADER>s", "<CMD>let @/=getregion(getpos('v'), getpos('.'))[0]<CR><CMD>set hlsearch<CR><ESC>")
+keymap.set("v", "<LEADER>s", "o<CMD>let @/=getregion(getpos('v'), getpos('.'))[0]<CR><CMD>set hlsearch<CR><ESC>")
