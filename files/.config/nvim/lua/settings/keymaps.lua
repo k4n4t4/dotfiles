@@ -19,4 +19,4 @@ keymap.set("n", "<LEADER>m", "<CMD>messages<CR>")
 
 
 keymap.set("n", "<LEADER>s", "viwo<CMD>let @/=getregion(getpos('v'), getpos('.'))[0]<CR><CMD>set hls<CR><ESC>")
-keymap.set("x", "<LEADER>s", "<CMD>let @/=getregion(getpos('v'), getpos('.'), {'type': mode()})[0]<CR><CMD>set hls<CR><ESC>")
+keymap.set("x", "<LEADER>s", "<CMD>let @/=getregion(getpos('v'), getpos('.'), {'type': mode()})[0]<CR><CMD>set hls<CR><ESC><CMD>call setpos('.', getpos(\"'<\"))<CR>")
