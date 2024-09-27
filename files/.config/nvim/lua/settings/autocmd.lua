@@ -32,3 +32,14 @@ if vim.opt.number and vim.opt.relativenumber then
     end
   })
 end
+
+
+autocmd("TermOpen", {
+  callback = function()
+    vim.wo.number = false
+    vim.wo.relativenumber = false
+    vim.wo.foldcolumn = '0'
+    vim.wo.signcolumn = "no"
+    vim.cmd [[startinsert]]
+  end
+})
