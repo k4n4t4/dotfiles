@@ -35,18 +35,18 @@ if vim.opt.number and vim.opt.relativenumber then
 end
 
 
-if vim.opt.cmdheight._value == 0 then
-  autocmd("CmdlineEnter", {
-    callback = function()
-      vim.opt_local.cmdheight = 1
-    end
-  })
-  autocmd("CmdlineLeave", {
-    callback = function()
-      vim.opt_local.cmdheight = 0
-    end
-  })
-end
+-- if vim.opt.cmdheight._value == 0 then
+--   autocmd("CmdlineEnter", {
+--     callback = function()
+--       vim.opt_local.cmdheight = 1
+--     end
+--   })
+--   autocmd("CmdlineLeave", {
+--     callback = function()
+--       vim.opt_local.cmdheight = 0
+--     end
+--   })
+-- end
 
 
 autocmd("TermOpen", {
