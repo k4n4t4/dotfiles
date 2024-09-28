@@ -1,3 +1,6 @@
 require "settings"
-require "lazyvim"
-require "config"
+
+vim.defer_fn(function()
+  require "lazyvim"
+  require "config"
+end, 0)
