@@ -34,6 +34,7 @@ if vim.opt.number and vim.opt.relativenumber then
   })
 end
 
+
 autocmd("BufEnter", {
   callback = function()
     if vim.fn.getcmdwintype() ~= "" then
@@ -42,6 +43,7 @@ autocmd("BufEnter", {
     end
   end
 })
+
 
 -- if vim.opt.cmdheight._value == 0 then
 --   autocmd("CmdlineEnter", {
