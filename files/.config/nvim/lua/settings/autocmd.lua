@@ -34,6 +34,14 @@ if vim.opt.number and vim.opt.relativenumber then
   })
 end
 
+autocmd("BufEnter", {
+  callback = function()
+    if vim.fn.getcmdwintype() ~= "" then
+      vim.opt_local.foldcolumn = '0'
+      vim.opt_local.signcolumn = "no"
+    end
+  end
+})
 
 -- if vim.opt.cmdheight._value == 0 then
 --   autocmd("CmdlineEnter", {
