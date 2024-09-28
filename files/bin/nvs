@@ -1,6 +1,6 @@
 #!/bin/sh
 
-list="'nvim' 'nvim-lazy' 'nvim-astro'"
+list="'nvim' 'lazyvim' 'astronvim' 'nvchad'"
 name=""
 
 cmd_exist() {
