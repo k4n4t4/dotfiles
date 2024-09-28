@@ -64,4 +64,5 @@ function StatusColumnInactive()
   end
 end
 
+
 vim.opt.statuscolumn = "%{% g:actual_curwin == win_getid() ? v:lua.StatusColumn() : v:lua.StatusColumnInactive() %}"
