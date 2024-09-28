@@ -1,5 +1,8 @@
 require "commands.transparent"
-vim.api.nvim_create_autocmd("VimEnter", {
+vim.api.nvim_create_autocmd({
+  "VimEnter",
+  "ColorScheme",
+}, {
   callback = TransparentBackground
 })
 
