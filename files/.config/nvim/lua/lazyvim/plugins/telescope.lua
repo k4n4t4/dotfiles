@@ -43,8 +43,8 @@ return {
     telescope.load_extension "aerial"
   end,
   keys = {
+    { mode = "n", "<LEADER>T",  "<CMD>Telescope<CR>",                           desc = "Telescope" },
     { mode = "n", "<LEADER>t",  "<CMD>Telescope<CR>",                           desc = "Telescope" },
-    { mode = "n", "<LEADER>tt", "<CMD>Telescope<CR>",                           desc = "Telescope" },
     { mode = "n", "<LEADER>tk", "<CMD>Telescope keymaps<CR>",                   desc = "Telescope Keymaps" },
     { mode = "n", "<LEADER>tf", "<CMD>Telescope find_files<CR>",                desc = "Telescope Find Files" },
     { mode = "n", "<LEADER>tg", "<CMD>Telescope live_grep<CR>",                 desc = "Telescope Live Grep" },
