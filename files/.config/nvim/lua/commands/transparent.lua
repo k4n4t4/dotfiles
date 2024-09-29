@@ -14,6 +14,9 @@ function M.TransparentBackground()
   vim.cmd.highlight {"TabLineFill",    "guibg=none", "ctermbg=none"}
   vim.cmd.highlight {"EndOfBuffer",    "guibg=none", "ctermbg=none"}
 
+  vim.cmd.highlight {"NeoTreeNormal",      "guibg=none", "ctermbg=none"}
+  vim.cmd.highlight {"NeoTreeNormalNC",    "guibg=none", "ctermbg=none"}
+  vim.cmd.highlight {"NeoTreeEndOfBuffer", "guibg=none", "ctermbg=none"}
   vim.cmd.highlight {"NvimTreeNormal",      "guibg=none", "ctermbg=none"}
   vim.cmd.highlight {"NvimTreeNormalNC",    "guibg=none", "ctermbg=none"}
   vim.cmd.highlight {"NvimTreeEndOfBuffer", "guibg=none", "ctermbg=none"}
