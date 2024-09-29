@@ -6,7 +6,7 @@ return {
         vim.keymap.set("n", "{", "<CMD>AerialPrev<CR>", { buffer = bufnr })
         vim.keymap.set("n", "}", "<CMD>AerialNext<CR>", { buffer = bufnr })
       end,
-      backends = { "treesitter", "lsp" },
+      backends = { "treesitter", "lsp", "man" },
       layout = {
         max_width = { 40, 0.2 },
         width = nil,
