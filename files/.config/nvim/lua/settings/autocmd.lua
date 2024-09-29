@@ -17,17 +17,17 @@ autocmd("BufWinEnter", {
 })
 
 
-if vim.opt.number and vim.opt.relativenumber then
+if vim.opt.number["_value"] and vim.opt.relativenumber["_value"] then
   autocmd("InsertEnter", {
     callback = function()
-      if vim.opt_local.number then
+      if vim.opt_local.number["_value"] then
         vim.opt_local.relativenumber = false
       end
     end
   })
   autocmd("InsertLeave", {
     callback = function()
-      if vim.opt_local.number then
+      if vim.opt_local.number["_value"] then
         vim.opt_local.relativenumber = true
       end
     end
