@@ -43,14 +43,15 @@ return {
     telescope.load_extension "aerial"
   end,
   keys = {
-    { mode = "n", "<LEADER>t", "<CMD>Telescope<CR>", desc = "Telescope" },
-    { mode = "n", "<LEADER>tt", "<CMD>Telescope<CR>", desc = "Telescope" },
-    { mode = "n", "<LEADER>tk", "<CMD>Telescope keymaps<CR>", desc = "Telescope Keymaps" },
-    { mode = "n", "<LEADER>tf", "<CMD>Telescope find_files<CR>", desc = "Telescope Find Files" },
-    { mode = "n", "<LEADER>tg", "<CMD>Telescope live_grep<CR>", desc = "Telescope Live Grep" },
-    { mode = "n", "<LEADER>tb", "<CMD>Telescope buffers<CR>", desc = "Telescope Buffers" },
-    { mode = "n", "<LEADER>th", "<CMD>Telescope help_tags<CR>", desc = "Telescope Help Tags" },
+    { mode = "n", "<LEADER>t",  "<CMD>Telescope<CR>",                           desc = "Telescope" },
+    { mode = "n", "<LEADER>tt", "<CMD>Telescope<CR>",                           desc = "Telescope" },
+    { mode = "n", "<LEADER>tk", "<CMD>Telescope keymaps<CR>",                   desc = "Telescope Keymaps" },
+    { mode = "n", "<LEADER>tf", "<CMD>Telescope find_files<CR>",                desc = "Telescope Find Files" },
+    { mode = "n", "<LEADER>tg", "<CMD>Telescope live_grep<CR>",                 desc = "Telescope Live Grep" },
+    { mode = "n", "<LEADER>tb", "<CMD>Telescope buffers<CR>",                   desc = "Telescope Buffers" },
+    { mode = "n", "<LEADER>th", "<CMD>Telescope help_tags<CR>",                 desc = "Telescope Help Tags" },
     { mode = "n", "<LEADER>t/", "<CMD>Telescope current_buffer_fuzzy_find<CR>", desc = "Telescope Current Buffer Fuzzy Finder" },
-    { mode = "n", "<LEADER>ta", "<CMD>Telescope aerial<CR>", desc = "Telescope Aerial" },
+    { mode = "n", "<LEADER>ta", "<CMD>Telescope aerial<CR>",                    desc = "Telescope Aerial" },
+    { mode = "n", "<LEADER>tz", "<CMD>Telescope fzf<CR>",                       desc = "Telescope fzf" },
   },
 }
