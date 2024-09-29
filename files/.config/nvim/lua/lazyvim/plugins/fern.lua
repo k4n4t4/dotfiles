@@ -1,4 +1,4 @@
-vim.g.terminal_color_13 = "#00ff00"
+vim.g.terminal_color_13 = "#0099DD"
 
 return {
   "lambdalisue/vim-fern",
@@ -8,7 +8,7 @@ return {
     "lambdalisue/glyph-palette.vim",
     "lambdalisue/fern-git-status.vim",
   },
-  event = "BufEnter",
+  event = "VeryLazy",
   config = function()
     vim.g["fern#renderer"] = "nerdfont"
 
@@ -24,14 +24,6 @@ return {
         vim.opt_local.signcolumn = "no"
         vim.keymap.set("n", "<CR>", "<PLUG>(fern-action-open-or-expand)", {buffer = true})
         vim.keymap.set("n", "<S-CR>", "<PLUG>(fern-action-collapse)", {buffer = true})
-      end
-    })
-
-    vim.api.nvim_create_autocmd("BufEnter", {
-      callback = function()
-        if vim.fn.isdirectory("%") == 1 then
-          vim.cmd.Fern(".", "-reveal=%")
-        end
       end
     })
   end,
