@@ -47,6 +47,8 @@ return {
           }
         end,
       }
+      require("lspconfig").lua_ls.setup {}
+      require("lspconfig").vimls.setup {}
     end,
   },
 }
