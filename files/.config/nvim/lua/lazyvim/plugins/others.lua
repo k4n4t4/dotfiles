@@ -3,19 +3,19 @@ return {
   -- colorschemes
   {
     "navarasu/onedark.nvim",
-    enabled = false,
+    enabled = true,
     opts = {
       style = "darker",
     },
   },
   {
     "catppuccin/nvim",
-    enabled = false,
+    enabled = true,
     name = "catppuccin",
   },
   {
     "folke/tokyonight.nvim",
-    enabled = false,
+    enabled = true,
   },
 
   -- highlights

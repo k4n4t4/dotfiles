@@ -1,4 +1,6 @@
-function TransparentBackground()
+local M = {}
+
+function M.TransparentBackground()
   vim.cmd.highlight {"Normal",         "guibg=none", "ctermbg=none"}
   vim.cmd.highlight {"NormalNC",       "guibg=none", "ctermbg=none"}
   vim.cmd.highlight {"Folded",         "guibg=none", "ctermbg=none"}
@@ -16,4 +18,14 @@ function TransparentBackground()
   vim.cmd.highlight {"NvimTreeNormalNC",    "guibg=none", "ctermbg=none"}
   vim.cmd.highlight {"NvimTreeEndOfBuffer", "guibg=none", "ctermbg=none"}
 end
-vim.api.nvim_create_user_command( "TransparentBackground", TransparentBackground, { nargs = 0 } )
+
+function M.setup(config)
+  vim.api.nvim_create_user_command( "TransparentBackground", M.TransparentBackground, { nargs = 0 } )
+  if config.events then
+    vim.api.nvim_create_autocmd(config.events, {
+      callback = M.TransparentBackground
+    })
+  end
+end
+
+return M

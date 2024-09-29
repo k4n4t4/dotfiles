@@ -1,9 +1,8 @@
--- require "commands.transparent"
--- vim.api.nvim_create_autocmd({
---   "VimEnter",
---   "ColorScheme",
--- }, {
---   callback = TransparentBackground
--- })
+-- require("commands.transparent").setup {
+--   events = {
+--     "VimEnter",
+--     "ColorScheme",
+--   }
+-- }
 
-vim.cmd.colorscheme "habamax"
+vim.cmd.colorscheme "tokyonight-moon"

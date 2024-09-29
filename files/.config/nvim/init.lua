@@ -1,3 +1,3 @@
 require "settings"
--- require "lazyvim"
+require "lazyvim"
 require "config"
