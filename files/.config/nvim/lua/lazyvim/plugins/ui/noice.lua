@@ -5,7 +5,7 @@ return {
       "MunifTanjim/nui.nvim",
       "rcarriga/nvim-notify",
     },
-    enabled = false,
+    enabled = true,
     event = "VeryLazy",
     config = true,
   },
