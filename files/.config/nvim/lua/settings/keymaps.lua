@@ -1,17 +1,18 @@
 local keymap = vim.keymap
+local set = keymap.set
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 
-keymap.set("n", "<ESC><ESC>", "<CMD>noh<CR>")
-keymap.set("t", "<ESC>", "<C-\\><C-N>")
+set("n", "<ESC><ESC>", "<CMD>noh<CR>")
+set("t", "<ESC>", "<C-\\><C-N>")
 
-keymap.set("n", "<LEADER>c", "<CMD>belowright new<CR><CMD>terminal<CR>")
-keymap.set("n", "<LEADER>C", "<CMD>terminal<CR>")
+set("n", "<LEADER>c", "<CMD>belowright new<CR><CMD>terminal<CR>")
+set("n", "<LEADER>C", "<CMD>terminal<CR>")
 
-keymap.set("n", "<LEADER>m", "<CMD>messages<CR>")
+set("n", "<LEADER>m", "<CMD>messages<CR>")
 
 
-keymap.set("n", "<LEADER>s", "viwo<CMD>let @/=getregion(getpos('v'), getpos('.'))[0]<CR><CMD>set hls<CR><ESC>")
-keymap.set("x", "<LEADER>s", "<CMD>let @/=getregion(getpos('v'), getpos('.'), {'type': mode()})[0]<CR><CMD>set hls<CR><ESC><CMD>call setpos('.', getpos(\"'<\"))<CR>")
+set("n", "<LEADER>s", "viwo<CMD>let @/=getregion(getpos('v'), getpos('.'))[0]<CR><CMD>set hls<CR><ESC>")
+set("x", "<LEADER>s", "<CMD>let @/=getregion(getpos('v'), getpos('.'), {'type': mode()})[0]<CR><CMD>set hls<CR><ESC><CMD>call setpos('.', getpos(\"'<\"))<CR>")

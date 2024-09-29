@@ -133,6 +133,7 @@ local mode_color = {
   ['r?']   = 'StatusLineModeConfirm',
   ['!']    = 'StatusLineModeTerminal',
   ['t']    = 'StatusLineModeTerminal',
+  ['nt']   = 'StatusLineModeNormal',
 }
 
 local function status_mode()
