@@ -1,19 +1,44 @@
 return {
   'nvim-telescope/telescope.nvim',
   event = "VeryLazy",
-  dependencies = { 'nvim-lua/plenary.nvim' },
-  opts = {
-    defaults = {
-      borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+    {
+      "nvim-telescope/telescope-fzf-native.nvim",
+      build = "make",
     },
   },
+  config = function()
+    local telescope = require "telescope"
+    local actions = require "telescope.actions"
+    telescope.setup {
+      defaults = {
+        borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+        mappings = {
+          i = {
+            ["<esc>"] = actions.close,
+          },
+        },
+      },
+      extensions = {
+        fzf = {
+          fuzzy = true,
+          override_generic_sorter = true,
+          override_file_sorter = true,
+          case_mode = "smart_case",
+        }
+      },
+    }
+    telescope.load_extension("fzf")
+  end,
   keys = {
-    { mode = "n", "<LEADER>t", "<cmd>Telescope<CR>", desc = "Telescope" },
-    { mode = "n", "<LEADER>tt", "<cmd>Telescope<CR>", desc = "Telescope" },
-    { mode = "n", "<LEADER>tk", "<cmd>Telescope keymaps<CR>", desc = "Telescope Keymaps" },
-    { mode = "n", "<LEADER>tf", "<cmd>Telescope find_files<CR>", desc = "Telescope Find Files" },
-    { mode = "n", "<LEADER>tg", "<cmd>Telescope live_grep<CR>", desc = "Telescope Live Grep" },
-    { mode = "n", "<LEADER>tb", "<cmd>Telescope buffers<CR>", desc = "Telescope Buffers" },
-    { mode = "n", "<LEADER>th", "<cmd>Telescope help_tags<CR>", desc = "Telescope Help Tags" },
+    { mode = "n", "<LEADER>t", "<CMD>Telescope<CR>", desc = "Telescope" },
+    { mode = "n", "<LEADER>tt", "<CMD>Telescope<CR>", desc = "Telescope" },
+    { mode = "n", "<LEADER>tk", "<CMD>Telescope keymaps<CR>", desc = "Telescope Keymaps" },
+    { mode = "n", "<LEADER>tf", "<CMD>Telescope find_files<CR>", desc = "Telescope Find Files" },
+    { mode = "n", "<LEADER>tg", "<CMD>Telescope live_grep<CR>", desc = "Telescope Live Grep" },
+    { mode = "n", "<LEADER>tb", "<CMD>Telescope buffers<CR>", desc = "Telescope Buffers" },
+    { mode = "n", "<LEADER>th", "<CMD>Telescope help_tags<CR>", desc = "Telescope Help Tags" },
+    { mode = "n", "<LEADER>t/", "<CMD>Telescope current_buffer_fuzzy_find<CR>", desc = "Telescope Help Tags" },
   },
 }

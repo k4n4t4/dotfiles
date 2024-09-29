@@ -17,15 +17,18 @@ return {
     }
 
     dashboard.section.buttons.val = {
-      dashboard.button("n", "  New file", ":ene <BAR> startinsert <CR>"),
-      dashboard.button("r", "  Recent file", ":Telescope oldfiles <CR>"),
-      dashboard.button("f", "󰥨  Find file", ":Telescope find_files <CR>"),
-      dashboard.button("g", "󰱼  Find text", ":Telescope live_grep <CR>"),
-      dashboard.button("s", "  Settings", ":e $MYVIMRC | :cd %:p:h <CR>"),
-      dashboard.button("q", "  Quit", ":qa<CR>"),
+      dashboard.button("n", "  New File", "<CMD>enew<CR>"),
+      dashboard.button("r", "  Recent File", "<CMD>Telescope oldfiles<CR>"),
+      dashboard.button("f", "󰥨  Find File", "<CMD>Telescope find_files<CR>"),
+      dashboard.button("g", "󰱼  Find Text", "<CMD>Telescope live_grep<CR>"),
+      dashboard.button("p", "  Plugins", "<CMD>Lazy<CR>"),
+      dashboard.button("u", "  Update Plugins", "<CMD>Lazy sync<CR>"),
+      dashboard.button("s", "  Settings", "<CMD>e $MYVIMRC<CR><CMD>:cd %:p:h<CR><CMD>NvimTreeOpen<CR>"),
+      dashboard.button("q", "  Quit", "<CMD>qa<CR>"),
     }
     dashboard.section.buttons.opts = {
-      spacing = 0,
+      cursor = 0,
+      spacing = 1,
     }
 
     vim.api.nvim_create_autocmd("User", {
