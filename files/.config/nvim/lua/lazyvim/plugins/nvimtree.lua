@@ -33,6 +33,6 @@ return {
     })
   end,
   keys = {
-    { mode = "n", "<leader>t", "<cmd>NvimTreeToggle<CR>", desc = "NvimTreeToggle" },
+    { mode = "n", "<leader>e", "<cmd>NvimTreeToggle<CR>", desc = "NvimTreeToggle" },
   }
 }
