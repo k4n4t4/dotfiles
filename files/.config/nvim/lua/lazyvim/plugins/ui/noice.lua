@@ -11,7 +11,7 @@ return {
   },
   {
     "rcarriga/nvim-notify",
-    enabled = false,
+    enabled = true,
     event = "VeryLazy",
     opts = {
       background_colour = "#000000",
