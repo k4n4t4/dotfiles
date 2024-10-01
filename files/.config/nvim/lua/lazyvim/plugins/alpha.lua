@@ -23,7 +23,7 @@ return {
       dashboard.button("g", "󰱼  Find Text", "<CMD>Telescope live_grep<CR>"),
       dashboard.button("p", "  Plugins", "<CMD>Lazy<CR>"),
       dashboard.button("u", "  Update Plugins", "<CMD>Lazy sync<CR>"),
-      dashboard.button("s", "  Settings", "<CMD>e $MYVIMRC<CR><CMD>:cd %:p:h<CR><CMD>NvimTreeOpen<CR>"),
+      dashboard.button("s", "  Settings", "<CMD>e $MYVIMRC<CR><CMD>silent :cd %:p:h<CR>"),
       dashboard.button("q", "  Quit", "<CMD>qa<CR>"),
     }
     dashboard.section.buttons.opts = {
