@@ -93,10 +93,11 @@ return {
     }
   end,
   keys = {
-    { mode = "n", "<LEADER>A", "<CMD>AerialToggle<CR>", desc = "AerialToggle" },
-    { mode = "n", "<LEADER>a", "<CMD>AerialToggle<CR>", desc = "AerialToggle" },
-    { mode = "n", "<LEADER>aa", "<CMD>AerialToggle<CR>", desc = "AerialToggle" },
+    { mode = "n", "<LEADER>aa", "<CMD>AerialToggle<CR>",       desc = "AerialToggle" },
+    { mode = "n", "<LEADER>a",  "<CMD>AerialToggle<CR>",       desc = "AerialToggle" },
+    { mode = "n", "<LEADER>A",  "<CMD>AerialToggle<CR>",       desc = "AerialToggle" },
+    { mode = "n", "<LEADER>aa", "<CMD>AerialToggle<CR>",       desc = "AerialToggle" },
     { mode = "n", "<LEADER>af", "<CMD>AerialToggle float<CR>", desc = "AerialToggle" },
-    { mode = "n", "<LEADER>an", "<CMD>AerialNavToggle<CR>", desc = "AerialNavToggle" },
+    { mode = "n", "<LEADER>an", "<CMD>AerialNavToggle<CR>",    desc = "AerialNavToggle" },
   },
 }
