@@ -4,18 +4,7 @@ function FoldText()
   local line_text = vim.fn.getline(vim.v.foldstart)
   local i = 1
   while i <= #line_text do
-    local hl
-
-
-    -- local ts_node = vim.treesitter.get_node { pos = {vim.v.foldstart-1, i-1} }
-
-    -- local inspect = vim.inspect_pos(0, vim.v.foldstart - 1, i - 1, {})
-    -- local treesitter_length = #inspect.treesitter
-    -- if treesitter_length > 0 then
-    --   hl = inspect.treesitter[treesitter_length].hl_group
-    -- else
-      hl = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.synID(vim.v.foldstart, i, 1)), 'name')
-    -- end
+    local hl = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.synID(vim.v.foldstart, i, 1)), 'name')
 
     local byte = string.byte(line_text, i)
     local char
