@@ -28,7 +28,7 @@ vim.api.nvim_set_decoration_provider(namespace, {
             {'Comment', 'Underlined'},
           })
 
-          vim.api.nvim_buf_set_extmark(bufnr, namespace, lnum-1, 0, {
+          pcall(vim.api.nvim_buf_set_extmark, bufnr, namespace, lnum-1, 0, {
             ephemeral = true,
             virt_text_pos = 'overlay',
             virt_text_win_col = vim.fn.strdisplaywidth(line_text),

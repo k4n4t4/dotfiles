@@ -11,6 +11,5 @@ return {
         null_ls.builtins.diagnostics.buf
       },
     }
-    vim.keymap.set('n', '<LEADER>f', vim.lsp.buf.format, {})
   end,
 }
