@@ -7,14 +7,16 @@ return {
       { "hrsh7th/cmp-emoji" },
       { "hrsh7th/cmp-buffer" },
       { "hrsh7th/cmp-path" },
+      { "hrsh7th/cmp-git" },
       { "hrsh7th/cmp-cmdline" },
-      { "hrsh7th/vim-vsnip" },
-      { "hrsh7th/cmp-vsnip" },
       { "onsails/lspkind.nvim" },
-      { "L3MON4D3/LuaSnip" },
+
+      {
+        "L3MON4D3/LuaSnip",
+        version = "v2.*",
+        build = "make install_jsregexp",
+      },
       { "saadparwaiz1/cmp_luasnip" },
-      { "dcampos/nvim-snippy" },
-      { "dcampos/cmp-snippy" },
     },
     event = {
       "InsertEnter",
@@ -36,21 +38,20 @@ return {
         },
         snippet = {
           expand = function(args)
-            vim.fn["vsnip#anonymous"](args.body)
+            require("luasnip").lsp_expand(args.body)
           end,
         },
         sources = {
           { name = "nvim_lsp" },
-          { name = "vsnip" },
+          { name = "nvim_lsp_signature_help" },
+          { name = "nvim_lua" },
+          { name = "luasnip" },
           { name = "buffer" },
           { name = "path" },
+          { name = "git" },
         },
         mapping = cmp.mapping.preset.insert({
-          ["<C-p>"] = cmp.mapping.select_prev_item(),
-          ["<C-n>"] = cmp.mapping.select_next_item(),
-          ["<C-l>"] = cmp.mapping.complete(),
           ["<C-e>"] = cmp.mapping.abort(),
-          ["<C-y>"] = cmp.mapping.confirm({ select = true }),
           ["<S-TAB>"] = cmp.mapping.select_prev_item(),
           ["<TAB>"] = cmp.mapping.select_next_item(),
           ["<CR>"] = cmp.mapping.confirm({ select = true }),

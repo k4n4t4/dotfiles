@@ -12,15 +12,19 @@ return {
       "neovim/nvim-lspconfig",
     },
     config = function()
-      require("mason-lspconfig").setup {
+      local mason_lspconfig = require "mason-lspconfig"
+      local lspconfig = require "lspconfig"
+
+      mason_lspconfig.setup {
         ensure_installed = {
           "lua_ls",
           "vimls",
         }
       }
-      require("mason-lspconfig").setup_handlers {
+
+      mason_lspconfig.setup_handlers {
         function(server_name)
-          require("lspconfig")[server_name].setup {
+          lspconfig[server_name].setup {
             on_attach = function()
               local set = vim.keymap.set
 
@@ -39,8 +43,28 @@ return {
           }
         end,
       }
-      require("lspconfig").lua_ls.setup {}
-      require("lspconfig").vimls.setup {}
+
+      lspconfig.lua_ls.setup {
+        settings = {
+          Lua = {
+            runtime = {
+              version = "LuaJIT",
+              pathStrict = true,
+              path = { "?.lua", "?/init.lua" },
+            },
+            workspace = {
+              library = vim.list_extend(vim.api.nvim_get_runtime_file("lua", true), {
+                vim.fn.stdpath("config") .. "/lua",
+                vim.env.VIMRUNTIME .. "/lua",
+                "${3rd}/luv/library",
+                "${3rd}/busted/library",
+                "${3rd}/luassert/library",
+              }),
+              checkThirdParty = "Disable",
+            },
+          },
+        },
+      }
     end,
   },
 }
