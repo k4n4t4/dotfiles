@@ -24,8 +24,13 @@ if vim.opt.foldtext["_value"] == "" then
             local virt_texts = {}
 
             table.insert(virt_texts, {
-              " " .. fold_start .. " - " .. fold_end .. " [" .. fold_level .. "] ",
-              'Comment'
+              " ▼ ",
+              {'Bold', 'Comment'},
+            })
+            table.insert(virt_texts, {
+              " " .. fold_start .. " - " .. fold_end .. " " ..
+              (fold_level == 1 and "" or "(" .. fold_level .. ") "),
+              {'Comment', 'Underlined'},
             })
 
             vim.api.nvim_buf_set_extmark(bufnr, namespace, lnum-1, 0, {
@@ -98,13 +103,15 @@ else
                 char = ""
               end
 
-              table.insert(
-                virt_texts,
-                {
-                  char,
-                  hl or 'None',
-                }
-              )
+              table.insert(virt_texts, {
+                " ▼ ",
+                {'Bold', 'Comment'},
+              })
+              table.insert(virt_texts, {
+                " " .. fold_start .. " - " .. fold_end .. " " ..
+                  (fold_level == 1 and "" or "(" .. fold_level .. ") "),
+                {'Comment', 'Underlined'},
+              })
 
               i = i + 1
             end
