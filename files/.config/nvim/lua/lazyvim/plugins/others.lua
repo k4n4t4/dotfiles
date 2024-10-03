@@ -17,6 +17,20 @@ return {
     "folke/tokyonight.nvim",
     enabled = true,
   },
+  {
+    "sainnhe/everforest",
+    enabled = true,
+    config = function()
+      vim.g.everforest_background = 'soft'
+    end
+  },
+  {
+    "sainnhe/gruvbox-material",
+    enabled = true,
+    config = function()
+      vim.g.gruvbox_material_background = 'medium'
+    end
+  },
 
   -- highlights
   {
