@@ -5,7 +5,6 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 
-set("n", "<ESC><ESC>", "<CMD>noh<CR>")
 set("t", "<ESC>", "<C-\\><C-N>")
 
 set("n", "<LEADER>c", "<CMD>belowright 10split<CR><CMD>terminal<CR>")
@@ -17,6 +16,7 @@ function TerminalOpenFile(file, pwd)
   vim.cmd.tabedit(file .. (empty and "Untitled" or ""))
 end
 
+set("n", "<LEADER>H", "<CMD>noh<CR>")
 set("n", "<LEADER>h", "viwo<CMD>let @/=getregion(getpos('v'), getpos('.'))[0]<CR><CMD>set hls<CR><ESC>")
 set("x", "<LEADER>h", "<CMD>let @/=getregion(getpos('v'), getpos('.'), {'type': mode()})[0]<CR><CMD>set hls<CR><ESC><CMD>call setpos('.', getpos(\"'<\"))<CR>")
 
