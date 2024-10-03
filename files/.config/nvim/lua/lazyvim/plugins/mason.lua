@@ -1,48 +1,38 @@
 return {
   {
-    "williamboman/mason.nvim",
-    event = 'VeryLazy',
-    config = true,
-  },
-  {
     "williamboman/mason-lspconfig.nvim",
-    event = 'VeryLazy',
+    event = "VeryLazy",
     dependencies = {
+      "williamboman/mason.nvim",
       "hrsh7th/cmp-nvim-lsp",
       "neovim/nvim-lspconfig",
     },
     config = function()
+      local mason = require "mason"
       local mason_lspconfig = require "mason-lspconfig"
       local lspconfig = require "lspconfig"
+
+      mason.setup {
+        ui = {
+          border = 'double',
+        },
+      }
 
       mason_lspconfig.setup {
         ensure_installed = {
           "lua_ls",
           "vimls",
-        }
+          "pylsp",
+          "bashls",
+        },
+        automatic_installation = false,
       }
 
-      mason_lspconfig.setup_handlers {
-        function(server_name)
-          lspconfig[server_name].setup {
-            on_attach = function()
-              local set = vim.keymap.set
+      local server_names = mason_lspconfig.get_installed_servers()
 
-              set('n', '<LEADER>lgd', "<CMD>lua vim.lsp.buf.definition()<CR>")
-              set('n', '<LEADER>lK', "<CMD>lua vim.lsp.buf.hover()<CR>")
-              set('n', '<LEADER>l<C-m>', "<CMD>lua vim.lsp.buf.signature_help()<CR>")
-              set('n', '<LEADER>lgy', "<CMD>lua vim.lsp.buf.type_definition()<CR>")
-              set('n', '<LEADER>lrn', "<CMD>lua vim.lsp.buf.rename()<CR>")
-              set('n', '<LEADER>lma', "<CMD>lua vim.lsp.buf.code_action()<CR>")
-              set('n', '<LEADER>lgr', "<CMD>lua vim.lsp.buf.references()<CR>")
-              set('n', '<LEADER>le', "<CMD>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>")
-              set('n', '<LEADER>l[d', "<CMD>lua vim.lsp.diagnostic.goto_prev()<CR>")
-              set('n', '<LEADER>l]d', "<CMD>lua vim.lsp.diagnostic.goto_next()<CR>")
-            end,
-            capabilities = require("cmp_nvim_lsp").default_capabilities(),
-          }
-        end,
-      }
+      for _, server_name in ipairs(server_names) do
+        lspconfig[server_name].setup {}
+      end
 
       lspconfig.lua_ls.setup {
         settings = {
@@ -65,6 +55,7 @@ return {
           },
         },
       }
+
     end,
   },
 }
