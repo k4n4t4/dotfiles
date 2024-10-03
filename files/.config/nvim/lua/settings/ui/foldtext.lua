@@ -12,7 +12,7 @@ if vim.opt.foldtext["_value"] == "" then
     on_win = function(_, winid, bufnr, toprow, botrow)
       vim.api.nvim_win_call(winid, function()
         local lnum = toprow + 1
-        while lnum <= botrow + 1 do
+        while lnum <= botrow do
           local fold_start = vim.fn.foldclosed(lnum)
           if fold_start == -1 then
             lnum = lnum + 1
@@ -53,7 +53,7 @@ else
       local ts_active = vim.treesitter.highlighter.active[bufnr]
       vim.api.nvim_win_call(winid, function()
         local lnum = toprow + 1
-        while lnum <= botrow + 1 do
+        while lnum <= botrow  do
           local fold_start = vim.fn.foldclosed(lnum)
           if fold_start == -1 then
             lnum = lnum + 1
