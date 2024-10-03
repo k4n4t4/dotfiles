@@ -19,8 +19,8 @@ return {
       { "saadparwaiz1/cmp_luasnip" },
     },
     event = {
-      "InsertEnter",
-      "CmdlineEnter",
+      'InsertEnter',
+      'CmdlineEnter',
     },
     config = function()
       local cmp = require "cmp"
@@ -42,19 +42,19 @@ return {
           end,
         },
         sources = {
-          { name = "nvim_lsp" },
-          { name = "nvim_lsp_signature_help" },
-          { name = "nvim_lua" },
-          { name = "luasnip" },
-          { name = "buffer" },
-          { name = "path" },
-          { name = "git" },
+          { name = 'nvim_lsp' },
+          { name = 'nvim_lsp_signature_help' },
+          { name = 'nvim_lua' },
+          { name = 'luasnip' },
+          { name = 'buffer' },
+          { name = 'path' },
+          { name = 'git' },
         },
         mapping = cmp.mapping.preset.insert({
-          ["<C-e>"] = cmp.mapping.abort(),
-          ["<S-TAB>"] = cmp.mapping.select_prev_item(),
-          ["<TAB>"] = cmp.mapping.select_next_item(),
-          ["<CR>"] = cmp.mapping.confirm({ select = true }),
+          ['<C-e>'] = cmp.mapping.abort(),
+          ['<S-TAB>'] = cmp.mapping.select_prev_item(),
+          ['<TAB>'] = cmp.mapping.select_next_item(),
+          ['<CR>'] = cmp.mapping.confirm({ select = true }),
         }),
       }
       cmp.setup.cmdline({ '/', '?' }, {

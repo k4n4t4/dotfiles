@@ -4,7 +4,7 @@ return {
     "MunifTanjim/nui.nvim",
     "rcarriga/nvim-notify",
   },
-  event = "VeryLazy",
+  event = 'VeryLazy',
   opts = {
     cmdline = {
       enabled = true,
@@ -57,7 +57,7 @@ return {
         enabled = true,
         format_done = "lsp_progress_done",
         throttle = 1000 / 30,
-        view = "mini",
+        view = 'mini',
       },
       override = {
         ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
@@ -82,7 +82,7 @@ return {
       },
       message = {
         enabled = true,
-        view = "notify",
+        view = 'notify',
       },
     },
     presets = {

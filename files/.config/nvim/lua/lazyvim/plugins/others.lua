@@ -36,12 +36,12 @@ return {
 
   {
     "norcalli/nvim-colorizer.lua",
-    event = "VeryLazy",
+    event = 'VeryLazy',
   },
 
   {
     "dstein64/vim-startuptime",
-    event = "VeryLazy",
+    event = 'VeryLazy',
   },
 
 }

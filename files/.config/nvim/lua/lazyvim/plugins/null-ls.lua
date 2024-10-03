@@ -1,6 +1,6 @@
 return {
   "nvimtools/none-ls.nvim",
-  event = "VeryLazy",
+  event = 'VeryLazy',
   config = function()
     local null_ls = require "null-ls"
     null_ls.setup {
@@ -11,6 +11,6 @@ return {
         null_ls.builtins.diagnostics.buf
       },
     }
-    vim.keymap.set("n", "<LEADER>f", vim.lsp.buf.format, {})
+    vim.keymap.set('n', '<LEADER>f', vim.lsp.buf.format, {})
   end,
 }

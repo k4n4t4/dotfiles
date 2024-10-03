@@ -1,7 +1,7 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    event = "VeryLazy",
+    event = 'VeryLazy',
     cmd = {
       "TSUpdate",
       "TSInstall",

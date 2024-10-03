@@ -5,7 +5,7 @@ return {
     "nvim-lua/plenary.nvim"
   },
   enabled = true,
-  event = "VimEnter",
+  event = 'VimEnter',
   config = function()
     local dashboard = require("alpha.themes.dashboard")
 
