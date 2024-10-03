@@ -14,6 +14,7 @@ if type trash > /dev/null 2>&1; then
 else
   stopUseRm() {
     printf "\033[91mStop!\033[m\n\033[36mPlease install \"trash\" command.\033[m\n"
+    unalias rm
   }
   alias rm="stopUseRm"
 fi
@@ -37,6 +38,17 @@ if type git > /dev/null 2>&1; then
   alias gc="git commit"
   alias gcm="git commit -m"
   alias gb="git branch"
+fi
+
+if type nvim > /dev/null 2>&1; then
+  nvimFunc() {
+    if [ "${NVIM:-}" = "" ]; then
+      nvim "$@"
+    else
+      nvim --server "$NVIM" --remote-send "<CMD>call v:lua.TerminalOpenFile(\"${1:-}\", \"$PWD\")<CR>"
+    fi
+  }
+  alias nvim="nvimFunc"
 fi
 
 alias h='printf "\033[?25l\033[0;0H\033[2J"&& read && printf "\033[?25h"'
