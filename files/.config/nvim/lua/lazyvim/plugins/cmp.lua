@@ -2,7 +2,6 @@ return {
   {
     "hrsh7th/nvim-cmp",
     dependencies = {
-      { "neovim/nvim-lspconfig" },
       { "hrsh7th/cmp-nvim-lsp" },
       { "hrsh7th/cmp-emoji" },
       { "hrsh7th/cmp-buffer" },
