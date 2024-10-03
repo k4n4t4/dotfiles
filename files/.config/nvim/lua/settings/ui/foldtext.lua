@@ -10,7 +10,6 @@ local namespace = vim.api.nvim_create_namespace("foldtext")
 if vim.opt.foldtext["_value"] == "" then
   vim.api.nvim_set_decoration_provider(namespace, {
     on_win = function(_, winid, bufnr, toprow, botrow)
-      local ts_active = vim.treesitter.highlighter.active[bufnr]
       vim.api.nvim_win_call(winid, function()
         local lnum = toprow + 1
         while lnum <= botrow + 1 do
