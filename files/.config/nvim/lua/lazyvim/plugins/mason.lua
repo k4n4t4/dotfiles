@@ -1,8 +1,8 @@
 return {
   {
-    "williamboman/mason.nvim",
+    "neovim/nvim-lspconfig",
     dependencies = {
-      "neovim/nvim-lspconfig",
+      "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
     },
     config = function()
@@ -53,7 +53,6 @@ return {
           end
         },
       }
-
     end,
   },
 }
