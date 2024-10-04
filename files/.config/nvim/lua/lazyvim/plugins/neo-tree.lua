@@ -23,7 +23,7 @@ return {
       end,
     },
   },
-  event = 'BufEnter',
+  event = 'User DirEnter',
   config = function()
     require("neo-tree").setup({
       close_if_last_window = false,

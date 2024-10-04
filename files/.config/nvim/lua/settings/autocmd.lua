@@ -1,7 +1,9 @@
+local group = vim.api.nvim_create_augroup("Settings", { clear = true })
 local autocmd = vim.api.nvim_create_autocmd
 
 
 autocmd("BufWinLeave", {
+  group = group,
   callback = function()
     if vim.fn.expand("%") ~= "" then
       vim.cmd [[mkview]]
@@ -9,6 +11,7 @@ autocmd("BufWinLeave", {
   end
 })
 autocmd("BufWinEnter", {
+  group = group,
   callback = function()
     if vim.fn.expand("%") ~= "" then
       vim.cmd [[silent! loadview]]
@@ -19,6 +22,7 @@ autocmd("BufWinEnter", {
 
 if vim.opt.number:get() and vim.opt.relativenumber:get() then
   autocmd("InsertEnter", {
+    group = group,
     callback = function()
       if vim.opt_local.number:get() then
         vim.opt_local.relativenumber = false
@@ -26,6 +30,7 @@ if vim.opt.number:get() and vim.opt.relativenumber:get() then
     end
   })
   autocmd("InsertLeave", {
+    group = group,
     callback = function()
       if vim.opt_local.number:get() then
         vim.opt_local.relativenumber = true
@@ -36,6 +41,7 @@ end
 
 
 autocmd("BufEnter", {
+  group = group,
   callback = function()
     if vim.fn.getcmdwintype() ~= "" then
       vim.opt_local.foldcolumn = '0'
@@ -46,6 +52,7 @@ autocmd("BufEnter", {
 
 
 autocmd("TermOpen", {
+  group = group,
   callback = function()
     vim.opt_local.number = false
     vim.opt_local.relativenumber = false
@@ -57,7 +64,20 @@ autocmd("TermOpen", {
 
 
 autocmd("TextYankPost", {
+  group = group,
   callback = function()
     vim.highlight.on_yank { hlgroup = "Visual", timeout = 300 }
+  end
+})
+
+autocmd("BufEnter", {
+  group = group,
+  pattern = "*",
+  callback = function(args)
+    local bufname = vim.api.nvim_buf_get_name(args.buf)
+    local stat = vim.uv.fs_stat(bufname)
+    if stat and stat.type == "directory" then
+      vim.api.nvim_exec_autocmds("User", { pattern = "DirEnter" })
+    end
   end
 })

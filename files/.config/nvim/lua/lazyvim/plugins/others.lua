@@ -82,6 +82,11 @@ return {
   },
 
   {
+    "tpope/vim-repeat",
+    event = 'VeryLazy',
+  },
+
+  {
     "folke/trouble.nvim",
     opts = {},
     cmd = "Trouble",
