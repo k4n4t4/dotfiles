@@ -67,7 +67,7 @@ return {
         diagnostic = true,
         gitsigns = true,
         handle = true,
-        search = true,
+        search = false,
         ale = true,
       },
     }
