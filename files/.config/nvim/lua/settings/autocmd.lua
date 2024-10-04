@@ -4,30 +4,30 @@ local autocmd = vim.api.nvim_create_autocmd
 autocmd("BufWinLeave", {
   callback = function()
     if vim.fn.expand("%") ~= "" then
-      vim.api.nvim_exec('mkview', false)
+      vim.cmd [[mkview]]
     end
   end
 })
 autocmd("BufWinEnter", {
   callback = function()
     if vim.fn.expand("%") ~= "" then
-      vim.api.nvim_exec('silent! loadview', false)
+      vim.cmd [[silent! loadview]]
     end
   end
 })
 
 
-if vim.opt.number["_value"] and vim.opt.relativenumber["_value"] then
+if vim.opt.number:get() and vim.opt.relativenumber:get() then
   autocmd("InsertEnter", {
     callback = function()
-      if vim.opt_local.number["_value"] then
+      if vim.opt_local.number:get() then
         vim.opt_local.relativenumber = false
       end
     end
   })
   autocmd("InsertLeave", {
     callback = function()
-      if vim.opt_local.number["_value"] then
+      if vim.opt_local.number:get() then
         vim.opt_local.relativenumber = true
       end
     end
@@ -52,5 +52,12 @@ autocmd("TermOpen", {
     vim.opt_local.foldcolumn = '0'
     vim.opt_local.signcolumn = "no"
     vim.cmd [[startinsert]]
+  end
+})
+
+
+autocmd("TextYankPost", {
+  callback = function()
+    vim.highlight.on_yank { hlgroup = "Visual", timeout = 300 }
   end
 })
