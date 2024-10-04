@@ -4,6 +4,8 @@ return {
     dependencies = {
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
+      "jayp0521/mason-null-ls.nvim",
+      "nvimtools/none-ls.nvim",
     },
     config = function()
       local lspconfig = require "lspconfig"

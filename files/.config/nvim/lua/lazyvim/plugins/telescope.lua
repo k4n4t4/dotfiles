@@ -3,6 +3,7 @@ return {
   event = 'VeryLazy',
   dependencies = {
     "nvim-lua/plenary.nvim",
+    "nvim-telescope/telescope-project.nvim",
     {
       "nvim-telescope/telescope-fzf-native.nvim",
       build = "make",
@@ -42,6 +43,7 @@ return {
     }
     telescope.load_extension "fzf"
     telescope.load_extension "aerial"
+    telescope.load_extension "project"
   end,
   keys = {
     { mode = 'n', "<LEADER>tt", "<CMD>Telescope<CR>",                           desc = "Telescope" },
@@ -53,5 +55,6 @@ return {
     { mode = 'n', "<LEADER>t/", "<CMD>Telescope current_buffer_fuzzy_find<CR>", desc = "Telescope Current Buffer Fuzzy Finder" },
     { mode = 'n', "<LEADER>ta", "<CMD>Telescope aerial<CR>",                    desc = "Telescope Aerial" },
     { mode = 'n', "<LEADER>tz", "<CMD>Telescope fzf<CR>",                       desc = "Telescope fzf" },
+    { mode = 'n', "<LEADER>tp", "<CMD>Telescope project<CR>",                   desc = "Telescope Project" },
   },
 }
