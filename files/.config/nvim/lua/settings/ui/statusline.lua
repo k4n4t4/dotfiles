@@ -37,16 +37,20 @@ local function status_line_highlights()
     bg = "none",
   })
 
-  vim.api.nvim_set_hl(0, 'StatusLineDiagnosticINFO', {
-    fg = "#99EEEE",
+  vim.api.nvim_set_hl(0, 'StatusLineDiagnosticERROR', {
+    fg = "#EE9999",
     bg = "none",
   })
   vim.api.nvim_set_hl(0, 'StatusLineDiagnosticWARN', {
     fg = "#EEEE99",
     bg = "none",
   })
-  vim.api.nvim_set_hl(0, 'StatusLineDiagnosticERROR', {
-    fg = "#EE9999",
+  vim.api.nvim_set_hl(0, 'StatusLineDiagnosticINFO', {
+    fg = "#99EEEE",
+    bg = "none",
+  })
+  vim.api.nvim_set_hl(0, 'StatusLineDiagnosticHINT', {
+    fg = "#99EE99",
     bg = "none",
   })
 end
@@ -178,21 +182,31 @@ local function status_lsp()
   return clients
 end
 
+local diagnostic_color = {
+  ERROR = "StatusLineDiagnosticERROR",
+  WARN = "StatusLineDiagnosticWARN",
+  INFO = "StatusLineDiagnosticINFO",
+  HINT = "StatusLineDiagnosticHINT",
+}
+
+local diagnostic_icon = {
+  ERROR = '!',
+  WARN = '*',
+  INFO = 'i',
+  HINT = '?',
+}
+
+local diagnostic = require "utils.diagnostic"
 local function status_diagnostic()
-  local diagnoses = {}
-  local severity_list = {
-    'ERROR',
-    'WARN',
-    'INFO',
-    'HINT',
-  }
-  for _, name in pairs(severity_list) do
-    local diagnostic = vim.diagnostic.get(0, { severity = vim.diagnostic.severity[name] })
-    if diagnostic ~= nil and #diagnostic > 0 then
-      table.insert(diagnoses, "%#StatusLineDiagnostic" .. name .. "#" .. tostring(#diagnostic) .. "%*")
-    end
+  local diagnoses = diagnostic.get(0)
+  local fmt = {}
+  for k, v in pairs(diagnoses) do
+    local name = diagnostic.SEVERITY[k]
+    local icon = diagnostic_icon[name]
+    local count = #v
+    table.insert(fmt, "%#" .. diagnostic_color[name] .. "#" .. icon .. count .. "%*")
   end
-  return table.concat(diagnoses, "")
+  return table.concat(fmt, ", ")
 end
 
 local function status_macro_recording()
@@ -208,7 +222,7 @@ function StatusLine()
   local mode = status_mode()
   local search = status_search_count()
   local lsp = status_lsp()
-  local diagnostic = status_diagnostic()
+  local diagnostic_format = status_diagnostic()
 
   local macro_format = ""
   if macro ~= "" then
@@ -227,13 +241,11 @@ function StatusLine()
     lsp_format = " "..table.concat(lsp, ", ")
   end
 
-  local diagnostic_format = " "..diagnostic
-
   local status_line = {
     macro_format,
     " " .. mode_format,
     "%f%m%r%h%w",
-    diagnostic_format,
+    " " .. diagnostic_format,
     "%=%<",
     "%S ",
     search_format,
