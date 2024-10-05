@@ -4,8 +4,6 @@ return {
     "nvim-tree/nvim-web-devicons",
     "nvim-lua/plenary.nvim"
   },
-  enabled = true,
-  event = 'VimEnter',
   config = function()
     local dashboard = require("alpha.themes.dashboard")
 
@@ -50,4 +48,5 @@ return {
 
     vim.cmd [[ autocmd FileType alpha setlocal nofoldenable ]]
   end,
+  event = 'VimEnter',
 }

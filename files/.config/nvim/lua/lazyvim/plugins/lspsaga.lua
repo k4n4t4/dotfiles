@@ -1,11 +1,10 @@
 return {
   'nvimdev/lspsaga.nvim',
   dependencies = {
-    'nvim-treesitter/nvim-treesitter',     -- optional
-    'nvim-tree/nvim-web-devicons',         -- optional
+    'nvim-tree/nvim-web-devicons',
   },
-  event = 'VeryLazy',
   config = function()
     require('lspsaga').setup {}
   end,
+  event = 'VeryLazy',
 }

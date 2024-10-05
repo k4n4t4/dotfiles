@@ -1,22 +1,30 @@
 return {
   {
-    "neovim/nvim-lspconfig",
+    "williamboman/mason.nvim",
+    opts = {
+      ui = {
+        border = 'double',
+      },
+    },
+    cmd = {
+      "Mason",
+      "MasonUpdate",
+      "MasonInstall",
+      "MasonUninstall",
+      "MasonUninstallAll",
+      "MasonLog",
+    },
+  },
+  {
+    "williamboman/mason-lspconfig.nvim",
     dependencies = {
-      "williamboman/mason.nvim",
-      "williamboman/mason-lspconfig.nvim",
-      "jayp0521/mason-null-ls.nvim",
+      "neovim/nvim-lspconfig",
       "nvimtools/none-ls.nvim",
+      "jayp0521/mason-null-ls.nvim",
     },
     config = function()
       local lspconfig = require "lspconfig"
-      local mason = require "mason"
       local mason_lspconfig = require "mason-lspconfig"
-
-      mason.setup {
-        ui = {
-          border = 'double',
-        },
-      }
 
       mason_lspconfig.setup {
         ensure_installed = {
@@ -56,5 +64,6 @@ return {
         },
       }
     end,
+    event = { "BufReadPre", "BufNewFile" },
   },
 }

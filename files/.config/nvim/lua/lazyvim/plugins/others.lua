@@ -3,30 +3,30 @@ return {
   -- colorschemes
   {
     "navarasu/onedark.nvim",
-    enabled = false,
+    lazy = true,
     opts = {
       style = "darker",
     },
   },
   {
     "catppuccin/nvim",
-    enabled = false,
+    lazy = true,
     name = "catppuccin",
   },
   {
     "folke/tokyonight.nvim",
-    enabled = false,
+    lazy = true,
   },
   {
     "sainnhe/everforest",
-    enabled = true,
+    lazy = true,
     config = function()
       vim.g.everforest_background = 'soft'
     end
   },
   {
     "sainnhe/gruvbox-material",
-    enabled = false,
+    lazy = true,
     config = function()
       vim.g.gruvbox_material_background = 'medium'
     end
@@ -39,12 +39,12 @@ return {
   },
   {
     "MeanderingProgrammer/markdown.nvim",
+    ft = "markdown",
     name = "render-markdown",
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
       "nvim-tree/nvim-web-devicons"
     },
-    ft = "markdown",
   },
 
 

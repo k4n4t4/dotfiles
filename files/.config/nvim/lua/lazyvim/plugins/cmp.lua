@@ -14,12 +14,7 @@ return {
       "rafamadriz/friendly-snippets",
       "saadparwaiz1/cmp_luasnip",
     },
-    event = {
-      'InsertEnter',
-      'CmdlineEnter',
-    },
     config = function()
-      require("luasnip.loaders.from_vscode").lazy_load()
       local cmp = require "cmp"
       cmp.setup {
         window = {
@@ -69,6 +64,12 @@ return {
         },
         matching = { disallow_symbol_nonprefix_matching = false }
       })
+      require("luasnip.loaders.from_vscode").lazy_load()
     end,
+    event = {
+      'InsertEnter',
+      'CmdlineEnter',
+    },
+    cmd = "CmpStatus",
   },
 }

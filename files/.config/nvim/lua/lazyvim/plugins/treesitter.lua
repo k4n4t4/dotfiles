@@ -1,18 +1,6 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    event = 'VeryLazy',
-    cmd = {
-      "TSUpdate",
-      "TSInstall",
-      "TSUninstall",
-      "TSToggle",
-      "TSEnable",
-      "TSDisable",
-      "TSBufToggle",
-      "TSBufEnable",
-      "TSBufDisable",
-    },
     dependencies = {
       "nvim-treesitter/nvim-treesitter-textobjects",
     },
@@ -33,6 +21,18 @@ return {
           enable = true,
         },
       }
-    end
+    end,
+    event = 'VeryLazy',
+    cmd = {
+      "TSUpdate",
+      "TSInstall",
+      "TSUninstall",
+      "TSToggle",
+      "TSEnable",
+      "TSDisable",
+      "TSBufToggle",
+      "TSBufEnable",
+      "TSBufDisable",
+    },
   },
 }

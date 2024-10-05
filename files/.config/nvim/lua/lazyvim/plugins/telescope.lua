@@ -1,6 +1,5 @@
 return {
   "nvim-telescope/telescope.nvim",
-  event = 'VeryLazy',
   dependencies = {
     "nvim-lua/plenary.nvim",
     "nvim-telescope/telescope-project.nvim",
@@ -45,6 +44,7 @@ return {
     telescope.load_extension "aerial"
     telescope.load_extension "project"
   end,
+  cmd = "Telescope",
   keys = {
     { mode = 'n', "<LEADER>tt", "<CMD>Telescope<CR>",                           desc = "Telescope" },
     { mode = 'n', "<LEADER>tk", "<CMD>Telescope keymaps<CR>",                   desc = "Telescope Keymaps" },

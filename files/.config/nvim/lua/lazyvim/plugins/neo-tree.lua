@@ -23,7 +23,6 @@ return {
       end,
     },
   },
-  event = 'User DirEnter',
   config = function()
     require("neo-tree").setup({
       close_if_last_window = false,
@@ -251,8 +250,9 @@ return {
       }
     })
   end,
+  event = 'User DirEnter',
   keys = {
-    { mode = "n", "<LEADER>e", "<CMD>Neotree toggle<CR>", desc = "Neotree Toggle" },
-    { mode = "n", "<LEADER>E", "<CMD>Neotree focus<CR>", desc = "Neotree Focus" },
+    { mode = 'n', "<LEADER>e", "<CMD>Neotree toggle<CR>", desc = "Neotree Toggle" },
+    { mode = 'n', "<LEADER>E", "<CMD>Neotree focus<CR>", desc = "Neotree Focus" },
   },
 }
