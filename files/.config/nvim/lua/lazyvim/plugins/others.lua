@@ -3,19 +3,19 @@ return {
   -- colorschemes
   {
     "navarasu/onedark.nvim",
-    enabled = true,
+    enabled = false,
     opts = {
       style = "darker",
     },
   },
   {
     "catppuccin/nvim",
-    enabled = true,
+    enabled = false,
     name = "catppuccin",
   },
   {
     "folke/tokyonight.nvim",
-    enabled = true,
+    enabled = false,
   },
   {
     "sainnhe/everforest",
@@ -26,7 +26,7 @@ return {
   },
   {
     "sainnhe/gruvbox-material",
-    enabled = true,
+    enabled = false,
     config = function()
       vim.g.gruvbox_material_background = 'medium'
     end

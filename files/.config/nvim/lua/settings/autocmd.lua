@@ -70,9 +70,9 @@ autocmd("TextYankPost", {
   end
 })
 
+
 autocmd("BufEnter", {
   group = group,
-  pattern = "*",
   callback = function(args)
     local bufname = vim.api.nvim_buf_get_name(args.buf)
     local stat = vim.uv.fs_stat(bufname)
