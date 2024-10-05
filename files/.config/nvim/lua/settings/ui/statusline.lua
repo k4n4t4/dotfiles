@@ -180,13 +180,19 @@ end
 
 local function status_diagnostic()
   local diagnoses = {}
-  for _, v in pairs({ 'ERROR', 'WARN', 'INFO' }) do
-    local t = vim.diagnostic.get(0, { severity = vim.diagnostic.severity[v] })
-    if t ~= nil and #t > 0 then
-      table.insert(diagnoses, "%#StatusLineDiagnostic" .. v .. "#" .. tostring(#t) .. "%*")
+  local severity_list = {
+    'ERROR',
+    'WARN',
+    'INFO',
+    'HINT',
+  }
+  for _, name in pairs(severity_list) do
+    local diagnostic = vim.diagnostic.get(0, { severity = vim.diagnostic.severity[name] })
+    if diagnostic ~= nil and #diagnostic > 0 then
+      table.insert(diagnoses, "%#StatusLineDiagnostic" .. name .. "#" .. tostring(#diagnostic) .. "%*")
     end
   end
-  return diagnoses
+  return table.concat(diagnoses, "")
 end
 
 local function status_macro_recording()
@@ -221,14 +227,11 @@ function StatusLine()
     lsp_format = " "..table.concat(lsp, ", ")
   end
 
-  local diagnostic_format = ""
-  if #diagnostic > 0 then
-    diagnostic_format = " "..table.concat(diagnostic, ", ")
-  end
+  local diagnostic_format = " "..diagnostic
 
   local status_line = {
     macro_format,
-    mode_format,
+    " " .. mode_format,
     "%f%m%r%h%w",
     diagnostic_format,
     "%=%<",
