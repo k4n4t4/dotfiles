@@ -49,26 +49,24 @@ local function table_to_str(tbl, indent_count, ignore_tables)
   local indent = string.rep("  ", indent_count)
   local str = "{\n"
   for k, v in pairs(tbl) do
+    local value
     local key = tostring(k)
     if type(v) == 'table' then
       if table_contains(ignore_tables, v) then
-        local value = tostring(v)
-        str = str .. indent .. "  " .. key .. " = " .. value .. ",\n"
+        value = tostring(v)
       else
-        local value = table_to_str(v, indent_count + 1, ignore_tables)
         table.insert(ignore_tables, v)
-        str = str .. indent .. "  " .. key .. " = " .. value .. ",\n"
+        value = table_to_str(v, indent_count + 1, ignore_tables)
       end
     else
-      local value
       if type(v) == 'string' then
         local quote = '"'
         value = quote .. string_escape_quote(v, quote) .. quote
       else
         value = tostring(v)
       end
-      str = str .. indent .. "  " .. key .. " = " .. value .. ",\n"
     end
+    str = str .. indent .. "  " .. key .. " = " .. value .. ",\n"
   end
   return str .. indent .. "}"
 end
