@@ -76,6 +76,5 @@ function M.table(tbl)
   M.echo { { table_to_str(tbl), "None" } }
 end
 
-M.table(_G)
 
 return M
