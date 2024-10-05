@@ -23,6 +23,8 @@ function M.error(fmt, ...)
   M.echo { { string.format(fmt, ...), "ErrorMsg" } }
 end
 
+---@param tbl table<any>
+---@param elm any
 local function table_contains(tbl, elm)
   for _, v in pairs(tbl) do
     if v == elm then
@@ -32,6 +34,8 @@ local function table_contains(tbl, elm)
   return false
 end
 
+---@param str string
+---@param quote? string
 local function string_escape_quote(str, quote)
   quote = quote or '"'
   return string.gsub(str, "[\\" .. quote .. "]", function(s)
@@ -43,6 +47,9 @@ local function string_escape_quote(str, quote)
   end)
 end
 
+---@param tbl table<any>
+---@param indent_count? number
+---@param ignore_tables? table<any>
 local function table_to_str(tbl, indent_count, ignore_tables)
   indent_count = indent_count or 0
   ignore_tables = ignore_tables or { _G }
