@@ -10,6 +10,7 @@ function M.get_null_ls_sources()
 end
 
 ---@param bufnr number
+---@return string[], table<string, string[]>
 function M.get(bufnr)
   local clients = {}
   local others = {}
