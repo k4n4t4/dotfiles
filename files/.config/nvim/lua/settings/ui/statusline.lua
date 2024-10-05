@@ -137,10 +137,11 @@ local mode_color = {
 }
 
 local function status_mode()
-  local mode = vim.api.nvim_get_mode().mode
-  local name = mode_name[mode] or "?"
-  local color = mode_color[mode] or 'StatusLineModeOther'
-  return { color = color, name = name }
+  local mode = vim.api.nvim_get_mode()
+  local blocking = mode.blocking and "=" or ""
+  local name = mode_name[mode.mode] or "?"
+  local color = mode_color[mode.mode] or 'StatusLineModeOther'
+  return { color = color, name = name..blocking }
 end
 
 local function status_encoding()
@@ -225,21 +226,21 @@ function StatusLine()
     diagnostic_format = " "..table.concat(diagnostic, ", ")
   end
 
-
-  return (
-    macro_format ..
-    mode_format ..
-    "%f%m%r%h%w" ..
-    lsp_format..
-    diagnostic_format..
-    "%=%<" ..
-    "%S "..
-    search_format ..
-    status_encoding().." " ..
-    status_fileformat().." " ..
-    status_filetype().." " ..
-    "%n %l/%L,%c%V %P"
-  )
+  local status_line = {
+    macro_format,
+    mode_format,
+    "%f%m%r%h%w",
+    diagnostic_format,
+    "%=%<",
+    "%S ",
+    search_format,
+    lsp_format,
+    status_encoding().." ",
+    status_fileformat().." ",
+    status_filetype().." ",
+    "%n %l/%L,%c%V %P",
+  }
+  return table.concat(status_line, "")
 end
 function StatusLineInactive()
   return (
@@ -253,4 +254,13 @@ end
 vim.opt.ruler = false
 vim.opt.rulerformat = "%15(%l,%c%V%=%P%)"
 
+vim.opt.laststatus = 3
 vim.opt.statusline = "%{% g:actual_curwin == win_getid() ? v:lua.StatusLine() : v:lua.StatusLineInactive() %}"
+
+local group = vim.api.nvim_create_augroup("StatusLine", { clear = true })
+vim.api.nvim_create_autocmd("ModeChanged", {
+  group = group,
+  callback = function()
+    vim.cmd [[redrawstatus]]
+  end
+})

@@ -42,7 +42,6 @@ vim.opt.scrolloff = 3
 vim.opt.sidescroll = 1
 vim.opt.sidescrolloff = 3
 
-vim.opt.laststatus = 2
 vim.opt.showmode = false
 vim.opt.showcmd = true
 vim.opt.showcmdloc = 'statusline'

@@ -5,6 +5,8 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 
+set('n', '<LEADER>p', "<CMD>Lazy<CR>")
+
 set('t', '<ESC>', "<C-\\><C-N>")
 set('n', '<LEADER>c', "<CMD>belowright 10split<CR><CMD>terminal<CR>", { desc = "Terminal" })
 set('n', '<LEADER>C', "<CMD>terminal<CR>", { desc = "Terminal (full)" })
