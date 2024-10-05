@@ -1,29 +1,27 @@
 local M = {}
 
----@param fmt string
----@param ... any
-function M.log(fmt, ...)
-  vim.api.nvim_echo({
-    {string.format(fmt, ...), "None"}
-  }, true, {})
+---@param list [string, string][]
+function M.echo(list)
+  vim.api.nvim_echo(list, true, {})
 end
 
 ---@param fmt string
 ---@param ... any
-function M.error(fmt, ...)
-  vim.api.nvim_echo({
-    {string.format(fmt, ...), "ErrorMsg"}
-  }, true, {})
+function M.log(fmt, ...)
+  M.echo { { string.format(fmt, ...), "None" } }
 end
 
 ---@param fmt string
 ---@param ... any
 function M.warn(fmt, ...)
-  vim.api.nvim_echo({
-    {string.format(fmt, ...), "WarningMsg"}
-  }, true, {})
+  M.echo { { string.format(fmt, ...), "WarningMsg" } }
 end
 
+---@param fmt string
+---@param ... any
+function M.error(fmt, ...)
+  M.echo { { string.format(fmt, ...), "ErrorMsg" } }
+end
 
 local function table_contains(tbl, elm)
   for _, v in pairs(tbl) do
@@ -36,47 +34,50 @@ end
 
 local function string_escape_quote(str, quote)
   quote = quote or '"'
-  return string.gsub(str, "[\\"..quote.."]", function(s)
+  return string.gsub(str, "[\\" .. quote .. "]", function(s)
     if s == "\\" then
       return "\\\\"
     elseif s == quote then
-      return "\\"..quote
+      return "\\" .. quote
     end
   end)
 end
 
-local function table_to_str(tbl, indent, ignore_tables)
-  indent = indent or 0
-  ignore_tables = ignore_tables or {_G}
+local function table_to_str(tbl, indent_count, ignore_tables)
+  indent_count = indent_count or 0
+  ignore_tables = ignore_tables or { _G }
+  local indent = string.rep("  ", indent_count)
   local str = "{\n"
   for k, v in pairs(tbl) do
+    local key = tostring(k)
     if type(v) == 'table' then
       if table_contains(ignore_tables, v) then
-        str = str .. string.rep("  ", indent + 1) .. tostring(k) .. " = " .. tostring(v) .. ",\n"
+        local value = tostring(v)
+        str = str .. indent .. "  " .. key .. " = " .. value .. ",\n"
       else
+        local value = table_to_str(v, indent_count + 1, ignore_tables)
         table.insert(ignore_tables, v)
-        str = str .. string.rep("  ", indent + 1) .. tostring(k) .. " = " .. table_to_str(v, indent + 1, ignore_tables) .. ",\n"
+        str = str .. indent .. "  " .. key .. " = " .. value .. ",\n"
       end
     else
-      local fmt
+      local value
       if type(v) == 'string' then
         local quote = '"'
-        fmt = quote .. string_escape_quote(v, quote) .. quote
+        value = quote .. string_escape_quote(v, quote) .. quote
       else
-        fmt = tostring(v)
+        value = tostring(v)
       end
-      str = str .. string.rep("  ", indent + 1) .. tostring(k) .. " = " .. fmt .. ",\n"
+      str = str .. indent .. "  " .. key .. " = " .. value .. ",\n"
     end
   end
-  return str .. string.rep("  ", indent) .. "}"
+  return str .. indent .. "}"
 end
 
 ---@param tbl table<any>
 function M.table(tbl)
-  vim.api.nvim_echo({
-    {table_to_str(tbl), "None"}
-  }, true, {})
+  M.echo { { table_to_str(tbl), "None" } }
 end
 
+M.table(_G)
 
 return M

@@ -19,10 +19,10 @@ end
 
 set('n', '<LEADER>H', "<CMD>noh<CR>", { desc = "nohlsearch" })
 set('n', '<LEADER>h', "viwo<CMD>let @/=getregion(getpos('v'), getpos('.'))[0]<CR><CMD>set hls<CR><ESC>", { desc = "Highlight" })
-set('x', '<LEADER>h', "<CMD>let @/=getregion(getpos('v'), getpos('.'), {'type': mode()})[0]<CR><CMD>set hls<CR><ESC><CMD>call setpos('.', getpos(\"'<\"))<CR>", { desc = "Highlight" })
+set('x', '<LEADER>h', "<CMD>let @/='\\V'..escape(getregion(getpos('v'), getpos('.'), {'type': mode()})[0], '/\\')<CR><CMD>set hls<CR><ESC><CMD>call setpos('.', getpos(\"'<\"))<CR>", { desc = "Highlight" })
 
 set('n', '<LEADER>s', "viw:<C-u>%s/<C-r>=getregion(getpos(\"\'<\"), getpos(\"\'>\"))[0]<CR>//g<LEFT><LEFT>", { desc = "Replace" })
-set('x', '<LEADER>s', ":<C-u>%s/<C-r>=getregion(getpos(\"\'<\"), getpos(\"\'>\"))[0]<CR>//g<LEFT><LEFT>", { desc = "Replace" })
+set('x', '<LEADER>s', ":<C-u>%s/\\V<C-r>=escape(getregion(getpos(\"\'<\"), getpos(\"\'>\"))[0], '/\\')<CR>//g<LEFT><LEFT>", { desc = "Replace" })
 
 
 set('n', '<LEADER>lf', vim.lsp.buf.format, { desc = "Format" })
