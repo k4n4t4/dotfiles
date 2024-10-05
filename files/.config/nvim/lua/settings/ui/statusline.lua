@@ -244,6 +244,7 @@ function StatusLine()
   end
 
   local status_line = {
+    "%n " ..
     macro_format,
     " " .. mode_format,
     "%f%m%r%h%w",
@@ -262,7 +263,7 @@ end
 
 function StatusLineInactive()
   return (
-    "%f%m%r%h%w" ..
+    "%n %f%m%r%h%w" ..
     "%=%<" ..
     "%l/%L,%c%V %P"
   )
