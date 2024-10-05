@@ -9,9 +9,13 @@ function M.update(bufnr, callback)
 
   local system_promises = {
     {
-      -- todo:  cd dir
       cmd = { "git", "rev-parse", "--abbrev-ref", "@" },
-      opts = { stderr = false, timeout = 5000 },
+      opts = {
+        -- todo:  cd dir
+        cwd = ".",
+        stderr = false,
+        timeout = 5000,
+      },
       on_exit = function(obj)
         if obj.code == 0 then
           M.data[bufnr].branch = obj.stdout
@@ -32,7 +36,6 @@ function M.update(bufnr, callback)
       end
     end)
   end
-
 end
 
 function M.get(bufnr)
