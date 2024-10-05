@@ -166,20 +166,14 @@ local function status_filetype()
   return (not ft or ft == "") and "" or (filetype_name[ft] or ft)
 end
 
+
+local lsp = require "utils.lsp"
 local function status_lsp()
-  local clients = {}
-  for _, client in ipairs(vim.lsp.get_active_clients { bufnr = 0 }) do
-    if client.name == "null-ls" then
-      local sources = {}
-      for _, source in ipairs(require("null-ls.sources").get_available(vim.bo.filetype)) do
-        table.insert(sources, source.name)
-      end
-      table.insert(clients, "null-ls(" .. table.concat(sources, ", ") .. ")")
-    else
-      table.insert(clients, client.name)
-    end
+  local clients, others = lsp.get(0)
+  if others["null-ls"] and #others["null-ls"] > 0 then
+    table.insert(clients, "null-ls:[" .. table.concat(others["null-ls"], ", ") .. "]")
   end
-  return clients
+  return table.concat(clients, ", ")
 end
 
 local diagnostic_color = {
@@ -223,7 +217,7 @@ function StatusLine()
   local macro = status_macro_recording()
   local mode = status_mode()
   local search = status_search_count()
-  local lsp = status_lsp()
+  local lsp_format = status_lsp()
   local diagnostic_format = status_diagnostic()
 
   local macro_format = ""
@@ -236,11 +230,6 @@ function StatusLine()
   local search_format = ""
   if search.total ~= nil and vim.v.hlsearch == 1 then
     search_format = "[" .. search.current .. "/" .. search.total .. "] "
-  end
-
-  local lsp_format = ""
-  if #lsp > 0 then
-    lsp_format = " " .. table.concat(lsp, ", ")
   end
 
   local status_line = {
