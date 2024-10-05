@@ -72,45 +72,45 @@ local mode_name = {
   ['noV']  = 'NOL',
   ['no^V'] = 'NOB',
 
-  ['niI'] = 'NI',
-  ['niR'] = 'NR',
-  ['niV'] = 'NV',
-  ['nt']  = 'NT',
-  ['ntT'] = 'NTT',
+  ['niI']  = 'NI',
+  ['niR']  = 'NR',
+  ['niV']  = 'NV',
+  ['nt']   = 'NT',
+  ['ntT']  = 'NTT',
 
-  ['v']   = 'V',
-  ['vs']  = 'VS',
-  ['V']   = 'VL',
-  ['Vs']  = 'VLS',
-  ['']  = 'VB',
-  ['s'] = 'VBS',
+  ['v']    = 'V',
+  ['vs']   = 'VS',
+  ['V']    = 'VL',
+  ['Vs']   = 'VLS',
+  ['']    = 'VB',
+  ['s']   = 'VBS',
 
-  ['s']  = 'S',
-  ['S']  = 'SL',
-  [''] = 'SB',
+  ['s']    = 'S',
+  ['S']    = 'SL',
+  ['']    = 'SB',
 
-  ['i']  = 'I',
-  ['ic'] = 'IC',
-  ['ix'] = 'IX',
+  ['i']    = 'I',
+  ['ic']   = 'IC',
+  ['ix']   = 'IX',
 
-  ['R']   = 'R',
-  ['Rc']  = 'RC',
-  ['Rx']  = 'RX',
-  ['Rv']  = 'RV',
-  ['Rvc'] = 'RVC',
-  ['Rvx'] = 'RVX',
+  ['R']    = 'R',
+  ['Rc']   = 'RC',
+  ['Rx']   = 'RX',
+  ['Rv']   = 'RV',
+  ['Rvc']  = 'RVC',
+  ['Rvx']  = 'RVX',
 
-  ['c']  = 'C',
-  ['cr'] = 'CR',
+  ['c']    = 'C',
+  ['cr']   = 'CR',
 
-  ['cv']  = 'EX',
-  ['cvr'] = 'EXR',
+  ['cv']   = 'EX',
+  ['cvr']  = 'EXR',
 
-  ['r']  = 'P',
-  ['rm'] = 'M',
-  ['r?'] = 'CF',
-  ['!']  = 'SH',
-  ['t']  = 'T',
+  ['r']    = 'P',
+  ['rm']   = 'M',
+  ['r?']   = 'CF',
+  ['!']    = 'SH',
+  ['t']    = 'T',
 }
 
 local mode_color = {
@@ -123,8 +123,8 @@ local mode_color = {
   ['vs']   = 'StatusLineModeVisual',
   ['V']    = 'StatusLineModeVisual',
   ['Vs']   = 'StatusLineModeVisual',
-  ['']   = 'StatusLineModeVisual',
-  ['s']  = 'StatusLineModeVisual',
+  ['']    = 'StatusLineModeVisual',
+  ['s']   = 'StatusLineModeVisual',
   ['i']    = 'StatusLineModeInsert',
   ['ic']   = 'StatusLineModeInsert',
   ['ix']   = 'StatusLineModeInsert',
@@ -145,7 +145,7 @@ local function status_mode()
   local blocking = mode.blocking and "=" or ""
   local name = mode_name[mode.mode] or "?"
   local color = mode_color[mode.mode] or 'StatusLineModeOther'
-  return { color = color, name = name..blocking }
+  return { color = color, name = name .. blocking }
 end
 
 local function status_encoding()
@@ -201,10 +201,12 @@ local function status_diagnostic()
   local diagnoses = diagnostic.get(0)
   local fmt = {}
   for k, v in pairs(diagnoses) do
-    local name = diagnostic.SEVERITY[k]
-    local icon = diagnostic_icon[name]
-    local count = #v
-    table.insert(fmt, "%#" .. diagnostic_color[name] .. "#" .. icon .. count .. "%*")
+    if #v ~= 0 then
+      local name = diagnostic.SEVERITY[k]
+      local icon = diagnostic_icon[name]
+      local count = #v
+      table.insert(fmt, "%#" .. diagnostic_color[name] .. "#" .. icon .. count .. "%*")
+    end
   end
   return table.concat(fmt, ", ")
 end
@@ -226,19 +228,19 @@ function StatusLine()
 
   local macro_format = ""
   if macro ~= "" then
-    macro_format = "@"..macro.." "
+    macro_format = "@" .. macro .. " "
   end
 
-  local mode_format = "%#"..mode.color.."#"..mode.name.."%*".." "
+  local mode_format = "%#" .. mode.color .. "#" .. mode.name .. "%*" .. " "
 
   local search_format = ""
   if search.total ~= nil and vim.v.hlsearch == 1 then
-    search_format = "["..search.current.."/"..search.total.."] "
+    search_format = "[" .. search.current .. "/" .. search.total .. "] "
   end
 
   local lsp_format = ""
   if #lsp > 0 then
-    lsp_format = " "..table.concat(lsp, ", ")
+    lsp_format = " " .. table.concat(lsp, ", ")
   end
 
   local status_line = {
@@ -249,14 +251,15 @@ function StatusLine()
     "%=%<",
     "%S ",
     search_format,
-    lsp_format,
-    status_encoding().." ",
-    status_fileformat().." ",
-    status_filetype().." ",
+    lsp_format .. " ",
+    status_encoding() .. " ",
+    status_fileformat() .. " ",
+    status_filetype() .. " ",
     "%n %l/%L,%c%V %P",
   }
   return table.concat(status_line, "")
 end
+
 function StatusLineInactive()
   return (
     "%f%m%r%h%w" ..
@@ -264,7 +267,6 @@ function StatusLineInactive()
     "%l/%L,%c%V %P"
   )
 end
-
 
 vim.opt.ruler = false
 vim.opt.rulerformat = "%15(%l,%c%V%=%P%)"
