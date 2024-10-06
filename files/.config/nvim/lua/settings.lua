@@ -1,8 +1,12 @@
-require("commands.transparent").setup {
-  events = {
-    "VimEnter",
-    "ColorScheme",
+if config.transparent then
+  require("commands.transparent").setup {
+    events = {
+      "VimEnter",
+      "ColorScheme",
+    }
   }
-}
+end
 
-vim.cmd.colorscheme "everforest"
+if config.colorscheme then
+  vim.cmd.colorscheme(config.colorscheme)
+end
