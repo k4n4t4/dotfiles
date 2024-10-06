@@ -16,6 +16,14 @@ local function status_line_number()
   return line_number
 end
 
+local function status_fold()
+  if vim.v.virtnum == 0 then
+    return "%C"
+  else
+    return " "
+  end
+end
+
 local function status_separator()
   if vim.v.lnum == vim.fn.line(".") then
     return "▌"
@@ -35,13 +43,14 @@ end
 function StatusColumn()
   if vim.wo.number then
     local line_number = status_line_number()
+    local fold = status_fold()
     local separator = status_separator()
     local separator_hl = status_separator_hl()
     return (
       "%s" ..
       "%=" ..
       line_number ..
-      "%C" ..
+      fold ..
       separator_hl ..
       separator
     )
@@ -52,11 +61,12 @@ end
 
 function StatusColumnInactive()
   if vim.wo.number then
+    local fold = status_fold()
     return (
       "%s" ..
       "%=" ..
       "%l" ..
-      "%C" ..
+      fold ..
       "│"
     )
   else
