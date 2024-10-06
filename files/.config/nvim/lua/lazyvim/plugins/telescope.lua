@@ -66,20 +66,8 @@ return {
               ['R'] = project_actions.recent_project_files,
               ['w'] = project_actions.change_working_directory,
               ['o'] = project_actions.next_cd_scope,
+              ['k'] = project_actions.change_workspace,
             },
-            i = {
-              ['<c-d>'] = project_actions.delete_project,
-              ['<c-v>'] = project_actions.rename_project,
-              ['<c-a>'] = project_actions.add_project,
-              ['<c-A>'] = project_actions.add_project_cwd,
-              ['<c-f>'] = project_actions.find_project_files,
-              ['<c-b>'] = project_actions.browse_project_files,
-              ['<c-s>'] = project_actions.search_in_project_files,
-              ['<c-r>'] = project_actions.recent_project_files,
-              ['<c-l>'] = project_actions.change_working_directory,
-              ['<c-o>'] = project_actions.next_cd_scope,
-              ['<c-w>'] = project_actions.change_workspace,
-            }
           }
         },
       },
