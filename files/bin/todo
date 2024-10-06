@@ -468,19 +468,16 @@ list() {
 }
 
 
-########################
-#   Todo File Format   #
-########################
-#                      #
-# >> '1' '2' '3' '4'   #
-#                      #
-# [1] priority: int    #
-# [2] complete: bool   #
-# [3] date: date       #
-# [4] text: str        #
-#                      #
-########################
 TODO_FILE="$HOME/.todo"
+if ! [ -f "$TODO_FILE" ]; then
+  if [ -e "$TODO_FILE" ] || [ -L "$TODO_FILE" ]; then
+    echo "${ESC}[31m$TODO_FILE is not file.${ESC}[m" >&2
+    exit 1
+  else
+    : > "$TODO_FILE"
+  fi
+fi
+
 
 main() {
   [ $# -eq 0 ] && set -- list
