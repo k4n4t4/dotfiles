@@ -7,12 +7,13 @@ M.data = {}
 function M.update(bufnr, callback)
   M.data[bufnr] = M.data[bufnr] or {}
 
+  local cwd = vim.fn.expand("%:h")
+
   local system_promises = {
     {
       cmd = { "git", "rev-parse", "--abbrev-ref", "@" },
       opts = {
-        -- todo:  cd dir
-        cwd = ".",
+        cwd = cwd,
         stderr = false,
         timeout = 5000,
       },
