@@ -1,5 +1,0 @@
-require "settings.ui.options"
-require "settings.ui.statusline"
-require "settings.ui.statuscolumn"
-require "settings.ui.tabline"
-require "settings.ui.foldtext"

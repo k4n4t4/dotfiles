@@ -1,0 +1,6 @@
+require "core.options"
+require "core.disable_plugins"
+require "core.netrw"
+require "core.keymaps"
+require "core.autocmd"
+require "core.ui"
