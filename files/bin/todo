@@ -176,8 +176,7 @@ opt_parser() {
 
 
 ESC="$(printf "\033")"
-LF='
-'
+
 
 get_todo_list() {
   todo_list=""
@@ -202,6 +201,11 @@ get_todo_list() {
 
 usage() {
   echo " [ Usage ]"
+  echo "    add"
+  echo "    del"
+  echo "    cmp"
+  echo "    move"
+  echo "    list"
 }
 
 add() {
@@ -353,7 +357,7 @@ move() {
   fi
 }
 
-complete() {
+cmp() {
   opt_parser -- "$@"
   eval "set -- $RET"
   while [ $# -gt 0 ]; do
@@ -439,9 +443,9 @@ list() {
     env_func() {
       eval "set -- $1"
       if $2; then
-        todo_complete_symbol="${ESC}[32m+${ESC}[m"
+        todo_complete_symbol="${ESC}[32m+"
       else
-        todo_complete_symbol="${ESC}[31m-${ESC}[m"
+        todo_complete_symbol="${ESC}[31m-"
       fi
       todo_index_text="$todo_index"
       todo_index_digit=${#todo_index}
@@ -450,7 +454,12 @@ list() {
         todo_index_text="0$todo_index_text"
         todo_zero=$((todo_zero - 1))
       done
-      printf "%s\n" "${ESC}[34m$todo_index_text${ESC}[m|${ESC}[33m$1${ESC}[m|$todo_complete_symbol|${ESC}[35m$3${ESC}[m| ${ESC}[36m$4${ESC}[m"
+      printf "%s" "${ESC}[34m$todo_index_text"
+      printf "%s" "${ESC}[m|${ESC}[33m$1"
+      printf "%s" "${ESC}[m|$todo_complete_symbol"
+      printf "%s" "${ESC}[m|${ESC}[35m$3"
+      printf "%s" "${ESC}[m|${ESC}[36m$4${ESC}[m"
+      printf "\n"
     }
     env_func "$1"
     shift
@@ -476,49 +485,35 @@ TODO_FILE="$HOME/.todo"
 main() {
   [ $# -eq 0 ] && set -- list
   case "$1" in
-
     ( help )
       shift
       usage "$@"
-      return $?
       ;;
-
     ( add | a )
       shift
       add "$@"
-      return $?
       ;;
-
     ( del | d )
       shift
       del "$@"
-      return $?
       ;;
-
     ( move | m )
       shift
       move "$@"
-      return $?
       ;;
-
-    ( complete | c )
+    ( cmp | c )
       shift
-      complete "$@"
-      return $?
+      cmp "$@"
       ;;
-
     ( list | l )
       shift
       list "$@"
-      return $?
       ;;
-
     ( * )
       echo "${ESC}[31mInvalid Sub Command: \"$1\"${ESC}[m" >&2
       usage
       return 1
       ;;
-
   esac
 }
 
