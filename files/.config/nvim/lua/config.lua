@@ -1,4 +1,4 @@
 _G.config = {
-  transparent = true,
-  colorscheme = "everforest"
+  transparent = false,
+  colorscheme = "onedark"
 }
