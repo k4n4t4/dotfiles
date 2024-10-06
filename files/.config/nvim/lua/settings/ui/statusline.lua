@@ -282,7 +282,7 @@ local function status_file()
   return vim.fn.expand("%:t")
 end
 
-local function status_flag(file)
+local function status_flag()
   local format = {}
 
   if vim.o.previewwindow then
@@ -307,7 +307,7 @@ function StatusLineActive()
   local macro = status_macro_recording()
   local mode = status_mode()
   local file = status_file()
-  local flag = status_flag(file)
+  local flag = status_flag()
   local search = status_search_count()
   local lsp = status_lsp()
   local diagnostic = status_diagnostic()
@@ -338,7 +338,7 @@ end
 function StatusLineInactive()
   local mode = status_mode()
   local file = status_file()
-  local flag = status_flag(file)
+  local flag = status_flag()
   local encoding = status_encoding()
   local fileformat = status_fileformat()
   local filetype = status_filetype()
