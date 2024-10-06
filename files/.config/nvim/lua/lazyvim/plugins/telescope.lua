@@ -17,7 +17,7 @@ return {
       defaults = {
         borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
         mappings = {
-          i = {
+          n = {
             ['<ESC>'] = actions.close,
           },
         },
