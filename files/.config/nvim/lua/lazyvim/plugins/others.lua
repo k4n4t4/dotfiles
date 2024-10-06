@@ -47,11 +47,11 @@ return {
     },
   },
 
-
   {
     "norcalli/nvim-colorizer.lua",
     event = 'VeryLazy',
   },
+
 
   {
     "dstein64/vim-startuptime",
@@ -59,17 +59,43 @@ return {
   },
 
   {
-    "petertriho/nvim-scrollbar",
-    event = 'VeryLazy',
+    "folke/which-key.nvim",
     opts = {
-      handlers = {
-        cursor = true,
-        diagnostic = true,
-        gitsigns = true,
-        handle = true,
-        search = false,
-        ale = true,
+      preset = 'modern',
+      delay = function(ctx)
+        return ctx.plugin and 0 or 500
+      end,
+      win = {
+        border = 'single',
       },
+    },
+    event = 'VeryLazy',
+    keys = {
+      {
+        mode = 'n',
+        '<LEADER>?',
+        function()
+          require("which-key").show({ global = true })
+        end,
+        desc = "Which Key"
+      },
+    }
+  },
+
+  {
+    "phaazon/hop.nvim",
+    branch = "v2",
+    opts = {
+      multi_windows = true,
+    },
+    keys = {
+      { mode = 'n', '<LEADER>jj', "<CMD>HopWord<CR>",     desc = "Hop Word" },
+      { mode = 'n', '<LEADER>ja', "<CMD>HopAnywhere<CR>", desc = "Hop Anywhere" },
+      { mode = 'n', '<LEADER>jl', "<CMD>HopLine<CR>",     desc = "Hop Line" },
+      { mode = 'n', '<LEADER>jv', "<CMD>HopVertical<CR>", desc = "Hop Vertical" },
+      { mode = 'n', '<LEADER>jc', "<CMD>HopChar1<CR>",    desc = "Hop Char1" },
+      { mode = 'n', '<LEADER>j2', "<CMD>HopChar2<CR>",    desc = "Hop Char2" },
+      { mode = 'n', '<LEADER>jp', "<CMD>HopPattern<CR>",  desc = "Hop Pattern" },
     }
   },
 
@@ -122,5 +148,29 @@ return {
         desc = "Quickfix List (Trouble)",
       },
     },
+  },
+
+  {
+    "mfussenegger/nvim-dap",
+    dependencies = {
+      "rcarriga/nvim-dap-ui",
+      "nvim-neotest/nvim-nio",
+    },
+    config = function()
+      local dap, dapui = require("dap"), require("dapui")
+      dap.listeners.before.attach.dapui_config = function()
+        dapui.open()
+      end
+      dap.listeners.before.launch.dapui_config = function()
+        dapui.open()
+      end
+      dap.listeners.before.event_terminated.dapui_config = function()
+        dapui.close()
+      end
+      dap.listeners.before.event_exited.dapui_config = function()
+        dapui.close()
+      end
+    end,
+    event = 'VeryLazy',
   },
 }

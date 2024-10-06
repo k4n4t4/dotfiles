@@ -7,7 +7,6 @@ return {
       sources = {
         null_ls.builtins.completion.spell,
         null_ls.builtins.completion.tags,
-
         null_ls.builtins.diagnostics.buf
       },
     }
