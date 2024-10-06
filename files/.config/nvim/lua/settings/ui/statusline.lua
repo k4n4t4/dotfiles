@@ -319,7 +319,7 @@ function StatusLineActive()
   local status_line = {
     macro,
     mode,
-    file,
+    " "..file.." ",
     flag,
     diagnostic,
     git,
@@ -344,7 +344,7 @@ function StatusLineInactive()
   local filetype = status_filetype()
   local status_line = {
     mode,
-    file,
+    " "..file.." ",
     flag,
     "%=%<",
     "%S ",
