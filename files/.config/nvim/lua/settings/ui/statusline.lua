@@ -216,7 +216,7 @@ local function status_git()
       table.insert(format, "%#" .. git_color.change .. "#" .. git_icon.change .. status.changed .. "%*")
     end
   end
-  return table.concat(format, " ")
+  return table.concat(format, "")
 end
 
 local utils_lsp = require "utils.lsp"
@@ -254,7 +254,7 @@ local function status_diagnostic()
       table.insert(format, "%#" .. diagnostic_color[name] .. "#" .. icon .. count .. "%*")
     end
   end
-  return table.concat(format, ", ")
+  return table.concat(format, "")
 end
 
 local function status_macro_recording()
