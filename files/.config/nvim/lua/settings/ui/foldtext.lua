@@ -20,12 +20,12 @@ vim.api.nvim_set_decoration_provider(namespace, {
 
           table.insert(virt_texts, {
             " ▼ ",
-            {'Bold', 'Comment'},
+            {"Bold", "Comment"},
           })
           table.insert(virt_texts, {
             " " .. fold_start .. " - " .. fold_end .. " " ..
               (fold_level == 1 and "" or "(" .. fold_level .. ") "),
-            {'Comment', 'Underlined'},
+            {"Comment", "Underlined"},
           })
 
           pcall(vim.api.nvim_buf_set_extmark, bufnr, namespace, lnum-1, 0, {

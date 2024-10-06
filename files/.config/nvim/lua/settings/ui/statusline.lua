@@ -1,72 +1,72 @@
 local function status_line_highlights()
-  vim.api.nvim_set_hl(0, 'StatusLine', {
+  vim.api.nvim_set_hl(0, "StatusLine", {
     fg = "#EEEEEE",
     bg = "none",
   })
-  vim.api.nvim_set_hl(0, 'StatusLineNC', {
+  vim.api.nvim_set_hl(0, "StatusLineNC", {
     fg = "#AAAAAA",
     bg = "none",
   })
 
-  vim.api.nvim_set_hl(0, 'StatusLineModeNormal', {
+  vim.api.nvim_set_hl(0, "StatusLineModeNormal", {
     fg = "#99EE99",
     bg = "none",
   })
-  vim.api.nvim_set_hl(0, 'StatusLineModeInsert', {
+  vim.api.nvim_set_hl(0, "StatusLineModeInsert", {
     fg = "#EE9999",
     bg = "none",
   })
-  vim.api.nvim_set_hl(0, 'StatusLineModeReplace', {
+  vim.api.nvim_set_hl(0, "StatusLineModeReplace", {
     fg = "#EEEE99",
     bg = "none",
   })
-  vim.api.nvim_set_hl(0, 'StatusLineModeVisual', {
+  vim.api.nvim_set_hl(0, "StatusLineModeVisual", {
     fg = "#9999EE",
     bg = "none",
   })
-  vim.api.nvim_set_hl(0, 'StatusLineModeConfirm', {
+  vim.api.nvim_set_hl(0, "StatusLineModeConfirm", {
     fg = "#999999",
     bg = "none",
   })
-  vim.api.nvim_set_hl(0, 'StatusLineModeTerminal', {
+  vim.api.nvim_set_hl(0, "StatusLineModeTerminal", {
     fg = "#999999",
     bg = "none",
   })
-  vim.api.nvim_set_hl(0, 'StatusLineModeOther', {
+  vim.api.nvim_set_hl(0, "StatusLineModeOther", {
     fg = "#EE99EE",
     bg = "none",
   })
 
-  vim.api.nvim_set_hl(0, 'StatusLineDiagnosticERROR', {
+  vim.api.nvim_set_hl(0, "StatusLineDiagnosticERROR", {
     fg = "#EE9999",
     bg = "none",
   })
-  vim.api.nvim_set_hl(0, 'StatusLineDiagnosticWARN', {
+  vim.api.nvim_set_hl(0, "StatusLineDiagnosticWARN", {
     fg = "#EEEE99",
     bg = "none",
   })
-  vim.api.nvim_set_hl(0, 'StatusLineDiagnosticINFO', {
+  vim.api.nvim_set_hl(0, "StatusLineDiagnosticINFO", {
     fg = "#99EEEE",
     bg = "none",
   })
-  vim.api.nvim_set_hl(0, 'StatusLineDiagnosticHINT', {
+  vim.api.nvim_set_hl(0, "StatusLineDiagnosticHINT", {
     fg = "#99EE99",
     bg = "none",
   })
 
-  vim.api.nvim_set_hl(0, 'StatusLineGitAdd', {
+  vim.api.nvim_set_hl(0, "StatusLineGitAdd", {
     fg = "#55CC55",
     bg = "none",
   })
-  vim.api.nvim_set_hl(0, 'StatusLineGitRemove', {
+  vim.api.nvim_set_hl(0, "StatusLineGitRemove", {
     fg = "#CC5555",
     bg = "none",
   })
-  vim.api.nvim_set_hl(0, 'StatusLineGitChange', {
+  vim.api.nvim_set_hl(0, "StatusLineGitChange", {
     fg = "#5555CC",
     bg = "none",
   })
-  vim.api.nvim_set_hl(0, 'StatusLineGitBranch', {
+  vim.api.nvim_set_hl(0, "StatusLineGitBranch", {
     fg = "#CC9955",
     bg = "none",
   })
@@ -80,85 +80,85 @@ vim.api.nvim_create_autocmd({
 })
 
 local mode_name = {
-  ['n']    = 'N',
-  ['no']   = 'NO',
-  ['nov']  = 'NOC',
-  ['noV']  = 'NOL',
-  ['no^V'] = 'NOB',
+  ["n"]    = "N",
+  ["no"]   = "NO",
+  ["nov"]  = "NOC",
+  ["noV"]  = "NOL",
+  ["no^V"] = "NOB",
 
-  ['niI']  = 'NI',
-  ['niR']  = 'NR',
-  ['niV']  = 'NV',
-  ['nt']   = 'NT',
-  ['ntT']  = 'NTT',
+  ["niI"]  = "NI",
+  ["niR"]  = "NR",
+  ["niV"]  = "NV",
+  ["nt"]   = "NT",
+  ["ntT"]  = "NTT",
 
-  ['v']    = 'V',
-  ['vs']   = 'VS',
-  ['V']    = 'VL',
-  ['Vs']   = 'VLS',
-  ['']    = 'VB',
-  ['s']   = 'VBS',
+  ["v"]    = "V",
+  ["vs"]   = "VS",
+  ["V"]    = "VL",
+  ["Vs"]   = "VLS",
+  [""]    = "VB",
+  ["s"]   = "VBS",
 
-  ['s']    = 'S',
-  ['S']    = 'SL',
-  ['']    = 'SB',
+  ["s"]    = "S",
+  ["S"]    = "SL",
+  [""]    = "SB",
 
-  ['i']    = 'I',
-  ['ic']   = 'IC',
-  ['ix']   = 'IX',
+  ["i"]    = "I",
+  ["ic"]   = "IC",
+  ["ix"]   = "IX",
 
-  ['R']    = 'R',
-  ['Rc']   = 'RC',
-  ['Rx']   = 'RX',
-  ['Rv']   = 'RV',
-  ['Rvc']  = 'RVC',
-  ['Rvx']  = 'RVX',
+  ["R"]    = "R",
+  ["Rc"]   = "RC",
+  ["Rx"]   = "RX",
+  ["Rv"]   = "RV",
+  ["Rvc"]  = "RVC",
+  ["Rvx"]  = "RVX",
 
-  ['c']    = 'C',
-  ['cr']   = 'CR',
+  ["c"]    = "C",
+  ["cr"]   = "CR",
 
-  ['cv']   = 'EX',
-  ['cvr']  = 'EXR',
+  ["cv"]   = "EX",
+  ["cvr"]  = "EXR",
 
-  ['r']    = 'P',
-  ['rm']   = 'M',
-  ['r?']   = 'CF',
-  ['!']    = 'SH',
-  ['t']    = 'T',
+  ["r"]    = "P",
+  ["rm"]   = "M",
+  ["r?"]   = "CF",
+  ["!"]    = "SH",
+  ["t"]    = "T",
 }
 
 local mode_color = {
-  ['n']    = 'StatusLineModeNormal',
-  ['no']   = 'StatusLineModeNormal',
-  ['nov']  = 'StatusLineModeNormal',
-  ['noV']  = 'StatusLineModeNormal',
-  ['no^V'] = 'StatusLineModeNormal',
-  ['v']    = 'StatusLineModeVisual',
-  ['vs']   = 'StatusLineModeVisual',
-  ['V']    = 'StatusLineModeVisual',
-  ['Vs']   = 'StatusLineModeVisual',
-  ['']    = 'StatusLineModeVisual',
-  ['s']   = 'StatusLineModeVisual',
-  ['i']    = 'StatusLineModeInsert',
-  ['ic']   = 'StatusLineModeInsert',
-  ['ix']   = 'StatusLineModeInsert',
-  ['R']    = 'StatusLineModeReplace',
-  ['Rc']   = 'StatusLineModeReplace',
-  ['Rx']   = 'StatusLineModeReplace',
-  ['Rv']   = 'StatusLineModeReplace',
-  ['Rvc']  = 'StatusLineModeReplace',
-  ['Rvx']  = 'StatusLineModeReplace',
-  ['r?']   = 'StatusLineModeConfirm',
-  ['!']    = 'StatusLineModeTerminal',
-  ['t']    = 'StatusLineModeTerminal',
-  ['nt']   = 'StatusLineModeNormal',
+  ["n"]    = "StatusLineModeNormal",
+  ["no"]   = "StatusLineModeNormal",
+  ["nov"]  = "StatusLineModeNormal",
+  ["noV"]  = "StatusLineModeNormal",
+  ["no^V"] = "StatusLineModeNormal",
+  ["v"]    = "StatusLineModeVisual",
+  ["vs"]   = "StatusLineModeVisual",
+  ["V"]    = "StatusLineModeVisual",
+  ["Vs"]   = "StatusLineModeVisual",
+  [""]    = "StatusLineModeVisual",
+  ["s"]   = "StatusLineModeVisual",
+  ["i"]    = "StatusLineModeInsert",
+  ["ic"]   = "StatusLineModeInsert",
+  ["ix"]   = "StatusLineModeInsert",
+  ["R"]    = "StatusLineModeReplace",
+  ["Rc"]   = "StatusLineModeReplace",
+  ["Rx"]   = "StatusLineModeReplace",
+  ["Rv"]   = "StatusLineModeReplace",
+  ["Rvc"]  = "StatusLineModeReplace",
+  ["Rvx"]  = "StatusLineModeReplace",
+  ["r?"]   = "StatusLineModeConfirm",
+  ["!"]    = "StatusLineModeTerminal",
+  ["t"]    = "StatusLineModeTerminal",
+  ["nt"]   = "StatusLineModeNormal",
 }
 
 local function status_mode()
   local mode = vim.api.nvim_get_mode()
   local blocking = mode.blocking and "=" or ""
   local name = mode_name[mode.mode] or "?"
-  local color = mode_color[mode.mode] or 'StatusLineModeOther'
+  local color = mode_color[mode.mode] or "StatusLineModeOther"
 
   local format = {
     "%#" .. color .. "#",
@@ -178,9 +178,9 @@ local function status_fileformat()
 end
 
 local filetype_name = {
-  ['javascript'] = "js",
-  ['typescript'] = "ts",
-  ['python']     = "py",
+  ["javascript"] = "js",
+  ["typescript"] = "ts",
+  ["python"]     = "py",
 }
 
 local function status_filetype()
@@ -236,10 +236,10 @@ local diagnostic_color = {
 }
 
 local diagnostic_icon = {
-  ERROR = '!',
-  WARN = '*',
-  INFO = 'i',
-  HINT = '?',
+  ERROR = "!",
+  WARN = "*",
+  INFO = "i",
+  HINT = "?",
 }
 
 local utils_diagnostic = require "utils.diagnostic"
