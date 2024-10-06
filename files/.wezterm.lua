@@ -73,8 +73,6 @@ config.keys = {
   }
 }
 
-config.default_prog = {
-  "/home/linuxbrew/.linuxbrew/bin/fish"
-}
+config.default_prog = { "fish" }
 
 return config
