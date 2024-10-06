@@ -161,11 +161,41 @@ local filetype_name = {
   ['typescript'] = "ts",
   ['python']     = "py",
 }
+
 local function status_filetype()
   local ft = vim.o.ft
   return (not ft or ft == "") and "" or (filetype_name[ft] or ft)
 end
 
+local git_icon = {
+  add = "+",
+  remove = "-",
+  change = "~",
+}
+
+local git_color = {
+  add = "GreenSign",
+  remove = "RedSign",
+  change = "BlueSign",
+}
+
+local function status_git()
+  local fmt = {}
+  local status = vim.b.gitsigns_status_dict
+  if status then
+    table.insert(fmt, "(" .. status.head .. ")")
+    if status.added and status.added > 0 then
+      table.insert(fmt, "%#" .. git_color.add .. "#" .. git_icon.add .. status.added .. "%*")
+    end
+    if status.removed and status.removed > 0 then
+      table.insert(fmt, "%#" .. git_color.remove .. "#" .. git_icon.remove .. status.removed .. "%*")
+    end
+    if status.changed and status.changed > 0 then
+      table.insert(fmt, "%#" .. git_color.change .. "#" .. git_icon.change .. status.changed .. "%*")
+    end
+  end
+  return table.concat(fmt, " ")
+end
 
 local lsp = require "utils.lsp"
 local function status_lsp()
@@ -219,6 +249,7 @@ function StatusLine()
   local search = status_search_count()
   local lsp_format = status_lsp()
   local diagnostic_format = status_diagnostic()
+  local git_format = status_git()
 
   local macro_format = ""
   if macro ~= "" then
@@ -238,6 +269,7 @@ function StatusLine()
     " " .. mode_format,
     "%f%m%r%h%w",
     " " .. diagnostic_format,
+    " " .. git_format,
     "%=%<",
     "%S ",
     search_format,
