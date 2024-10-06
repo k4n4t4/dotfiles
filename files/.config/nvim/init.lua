@@ -1,4 +1,4 @@
-require "settings"
+require "config"
 require "core"
 require "lazyvim"
-require "config"
+require "settings"
