@@ -16,7 +16,22 @@ return {
     },
     config = function()
       local cmp = require "cmp"
+      local lspkind = require "lspkind"
       cmp.setup {
+        formatting = {
+          format = lspkind.cmp_format {
+            mode = "symbol_text",
+            menu = {
+              buffer = "[Buffer]",
+              nvim_lsp = "[LSP]",
+              nvim_lua = "[Lua]",
+              luasnip = "[LuaSnip]",
+              latex_symbols = "[Latex]",
+              path = "[Path]",
+              git = "[Git]",
+            },
+          },
+        },
         window = {
           completion = {
             border = 'single',
@@ -55,7 +70,7 @@ return {
           { name = 'buffer' },
         }
       })
-      cmp.setup.cmdline({':', '@', '-', '=', '>'}, {
+      cmp.setup.cmdline({ ':', '@', '-', '=', '>' }, {
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources {
           { name = 'path' },
