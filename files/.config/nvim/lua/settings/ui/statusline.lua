@@ -53,16 +53,30 @@ local function status_line_highlights()
     fg = "#99EE99",
     bg = "none",
   })
+
+  vim.api.nvim_set_hl(0, 'StatusLineGitAdd', {
+    fg = "#55CC55",
+    bg = "none",
+  })
+  vim.api.nvim_set_hl(0, 'StatusLineGitRemove', {
+    fg = "#CC5555",
+    bg = "none",
+  })
+  vim.api.nvim_set_hl(0, 'StatusLineGitChange', {
+    fg = "#5555CC",
+    bg = "none",
+  })
+  vim.api.nvim_set_hl(0, 'StatusLineGitBranch', {
+    fg = "#CC9955",
+    bg = "none",
+  })
 end
 
 vim.api.nvim_create_autocmd({
   "VimEnter",
   "ColorScheme",
 }, {
-  pattern = "*",
-  callback = function()
-    status_line_highlights()
-  end
+  callback = status_line_highlights
 })
 
 local mode_name = {
@@ -145,7 +159,14 @@ local function status_mode()
   local blocking = mode.blocking and "=" or ""
   local name = mode_name[mode.mode] or "?"
   local color = mode_color[mode.mode] or 'StatusLineModeOther'
-  return { color = color, name = name .. blocking }
+
+  local format = {
+    "%#" .. color .. "#",
+    name .. blocking,
+    "%*",
+  }
+
+  return table.concat(format, "")
 end
 
 local function status_encoding()
@@ -163,7 +184,7 @@ local filetype_name = {
 }
 
 local function status_filetype()
-  local ft = vim.o.ft
+  local ft = vim.bo.ft
   return (not ft or ft == "") and "" or (filetype_name[ft] or ft)
 end
 
@@ -174,32 +195,33 @@ local git_icon = {
 }
 
 local git_color = {
-  add = "GreenSign",
-  remove = "RedSign",
-  change = "BlueSign",
+  branch = "StatusLineGitBranch",
+  add = "StatusLineGitAdd",
+  remove = "StatusLineGitRemove",
+  change = "StatusLineGitChange",
 }
 
 local function status_git()
-  local fmt = {}
+  local format = {}
   local status = vim.b.gitsigns_status_dict
   if status then
-    table.insert(fmt, "(" .. status.head .. ")")
+    table.insert(format, "%#" .. git_color.branch .. "#(" .. status.head .. ")%*")
     if status.added and status.added > 0 then
-      table.insert(fmt, "%#" .. git_color.add .. "#" .. git_icon.add .. status.added .. "%*")
+      table.insert(format, "%#" .. git_color.add .. "#" .. git_icon.add .. status.added .. "%*")
     end
     if status.removed and status.removed > 0 then
-      table.insert(fmt, "%#" .. git_color.remove .. "#" .. git_icon.remove .. status.removed .. "%*")
+      table.insert(format, "%#" .. git_color.remove .. "#" .. git_icon.remove .. status.removed .. "%*")
     end
     if status.changed and status.changed > 0 then
-      table.insert(fmt, "%#" .. git_color.change .. "#" .. git_icon.change .. status.changed .. "%*")
+      table.insert(format, "%#" .. git_color.change .. "#" .. git_icon.change .. status.changed .. "%*")
     end
   end
-  return table.concat(fmt, " ")
+  return table.concat(format, " ")
 end
 
-local lsp = require "utils.lsp"
+local utils_lsp = require "utils.lsp"
 local function status_lsp()
-  local clients, others = lsp.get(0)
+  local clients, others = utils_lsp.get(0)
   if others["null-ls"] and #others["null-ls"] > 0 then
     table.insert(clients, "null-ls:[" .. table.concat(others["null-ls"], ", ") .. "]")
   end
@@ -220,81 +242,150 @@ local diagnostic_icon = {
   HINT = '?',
 }
 
-local diagnostic = require "utils.diagnostic"
+local utils_diagnostic = require "utils.diagnostic"
 local function status_diagnostic()
-  local diagnoses = diagnostic.get(0)
-  local fmt = {}
+  local format = {}
+  local diagnoses = utils_diagnostic.get(0)
   for k, v in pairs(diagnoses) do
     if #v ~= 0 then
-      local name = diagnostic.SEVERITY[k]
+      local name = utils_diagnostic.SEVERITY[k]
       local icon = diagnostic_icon[name]
       local count = #v
-      table.insert(fmt, "%#" .. diagnostic_color[name] .. "#" .. icon .. count .. "%*")
+      table.insert(format, "%#" .. diagnostic_color[name] .. "#" .. icon .. count .. "%*")
     end
   end
-  return table.concat(fmt, ", ")
+  return table.concat(format, ", ")
 end
 
 local function status_macro_recording()
-  return vim.fn.reg_recording()
+  local format = {}
+  local macro = vim.fn.reg_recording()
+  if macro ~= "" then
+    table.insert(format, "@" .. macro)
+  end
+  return table.concat(format, "")
 end
 
 local function status_search_count()
-  return vim.fn.searchcount()
+  local format = {}
+
+  local search = vim.fn.searchcount()
+
+  if search.total ~= nil and vim.v.hlsearch == 1 then
+    table.insert(format, "[" .. search.current .. "/" .. search.total .. "] ")
+  end
+
+  return table.concat(format, "")
 end
 
-function StatusLine()
+local function status_file()
+  return vim.fn.expand("%:t")
+end
+
+local function status_flag(file)
+  local format = {}
+
+  if vim.o.previewwindow then
+    table.insert(format, "p")
+  end
+  if vim.bo.readonly then
+    table.insert(format, "r")
+  else
+    if vim.bo.modifiable then
+      if vim.bo.modified then
+        table.insert(format, "+")
+      end
+    else
+        table.insert(format, "-")
+    end
+  end
+
+  return table.concat(format, "")
+end
+
+function StatusLineActive()
   local macro = status_macro_recording()
   local mode = status_mode()
+  local file = status_file()
+  local flag = status_flag(file)
   local search = status_search_count()
-  local lsp_format = status_lsp()
-  local diagnostic_format = status_diagnostic()
-  local git_format = status_git()
-
-  local macro_format = ""
-  if macro ~= "" then
-    macro_format = "@" .. macro .. " "
-  end
-
-  local mode_format = "%#" .. mode.color .. "#" .. mode.name .. "%*" .. " "
-
-  local search_format = ""
-  if search.total ~= nil and vim.v.hlsearch == 1 then
-    search_format = "[" .. search.current .. "/" .. search.total .. "] "
-  end
+  local lsp = status_lsp()
+  local diagnostic = status_diagnostic()
+  local git = status_git()
+  local encoding = status_encoding()
+  local fileformat = status_fileformat()
+  local filetype = status_filetype()
 
   local status_line = {
-    "%n " ..
-    macro_format,
-    " " .. mode_format,
-    "%f%m%r%h%w",
-    " " .. diagnostic_format,
-    " " .. git_format,
+    macro,
+    mode,
+    file,
+    flag,
+    diagnostic,
+    git,
     "%=%<",
     "%S ",
-    search_format,
-    lsp_format .. " ",
-    status_encoding() .. " ",
-    status_fileformat() .. " ",
-    status_filetype() .. " ",
-    "%n %l/%L,%c%V %P",
+    search,
+    lsp .. " ",
+    encoding.. " ",
+    fileformat .. " ",
+    filetype .. " ",
+    "%l/%L,%c %n",
   }
   return table.concat(status_line, "")
 end
 
 function StatusLineInactive()
-  return (
-    "%n %f%m%r%h%w" ..
-    "%=%<" ..
-    "%l/%L,%c%V %P"
-  )
+  local mode = status_mode()
+  local file = status_file()
+  local flag = status_flag(file)
+  local encoding = status_encoding()
+  local fileformat = status_fileformat()
+  local filetype = status_filetype()
+  local status_line = {
+    mode,
+    file,
+    flag,
+    "%=%<",
+    "%S ",
+    encoding.. " ",
+    fileformat .. " ",
+    filetype .. " ",
+    "%l/%L,%c %n",
+  }
+  return table.concat(status_line, "")
+end
+
+function StatusLineSimple()
+  local mode = status_mode()
+  local filetype = status_filetype()
+  local status_line = {
+    mode,
+    "%=%<",
+    "%S ",
+    filetype .. " ",
+    "%n",
+  }
+  return table.concat(status_line, "")
+end
+
+function StatusLine(active)
+  if vim.bo.ft == "neo-tree" then
+    return StatusLineSimple()
+  else
+    if active == 1 then
+      return StatusLineActive()
+    else
+      return StatusLineInactive()
+    end
+  end
 end
 
 vim.opt.ruler = false
 vim.opt.rulerformat = "%15(%l,%c%V%=%P%)"
 
 vim.opt.laststatus = 3
-vim.opt.statusline = "%{% g:actual_curwin == win_getid() ? v:lua.StatusLine() : v:lua.StatusLineInactive() %}"
+vim.opt.statusline = "%{% v:lua.StatusLine(g:actual_curwin == win_getid()) %}"
 
 local group = vim.api.nvim_create_augroup("StatusLine", { clear = true })
 vim.api.nvim_create_autocmd("ModeChanged", {
