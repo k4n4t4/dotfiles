@@ -8,7 +8,6 @@ vim.opt.debug = 'throw'
 
 vim.opt.number = true
 vim.opt.relativenumber = true
-vim.opt.foldcolumn = '1'
 vim.opt.signcolumn = "yes"
 vim.opt.numberwidth = 4
 
