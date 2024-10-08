@@ -45,7 +45,6 @@ vim.opt.sidescrolloff = 3
 vim.opt.showmode = false
 vim.opt.showcmd = true
 vim.opt.showcmdloc = 'statusline'
-vim.opt.showtabline = 1
 
 vim.opt.spell = false
 vim.opt.spelllang = "en"
