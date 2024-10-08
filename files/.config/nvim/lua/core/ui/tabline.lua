@@ -9,11 +9,11 @@ local function tabline_highlights()
   })
   vim.api.nvim_set_hl(0, "TabLineFileName", {
     fg = "#A0A0A0",
-    bg = "none",
+    bg = "#202020",
   })
   vim.api.nvim_set_hl(0, "TabLineUntitled", {
     fg = "#707070",
-    bg = "none",
+    bg = "#202020",
     italic = true,
   })
   vim.api.nvim_set_hl(0, "CurrentTabLine", {
@@ -22,11 +22,11 @@ local function tabline_highlights()
   })
   vim.api.nvim_set_hl(0, "CurrentTabLineFileName", {
     fg = "#E0E0E0",
-    bg = "none",
+    bg = "#404040",
   })
   vim.api.nvim_set_hl(0, "CurrentTabLineUntitled", {
     fg = "#909090",
-    bg = "none",
+    bg = "#404040",
     italic = true,
   })
 end
