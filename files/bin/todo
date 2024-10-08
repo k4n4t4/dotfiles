@@ -278,7 +278,7 @@ del() {
   : > "$TODO_FILE"
   todo_index=0
   while [ $# -gt 0 ]; do
-    if [ $todo_index -eq $todo_del_index ]; then
+    if [ $todo_index -eq "$todo_del_index" ]; then
       shift
       todo_index=$((todo_index + 1))
       continue
@@ -316,34 +316,35 @@ move() {
     echo "\"$2\" is not number." >&2
     return 1
   fi
-  if [ $1 -eq $2 ]; then
+  if [ "$1" -eq "$2" ]; then
     return 0
   fi
   todo_move_from_index=$1
   todo_move_to_index=$2
 
-  get_todo_list
+  get_todo_list "$@"
   eval "set -- $RET"
 
-  if [ $todo_move_from_index -lt 0 ] || [ $((todo_move_from_index + 1)) -gt $# ]; then
+  if [ "$todo_move_from_index" -lt 0 ] || [ $((todo_move_from_index + 1)) -gt $# ]; then
     echo "Invalid number." >&2
     return 1
   fi
-  if [ $todo_move_to_index -lt 0 ] || [ $((todo_move_to_index)) -gt $# ]; then
+  if [ "$todo_move_to_index" -lt 0 ] || [ $((todo_move_to_index)) -gt $# ]; then
     echo "Invalid number." >&2
     return 1
   fi
 
   : > "$TODO_FILE"
+  todo_move_from_text=""
   eval "todo_move_from_text=\"\${$((todo_move_from_index + 1))}\""
   todo_index=0
   while [ $# -gt 0 ]; do
-    if [ $todo_index -eq $todo_move_to_index ]; then
+    if [ $todo_index -eq "$todo_move_to_index" ]; then
       printf "%s\n" "$todo_move_from_text" >> "$TODO_FILE"
       printf "%s\n" "$1" >> "$TODO_FILE"
       shift
     else
-      if [ $todo_index -eq $todo_move_from_index ]; then
+      if [ $todo_index -eq "$todo_move_from_index" ]; then
         shift
       else
         printf "%s\n" "$1" >> "$TODO_FILE"
@@ -352,7 +353,7 @@ move() {
     fi
     todo_index=$((todo_index + 1))
   done
-  if [ $todo_index -eq $todo_move_to_index ]; then
+  if [ $todo_index -eq "$todo_move_to_index" ]; then
     printf "%s\n" "$todo_move_from_text" >> "$TODO_FILE"
   fi
 }
@@ -393,7 +394,7 @@ cmp() {
       qesc "$1"
       todo_line="$RET"
 
-      if [ $todo_index -eq $todo_complete_index ]; then
+      if [ $todo_index -eq "$todo_complete_index" ]; then
         if $2; then
           todo_line="$todo_line 'false'"
         else
