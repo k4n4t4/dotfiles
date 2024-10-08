@@ -252,7 +252,7 @@ return {
   end,
   event = 'User DirEnter',
   keys = {
-    { mode = 'n', "<LEADER>e", "<CMD>Neotree toggle<CR>", desc = "Neotree Toggle" },
-    { mode = 'n', "<LEADER>E", "<CMD>Neotree focus<CR>", desc = "Neotree Focus" },
+    { mode = 'n', "<LEADER>e", "<CMD>Neotree focus<CR>", desc = "Neotree Focus" },
+    { mode = 'n', "<LEADER>E", "<CMD>Neotree toggle<CR>", desc = "Neotree Toggle" },
   },
 }
