@@ -125,5 +125,5 @@ function TabLine()
   return table.concat(tabline_items, "") .. "%#TabLineFill#" .. "%T"
 end
 
-vim.opt.showtabline = 2
+vim.opt.showtabline = 1
 vim.opt.tabline = "%!v:lua.TabLine()"
