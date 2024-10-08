@@ -29,16 +29,6 @@ return {
           override_file_sorter = true,
           case_mode = 'smart_case',
         },
-        aerial = {
-          format_symbol = function(symbol_path, filetype)
-            if filetype == "json" or filetype == "yaml" then
-              return table.concat(symbol_path, '.')
-            else
-              return symbol_path[#symbol_path]
-            end
-          end,
-          show_columns = 'both',
-        },
         project = {
           base_dirs = {
             '~/dotfiles',
@@ -73,7 +63,6 @@ return {
       },
     }
     telescope.load_extension "fzf"
-    telescope.load_extension "aerial"
     telescope.load_extension "project"
   end,
   cmd = "Telescope",
@@ -86,7 +75,6 @@ return {
     { mode = 'n', "<LEADER>tb", "<CMD>Telescope buffers<CR>",                   desc = "Telescope Buffers" },
     { mode = 'n', "<LEADER>th", "<CMD>Telescope help_tags<CR>",                 desc = "Telescope Help Tags" },
     { mode = 'n', "<LEADER>t/", "<CMD>Telescope current_buffer_fuzzy_find<CR>", desc = "Telescope Current Buffer Fuzzy Finder" },
-    { mode = 'n', "<LEADER>ta", "<CMD>Telescope aerial<CR>",                    desc = "Telescope Aerial" },
     { mode = 'n', "<LEADER>tz", "<CMD>Telescope fzf<CR>",                       desc = "Telescope fzf" },
     { mode = 'n', "<LEADER>tp", "<CMD>Telescope project<CR>",                   desc = "Telescope Project" },
   },
