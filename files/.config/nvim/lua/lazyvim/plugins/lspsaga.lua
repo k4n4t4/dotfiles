@@ -3,8 +3,11 @@ return {
   dependencies = {
     'nvim-tree/nvim-web-devicons',
   },
-  config = function()
-    require('lspsaga').setup {}
-  end,
+  opts = {
+  },
   event = 'VeryLazy',
+  keys = {
+    { mode = 'n', '<LEADER>go', "<CMD>Lspsaga outline<CR>", desc = "Lspsaga Outline" },
+    { mode = 'n', '<LEADER>gf', "<CMD>Lspsaga finder<CR>", desc = "Lspsaga Finder" },
+  },
 }

@@ -64,9 +64,9 @@ return {
               ['b'] = project_actions.browse_project_files,
               ['s'] = project_actions.search_in_project_files,
               ['R'] = project_actions.recent_project_files,
-              ['w'] = project_actions.change_working_directory,
               ['o'] = project_actions.next_cd_scope,
-              ['k'] = project_actions.change_workspace,
+              ['w'] = project_actions.change_working_directory,
+              ['W'] = project_actions.change_workspace,
             },
           }
         },
