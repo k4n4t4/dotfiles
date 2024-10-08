@@ -78,8 +78,12 @@ return {
   },
 
   {
+    "monaqa/dial.nvim",
+    event = 'VeryLazy',
+  },
+
+  {
     "shellRaining/hlchunk.nvim",
-    event = { "BufReadPre", "BufNewFile" },
     config = function()
       require("hlchunk").setup {
         chunk = {
@@ -103,9 +107,10 @@ return {
         },
         indent = {
           enable = false,
-        }
+        },
       }
-    end
+    end,
+    event = 'VeryLazy',
   },
 
 
