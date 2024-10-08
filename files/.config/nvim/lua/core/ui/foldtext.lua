@@ -1,4 +1,4 @@
-vim.opt.foldcolumn = '0'
+vim.opt.foldcolumn = '1'
 vim.opt.foldtext = ""
 
 
