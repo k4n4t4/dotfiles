@@ -80,6 +80,7 @@ return {
   keys = {
     { mode = 'n', "<LEADER>tt", "<CMD>Telescope<CR>",                           desc = "Telescope" },
     { mode = 'n', "<LEADER>tk", "<CMD>Telescope keymaps<CR>",                   desc = "Telescope Keymaps" },
+    { mode = 'n', "<LEADER>tr", "<CMD>Telescope oldfiles<CR>",                   desc = "Telescope Oldfiles" },
     { mode = 'n', "<LEADER>tf", "<CMD>Telescope find_files<CR>",                desc = "Telescope Find Files" },
     { mode = 'n', "<LEADER>tg", "<CMD>Telescope live_grep<CR>",                 desc = "Telescope Live Grep" },
     { mode = 'n', "<LEADER>tb", "<CMD>Telescope buffers<CR>",                   desc = "Telescope Buffers" },
