@@ -48,21 +48,6 @@ return {
       spacing = 1,
     }
 
-    vim.api.nvim_create_autocmd("User", {
-      pattern = "AlphaReady",
-      callback = function()
-        vim.opt.laststatus = 0
-        vim.opt.showtabline = 0
-      end
-    })
-    vim.api.nvim_create_autocmd("BufUnload", {
-      pattern = "<buffer>",
-      callback = function()
-        vim.opt.laststatus = 2
-        vim.opt.showtabline = 1
-      end
-    })
-
     require("alpha").setup(dashboard.config)
 
     vim.cmd [[ autocmd FileType alpha setlocal nofoldenable ]]
