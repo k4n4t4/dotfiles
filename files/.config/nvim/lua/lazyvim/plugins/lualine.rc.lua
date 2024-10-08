@@ -20,7 +20,19 @@ return {
         }
       },
       sections = {
-        lualine_a = { 'mode' },
+        lualine_a = {
+          'mode',
+          {
+            function()
+              local format = {}
+              local macro = vim.fn.reg_recording()
+              if macro ~= "" then
+                table.insert(format, "@" .. macro)
+              end
+              return table.concat(format, "")
+            end
+          }
+        },
         lualine_b = { 'branch', 'diff', 'diagnostics' },
         lualine_c = { 'filename' },
         lualine_x = { 'encoding', 'fileformat', 'filetype' },
