@@ -1,3 +1,17 @@
+vim.opt.ruler = false
+vim.opt.rulerformat = "%15(%l,%c%V%=%P%)"
+
+vim.opt.laststatus = 3
+vim.opt.statusline = "%{% v:lua.StatusLine(g:actual_curwin == win_getid()) %}"
+
+local group = vim.api.nvim_create_augroup("StatusLine", { clear = true })
+vim.api.nvim_create_autocmd("ModeChanged", {
+  group = group,
+  callback = function()
+    vim.cmd [[redrawstatus]]
+  end
+})
+
 local function status_line_highlights()
   vim.api.nvim_set_hl(0, "StatusLine", {
     fg = "#EEEEEE",
@@ -380,17 +394,3 @@ function StatusLine(active)
     end
   end
 end
-
-vim.opt.ruler = false
-vim.opt.rulerformat = "%15(%l,%c%V%=%P%)"
-
-vim.opt.laststatus = 3
-vim.opt.statusline = "%{% v:lua.StatusLine(g:actual_curwin == win_getid()) %}"
-
-local group = vim.api.nvim_create_augroup("StatusLine", { clear = true })
-vim.api.nvim_create_autocmd("ModeChanged", {
-  group = group,
-  callback = function()
-    vim.cmd [[redrawstatus]]
-  end
-})
