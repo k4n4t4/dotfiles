@@ -248,6 +248,50 @@ add() {
   done
 }
 
+priority() {
+  if [ $# -ne 2 ]; then
+    echo "Invalid arguments." >&2
+    return 1
+  fi
+  if ! is_number "$1"; then
+    echo "\"$1\" is not number." >&2
+    return 1
+  fi
+  if ! is_number "$2"; then
+    echo "\"$2\" is not number." >&2
+    return 1
+  fi
+  target_index=$1
+  target_priority=$2
+  get_todo_list
+  eval "set -- $RET"
+  : > "$TODO_FILE"
+  todo_index=0
+  while [ $# -gt 0 ]; do
+    if [ "$todo_index" -eq "$target_index" ]; then
+      env_func() {
+        eval "set -- $1"
+
+        qesc "$target_priority"
+        todo_line="$RET"
+        qesc "$2"
+        todo_line="$todo_line $RET"
+        qesc "$3"
+        todo_line="$todo_line $RET"
+        qesc "$4"
+        todo_line="$todo_line $RET"
+
+        printf "%s\n" "$todo_line" >> "$TODO_FILE"
+      }
+      env_func "$1"
+    else
+      printf "%s\n" "$1" >> "$TODO_FILE"
+    fi
+    shift
+    todo_index=$((todo_index + 1))
+  done
+}
+
 del() {
   opt_parser -- "$@"
   eval "set -- $RET"
@@ -490,6 +534,10 @@ main() {
     ( add | a )
       shift
       add "$@"
+      ;;
+    ( priority | p )
+      shift
+      priority "$@"
       ;;
     ( del | d )
       shift
