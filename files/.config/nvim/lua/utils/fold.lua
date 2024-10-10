@@ -10,8 +10,7 @@ function M.is_fold_start(lnum)
     local winview = vim.fn.winsaveview()
     vim.b.lazyredraw = true
 
-    vim.cmd.normal "k"
-    vim.cmd.normal "zj"
+    vim.cmd "noautocmd normal kzj"
     local fold_lnum = vim.fn.line(".")
 
     vim.fn.winrestview(winview)
@@ -28,7 +27,7 @@ function M.get_fold_start(toprow, botrow)
   vim.b.lazyredraw = true
   local folds = {}
 
-  vim.cmd.normal(tostring(toprow) .. "G")
+  vim.cmd("noautocmd normal " .. tostring(toprow) .. "G")
 
   local fold_lnum
   local pre_lnum
@@ -37,12 +36,12 @@ function M.get_fold_start(toprow, botrow)
     pre_lnum = 1
     table.insert(folds, fold_lnum)
   else
-    vim.cmd.normal "k"
+    vim.cmd "noautocmd normal k"
     pre_lnum = vim.fn.line(".")
   end
 
   while true do
-    vim.cmd.normal "zj"
+    vim.cmd "noautocmd normal zj"
     fold_lnum = vim.fn.line(".")
 
     if fold_lnum == pre_lnum or fold_lnum >= botrow then break end
