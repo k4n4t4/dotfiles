@@ -1,11 +1,6 @@
 #!/bin/sh
 set -eu
 
-#
-# Useful functions
-#
-
-# check is number
 is_number() {
   case "$1" in
     ( *[!0123456789]* )
@@ -17,11 +12,6 @@ is_number() {
   esac
 }
 
-# escape quotes
-# * The return value is in RET
-# e.g.
-# qesc "ABC" -> RET="'ABC'"
-# qesc "AB'C" -> RET="'AB'"'"'C'"
 qesc() {
   RET="$1"
   set -- ""
@@ -39,7 +29,6 @@ qesc() {
   done
 }
 
-# helper of opt_parser
 opt_parser_get_arg_count() {
   RET="$1"
   eval "set -- $2"
@@ -54,34 +43,6 @@ opt_parser_get_arg_count() {
   return 0
 }
 
-# option parser
-# e.g.
-# opt_parser --A:1 -- "$@"
-# eval "set -- $RET"
-# while [ $# -gt 0 ]; do
-#   case "$1" in
-#     ( -- )
-#       shift 1
-#       break
-#       ;;
-#     ( --A )
-#       arg_of_A="$2"
-#       shift 2
-#       ;;
-#     ( -a )
-#       : a option
-#       shift 1
-#       ;;
-#     ( -b )
-#       : b option
-#       shift 1
-#       ;;
-#     ( * )
-#       error "Invalid Option: \"$1\""
-#       return 1
-#       ;;
-#   esac
-# done
 opt_parser() {
   _option_has_arg=""
   while [ $# -gt 0 ]; do
@@ -198,14 +159,43 @@ get_todo_list() {
   RET="$todo_list"
 }
 
+create_todo() {
+  todo_priority="$1"
+  todo_complete="$2"
+  todo_date="$3"
+  todo_text="$4"
+
+  qesc "$todo_priority"
+  todo_line="$RET"
+  qesc "$todo_complete"
+  todo_line="$todo_line $RET"
+  qesc "$todo_date"
+  todo_line="$todo_line $RET"
+  qesc "$todo_text"
+  todo_line="$todo_line $RET"
+
+  RET="$todo_line"
+}
+
 
 usage() {
-  echo " [ Usage ]"
-  echo "    add"
-  echo "    del"
-  echo "    cmp"
-  echo "    move"
-  echo "    list"
+  echo "Usage"
+  echo
+  echo "  add [option] <text>           add todo"
+  echo "    Options"
+  echo "      -p, --priority <number>   set todo priority"
+  echo "      -c, --complete            set todo complete"
+  echo
+  echo "  pri <number>                  set todo priority"
+  echo
+  echo "  del <number>                  delete todo"
+  echo
+  echo "  cmp <number>                  complete todo"
+  echo
+  echo "  move <from> <to>              move todo"
+  echo
+  echo "  list                          list todo"
+  echo
 }
 
 add() {
@@ -222,7 +212,7 @@ add() {
           opt_priority="$2"
           shift 2
         else
-          echo "\"$1\" is not number" >&2
+          echo "\"$2\" is not a number" >&2
           return 1
         fi
         ;;
@@ -525,9 +515,9 @@ fi
 
 
 main() {
-  [ $# -eq 0 ] && set -- list
+  [ $# -eq 0 ] && set -- ls
   case "$1" in
-    ( help )
+    ( help | h )
       shift
       usage "$@"
       ;;
@@ -535,7 +525,7 @@ main() {
       shift
       add "$@"
       ;;
-    ( priority | p )
+    ( pri | p )
       shift
       priority "$@"
       ;;
@@ -543,7 +533,7 @@ main() {
       shift
       del "$@"
       ;;
-    ( move | m )
+    ( mv | m )
       shift
       move "$@"
       ;;
@@ -551,7 +541,7 @@ main() {
       shift
       cmp "$@"
       ;;
-    ( list | l )
+    ( ls | l )
       shift
       list "$@"
       ;;
