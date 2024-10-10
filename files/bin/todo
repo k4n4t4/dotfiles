@@ -379,10 +379,14 @@ cmp() {
     env_func() {
       eval "set -- $1"
 
-      if $2; then
-        todo_complete=false
+      if [ $todo_index -eq "$todo_complete_index" ]; then
+        if $2; then
+          todo_complete=false
+        else
+          todo_complete=true
+        fi
       else
-        todo_complete=true
+        todo_complete="$2"
       fi
 
       create_todo "$1" "$todo_complete" "$3" "$4"
