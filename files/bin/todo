@@ -181,20 +181,20 @@ create_todo() {
 usage() {
   echo "Usage"
   echo
-  echo "  add [option] <text>           add todo"
+  echo "  add [option] <text> [<text>...]    add todo"
   echo "    Options"
-  echo "      -p, --priority <number>   set todo priority"
-  echo "      -c, --complete            set todo complete"
+  echo "      -p, --priority <number>        set todo priority"
+  echo "      -c, --complete                 set todo complete"
   echo
-  echo "  pri <number>                  set todo priority"
+  echo "  pri <number>                       set todo priority"
   echo
-  echo "  del <number>                  delete todo"
+  echo "  del <number>                       delete todo"
   echo
-  echo "  cmp <number>                  complete todo"
+  echo "  cmp <number>                       complete todo"
   echo
-  echo "  move <from> <to>              move todo"
+  echo "  move <number> <number>             move todo"
   echo
-  echo "  list                          list todo"
+  echo "  list                               list todo"
   echo
 }
 
@@ -232,8 +232,8 @@ add() {
   todo_date="$(date "+%y-%m-%d %H:%M:%S")"
 
   while [ $# -gt 0 ]; do
-    qesc "$1"
-    echo "'$todo_priority' '$todo_complete' '$todo_date' $RET" >> "$TODO_FILE"
+    create_todo "$todo_priority" "$todo_complete" "$todo_date" "$1"
+    printf "%s\n" "$RET" >> "$TODO_FILE"
     shift
   done
 }
@@ -251,8 +251,10 @@ priority() {
     echo "\"$2\" is not number." >&2
     return 1
   fi
+
   target_index=$1
   target_priority=$2
+
   get_todo_list
   eval "set -- $RET"
   : > "$TODO_FILE"
@@ -261,17 +263,8 @@ priority() {
     if [ "$todo_index" -eq "$target_index" ]; then
       env_func() {
         eval "set -- $1"
-
-        qesc "$target_priority"
-        todo_line="$RET"
-        qesc "$2"
-        todo_line="$todo_line $RET"
-        qesc "$3"
-        todo_line="$todo_line $RET"
-        qesc "$4"
-        todo_line="$todo_line $RET"
-
-        printf "%s\n" "$todo_line" >> "$TODO_FILE"
+        create_todo "$target_priority" "$2" "$3" "$4"
+        printf "%s\n" "$RET" >> "$TODO_FILE"
       }
       env_func "$1"
     else
@@ -283,20 +276,6 @@ priority() {
 }
 
 del() {
-  opt_parser -- "$@"
-  eval "set -- $RET"
-  while [ $# -gt 0 ]; do
-    case "$1" in
-      ( -- )
-        shift 1
-        break
-        ;;
-      ( * )
-        echo "Invalid Option: \"$1\"" >&2
-        return 1
-        ;;
-    esac
-  done
   if [ $# -ne 1 ]; then
     echo "Invalid arguments." >&2
     return 1
@@ -305,6 +284,7 @@ del() {
     echo "\"$1\" is not number." >&2
     return 1
   fi
+
   todo_del_index="$1"
 
   get_todo_list
@@ -324,20 +304,6 @@ del() {
 }
 
 move() {
-  opt_parser -- "$@"
-  eval "set -- $RET"
-  while [ $# -gt 0 ]; do
-    case "$1" in
-      ( -- )
-        shift 1
-        break
-        ;;
-      ( * )
-        echo "Invalid Option: \"$1\"" >&2
-        return 1
-        ;;
-    esac
-  done
   if [ $# -ne 2 ]; then
     echo "Invalid arguments." >&2
     return 1
@@ -353,6 +319,7 @@ move() {
   if [ "$1" -eq "$2" ]; then
     return 0
   fi
+
   todo_move_from_index=$1
   todo_move_to_index=$2
 
@@ -393,20 +360,6 @@ move() {
 }
 
 cmp() {
-  opt_parser -- "$@"
-  eval "set -- $RET"
-  while [ $# -gt 0 ]; do
-    case "$1" in
-      ( -- )
-        shift 1
-        break
-        ;;
-      ( * )
-        echo "Invalid Option: \"$1\"" >&2
-        return 1
-        ;;
-    esac
-  done
   if [ $# -ne 1 ]; then
     echo "Invalid arguments." >&2
     return 1
@@ -415,6 +368,7 @@ cmp() {
     echo "\"$1\" is not number." >&2
     return 1
   fi
+
   todo_complete_index=$1
 
   get_todo_list
@@ -425,26 +379,14 @@ cmp() {
     env_func() {
       eval "set -- $1"
 
-      qesc "$1"
-      todo_line="$RET"
-
-      if [ $todo_index -eq "$todo_complete_index" ]; then
-        if $2; then
-          todo_line="$todo_line 'false'"
-        else
-          todo_line="$todo_line 'true'"
-        fi
+      if $2; then
+        todo_complete=false
       else
-        qesc "$2"
-        todo_line="$todo_line $RET"
+        todo_complete=true
       fi
 
-      qesc "$3"
-      todo_line="$todo_line $RET"
-      qesc "$4"
-      todo_line="$todo_line $RET"
-
-      printf "%s\n" "$todo_line" >> "$TODO_FILE"
+      create_todo "$1" "$todo_complete" "$3" "$4"
+      printf "%s\n" "$RET" >> "$TODO_FILE"
     }
     env_func "$1"
     shift
@@ -453,20 +395,10 @@ cmp() {
 }
 
 list() {
-  opt_parser -- "$@"
-  eval "set -- $RET"
-  while [ $# -gt 0 ]; do
-    case "$1" in
-      ( -- )
-        shift 1
-        break
-        ;;
-      ( * )
-        echo "Invalid Option: \"$1\"" >&2
-        return 1
-        ;;
-    esac
-  done
+  if [ $# -ne 0 ]; then
+    echo "Invalid arguments." >&2
+    return 1
+  fi
 
   get_todo_list
   eval "set -- $RET"
