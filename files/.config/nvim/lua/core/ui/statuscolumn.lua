@@ -75,4 +75,6 @@ function StatusColumnInactive()
 end
 
 
+vim.opt.foldcolumn = "auto:5"
+
 vim.opt.statuscolumn = "%{% g:actual_curwin == win_getid() ? v:lua.StatusColumn() : v:lua.StatusColumnInactive() %}"
