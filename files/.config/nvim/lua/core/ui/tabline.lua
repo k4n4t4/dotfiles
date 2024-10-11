@@ -1,3 +1,6 @@
+vim.opt.showtabline = 1
+vim.opt.tabline = "%!v:lua.TabLine()"
+
 local function tabline_highlights()
   vim.api.nvim_set_hl(0, "TabLineFill", {
     fg = "none",
@@ -37,7 +40,6 @@ vim.api.nvim_create_autocmd({
 }, {
   callback = tabline_highlights
 })
-
 
 function TabLine()
   local pcall_devicons, devicons = pcall(require, "nvim-web-devicons")
@@ -124,6 +126,3 @@ function TabLine()
 
   return table.concat(tabline_items, "") .. "%#TabLineFill#" .. "%T"
 end
-
-vim.opt.showtabline = 1
-vim.opt.tabline = "%!v:lua.TabLine()"
