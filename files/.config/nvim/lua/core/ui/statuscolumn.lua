@@ -1,3 +1,7 @@
+vim.opt.foldcolumn = "0"
+vim.opt.statuscolumn = "%{% g:actual_curwin == win_getid() ? v:lua.StatusColumn() : v:lua.StatusColumnInactive() %}"
+
+
 local function status_column_highlights()
   vim.api.nvim_set_hl(0, "StatusColumn", {
     fg = "#EEEEEE",
@@ -116,8 +120,3 @@ function StatusColumnInactive()
     return ""
   end
 end
-
-
-vim.opt.foldcolumn = "auto:5"
-
-vim.opt.statuscolumn = "%{% g:actual_curwin == win_getid() ? v:lua.StatusColumn() : v:lua.StatusColumnInactive() %}"

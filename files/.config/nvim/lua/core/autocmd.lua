@@ -20,11 +20,11 @@ autocmd("BufWinEnter", {
 })
 
 
-if vim.opt.number:get() and vim.opt.relativenumber:get() then
+if vim.o.number and vim.o.relativenumber then
   autocmd("InsertEnter", {
     group = group,
     callback = function()
-      if vim.opt_local.number:get() then
+      if vim.wo.number then
         vim.opt_local.relativenumber = false
       end
     end
@@ -32,7 +32,7 @@ if vim.opt.number:get() and vim.opt.relativenumber:get() then
   autocmd("InsertLeave", {
     group = group,
     callback = function()
-      if vim.opt_local.number:get() then
+      if vim.wo.number then
         vim.opt_local.relativenumber = true
       end
     end

@@ -170,13 +170,14 @@ local mode_color = {
 
 local function status_mode()
   local mode = vim.api.nvim_get_mode()
-  local blocking = mode.blocking and "=" or ""
+  local blocking = mode.blocking
   local name = mode_name[mode.mode] or "?"
   local color = mode_color[mode.mode] or "StatusLineModeOther"
 
   local format = {
     "%#" .. color .. "#",
-    name .. blocking,
+    name,
+    blocking and "=" or "",
     "%*",
   }
 
@@ -344,7 +345,7 @@ function StatusLineActive()
     encoding.. " ",
     fileformat .. " ",
     filetype .. " ",
-    "%l/%L,%c %n",
+    "%l:%c %n",
   }
   return table.concat(status_line, "")
 end
@@ -365,7 +366,7 @@ function StatusLineInactive()
     encoding.. " ",
     fileformat .. " ",
     filetype .. " ",
-    "%l/%L,%c %n",
+    "%l:%c %n",
   }
   return table.concat(status_line, "")
 end
