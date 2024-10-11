@@ -51,6 +51,16 @@ local function status_line_highlights()
     bg = "none",
   })
 
+  vim.api.nvim_set_hl(0, "StatusLineMacro", {
+    fg = "#BB77EE",
+    bg = "none",
+  })
+
+  vim.api.nvim_set_hl(0, "StatusLineFileFlag", {
+    fg = "#DDEE99",
+    bg = "none",
+  })
+
   vim.api.nvim_set_hl(0, "StatusLineDiagnosticERROR", {
     fg = "#EE9999",
     bg = "none",
@@ -276,7 +286,9 @@ local function status_macro_recording()
   local format = {}
   local macro = vim.fn.reg_recording()
   if macro ~= "" then
+    table.insert(format, "%#StatusLineMacro#")
     table.insert(format, "@" .. macro)
+    table.insert(format, "%*")
   end
   return table.concat(format, "")
 end
@@ -300,6 +312,7 @@ end
 local function status_flag()
   local format = {}
 
+  table.insert(format, "%#StatusLineFileFlag#")
   if vim.o.previewwindow then
     table.insert(format, "p")
   end
@@ -314,6 +327,7 @@ local function status_flag()
         table.insert(format, "-")
     end
   end
+  table.insert(format, "%*")
 
   return table.concat(format, "")
 end
@@ -324,7 +338,7 @@ function StatusLineActive()
   local file = status_file()
   local flag = status_flag()
   local search = status_search_count()
-  local lsp = status_lsp()
+  -- local lsp = status_lsp()
   local diagnostic = status_diagnostic()
   local git = status_git()
   local encoding = status_encoding()
@@ -332,20 +346,26 @@ function StatusLineActive()
   local filetype = status_filetype()
 
   local status_line = {
-    macro,
     mode,
-    " "..file.." ",
+    " ",
+    macro ~= "" and macro .. " " or "",
+    file,
     flag,
-    diagnostic,
+    " ",
     git,
+    " ",
+    diagnostic,
     "%=%<",
-    "%S ",
+    "%S",
     search,
-    lsp .. " ",
-    encoding.. " ",
-    fileformat .. " ",
-    filetype .. " ",
-    "%l:%c %n",
+    -- lsp,
+    encoding,
+    " ",
+    filetype,
+    " ",
+    fileformat,
+    " ",
+    "%l:%c",
   }
   return table.concat(status_line, "")
 end
@@ -359,14 +379,18 @@ function StatusLineInactive()
   local filetype = status_filetype()
   local status_line = {
     mode,
-    " "..file.." ",
+    " ",
+    file,
     flag,
     "%=%<",
-    "%S ",
-    encoding.. " ",
-    fileformat .. " ",
-    filetype .. " ",
-    "%l:%c %n",
+    "%S",
+    encoding,
+    " ",
+    filetype,
+    " ",
+    fileformat,
+    " ",
+    "%l:%c",
   }
   return table.concat(status_line, "")
 end
@@ -377,9 +401,7 @@ function StatusLineSimple()
   local status_line = {
     mode,
     "%=%<",
-    "%S ",
     filetype .. " ",
-    "%n",
   }
   return table.concat(status_line, "")
 end
