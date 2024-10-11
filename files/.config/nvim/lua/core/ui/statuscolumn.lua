@@ -12,7 +12,7 @@ local function status_column_highlights()
     bg = "none",
   })
   vim.api.nvim_set_hl(0, "StatusColumnFold", {
-    fg = "#77AADD",
+    fg = "#224466",
     bg = "none",
   })
 end
