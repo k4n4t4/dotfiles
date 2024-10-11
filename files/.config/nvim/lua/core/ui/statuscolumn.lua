@@ -1,3 +1,25 @@
+local function status_column_highlights()
+  vim.api.nvim_set_hl(0, "StatusColumn", {
+    fg = "#EEEEEE",
+    bg = "none",
+  })
+  vim.api.nvim_set_hl(0, "StatusColumnNC", {
+    fg = "#AAAAAA",
+    bg = "none",
+  })
+  vim.api.nvim_set_hl(0, "StatusColumnFold", {
+    fg = "#77AADD",
+    bg = "none",
+  })
+end
+
+vim.api.nvim_create_autocmd({
+  "VimEnter",
+  "ColorScheme",
+}, {
+  callback = status_column_highlights
+})
+
 local function status_line_number()
   local line_number = ""
   if vim.v.virtnum == 0 then
@@ -39,6 +61,10 @@ local function status_fold()
   end
 end
 
+local function status_fold_hl()
+  return "%#StatusColumnFold#"
+end
+
 local function status_separator()
   if vim.v.lnum == vim.fn.line(".") then
     return "▌"
@@ -59,12 +85,14 @@ function StatusColumn()
   if vim.wo.number then
     local line_number = status_line_number()
     local fold = status_fold()
+    local fold_hl = status_fold_hl()
     local separator = status_separator()
     local separator_hl = status_separator_hl()
     return (
       "%s" ..
       "%=" ..
       line_number ..
+      fold_hl ..
       fold ..
       separator_hl ..
       separator
