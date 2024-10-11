@@ -16,9 +16,24 @@ local function status_line_number()
   return line_number
 end
 
+local utils_fold = require "utils.fold"
+
 local function status_fold()
-  if vim.v.virtnum == 0 then
-    return "%C"
+  local winnr = vim.api.nvim_get_current_win()
+  local fi = utils_fold.get(winnr, vim.v.lnum)
+
+  if fi.lnum == vim.v.lnum then
+    if vim.v.virtnum == 0 then
+      if fi.folded then
+        return ">"
+      else
+        return "v"
+      end
+    else
+      return "¦"
+    end
+  elseif fi.lnum ~= 0 then
+      return "¦"
   else
     return " "
   end

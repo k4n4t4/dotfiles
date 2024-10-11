@@ -1,5 +1,6 @@
 return {
   "luukvbaal/statuscol.nvim",
+  enabled = false,
   config = function()
     local builtin = require("statuscol.builtin")
     vim.opt.foldcolumn = '1'
