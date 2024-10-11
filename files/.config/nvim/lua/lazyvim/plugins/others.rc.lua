@@ -294,7 +294,7 @@ return {
           { text = { "%s" } },
           { text = { builtin.lnumfunc } },
           { text = { builtin.foldfunc } },
-          { text = { "|" } },
+          { text = { "│" } },
         }
       })
     end,
