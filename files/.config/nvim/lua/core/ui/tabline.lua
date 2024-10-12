@@ -1,4 +1,4 @@
-vim.opt.showtabline = 1
+vim.opt.showtabline = 2
 vim.opt.tabline = "%!v:lua.TabLine()"
 
 local function tabline_highlights()
@@ -48,6 +48,7 @@ function TabLine()
   local tabline_items = {}
 
   for tabnr = 1, tab_length do
+
     local tab_id = "%" .. tabnr .. "T"
     local is_current_tab = tabnr == vim.fn.tabpagenr()
 
@@ -69,8 +70,16 @@ function TabLine()
 
     local icon, icon_hl
     if pcall_devicons then
-      icon, icon_hl = devicons.get_icon_by_filetype(filetype)
+      icon, color = devicons.get_icon_color_by_filetype(filetype)
       if icon then
+        icon_hl = "TablineIcon" .. filetype
+
+        vim.api.nvim_set_hl(0,icon_hl, {
+          fg = color,
+          bg = "#404040",
+          italic = true,
+        })
+
         icon_hl = "%#" .. icon_hl .. "#"
       else
         icon = ""
@@ -113,6 +122,9 @@ function TabLine()
     local components = {
       tabline_hl,
       tab_id,
+      " ",
+      icon_hl,
+      icon,
       " ",
       file_name_hl,
       buf_modified_fmt,
