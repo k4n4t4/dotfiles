@@ -50,6 +50,7 @@ return {
 
   {
     "mattn/emmet-vim",
+    enabled = false,
     event = 'VeryLazy',
   },
 
