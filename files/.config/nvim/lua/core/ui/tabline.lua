@@ -72,12 +72,11 @@ function TabLine()
     if pcall_devicons then
       icon, color = devicons.get_icon_color_by_filetype(filetype)
       if icon then
-        icon_hl = "TablineIcon" .. filetype
+        icon_hl = "TablineIcon@" .. filetype
 
         vim.api.nvim_set_hl(0,icon_hl, {
           fg = color,
           bg = "#404040",
-          italic = true,
         })
 
         icon_hl = "%#" .. icon_hl .. "#"
