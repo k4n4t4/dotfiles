@@ -122,7 +122,7 @@ function TabLine()
     local components = {
       tabline_hl,
       tab_id,
-      " ",
+      icon == "" and "" or " ",
       icon_hl,
       icon,
       " ",
