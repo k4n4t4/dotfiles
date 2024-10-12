@@ -58,7 +58,7 @@ local function status_fold()
     else
       return "¦"
     end
-  elseif fi.lnum ~= 0 then
+  elseif fi.level ~= 0 then
       return "¦"
   else
     return " "
