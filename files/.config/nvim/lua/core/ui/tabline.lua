@@ -41,14 +41,18 @@ vim.api.nvim_create_autocmd({
   callback = tabline_highlights
 })
 
-function TabLine()
-  local pcall_devicons, devicons = pcall(require, "nvim-web-devicons")
-  local tab_length = vim.fn.tabpagenr('$')
+local devicons
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    _, devicons = pcall(require, "nvim-web-devicons")
+  end,
+})
 
+function TabLine()
+  local tab_length = vim.fn.tabpagenr('$')
   local tabline_items = {}
 
   for tabnr = 1, tab_length do
-
     local tab_id = "%" .. tabnr .. "T"
     local is_current_tab = tabnr == vim.fn.tabpagenr()
 
@@ -68,13 +72,15 @@ function TabLine()
       tabline_hl = "%#TabLine#"
     end
 
-    local icon, icon_hl, color
-    if pcall_devicons then
+    local icon = ""
+    local icon_hl = ""
+    if devicons then
+      local color
       icon, color = devicons.get_icon_color_by_filetype(filetype)
       if icon then
         icon_hl = (is_current_tab and "Current" or "") .. "TabLineIcon@" .. filetype
 
-        vim.api.nvim_set_hl(0,icon_hl, {
+        vim.api.nvim_set_hl(0, icon_hl, {
           fg = color,
           bg = is_current_tab and "#404040" or "#202020",
         })
@@ -82,7 +88,6 @@ function TabLine()
         icon_hl = "%#" .. icon_hl .. "#"
       else
         icon = ""
-        icon_hl = ""
       end
     end
 

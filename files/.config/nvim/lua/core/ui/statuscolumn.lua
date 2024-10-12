@@ -42,26 +42,36 @@ local function status_line_number()
   return line_number
 end
 
-local utils_fold = require "utils.fold"
+
+local utils_fold
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    utils_fold = require "utils.fold"
+  end,
+})
 
 local function status_fold()
-  local winnr = vim.api.nvim_get_current_win()
-  local fi = utils_fold.get(winnr, vim.v.lnum)
+  if utils_fold then
+    local winnr = vim.api.nvim_get_current_win()
+    local fi = utils_fold.get(winnr, vim.v.lnum)
 
-  if fi.lnum == vim.v.lnum then
-    if vim.v.virtnum == 0 then
-      if fi.folded then
-        return ">"
+    if fi.lnum == vim.v.lnum then
+      if vim.v.virtnum == 0 then
+        if fi.folded then
+          return ">"
+        else
+          return "v"
+        end
       else
-        return "v"
+        return "¦"
       end
+    elseif fi.level ~= 0 then
+      return "¦"
     else
-      return "¦"
+      return " "
     end
-  elseif fi.level ~= 0 then
-      return "¦"
   else
-    return " "
+    return "%C"
   end
 end
 

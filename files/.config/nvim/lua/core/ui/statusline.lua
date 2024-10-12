@@ -209,12 +209,13 @@ local filetype_name = {
 }
 
 
-local function status_filetype(pcall_devicons, devicons)
+local function status_filetype(devicons)
   local ft = vim.bo.ft
 
   local icon, icon_hl, color
-  if pcall_devicons then
-    if pcall_devicons then
+  if devicons then
+    if devicons
+    then
       icon, color = devicons.get_icon_color_by_filetype(ft)
       if icon then
         icon_hl = "StatusLineIcon@" .. ft
@@ -359,6 +360,14 @@ local function status_flag()
   return table.concat(format, "")
 end
 
+
+local devicons
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    _, devicons = pcall(require, "nvim-web-devicons")
+  end,
+})
+
 function StatusLineActive()
   local macro = status_macro_recording()
   local mode = status_mode()
@@ -371,8 +380,7 @@ function StatusLineActive()
   local encoding = status_encoding()
   local fileformat = status_fileformat()
 
-  local pcall_devicons, devicons = pcall(require, "nvim-web-devicons")
-  local filetype = status_filetype(pcall_devicons, devicons)
+  local filetype = status_filetype(devicons)
 
   local status_line = {
     mode,
