@@ -208,8 +208,35 @@ local filetype_name = {
   ["python"]     = "py",
 }
 
-local function status_filetype()
+
+local function status_filetype(pcall_devicons, devicons)
   local ft = vim.bo.ft
+
+  local icon, icon_hl, color
+  if pcall_devicons then
+    if pcall_devicons then
+      icon, color = devicons.get_icon_color_by_filetype(ft)
+      if icon then
+        icon_hl = "StatusLineIcon@" .. ft
+
+        vim.api.nvim_set_hl(0,icon_hl, {
+          fg = color,
+          bg = "none",
+        })
+
+        icon_hl = "%#" .. icon_hl .. "#"
+
+        local format = {
+          icon_hl,
+          icon,
+          "%*",
+        }
+
+        return table.concat(format, "")
+      end
+    end
+  end
+
   return (not ft or ft == "") and "" or (filetype_name[ft] or ft)
 end
 
@@ -343,7 +370,9 @@ function StatusLineActive()
   local git = status_git()
   local encoding = status_encoding()
   local fileformat = status_fileformat()
-  local filetype = status_filetype()
+
+  local pcall_devicons, devicons = pcall(require, "nvim-web-devicons")
+  local filetype = status_filetype(pcall_devicons, devicons)
 
   local status_line = {
     mode,
@@ -357,6 +386,7 @@ function StatusLineActive()
     diagnostic,
     "%=%<",
     "%S",
+    " ",
     search,
     -- lsp,
     encoding,
