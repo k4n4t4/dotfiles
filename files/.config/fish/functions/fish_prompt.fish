@@ -95,7 +95,7 @@ function fish_prompt
   echo -n " "
   echo -n "$date_color$prompt_date$reset_fg_color"
   echo -n " "(printf "\033[38;5;232m\033[48;5;233m")" "
-  echo -n "$user_color$USER@"(hostname)"$reset_fg_color"
+  echo -n "$user_color$USER@$hostname$reset_fg_color"
   echo -n " "(printf "\033[38;5;233m\033[48;5;232m")" "
   echo -n "$pwd_color"(prompt_pwd)"$reset_fg_color"
   if _is_git_repo
