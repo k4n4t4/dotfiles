@@ -1,3 +1,6 @@
+
+# shellcheck disable=all
+
 log() {
   printf "%s\n" " ${ESC}[32m[ LOG ]${ESC}[90m: ${ESC}[m$*"
 }
@@ -28,5 +31,5 @@ fatal() {
 
 ask() {
   printf "%s" " ${ESC}[33m[ ASK ]${ESC}[90m: ${ESC}[1m${ESC}[97m$*${ESC}[m"
-  read RET
+  read -r RET
 }

@@ -1,3 +1,8 @@
+
+# shellcheck disable=all
+
+ESC="$(printf "\033")"
+
 is_empty_dir() {
   set -- "${1:-.}"
   set -- "$1/"* "$1/."*
