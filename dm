@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/sh
 set -eu
 
 dir_name() {
