@@ -137,21 +137,21 @@ if cmd_exist firefox; then
 fi
 
 if cmd_exist greetd && cmd_exist Hyprland && cmd_exist ags; then
-  if [ -d "/etc/greetd" ]; then
-    warn "sudo required"
-    ask "Continue? [y/N]: "
-
     # shellcheck disable=SC2154
     case "$dot_mode" in
       ( "install" )
-        case "$RET" in
-          ( [Yy] )
-            sudo cp "$WORK_PATH"/files/greetd/* /etc/greetd/ -riv
-            ;;
-          ( * )
-            log "Skiped."
-            ;;
-        esac
+        if [ -d "/etc/greetd" ]; then
+          warn "sudo required"
+          ask "Continue? [y/N]: "
+          case "$RET" in
+            ( [Yy] )
+              sudo cp "$WORK_PATH"/files/greetd/* /etc/greetd/ -riv
+              ;;
+            ( * )
+              log "Skiped."
+              ;;
+          esac
+        fi
         ;;
       ( "uninstall" )
         :
@@ -164,6 +164,4 @@ if cmd_exist greetd && cmd_exist Hyprland && cmd_exist ags; then
         return 1
         ;;
     esac
-
-  fi
 fi
