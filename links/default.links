@@ -167,22 +167,22 @@ fi
 
 if cmd_exist git; then
   info "git config"
-  ask "[Y/n]: "
+  ask "  Continue? [Y/n]: "
   case "$RET" in
     ( [nN] ) : ;;
     ( * )
 
       info "  git config user"
 
-      ask "[Y/n]: "
+      ask "  Continue? [Y/n]: "
       case "$RET" in
         ( [nN] ) : ;;
         ( * )
-          ask "  email: "
+          ask "    email: "
           if [ "$RET" != "" ]; then
             git config --global user.email "$RET"
           fi
-          ask "  name: "
+          ask "    name: "
           if [ "$RET" != "" ]; then
             git config --global user.name "$RET"
           fi
@@ -191,7 +191,7 @@ if cmd_exist git; then
 
       if cmd_exist delta; then
         info "  git config delta"
-        ask "[Y/n]: "
+        ask "  Continue? [Y/n]: "
         case "$RET" in
           ( [nN] ) : ;;
           ( * )
