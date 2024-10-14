@@ -32,7 +32,6 @@ return {
           "vimls",
           "pylsp",
           "bashls",
-          "emmet-language-server",
         },
         automatic_installation = false,
         handlers = {
