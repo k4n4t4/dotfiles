@@ -49,12 +49,6 @@ return {
 
 
   {
-    "mattn/emmet-vim",
-    enabled = false,
-    event = 'VeryLazy',
-  },
-
-  {
     "windwp/nvim-autopairs",
     opts = {
       disable_filetype = { "TelescopePrompt", "spectre_panel" },
