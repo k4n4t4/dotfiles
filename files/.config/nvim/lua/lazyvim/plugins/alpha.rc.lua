@@ -41,7 +41,7 @@ return {
       dashboard.button("p", "  Plugins", "<CMD>Lazy<CR>"),
       dashboard.button("u", "  Update Plugins", "<CMD>Lazy sync<CR>"),
       dashboard.button("s", "  Settings", "<CMD>e $MYVIMRC<CR><CMD>silent :cd %:p:h<CR>"),
-      dashboard.button("z", "  Quit", "<CMD>qa<CR>"),
+      dashboard.button("q", "  Quit", "<CMD>qa<CR>"),
     }
     dashboard.section.buttons.opts = {
       cursor = 0,
