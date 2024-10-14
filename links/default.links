@@ -167,11 +167,42 @@ if cmd_exist greetd && cmd_exist Hyprland && cmd_exist ags; then
 fi
 
 if cmd_exist git; then
-  if cmd_exist delta; then
-    info "git config delta"
-    git config core.pager "delta --line-numbers"
-    git config interactive.diffFilter "delta --color-only"
-    git config delta.navigate true
-    git config delta.light false
-  fi
+  info "git config"
+  ask "[Y/n]: "
+  case "$RET" in
+    ( [nN] ) : ;;
+    ( * )
+
+      info "git config user"
+
+      ask "[Y/n]: "
+      case "$RET" in
+        ( [nN] ) : ;;
+        ( * )
+          ask "email: "
+          if [ "$RET" != "" ]; then
+            git config --global user.email "$RET"
+          fi
+          ask "name: "
+          if [ "$RET" != "" ]; then
+            git config --global user.name "$RET"
+          fi
+          ;;
+      esac
+
+      if cmd_exist delta; then
+        info "git config delta"
+        ask "[Y/n]: "
+        case "$RET" in
+          ( [nN] ) : ;;
+          ( * )
+            git config --global core.pager "delta --line-numbers"
+            git config --global interactive.diffFilter "delta --color-only"
+            git config --global delta.navigate true
+            git config --global delta.light false
+            ;;
+        esac
+      fi
+      ;;
+  esac
 fi
