@@ -165,3 +165,13 @@ if cmd_exist greetd && cmd_exist Hyprland && cmd_exist ags; then
         ;;
     esac
 fi
+
+if cmd_exist git; then
+  if cmd_exist delta; then
+    info "git config delta"
+    git config core.pager "delta --line-numbers"
+    git config interactive.diffFilter "delta --color-only"
+    git config delta.navigate true
+    git config delta.light false
+  fi
+fi
