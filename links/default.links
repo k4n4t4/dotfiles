@@ -141,24 +141,23 @@ if cmd_exist greetd && cmd_exist Hyprland && cmd_exist ags; then
     case "$dot_mode" in
       ( "install" )
         if [ -d "/etc/greetd" ]; then
-          warn "sudo required"
-          ask "Continue? [y/N]: "
+
+          info "greetd config"
+
+          warn "  sudo required"
+          ask "  Continue? [y/N]: "
           case "$RET" in
             ( [Yy] )
               sudo cp "$WORK_PATH"/files/greetd/* /etc/greetd/ -riv
               ;;
             ( * )
-              log "Skiped."
+              log "  Skiped."
               ;;
           esac
         fi
         ;;
-      ( "uninstall" )
-        :
-        ;;
-      ( "check" )
-        :
-        ;;
+      ( "uninstall" ) : ;;
+      ( "check" ) : ;;
       ( * )
         error "Invalid Mode: $dot_mode"
         return 1
@@ -173,17 +172,17 @@ if cmd_exist git; then
     ( [nN] ) : ;;
     ( * )
 
-      info "git config user"
+      info "  git config user"
 
       ask "[Y/n]: "
       case "$RET" in
         ( [nN] ) : ;;
         ( * )
-          ask "email: "
+          ask "  email: "
           if [ "$RET" != "" ]; then
             git config --global user.email "$RET"
           fi
-          ask "name: "
+          ask "  name: "
           if [ "$RET" != "" ]; then
             git config --global user.name "$RET"
           fi
@@ -191,7 +190,7 @@ if cmd_exist git; then
       esac
 
       if cmd_exist delta; then
-        info "git config delta"
+        info "  git config delta"
         ask "[Y/n]: "
         case "$RET" in
           ( [nN] ) : ;;
