@@ -136,9 +136,11 @@ if cmd_exist firefox; then
   done
 fi
 
+
 # shellcheck disable=SC2154
 case "$dot_mode" in
   ( "install" )
+
     if cmd_exist greetd && cmd_exist Hyprland && cmd_exist ags; then
       if [ -d "/etc/greetd" ]; then
 
@@ -156,18 +158,7 @@ case "$dot_mode" in
         esac
       fi
     fi
-    ;;
-  ( "uninstall" ) : ;;
-  ( "check" ) : ;;
-  ( * )
-    error "Invalid Mode: $dot_mode"
-    return 1
-    ;;
-esac
 
-
-case "$dot_mode" in
-  ( "install" )
     if cmd_exist git; then
       info "git config"
       ask "  Continue? [Y/n]: "
@@ -208,6 +199,7 @@ case "$dot_mode" in
           ;;
       esac
     fi
+
     ;;
   ( "uninstall" ) : ;;
   ( "check" ) : ;;
