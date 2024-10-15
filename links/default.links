@@ -136,72 +136,83 @@ if cmd_exist firefox; then
   done
 fi
 
-if cmd_exist greetd && cmd_exist Hyprland && cmd_exist ags; then
-    # shellcheck disable=SC2154
-    case "$dot_mode" in
-      ( "install" )
-        if [ -d "/etc/greetd" ]; then
+# shellcheck disable=SC2154
+case "$dot_mode" in
+  ( "install" )
+    if cmd_exist greetd && cmd_exist Hyprland && cmd_exist ags; then
+      if [ -d "/etc/greetd" ]; then
 
-          info "greetd config"
+        info "greetd config"
 
-          warn "  sudo required"
-          ask "  Continue? [y/N]: "
-          case "$RET" in
-            ( [Yy] )
-              sudo cp "$WORK_PATH"/files/greetd/* /etc/greetd/ -riv
-              ;;
-            ( * )
-              log "  Skiped."
-              ;;
-          esac
-        fi
-        ;;
-      ( "uninstall" ) : ;;
-      ( "check" ) : ;;
-      ( * )
-        error "Invalid Mode: $dot_mode"
-        return 1
-        ;;
-    esac
-fi
+        warn "  sudo required"
+        ask "  Continue? [y/N]: "
+        case "$RET" in
+          ( [Yy] )
+            sudo cp "$WORK_PATH"/files/greetd/* /etc/greetd/ -riv
+            ;;
+          ( * )
+            log "  Skiped."
+            ;;
+        esac
+      fi
+    fi
+    ;;
+  ( "uninstall" ) : ;;
+  ( "check" ) : ;;
+  ( * )
+    error "Invalid Mode: $dot_mode"
+    return 1
+    ;;
+esac
 
-if cmd_exist git; then
-  info "git config"
-  ask "  Continue? [Y/n]: "
-  case "$RET" in
-    ( [nN] ) : ;;
-    ( * )
 
-      info "  git config user"
-
+case "$dot_mode" in
+  ( "install" )
+    if cmd_exist git; then
+      info "git config"
       ask "  Continue? [Y/n]: "
       case "$RET" in
         ( [nN] ) : ;;
         ( * )
-          ask "    email: "
-          if [ "$RET" != "" ]; then
-            git config --global user.email "$RET"
-          fi
-          ask "    name: "
-          if [ "$RET" != "" ]; then
-            git config --global user.name "$RET"
+
+          info "  git config user"
+
+          ask "  Continue? [Y/n]: "
+          case "$RET" in
+            ( [nN] ) : ;;
+            ( * )
+              ask "    email: "
+              if [ "$RET" != "" ]; then
+                git config --global user.email "$RET"
+              fi
+              ask "    name: "
+              if [ "$RET" != "" ]; then
+                git config --global user.name "$RET"
+              fi
+              ;;
+          esac
+
+          if cmd_exist delta; then
+            info "  git config delta"
+            ask "  Continue? [Y/n]: "
+            case "$RET" in
+              ( [nN] ) : ;;
+              ( * )
+                git config --global core.pager "delta --line-numbers"
+                git config --global interactive.diffFilter "delta --color-only"
+                git config --global delta.navigate true
+                git config --global delta.light false
+                ;;
+            esac
           fi
           ;;
       esac
-
-      if cmd_exist delta; then
-        info "  git config delta"
-        ask "  Continue? [Y/n]: "
-        case "$RET" in
-          ( [nN] ) : ;;
-          ( * )
-            git config --global core.pager "delta --line-numbers"
-            git config --global interactive.diffFilter "delta --color-only"
-            git config --global delta.navigate true
-            git config --global delta.light false
-            ;;
-        esac
-      fi
-      ;;
-  esac
-fi
+    fi
+    ;;
+  ( "uninstall" ) : ;;
+  ( "check" ) : ;;
+  ( * )
+    error "Invalid Mode: $dot_mode"
+    return 1
+    ;;
+esac
