@@ -49,17 +49,7 @@ vim.opt.laststatus = 0
 vim.opt.showcmd = false
 vim.opt.showmode = false
 
-vim.opt.list = true
-vim.opt.listchars = {
-  tab      = ">-",
-  extends  = ">",
-  precedes = "<",
-  trail    = "-",
-  nbsp     = "+",
-  conceal  = "@",
-}
-
-vim.opt.pumheight = 10
+vim.opt.list = false
 
 vim.opt.belloff = "all"
 vim.opt.visualbell = true
@@ -127,8 +117,22 @@ vim.keymap.set('n', "<ESC>", "<CMD>qa!<CR>")
 vim.keymap.set('n', "q", "<CMD>qa!<CR>")
 vim.keymap.set('n', "i", "<CMD>qa!<CR>")
 vim.keymap.set('t', "<ESC>", "<C-\\><C-N>")
-vim.api.nvim_create_autocmd("TermOpen", {
+
+
+local input_line_number = tonumber(os.getenv("INPUT_LINE_NUMBER"))
+local line = input_line_number + tonumber(os.getenv("CURSOR_LINE"))
+local col = tonumber(os.getenv("CURSOR_COLUMN"))
+
+local buf = vim.api.nvim_create_buf(true, false)
+local term = vim.api.nvim_open_term(buf, {})
+local scroll_back = vim.fn.system("cat /tmp/kitty_scrollback_buffer")
+
+vim.api.nvim_create_autocmd("VimEnter", {
+  once = true,
   callback = function()
-    vim.cmd "normal G"
-  end,
+    local win = vim.api.nvim_get_current_win()
+    vim.api.nvim_chan_send(term, scroll_back)
+    vim.api.nvim_win_set_buf(win, buf)
+    vim.fn.cursor(line - 1, col - 1)
+  end
 })
