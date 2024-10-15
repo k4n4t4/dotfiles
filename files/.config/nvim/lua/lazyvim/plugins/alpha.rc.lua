@@ -32,6 +32,13 @@ return {
       end)(),
     }
 
+    local lazy = require("lazy")
+    local stats = lazy.stats()
+
+    dashboard.section.footer.val = {
+      "Plugin Count: " .. stats.count,
+    }
+
     dashboard.section.buttons.val = {
       dashboard.button("n", "  New File", "<CMD>enew<CR>"),
       dashboard.button("r", "  Recent File", "<CMD>Telescope oldfiles<CR>"),
@@ -49,8 +56,6 @@ return {
     }
 
     require("alpha").setup(dashboard.config)
-
-    vim.cmd [[ autocmd FileType alpha setlocal nofoldenable ]]
   end,
   event = 'VimEnter',
 }
