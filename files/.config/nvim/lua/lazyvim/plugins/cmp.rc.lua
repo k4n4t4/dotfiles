@@ -34,7 +34,10 @@ return {
         },
         window = {
           completion = {
-            border = 'single',
+            border = { '┌', '─', '┐', '│', '┘', '─', '└', '│' },
+            side_padding = 0,
+            col_offset = 0,
+            winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None",
           },
           documentation = {
             border = 'double',
@@ -64,6 +67,12 @@ return {
           ['<CR>'] = cmp.mapping.confirm({ select = false }),
         }),
       }
+
+      local hl = vim.api.nvim_set_hl
+      hl(0, "CmpItemAbbr", { fg = "#909090", bg = "none" })
+      hl(0, "CmpItemAbbrMatch", { fg = "#3333AA", bg = "none" })
+      hl(0, "CmpItemAbbrMatchFuzzy", { fg = "#3399AA", bg = "none" })
+
       cmp.setup.cmdline({ '/', '?' }, {
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources {
