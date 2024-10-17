@@ -113,6 +113,19 @@ vim.opt.synmaxcol = 1000
 vim.opt.termguicolors = true
 vim.opt.background = "dark"
 
+vim.cmd.highlight {"Normal",         "guibg=none", "ctermbg=none"}
+vim.cmd.highlight {"NormalNC",       "guibg=none", "ctermbg=none"}
+vim.cmd.highlight {"Folded",         "guibg=none", "ctermbg=none"}
+vim.cmd.highlight {"FoldColumn",     "guibg=none", "ctermbg=none"}
+vim.cmd.highlight {"NonText",        "guibg=none", "ctermbg=none"}
+vim.cmd.highlight {"LineNr",         "guibg=none", "ctermbg=none"}
+vim.cmd.highlight {"CursorLineNr",   "guibg=none", "ctermbg=none"}
+vim.cmd.highlight {"SignColumn",     "guibg=none", "ctermbg=none"}
+vim.cmd.highlight {"CursorLineSign", "guibg=none", "ctermbg=none"}
+vim.cmd.highlight {"TabLine",        "guibg=none", "ctermbg=none"}
+vim.cmd.highlight {"TabLineFill",    "guibg=none", "ctermbg=none"}
+vim.cmd.highlight {"EndOfBuffer",    "guibg=none", "ctermbg=none"}
+
 vim.keymap.set('n', "<ESC>", "<CMD>qa!<CR>")
 vim.keymap.set('n', "q", "<CMD>qa!<CR>")
 vim.keymap.set('n', "i", "<CMD>qa!<CR>")
