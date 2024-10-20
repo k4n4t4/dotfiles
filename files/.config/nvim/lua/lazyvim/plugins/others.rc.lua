@@ -31,6 +31,20 @@ return {
       vim.g.gruvbox_material_background = 'medium'
     end
   },
+  {
+    "EdenEast/nightfox.nvim",
+    lazy = true,
+    opts = {
+      options = {
+        styles = {
+          comments = "italic",
+          keywords = "bold",
+          types = "italic,bold",
+        },
+      },
+    },
+  },
+
 
   -- highlights
   {
