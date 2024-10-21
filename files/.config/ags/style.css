@@ -16,10 +16,15 @@ menu {
 }
 
 menu menuitem {
+  background: rgba(50, 50, 50, 0.8);
+  margin: 0.2rem;
+  padding: 0.3rem;
+  border-radius: 0.2rem;
   color: #E0C0E0;
 }
 
 menu menuitem:hover {
+  background: rgba(70, 70, 70, 0.9);
   color: #E080E0;
 }
 

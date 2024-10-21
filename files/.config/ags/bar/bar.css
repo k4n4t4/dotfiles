@@ -51,13 +51,13 @@
 
 
 .bar-audio {
-  color: #CCAA36;
+  color: #CCAA88;
   margin: 0 0.4rem 0 0.4rem;
 }
 
 
 .bar-title {
-  color: #2244AA;
+  color: #CCCCCC;
   font-weight: bold;
 }
 
@@ -106,10 +106,10 @@
 
 
 .bar-notifications {
-  color: #CCAACC;
+  color: #CCCCCC;
   margin: 0 0.4rem 0 0.4rem;
 }
 
 .bar-notifications-exist {
-  color: #EE99EE;
+  color: #CCAACC;
 }
