@@ -7,6 +7,7 @@ window {
   margin: 0;
   padding: 10px;
   background: rgba(20, 20, 20, 0.6);
+  color: #A0A0A0;
 }
 
 #inner-box {
@@ -38,6 +39,10 @@ window {
 
 #entry {
   border-radius: 0.5rem;
+}
+
+#entry #text {
+  color: #E0A0A0;
 }
 
 #entry:selected {
