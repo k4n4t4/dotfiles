@@ -64,11 +64,15 @@ function barClock(show_clock_detail = false) {
   const BarClock = Widget.Box({
     class_name: "bar-clock",
     child: Widget.EventBox({
+
       onPrimaryClick: self => {
-        let reveal_child = !left_revealer.reveal_child
-        left_revealer.reveal_child = reveal_child
-        right_revealer.reveal_child = reveal_child
+        left_revealer.reveal_child = !left_revealer.reveal_child
       },
+
+      onSecondaryClick: self => {
+        right_revealer.reveal_child = !right_revealer.reveal_child
+      },
+
       child: Widget.Box({
         children: [
           left_revealer,
@@ -83,6 +87,7 @@ function barClock(show_clock_detail = false) {
           right_revealer,
         ]
       }),
+
     })
   })
 
