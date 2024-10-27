@@ -61,34 +61,34 @@ function barClock(show_clock_detail = false) {
     })
   )
 
+  const label = Widget.Label({
+    label: CLOCK.bind().as(({
+      hours: h,
+      minutes: m,
+    }) => {
+        return `${h}:${m}`
+      })
+  })
+
   const BarClock = Widget.Box({
     class_name: "bar-clock",
-    child: Widget.EventBox({
-
-      onPrimaryClick: self => {
-        left_revealer.reveal_child = !left_revealer.reveal_child
+    child: Widget.EventBox(
+      {
+        onPrimaryClick: self => {
+          left_revealer.reveal_child = !left_revealer.reveal_child
+        },
+        onSecondaryClick: self => {
+          right_revealer.reveal_child = !right_revealer.reveal_child
+        },
       },
-
-      onSecondaryClick: self => {
-        right_revealer.reveal_child = !right_revealer.reveal_child
-      },
-
-      child: Widget.Box({
+      Widget.Box({
         children: [
           left_revealer,
-          Widget.Label({
-            label: CLOCK.bind().as(({
-              hours: h,
-              minutes: m,
-            }) => {
-              return `${h}:${m}`
-            })
-          }),
+          label,
           right_revealer,
         ]
-      }),
-
-    })
+      })
+    )
   })
 
   return BarClock
