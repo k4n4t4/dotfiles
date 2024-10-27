@@ -65,17 +65,17 @@
 
 .bar-workspace {
   background: #202020;
-  color: #EECCAA;
-  border-radius: 0.5rem;
-  padding: 0 1.5rem 0 1.5rem;
+  color: #888888;
+  border-radius: 1.5rem;
+  padding: 0 1.0rem 0 1.0rem;
   margin: 0.1rem 0.2rem 0.1rem 0.2rem;
 }
 
 .bar-current-workspace {
   background: #303030;
   font-weight: bold;
-  border: 1px solid #EEAA99;
-  border-radius: 0.5rem;
+  color: #DCDCDC;
+  border: 1px solid #999999;
 }
 
 
