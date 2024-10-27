@@ -25,13 +25,13 @@ function clock(interval) {
   })
 }
 
-function barClock(show_clock_detail = false) {
+function barClock(show_date=false, show_second=false) {
 
   const CLOCK = clock(1000)
 
   const left_revealer = Widget.Revealer(
     {
-      revealChild: show_clock_detail,
+      revealChild: show_date,
       transitionDuration: 500,
       transition: 'slide_left',
     },
@@ -48,7 +48,7 @@ function barClock(show_clock_detail = false) {
 
   const right_revealer = Widget.Revealer(
     {
-      revealChild: show_clock_detail,
+      revealChild: show_second,
       transitionDuration: 500,
       transition: 'slide_right',
     },
@@ -533,7 +533,7 @@ const BarEnd = Widget.Box({
     barBluetooth(),
     barNetwork(),
     barBattery(),
-    barClock(false),
+    barClock(false, true),
     barNotifications(),
   ]
 })
