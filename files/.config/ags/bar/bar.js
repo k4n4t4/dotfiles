@@ -161,15 +161,15 @@ function barBattery() {
     },
     Widget.EventBox(
       {
-        onPrimaryClick: () => {
+        onPrimaryClick: self => {
           switch (powerProfiles.active_profile) {
               case 'balanced':
-                  powerProfiles.active_profile = 'power-saver';
-                  break;
+                  powerProfiles.active_profile = 'power-saver'
+                  break
               default:
-                  powerProfiles.active_profile = 'balanced';
-                  break;
-          };
+                  powerProfiles.active_profile = 'balanced'
+                  break
+          }
         }
       },
       Widget.Box([label])
