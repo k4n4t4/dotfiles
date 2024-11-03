@@ -19,7 +19,15 @@
 }
 
 #PersonalToolbar {
-  padding-inline: 0px;
+  padding-inline: 0px !important;
+  height: 0px;
+  animation: anim-slide-hide 0.1s linear;
+}
+
+#navigator-toolbox:hover #PersonalToolbar,
+#navigator-toolbox:focus-within #PersonalToolbar {
+  height: auto;
+  animation: anim-slide-spawn 0.1s linear;
 }
 
 @keyframes anim-spawn {
@@ -43,6 +51,24 @@
   }
   100% {
     transform: scale(1.0);
+  }
+}
+
+@keyframes anim-slide-hide {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-10%);
+  }
+}
+
+@keyframes anim-slide-spawn {
+  0% {
+    transform: translateY(-10%);
+  }
+  100% {
+    transform: translateY(0%);
   }
 }
 
