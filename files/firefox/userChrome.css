@@ -1,19 +1,21 @@
-#TabsToolbar {
-  margin-left: 50vw !important;
-}
+@media (min-width: 700px) {
+  #TabsToolbar {
+    margin-left: 50vw !important;
+  }
 
-#nav-bar {
-  margin-right: 50vw !important;
-  margin-top: -40px !important;
-  background: transparent !important;
-}
+  #nav-bar {
+    margin-right: 50vw !important;
+    margin-top: -40px !important;
+    background: transparent !important;
+  }
 
-#urlbar-container {
-  width: auto !important;
-}
+  #urlbar-container {
+    width: auto !important;
+  }
 
-#urlbar-container:has(#urlbar[breakout-extend=true]) {
-  width: 80vw !important;
+  #urlbar-container:has(#urlbar[breakout-extend=true]) {
+    width: 80vw !important;
+  }
 }
 
 #private-browsing-indicator-with-label > label,
