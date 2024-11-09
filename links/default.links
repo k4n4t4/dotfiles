@@ -33,12 +33,6 @@ if cmd_exist fish; then
   dot ".config/fish" -r
 fi
 
-if cmd_exist codium; then
-  dot ".config/VSCodium/User/keybindings.json"
-  dot ".config/VSCodium/User/settings.json"
-  dot ".config/VSCodium/User/snippets"
-fi
-
 if cmd_exist vim; then
   dot ".vimrc"
 fi
@@ -52,53 +46,8 @@ if cmd_exist tmux; then
   dot ".config/tmux" -r
 fi
 
-if cmd_exist zellij; then
-  dot ".config/zellij" -r
-fi
-
-if cmd_exist alacritty; then
-  dot ".config/alacritty/alacritty.yml"
-  dot ".config/alacritty/alacritty.toml"
-fi
-
-if cmd_exist wezterm; then
-  dot ".wezterm.lua"
-fi
-
 if cmd_exist starship; then
   dot ".config/starship/starship.toml" ".config/starship.toml"
-fi
-
-if cmd_exist bspwm; then
-  dot ".config/bspwm" -r
-fi
-
-if cmd_exist picom; then
-  dot ".config/picom" -r
-fi
-
-if cmd_exist sxhkd; then
-  dot ".config/sxhkd" -r
-fi
-
-if cmd_exist polybar; then
-  dot ".config/polybar" -r
-fi
-
-if cmd_exist eww; then
-  dot ".config/eww" -r
-fi
-
-if cmd_exist rofi; then
-  dot ".config/rofi" -r
-fi
-
-if cmd_exist conky; then
-  dot ".config/conky" -r
-fi
-
-if cmd_exist dunst; then
-  dot ".config/dunst" -r
 fi
 
 if cmd_exist Hyprland; then
@@ -115,10 +64,6 @@ fi
 
 if cmd_exist fastfetch; then
   dot ".config/fastfetch" -r
-fi
-
-if cmd_exist luakit; then
-  dot ".config/luakit" -r
 fi
 
 if cmd_exist kitty; then

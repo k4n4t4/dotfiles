@@ -1,6 +1,0 @@
-#!/bin/sh
-if [ -n "$(bluetoothctl show | grep "Powered: yes")" ]; then
-  echo "%{F#0000FF}B"
-else
-  echo "%{F#777777}B"
-fi
