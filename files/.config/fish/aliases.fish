@@ -1,7 +1,4 @@
 abbr --add '^' "command"
-abbr --add cmd "command"
-
-alias clear "echo \"Cleared!\"; printf \"\033[0;0H\033[2J\""
 abbr --add c "clear"
 
 abbr --add cd-  "cd -"
@@ -10,7 +7,6 @@ abbr --add cd.  "cd ."
 abbr --add cd.. "cd .."
 abbr --add pd   "prevd"
 abbr --add nd   "nextd"
-
 for i in (seq 9)
   set -l p "./"
   for j in (seq $i)
@@ -27,17 +23,9 @@ abbr --add q "exit"
 
 alias reboot   "systemctl reboot"
 alias poweroff "systemctl poweroff"
-
 abbr --add rbt "reboot"
 abbr --add pof "poweroff"
 
-if type -q apt
-  abbr --add aptup "sudo apt update && sudo apt upgrade"
-  if type -q nala
-    abbr --add apt "sudo nala"
-    abbr --add aptup "sudo nala update && sudo nala upgrade"
-  end
-end
 
 if type -q tmux
   alias tmux "tmux -u"
@@ -86,7 +74,6 @@ if type -q git
   abbr --add gr   "git remote"
   abbr --add gbl  "git blame"
   alias groot "cdgitroot"
-  alias grt "cdgitroot"
 end
 
 if type -q eza
@@ -133,21 +120,6 @@ else
   export LS_COLORS=(get_ls_colors)
 end
 
-if type -q sl
-  alias al "sl -a"
-  alias ala "sl -al"
-  alias all "sl -al"
-  alias lal "sl -al"
-end
-
-if type -q ranger
-  abbr --add r "ranger"
-end
-
-if type -q batcat
-  alias bat "batcat"
-end
-
 if type -q zoxide
   zoxide init fish --cmd z | source
 end
@@ -160,8 +132,6 @@ if type -q thefuck
   eval (thefuck --alias | tr '\n' ';')
   abbr --add f "fuck"
 end
-
-abbr --add s "search"
 
 alias cp "cp -iv"
 alias mv "mv -iv"
@@ -184,14 +154,6 @@ if type -q nvim
   abbr --add v  "nvim"
 else if type -q vim
   abbr --add v  "vim"
-end
-
-if type -q btop
-  alias top "btop"
-else if type -q gotop
-  alias top "gotop"
-else if type -q htop
-  alias top "htop"
 end
 
 if type -q xsel

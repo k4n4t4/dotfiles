@@ -1,9 +1,7 @@
-
 function _fish_right_prompt
   set -f last_pipestatus (string split " " $argv[1])
   set -f reset_color (printf "\033[m")
   set -f reset_fg_color (printf "\033[39m")
-  
   
   if test $CMD_DURATION
     set -f duration (math $CMD_DURATION / 1000)
