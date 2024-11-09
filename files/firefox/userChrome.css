@@ -16,8 +16,8 @@
   #urlbar-container:has(#urlbar[breakout-extend=true]) {
     position: absolute !important;
     top: 0px !important;
-    left: 0px !important;
-    width: 100vw !important;
+    left: 10vw !important;
+    width: 80vw !important;
     padding: 0px !important;
     margin: 0px !important;
     border: none !important;
