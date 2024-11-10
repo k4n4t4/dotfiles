@@ -127,8 +127,6 @@ vim.cmd.highlight { "TabLineFill",    "guibg=none", "ctermbg=none" }
 vim.cmd.highlight { "EndOfBuffer",    "guibg=none", "ctermbg=none" }
 
 vim.keymap.set('n', "<ESC>", "<CMD>qa!<CR>")
-vim.keymap.set('n', "q", "<CMD>qa!<CR>")
-vim.keymap.set('n', "i", "<CMD>qa!<CR>")
 vim.keymap.set('t', "<ESC>", "<C-\\><C-N>")
 
 
