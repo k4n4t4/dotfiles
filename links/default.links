@@ -8,7 +8,6 @@ dot ".profile"
 
 if cmd_exist bash; then
   dot ".bashrc"
-  dot ".bash_aliases"
 fi
 
 if cmd_exist zsh; then
