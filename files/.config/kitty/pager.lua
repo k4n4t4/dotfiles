@@ -140,7 +140,7 @@ local term = vim.api.nvim_open_term(buf, {})
 local scroll_back = vim.fn.system("cat /tmp/kitty_scrollback_buffer")
 vim.api.nvim_chan_send(term, string.sub(scroll_back, 0, -2))
 
-vim.api.nvim_create_autocmd("BufEnter", {
+vim.api.nvim_create_autocmd("BufWinEnter", {
   callback = function()
     vim.defer_fn(function()
       vim.cmd.normal "G"
