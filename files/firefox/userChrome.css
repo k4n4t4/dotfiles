@@ -5,7 +5,8 @@
 
   #nav-bar {
     margin-right: 50vw !important;
-    margin-top: -40px !important;
+    margin-top: -42px !important;
+    border: none !important;
     background: transparent !important;
   }
 
