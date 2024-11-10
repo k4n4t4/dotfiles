@@ -24,6 +24,20 @@ case "$KERNEL_NAME" in
     ;;
 esac
 
+PATH="$HOME/bin:$PATH"
+PATH="$HOME/.local/bin:$PATH"
+PATH="$HOME/.cargo/bin:$PATH"
+PATH="$HOME/go/bin:$PATH"
+PATH="/snap/bin:$PATH"
+PATH="/usr/sandbox:$PATH"
+PATH="/usr/local/bin:$PATH"
+PATH="/usr/local/sbin:$PATH"
+PATH="/usr/share/games:$PATH"
+PATH="/usr/sbin:$PATH"
+PATH="/sbin:$PATH"
+PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+PATH="/home/linuxbrew/.linuxbrew/sbin:$PATH"
+
 . "$WORK_PATH/config.sh"
 
 dot_mode="unknown"
