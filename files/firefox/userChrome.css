@@ -5,7 +5,7 @@
 
   #nav-bar {
     margin-right: 50vw !important;
-    margin-top: -42px !important;
+    margin-top: -34px !important;
     border: none !important;
     background: transparent !important;
   }
@@ -86,4 +86,18 @@ toolbarbutton[open="true"] > menupopup {
 
 #tab-preview-panel[animating="true"], #tab-preview-panel[panelopen="true"] {
   animation: anim-spawn-1 0.2s linear;
+}
+
+:root {
+  --tab-border-radius: 0px !important;
+  --tab-outline: none !important;
+  --tab-block-margin: 0px !important;
+  --tab-inline-padding: 4px !important;
+  --tab-overflow-clip-margin: 0px !important;
+
+  --urlbar-margin-inline: 0px !important;
+}
+
+#urlbar-container[breakout=true] {
+  min-height: 0px !important;
 }
