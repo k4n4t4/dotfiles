@@ -22,4 +22,3 @@ apply = ["defer"]
 
 [plugins.zsh-abbr]
 github = "olets/zsh-abbr"
-apply = ["defer"]
