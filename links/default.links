@@ -138,3 +138,7 @@ case "$dot_mode" in
     return 1
     ;;
 esac
+
+if cmd_exist wlogout; then
+  dot ".config/wlogout" -r
+fi
