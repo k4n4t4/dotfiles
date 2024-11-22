@@ -7,4 +7,4 @@ user_pref("browser.theme.dark-private-windows", true);
 user_pref("browser.tabs.hoverPreview.enabled", true);
 user_pref("browser.compactmode.show", true);
 user_pref("extensions.pocket.enabled", false);
-user_pref("general.useragent.override", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36");
+//user_pref("general.useragent.override", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36");
