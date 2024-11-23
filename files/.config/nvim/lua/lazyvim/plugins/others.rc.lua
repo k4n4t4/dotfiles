@@ -60,7 +60,14 @@ return {
       "nvim-tree/nvim-web-devicons"
     },
   },
-
+  {
+    "leafgarland/typescript-vim",
+    ft = {"typescript", "typescriptreact", "*.tsx", "*.jsx"},
+  },
+  {
+    "peitalin/vim-jsx-typescript",
+    ft = {"typescript", "typescriptreact", "*.tsx", "*.jsx"},
+  },
 
   {
     "windwp/nvim-autopairs",
