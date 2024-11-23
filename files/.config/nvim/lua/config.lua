@@ -1,6 +1,6 @@
 _G.config = {
   colorscheme = {
-    name = "carbonfox",
+    name = "onedark",
     transparent = true,
   },
 }
