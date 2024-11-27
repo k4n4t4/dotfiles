@@ -1,0 +1,83 @@
+$font: "ComicShannsMono Nerd Font";
+
+window.NotificationPopups {
+
+  .notification-popups {
+    background: transparent;
+    margin: 0.1rem 0.1rem 0 0;
+    min-width: 0;
+    min-height: 0;
+  }
+
+  .notification-popup {
+    min-width: 25rem;
+    min-height: 5rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 1px solid #EEAAEE;
+    background: rgba(20, 20, 20, 0.8);
+  }
+
+  .notification-popup-icon {
+    min-width: 2rem;
+    min-height: 2rem;
+    margin-right: 1em;
+    icon {
+      font-size: 5rem;
+      color: #EEAAEE;
+    }
+    box {
+      border-radius: 7px;
+    }
+  }
+
+
+  .notification-popup-low {
+    border: 1px solid #AA77AA;
+  }
+
+  .notification-popup-normal {
+    border: 1px solid #EE99DD;
+  }
+
+  .notification-popup-critical {
+    border: 1px solid #EE7788;
+  }
+
+  .notification-popup-title {
+    color: #EE55EE;
+  }
+
+  .notification-popup-time {
+    color: #A090F0;
+  }
+
+  .notification-popup-body {
+    color: #A090C0;
+  }
+
+  .notification-popup-actions {
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 1rem;
+  }
+
+  .notification-popup-action-button {
+    background: #404040;
+    margin: 0 0.4rem 0 0.4rem;
+    padding: 0.3rem;
+    border-radius: 0.2rem;
+  }
+
+  .notification-popup-action-button:hover {
+    background: #885088;
+  }
+
+  .notification-popup-action-button:first-child {
+    margin-left: 0;
+  }
+
+  .notification-popup-action-button:last-child {
+    margin-right: 0;
+  }
+}

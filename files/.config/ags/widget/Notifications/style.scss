@@ -1,0 +1,84 @@
+$font: "ComicShannsMono Nerd Font";
+
+window.Notifications {
+  .notifications {
+    background: rgba(10, 10, 10, 0.8);
+    margin: 0.1rem 0.1rem 0 0;
+    min-width: 30rem;
+    min-height: 20rem;
+    padding: 1rem;
+    border-radius: 1rem;
+  }
+
+  .notification {
+    min-width: 25rem;
+    min-height: 5rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 1px solid #EEAAEE;
+    background: rgba(20, 20, 20, 0.8);
+    margin: 0.25rem 0 0.25rem 0;
+  }
+
+  .notification-icon {
+    min-width: 2rem;
+    min-height: 2rem;
+    margin-right: 1em;
+    icon {
+      font-size: 5rem;
+      color: #EEAAEE;
+    }
+    box {
+      border-radius: 7px;
+    }
+  }
+
+  .notification-low {
+    border: 1px solid #AA77AA;
+  }
+
+  .notification-normal {
+    border: 1px solid #EE99DD;
+  }
+
+  .notification-critical {
+    border: 1px solid #EE7788;
+  }
+
+  .notification-title {
+    color: #EE55EE;
+  }
+
+  .notification-time {
+    color: #A090F0;
+  }
+
+  .notification-body {
+    color: #A090C0;
+  }
+
+  .notification-actions {
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 1rem;
+  }
+
+  .notification-action-button {
+    background: #404040;
+    margin: 0 0.4rem 0 0.4rem;
+    padding: 0.3rem;
+    border-radius: 0.2rem;
+  }
+
+  .notification-action-button:hover {
+    background: #885088;
+  }
+
+  .notification-action-button:first-child {
+    margin-left: 0;
+  }
+
+  .notification-action-button:last-child {
+    margin-right: 0;
+  }
+}

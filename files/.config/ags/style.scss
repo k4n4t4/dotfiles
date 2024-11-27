@@ -1,0 +1,35 @@
+@import "./widget/Bar/style.scss";
+@import "./widget/Popups/style.scss";
+@import "./widget/Media/style.scss";
+@import "./widget/Notifications/style.scss";
+@import "./widget/NotificationPopups/style.scss";
+
+$font: "ComicShannsMono Nerd Font";
+
+* {
+  all: unset;
+}
+
+tooltip {
+  font-family: $font;
+  background: rgba(30, 30, 30, 0.8);
+  border-radius: 0.5rem;
+  color: #E0C0E0;
+}
+
+menu {
+  background: rgba(30, 30, 30, 0.8);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+
+  menuitem {
+    background: rgba(50, 50, 50, 0.8);
+    margin: 0.2rem;
+    padding: 0.3rem;
+    border-radius: 0.2rem;
+    color: #E0C0E0;
+  }:hover {
+    background: rgba(70, 70, 70, 0.9);
+    color: #E080E0;
+  }
+}
