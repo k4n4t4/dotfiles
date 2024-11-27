@@ -1,0 +1,13 @@
+[background]
+path = "~/work/pers/imgs/wallpapers/background_1.png"
+
+[GTK]
+application_prefer_dark_theme = true
+font_name = "ComicShannsMono Nerd Font 16"
+
+[commands]
+reboot = [ "systemctl", "reboot" ]
+poweroff = [ "systemctl", "poweroff" ]
+
+[appearance]
+greeting_msg = "Hello"
