@@ -5,7 +5,7 @@
 
   #nav-bar {
     margin-right: 50vw !important;
-    margin-top: -35px !important;
+    margin-top: -40px !important;
     border: none !important;
     background: transparent !important;
   }
@@ -25,7 +25,7 @@
   }
 }
 
-#private-browsing-indicator-with-label > label,
+.private-browsing-indicator-with-label > label,
 .titlebar-spacer {
   display: none !important;
 }
