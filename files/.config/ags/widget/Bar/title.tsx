@@ -8,7 +8,6 @@ export default function BarTitle(): JSX.Element {
 
   const label = Variable("")
   hyprland.connect('event', (_source, event) => {
-    print(event)
     switch (event) {
       case 'activewindowv2':
       case 'windowtitle':
