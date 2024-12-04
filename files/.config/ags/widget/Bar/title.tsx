@@ -6,19 +6,25 @@ import Hyprland from "gi://AstalHyprland"
 export default function BarTitle(): JSX.Element {
   const hyprland = Hyprland.get_default()
 
-  let tmp_label = ""
-  const label = bind(hyprland, 'focused_client').as(active => {
-    if (active?.title) {
-      tmp_label = active.title
-      return active.title
-    } else {
-      return tmp_label
+  const label = Variable("")
+  hyprland.connect('event', (_source, event) => {
+    print(event)
+    switch (event) {
+      case 'activewindowv2':
+      case 'windowtitle':
+      case 'windowtitlev2':
+        if (hyprland.focused_client) {
+          label.set(hyprland.focused_client.title)
+        } else {
+          label.set("")
+        }
+        break
     }
   })
 
   return (
     <box className="bar-title" >
-      <label truncate max-width-chars={50} label={label} />
+      <label truncate max-width-chars={50} label={bind(label)} />
     </box>
   )
 }
