@@ -21,12 +21,14 @@ window {
   margin: 5px;
   padding: 10px;
   border: none;
+  background: none;
 }
 
 #scroll {
   margin: 0px;
   padding: 10px;
   border: none;
+  background: none;
 }
 
 #input {
@@ -35,6 +37,10 @@ window {
   border: none;
   color: #E0A0A0;
   background: #404040;
+}
+
+#entry arrow {
+  color: #606060;
 }
 
 #entry {
