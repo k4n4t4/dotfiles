@@ -22,9 +22,6 @@ export default function BarNotifications(): JSX.Element {
       case Astal.MouseButton.PRIMARY:
         App.toggle_window("Notifications")
         break
-      case Astal.MouseButton.SECONDARY:
-        // todo
-        break
     }
   }
 

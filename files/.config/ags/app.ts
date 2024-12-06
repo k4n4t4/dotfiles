@@ -10,12 +10,12 @@ import NotificationPopups from "./widget/NotificationPopups"
 
 
 App.start({
-    css: style,
-    main() {
-        App.get_monitors().map(Bar)
-        App.get_monitors().map(Popups)
-        App.get_monitors().map(Media)
-        App.get_monitors().map(Notifications)
-        App.get_monitors().map(NotificationPopups)
-    },
+  css: style,
+  main() {
+    App.get_monitors().map(Bar)
+    App.get_monitors().map(Popups)
+    App.get_monitors().map(Media)
+    App.get_monitors().map(Notifications)
+    App.get_monitors().map(NotificationPopups)
+  },
 })
