@@ -1,9 +1,11 @@
 local M = {}
 
+
 ---@param list [string, string][]
 function M.echo(list)
   vim.api.nvim_echo(list, true, {})
 end
+
 
 ---@param fmt string
 ---@param ... any
@@ -11,17 +13,20 @@ function M.log(fmt, ...)
   M.echo { { string.format(fmt, ...), "None" } }
 end
 
+
 ---@param fmt string
 ---@param ... any
 function M.warn(fmt, ...)
   M.echo { { string.format(fmt, ...), "WarningMsg" } }
 end
 
+
 ---@param fmt string
 ---@param ... any
 function M.error(fmt, ...)
   M.echo { { string.format(fmt, ...), "ErrorMsg" } }
 end
+
 
 ---@param tbl table<any>
 ---@param elm any
@@ -33,6 +38,7 @@ local function table_contains(tbl, elm)
   end
   return false
 end
+
 
 ---@param str string
 ---@param quote? string
@@ -46,6 +52,7 @@ local function string_escape_quote(str, quote)
     end
   end)
 end
+
 
 ---@param tbl table<any>
 ---@param indent_count? number
@@ -77,6 +84,7 @@ local function table_to_str(tbl, indent_count, ignore_tables)
   end
   return str .. indent .. "}"
 end
+
 
 ---@param tbl table<any>
 function M.table(tbl)

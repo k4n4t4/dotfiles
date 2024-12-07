@@ -2,6 +2,7 @@ local ffi = require "ffi"
 
 local M = {}
 
+
 ffi.cdef [[
   typedef struct {} Error;
   typedef struct {} win_T;
@@ -37,6 +38,7 @@ M.find_window = function(winnr)
   return C.find_window_by_handle(winnr, error)
 end
 
+
 ---@param winnr? number
 ---@param lnum number
 ---@param wp? ffi.cdata*
@@ -53,5 +55,6 @@ function M.get(winnr, lnum, wp)
     wp = wp,
   }
 end
+
 
 return M

@@ -1,5 +1,6 @@
 local M = {}
 
+
 function M.get_null_ls_sources()
   local sources = require "null-ls.sources"
   local availables = {}
@@ -8,6 +9,7 @@ function M.get_null_ls_sources()
   end
   return availables
 end
+
 
 ---@param bufnr number
 ---@return string[], table<string, string[]>

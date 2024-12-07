@@ -2,6 +2,7 @@ local M = {}
 
 M.SEVERITY = vim.diagnostic.severity
 
+
 ---@param bufnr number
 ---@param severity_list? vim.diagnostic.Severity[]
 ---@return table<vim.diagnostic.Severity, vim.Diagnostic[]>
@@ -23,5 +24,6 @@ function M.get(bufnr, severity_list)
   end
   return diagnoses
 end
+
 
 return M
