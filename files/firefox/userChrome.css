@@ -5,12 +5,13 @@
 
   #nav-bar {
     margin-right: 50vw !important;
-    margin-top: -40px !important;
+    margin-top: -35px !important;
     border: none !important;
     background: transparent !important;
   }
 
   #urlbar-container {
+    margin-top: -4px !important;
     width: auto !important;
   }
 
