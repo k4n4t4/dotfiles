@@ -23,8 +23,11 @@ vim.api.nvim_set_decoration_provider(namespace, {
             {"Bold", "Comment"},
           })
           table.insert(virt_texts, {
-            " " .. fold_start .. " - " .. fold_end .. " " ..
-              (fold_level == 1 and "" or "(" .. fold_level .. ") "),
+            " " ..
+            (fold_level == 1 and "" or fold_level .. ": ") ..
+            fold_start .. " - " .. fold_end .. " " ..
+            "(" .. (fold_end - fold_start) .. ")" ..
+            " ",
             {"Comment", "Underlined"},
           })
 
