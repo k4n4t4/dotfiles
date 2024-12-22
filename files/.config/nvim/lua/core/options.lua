@@ -121,3 +121,5 @@ vim.opt.synmaxcol = 1000
 
 vim.opt.termguicolors = true
 vim.opt.background = "dark"
+
+-- vim.opt.shell = "fish"
