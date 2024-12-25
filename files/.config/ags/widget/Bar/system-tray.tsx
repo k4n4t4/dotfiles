@@ -5,24 +5,15 @@ import Tray from "gi://AstalTray"
 
 
 function BarSystemTrayItem(item: Tray.TrayItem): JSX.Element {
-  const menu = item.create_menu()
-
-  function onClick(self: Astal.Button, event: Astal.ClickEvent) {
-    switch (event.button) {
-      case Astal.MouseButton.PRIMARY:
-        item?.activate(event.x, event.y)
-        break
-      case Astal.MouseButton.SECONDARY:
-        menu?.popup_at_widget(self, Gdk.Gravity.SOUTH, Gdk.Gravity.NORTH, null)
-        break
-    }
-  }
-
   return (
     <box className="bar-systemtray-item">
-      <button onDestroy={() => menu?.destroy()} onClick={onClick} tooltip-markup={bind(item, 'tooltip_markup')}>
-        <icon icon={bind(item, 'icon_name')} />
-      </button>
+      <menubutton
+        tooltipMarkup={bind(item, "tooltipMarkup")}
+        usePopover={false}
+        actionGroup={bind(item, "action-group").as(ag => ["dbusmenu", ag])}
+        menuModel={bind(item, "menu-model")}>
+        <icon gicon={bind(item, "gicon")} />
+      </menubutton>
     </box>
   )
 }
