@@ -1,8 +1,8 @@
-@import "./widget/Bar/style.scss";
-@import "./widget/Popups/style.scss";
-@import "./widget/Media/style.scss";
-@import "./widget/Notifications/style.scss";
-@import "./widget/NotificationPopups/style.scss";
+@use "./widget/Bar/style" as Bar;
+@use "./widget/Popups/style" as Popups;
+@use "./widget/Media/style" as Media;
+@use "./widget/Notifications/style" as Notifications;
+@use "./widget/NotificationPopups/style" as NotificationPopups;
 
 $font: "ComicShannsMono Nerd Font";
 
