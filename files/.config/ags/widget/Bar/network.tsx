@@ -1,4 +1,4 @@
-import { exec } from "astal/process"
+import { execAsync } from "astal/process"
 import { Variable, bind } from "astal"
 
 import Network from "gi://AstalNetwork"
@@ -74,13 +74,13 @@ export default function BarNetwork(): JSX.Element {
   function BarNetWorkUnknown(): JSX.Element {
     return (
       <box name="unknown" className="bar-network-unknown">
-        ?
+        <label label="?" />
       </box>
     )
   }
 
   function onClick() {
-    exec(`
+    execAsync(`
       st -f 'ComicShannsMono Nerd Font Mono-14' -i env NEWT_COLORS='
       root=white,black
       roottext=yellow,black
