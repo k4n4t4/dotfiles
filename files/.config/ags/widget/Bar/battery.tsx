@@ -40,21 +40,14 @@ export default function BarBattery(): JSX.Element {
     bind(battery, 'charging'),
     bind(powerprofiles, 'active_profile'),
   ], (percentage, charging, profile) => {
-
     let label = ""
     const percent = Math.round(percentage * 100)
 
-    if (profile === 'power-saver') {
-      label += "󰌪 "
-    }
+    label += profile === 'power-saver' ? "󰌪 " : ""
 
     label += batCap(percent)
 
-    if (charging) {
-      label += "󱐋"
-    } else {
-      label += ""
-    }
+    label += charging ? "󱐋" : ""
 
     return label
   }))
