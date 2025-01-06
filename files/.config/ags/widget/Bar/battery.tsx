@@ -4,10 +4,36 @@ import Battery from "gi://AstalBattery"
 import PowerProfiles from "gi://AstalPowerProfiles"
 
 
+function batCap(percent: number) {
+  if (percent >= 100) {
+    return "󰁹"
+  } else if (percent >= 90) {
+    return "󰂂"
+  } else if (percent >= 80) {
+    return "󰂁"
+  } else if (percent >= 70) {
+    return "󰂀"
+  } else if (percent >= 60) {
+    return "󰁿"
+  } else if (percent >= 50) {
+    return "󰁾"
+  } else if (percent >= 40) {
+    return "󰁽"
+  } else if (percent >= 30) {
+    return "󰁼"
+  } else if (percent >= 20) {
+    return "󰁻"
+  } else if (percent >= 10) {
+    return "󰁺"
+  } else {
+    return "󰂎"
+  }
+}
+
+
 export default function BarBattery(): JSX.Element {
   const battery = Battery.get_default()
   const powerprofiles = PowerProfiles.get_default()
-
 
   const bat_status = bind(Variable.derive([
     bind(battery, 'percentage'),
@@ -22,29 +48,7 @@ export default function BarBattery(): JSX.Element {
       label += "󰌪 "
     }
 
-    if (percent >= 100) {
-      label += "󰁹"
-    } else if (percent >= 90) {
-      label += "󰂂"
-    } else if (percent >= 80) {
-      label += "󰂁"
-    } else if (percent >= 70) {
-      label += "󰂀"
-    } else if (percent >= 60) {
-      label += "󰁿"
-    } else if (percent >= 50) {
-      label += "󰁾"
-    } else if (percent >= 40) {
-      label += "󰁽"
-    } else if (percent >= 30) {
-      label += "󰁼"
-    } else if (percent >= 20) {
-      label += "󰁻"
-    } else if (percent >= 10) {
-      label += "󰁺"
-    } else {
-      label += "󰂎"
-    }
+    label += batCap(percent)
 
     if (charging) {
       label += "󱐋"
