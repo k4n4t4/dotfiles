@@ -44,9 +44,7 @@ export default function BarBattery(): JSX.Element {
     const percent = Math.round(percentage * 100)
 
     label += profile === 'power-saver' ? "󰌪 " : ""
-
     label += batCap(percent)
-
     label += charging ? "󱐋" : ""
 
     return label
