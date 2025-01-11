@@ -4,30 +4,18 @@ import Battery from "gi://AstalBattery"
 import PowerProfiles from "gi://AstalPowerProfiles"
 
 
-function batCap(percent: number) {
-  if (percent >= 100) {
-    return "󰁹"
-  } else if (percent >= 90) {
-    return "󰂂"
-  } else if (percent >= 80) {
-    return "󰂁"
-  } else if (percent >= 70) {
-    return "󰂀"
-  } else if (percent >= 60) {
-    return "󰁿"
-  } else if (percent >= 50) {
-    return "󰁾"
-  } else if (percent >= 40) {
-    return "󰁽"
-  } else if (percent >= 30) {
-    return "󰁼"
-  } else if (percent >= 20) {
-    return "󰁻"
-  } else if (percent >= 10) {
-    return "󰁺"
-  } else {
-    return "󰂎"
-  }
+function batIcon(percent: number) {
+  if (percent >= 100) return "󰁹"
+  if (percent >= 90) return "󰂂"
+  if (percent >= 80) return "󰂁"
+  if (percent >= 70) return "󰂀"
+  if (percent >= 60) return "󰁿"
+  if (percent >= 50) return "󰁾"
+  if (percent >= 40) return "󰁽"
+  if (percent >= 30) return "󰁼"
+  if (percent >= 20) return "󰁻"
+  if (percent >= 10) return "󰁺"
+  return "󰂎"
 }
 
 
@@ -44,7 +32,7 @@ export default function BarBattery(): JSX.Element {
     const percent = Math.round(percentage * 100)
 
     label += profile === 'power-saver' ? "󰌪 " : ""
-    label += batCap(percent)
+    label += batIcon(percent)
     label += charging ? "󱐋" : ""
 
     return label
