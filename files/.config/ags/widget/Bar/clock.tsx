@@ -11,6 +11,7 @@ type clock = {
   seconds?: string,
   day?: string,
 }
+
 type clock_params = {
   show_date?: boolean
   show_seconds?: boolean
