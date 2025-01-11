@@ -23,6 +23,8 @@ export default function BarBattery(): JSX.Element {
   const battery = Battery.get_default()
   const powerprofiles = PowerProfiles.get_default()
 
+  if (battery.deviceType === 0) return <box />
+
   const bat_status = bind(Variable.derive([
     bind(battery, 'percentage'),
     bind(battery, 'charging'),
