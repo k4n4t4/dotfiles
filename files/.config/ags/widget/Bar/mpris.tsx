@@ -27,11 +27,23 @@ export default function BarMpris(): JSX.Element {
       return str
   }))
 
+  const icon = bind(mpris, 'players').as(players => {
+    if (players.length > 0) {
+      return (
+        <eventbox onClick={() => {App.toggle_window("Media")}}>
+          <box className={class_name}>
+            <label label="󰎆 " />
+          </box>
+        </eventbox>
+      )
+    } else {
+      return <box />
+    }
+  })
+
   return (
-    <eventbox onClick={() => {App.toggle_window("Media")}}>
-      <box className={class_name} >
-        <label tooltipText={tooltip_text} label="󰎆 " />
-      </box>
-    </eventbox>
+    <box>
+      {icon}
+    </box>
   )
 }

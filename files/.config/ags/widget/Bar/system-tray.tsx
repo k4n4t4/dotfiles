@@ -1,4 +1,3 @@
-import { Astal, Gdk } from "astal/gtk3"
 import { bind, Variable } from "astal"
 
 import Tray from "gi://AstalTray"
@@ -8,11 +7,11 @@ function BarSystemTrayItem(item: Tray.TrayItem): JSX.Element {
   return (
     <box className="bar-systemtray-item">
       <menubutton
-        tooltipMarkup={bind(item, "tooltipMarkup")}
+        tooltipMarkup={bind(item, 'tooltipMarkup')}
         usePopover={false}
-        actionGroup={bind(item, "action-group").as(ag => ["dbusmenu", ag])}
-        menuModel={bind(item, "menu-model")}>
-        <icon gicon={bind(item, "gicon")} />
+        actionGroup={bind(item, 'actionGroup').as(ag => ['dbusmenu', ag])}
+        menuModel={bind(item, 'menuModel')}>
+        <icon gicon={bind(item, 'gicon')} />
       </menubutton>
     </box>
   )
