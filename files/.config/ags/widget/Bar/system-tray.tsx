@@ -5,8 +5,9 @@ import Tray from "gi://AstalTray"
 
 function BarSystemTrayItem(item: Tray.TrayItem): JSX.Element {
   return (
-    <box className="bar-systemtray-item">
+    <box>
       <menubutton
+        className="bar-systemtray-item"
         tooltipMarkup={bind(item, 'tooltipMarkup')}
         usePopover={false}
         actionGroup={bind(item, 'actionGroup').as(ag => ['dbusmenu', ag])}
