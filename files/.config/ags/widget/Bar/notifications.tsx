@@ -17,6 +17,14 @@ export default function BarNotifications(): JSX.Element {
 
   const tooltip_text = bind(notifd, 'notifications').as(n => `${n.length}`)
 
+  const icon = bind(notifd, 'notifications').as(n => {
+    if (n.length > 0) {
+      return " "
+    } else {
+      return " "
+    }
+  })
+
   function onClick(_self: Astal.EventBox, event: Astal.ClickEvent) {
     switch (event.button) {
       case Astal.MouseButton.PRIMARY:
@@ -28,7 +36,7 @@ export default function BarNotifications(): JSX.Element {
   return (
     <eventbox onClick={onClick}>
       <box className={class_name} >
-        <label tooltipText={tooltip_text} label={" "} />
+        <label tooltipText={tooltip_text} label={icon} />
       </box>
     </eventbox>
   )
