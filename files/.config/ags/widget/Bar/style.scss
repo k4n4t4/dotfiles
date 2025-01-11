@@ -3,7 +3,7 @@ $font: "ComicShannsMono Nerd Font";
 window.Bar {
   .bar {
     color: #E0E0E0;
-    border-radius: 0.4rem;
+    border-radius: 0.2rem;
     min-height: 2.5rem;
     padding: 0.25rem;
     font-family: $font;
@@ -58,14 +58,14 @@ window.Bar {
   .bar-workspace {
     background: #202020;
     color: #888888;
-    border-radius: 1.5rem;
+    border-radius: 0.1rem;
     padding: 0 1.0rem 0 1.0rem;
     margin: 0.1rem 0.2rem 0.1rem 0.2rem;
   }
   .bar-current-workspace {
     background: #303030;
     font-weight: bold;
-    color: #DCDCDC;
+    color: #ACACAC;
     border: 1px solid #999999;
   }
 
@@ -79,17 +79,17 @@ window.Bar {
 
   .bar-systemtray-exist {
     background: #202020;
-    border-radius: 0.5rem;
+    border-radius: 0.1rem;
     color: #E0E0E0;
-    padding: 0 0.5rem 0 0.5rem;
+    padding: 0.1rem 0.2rem 0.1rem 0.2rem;
     margin: 0.1rem 0.2rem 0.1rem 0.2rem;
   }
   .bar-systemtray-item {
     background: #404040;
-    border-radius: 1rem;
+    border-radius: 0.1rem;
     color: #D090A0;
     padding: 0.5rem;
-    margin: 0 0.05rem 0 0.05rem;
+    margin: 0.2rem 0.05rem 0.2rem 0.05rem;
   }
 
   .bar-notifications {
