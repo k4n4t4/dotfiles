@@ -6,7 +6,7 @@ import Bluetooth from "gi://AstalBluetooth"
 export default function BarBluetooth(): JSX.Element {
   const bluetooth = Bluetooth.get_default()
 
-  const bluetooth_status = bind(bluetooth, 'is_connected').as(connected => {
+  const bluetooth_status = bind(bluetooth, 'isConnected').as(connected => {
     if (connected) {
       return "󰂯"
     } else {
@@ -14,9 +14,19 @@ export default function BarBluetooth(): JSX.Element {
     }
   })
 
+  const icon = bind(bluetooth, 'isPowered').as(powered => {
+    if (powered) {
+      return <box className="bar-bluetooth">
+        <label label={bluetooth_status} />
+      </box>
+    } else {
+      return <box />
+    }
+  })
+
   return (
-    <box className="bar-bluetooth">
-      <label label={bluetooth_status} />
+    <box>
+      {icon}
     </box>
   )
 }
