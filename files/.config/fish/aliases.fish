@@ -71,6 +71,8 @@ if type -q git
   abbr --add gf   "git fetch"
   abbr --add gc   "git commit"
   abbr --add gcm  "git commit -m"
+  abbr --add gcmu  "git commit -m update"
+  abbr --add gcmau  "git add . && git commit -m update"
   abbr --add gr   "git remote"
   abbr --add gbl  "git blame"
   alias groot "cdgitroot"
