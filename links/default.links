@@ -70,7 +70,7 @@ fi
 # shellcheck disable=SC2154
 case "$dot_mode" in
   ( "install" )
-    . ./script/gitconfig.sh
+    . "$WORK_PATH/links/script/gitconfig.sh"
     ;;
   ( "uninstall" ) : ;;
   ( "check" ) : ;;
