@@ -70,25 +70,6 @@ fi
 # shellcheck disable=SC2154
 case "$dot_mode" in
   ( "install" )
-
-    if cmd_exist greetd && cmd_exist Hyprland && cmd_exist ags; then
-      if [ -d "/etc/greetd" ]; then
-
-        info "greetd config"
-
-        warn "  sudo required"
-        ask "  Continue? [y/N]: "
-        case "$RET" in
-          ( [Yy] )
-            sudo cp "$WORK_PATH"/files/greetd/* /etc/greetd/ -riv
-            ;;
-          ( * )
-            log "  Skiped."
-            ;;
-        esac
-      fi
-    fi
-
     if cmd_exist git; then
       info "git config"
       ask "  Continue? [Y/n]: "
