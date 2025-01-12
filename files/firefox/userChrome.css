@@ -5,13 +5,19 @@
 
   #nav-bar {
     margin-right: 50vw !important;
-    margin-top: -35px !important;
+    margin-top: 0px !important;
     border: none !important;
     background: transparent !important;
+    margin-top: -32px !important;
+  }
+
+  #nav-bar-customization-target,
+  #PanelUI-button,
+  #nav-bar > * {
+    margin-top: -6px !important;
   }
 
   #urlbar-container {
-    margin-top: -4px !important;
     width: auto !important;
   }
 
@@ -31,7 +37,12 @@
   display: none !important;
 }
 
+#nav-bar {
+  min-height: 32px !important;
+}
+
 #navigator-toolbox {
+  min-height: 40px !important;
   border: none !important;
   border-bottom: solid #202020 1px !important;
 }
@@ -39,13 +50,13 @@
 #PersonalToolbar {
   background: rgba(20, 20, 20, 0.8) !important;
   padding-inline: 0px !important;
-  height: 0px !important;
+  max-height: 0px !important;
 }
 
 #navigator-toolbox:hover #PersonalToolbar,
 #navigator-toolbox:focus-within #PersonalToolbar,
 #PersonalToolbar:has(toolbarbutton[open=true]) {
-  height: auto !important;
+  max-height: 30px !important;
 }
 
 
