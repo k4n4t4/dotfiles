@@ -134,7 +134,7 @@ tab.tabbrowser-tab {
   animation: anim-spawn 0.3s linear;
 }
 
-toolbarbutton[open="true"] > menupopup {
+toolbarbutton.bookmark-item[open="true"] > menupopup {
   animation: anim-spawn-1 0.1s linear;
 }
 
