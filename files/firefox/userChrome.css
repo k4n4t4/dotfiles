@@ -50,15 +50,44 @@
 #PersonalToolbar {
   background: rgba(20, 20, 20, 0.8) !important;
   padding-inline: 0px !important;
-  max-height: 0px !important;
+  max-height: 30px !important;
+  opacity: 0;
+  margin-top: -30px !important;
+  animation: anim-up 0.1s linear;
 }
 
 #navigator-toolbox:hover #PersonalToolbar,
 #navigator-toolbox:focus-within #PersonalToolbar,
 #PersonalToolbar:has(toolbarbutton[open=true]) {
-  max-height: 30px !important;
+  opacity: 1;
+  margin-top: 0px !important;
+  animation: anim-down 0.1s linear;
 }
 
+@keyframes anim-up {
+  0% {
+    opacity: 1;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(0px);
+  }
+}
+
+@keyframes anim-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  80% {
+    transform: translateY(3px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
 
 @keyframes anim-spawn {
   0% {
@@ -85,7 +114,16 @@
 }
 
 tab.tabbrowser-tab {
-  max-width: 20% !important;
+  border-radius: 0.5rem !important;
+}
+
+.tab-close-button {
+  border-radius: 0.5rem !important;
+}
+
+.toolbarbutton-badge-stack,
+.toolbarbutton-icon {
+  border-radius: 0.5rem !important;
 }
 
 tab.tabbrowser-tab[selected="true"] {
