@@ -85,6 +85,14 @@
 }
 
 tab.tabbrowser-tab {
+  max-width: 20% !important;
+}
+
+tab.tabbrowser-tab[selected="true"] {
+  max-width: 100% !important;
+}
+
+tab.tabbrowser-tab {
   animation: anim-spawn 0.3s linear;
 }
 
