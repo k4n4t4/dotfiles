@@ -7,11 +7,12 @@
   --urlbar-margin-inline: 0px !important;
 
 
+  --one-line-width: 50vw;
   --navigator-toolbox-height: 40px;
   --nav-bar-height: 40px;
   --tabs-toolbar-height: 40px;
   --personal-toolbar-height: 30px;
-  --one-line-width: 50vw;
+  --urlbar-height: 40px;
 }
 
 #navigator-toolbox {
@@ -25,6 +26,9 @@
 }
 #PersonalToolbar {
   min-height: var(--personal-toolbar-height) !important;
+}
+#urlbar {
+  min-height: var(--urlbar-height) !important;
 }
 
 
@@ -80,6 +84,10 @@
   animation: anim-down 0.1s linear;
 }
 
+#PlacesToolbarItems > toolbarbutton.bookmark-item {
+  margin: 0 0.5px 0 0.5px !important;
+  padding: 0 3px 0 3px !important;
+}
 
 @keyframes anim-up {
   0% {
@@ -134,6 +142,10 @@
 .private-browsing-indicator-with-label > label,
 .titlebar-spacer {
   display: none !important;
+}
+
+#urlbar-background {
+  border: none !important;
 }
 
 #navigator-toolbox {
