@@ -4,11 +4,9 @@
   --tab-block-margin: 0px !important;
   --tab-inline-padding: 4px !important;
   --tab-overflow-clip-margin: 0px !important;
-
   --urlbar-margin-inline: 0px !important;
-}
 
-:root {
+
   --navigator-toolbox-height: 40px;
   --nav-bar-height: 40px;
   --tabs-toolbar-height: 40px;
@@ -65,17 +63,7 @@
   }
 }
 
-.private-browsing-indicator-with-label > label,
-.titlebar-spacer {
-  display: none !important;
-}
-
-
-#navigator-toolbox {
-  border: none !important;
-  border-bottom: solid #202020 1px !important;
-}
-
+/* hide-bookmark */
 #PersonalToolbar {
   background: rgba(20, 20, 20, 0.8) !important;
   padding-inline: 0px !important;
@@ -92,10 +80,11 @@
   animation: anim-down 0.1s linear;
 }
 
+
 @keyframes anim-up {
   0% {
     opacity: 1;
-    transform: translateY(30px);
+    transform: translateY(var(--personal-toolbar-height));
   }
   100% {
     opacity: 0;
@@ -106,7 +95,7 @@
 @keyframes anim-down {
   0% {
     opacity: 0;
-    transform: translateY(-30px);
+    transform: translateY(calc(-1 * var(--personal-toolbar-height)));
   }
   80% {
     transform: translateY(3px);
@@ -139,6 +128,17 @@
   100% {
     transform: scale(1.0);
   }
+}
+
+
+.private-browsing-indicator-with-label > label,
+.titlebar-spacer {
+  display: none !important;
+}
+
+#navigator-toolbox {
+  border: none !important;
+  border-bottom: solid #202020 1px !important;
 }
 
 tab.tabbrowser-tab {
