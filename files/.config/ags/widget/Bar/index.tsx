@@ -7,6 +7,7 @@ import Bluetooth from "./bluetooth"
 import Audio from "./audio"
 import Title from "./title"
 import Workspaces from "./workspaces"
+import Submap from "./submap"
 import Mpris from "./mpris"
 import SystemTray from "./system-tray"
 import Notifications from "./notifications"
@@ -33,6 +34,7 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
         <centerbox>
           <box hexpand halign={Gtk.Align.START} className="bar-left">
             <Workspaces />
+            <Submap />
           </box>
           <box halign={Gtk.Align.CENTER} className="bar-center">
             <Title />
