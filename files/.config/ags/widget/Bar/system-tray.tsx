@@ -1,6 +1,12 @@
+import { Astal, Gtk } from "astal/gtk3"
 import { bind, Variable } from "astal"
 
 import Tray from "gi://AstalTray"
+
+type systemtray_params = {
+  reveal?: boolean
+  show_items?: string[]
+}
 
 
 function BarSystemTrayItem(item: Tray.TrayItem): JSX.Element {
@@ -18,32 +24,72 @@ function BarSystemTrayItem(item: Tray.TrayItem): JSX.Element {
   )
 }
 
-
-export default function BarSystemTray(): JSX.Element {
+export default function BarSystemTray(params: systemtray_params): JSX.Element {
   const tray = Tray.get_default()
 
+  const reveal = Variable(params.reveal || false)
+  const show_items = params.show_items || []
+
+
   const system_tray_items = bind(tray, 'items').as(items => {
+
     const children = []
+    const hide_children = []
+
     for (const item of items) {
-      children.push(BarSystemTrayItem(item))
+      if (show_items.includes(item.title)) {
+        children.push(BarSystemTrayItem(item))
+      } else {
+        hide_children.push(BarSystemTrayItem(item))
+      }
     }
-    return children
+
+    function onClick(_self: Astal.EventBox, event: Astal.ClickEvent) {
+      switch (event.button) {
+        case Astal.MouseButton.PRIMARY:
+        case Astal.MouseButton.SECONDARY:
+          reveal.set(!reveal.get())
+          break
+      }
+    }
+
+    const reveal_button = hide_children.length > 0 ? (
+      <box className={"bar-systemtray-reveal-button"}>
+        <eventbox onClick={onClick}>
+          <label label={bind(reveal).as(b => {
+            if (b) {
+              return "  "
+            } else {
+              return "  "
+            }
+          })} />
+        </eventbox>
+      </box>
+    ) : (
+      <box />
+    )
+
+    return (
+      <box className={"bar-systemtray bar-systemtray-" + (children.length + hide_children.length > 0 ? "exist" : "empty")}>
+        <box className={"bar-systemtray-hide-items bar-systemtray-hide-items-" + (hide_children.length > 0 ? "exist" : "empty")}>
+          <revealer
+            transitionDuration={500}
+            transitionType={Gtk.RevealerTransitionType.SLIDE_RIGHT}
+            revealChild={bind(reveal)} >
+            {hide_children}
+          </revealer>
+        </box>
+        {reveal_button}
+        <box className={"bar-systemtray-items bar-systemtray-items-" + (children.length > 0 ? "exist" : "empty")}>
+          {children}
+        </box>
+      </box>
+    )
   })
 
-  const class_names = bind(Variable.derive([
-    bind(tray, 'items'),
-  ], (items) => {
-    const class_names = ["bar-systemtray"]
-    if (items.length > 0) {
-      class_names.push("bar-systemtray-exist")
-    } else {
-      class_names.push("bar-systemtray-empty")
-    }
-    return class_names.join(" ")
-  }))
 
   return (
-    <box className={class_names}>
+    <box>
       {system_tray_items}
     </box>
   )

@@ -40,7 +40,9 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
             <Title />
           </box>
           <box hexpand halign={Gtk.Align.END} className="bar-right">
-            <SystemTray />
+            <SystemTray show_items={[
+              "Input Method",
+            ]} reveal={false} />
             <Mpris />
             <Audio />
             <Bluetooth />
