@@ -7,7 +7,7 @@ export default function BarWorkspaces(): JSX.Element {
   const hyprland = Hyprland.get_default()
 
   const workspaces = bind(hyprland, 'workspaces').as(wss => {
-    const children: JSX.Element[] = []
+    const children: any[] = []
 
     for (let i = wss.length - 1; i >= 0; i--) {
       const ws = wss[i]
@@ -25,13 +25,19 @@ export default function BarWorkspaces(): JSX.Element {
       }
 
       children.push(
-        <eventbox onClick={onClick}>
-          <box className={class_name}>
-            <label label={ws.name} />
-          </box>
-        </eventbox>
+        <box data-id={ws.id}>
+          <eventbox onClick={onClick}>
+            <box className={class_name}>
+              <label label={ws.name} />
+            </box>
+          </eventbox>
+        </box>
       )
     }
+
+    children.sort((a, b) => {
+      return a["data-id"] - b["data-id"]
+    })
 
     return children
   })
