@@ -30,10 +30,9 @@ export default function Popups(gdkmonitor: Gdk.Monitor) {
 
   return (
     <window
-      className="Popups"
-      name={`Popups-${gdkmonitor}`}
+      name="Popups"
       gdkmonitor={gdkmonitor}
-      exclusivity={Astal.Exclusivity.EXCLUSIVE}
+      exclusivity={Astal.Exclusivity.IGNORE}
       anchor={0}
       layer={Astal.Layer.OVERLAY}
       application={App}

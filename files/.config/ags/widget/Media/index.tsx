@@ -159,8 +159,7 @@ export default function Media(gdkmonitor: Gdk.Monitor) {
   const mpris = Mpris.get_default()
   return (
     <window
-      className="Media"
-      name={`Media`}
+      name="Media"
       gdkmonitor={gdkmonitor}
       exclusivity={Astal.Exclusivity.NORMAL}
       anchor={

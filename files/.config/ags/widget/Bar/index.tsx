@@ -16,8 +16,7 @@ import Notifications from "./notifications"
 export default function Bar(gdkmonitor: Gdk.Monitor) {
   return (
     <window
-      className="Bar"
-      name={`Bar-${gdkmonitor}`}
+      name="Bar"
       gdkmonitor={gdkmonitor}
       exclusivity={Astal.Exclusivity.EXCLUSIVE}
       anchor={
