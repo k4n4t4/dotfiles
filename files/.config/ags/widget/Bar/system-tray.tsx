@@ -54,17 +54,17 @@ export default function BarSystemTray(params: systemtray_params): JSX.Element {
     }
 
     const reveal_button = hide_children.length > 0 ? (
-      <box className={"bar-systemtray-reveal-button"}>
-        <eventbox onClick={onClick}>
+      <eventbox onClick={onClick}>
+        <box className="bar-systemtray-reveal-button">
           <label label={bind(reveal).as(b => {
             if (b) {
-              return "  "
+              return "-"
             } else {
-              return "  "
+              return "<"
             }
           })} />
-        </eventbox>
-      </box>
+        </box>
+      </eventbox>
     ) : (
       <box />
     )
