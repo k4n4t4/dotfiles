@@ -58,9 +58,9 @@ export default function BarSystemTray(params: systemtray_params): JSX.Element {
         <box className="bar-systemtray-reveal-button">
           <label label={bind(reveal).as(b => {
             if (b) {
-              return "-"
+              return " "
             } else {
-              return "<"
+              return " "
             }
           })} />
         </box>
