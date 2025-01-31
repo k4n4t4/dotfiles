@@ -1,4 +1,4 @@
-require "config"
+pcall(require, "config")
 require "core"
 require "lazyvim"
 require "settings"
