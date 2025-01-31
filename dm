@@ -92,10 +92,23 @@ main() {
 
   case "$1" in
     ( help      | h ) shift ; usage "$@" ;;
-    ( status    | s ) shift ; status "$@" ;;
+    ( debug     | d ) shift ; debug "$@" ;;
     ( install   | i ) shift ; install "$@" ;;
     ( uninstall | u ) shift ; uninstall "$@" ;;
     ( check     | c ) shift ; check "$@" ;;
+    ( pull      | p )
+      cd -- "$WORK_PATH"
+      git pull
+      ;;
+    ( status    | s )
+      cd -- "$WORK_PATH"
+      git status
+      ;;
+    ( git       | g )
+      shift
+      cd -- "$WORK_PATH"
+      git "$@"
+      ;;
     ( * )
       error "Invalid Sub Command: \"$1\""
       usage

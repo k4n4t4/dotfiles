@@ -1,4 +1,4 @@
-status() {
+debug() {
   info "Information"
   log "  SHELL_PATH = \"$SHELL_PATH\""
   log "  SHELL_NAME = \"$SHELL_NAME\""

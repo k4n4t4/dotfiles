@@ -49,7 +49,7 @@ dot_opts=""
 . "$WORK_PATH/scripts/libs/func.sh"
 
 . "$WORK_PATH/scripts/commands/usage.sh"
-. "$WORK_PATH/scripts/commands/status.sh"
+. "$WORK_PATH/scripts/commands/debug.sh"
 . "$WORK_PATH/scripts/commands/install.sh"
 . "$WORK_PATH/scripts/commands/uninstall.sh"
 . "$WORK_PATH/scripts/commands/check.sh"
