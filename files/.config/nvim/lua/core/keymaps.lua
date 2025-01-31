@@ -5,8 +5,11 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 
+-- plugin
 set('n', '<LEADER>p', "<CMD>Lazy<CR>")
 
+
+-- terminal
 set('t', '<ESC>', "<C-\\><C-N>")
 set('n', '<LEADER>c', "<CMD>belowright 10split<CR><CMD>terminal<CR>", { desc = "Terminal" })
 set('n', '<LEADER>C', "<CMD>terminal<CR>", { desc = "Terminal (full)" })
@@ -17,6 +20,8 @@ function TerminalOpenFile(file, _)
   vim.cmd.tabedit(file .. (empty and "Untitled" or ""))
 end
 
+
+-- highlight, replace
 set('n', '<LEADER>H', "<CMD>noh<CR>", { desc = "nohlsearch" })
 set('n', '<LEADER>h', "viwo<CMD>let @/=getregion(getpos('v'), getpos('.'))[0]<CR><CMD>set hls<CR><ESC>",
   { desc = "Highlight" })
@@ -31,6 +36,7 @@ set('x', '<LEADER>s',
   { desc = "Replace" })
 
 
+-- lsp
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function()
     set('n', '<LEADER>lf', vim.lsp.buf.format, { desc = "Format" })
