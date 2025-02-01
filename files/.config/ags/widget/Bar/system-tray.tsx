@@ -76,7 +76,9 @@ export default function BarSystemTray(params: systemtray_params): JSX.Element {
             transitionDuration={500}
             transitionType={Gtk.RevealerTransitionType.SLIDE_RIGHT}
             revealChild={bind(reveal)} >
-            {hide_children}
+            <box>
+              {hide_children}
+            </box>
           </revealer>
         </box>
         {reveal_button}

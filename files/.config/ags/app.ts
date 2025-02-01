@@ -10,7 +10,6 @@ import NotificationPopups from "./widget/NotificationPopups"
 
 
 App.start({
-  instanceName: "astal ags",
   css: style,
   main() {
     App.get_monitors().map(m => {
