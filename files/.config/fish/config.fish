@@ -6,8 +6,8 @@ source $fish_dir/colors.fish
 source $fish_dir/aliases.fish
 
 
-if test -f ~/.fishrc
-  source ~/.fishrc
+if test -f ~/.rc.fish
+  source ~/.rc.fish
 end
 
 
