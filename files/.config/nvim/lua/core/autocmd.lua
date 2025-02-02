@@ -84,7 +84,7 @@ autocmd("BufEnter", {
 
 
 -- fcitx
-if vim.fn.executable("fcitx5") then
+if vim.fn.executable("fcitx5") == 1 then
   autocmd("InsertLeave", {
     group = group,
     callback = function()
