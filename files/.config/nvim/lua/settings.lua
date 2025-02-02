@@ -1,16 +1,18 @@
-if config.colorscheme then
+if config then
+  if config.colorscheme then
 
-  if config.colorscheme.transparent then
-    require("commands.transparent").setup {
-      events = {
-        "VimEnter",
-        "ColorScheme",
+    if config.colorscheme.transparent then
+      require("commands.transparent").setup {
+        events = {
+          "VimEnter",
+          "ColorScheme",
+        }
       }
-    }
-  end
+    end
 
-  if config.colorscheme.name then
-    vim.cmd.colorscheme(config.colorscheme.name)
-  end
+    if config.colorscheme.name then
+      vim.cmd.colorscheme(config.colorscheme.name)
+    end
 
+  end
 end
