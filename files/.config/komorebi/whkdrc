@@ -10,8 +10,12 @@ alt + shift + r         : komorebic reload-configuration
 
 alt + b                 : start firefox
 alt + p                 : start firefox --private-window
+
 alt + t                 : wt
-alt + c                 : wt -p "Windows PowerShell"
+alt + shift + t         : Start-Process -FilePath "wt" -Verb RunAs
+alt + c                 : wt -p "PowerShell"
+alt + shift + c         : Start-Process -FilePath "wt" -Verb RunAs -ArgumentList "-p", "PowerShell"
+
 
 alt + q                 : komorebic close
 alt + m                 : komorebic minimize
