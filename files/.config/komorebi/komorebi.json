@@ -5,9 +5,22 @@
   "cross_monitor_move_behaviour": "Insert",
   "default_workspace_padding": 1,
   "default_container_padding": 1,
+  "animation": {
+    "duration": 150,
+    "enabled": true,
+    "fps": 60,
+    "style": "Linear"
+  },
   "border": true,
   "border_width": 2,
   "border_offset": -1,
+  "_border_colours": {
+    "floating":  { "r": 255, "g": 255, "b": 255 },
+    "monocle":   { "r": 255, "g": 255, "b": 255 },
+    "single":    { "r": 255, "g": 255, "b": 255 },
+    "stack":     { "r": 255, "g": 255, "b": 255 },
+    "unfocused": { "r": 255, "g": 255, "b": 255 }
+  },
   "theme": {
     "palette": "Base16",
     "name": "Ashes",
