@@ -8,6 +8,7 @@ return {
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-git",
       "hrsh7th/cmp-cmdline",
+      "hrsh7th/cmp-calc",
       "onsails/lspkind.nvim",
 
       "L3MON4D3/LuaSnip",
@@ -59,6 +60,7 @@ return {
           { name = 'buffer' },
           { name = 'path' },
           { name = 'git' },
+          { name = 'calc' },
         },
         mapping = cmp.mapping.preset.insert({
           ['<C-e>'] = cmp.mapping.abort(),
