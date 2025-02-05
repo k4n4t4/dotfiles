@@ -68,6 +68,165 @@ return {
     "peitalin/vim-jsx-typescript",
     ft = {"typescript", "typescriptreact", "*.tsx", "*.jsx"},
   },
+  {
+    "folke/lsp-colors.nvim",
+    event = 'VeryLazy',
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-context",
+    event = 'VeryLazy',
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+    },
+  },
+  {
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    event = 'VeryLazy',
+  },
+  {
+    "m-demare/hlargs.nvim",
+    event = 'VeryLazy',
+  },
+  {
+    "unblevable/quick-scope",
+    event = 'VeryLazy',
+    enabled = false,
+  },
+  {
+    "RRethy/vim-illuminate",
+    event = 'VeryLazy',
+    config = function()
+      local illuminate = require("illuminate")
+      illuminate.configure {
+        providers = {
+          'lsp',
+          'treesitter',
+          'regex',
+        },
+        delay = 500,
+        filetype_overrides = {},
+        filetypes_denylist = {
+          'dirbuf',
+          'dirvish',
+          'fugitive',
+        },
+        filetypes_allowlist = {},
+        modes_denylist = {},
+        modes_allowlist = {},
+        providers_regex_syntax_denylist = {},
+        providers_regex_syntax_allowlist = {},
+        under_cursor = true,
+        large_file_cutoff = nil,
+        large_file_overrides = nil,
+        min_count_to_highlight = 1,
+        should_enable = function(bufnr) return true end,
+        case_insensitive_regex = false,
+      }
+    end,
+  },
+  {
+    "andersevenrud/nvim_context_vt",
+    event = 'VeryLazy',
+    opts = {
+      enabled = true,
+      prefix = '',
+      highlight = 'ContextVt',
+      disable_ft = { 'markdown' },
+      disable_virtual_lines = false,
+      disable_virtual_lines_ft = {},
+      min_rows = 1,
+      min_rows_ft = {},
+    },
+  },
+  {
+    "mvllow/modes.nvim",
+    event = 'VeryLazy',
+    opts = {
+      colors = {
+        bg = "",
+        copy = "#f5c359",
+        delete = "#c75c6a",
+        insert = "#78ccc5",
+        visual = "#9745be",
+      },
+      line_opacity = 0.15,
+      set_cursor = true,
+      set_cursorline = true,
+      set_number = true,
+      ignore_filetypes = { 'NvimTree', 'TelescopePrompt' }
+    },
+  },
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    event = 'VeryLazy',
+    config = function()
+      local todo_comments = require("todo-comments")
+      todo_comments.setup {
+        signs = true,
+        sign_priority = 8,
+        keywords = {
+          FIX = {
+            icon = " ",
+            color = "error",
+            alt = { "FIXME", "BUG", "FIXIT", "ISSUE" },
+          },
+          TODO = { icon = " ", color = "info" },
+          HACK = { icon = " ", color = "warning" },
+          WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
+          PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+          NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+          TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
+        },
+        gui_style = {
+          fg = "NONE",
+          bg = "BOLD",
+        },
+        merge_keywords = true,
+        highlight = {
+          multiline = true,
+          multiline_pattern = "^.",
+          multiline_context = 10,
+          before = "",
+          keyword = "wide",
+          after = "fg",
+          pattern = [[.*<(KEYWORDS)\s*:]],
+          comments_only = true,
+          max_line_len = 400,
+          exclude = {},
+        },
+        colors = {
+          error = { "DiagnosticError", "ErrorMsg", "#DC2626" },
+          warning = { "DiagnosticWarn", "WarningMsg", "#FBBF24" },
+          info = { "DiagnosticInfo", "#2563EB" },
+          hint = { "DiagnosticHint", "#10B981" },
+          default = { "Identifier", "#7C3AED" },
+          test = { "Identifier", "#FF00FF" }
+        },
+        search = {
+          command = "rg",
+          args = {
+            "--color=never",
+            "--no-heading",
+            "--with-filename",
+            "--line-number",
+            "--column",
+          },
+          pattern = [[\b(KEYWORDS):]],
+        },
+      }
+
+      vim.keymap.set("n", "]t", function()
+        todo_comments.jump_next()
+      end, { desc = "Next todo comment" })
+      vim.keymap.set("n", "[t", function()
+        todo_comments.jump_prev()
+      end, { desc = "Previous todo comment" })
+      vim.keymap.set("n", "]t", function()
+        todo_comments.jump_next({keywords = { "ERROR", "WARNING" }})
+      end, { desc = "Next error/warning todo comment" })
+    end
+  },
 
   {
     "windwp/nvim-autopairs",

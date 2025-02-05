@@ -9,8 +9,11 @@ return {
       "hrsh7th/cmp-git",
       "hrsh7th/cmp-cmdline",
       "hrsh7th/cmp-calc",
+      "yutkat/cmp-mocword",
       "onsails/lspkind.nvim",
+      "ray-x/cmp-treesitter",
 
+      "nvim-lua/plenary.nvim",
       "L3MON4D3/LuaSnip",
       "rafamadriz/friendly-snippets",
       "saadparwaiz1/cmp_luasnip",
@@ -61,6 +64,8 @@ return {
           { name = 'path' },
           { name = 'git' },
           { name = 'calc' },
+          { name = 'mocword' },
+          { name = 'treesitter' },
         },
         mapping = cmp.mapping.preset.insert({
           ['<C-e>'] = cmp.mapping.abort(),

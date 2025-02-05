@@ -18,6 +18,7 @@ return {
   {
     "williamboman/mason-lspconfig.nvim",
     dependencies = {
+      "williamboman/nvim-lsp-installer",
       "neovim/nvim-lspconfig",
       "nvimtools/none-ls.nvim",
       "jayp0521/mason-null-ls.nvim",
@@ -25,6 +26,17 @@ return {
     config = function()
       local lspconfig = require "lspconfig"
       local mason_lspconfig = require "mason-lspconfig"
+
+      require("nvim-lsp-installer").setup {
+        automatic_installation = true,
+        ui = {
+          icons = {
+            server_installed = "✓",
+            server_pending = "➜",
+            server_uninstalled = "✗"
+          }
+        }
+      }
 
       mason_lspconfig.setup {
         ensure_installed = {
