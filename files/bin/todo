@@ -439,12 +439,13 @@ list() {
 }
 
 
-TODO_FILE="$HOME/.todo"
+TODO_FILE="$HOME/.local/share/todo/.todo"
 if ! [ -f "$TODO_FILE" ]; then
   if [ -e "$TODO_FILE" ] || [ -L "$TODO_FILE" ]; then
     echo "${ESC}[31m$TODO_FILE is not file.${ESC}[m" >&2
     exit 1
   else
+    mkdir -p "$(dirname -- "$TODO_FILE")"
     : > "$TODO_FILE"
   fi
 fi
