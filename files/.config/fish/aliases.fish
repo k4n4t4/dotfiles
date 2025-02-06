@@ -90,7 +90,7 @@ if type -q eza
   alias lta  "eza -F -Ta"
   alias llt  "eza -F -Tl"
   alias llta "eza -F -Tla"
-  export EXA_COLORS=(get_ls_colors exa)
+  alias lll  "eza -F -l -igbhHSOM@ --git-repos"
 else if type -q exa
   alias exa  "exa --icons --git -H -s type --time-style=long-iso"
   alias ls   "exa"

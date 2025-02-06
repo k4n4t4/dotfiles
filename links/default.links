@@ -59,6 +59,10 @@ if cmd_exist sheldon; then
   dot ".config/sheldon" -r
 fi
 
+if cmd_exist eza; then
+  dot ".config/eza" -r
+fi
+
 if cmd_exist firefox; then
   for folder in ~/.mozilla/firefox/*.default-release; do
     dot "firefox/user.js" "$folder/user.js"

@@ -1,0 +1,208 @@
+filekinds:
+  normal:
+    foreground: "#B0B0B0"
+    background: null
+    is_bold: false
+    is_dimmed: false
+    is_italic: false
+    is_underline: false
+    is_blink: false
+    is_reverse: false
+    is_hidden: false
+    is_strikethrough: false
+    prefix_with_reset: false
+  directory:
+    foreground: "#3070D0"
+  symlink:
+    foreground: "#30C0D0"
+  pipe:
+    foreground: "#30D090"
+  block_device:
+    foreground: "#D09030"
+  char_device:
+    foreground: "#D0C030"
+  socket:
+    foreground: "#C070D0"
+  special:
+    foreground: "#D09090"
+  executable:
+    foreground: "#30D090"
+  mount_point:
+    foreground: "#3030D0"
+    is_bold: true
+
+perms:
+  user_read:
+    foreground: "#D0C060"
+  user_write:
+    foreground: "#D06060"
+  user_executable_file:
+    foreground: "#60D060"
+  user_execute_other:
+    foreground: "#60D060"
+    is_underline: true
+  group_read:
+    foreground: "#D0C060"
+  group_write:
+    foreground: "#D06060"
+  group_execute:
+    foreground: "#60D060"
+  other_read:
+    foreground: "#D0C060"
+  other_write:
+    foreground: "#D06060"
+  other_execute:
+    foreground: "#60D060"
+  special_user_file:
+    foreground: "#D090D0"
+  special_other:
+    foreground: "#D090D0"
+    is_underline: true
+  attribute:
+    foreground: "#60D0D0"
+
+size:
+  major:
+    foreground: "#509050"
+  minor:
+    foreground: "#509050"
+    is_dimmed: true
+  number_byte:
+    foreground: "#A09090"
+  number_kilo:
+    foreground: "#A07050"
+  number_mega:
+    foreground: "#A05050"
+  number_giga:
+    foreground: "#A03030"
+  number_huge:
+    foreground: "#A01030"
+  unit_byte:
+    foreground: "#A09090"
+  unit_kilo:
+    foreground: "#A07050"
+  unit_mega:
+    foreground: "#A05050"
+  unit_giga:
+    foreground: "#A03030"
+  unit_huge:
+    foreground: "#A01030"
+
+users:
+  user_you:
+    foreground: "#90D090"
+  user_root:
+    foreground: "#D09090"
+  user_other:
+    foreground: "#D0D090"
+  group_yours:
+    foreground: "#90D090"
+  group_root:
+    foreground: "#D09090"
+  group_other:
+    foreground: "#D0D090"
+
+links:
+  normal:
+    foreground: "#C09090"
+  multi_link_file:
+    foreground: "#C090C0"
+
+git:
+  new:
+    foreground: "#90D090"
+  modified:
+    foreground: "#D0D090"
+  deleted:
+    foreground: "#D09090"
+  renamed:
+    foreground: "#D0A060"
+  ignored:
+    foreground: "#C090C0"
+  conflicted:
+    foreground: "#A03030"
+
+git_repo:
+  branch_main:
+    foreground: "#C090C0"
+  branch_other:
+    foreground: "#C090C0"
+    is_underline: true
+  git_clean:
+    foreground: "#D0D090"
+  git_dirty:
+    foreground: "#D0A060"
+
+# security_context:
+#   none:
+#   selinux:
+#     colon
+#     user
+#     role
+#     typ
+#     range
+
+file_type:
+  image:
+    foreground: "#C050D0"
+  video:
+    foreground: "#D060A0"
+  music:
+    foreground: "#C080D0"
+  crypto:
+    foreground: "#C0D090"
+  document:
+    foreground: "#909080"
+  compressed:
+    foreground: "#9090D0"
+  temp:
+    foreground: "#9060A0"
+  compiled:
+    foreground: "#70E090"
+  build:
+    foreground: "#90E070"
+  source:
+    foreground: "#70E0C0"
+
+punctuation:
+  foreground: "#A0A0E0"
+
+date:
+  foreground: "#A0A0E0"
+
+inode:
+  foreground: "#A0A0E0"
+
+blocks:
+  foreground: "#A0A0E0"
+
+header:
+  foreground: "#E0E0E0"
+
+octal:
+  foreground: "#A0A0E0"
+
+flags:
+  foreground: "#A0A0E0"
+
+control_char:
+  foreground: "#A0A0E0"
+
+broken_symlink:
+  foreground: "#E03030"
+
+broken_path_overlay:
+  foreground: "#E03030"
+
+
+filenames:
+  "README.md":
+    filename:
+      foreground: "#D0D0A0"
+    icon:
+      foreground: "#D0D0A0"
+  "LICENSE":
+    filename:
+      foreground: "#D0A0D0"
+    icon:
+      foreground: "#D0A0D0"
