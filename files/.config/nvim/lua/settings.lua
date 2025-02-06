@@ -1,4 +1,9 @@
 if config then
+
+  if config.shell then
+    vim.opt.shell = config.shell
+  end
+
   if config.colorscheme then
 
     if config.colorscheme.transparent then
@@ -15,4 +20,5 @@ if config then
     end
 
   end
+
 end
