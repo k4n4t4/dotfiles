@@ -94,6 +94,7 @@ return {
   },
   {
     "RRethy/vim-illuminate",
+    enabled = false,
     event = 'VeryLazy',
     config = function()
       local illuminate = require("illuminate")
@@ -126,6 +127,7 @@ return {
   },
   {
     "andersevenrud/nvim_context_vt",
+    enabled = false,
     event = 'VeryLazy',
     opts = {
       enabled = true,
@@ -136,23 +138,6 @@ return {
       disable_virtual_lines_ft = {},
       min_rows = 1,
       min_rows_ft = {},
-    },
-  },
-  {
-    "mvllow/modes.nvim",
-    event = 'VeryLazy',
-    opts = {
-      colors = {
-        copy = "#f5c359",
-        delete = "#c75c6a",
-        insert = "#78ccc5",
-        visual = "#9745be",
-      },
-      line_opacity = 0.15,
-      set_cursor = true,
-      set_cursorline = true,
-      set_number = true,
-      ignore_filetypes = { 'NvimTree', 'TelescopePrompt' }
     },
   },
   {
