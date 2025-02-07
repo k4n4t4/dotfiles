@@ -165,10 +165,10 @@ file_type:
     foreground: "#70E0C0"
 
 punctuation:
-  foreground: "#A0A0E0"
+  foreground: "#505050"
 
 date:
-  foreground: "#A0A0E0"
+  foreground: "#30A0E0"
 
 inode:
   foreground: "#A0A0E0"
@@ -183,7 +183,7 @@ octal:
   foreground: "#A0A0E0"
 
 flags:
-  foreground: "#A0A0E0"
+  foreground: "#E030A0"
 
 control_char:
   foreground: "#A0A0E0"
