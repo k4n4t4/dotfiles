@@ -189,3 +189,7 @@ end
 if type -q codium && not type -q code
   alias code "codium"
 end
+
+if type -q calcurse
+  abbr --add cl "calcurse"
+end
