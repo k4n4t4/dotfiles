@@ -4,98 +4,112 @@ vim.opt.rulerformat = "%15(%l,%c%V%=%P%)"
 vim.opt.laststatus = 3
 vim.opt.statusline = "%{% v:lua.StatusLine(g:actual_curwin == win_getid()) %}"
 
-local group = vim.api.nvim_create_augroup("StatusLine", { clear = true })
+
+local statusline_group = vim.api.nvim_create_augroup("StatusLine", { clear = true })
+
+-- Redraw statusline when mode changed.
 vim.api.nvim_create_autocmd("ModeChanged", {
-  group = group,
+  group = statusline_group,
   callback = function()
-    vim.cmd [[redrawstatus]]
+    vim.cmd.redrawstatus()
   end
 })
 
+-- Set highlights
 local function status_line_highlights()
-  vim.api.nvim_set_hl(0, "StatusLine", {
-    fg = "#EEEEEE",
-    bg = "none",
-  })
-  vim.api.nvim_set_hl(0, "StatusLineNC", {
-    fg = "#AAAAAA",
-    bg = "none",
-  })
+  local hls = {
+    {"StatusLine", {
+      fg = "#EEEEEE",
+      bg = "none",
+    }},
+    {"StatusLine", {
+      fg = "#EEEEEE",
+      bg = "none",
+    }},
+    {"StatusLineNC", {
+      fg = "#AAAAAA",
+      bg = "none",
+    }},
 
-  vim.api.nvim_set_hl(0, "StatusLineModeNormal", {
-    fg = "#99EE99",
-    bg = "none",
-  })
-  vim.api.nvim_set_hl(0, "StatusLineModeInsert", {
-    fg = "#EE9999",
-    bg = "none",
-  })
-  vim.api.nvim_set_hl(0, "StatusLineModeReplace", {
-    fg = "#EEEE99",
-    bg = "none",
-  })
-  vim.api.nvim_set_hl(0, "StatusLineModeVisual", {
-    fg = "#9999EE",
-    bg = "none",
-  })
-  vim.api.nvim_set_hl(0, "StatusLineModeConfirm", {
-    fg = "#999999",
-    bg = "none",
-  })
-  vim.api.nvim_set_hl(0, "StatusLineModeTerminal", {
-    fg = "#999999",
-    bg = "none",
-  })
-  vim.api.nvim_set_hl(0, "StatusLineModeOther", {
-    fg = "#EE99EE",
-    bg = "none",
-  })
+    {"StatusLineModeNormal", {
+      fg = "#99EE99",
+      bg = "none",
+    }},
+    {"StatusLineModeInsert", {
+      fg = "#EE9999",
+      bg = "none",
+    }},
+    {"StatusLineModeReplace", {
+      fg = "#EEEE99",
+      bg = "none",
+    }},
+    {"StatusLineModeVisual", {
+      fg = "#9999EE",
+      bg = "none",
+    }},
+    {"StatusLineModeConfirm", {
+      fg = "#999999",
+      bg = "none",
+    }},
+    {"StatusLineModeTerminal", {
+      fg = "#999999",
+      bg = "none",
+    }},
+    {"StatusLineModeOther", {
+      fg = "#EE99EE",
+      bg = "none",
+    }},
 
-  vim.api.nvim_set_hl(0, "StatusLineMacro", {
-    fg = "#BB77EE",
-    bg = "none",
-  })
+    {"StatusLineMacro", {
+      fg = "#BB77EE",
+      bg = "none",
+    }},
 
-  vim.api.nvim_set_hl(0, "StatusLineFileFlag", {
-    fg = "#DDEE99",
-    bg = "none",
-  })
+    {"StatusLineFileFlag", {
+      fg = "#DDEE99",
+      bg = "none",
+    }},
 
-  vim.api.nvim_set_hl(0, "StatusLineDiagnosticERROR", {
-    fg = "#EE9999",
-    bg = "none",
-  })
-  vim.api.nvim_set_hl(0, "StatusLineDiagnosticWARN", {
-    fg = "#EEEE99",
-    bg = "none",
-  })
-  vim.api.nvim_set_hl(0, "StatusLineDiagnosticINFO", {
-    fg = "#99EEEE",
-    bg = "none",
-  })
-  vim.api.nvim_set_hl(0, "StatusLineDiagnosticHINT", {
-    fg = "#99EE99",
-    bg = "none",
-  })
+    {"StatusLineDiagnosticERROR", {
+      fg = "#EE9999",
+      bg = "none",
+    }},
+    {"StatusLineDiagnosticWARN", {
+      fg = "#EEEE99",
+      bg = "none",
+    }},
+    {"StatusLineDiagnosticINFO", {
+      fg = "#99EEEE",
+      bg = "none",
+    }},
+    {"StatusLineDiagnosticHINT", {
+      fg = "#99EE99",
+      bg = "none",
+    }},
 
-  vim.api.nvim_set_hl(0, "StatusLineGitAdd", {
-    fg = "#55CC55",
-    bg = "none",
-  })
-  vim.api.nvim_set_hl(0, "StatusLineGitRemove", {
-    fg = "#CC5555",
-    bg = "none",
-  })
-  vim.api.nvim_set_hl(0, "StatusLineGitChange", {
-    fg = "#5555CC",
-    bg = "none",
-  })
-  vim.api.nvim_set_hl(0, "StatusLineGitBranch", {
-    fg = "#CC9955",
-    bg = "none",
-  })
+    {"StatusLineGitAdd", {
+      fg = "#55CC55",
+      bg = "none",
+    }},
+    {"StatusLineGitRemove", {
+      fg = "#CC5555",
+      bg = "none",
+    }},
+    {"StatusLineGitChange", {
+      fg = "#5555CC",
+      bg = "none",
+    }},
+    {"StatusLineGitBranch", {
+      fg = "#CC9955",
+      bg = "none",
+    }},
+  }
+  for _, v in pairs(hls) do
+    local name = v[1]
+    local params = v[2]
+    vim.api.nvim_set_hl(0, name, params)
+  end
 end
-
 vim.api.nvim_create_autocmd({
   "VimEnter",
   "ColorScheme",
@@ -202,7 +216,7 @@ local function status_fileformat()
   return vim.o.ff
 end
 
-local filetype_name = {
+local filetype_alias = {
   ["javascript"] = "js",
   ["typescript"] = "ts",
   ["python"]     = "py",
@@ -238,7 +252,7 @@ local function status_filetype(devicons)
     end
   end
 
-  return (not ft or ft == "") and "" or (filetype_name[ft] or ft)
+  return (not ft or ft == "") and "" or (filetype_alias[ft] or ft)
 end
 
 local git_icon = {
@@ -281,18 +295,18 @@ local function status_lsp()
   return table.concat(clients, ", ")
 end
 
-local diagnostic_color = {
-  ERROR = "StatusLineDiagnosticERROR",
-  WARN = "StatusLineDiagnosticWARN",
-  INFO = "StatusLineDiagnosticINFO",
-  HINT = "StatusLineDiagnosticHINT",
-}
-
 local diagnostic_icon = {
   ERROR = "!",
   WARN = "*",
   INFO = "i",
   HINT = "?",
+}
+
+local diagnostic_color = {
+  ERROR = "StatusLineDiagnosticERROR",
+  WARN = "StatusLineDiagnosticWARN",
+  INFO = "StatusLineDiagnosticINFO",
+  HINT = "StatusLineDiagnosticHINT",
 }
 
 local utils_diagnostic = require "utils.diagnostic"
