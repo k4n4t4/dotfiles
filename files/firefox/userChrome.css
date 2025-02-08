@@ -192,6 +192,10 @@ toolbaritem#urlbar-container[breakout=true] {
 }
 
 
+html#main-window {
+  background: rgba(10, 10, 10, 0.5) !important;
+}
+
 toolbox#navigator-toolbox.browser-toolbox-background {
   background: transparent !important;
 }
@@ -205,4 +209,11 @@ tab.tabbrowser-tab[selected="true"]>stack.tab-stack>vbox.tab-background {
 
 div#urlbar>hbox#urlbar-background {
   background: rgba(20, 20, 20, 0.7) !important;
+}
+
+hbox#browser {
+  background: transparent !important;
+}
+hbox#browser>tabbox#tabbrowser-tabbox>tabpanels#tabbrowser-tabpanels {
+  background: transparent !important;
 }
