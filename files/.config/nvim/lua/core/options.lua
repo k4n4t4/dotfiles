@@ -159,4 +159,4 @@ vim.diagnostic.config {
   },
 }
 
-vim.env.EDITOR = "nvim --server \"" .. vim.env.NVIM .. "\" --remote-tab"
+vim.env.EDITOR = "nvim --server \"$NVIM\" --remote-tab"

@@ -61,6 +61,20 @@ autocmd("TermOpen", {
     vim.cmd [[startinsert]]
   end
 })
+autocmd("TermClose", {
+  group = group,
+  pattern = 'term://*fish',
+  callback = function()
+    vim.api.nvim_input("<CR>")
+  end
+})
+autocmd("BufEnter", {
+  group = group,
+  pattern = 'term://*',
+  callback = function()
+    vim.cmd [[startinsert]]
+  end
+})
 
 
 autocmd("TextYankPost", {
