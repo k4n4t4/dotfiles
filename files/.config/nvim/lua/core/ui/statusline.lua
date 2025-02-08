@@ -110,6 +110,7 @@ vim.api.nvim_create_autocmd({
   "VimEnter",
   "ColorScheme",
 }, {
+  group = statusline_group,
   callback = status_line_highlights
 })
 
