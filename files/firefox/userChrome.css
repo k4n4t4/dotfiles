@@ -15,19 +15,19 @@
   --urlbar-height: 40px;
 }
 
-#navigator-toolbox {
+toolbox#navigator-toolbox {
   min-height: var(--navigator-toolbox-height) !important;
 }
-#nav-bar {
+toolbar#nav-bar {
   min-height: var(--nav-bar-height) !important;
 }
-#TabsToolbar {
+toolbar#TabsToolbar {
   min-height: var(--tabs-toolbar-height) !important;
 }
-#PersonalToolbar {
+toolbar#PersonalToolbar {
   min-height: var(--personal-toolbar-height) !important;
 }
-#urlbar {
+hbox#urlbar {
   min-height: var(--urlbar-height) !important;
 }
 
@@ -37,26 +37,26 @@
   #TabsToolbar {
     margin-left: var(--one-line-width) !important;
   }
-  #nav-bar {
+  toolbar#nav-bar {
     margin-right: calc(100vw - var(--one-line-width)) !important;
   }
 
-  #nav-bar {
+  toolbar#nav-bar {
     background: transparent !important;
     margin-top: calc(-1 * var(--nav-bar-height)) !important;
   }
 
-  #nav-bar-customization-target,
-  #PanelUI-button,
-  #nav-bar > * {
+  hbox#nav-bar-customization-target,
+  toobaritem#PanelUI-button,
+  toolbar#nav-bar>* {
     margin-top: calc(var(--nav-bar-height) - var(--navigator-toolbox-height)) !important;
   }
 
-  #urlbar-container {
+  toolbaritem#urlbar-container {
     width: auto !important;
   }
 
-  #urlbar-container:has(#urlbar[breakout-extend=true]) {
+  toolbaritem#urlbar-container:has(div#urlbar[breakout-extend=true]) {
     position: absolute !important;
     top: 0px !important;
     left: 10vw !important;
@@ -68,7 +68,7 @@
 }
 
 /* hide-bookmark */
-#PersonalToolbar {
+toolbar#PersonalToolbar {
   background: rgba(20, 20, 20, 0.8) !important;
   padding-inline: 0px !important;
   opacity: 0;
@@ -76,15 +76,15 @@
   animation: anim-up 0.1s linear;
 }
 
-#navigator-toolbox:hover #PersonalToolbar,
-#navigator-toolbox:focus-within #PersonalToolbar,
-#PersonalToolbar:has(toolbarbutton[open=true]) {
+toolbox#navigator-toolbox:hover>toolbar#PersonalToolbar,
+toolbox#navigator-toolbox:focus-within>toolbar#PersonalToolbar,
+toolbar#PersonalToolbar:has(toolbarbutton[open=true]) {
   opacity: 1;
   margin-top: 0px !important;
   animation: anim-down 0.1s linear;
 }
 
-#PlacesToolbarItems > toolbarbutton.bookmark-item {
+scrollbox#PlacesToolbarItems>toolbarbutton.bookmark-item {
   margin: 0 0.5px 0 0.5px !important;
   padding: 0 3px 0 3px !important;
 }
@@ -139,16 +139,16 @@
 }
 
 
-.private-browsing-indicator-with-label > label,
-.titlebar-spacer {
+hbox.private-browsing-indicator-with-label>label.private-browsing-indicator-label,
+hbox.titlebar-spacer {
   display: none !important;
 }
 
-#urlbar-background {
+div#urlbar>hbox#urlbar-background {
   border: none !important;
 }
 
-#navigator-toolbox {
+toolbox#navigator-toolbox {
   border: none !important;
   border-bottom: solid #202020 1px !important;
 }
@@ -157,12 +157,12 @@ tab.tabbrowser-tab {
   border-radius: 0.5rem !important;
 }
 
-.tab-close-button {
+image.tab-close-button {
   border-radius: 0.5rem !important;
 }
 
-.toolbarbutton-badge-stack,
-.toolbarbutton-icon {
+stack.toolbarbutton-badge-stack,
+image.toolbarbutton-icon {
   border-radius: 0.5rem !important;
 }
 
@@ -174,18 +174,36 @@ tab.tabbrowser-tab {
   animation: anim-spawn 0.3s linear;
 }
 
-toolbarbutton.bookmark-item[open="true"] > menupopup {
+toolbarbutton.bookmark-item[open="true"]>menupopup {
   animation: anim-spawn-1 0.1s linear;
 }
 
-#appMenu-popup[animating="true"], #appMenu-popup[panelopen="true"] {
+panel#appMenu-popup[animating="true"],
+panel#appMenu-popup[panelopen="true"] {
   animation: anim-spawn-1 0.2s linear;
 }
 
-#tab-preview-panel[animating="true"], #tab-preview-panel[panelopen="true"] {
+panel#tab-preview-panel[animating="true"],
+panel#tab-preview-panel[panelopen="true"] {
   animation: anim-spawn-1 0.2s linear;
 }
 
-#urlbar-container[breakout=true] {
+toolbaritem#urlbar-container[breakout=true] {
   min-height: 0px !important;
+}
+
+
+toolbox#navigator-toolbox.browser-toolbox-background {
+  background: transparent !important;
+}
+
+tab.tabbrowser-tab>stack.tab-stack>vbox.tab-background {
+  background: rgba(40, 40, 40, 0.5) !important;
+}
+tab.tabbrowser-tab[selected="true"]>stack.tab-stack>vbox.tab-background {
+  background: rgba(60, 60, 60, 0.7) !important;
+}
+
+div#urlbar>hbox#urlbar-background {
+  background: rgba(20, 20, 20, 0.7) !important;
 }
