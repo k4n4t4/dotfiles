@@ -117,86 +117,165 @@ vim.api.nvim_create_autocmd({
   callback = status_line_highlights
 })
 
-local mode_name = {
-  ["n"]    = "N",
-  ["no"]   = "NO",
-  ["nov"]  = "NOC",
-  ["noV"]  = "NOL",
-  ["no^V"] = "NOB",
 
-  ["niI"]  = "NI",
-  ["niR"]  = "NR",
-  ["niV"]  = "NV",
-  ["nt"]   = "NT",
-  ["ntT"]  = "NTT",
+local mode_props = {
+  ["n"] = {
+    name = "N",
+    hi = "StatusLineModeNormal",
+  },
+  ["no"] = {
+    name = "NO",
+    hi = "StatusLineModeNormal",
+  },
+  ["nov"] = {
+    name = "NOC",
+    hi = "StatusLineModeNormal",
+  },
+  ["noV"] = {
+    name = "NOL",
+    hi = "StatusLineModeNormal",
+  },
+  ["no"] = {
+    name = "NOB",
+    hi = "StatusLineModeNormal",
+  },
 
-  ["v"]    = "V",
-  ["vs"]   = "VS",
-  ["V"]    = "VL",
-  ["Vs"]   = "VLS",
-  [""]    = "VB",
-  ["s"]   = "VBS",
+  ["niI"] = {
+    name = "NI",
+  },
+  ["niR"] = {
+    name = "NR",
+  },
+  ["niV"] = {
+    name = "NV",
+  },
+  ["nt"] = {
+    name = "NT",
+    hi = "StatusLineModeTerminal",
+  },
+  ["ntT"] = {
+    name = "NTT",
+    hi = "StatusLineModeTerminal",
+  },
 
-  ["s"]    = "S",
-  ["S"]    = "SL",
-  [""]    = "SB",
+  ["v"] = {
+    name = "V",
+    hi = "StatusLineModeVisual",
+  },
+  ["vs"] = {
+    name = "VS",
+    hi = "StatusLineModeVisual",
+  },
+  ["V"] = {
+    name = "VL",
+    hi = "StatusLineModeVisual",
+  },
+  ["Vs"] = {
+    name = "VLS",
+    hi = "StatusLineModeVisual",
+  },
+  [""] = {
+    name = "VB",
+    hi = "StatusLineModeVisual",
+  },
+  ["s"] = {
+    name = "VBS",
+    hi = "StatusLineModeVisual",
+  },
 
-  ["i"]    = "I",
-  ["ic"]   = "IC",
-  ["ix"]   = "IX",
+  ["s"] = {
+    name = "S",
+  },
+  ["S"] = {
+    name = "SL",
+  },
+  [""] = {
+    name = "SB",
+  },
 
-  ["R"]    = "R",
-  ["Rc"]   = "RC",
-  ["Rx"]   = "RX",
-  ["Rv"]   = "RV",
-  ["Rvc"]  = "RVC",
-  ["Rvx"]  = "RVX",
+  ["i"] = {
+    name = "I",
+    hi = "StatusLineModeInsert",
+  },
+  ["ic"] = {
+    name = "IC",
+    hi = "StatusLineModeInsert",
+  },
+  ["ix"] = {
+    name = "IX",
+    hi = "StatusLineModeInsert",
+  },
 
-  ["c"]    = "C",
-  ["cr"]   = "CR",
+  ["R"] = {
+    name = "R",
+    hi = "StatusLineModeReplace"
+  },
+  ["Rc"] = {
+    name = "RC",
+    hi = "StatusLineModeReplace"
+  },
+  ["Rx"] = {
+    name = "RX",
+    hi = "StatusLineModeReplace"
+  },
+  ["Rv"] = {
+    name = "RV",
+    hi = "StatusLineModeReplace"
+  },
+  ["Rvc"] = {
+    name = "RVC",
+    hi = "StatusLineModeReplace"
+  },
+  ["Rvx"] = {
+    name = "RVX",
+    hi = "StatusLineModeReplace"
+  },
 
-  ["cv"]   = "EX",
-  ["cvr"]  = "EXR",
+  ["c"] = {
+    name = "C",
+  },
+  ["cr"] = {
+    name = "CR",
+  },
 
-  ["r"]    = "P",
-  ["rm"]   = "M",
-  ["r?"]   = "CF",
-  ["!"]    = "SH",
-  ["t"]    = "T",
-}
+  ["cv"] = {
+    name = "EX",
+  },
+  ["cvr"] = {
+    name = "EXR",
+  },
 
-local mode_color = {
-  ["n"]    = "StatusLineModeNormal",
-  ["no"]   = "StatusLineModeNormal",
-  ["nov"]  = "StatusLineModeNormal",
-  ["noV"]  = "StatusLineModeNormal",
-  ["no^V"] = "StatusLineModeNormal",
-  ["v"]    = "StatusLineModeVisual",
-  ["vs"]   = "StatusLineModeVisual",
-  ["V"]    = "StatusLineModeVisual",
-  ["Vs"]   = "StatusLineModeVisual",
-  [""]    = "StatusLineModeVisual",
-  ["s"]   = "StatusLineModeVisual",
-  ["i"]    = "StatusLineModeInsert",
-  ["ic"]   = "StatusLineModeInsert",
-  ["ix"]   = "StatusLineModeInsert",
-  ["R"]    = "StatusLineModeReplace",
-  ["Rc"]   = "StatusLineModeReplace",
-  ["Rx"]   = "StatusLineModeReplace",
-  ["Rv"]   = "StatusLineModeReplace",
-  ["Rvc"]  = "StatusLineModeReplace",
-  ["Rvx"]  = "StatusLineModeReplace",
-  ["r?"]   = "StatusLineModeConfirm",
-  ["!"]    = "StatusLineModeTerminal",
-  ["t"]    = "StatusLineModeTerminal",
-  ["nt"]   = "StatusLineModeNormal",
+  ["r"] = {
+    name = "P",
+  },
+  ["rm"] = {
+    name = "M",
+  },
+  ["r?"] = {
+    name = "CF",
+    hi = "StatusLineModeConfirm",
+  },
+  ["!"] = {
+    name = "SH",
+    hi = "StatusLineModeTerminal",
+  },
+  ["t"] = {
+    name = "T",
+    hi = "StatusLineModeTerminal",
+  },
 }
 
 local function status_mode()
   local mode = vim.api.nvim_get_mode()
   local blocking = mode.blocking
-  local name = mode_name[mode.mode] or "?"
-  local color = mode_color[mode.mode] or "StatusLineModeOther"
+
+  local prop = mode_props[mode.mode] or {
+    name = nil,
+    hi = nil,
+  }
+
+  local name = prop.name or "?"
+  local color = prop.hi or "StatusLineModeOther"
 
   local format = {
     "%#" .. color .. "#",
@@ -260,7 +339,6 @@ local git_icon = {
   remove = "-",
   change = "~",
 }
-
 local git_color = {
   branch = "StatusLineGitBranch",
   add = "StatusLineGitAdd",
@@ -301,7 +379,6 @@ local diagnostic_icon = {
   INFO = "i",
   HINT = "?",
 }
-
 local diagnostic_color = {
   ERROR = "StatusLineDiagnosticERROR",
   WARN = "StatusLineDiagnosticWARN",
@@ -391,7 +468,7 @@ function StatusLineActive()
   local file = status_file()
   local flag = status_flag()
   local search = status_search_count()
-  -- local lsp = status_lsp()
+  local lsp = status_lsp()
   local diagnostic = status_diagnostic()
   local git = status_git()
   local encoding = status_encoding()
@@ -413,7 +490,8 @@ function StatusLineActive()
     "%S",
     " ",
     search,
-    -- lsp,
+    lsp,
+    " ",
     encoding,
     filetype == "" and "" or " ",
     filetype,
