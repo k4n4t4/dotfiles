@@ -44,7 +44,10 @@ vim.api.nvim_create_autocmd({
 local devicons
 vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
-    _, devicons = pcall(require, "nvim-web-devicons")
+    local result, ret = pcall(require, "nvim-web-devicons")
+    if result then
+      devicons = ret
+    end
   end,
 })
 
