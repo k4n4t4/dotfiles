@@ -157,6 +157,16 @@ else
 end
 
 if type -q nvim
+  function _nvim
+    if [ "$NVIM" = "" ]
+      command nvim $argv
+    else
+      for file in $argv
+        command nvim --server $NVIM --remote-tab (realpath $file)
+      end
+    end
+  end
+  alias nvim "_nvim"
   abbr --add v  "nvim"
 else if type -q vim
   abbr --add v  "vim"

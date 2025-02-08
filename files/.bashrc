@@ -112,14 +112,17 @@ if type git > /dev/null 2>&1; then
 fi
 
 if type nvim > /dev/null 2>&1; then
-  nvimFunc() {
+  _nvim() {
     if [ "${NVIM:-}" = "" ]; then
-      nvim "$@"
+      command nvim "$@"
     else
-      nvim --server "$NVIM" --remote-send "<CMD>call v:lua.TerminalOpenFile(\"${1:-}\", \"$PWD\")<CR>"
+      while [ $# -gt 0 ]; do
+        command nvim --server "$NVIM" --remote-tab "$(realpath "$1")"
+        shift
+      done
     fi
   }
-  alias nvim="nvimFunc"
+  alias nvim="_nvim"
 fi
 
 alias h='printf "\033[?25l\033[0;0H\033[2J"&& read && printf "\033[?25h"'
