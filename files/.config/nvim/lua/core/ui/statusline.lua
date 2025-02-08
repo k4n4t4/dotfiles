@@ -7,7 +7,7 @@ vim.opt.statusline = "%{% v:lua.StatusLine(g:actual_curwin == win_getid()) %}"
 
 local statusline_group = vim.api.nvim_create_augroup("StatusLine", { clear = true })
 
--- Redraw statusline when mode changed. (e.g. mode ix)
+-- Redraw statusline when mode changed. (e.g. 'ix' mode)
 vim.api.nvim_create_autocmd("ModeChanged", {
   group = statusline_group,
   callback = function()
@@ -15,13 +15,9 @@ vim.api.nvim_create_autocmd("ModeChanged", {
   end
 })
 
--- Set highlights
+-- Override highlights
 local function status_line_highlights()
   local hls = {
-    {"StatusLine", {
-      fg = "#EEEEEE",
-      bg = "none",
-    }},
     {"StatusLine", {
       fg = "#EEEEEE",
       bg = "none",
