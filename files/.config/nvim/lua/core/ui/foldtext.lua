@@ -16,20 +16,20 @@ vim.api.nvim_set_decoration_provider(namespace, {
           local fold_end = vim.fn.foldclosedend(lnum)
           local fold_level = vim.fn.foldlevel(lnum)
 
-          local virt_texts = {}
-
-          table.insert(virt_texts, {
-            " ▼ ",
-            {"Bold", "Comment"},
-          })
-          table.insert(virt_texts, {
-            " " ..
-            (fold_level == 1 and "" or fold_level .. ": ") ..
-            fold_start .. " - " .. fold_end .. " " ..
-            "(" .. (fold_end - fold_start) .. ")" ..
-            " ",
-            {"Comment", "Underlined"},
-          })
+          local virt_texts = {
+            {
+              " ▼ ",
+              {"Bold", "Comment"},
+            },
+            {
+              " " ..
+                (fold_level == 1 and "" or fold_level .. ": ") ..
+                fold_start .. " - " .. fold_end .. " " ..
+                "(" .. (fold_end - fold_start) .. ")" ..
+                " ",
+              {"Comment", "Underlined"},
+            },
+          }
 
           pcall(vim.api.nvim_buf_set_extmark, bufnr, namespace, lnum-1, 0, {
             ephemeral = true,
