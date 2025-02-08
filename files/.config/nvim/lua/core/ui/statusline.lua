@@ -507,6 +507,8 @@ function StatusLineActive()
     fileformat,
     " ",
     "%l:%c",
+    " ",
+    "%P",
   }
   return table.concat(status_line, "")
 end
@@ -532,6 +534,8 @@ function StatusLineInactive()
     fileformat,
     " ",
     "%l:%c",
+    " ",
+    "%P",
   }
   return table.concat(status_line, "")
 end
