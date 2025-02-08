@@ -112,7 +112,7 @@ vim.opt.virtualedit = "block"
 
 vim.opt.gdefault = false
 
-vim.opt.whichwrap = "b,s,h,l,~,<,>,[,]"
+vim.opt.whichwrap = "b,s,~,<,>,[,]"
 
 vim.opt.backspace = { "indent", "eol", "nostop" }
 
@@ -130,5 +130,3 @@ vim.opt.synmaxcol = 1000
 
 vim.opt.termguicolors = true
 vim.opt.background = "dark"
-
--- vim.opt.shell = "fish"
