@@ -261,7 +261,6 @@ local mode_props = {
     hi = "StatusLineModeTerminal",
   },
 }
-
 local function status_mode()
   local mode = vim.api.nvim_get_mode()
   local blocking = mode.blocking
@@ -292,13 +291,11 @@ local function status_fileformat()
   return vim.o.ff
 end
 
-local filetype_alias = {
+local filetype_aliases = {
   ["javascript"] = "js",
   ["typescript"] = "ts",
   ["python"]     = "py",
 }
-
-
 local function status_filetype(devicons)
   local ft = vim.bo.ft
 
@@ -328,34 +325,40 @@ local function status_filetype(devicons)
     end
   end
 
-  return (not ft or ft == "") and "" or (filetype_alias[ft] or ft)
+  return (not ft or ft == "") and "" or (filetype_aliases[ft] or ft)
 end
 
-local git_icon = {
-  add = "+",
-  remove = "-",
-  change = "~",
-}
-local git_color = {
-  branch = "StatusLineGitBranch",
-  add = "StatusLineGitAdd",
-  remove = "StatusLineGitRemove",
-  change = "StatusLineGitChange",
+local git_props = {
+  add = {
+    icon = "+",
+    hi = "StatusLineGitAdd",
+  },
+  remove = {
+    icon = "-",
+    hi = "StatusLineGitRemove",
+  },
+  change = {
+    icon = "~",
+    hi = "StatusLineGitChange",
+  },
+  branch = {
+    hi = "StatusLineGitBranch",
+  },
 }
 
 local function status_git()
   local format = {}
   local status = vim.b.gitsigns_status_dict
   if status then
-    table.insert(format, "%#" .. git_color.branch .. "#(" .. status.head .. ")%*")
+    table.insert(format, "%#" .. git_props.branch.hi .. "#(" .. status.head .. ")%*")
     if status.added and status.added > 0 then
-      table.insert(format, "%#" .. git_color.add .. "#" .. git_icon.add .. status.added .. "%*")
+      table.insert(format, "%#" .. git_props.add.hi .. "#" .. git_props.add.icon .. status.added .. "%*")
     end
     if status.removed and status.removed > 0 then
-      table.insert(format, "%#" .. git_color.remove .. "#" .. git_icon.remove .. status.removed .. "%*")
+      table.insert(format, "%#" .. git_props.remove.hi .. "#" .. git_props.remove.icon .. status.removed .. "%*")
     end
     if status.changed and status.changed > 0 then
-      table.insert(format, "%#" .. git_color.change .. "#" .. git_icon.change .. status.changed .. "%*")
+      table.insert(format, "%#" .. git_props.change.hi .. "#" .. git_props.change.icon .. status.changed .. "%*")
     end
   end
   return table.concat(format, "")
