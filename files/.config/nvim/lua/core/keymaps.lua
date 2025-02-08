@@ -50,3 +50,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     set('n', '<LEADER>l]', function() vim.lsp.diagnostic.goto_next() end, { desc = "Diagnostic Goto Next" })
   end,
 })
+
+set('n', '<TAB>', "5j")
+set('n', '<S-TAB>', "5k")
