@@ -345,7 +345,6 @@ local git_props = {
     hi = "StatusLineGitBranch",
   },
 }
-
 local function status_git()
   local format = {}
   local status = vim.b.gitsigns_status_dict
@@ -373,19 +372,24 @@ local function status_lsp()
   return table.concat(clients, ", ")
 end
 
-local diagnostic_icon = {
-  ERROR = "!",
-  WARN = "*",
-  INFO = "i",
-  HINT = "?",
+local diagnostic_props = {
+  ERROR = {
+    icon = "!",
+    hi = "StatusLineDiagnosticERROR",
+  },
+  WARN = {
+    icon = "*",
+    hi = "StatusLineDiagnosticWARN",
+  },
+  INFO = {
+    icon = "i",
+    hi = "StatusLineDiagnosticINFO",
+  },
+  HINT = {
+    icon = "?",
+    hi = "StatusLineDiagnosticHINT",
+  },
 }
-local diagnostic_color = {
-  ERROR = "StatusLineDiagnosticERROR",
-  WARN = "StatusLineDiagnosticWARN",
-  INFO = "StatusLineDiagnosticINFO",
-  HINT = "StatusLineDiagnosticHINT",
-}
-
 local utils_diagnostic = require "utils.diagnostic"
 local function status_diagnostic()
   local format = {}
@@ -393,9 +397,13 @@ local function status_diagnostic()
   for k, v in pairs(diagnoses) do
     if #v ~= 0 then
       local name = utils_diagnostic.SEVERITY[k]
-      local icon = diagnostic_icon[name]
       local count = #v
-      table.insert(format, "%#" .. diagnostic_color[name] .. "#" .. icon .. count .. "%*")
+      table.insert(format,
+        "%#" .. diagnostic_props[name].hi .. "#" ..
+        diagnostic_props[name].icon ..
+        count ..
+        "%*"
+      )
     end
   end
   return table.concat(format, "")
