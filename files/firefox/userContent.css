@@ -1,0 +1,10 @@
+html.private p#info-body {
+   visibility: hidden;
+}
+html.private p#info-body::before {
+    content: "Hello, World!" !important;
+    visibility: visible !important;
+}
+html.private {
+  --in-content-page-background: transparent !important;
+}
