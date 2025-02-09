@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Page</title>
+  </head>
+  <body>
+    <h1>Start Page</h1>
+    <h2>google</h2>
+    <div class="input-container">
+      <form
+        method="get"
+        action="http://www.google.com/search"
+      >
+        <input type="text" name="q" value="">
+      </form>
+    </div>
+    <h2>youtube</h2>
+    <div class="input-container">
+      <form
+        method="get"
+        action="http://www.youtube.com/results"
+      >
+        <input type="text" name="search_query" value="">
+      </form>
+    </div>
+    <h2>youtube music</h2>
+    <div class="input-container">
+      <form
+        method="get"
+        action="http://music.youtube.com/search"
+      >
+        <input type="text" name="q" value="">
+      </form>
+    </div>
+    <style>
+      body {
+        background: rgba(30, 30, 30, 0.8);
+        color: #E0E0E0;
+        font-family: monospace;
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        color: #A0D0E0;
+        font-size: 4rem;
+        text-align: center;
+        user-select: none;
+      }
+      h2 {
+        color: #A0D0E0;
+        font-size: 3rem;
+        text-align: center;
+        user-select: none;
+      }
+      .input-container {
+        text-align: center;
+      }
+      input {
+        background: transparent;
+        border: none;
+        border-bottom: solid 1px #909090;
+        outline: none;
+        color: #E0E0E0;
+        font-family: monospace;
+        font-size: 2rem;
+      }
+      input:focus {
+        border-bottom: solid 1px #D0A0E0;
+      }
+      input::selection {
+        color: #101010;
+        background: #C0A0D0;
+      }
+    </style>
+  </body>
+</html>
