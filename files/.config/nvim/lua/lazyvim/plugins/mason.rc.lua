@@ -122,15 +122,18 @@ return {
               },
               useLibraryCodeForTypes = true,
               autoSearchPaths = true,
-              autoImportCompletions = false,
+              autoImportCompletions = true,
               reportMissingImports = true,
               followImportForHints = true,
               cargo = {
                 allFeatures = true,
               },
-              checkOnSave = {
-                command = "cargo clippy",
+              check = {
+                command = "clippy",
               },
+              diagnostics = {
+                enable = true,
+              }
             },
           },
         }
