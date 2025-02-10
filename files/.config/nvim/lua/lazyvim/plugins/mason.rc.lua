@@ -109,11 +109,31 @@ return {
     ft = "rust",
     event = 'VeryLazy',
     config = function()
-      local lspconfig = require "lspconfig"
       vim.g.rustaceanvim = {
         tools = {
           enable_clippy = true,
         },
+        server = {
+          default_settings = {
+            ['rust-analyzer'] = {
+              assist = {
+                importGranularity = "module",
+                importPrefix = "self",
+              },
+              useLibraryCodeForTypes = true,
+              autoSearchPaths = true,
+              autoImportCompletions = false,
+              reportMissingImports = true,
+              followImportForHints = true,
+              cargo = {
+                allFeatures = true,
+              },
+              checkOnSave = {
+                command = "cargo clippy",
+              },
+            },
+          },
+        }
       }
     end,
   },
