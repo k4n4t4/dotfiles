@@ -114,10 +114,6 @@ return {
         tools = {
           enable_clippy = true,
         },
-        server = {
-          auto_attach = true,
-          root_dir = lspconfig.util.root_pattern("Cargo.toml")
-        },
       }
     end,
   },
