@@ -118,7 +118,8 @@ return {
             ['rust-analyzer'] = {
               assist = {
                 importGranularity = "module",
-                importPrefix = "self",
+                importEnforceGranularity = true,
+                importPrefix = 'crate',
               },
               useLibraryCodeForTypes = true,
               autoSearchPaths = true,
@@ -131,9 +132,16 @@ return {
               check = {
                 command = "clippy",
               },
+              checkOnSave = {
+                command = "clippy"
+              },
+              inlayHints = { locationLinks = false },
               diagnostics = {
                 enable = true,
-              }
+                experimental = {
+                  enable = true,
+                },
+              },
             },
           },
         }
