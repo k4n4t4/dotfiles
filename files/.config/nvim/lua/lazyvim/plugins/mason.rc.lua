@@ -75,11 +75,16 @@ return {
           end,
           rust_analyzer = function()
             lspconfig.rust_analyzer.setup {
+              filetypes = { "rust" },
+              root_dir = lspconfig.util.root_pattern("Cargo.toml"),
               settings = {
                 ["rust-analyzer"] = {
+                  cargo = {
+                    allFeatures = true,
+                  },
                   checkOnSave = {
                     command = "clippy"
-                  }
+                  },
                 }
               },
             }
