@@ -321,12 +321,6 @@ return {
     event = 'VeryLazy',
   },
 
-
-  {
-    "dstein64/vim-startuptime",
-    cmd = 'StartupTime',
-  },
-
   {
     "folke/which-key.nvim",
     opts = {
@@ -440,6 +434,12 @@ return {
         dapui.close()
       end
     end,
+    event = 'VeryLazy',
+  },
+
+  {
+    "mrcjkb/rustaceanvim",
+    ft = "rust",
     event = 'VeryLazy',
   },
 }
