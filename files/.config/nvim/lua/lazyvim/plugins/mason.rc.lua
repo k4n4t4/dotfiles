@@ -74,20 +74,9 @@ return {
             }
           end,
           rust_analyzer = function()
-            lspconfig.rust_analyzer.setup {
-              filetypes = { "rust" },
-              root_dir = lspconfig.util.root_pattern("Cargo.toml"),
-              settings = {
-                ["rust-analyzer"] = {
-                  cargo = {
-                    allFeatures = true,
-                  },
-                  checkOnSave = {
-                    command = "clippy"
-                  },
-                }
-              },
-            }
+            lspconfig.rust_analyzer.setup = function()
+              return true
+            end
           end,
         },
       }
@@ -109,5 +98,28 @@ return {
 
     end,
     event = { "BufReadPre", "BufNewFile" },
+  },
+
+  {
+    "mrcjkb/rustaceanvim",
+    dependencies = {
+      { "hrsh7th/cmp-nvim-lsp" },
+    },
+    version = '^5',
+    lazy = false,
+    ft = "rust",
+    event = 'VeryLazy',
+    config = function()
+      local lspconfig = require "lspconfig"
+      vim.g.rustaceanvim = {
+        tools = {
+          enable_clippy = true,
+        },
+        server = {
+          auto_attach = true,
+          root_dir = lspconfig.util.root_pattern("Cargo.toml")
+        },
+      }
+    end,
   },
 }
