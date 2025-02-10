@@ -106,8 +106,8 @@ return {
       { "hrsh7th/cmp-nvim-lsp" },
     },
     version = '^5',
-    lazy = false,
     ft = "rust",
+    event = 'VeryLazy',
     config = function()
       local lspconfig = require "lspconfig"
       vim.g.rustaceanvim = {
