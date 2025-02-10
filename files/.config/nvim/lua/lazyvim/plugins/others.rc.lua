@@ -437,9 +437,4 @@ return {
     event = 'VeryLazy',
   },
 
-  {
-    "mrcjkb/rustaceanvim",
-    ft = "rust",
-    event = 'VeryLazy',
-  },
 }
