@@ -102,12 +102,9 @@ return {
 
   {
     "mrcjkb/rustaceanvim",
-    dependencies = {
-      { "hrsh7th/cmp-nvim-lsp" },
-    },
-    version = '^5',
     ft = "rust",
     event = 'VeryLazy',
+    version = '^5',
     config = function()
       vim.g.rustaceanvim = {
         tools = {
