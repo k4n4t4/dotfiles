@@ -51,7 +51,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
+
 set('n', '<TAB>', "5j")
 set('n', '<S-TAB>', "5k")
 set('x', '<TAB>', "5j")
 set('x', '<S-TAB>', "5k")
+
+set('i', '<S-CR>', "<C-O>O")
+set('i', '<S-TAB>', "<C-O><<")
