@@ -1,22 +1,25 @@
 function cdf
+  set -l find_cmd
+  set -l find_pipe
+
   if type -q fd
-    if type -q fzf
-      set find_dir (fd -H -t d | fzf --prompt "fd > " --query "$argv")
-    else if type -q peco
-      set find_dir (fd -H -t d | peco --prompt "fd >" --query "$argv")
-    else
-      echo "Please install peco or fzf."
-      return 1
-    end
+    set find_cmd fd -H -t d
   else
-    if type -q peco
-      set find_dir (find -type d | peco --prompt "find >" --query "$argv")
-    else if type -q fzf
-      set find_dir (find -type d | fzf --prompt "find > " --query "$argv")
-    else
-      echo "Please install peco or fzf."
-      return 1
-    end
+    set find_cmd find -type d
   end
-  cd $find_dir
+
+  if type -q fzf
+    set find_pipe fzf --prompt " > " --query "$argv"
+  else if type -q peco
+    set find_pipe peco --prompt " > " --query "$argv"
+  else
+    echo "Please install peco or fzf."
+    return 1
+  end
+
+  set -l find_dir ($find_cmd | $find_pipe)
+
+  if test -n "$find_dir"
+    cd $find_dir
+  end
 end

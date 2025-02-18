@@ -76,6 +76,9 @@ if type -q git
   abbr --add gcmaup "git add . && git commit -m update && git push"
   abbr --add gr   "git remote"
   abbr --add gbl  "git blame"
+  abbr --add gl   "git log"
+  abbr --add glp  "git log -p"
+  abbr --add gld "git log -p --full-diff"
   alias groot "cdgitroot"
 end
 

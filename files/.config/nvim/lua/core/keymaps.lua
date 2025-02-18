@@ -59,3 +59,5 @@ set('x', '<S-TAB>', "5k")
 
 set('i', '<S-CR>', "<C-O>O")
 set('i', '<S-TAB>', "<C-O><<")
+set('i', '<S-BS>', "<C-O>u")
+set('i', '<C-BS>', "<C-O><C-R>")

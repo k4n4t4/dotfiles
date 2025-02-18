@@ -1,3 +1,3 @@
 function mkcd
-    mkdir -p -- $argv && builtin cd -- $argv
+  mkdir -p -- $argv && cd -- $argv
 end
