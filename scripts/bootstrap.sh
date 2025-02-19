@@ -38,8 +38,6 @@ PATH="/sbin:$PATH"
 PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 PATH="/home/linuxbrew/.linuxbrew/sbin:$PATH"
 
-. "$WORK_PATH/config.sh"
-
 dot_mode="unknown"
 dot_opts=""
 . "$WORK_PATH/scripts/dot.sh"

@@ -71,6 +71,10 @@ WORK_PATH="$RET"
 
 . "$WORK_PATH/scripts/bootstrap.sh"
 
+if [ -f "$WORK_PATH/config.sh" ]; then
+  . "$WORK_PATH/config.sh"
+fi
+
 
 main() {
 
