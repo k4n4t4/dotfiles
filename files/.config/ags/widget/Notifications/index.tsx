@@ -173,6 +173,7 @@ export default function Notifications(gdkmonitor: Gdk.Monitor) {
         Astal.WindowAnchor.TOP |
         Astal.WindowAnchor.RIGHT
       }
+      layer={Astal.Layer.OVERLAY}
       application={App}
       visible={false}
     >

@@ -28,6 +28,7 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
       margin-left={1}
       margin-right={1}
       application={App}
+      layer={Astal.Layer.TOP}
     >
       <box className="bar">
         <centerbox>

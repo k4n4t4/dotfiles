@@ -201,6 +201,7 @@ export default function NotificationPopups(gdkmonitor: Gdk.Monitor) {
         Astal.WindowAnchor.RIGHT
       }
       application={App}
+      layer={Astal.Layer.OVERLAY}
     >
       <box vertical className="notification-popups">
         {bind(popups)}
