@@ -21,4 +21,8 @@ if config then
 
   end
 
+  if config.run then
+    config.run()
+  end
+
 end
