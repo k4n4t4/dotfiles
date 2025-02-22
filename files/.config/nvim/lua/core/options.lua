@@ -60,6 +60,7 @@ vim.opt.spelllang = "en"
 vim.opt.foldenable = true
 vim.opt.foldmethod = "manual"
 vim.opt.foldmarker = "{{{,}}}"
+-- vim.opt.foldexpr = ""
 
 vim.opt.belloff = "all"
 vim.opt.visualbell = true
