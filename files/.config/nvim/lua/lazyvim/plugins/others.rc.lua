@@ -150,17 +150,24 @@ return {
         signs = true,
         sign_priority = 8,
         keywords = {
+          -- FIXME:
+          -- TODO:
+          -- HACK:
+          -- WARN:
+          -- PERF:
+          -- NOTE:
+          -- TEST:
           FIX = {
             icon = " ",
             color = "error",
             alt = { "FIXME", "BUG", "FIXIT", "ISSUE" },
           },
           TODO = { icon = " ", color = "info" },
-          HACK = { icon = " ", color = "warning" },
+          HACK = { icon = " ", color = "warning", alt = { "REVIEW" } },
           WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
           PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-          NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
-          TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
+          NOTE = { icon = " ", color = "hint", alt = { "INFO", "IDEA" } },
+          TEST = { icon = "⏲ ", color = "test", alt = { "DEBUG", "TEMP", "TESTING", "PASSED", "FAILED" } },
         },
         gui_style = {
           fg = "NONE",
