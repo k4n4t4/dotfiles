@@ -10,7 +10,7 @@ $line_break\
 """
 
 right_format = """
-($battery )($cmd_duration )($jobs )($status )$time \
+($battery )($cmd_duration )($jobs )($status )($time )\
 """
 
 continuation_prompt = '[ > ](dimmed blue)'
@@ -60,7 +60,7 @@ disabled = false
 use_12hr = false
 style = 'purple'
 format = '[$time]($style)'
-disabled = false
+disabled = true
 
 [battery]
 full_symbol        = '='
