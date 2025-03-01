@@ -2,6 +2,7 @@ local group = vim.api.nvim_create_augroup("Settings", { clear = true })
 local autocmd = vim.api.nvim_create_autocmd
 
 
+-- make view
 autocmd("BufWinLeave", {
   group = group,
   callback = function()
@@ -10,6 +11,7 @@ autocmd("BufWinLeave", {
     end
   end
 })
+-- load view
 autocmd("BufWinEnter", {
   group = group,
   callback = function()
@@ -20,6 +22,7 @@ autocmd("BufWinEnter", {
 })
 
 
+-- toggle relativenumber when enter insert mode
 if vim.o.number and vim.o.relativenumber then
   autocmd("InsertEnter", {
     group = group,
@@ -40,6 +43,7 @@ if vim.o.number and vim.o.relativenumber then
 end
 
 
+-- hide column
 autocmd("BufEnter", {
   group = group,
   callback = function()
@@ -51,6 +55,7 @@ autocmd("BufEnter", {
 })
 
 
+-- terminal settings
 autocmd("TermOpen", {
   group = group,
   callback = function()
@@ -77,6 +82,7 @@ autocmd("BufEnter", {
 })
 
 
+-- highlight yank area
 autocmd("TextYankPost", {
   group = group,
   callback = function()
@@ -85,6 +91,7 @@ autocmd("TextYankPost", {
 })
 
 
+-- emit direnter
 autocmd("BufEnter", {
   group = group,
   callback = function(args)
