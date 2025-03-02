@@ -1,6 +1,3 @@
-abbr --add '^' "command"
-abbr --add c "clear"
-
 abbr --add cd-  "cd -"
 abbr --add cd~  "cd ~"
 abbr --add cd.  "cd ."
@@ -18,6 +15,11 @@ for i in (seq 9)
   alias ..$i   "cd $p"
 end
 
+alias cp "cp -iv"
+alias mv "mv -iv"
+
+abbr --add '^' "command"
+abbr --add c "clear"
 abbr --add h "history"
 abbr --add q "exit"
 
@@ -136,22 +138,6 @@ else
   alias lla "ls -Fla"
   export LS_COLORS=(get_ls_colors)
 end
-
-if type -q zoxide
-  zoxide init fish --cmd z | source
-end
-
-if type -q broot
-  broot --print-shell-function fish | source
-end
-
-if type -q thefuck
-  eval (thefuck --alias | tr '\n' ';')
-  abbr --add f "fuck"
-end
-
-alias cp "cp -iv"
-alias mv "mv -iv"
 
 if type -q trash
   alias rm "trash"
