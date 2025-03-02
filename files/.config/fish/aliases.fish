@@ -141,16 +141,6 @@ end
 
 if type -q trash
   alias rm "trash"
-else
-  function _stopUseRm
-    printf "\033[91mStop!\033[m\n\033[36mPlease install \"trash\" command.\033[m\n"
-    read -lP "Use \"rm\" command [y/N]: " ans
-    if test $ans = y; or test $ans = Y
-      printf "\"rm\" command is enabled!\n"
-      alias rm "command rm"
-    end
-  end
-  alias rm "_stopUseRm"
 end
 
 if type -q nvim
