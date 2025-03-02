@@ -3,10 +3,10 @@ format = """
 ($hostname )\
 ($shell ($shlvl ))\
 ($directory )\
-($git_branch$git_commit$git_state$git_status$git_metrics)\
-$package\
+($git_branch$git_commit$git_state$git_status$git_metrics )\
+($package)\
 $line_break\
-( $username)( $sudo) $character \
+( $username)( $sudo)( $character) \
 """
 
 right_format = """
