@@ -1,19 +1,11 @@
-abbr --add cd-  "cd -"
-abbr --add cd~  "cd ~"
-abbr --add cd.  "cd ."
-abbr --add cd.. "cd .."
+function multicd
+  set -l length (math (string length -- $argv) - 1)
+  echo cd (string repeat -n $length ../)
+end
+abbr --add dotdot --regex '^\.\.+$' --function multicd
+
 abbr --add pd   "prevd"
 abbr --add nd   "nextd"
-for i in (seq 9)
-  set -l p "./"
-  for j in (seq $i)
-    set p "$p../"
-  end
-  alias cd.$i  "cd $p"
-  alias cd..$i "cd $p"
-  alias .$i    "cd $p"
-  alias ..$i   "cd $p"
-end
 
 alias cp "cp -iv"
 alias mv "mv -iv"
