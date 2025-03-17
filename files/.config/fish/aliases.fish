@@ -182,3 +182,7 @@ end
 if type -q calcurse
   abbr --add cl "calcurse"
 end
+
+if type -q yay
+  alias yay "yay --color auto"
+end
