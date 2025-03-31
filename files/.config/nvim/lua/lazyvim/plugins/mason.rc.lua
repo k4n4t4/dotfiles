@@ -27,17 +27,6 @@ return {
       local lspconfig = require "lspconfig"
       local mason_lspconfig = require "mason-lspconfig"
 
-      require("nvim-lsp-installer").setup {
-        automatic_installation = true,
-        ui = {
-          icons = {
-            server_installed = "✓",
-            server_pending = "➜",
-            server_uninstalled = "✗"
-          }
-        }
-      }
-
       mason_lspconfig.setup {
         ensure_installed = {
           "lua_ls",
