@@ -51,3 +51,23 @@ dot_opts=""
 . "$WORK_PATH/scripts/commands/install.sh"
 . "$WORK_PATH/scripts/commands/uninstall.sh"
 . "$WORK_PATH/scripts/commands/check.sh"
+
+
+if [ -f "$WORK_PATH/config.sh" ]; then
+  . "$WORK_PATH/config.sh"
+fi
+
+
+if ${CHECK_INSTALL_LOCATION:-false} &&
+  [ "$WORK_PATH" != "$HOME/dotfiles" ]; then
+  warn "Installed location is not \"~/dotfiles\""
+  info "Installed on \"$WORK_PATH\""
+  ask "Continue? [y/N]: "
+  case "$RET" in
+    ( [Yy] ) : ;;
+    ( * )
+      log "Canceled."
+      return 0
+      ;;
+  esac
+fi
