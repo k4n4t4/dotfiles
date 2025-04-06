@@ -1,4 +1,3 @@
-
 [[ $- != *i* ]] && return
 
 
@@ -8,36 +7,6 @@ HISTFILESIZE=2000
 
 shopt -s histappend
 shopt -s checkwinsize
-
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
-fi
-
-case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes ;;
-esac
-
-#force_color_prompt=yes
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-    color_prompt=yes
-    else
-    color_prompt=
-    fi
-fi
-
-unset color_prompt force_color_prompt
-
-if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
-fi
-
 
 
 PATH="$HOME/bin:$PATH"
@@ -128,3 +97,10 @@ fi
 alias h='printf "\033[?25l\033[0;0H\033[2J"&& read && printf "\033[?25h"'
 alias c='printf "\033[0;0H\033[2J"'
 alias q="exit"
+
+alias v="vim"
+
+alias emacs="vim"
+
+ESC=$(printf '\033')
+export PS1="$ESC[35m\$?$ESC[90m-$ESC[36m\h@\u$ESC[90m:$ESC[33m\w$ESC[m\\$ "
