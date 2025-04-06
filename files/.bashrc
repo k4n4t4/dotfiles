@@ -100,7 +100,8 @@ alias q="exit"
 
 alias v="vim"
 
-alias emacs="vim"
+export PS1="\[\033[35m\]\$?\[\033[90m\]-\[\033[36m\]\h@\u\[\033[90m\]:\[\033[33m\]\w\[\033[m\]\\$ "
 
-ESC=$(printf '\033')
-export PS1="$ESC[35m\$?$ESC[90m-$ESC[36m\h@\u$ESC[90m:$ESC[33m\w$ESC[m\\$ "
+# I hate emacs.
+# I love vim.
+alias emacs="vim"
