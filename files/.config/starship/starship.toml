@@ -1,4 +1,5 @@
 format = """
+ \
 ($container )\
 ($os )\
 ($hostname )\
@@ -129,7 +130,7 @@ disabled = false
 ssh_only = true
 ssh_symbol = '@'
 style = 'dimmed green'
-format = '[$ssh_symbol $hostname]($style)'
+format = '[$ssh_symbol$hostname]($style)'
 disabled = false
 
 [directory]
