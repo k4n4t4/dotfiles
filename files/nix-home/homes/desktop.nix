@@ -10,6 +10,8 @@
       fish
       starship
       neovim
+      luajit
+      luarocks
       eza
       fd
       ripgrep
