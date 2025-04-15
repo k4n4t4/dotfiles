@@ -6,6 +6,7 @@
       vim
       gnumake
       gcc
+      python3
       nodejs
     ];
   };
