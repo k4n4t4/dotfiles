@@ -4,8 +4,8 @@ set -eu
 printf %s " name (defaut: desktop): "
 read -r name
 
-if [ "$name" = "" ]; then
+case "$name" in ( "" )
   name="desktop"
-fi
+esac
 
 nix run home-manager/master -- switch --flake .#"$name"
