@@ -1,6 +1,7 @@
 {
   description = "Home Configuration";
 
+
   inputs = {
 
     nixpkgs = {
@@ -15,7 +16,8 @@
   };
 
 
-  outputs = { self, nixpkgs, home-manager, ... }: {
+  outputs = { self, nixpkgs, home-manager, ... } @ inputs:
+  {
 
     homeConfigurations = {
       "desktop" = home-manager.lib.homeManagerConfiguration {
@@ -25,14 +27,8 @@
           ./homes/desktop.nix
         ];
       };
-      "darwin" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages."x86_64-darwin";
-        modules = [
-          ./homes/common.nix
-          ./homes/darwin.nix
-        ];
-      };
     };
 
   };
+
 }
