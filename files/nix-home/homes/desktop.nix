@@ -20,20 +20,21 @@
       delta
       trash-cli
 
-      (
-        nerdfonts.override {
-          fonts = [];
-        }
-      )
+      kitty
+      # (
+      #   nerdfonts.override {
+      #     fonts = [];
+      #   }
+      # )
 
     ];
   };
 
-  file = {};
-
-  sessionVariables = {
-    EDITOR = "vim";
-  };
+  # file = {};
+  #
+  # sessionVariables = {
+  #   EDITOR = "vim";
+  # };
 
   programs = {
     home-manager.enable = true;
