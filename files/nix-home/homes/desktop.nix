@@ -19,7 +19,20 @@
       zoxide
       delta
       trash-cli
+
+      (
+        nerdfonts.override {
+          fonts = [];
+        }
+      )
+
     ];
+  };
+
+  file = {};
+
+  sessionVariables = {
+    EDITOR = "vim";
   };
 
   programs = {
