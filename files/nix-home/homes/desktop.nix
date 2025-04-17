@@ -1,13 +1,17 @@
 { config, pkgs, ... }:
+let
+  version = "24.05";
+  username = "kanata";
+in
 {
 
   fonts.fontconfig.enable = true;
 
   home = {
-    stateVersion = "24.05";
+    stateVersion = "${version}";
 
-    username = "kanata";
-    homeDirectory = "/home/kanata";
+    username = "${username}";
+    homeDirectory = "/home/${username}";
 
     packages = with pkgs; [
       fish
