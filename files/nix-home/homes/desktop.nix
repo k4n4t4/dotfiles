@@ -1,5 +1,8 @@
 { config, pkgs, ... }:
 {
+
+  fonts.fontconfig.enable = true;
+
   home = {
     stateVersion = "24.05";
 
@@ -21,20 +24,16 @@
       trash-cli
 
       kitty
-      # (
-      #   nerdfonts.override {
-      #     fonts = [];
-      #   }
-      # )
-
     ];
-  };
 
-  # file = {};
-  #
-  # sessionVariables = {
-  #   EDITOR = "vim";
-  # };
+
+    file = {};
+
+    sessionVariables = {
+      EDITOR = "vim";
+    };
+
+  };
 
   programs = {
     home-manager.enable = true;
