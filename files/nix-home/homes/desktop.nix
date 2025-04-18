@@ -22,11 +22,5 @@ in
       trash-cli
       kitty
     ];
-
-    file = {};
-
-    sessionVariables = {
-      EDITOR = "nvim";
-    };
   };
 }
