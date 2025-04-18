@@ -4,6 +4,8 @@ let
   username = "kanata";
 in
 {
+  programs.home-manager.enable = true;
+
   fonts.fontconfig.enable = true;
 
   home = {
@@ -26,9 +28,5 @@ in
     sessionVariables = {
       EDITOR = "vim";
     };
-  };
-
-  programs = {
-    home-manager.enable = true;
   };
 }
