@@ -26,7 +26,7 @@ in
     file = {};
 
     sessionVariables = {
-      EDITOR = "vim";
+      EDITOR = "nvim";
     };
   };
 }
