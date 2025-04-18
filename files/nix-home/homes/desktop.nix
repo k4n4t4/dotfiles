@@ -4,7 +4,6 @@ let
   username = "kanata";
 in
 {
-
   fonts.fontconfig.enable = true;
 
   home = {
@@ -14,29 +13,19 @@ in
     homeDirectory = "/home/${username}";
 
     packages = with pkgs; [
-      fish
-      starship
-      neovim
-      luajit
-      luarocks
-      eza
-      fd
-      ripgrep
-      fzf
-      zoxide
+      fish starship
+      neovim luajit luarocks
+      eza fd ripgrep fzf zoxide
       delta
       trash-cli
-
       kitty
     ];
-
 
     file = {};
 
     sessionVariables = {
       EDITOR = "vim";
     };
-
   };
 
   programs = {
