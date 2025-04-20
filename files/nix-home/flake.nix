@@ -13,14 +13,16 @@
 
   outputs = { self, nixpkgs, home-manager, ... } @ inputs: let
     config = {
-      username = "kanata";
-
-      system = "x86_64-linux";
-      # system = "aarch64-linux";
-      # system = "x86_64-darwin";
-      # system = "aarch64-darwin";
-
       version = "24.11";
+      username = "kanata";
+      system =
+        "x86_64-linux"
+        # "aarch64-linux"
+        # "x86_64-darwin"
+        # "aarch64-darwin"
+      ;
+      # homeDirPrefix = "/home";
+      # homeDirSufix = "/kanata";
     };
 
     isLinux = config.system == "x86_64-linux" || config.system == "aarch64-linux";
@@ -30,10 +32,17 @@
       stateVersion = config.version;
       username = config.username;
       homeDirectory =
-        if isLinux then
-          "/home/${config.username}"
-        else if isDarwin then
-          "/Users/${config.username}"
+        if isLinux || isDarwin then
+          if config ? homeDirPrefix then
+            if config ? homeDirSufix then
+              "${config.homeDirPrefix}${config.homeDirSufix}"
+            else
+              "${config.homeDirPrefix}/${config.username}"
+          else
+            if isLinux then
+              "/home/${config.username}"
+            else
+              "/Users/${config.username}"
         else
           throw "\"${config.system}\" is unsupported system"
         ;
