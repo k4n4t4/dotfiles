@@ -142,5 +142,5 @@ hi Number ctermfg=63
 hi Function ctermfg=208
 
 
-inoremap <TAB> 5j
-inoremap <S-TAB> 5k
+nnoremap <TAB> 5j
+nnoremap <S-TAB> 5k
