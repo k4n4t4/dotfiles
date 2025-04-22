@@ -140,3 +140,7 @@ hi Comment ctermfg=8
 hi String ctermfg=120
 hi Number ctermfg=63
 hi Function ctermfg=208
+
+
+inoremap <TAB> 5j
+inoremap <S-TAB> 5k
