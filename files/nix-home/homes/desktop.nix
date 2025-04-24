@@ -10,6 +10,7 @@
       delta
       trash-cli
       kitty
+      dash
     ];
   };
 }
