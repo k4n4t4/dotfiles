@@ -7,6 +7,7 @@ HISTFILESIZE=2000
 
 shopt -s histappend
 shopt -s checkwinsize
+set -o vi
 
 
 PATH="$HOME/bin:$PATH"
