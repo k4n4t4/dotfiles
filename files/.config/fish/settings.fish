@@ -56,6 +56,11 @@ export EDITOR="nvim"
 export LANG=C.UTF-8
 
 
+
+if type -q tmux
+  export TMUX_SHELL=$FISH_BIN
+end
+
 if test -f /home/linuxbrew/.linuxbrew/bin/brew
   eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 end
