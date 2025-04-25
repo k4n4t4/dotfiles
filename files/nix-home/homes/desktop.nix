@@ -11,6 +11,7 @@
       trash-cli
       kitty
       dash
+      tmux
     ];
   };
 }
