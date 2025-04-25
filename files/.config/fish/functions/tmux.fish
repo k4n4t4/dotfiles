@@ -1,5 +1,4 @@
 function tmux-start
-
   if not type -q tmux
     echo "`tmux` is not installed." >&2
     return 1
@@ -12,6 +11,8 @@ function tmux-start
     echo "Already in tmux." >&2
     return 1
   end
+
+  export TMUX_SHELL=$FISH_BIN
 
   if set -f TMUX_SESSION_LIST (tmux list-session 2> /dev/null)
 

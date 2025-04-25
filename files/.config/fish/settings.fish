@@ -38,7 +38,7 @@ fish_add_path \
   /usr/sbin \
   /sbin
 
-export fish_bin=(which fish)
+export FISH_BIN=(which fish)
 
 export PAGER="less"
 
@@ -54,11 +54,6 @@ export LESS_TERMCAP_ue=\033"[m"
 export EDITOR="nvim"
 
 export LANG=C.UTF-8
-
-
-if type -q tmux
-  export TMUX_SHELL=$fish_bin
-end
 
 
 if test -f /home/linuxbrew/.linuxbrew/bin/brew
