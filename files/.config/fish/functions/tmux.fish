@@ -12,6 +12,8 @@ function tmux-start
     return 1
   end
 
+  export TMUX_SHELL=$FISH_BIN
+
   if set -f TMUX_SESSION_LIST (tmux list-session 2> /dev/null)
 
     printf "%s%s%s\n" (whoami) "@" (hostname)
