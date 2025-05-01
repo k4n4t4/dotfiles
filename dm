@@ -26,7 +26,7 @@ case "$SHELL_NAME" in
   ( zsh )
     emulate -R sh
     ;;
-  ( yash | dash | ksh93 | busybox ) : ;;
+  ( sh | yash | dash | ksh93 | busybox ) : ;;
   ( * )
     echo "\"$SHELL_NAME\" is not supported." >&2
     exit 1
