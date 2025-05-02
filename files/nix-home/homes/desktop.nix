@@ -4,14 +4,11 @@
 
   home = {
     packages = with pkgs; [
+      kitty
       fish starship
       neovim luajit luarocks
-      eza fd ripgrep fzf zoxide
-      delta
-      trash-cli
-      kitty
+      eza fd ripgrep fzf zoxide btop ncdu delta trash-cli tmux
       dash
-      tmux
     ];
   };
 }
