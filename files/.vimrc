@@ -66,8 +66,8 @@ set nobackup
 set nowritebackup
 set backupext=.bak
 
-set mouse=
 set title
+set mouse=a
 set clipboard+=unnamedplus
 
 set autoread
@@ -144,3 +144,5 @@ hi Function ctermfg=208
 
 nnoremap <TAB> 5j
 nnoremap <S-TAB> 5k
+vnoremap <TAB> 5j
+vnoremap <S-TAB> 5k
