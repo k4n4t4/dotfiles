@@ -8,4 +8,6 @@ commands_usage() {
   echo "    install          install dotfiles"
   echo "    uninstall        uninstall dotfiles"
   echo "    check            check dotfiles"
+  echo "    git              run git"
+  echo "    pull             run git pull"
 }
