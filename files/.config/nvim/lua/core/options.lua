@@ -96,8 +96,8 @@ vim.opt.writebackup = false
 vim.opt.backupext = ".bak"
 
 
-vim.opt.mouse = ""
 vim.opt.title = true
+vim.opt.mouse = "a"
 vim.opt.clipboard:append "unnamedplus"
 
 vim.opt.autoread = true
