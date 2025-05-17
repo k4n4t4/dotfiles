@@ -1,4 +1,5 @@
 export LANG=en_US.UTF-8
+export CLICOLOR=1
 
 stty -ixon
 
@@ -20,6 +21,9 @@ HISTFILE=~/.zsh_history
 HISTSIZE=5000
 SAVEHIST=5000
 
+
+# autoload
+
 bindkey -e
 
 autoload -Uz compinit
@@ -38,6 +42,8 @@ zle -N edit-command-line
 bindkey "^[v" edit-command-line
 
 
+# path
+
 PATH="$HOME/bin:$PATH"
 PATH="$HOME/go/bin:$PATH"
 PATH="$HOME/.cargo/bin:$PATH"
@@ -49,6 +55,9 @@ PATH="/usr/share/games:$PATH"
 PATH="/usr/local/sbin:$PATH"
 PATH="/usr/sbin:$PATH"
 PATH="/sbin:$PATH"
+
+
+# source
 
 if [ -e /home/linuxbrew/.linuxbrew/bin/brew ]; then
   eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
@@ -64,8 +73,8 @@ if type starship > /dev/null 2>&1 ; then
   eval "$(starship init zsh)"
 fi
 
-export LANG=C
-export CLICOLOR=1
+
+# ZSH_HIGHLIGHT
 
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor root line)
 typeset -A ZSH_HIGHLIGHT_STYLES
@@ -103,6 +112,9 @@ ZSH_HIGHLIGHT_STYLES[comment]='fg=black,bold'
 ZSH_HIGHLIGHT_STYLES[named-fd]='none'
 ZSH_HIGHLIGHT_STYLES[numeric-fd]='none'
 ZSH_HIGHLIGHT_STYLES[arg0]='fg=green'
+
+
+# aliases
 
 alias reboot   "systemctl reboot"
 alias poweroff "systemctl poweroff"
