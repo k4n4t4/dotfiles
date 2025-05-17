@@ -10,16 +10,17 @@ shopt -s checkwinsize
 set -o vi
 
 
+# path
+
 PATH="$HOME/bin:$PATH"
 PATH="$HOME/.local/bin:$PATH"
 PATH="$HOME/.cargo/bin:$PATH"
 PATH="$HOME/go/bin:$PATH"
 
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
 
-if [ -e /home/linuxbrew/.linuxbrew/bin/brew ]; then
+# source
+
+if [ -f /home/linuxbrew/.linuxbrew/bin/brew ]; then
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
 
@@ -32,11 +33,11 @@ if type zoxide > /dev/null 2>&1; then
 fi
 
 if [ -f ~/.fzf.bash ]; then
-  source ~/.fzf.bash
+  . ~/.fzf.bash
 fi
 
-if [ -e ~/.local/share/blesh/ble.sh ]; then
-  source ~/.local/share/blesh/ble.sh
+if [ -f ~/.local/share/blesh/ble.sh ]; then
+  . ~/.local/share/blesh/ble.sh
 fi
 
 if type starship > /dev/null 2>&1; then
@@ -44,11 +45,17 @@ if type starship > /dev/null 2>&1; then
 fi
 
 if type broot > /dev/null 2>&1; then
-  if [ -e ~/.config/broot/launcher/bash/br ]; then
-    source ~/.config/broot/launcher/bash/br
+  if [ -f ~/.config/broot/launcher/bash/br ]; then
+    . ~/.config/broot/launcher/bash/br
   fi
 fi
 
+
+# aliases
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
 
 alias ls='ls --color=auto'
 
@@ -95,14 +102,13 @@ if type nvim > /dev/null 2>&1; then
   alias nvim="_nvim"
 fi
 
-alias h='printf "\033[?25l\033[0;0H\033[2J"&& read && printf "\033[?25h"'
 alias c='printf "\033[0;0H\033[2J"'
 alias q="exit"
 
 alias v="vim"
+alias emacs="vim"
+
+
+# PS
 
 export PS1="\[\033[35m\]\$?\[\033[90m\]-\[\033[36m\]\h@\u\[\033[90m\]:\[\033[33m\]\w\[\033[m\]\\$ "
-
-# I hate emacs.
-# I love vim.
-alias emacs="vim"
