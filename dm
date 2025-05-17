@@ -60,12 +60,22 @@ main() {
     ( uninstall | u ) SUBCOMMAND="uninstall" ;;
     ( check | c ) SUBCOMMAND="check" ;;
     ( debug | d ) SUBCOMMAND="debug" ;;
+    ( git | g ) SUBCOMMAND="git" ;;
+    ( pull | p ) SUBCOMMAND="pull" ;;
     ( * ) msg_error "Invalid Sub Command: \"$1\"" ;;
   esac
   shift
   case "$SUBCOMMAND" in
     ( help ) commands_usage ;;
     ( install | uninstall | check ) commands_run "$@" ;;
+    ( git )
+      cd -- "$WORK_PATH"
+      git "$@"
+      ;;
+    ( pull )
+      cd -- "$WORK_PATH"
+      git pull
+      ;;
     ( debug )
       msg_info "Information"
       msg_log "        HOME = \"$HOME\""
