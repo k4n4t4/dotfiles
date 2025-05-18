@@ -1,8 +1,6 @@
 alias dotconf="dot --origin-suffix=.config --target-suffix=.config"
 
-
 dot "$WORK_PATH/dm" "bin/dm"
-
 dot "bin" -r
 dot ".fonts.conf"
 dot ".profile"
