@@ -2,10 +2,10 @@
 
 printf "%s" "\
 #[fg=#222222,bg=default]#[fg=#eeeeee,bg=#222222]\
- #P \
+ #{pane_index} \
 #[fg=#666666]#[fg=default,bold]\
- #T \
+ #{pane_title} \
 #[fg=#666666,nobold]#[fg=#eeeeee]\
- #H \
+ #{pane_current_command} \
 #[fg=#222222,bg=default]\
 "
