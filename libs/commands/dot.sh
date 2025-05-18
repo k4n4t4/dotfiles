@@ -194,7 +194,7 @@ _dot_link() {
   if [ ! -d "$RET" ]; then
     if file_exist "$RET"; then
       msg_error "Cannot make directory: $RET (Already Exist)"
-      ask_continue
+      _dot_ask_continue
       return "$RET"
     else
       if mkdir -p -- "$RET"; then
@@ -212,7 +212,7 @@ _dot_link() {
       return 0
     else
       msg_error "$1 --x $2 (Already Exist)"
-      ask_continue
+      _dot_ask_continue
       return "$RET"
     fi
   fi
