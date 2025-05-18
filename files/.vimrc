@@ -100,6 +100,7 @@ set background=dark
 
 set ttimeoutlen=10
 
+
 let mapleader = " "
 nnoremap <SPACE> <NOP>
 
