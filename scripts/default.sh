@@ -23,8 +23,8 @@ if cmd_exist nvim; then
   dotconf "nvim" -r -d1
 fi
 if cmd_exist tmux; then
-  dotconf "tmux" -r -i ".tmux.conf"
-  dot ".config/tmux/.tmux.conf" ".tmux.conf"
+  dotconf "tmux" -r -i "tmux.conf"
+  dot ".config/tmux/tmux.conf" ".tmux.conf"
 fi
 if cmd_exist starship; then
   dotconf "starship/starship.toml" "starship.toml"
