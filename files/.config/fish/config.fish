@@ -3,6 +3,4 @@ if status --is-interactive
 
   source $fish_dir/settings.fish
   source $fish_dir/aliases.fish
-else
-  echo 1
 end
