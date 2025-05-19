@@ -1,5 +1,5 @@
 function clear
-  if [ (count $argv) -ne 0 ]
+  if test (count $argv) -ne 0
     command clear && cd $argv
   else
     command clear

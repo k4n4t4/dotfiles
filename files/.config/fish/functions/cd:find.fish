@@ -1,4 +1,4 @@
-function cdf
+function cd:find
   set -l find_cmd
   set -l find_pipe
 

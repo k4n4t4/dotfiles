@@ -1,4 +1,4 @@
-function cdg
+function cd:ghq
   set -l find_pipe
 
   if not type -q ghq

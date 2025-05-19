@@ -1,4 +1,4 @@
-function cdgitroot
+function cd:gitroot
   if set -l root_dir (git rev-parse --show-toplevel)
     cd $root_dir
   else

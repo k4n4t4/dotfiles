@@ -1,4 +1,4 @@
-function cdr
+function cd:recent
   set -l find_pipe
 
   if type -q fzf
