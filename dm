@@ -17,7 +17,7 @@ case "$WORK_PATH" in ( "" )
   WORK_PATH="/"
 esac
 
-SHELL_NAME="$(ps -p $$ -o comm=)"
+SHELL_NAME="${SHELL##*/}"
 case "$SHELL_NAME" in
   ( bash )
     # shellcheck disable=SC3044
