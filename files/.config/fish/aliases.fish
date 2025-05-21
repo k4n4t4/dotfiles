@@ -4,25 +4,22 @@ function multicd
 end
 abbr --add dotdot --regex '^\.\.+$' --function multicd
 
-abbr --add pd   "prevd"
-abbr --add nd   "nextd"
+abbr --add pd "prevd"
+abbr --add nd "nextd"
+
+abbr --add cmd "command"
+abbr --add hist "history"
+abbr --add c "clear"
+abbr --add q "exit"
+
 
 alias cp "cp -iv"
 alias mv "mv -iv"
 
-abbr --add '^' "command"
-abbr --add c "clear"
-abbr --add h "history"
-abbr --add q "exit"
-
-alias reboot   "systemctl reboot"
-alias poweroff "systemctl poweroff"
-abbr --add rbt "reboot"
-abbr --add pof "poweroff"
-
 
 if type -q tmux
   alias tmux "tmux -u"
+
   abbr --add tm      "tmux"
   abbr --add tma     "tmux attach-session"
   abbr --add tmat    "tmux attach-session -t"
@@ -40,13 +37,15 @@ if type -q tmux
   abbr --add tmlsc   "tmux list-clients"
   abbr --add tmd     "tmux detach-client"
   abbr --add tmcl    "tmux clear-history"
-  abbr --add tmclear "clear ; tmux clear-history"
+  abbr --add tmclear "clear && tmux clear-history"
   abbr --add tmrm    "tmux kill-session"
   abbr --add tmrmt   "tmux kill-session -t"
   abbr --add tmkill  "tmux kill-server"
 end
 
 if type -q git
+  alias groot "cd:gitroot"
+
   abbr --add g      "git"
   abbr --add ga     "git add"
   abbr --add gd     "git diff"
@@ -68,13 +67,12 @@ if type -q git
   abbr --add gcmu   "git commit -m update"
   abbr --add gcmau  "git add . && git commit -m update"
   abbr --add gcmaup "git add . && git commit -m update && git push"
+  abbr --add gu     "git add . && git commit -m update && git push"
   abbr --add gr     "git remote"
   abbr --add gbl    "git blame"
   abbr --add gl     "git log"
   abbr --add glp    "git log -p"
   abbr --add gld    "git log -p --full-diff"
-  abbr --add gu     "git add . && git commit -m update && git push"
-  alias groot "cdgitroot"
 end
 
 if type -q eza
@@ -138,7 +136,7 @@ end
 
 if type -q nvim
   function _nvim
-    if [ "$NVIM" = "" ]
+    if test "$NVIM" = ""
       command nvim $argv
     else
       for file in $argv
@@ -155,25 +153,8 @@ end
 if type -q xsel
   alias pbcopy "xsel --clipboard --input"
   alias pbpaste "xsel --clipboard --output"
-  abbr --add pbc "pbcopy"
-  abbr --add pbp "pbpaste"
-  alias pwdc 'pwd | tr -d "\n" | xsel --clipboard --input'
-end
 
-if type -q todo
-  abbr --add t "todo"
-  abbr --add ta   "todo add"
-  abbr --add tad  "todo add"
-  abbr --add td   "todo del"
-  abbr --add trm  "todo del"
-  abbr --add tmv  "todo move"
-  abbr --add tt   "todo tag"
-  abbr --add ttag "todo tag"
-  abbr --add ts   "todo status"
-  abbr --add tst  "todo status"
-  abbr --add tl   "todo list"
-  abbr --add tls  "todo list"
-  abbr --add tcl  "todo clear"
+  alias pwdcopy 'pwd | tr -d "\n" | pbcopy'
 end
 
 if type -q codium && not type -q code
@@ -186,4 +167,20 @@ end
 
 if type -q yay
   alias yay "yay --color auto"
+end
+
+if type -q todo
+  abbr --add t    "todo"
+  abbr --add ta   "todo add"
+  abbr --add tad  "todo add"
+  abbr --add td   "todo del"
+  abbr --add trm  "todo del"
+  abbr --add tmv  "todo move"
+  abbr --add tt   "todo tag"
+  abbr --add ttag "todo tag"
+  abbr --add ts   "todo status"
+  abbr --add tst  "todo status"
+  abbr --add tl   "todo list"
+  abbr --add tls  "todo list"
+  abbr --add tcl  "todo clear"
 end
