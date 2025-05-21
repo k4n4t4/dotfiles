@@ -170,17 +170,12 @@ if type -q yay
 end
 
 if type -q todo
-  abbr --add t    "todo"
-  abbr --add ta   "todo add"
-  abbr --add tad  "todo add"
-  abbr --add td   "todo del"
-  abbr --add trm  "todo del"
-  abbr --add tmv  "todo move"
-  abbr --add tt   "todo tag"
-  abbr --add ttag "todo tag"
-  abbr --add ts   "todo status"
-  abbr --add tst  "todo status"
-  abbr --add tl   "todo list"
-  abbr --add tls  "todo list"
-  abbr --add tcl  "todo clear"
+  abbr --add t  "todo"
+  abbr --add ta "todo add"
+  abbr --add td "todo del"
+  abbr --add tm "todo move"
+  abbr --add tt "todo tag"
+  abbr --add ts "todo status"
+  abbr --add tl "todo list"
+  abbr --add tc "todo clear"
 end
