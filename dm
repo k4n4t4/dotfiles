@@ -287,31 +287,31 @@ msg_log() {
 }
 
 msg_success() {
-  printf "%s\n" " ${ESC}[92m[ SUC ]${ESC}[90m: ${ESC}[32m$*${ESC}[m"
+  printf "%s\n" " ${ESC}[92m[ SUC ]${ESC}[90m: ${ESC}[m$*"
 }
 
 msg_info() {
-  printf "%s\n" " ${ESC}[94m[ INF ]${ESC}[90m: ${ESC}[4m${ESC}[34m$*${ESC}[m"
+  printf "%s\n" " ${ESC}[94m[ INF ]${ESC}[90m: ${ESC}[m$*"
 }
 
 msg_debug() {
-  printf "%s\n" " ${ESC}[97m${ESC}[43m[ DBG ]${ESC}[m${ESC}[90m: ${ESC}[1m${ESC}[4m${ESC}[93m$*${ESC}[m"
+  printf "%s\n" " ${ESC}[97m${ESC}[43m[ DBG ]${ESC}[m${ESC}[90m: ${ESC}[m$*"
 }
 
 msg_warn() {
-  printf "%s\n" " ${ESC}[93m[ WRN ]${ESC}[90m: ${ESC}[33m$*${ESC}[m" >&2
+  printf "%s\n" " ${ESC}[93m[ WRN ]${ESC}[90m: ${ESC}[m$*" >&2
 }
 
 msg_error() {
-  printf "%s\n" " ${ESC}[91m[ ERR ]${ESC}[90m: ${ESC}[31m$*${ESC}[m" >&2
+  printf "%s\n" " ${ESC}[91m[ ERR ]${ESC}[90m: ${ESC}[m$*" >&2
 }
 
 msg_fatal() {
-  printf "%s\n" " ${ESC}[97m${ESC}[41m[ FTL ]${ESC}[m${ESC}[90m: ${ESC}[1m${ESC}[91m$*${ESC}[m" >&2
+  printf "%s\n" " ${ESC}[97m${ESC}[41m[ FTL ]${ESC}[m${ESC}[90m: ${ESC}[m$*" >&2
 }
 
 msg_ask() {
-  printf "%s" " ${ESC}[33m[ ASK ]${ESC}[90m: ${ESC}[1m${ESC}[97m$*${ESC}[m"
+  printf "%s" " ${ESC}[33m[ ASK ]${ESC}[90m: ${ESC}[m$*"
   read -r RET
 }
 
