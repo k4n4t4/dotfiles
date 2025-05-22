@@ -17,22 +17,6 @@ case "$WORK_PATH" in ( "" )
   WORK_PATH="/"
 esac
 
-SHELL_NAME="${SHELL##*/}"
-case "$SHELL_NAME" in
-  ( bash )
-    # shellcheck disable=SC3044
-    shopt -s expand_aliases
-    ;;
-  ( zsh )
-    emulate -R sh
-    ;;
-  ( sh | yash | dash | ksh93 | busybox ) : ;;
-  ( * )
-    echo "\"$SHELL_NAME\" is not supported." >&2
-    exit 1
-    ;;
-esac
-
 KERNEL_NAME="$(uname -s)"
 case "$KERNEL_NAME" in
   ( Linux* ) : ;;
