@@ -2,10 +2,6 @@
 set -eu
 
 
-if ! command -v -- "ps" > /dev/null 2>&1; then
-  echo '"ps" is not exist.' >&2
-  exit 1
-fi
 if ! command -v -- "realpath" > /dev/null 2>&1; then
   echo '"realpath" is not exist.' >&2
   exit 1
@@ -19,7 +15,7 @@ esac
 
 KERNEL_NAME="$(uname -s)"
 case "$KERNEL_NAME" in
-  ( Linux* ) : ;;
+  ( Linux ) : ;;
   ( * )
     echo "\"$KERNEL_NAME\" is not supported." >&2
     exit 1
