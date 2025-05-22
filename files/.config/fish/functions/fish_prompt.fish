@@ -13,7 +13,7 @@ function _fish_right_prompt
   set -f status_err_color (printf "\033[38;5;160m")
   set -f status_comma ""
   for s in $last_pipestatus
-    if [ $s = 0 ]
+    if test $s = 0
       set -f status_text "$status_text$status_comma$status_suc_color$s$reset_fg_color"
     else
       set -f status_text "$status_text$status_comma$status_err_color$s$reset_fg_color"
@@ -40,19 +40,19 @@ function fish_prompt
 
   set -f date_color (printf "\033[38;5;129m")
 
-  if [ $last_status = 0 ]
+  if test $last_status = 0
     set -f status_color (printf "\033[38;5;247m")
   else
     set -f status_color (printf "\033[38;5;124m")
   end
 
-  if [ "$USER" = "root" ]
+  if test "$USER" = "root"
     set -f user_color (printf "\033[38;5;124m")
   else
     set -f user_color (printf "\033[38;5;20m")
   end
 
-  if [ -w "$pwd" ]
+  if test -w "$pwd"
     if string match "$HOME/dotfiles/*" "$pwd/" >/dev/null 2>&1
       set -f pwd_color (printf "\033[38;5;105m")
     else
@@ -62,21 +62,21 @@ function fish_prompt
     set -f pwd_color (printf "\033[38;5;196m")
   end
 
-  if set -f repo_type (_repo_type)
-    if [ "$repo_type" = "git" ]
+  if set -f repo_type (repo:type)
+    if test "$repo_type" = "git"
       set -f repo_type_color (printf "\033[38;5;240m")
     else
       set -f repo_type_color (printf "\033[38;5;255m")
     end
 
-    set -f repo_branch (_repo_branch_name $repo_type)
-    if [ "$repo_branch" = "master" ]; or [ "$repo_branch" = "main" ]
+    set -f repo_branch (repo:branch_name $repo_type)
+    if test "$repo_branch" = "master"; or test "$repo_branch" = "main"
       set -f repo_branch_color (printf "\033[38;5;164m")
     else
       set -f repo_branch_color (printf "\033[38;5;75m")
     end
 
-    if [ -n (_is_repo_dirty $repo_type) ]
+    if test -n (repo:is_dirty $repo_type)
       set -f repo_dirty "!"
       set -f repo_dirty_color (printf "\033[38;5;196m")
     else
