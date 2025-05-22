@@ -157,7 +157,7 @@ if type -q xsel
   alias pwdcopy 'pwd | tr -d "\n" | pbcopy'
 end
 
-if type -q codium && not type -q code
+if type -q codium; and not type -q code
   alias code "codium"
 end
 
