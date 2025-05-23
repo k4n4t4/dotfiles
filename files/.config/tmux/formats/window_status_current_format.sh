@@ -7,4 +7,3 @@ printf "%s" "\
 #{pane_current_command} \
 #[fg=#555599,bg=#222222,nobold]\
 "
-
