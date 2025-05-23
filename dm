@@ -520,6 +520,15 @@ _dot_ask_continue() {
   esac
 }
 
+_dot_msg() {
+  set -- "$1" "$2" "$3" "$4" "${5:-}"
+  if [ "$5" = "" ]; then
+    "msg_$1" "$2 ${ESC}[90m$3${ESC}[m $4"
+  else
+    "msg_$1" "$2 ${ESC}[90m$3${ESC}[m $4 $5"
+  fi
+}
+
 _dot_link() {
   dir_name "$2"
   if [ ! -d "$RET" ]; then
@@ -539,19 +548,19 @@ _dot_link() {
 
   if file_exist "$2"; then
     if [ -L "$2" ] && [ "$(realpath "$2")" = "$1" ]; then
-      msg_log "$1 ${ESC}[90m<->${ESC}[m $2 (Already Linked)"
+      _dot_msg log "$1" "<->" "$2" "(Already Linked)"
       return 0
     else
-      msg_error "$1 ${ESC}[90m--x${ESC}[m $2 (Already Exist)"
+      _dot_msg error "$1" "--x" "$2" "(Already Exist)"
       _dot_ask_continue
       return "$RET"
     fi
   fi
 
   if ln -s -- "$1" "$2"; then
-    msg_log "$1 ${ESC}[90m-->${ESC}[m $2"
+    _dot_msg log "$1" "<->" "$2"
   else
-    msg_fatal "$1 ${ESC}[90m--x${ESC}[m $2 (Faild)"
+    _dot_msg fatal "$1" "--x" "$2" "(Faild)"
     return 1
   fi
 }
@@ -559,21 +568,21 @@ _dot_link() {
 _dot_unlink() {
   if [ -e "$2" ] && [ -L "$2" ] && [ "$(realpath "$2")" = "$1" ]; then
     if unlink -- "$2"; then
-      msg_log "$1 ${ESC}[90mx-x${ESC}[m $2"
+      _dot_msg log "$1" "x-x" "$2"
     else
-      msg_fatal "$1 ${ESC}[90m-?-${ESC}[m $2 (Faild)"
+      _dot_msg fatal "$1" "-?-" "$2" "(Faild)"
       return 1
     fi
   else
-    msg_log "$1 ${ESC}[90mx-x${ESC}[m $2 (Already Unlinked)"
+    _dot_msg log "$1" "x-x" "$2" "(Already Unlinked)"
   fi
 }
 
 _dot_check() {
   if [ -e "$2" ] && [ -L "$2" ] && [ "$(realpath "$2")" = "$1" ]; then
-    msg_log "$1 ${ESC}[90m<->${ESC}[m $2"
+    _dot_msg log "$1" "<->" "$2"
   else
-    msg_warn "$1 ${ESC}[90m-?-${ESC}[m $2"
+    _dot_msg warn "$1" "-?-" "$2"
   fi
 }
 #############
