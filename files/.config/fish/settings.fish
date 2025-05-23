@@ -27,6 +27,7 @@ set fish_pager_color_prefix              white
 set fish_pager_color_description         cyan
 set fish_pager_color_progress            brwhite
 
+
 fish_add_path \
   ~/bin \
   ~/.local/bin \
@@ -38,7 +39,6 @@ fish_add_path \
   /usr/sbin \
   /sbin
 
-export FISH_BIN=(which fish)
 
 export PAGER="less"
 

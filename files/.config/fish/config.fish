@@ -1,8 +1,10 @@
 if status is-interactive
-  export fish_dir=(dirname (status --current-filename))
+  export FISH_DIR=(dirname (status --current-filename))
+  export FISH_BIN=(which fish)
 
-  source $fish_dir/settings.fish
-  source $fish_dir/aliases.fish
+
+  source $FISH_DIR/settings.fish
+  source $FISH_DIR/aliases.fish
 
   if test -f ~/.rc.fish
     source ~/.rc.fish
