@@ -9,8 +9,10 @@ fi
 
 FILE_PATH="$(realpath "$0")"
 WORK_PATH="${FILE_PATH%"/"*}"
-case "$WORK_PATH" in ( "" )
-  WORK_PATH="/"
+case "$WORK_PATH" in
+  ( "" )
+    WORK_PATH="/"
+    ;;
 esac
 
 KERNEL_NAME="$(uname -s)"
@@ -65,8 +67,10 @@ abs_path() {
   cd -- "$RET" || return 1
   base_name "$1"
   set -- "$PWD" "/" "$RET"
-  case "$1" in ( "/" | "//" )
-    set -- "$1" "" "$3"
+  case "$1" in
+    ( "/" | "//" )
+      set -- "$1" "" "$3"
+      ;;
   esac
   case "$3" in
     ( "/" )  RET="$1$2" ;;
@@ -157,9 +161,11 @@ opt_parser_get_arg_count() {
   RET="$1"
   eval "set -- $2"
   while [ $# -gt 0 ]; do
-    case "$1" in ( "$RET:"?* )
-      RET="${1#"$RET:"}"
-      return 0
+    case "$1" in
+      ( "$RET:"?* )
+        RET="${1#"$RET:"}"
+        return 0
+        ;;
     esac
     shift
   done
@@ -522,11 +528,15 @@ _dot_ask_continue() {
 
 _dot_msg() {
   set -- "$1" "$2" "$3" "$4" "${5:-}"
-  case "$2" in ( "$HOME"* )
-    set -- "$1" "~${2#"$HOME"}" "$3" "$4" "$5"
+  case "$2" in
+    ( "$HOME"* )
+      set -- "$1" "~${2#"$HOME"}" "$3" "$4" "$5"
+      ;;
   esac
-  case "$4" in ( "$HOME"* )
-    set -- "$1" "$2" "$3" "~${4#"$HOME"}" "$5"
+  case "$4" in
+    ( "$HOME"* )
+      set -- "$1" "$2" "$3" "~${4#"$HOME"}" "$5"
+      ;;
   esac
   if [ "$5" = "" ]; then
     "msg_$1" "$2 ${ESC}[90m$3${ESC}[m $4"
