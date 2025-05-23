@@ -81,12 +81,6 @@ if type -q broot
 end
 
 
-# source local config
-if test -f ~/.rc.fish
-  source ~/.rc.fish
-end
-
-
 # starship setup
 if type -q starship
   starship init fish | source
