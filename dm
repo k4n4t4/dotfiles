@@ -522,6 +522,12 @@ _dot_ask_continue() {
 
 _dot_msg() {
   set -- "$1" "$2" "$3" "$4" "${5:-}"
+  case "$2" in ( "$HOME"* )
+    set -- "$1" "~${2#"$HOME"}" "$3" "$4" "$5"
+  esac
+  case "$4" in ( "$HOME"* )
+    set -- "$1" "$2" "$3" "~${4#"$HOME"}" "$5"
+  esac
   if [ "$5" = "" ]; then
     "msg_$1" "$2 ${ESC}[90m$3${ESC}[m $4"
   else
