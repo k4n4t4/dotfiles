@@ -156,26 +156,3 @@ if type -q xsel
 
   alias pwdcopy 'pwd | tr -d "\n" | pbcopy'
 end
-
-if type -q codium; and not type -q code
-  alias code "codium"
-end
-
-if type -q calcurse
-  abbr --add cl "calcurse"
-end
-
-if type -q yay
-  alias yay "yay --color auto"
-end
-
-if type -q todo
-  abbr --add t  "todo"
-  abbr --add ta "todo add"
-  abbr --add td "todo del"
-  abbr --add tm "todo move"
-  abbr --add tt "todo tag"
-  abbr --add ts "todo status"
-  abbr --add tl "todo list"
-  abbr --add tc "todo clear"
-end
