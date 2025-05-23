@@ -529,12 +529,12 @@ _dot_ask_continue() {
 _dot_msg() {
   set -- "$1" "$2" "$3" "$4" "${5:-}"
   case "$2" in
-    ( "$HOME"* )
-      set -- "$1" "~${2#"$HOME"}" "$3" "$4" "$5"
+    ( "$WORK_PATH/"* )
+      set -- "$1" "\$WORK_PATH${2#"$WORK_PATH"}" "$3" "$4" "$5"
       ;;
   esac
   case "$4" in
-    ( "$HOME"* )
+    ( "$HOME/"* )
       set -- "$1" "$2" "$3" "~${4#"$HOME"}" "$5"
       ;;
   esac
