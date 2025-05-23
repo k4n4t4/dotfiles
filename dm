@@ -531,7 +531,7 @@ _dot_msg() {
   if [ "$5" = "" ]; then
     "msg_$1" "$2 ${ESC}[90m$3${ESC}[m $4"
   else
-    "msg_$1" "$2 ${ESC}[90m$3${ESC}[m $4 $5"
+    "msg_$1" "$2 ${ESC}[90m$3${ESC}[m $4 ${ESC}[90m$5${ESC}[m"
   fi
 }
 
