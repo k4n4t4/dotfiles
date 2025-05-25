@@ -343,7 +343,6 @@ source_script() {
 
 commands_run() {
   DOT_TARGET_PATH="$HOME"
-  DOT_SCRIPT_NAME="default"
 
   opt_parser p:1 path:1 -- "$@"
   eval "set -- $RET"
@@ -365,22 +364,22 @@ commands_run() {
     esac
   done
 
-  if [ $# -ne 0 ]; then
-    if [ $# -eq 1 ]; then
-      DOT_SCRIPT_NAME="$1"
+  if [ $# -eq 0 ]; then
+    set -- "default"
+  fi
+
+  while [ $# -gt 0 ]; do
+    DOT_SCRIPT_NAME="$1"
+
+    if [ -f "$WORK_PATH/scripts/$DOT_SCRIPT_NAME.sh" ]; then
+      source_script "$DOT_SCRIPT_NAME"
     else
-      msg_error "Invalid Arguments."
+      msg_error "\"$DOT_SCRIPT_NAME\" is not found."
       return 1
     fi
-  fi
 
-
-  if [ -f "$WORK_PATH/scripts/$DOT_SCRIPT_NAME.sh" ]; then
-    source_script "$DOT_SCRIPT_NAME"
-  else
-    msg_error "\"$DOT_SCRIPT_NAME\" is not found."
-    return 1
-  fi
+    shift
+  done
 }
 
 dot() {
