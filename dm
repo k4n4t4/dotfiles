@@ -336,6 +336,11 @@ commands_usage() {
   echo "    pull             run git pull"
 }
 
+source_script() {
+  # shellcheck disable=SC1090
+  . "$WORK_PATH/scripts/$1.sh"
+}
+
 commands_run() {
   DOT_TARGET_PATH="$HOME"
   DOT_SCRIPT_NAME="default"
@@ -371,8 +376,7 @@ commands_run() {
 
 
   if [ -f "$WORK_PATH/scripts/$DOT_SCRIPT_NAME.sh" ]; then
-    # shellcheck disable=SC1090
-    . "$WORK_PATH/scripts/$DOT_SCRIPT_NAME.sh"
+    source_script "$DOT_SCRIPT_NAME"
   else
     msg_error "\"$DOT_SCRIPT_NAME\" is not found."
     return 1
