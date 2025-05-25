@@ -511,7 +511,6 @@ _dot_ask_continue() {
       ;;
   esac
 }
-
 _dot_msg() {
   set -- "$1" "$2" "$3" "$4" "${5:-}"
 
@@ -539,7 +538,6 @@ _dot_msg() {
     "msg_$1" "$2 ${ESC}[90m$3${ESC}[m $4 ${ESC}[90m$5${ESC}[m"
   fi
 }
-
 _dot_link() {
   dir_name "$2"
   if [ ! -d "$RET" ]; then
@@ -575,7 +573,6 @@ _dot_link() {
     return 1
   fi
 }
-
 _dot_unlink() {
   if [ -e "$2" ] && [ -L "$2" ] && [ "$(realpath "$2")" = "$1" ]; then
     if unlink -- "$2"; then
@@ -588,7 +585,6 @@ _dot_unlink() {
     _dot_msg log "$1" "x-x" "$2" "(Already Unlinked)"
   fi
 }
-
 _dot_check() {
   if [ -e "$2" ] && [ -L "$2" ] && [ "$(realpath "$2")" = "$1" ]; then
     _dot_msg success "$1" "<->" "$2"
