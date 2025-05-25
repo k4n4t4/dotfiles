@@ -313,6 +313,10 @@ source_script() {
 run_script() {
   DOT_TARGET_PATH="$HOME"
 
+  [ $# -eq 0 ] && return 1
+  DOT_SCRIPT_MODE="$1"
+  shift
+
   opt_parser p:1 path:1 -- "$@"
   eval "set -- $RET"
   while [ $# -gt 0 ]; do
@@ -333,9 +337,7 @@ run_script() {
     esac
   done
 
-  if [ $# -eq 0 ]; then
-    set -- "default"
-  fi
+  [ $# -eq 0 ] && set -- "default"
 
   while [ $# -gt 0 ]; do
     DOT_SCRIPT_NAME="$1"
@@ -458,7 +460,7 @@ dot() {
                 _dot_rec_dir_stack="$_dot_rec_dir_stack $RET"
               else
                 _dot_rec_entry_target="$DOT_ARG_TARGET/${_dot_rec_entry_origin#"$DOT_ARG_ORIGIN/"}"
-                case "$SCRIPT_MODE" in
+                case "$DOT_SCRIPT_MODE" in
                   ( 'install' ) _dot_link "$_dot_rec_entry_origin" "$_dot_rec_entry_target" ;;
                   ( 'uninstall' ) _dot_unlink "$_dot_rec_entry_origin" "$_dot_rec_entry_target" ;;
                   ( 'check' ) _dot_check "$_dot_rec_entry_origin" "$_dot_rec_entry_target" ;;
@@ -471,7 +473,7 @@ dot() {
         done
         IFS="$OLD_IFS"
       else
-        case "$SCRIPT_MODE" in
+        case "$DOT_SCRIPT_MODE" in
           ( 'install' ) _dot_link "$DOT_ARG_ORIGIN" "$DOT_ARG_TARGET" ;;
           ( 'uninstall' ) _dot_unlink "$DOT_ARG_ORIGIN" "$DOT_ARG_TARGET" ;;
           ( 'check' ) _dot_check "$DOT_ARG_ORIGIN" "$DOT_ARG_TARGET" ;;
@@ -578,7 +580,6 @@ FILE_PATH="$(realpath "$0")"
 WORK_PATH="${FILE_PATH%"/"*}"
 [ "$WORK_PATH" = "" ] && WORK_PATH="/"
 KERNEL_NAME="$(uname -s)"
-SCRIPT_MODE="unknown"
 SUBCOMMAND="unknown"
 
 
@@ -606,8 +607,7 @@ main() {
   case "$SUBCOMMAND" in
     ( help ) usage ;;
     ( install | uninstall | check )
-      SCRIPT_MODE="$SUBCOMMAND"
-      run_script "$@"
+      run_script "$SUBCOMMAND" "$@"
       ;;
     ( git )
       cd -- "$WORK_PATH"

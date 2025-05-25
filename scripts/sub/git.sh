@@ -1,4 +1,4 @@
-case "$SCRIPT_MODE" in
+case "$DOT_SCRIPT_MODE" in
   ( install )
     msg_info "git config"
     msg_ask "  Continue? [Y/n]: "
