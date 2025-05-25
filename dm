@@ -547,7 +547,7 @@ _dot_link() {
   fi
 
   if ln -s -- "$1" "$2"; then
-    _dot_msg log "$1" "<->" "$2"
+    _dot_msg success "$1" "-->" "$2"
   else
     _dot_msg fatal "$1" "--x" "$2" "(Faild)"
     return 1
@@ -557,7 +557,7 @@ _dot_link() {
 _dot_unlink() {
   if [ -e "$2" ] && [ -L "$2" ] && [ "$(realpath "$2")" = "$1" ]; then
     if unlink -- "$2"; then
-      _dot_msg log "$1" "x-x" "$2"
+      _dot_msg success "$1" "x-x" "$2"
     else
       _dot_msg fatal "$1" "-?-" "$2" "(Faild)"
       return 1
@@ -569,7 +569,7 @@ _dot_unlink() {
 
 _dot_check() {
   if [ -e "$2" ] && [ -L "$2" ] && [ "$(realpath "$2")" = "$1" ]; then
-    _dot_msg log "$1" "<->" "$2"
+    _dot_msg success "$1" "<->" "$2"
   else
     _dot_msg warn "$1" "-?-" "$2"
   fi
