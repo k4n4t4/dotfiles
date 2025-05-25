@@ -341,7 +341,7 @@ source_script() {
   . "$WORK_PATH/scripts/$1.sh"
 }
 
-commands_run() {
+run_script() {
   DOT_TARGET_PATH="$HOME"
 
   opt_parser p:1 path:1 -- "$@"
@@ -627,7 +627,7 @@ main() {
   shift
   case "$SUBCOMMAND" in
     ( help ) usage ;;
-    ( install | uninstall | check ) commands_run "$@" ;;
+    ( install | uninstall | check ) run_script "$@" ;;
     ( git )
       cd -- "$WORK_PATH"
       git "$@"
