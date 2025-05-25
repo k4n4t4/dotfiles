@@ -1,23 +1,18 @@
 #!/bin/sh
 set -eu
 
-FILE_PATH=""
-WORK_PATH=""
-KERNEL_NAME=""
-
-SUBCOMMAND=""
-
 NL='
 '
 ESC="$(printf "\033")"
 
-
 FILE_PATH="$(realpath "$0")"
-
 WORK_PATH="${FILE_PATH%"/"*}"
 [ "$WORK_PATH" = "" ] && WORK_PATH="/"
-
 KERNEL_NAME="$(uname -s)"
+
+SUBCOMMAND="unknown"
+
+
 case "$KERNEL_NAME" in
   ( Linux ) : ;;
   ( * )
@@ -605,8 +600,6 @@ _dot_check() {
 # functions #
 #############
 
-
-SUBCOMMAND="unknown"
 
 main() {
   [ $# -eq 0 ] && set -- help
