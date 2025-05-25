@@ -53,9 +53,9 @@ if cmd_exist wlogout; then
 fi
 
 if cmd_exist firefox; then
-  source_script firefox
+  source_script sub/firefox
 fi
 
 if cmd_exist git; then
-  source_script git
+  source_script sub/git
 fi
