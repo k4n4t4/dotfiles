@@ -1,11 +1,11 @@
 #!/bin/sh
 set -eu
 
-: "${FILE_PATH:=}"
-: "${WORK_PATH:=}"
-: "${KERNEL_NAME:=}"
+FILE_PATH=""
+WORK_PATH=""
+KERNEL_NAME=""
 
-: "${SUBCOMMAND:=}"
+SUBCOMMAND=""
 
 NL='
 '
