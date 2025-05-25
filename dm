@@ -2,30 +2,13 @@
 set -eu
 
 
+#############
+# functions #
+#############
 NL='
 '
 ESC="$(printf "\033")"
 
-FILE_PATH="$(realpath "$0")"
-WORK_PATH="${FILE_PATH%"/"*}"
-[ "$WORK_PATH" = "" ] && WORK_PATH="/"
-KERNEL_NAME="$(uname -s)"
-
-SUBCOMMAND="unknown"
-
-
-case "$KERNEL_NAME" in
-  ( Linux ) : ;;
-  ( * )
-    echo "\"$KERNEL_NAME\" is not supported." >&2
-    exit 1
-    ;;
-esac
-
-
-#############
-# functions #
-#############
 dir_name() {
   RET="${1:-"."}"
   RET="${RET%"${RET##*[!"/"]}"}"
@@ -597,9 +580,23 @@ _dot_check() {
 #############
 
 
-main() {
-  [ $# -eq 0 ] && set -- help
+FILE_PATH="$(realpath "$0")"
+WORK_PATH="${FILE_PATH%"/"*}"
+[ "$WORK_PATH" = "" ] && WORK_PATH="/"
+KERNEL_NAME="$(uname -s)"
+SUBCOMMAND="unknown"
 
+
+main() {
+  case "$KERNEL_NAME" in
+    ( Linux ) : ;;
+    ( * )
+      msg_error "\"$KERNEL_NAME\" is not supported."
+      return 1
+      ;;
+  esac
+
+  [ $# -eq 0 ] && set -- help
   case "$1" in
     ( help | h | usage | '-?' | '-h' | '--help' ) SUBCOMMAND="help" ;;
     ( install | i ) SUBCOMMAND="install" ;;
@@ -610,9 +607,7 @@ main() {
     ( debug | d ) SUBCOMMAND="debug" ;;
     ( * ) msg_error "Invalid Sub Command: \"$1\"" ;;
   esac
-
   shift
-
   case "$SUBCOMMAND" in
     ( help ) usage ;;
     ( install | uninstall | check ) run_script "$@" ;;
