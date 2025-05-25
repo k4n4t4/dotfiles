@@ -322,7 +322,7 @@ msg_ask() {
 }
 
 
-commands_usage() {
+usage() {
   echo "Usage"
   echo "    $0 <SUB_COMMANDS> [options...]"
   echo
@@ -626,7 +626,7 @@ main() {
   esac
   shift
   case "$SUBCOMMAND" in
-    ( help ) commands_usage ;;
+    ( help ) usage ;;
     ( install | uninstall | check ) commands_run "$@" ;;
     ( git )
       cd -- "$WORK_PATH"
@@ -647,7 +647,7 @@ main() {
       msg_log "  SUBCOMMAND = \"$SUBCOMMAND\""
       ;;
     ( * )
-      commands_usage
+      usage
       return 1
       ;;
   esac
