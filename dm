@@ -2,9 +2,6 @@
 set -eu
 
 
-#############
-# functions #
-#############
 NL='
 '
 ESC="$(printf "\033")"
@@ -461,7 +458,7 @@ dot() {
                 _dot_rec_dir_stack="$_dot_rec_dir_stack $RET"
               else
                 _dot_rec_entry_target="$DOT_ARG_TARGET/${_dot_rec_entry_origin#"$DOT_ARG_ORIGIN/"}"
-                case "$SUBCOMMAND" in
+                case "$SCRIPT_MODE" in
                   ( 'install' ) _dot_link "$_dot_rec_entry_origin" "$_dot_rec_entry_target" ;;
                   ( 'uninstall' ) _dot_unlink "$_dot_rec_entry_origin" "$_dot_rec_entry_target" ;;
                   ( 'check' ) _dot_check "$_dot_rec_entry_origin" "$_dot_rec_entry_target" ;;
@@ -474,7 +471,7 @@ dot() {
         done
         IFS="$OLD_IFS"
       else
-        case "$SUBCOMMAND" in
+        case "$SCRIPT_MODE" in
           ( 'install' ) _dot_link "$DOT_ARG_ORIGIN" "$DOT_ARG_TARGET" ;;
           ( 'uninstall' ) _dot_unlink "$DOT_ARG_ORIGIN" "$DOT_ARG_TARGET" ;;
           ( 'check' ) _dot_check "$DOT_ARG_ORIGIN" "$DOT_ARG_TARGET" ;;
@@ -575,15 +572,13 @@ _dot_check() {
     _dot_msg warn "$1" "-?-" "$2"
   fi
 }
-#############
-# functions #
-#############
 
 
 FILE_PATH="$(realpath "$0")"
 WORK_PATH="${FILE_PATH%"/"*}"
 [ "$WORK_PATH" = "" ] && WORK_PATH="/"
 KERNEL_NAME="$(uname -s)"
+SCRIPT_MODE="unknown"
 SUBCOMMAND="unknown"
 
 
@@ -610,7 +605,10 @@ main() {
   shift
   case "$SUBCOMMAND" in
     ( help ) usage ;;
-    ( install | uninstall | check ) run_script "$@" ;;
+    ( install | uninstall | check )
+      SCRIPT_MODE="$SUBCOMMAND"
+      run_script "$@"
+      ;;
     ( git )
       cd -- "$WORK_PATH"
       git "$@"

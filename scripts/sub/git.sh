@@ -1,5 +1,5 @@
-case "$SUBCOMMAND" in
-  ( "install" )
+case "$SCRIPT_MODE" in
+  ( install )
     msg_info "git config"
     msg_ask "  Continue? [Y/n]: "
     case "$RET" in
