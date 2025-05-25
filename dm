@@ -642,7 +642,6 @@ main() {
       msg_log "         PWD = \"$PWD\""
       msg_log "   FILE_PATH = \"$FILE_PATH\""
       msg_log "   WORK_PATH = \"$WORK_PATH\""
-      msg_log "  SHELL_NAME = \"$SHELL_NAME\""
       msg_log " KERNEL_NAME = \"$KERNEL_NAME\""
       msg_log "  SUBCOMMAND = \"$SUBCOMMAND\""
       ;;
