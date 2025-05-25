@@ -1,6 +1,7 @@
 #!/bin/sh
 set -eu
 
+
 NL='
 '
 ESC="$(printf "\033")"
@@ -128,10 +129,6 @@ is_number() {
 
 is_int() {
   is_number "${1#"-"}"
-}
-
-path_without() {
-  RET="${1#"$2/"}"
 }
 
 qesc() {
@@ -480,8 +477,7 @@ dot() {
                 qesc "$_dot_rec_entry_origin"
                 _dot_rec_dir_stack="$_dot_rec_dir_stack $RET"
               else
-                path_without "$_dot_rec_entry_origin" "$DOT_ARG_ORIGIN"
-                _dot_rec_entry_target="$DOT_ARG_TARGET/$RET"
+                _dot_rec_entry_target="$DOT_ARG_TARGET/${_dot_rec_entry_origin#"$DOT_ARG_ORIGIN/"}"
                 case "$SUBCOMMAND" in
                   ( 'install' ) _dot_link "$_dot_rec_entry_origin" "$_dot_rec_entry_target" ;;
                   ( 'uninstall' ) _dot_unlink "$_dot_rec_entry_origin" "$_dot_rec_entry_target" ;;
@@ -614,7 +610,9 @@ main() {
     ( debug | d ) SUBCOMMAND="debug" ;;
     ( * ) msg_error "Invalid Sub Command: \"$1\"" ;;
   esac
+
   shift
+
   case "$SUBCOMMAND" in
     ( help ) usage ;;
     ( install | uninstall | check ) run_script "$@" ;;
