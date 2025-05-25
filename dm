@@ -13,12 +13,9 @@ ESC="$(printf "\033")"
 
 
 FILE_PATH="$(realpath "$0")"
+
 WORK_PATH="${FILE_PATH%"/"*}"
-case "$WORK_PATH" in
-  ( "" )
-    WORK_PATH="/"
-    ;;
-esac
+[ "$WORK_PATH" = "" ] && WORK_PATH="/"
 
 KERNEL_NAME="$(uname -s)"
 case "$KERNEL_NAME" in
