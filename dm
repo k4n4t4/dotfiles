@@ -311,11 +311,11 @@ source_script() {
 }
 
 run_script() {
-  DOT_TARGET_PATH="$HOME"
-
   [ $# -eq 0 ] && return 1
   DOT_SCRIPT_MODE="$1"
   shift
+
+  DOT_TARGET_PATH="$HOME"
 
   opt_parser p:1 path:1 -- "$@"
   eval "set -- $RET"
