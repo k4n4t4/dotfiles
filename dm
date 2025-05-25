@@ -256,6 +256,14 @@ alt_match() {
   return 1
 }
 
+true() {
+  return 0
+}
+
+false() {
+  return 1
+}
+
 
 msg_log() {
   printf "%s\n" " ${ESC}[32m[ LOG ]${ESC}[90m: ${ESC}[m$*"
@@ -315,6 +323,7 @@ run_script() {
   DOT_SCRIPT_MODE="$1"
   shift
 
+  DOT_IS_QUIET=false
   DOT_TARGET_PATH="$HOME"
 
   opt_parser p:1 path:1 -- "$@"
@@ -324,6 +333,10 @@ run_script() {
       ( -- )
         shift
         break
+        ;;
+      ( -q | --quiet )
+        shift
+        DOT_IS_QUIET=true
         ;;
       ( -p | --path )
         shift
@@ -501,6 +514,15 @@ _dot_ask_continue() {
 
 _dot_msg() {
   set -- "$1" "$2" "$3" "$4" "${5:-}"
+
+  if $DOT_IS_QUIET; then
+    case "$1" in
+      ( log | info )
+        return 0
+        ;;
+    esac
+  fi
+
   case "$2" in
     ( "$WORK_PATH/"* )
       set -- "$1" "\$WORK_PATH${2#"$WORK_PATH"}" "$3" "$4" "$5"
