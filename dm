@@ -1,11 +1,16 @@
 #!/bin/sh
 set -eu
 
+: "${FILE_PATH:=}"
+: "${WORK_PATH:=}"
+: "${KERNEL_NAME:=}"
 
-if ! command -v -- "realpath" > /dev/null 2>&1; then
-  echo '"realpath" is not exist.' >&2
-  exit 1
-fi
+: "${SUBCOMMAND:=}"
+
+NL='
+'
+ESC="$(printf "\033")"
+
 
 FILE_PATH="$(realpath "$0")"
 WORK_PATH="${FILE_PATH%"/"*}"
@@ -28,9 +33,6 @@ esac
 #############
 # functions #
 #############
-NL='
-'
-
 dir_name() {
   RET="${1:-"."}"
   RET="${RET%"${RET##*[!"/"]}"}"
@@ -285,8 +287,6 @@ alt_match() {
   return 1
 }
 
-
-ESC="$(printf "\033")"
 
 msg_log() {
   printf "%s\n" " ${ESC}[32m[ LOG ]${ESC}[90m: ${ESC}[m$*"
@@ -619,9 +619,9 @@ main() {
     ( install | i ) SUBCOMMAND="install" ;;
     ( uninstall | u ) SUBCOMMAND="uninstall" ;;
     ( check | c ) SUBCOMMAND="check" ;;
-    ( debug | d ) SUBCOMMAND="debug" ;;
     ( git | g ) SUBCOMMAND="git" ;;
     ( pull | p ) SUBCOMMAND="pull" ;;
+    ( debug | d ) SUBCOMMAND="debug" ;;
     ( * ) msg_error "Invalid Sub Command: \"$1\"" ;;
   esac
   shift
@@ -637,7 +637,7 @@ main() {
       git pull
       ;;
     ( debug )
-      msg_info "Information"
+      msg_info "Debug"
       msg_log "        HOME = \"$HOME\""
       msg_log "         PWD = \"$PWD\""
       msg_log "   FILE_PATH = \"$FILE_PATH\""
