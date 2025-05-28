@@ -612,7 +612,12 @@ EOL
     ( fish )
 cat << EOL
 function dm
-  
+  switch \$argv[1]
+    case "cd"
+      cd (command dm cd \$argv[2])
+    case "*"
+      command dm \$argv
+  end
 end
 EOL
       ;;
