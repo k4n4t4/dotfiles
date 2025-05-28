@@ -309,6 +309,7 @@ usage() {
   echo "    install          install dotfiles"
   echo "    uninstall        uninstall dotfiles"
   echo "    check            check dotfiles"
+  echo "    shellenv         print shellenv"
   echo "    git              run git"
   echo "    pull             run git pull"
 }
@@ -593,6 +594,35 @@ _dot_check() {
   fi
 }
 
+shell_cd() {
+  if [ "${1:-}" = "" ]; then
+    printf "%s\n" "$WORK_PATH"
+  else
+    printf "%s\n" "$WORK_PATH/$1"
+  fi
+}
+
+shellenv() {
+  PARENT_SHELL="$(ps -o ppid= -p $$ | xargs -I{} ps -o comm= -p {})"
+  case "$PARENT_SHELL" in
+    ( bash | zsh )
+cat << EOL
+EOL
+      ;;
+    ( fish )
+cat << EOL
+function dm
+  
+end
+EOL
+      ;;
+    ( * )
+      msg_error "Not supported shell: $PARENT_SHELL"
+      return 1
+      ;;
+  esac
+}
+
 
 FILE_PATH="$(realpath "$0")"
 WORK_PATH="${FILE_PATH%"/"*}"
@@ -616,6 +646,8 @@ main() {
     ( install | i ) SUBCOMMAND="install" ;;
     ( uninstall | u ) SUBCOMMAND="uninstall" ;;
     ( check | c ) SUBCOMMAND="check" ;;
+    ( cd ) SUBCOMMAND="cd" ;;
+    ( shellenv ) SUBCOMMAND="shellenv" ;;
     ( git | g ) SUBCOMMAND="git" ;;
     ( pull | p ) SUBCOMMAND="pull" ;;
     ( debug | d ) SUBCOMMAND="debug" ;;
@@ -626,6 +658,12 @@ main() {
     ( help ) usage ;;
     ( install | uninstall | check )
       run_script "$SUBCOMMAND" "$@"
+      ;;
+    ( cd )
+      shell_cd "$@"
+      ;;
+    ( shellenv )
+      shellenv "$@"
       ;;
     ( git )
       cd -- "$WORK_PATH"
