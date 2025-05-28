@@ -56,6 +56,10 @@ export EDITOR="nvim"
 export LANG=C.UTF-8
 
 
+if type -q dm
+  eval (dm shellenv)
+end
+
 if type -q tmux
   export TMUX_SHELL=$FISH_BIN
 end

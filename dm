@@ -309,6 +309,7 @@ usage() {
   echo "    install          install dotfiles"
   echo "    uninstall        uninstall dotfiles"
   echo "    check            check dotfiles"
+  echo "    cd               print dotfiles path"
   echo "    shellenv         print shellenv"
   echo "    git              run git"
   echo "    pull             run git pull"
@@ -607,18 +608,24 @@ shellenv() {
   case "$PARENT_SHELL" in
     ( bash | zsh )
 cat << EOL
+dm() {
+  case "\${1:-}" in
+    ( cd ) cd "\$(command dm "\$@")" ;;
+    ( * ) command dm "\$@" ;;
+  esac
+}
 EOL
       ;;
     ( fish )
 cat << EOL
-function dm
-  switch \$argv[1]
-    case "cd"
-      cd (command dm cd \$argv[2])
-    case "*"
-      command dm \$argv
-  end
-end
+function dm;
+  switch \$argv[1];
+    case "cd";
+      cd (command dm \$argv);
+    case "*";
+      command dm \$argv;
+  end;
+end;
 EOL
       ;;
     ( * )

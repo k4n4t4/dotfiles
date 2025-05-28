@@ -20,6 +20,10 @@ PATH="$HOME/go/bin:$PATH"
 
 # source
 
+if type dm > /dev/null 2>&1; then
+  eval "$(dm shellenv)"
+fi
+
 if [ -f /home/linuxbrew/.linuxbrew/bin/brew ]; then
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
