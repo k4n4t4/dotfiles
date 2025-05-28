@@ -1,28 +1,28 @@
 return {
   {
-    "williamboman/mason.nvim",
+    "williamboman/mason.nvim";
     opts = {
       ui = {
-        border = 'double',
-      },
-    },
+        border = 'double';
+      };
+    };
     cmd = {
-      "Mason",
-      "MasonUpdate",
-      "MasonInstall",
-      "MasonUninstall",
-      "MasonUninstallAll",
-      "MasonLog",
-    },
+      "Mason";
+      "MasonUpdate";
+      "MasonInstall";
+      "MasonUninstall";
+      "MasonUninstallAll";
+      "MasonLog";
+    };
   },
   {
-    "williamboman/mason-lspconfig.nvim",
+    "williamboman/mason-lspconfig.nvim";
     dependencies = {
-      "williamboman/nvim-lsp-installer",
-      "neovim/nvim-lspconfig",
-      "nvimtools/none-ls.nvim",
-      "jayp0521/mason-null-ls.nvim",
-    },
+      "williamboman/nvim-lsp-installer";
+      "neovim/nvim-lspconfig";
+      "nvimtools/none-ls.nvim";
+      "jayp0521/mason-null-ls.nvim";
+    };
     config = function()
       local lspconfig = require "lspconfig"
       local mason_lspconfig = require "mason-lspconfig"
@@ -33,21 +33,21 @@ return {
           "vimls",
           "pylsp",
           "bashls",
-        },
-        automatic_installation = false,
+        };
+        automatic_installation = false;
         handlers = {
           function(server_name)
             lspconfig[server_name].setup {}
-          end,
+          end;
           lua_ls = function()
             lspconfig.lua_ls.setup {
               settings = {
                 Lua = {
                   runtime = {
-                    version = "LuaJIT",
-                    pathStrict = true,
-                    path = { "?.lua", "?/init.lua" },
-                  },
+                    version = "LuaJIT";
+                    pathStrict = true;
+                    path = { "?.lua", "?/init.lua" };
+                  };
                   workspace = {
                     library = vim.list_extend(vim.api.nvim_get_runtime_file("lua", true), {
                       vim.fn.stdpath("config") .. "/lua",
@@ -55,83 +55,83 @@ return {
                       "${3rd}/luv/library",
                       "${3rd}/busted/library",
                       "${3rd}/luassert/library",
-                    }),
-                    checkThirdParty = "Disable",
-                  },
-                },
-              },
+                    });
+                    checkThirdParty = "Disable";
+                  };
+                };
+              };
             }
-          end,
+          end;
           rust_analyzer = function()
             lspconfig.rust_analyzer.setup = function()
               return true
             end
-          end,
-        },
+          end;
+        };
       }
 
       lspconfig.emmet_language_server.setup {
-        filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "pug", "typescriptreact" },
+        filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "pug", "typescriptreact" };
         init_options = {
-          includeLanguages = {},
-          excludeLanguages = {},
-          extensionsPath = {},
-          preferences = {},
-          showAbbreviationSuggestions = true,
-          showExpandedAbbreviation = "always",
-          showSuggestionsAsSnippets = false,
-          syntaxProfiles = {},
-          variables = {},
-        },
+          includeLanguages = {};
+          excludeLanguages = {};
+          extensionsPath = {};
+          preferences = {};
+          showAbbreviationSuggestions = true;
+          showExpandedAbbreviation = "always";
+          showSuggestionsAsSnippets = false;
+          syntaxProfiles = {};
+          variables = {};
+        };
       }
 
-    end,
-    event = { "BufReadPre", "BufNewFile" },
+    end;
+    event = { "BufReadPre", "BufNewFile" };
   },
 
   {
-    "mrcjkb/rustaceanvim",
-    ft = "rust",
-    event = 'VeryLazy',
-    version = '^5',
+    "mrcjkb/rustaceanvim";
+    ft = "rust";
+    event = 'VeryLazy';
+    version = '^5';
     config = function()
       vim.g.rustaceanvim = {
         tools = {
-          enable_clippy = true,
-        },
+          enable_clippy = true;
+        };
         server = {
           default_settings = {
             ['rust-analyzer'] = {
               assist = {
-                importGranularity = "module",
-                importEnforceGranularity = true,
-                importPrefix = 'crate',
-              },
-              useLibraryCodeForTypes = true,
-              autoSearchPaths = true,
-              autoImportCompletions = true,
-              reportMissingImports = true,
-              followImportForHints = true,
+                importGranularity = "module";
+                importEnforceGranularity = true;
+                importPrefix = 'crate';
+              };
+              useLibraryCodeForTypes = true;
+              autoSearchPaths = true;
+              autoImportCompletions = true;
+              reportMissingImports = true;
+              followImportForHints = true;
               cargo = {
-                allFeatures = true,
-              },
+                allFeatures = true;
+              };
               check = {
-                command = "clippy",
-              },
+                command = "clippy";
+              };
               checkOnSave = {
                 command = "clippy"
-              },
-              inlayHints = { locationLinks = false },
+              };
+              inlayHints = { locationLinks = false };
               diagnostics = {
-                enable = true,
+                enable = true;
                 experimental = {
-                  enable = true,
-                },
-              },
-            },
-          },
+                  enable = true;
+                };
+              };
+            };
+          };
         }
       }
-    end,
+    end;
   },
 }

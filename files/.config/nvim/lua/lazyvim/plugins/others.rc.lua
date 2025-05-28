@@ -2,103 +2,103 @@ return {
 
   -- colorschemes
   {
-    "navarasu/onedark.nvim",
-    lazy = true,
+    "navarasu/onedark.nvim";
+    lazy = true;
     opts = {
-      style = "darker",
-    },
+      style = "darker";
+    };
   },
   {
-    "catppuccin/nvim",
-    lazy = true,
-    name = "catppuccin",
+    "catppuccin/nvim";
+    lazy = true;
+    name = "catppuccin";
   },
   {
-    "folke/tokyonight.nvim",
-    lazy = true,
+    "folke/tokyonight.nvim";
+    lazy = true;
   },
   {
-    "sainnhe/everforest",
-    lazy = true,
+    "sainnhe/everforest";
+    lazy = true;
     config = function()
       vim.g.everforest_background = 'soft'
     end
   },
   {
-    "sainnhe/gruvbox-material",
-    lazy = true,
+    "sainnhe/gruvbox-material";
+    lazy = true;
     config = function()
       vim.g.gruvbox_material_background = 'medium'
     end
   },
   {
-    "EdenEast/nightfox.nvim",
-    lazy = true,
+    "EdenEast/nightfox.nvim";
+    lazy = true;
     opts = {
       options = {
         styles = {
-          comments = "italic",
-          keywords = "bold",
-          types = "italic,bold",
-        },
-      },
-    },
+          comments = "italic";
+          keywords = "bold";
+          types = "italic,bold";
+        };
+      };
+    };
   },
   {
-    "tomasiser/vim-code-dark",
-    lazy = true,
+    "tomasiser/vim-code-dark";
+    lazy = true;
   },
 
   -- highlights
   {
-    "fladson/vim-kitty",
-    ft = "kitty",
+    "fladson/vim-kitty";
+    ft = "kitty";
   },
   {
-    "MeanderingProgrammer/markdown.nvim",
-    ft = "markdown",
-    name = "render-markdown",
+    "MeanderingProgrammer/markdown.nvim";
+    ft = "markdown";
+    name = "render-markdown";
     dependencies = {
-      "nvim-treesitter/nvim-treesitter",
+      "nvim-treesitter/nvim-treesitter";
       "nvim-tree/nvim-web-devicons"
-    },
+    };
   },
   {
-    "leafgarland/typescript-vim",
-    ft = {"typescript", "typescriptreact", "*.tsx", "*.jsx"},
+    "leafgarland/typescript-vim";
+    ft = {"typescript", "typescriptreact", "*.tsx", "*.jsx"};
   },
   {
-    "peitalin/vim-jsx-typescript",
-    ft = {"typescript", "typescriptreact", "*.tsx", "*.jsx"},
+    "peitalin/vim-jsx-typescript";
+    ft = {"typescript", "typescriptreact", "*.tsx", "*.jsx"};
   },
   {
-    "folke/lsp-colors.nvim",
-    event = 'VeryLazy',
+    "folke/lsp-colors.nvim";
+    event = 'VeryLazy';
   },
   {
-    "nvim-treesitter/nvim-treesitter-context",
-    event = 'VeryLazy',
+    "nvim-treesitter/nvim-treesitter-context";
+    event = 'VeryLazy';
     dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-    },
+      "nvim-treesitter/nvim-treesitter";
+    };
   },
   {
-    "JoosepAlviste/nvim-ts-context-commentstring",
-    event = 'VeryLazy',
+    "JoosepAlviste/nvim-ts-context-commentstring";
+    event = 'VeryLazy';
   },
   {
-    "m-demare/hlargs.nvim",
-    event = 'VeryLazy',
+    "m-demare/hlargs.nvim";
+    event = 'VeryLazy';
   },
   {
-    "unblevable/quick-scope",
-    event = 'VeryLazy',
-    enabled = false,
+    "unblevable/quick-scope";
+    event = 'VeryLazy';
+    enabled = false;
   },
   {
-    "RRethy/vim-illuminate",
-    enabled = false,
-    event = 'VeryLazy',
+    "RRethy/vim-illuminate";
+    enabled = false;
+    event = 'VeryLazy';
     config = function()
       local illuminate = require("illuminate")
       illuminate.configure {
@@ -106,52 +106,52 @@ return {
           'lsp',
           'treesitter',
           'regex',
-        },
-        delay = 500,
-        filetype_overrides = {},
+        };
+        delay = 500;
+        filetype_overrides = {};
         filetypes_denylist = {
           'dirbuf',
           'dirvish',
           'fugitive',
-        },
-        filetypes_allowlist = {},
-        modes_denylist = {},
-        modes_allowlist = {},
-        providers_regex_syntax_denylist = {},
-        providers_regex_syntax_allowlist = {},
-        under_cursor = true,
-        large_file_cutoff = nil,
-        large_file_overrides = nil,
-        min_count_to_highlight = 1,
-        should_enable = function(bufnr) return true end,
-        case_insensitive_regex = false,
+        };
+        filetypes_allowlist = {};
+        modes_denylist = {};
+        modes_allowlist = {};
+        providers_regex_syntax_denylist = {};
+        providers_regex_syntax_allowlist = {};
+        under_cursor = true;
+        large_file_cutoff = nil;
+        large_file_overrides = nil;
+        min_count_to_highlight = 1;
+        should_enable = function(bufnr) return true end;
+        case_insensitive_regex = false;
       }
-    end,
+    end;
   },
   {
-    "andersevenrud/nvim_context_vt",
-    enabled = false,
-    event = 'VeryLazy',
+    "andersevenrud/nvim_context_vt";
+    enabled = false;
+    event = 'VeryLazy';
     opts = {
-      enabled = true,
-      prefix = '',
-      highlight = 'ContextVt',
-      disable_ft = { 'markdown' },
-      disable_virtual_lines = false,
-      disable_virtual_lines_ft = {},
-      min_rows = 1,
-      min_rows_ft = {},
-    },
+      enabled = true;
+      prefix = '';
+      highlight = 'ContextVt';
+      disable_ft = { 'markdown' };
+      disable_virtual_lines = false;
+      disable_virtual_lines_ft = {};
+      min_rows = 1;
+      min_rows_ft = {};
+    };
   },
   {
-    "folke/todo-comments.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    event = 'VeryLazy',
+    "folke/todo-comments.nvim";
+    dependencies = { "nvim-lua/plenary.nvim" };
+    event = 'VeryLazy';
     config = function()
       local todo_comments = require("todo-comments")
       todo_comments.setup {
-        signs = true,
-        sign_priority = 8,
+        signs = true;
+        sign_priority = 8;
         keywords = {
           -- FIXME:
           -- TODO:
@@ -161,53 +161,53 @@ return {
           -- NOTE:
           -- TEST:
           FIX = {
-            icon = " ",
-            color = "error",
-            alt = { "FIXME", "BUG", "FIXIT", "ISSUE" },
+            icon = " ";
+            color = "error";
+            alt = { "FIXME", "BUG", "FIXIT", "ISSUE" };
           },
-          TODO = { icon = " ", color = "info" },
-          HACK = { icon = " ", color = "warning", alt = { "REVIEW" } },
-          WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
-          PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-          NOTE = { icon = " ", color = "hint", alt = { "INFO", "IDEA" } },
-          TEST = { icon = "⏲ ", color = "test", alt = { "DEBUG", "TEMP", "TESTING", "PASSED", "FAILED" } },
-        },
+          TODO = { icon = " ", color = "info" };
+          HACK = { icon = " ", color = "warning", alt = { "REVIEW" } };
+          WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } };
+          PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } };
+          NOTE = { icon = " ", color = "hint", alt = { "INFO", "IDEA" } };
+          TEST = { icon = "⏲ ", color = "test", alt = { "DEBUG", "TEMP", "TESTING", "PASSED", "FAILED" } };
+        };
         gui_style = {
-          fg = "NONE",
-          bg = "BOLD",
-        },
-        merge_keywords = true,
+          fg = "NONE";
+          bg = "BOLD";
+        };
+        merge_keywords = true;
         highlight = {
-          multiline = true,
-          multiline_pattern = "^.",
-          multiline_context = 10,
-          before = "",
-          keyword = "wide",
-          after = "fg",
-          pattern = [[.*<(KEYWORDS)\s*:]],
-          comments_only = true,
-          max_line_len = 400,
-          exclude = {},
-        },
+          multiline = true;
+          multiline_pattern = "^.";
+          multiline_context = 10;
+          before = "";
+          keyword = "wide";
+          after = "fg";
+          pattern = [[.*<(KEYWORDS)\s*:]];
+          comments_only = true;
+          max_line_len = 400;
+          exclude = {};
+        };
         colors = {
-          error = { "DiagnosticError", "ErrorMsg", "#DC2626" },
-          warning = { "DiagnosticWarn", "WarningMsg", "#FBBF24" },
-          info = { "DiagnosticInfo", "#2563EB" },
-          hint = { "DiagnosticHint", "#10B981" },
-          default = { "Identifier", "#7C3AED" },
+          error = { "DiagnosticError", "ErrorMsg", "#DC2626" };
+          warning = { "DiagnosticWarn", "WarningMsg", "#FBBF24" };
+          info = { "DiagnosticInfo", "#2563EB" };
+          hint = { "DiagnosticHint", "#10B981" };
+          default = { "Identifier", "#7C3AED" };
           test = { "Identifier", "#FF00FF" }
-        },
+        };
         search = {
-          command = "rg",
+          command = "rg";
           args = {
-            "--color=never",
-            "--no-heading",
-            "--with-filename",
-            "--line-number",
-            "--column",
-          },
-          pattern = [[\b(KEYWORDS):]],
-        },
+            "--color=never";
+            "--no-heading";
+            "--with-filename";
+            "--line-number";
+            "--column";
+          };
+          pattern = [[\b(KEYWORDS):]];
+        };
       }
 
       vim.keymap.set("n", "]t", function()
@@ -223,71 +223,71 @@ return {
   },
 
   {
-    "windwp/nvim-autopairs",
+    "windwp/nvim-autopairs";
     opts = {
-      disable_filetype = { "TelescopePrompt", "spectre_panel" },
-      disable_in_macro = true,
-      disable_in_visualblock = false,
-      disable_in_replace_mode = true,
-      ignored_next_char = [=[[%w%%%'%[%"%.%`%$]]=],
-      enable_moveright = true,
-      enable_afterquote = true,
-      enable_check_bracket_line = true,
-      enable_bracket_in_quote = true,
-      enable_abbr = false,
-      break_undo = true,
-      check_ts = false,
-    },
-    event = "InsertEnter",
+      disable_filetype = { "TelescopePrompt", "spectre_panel" };
+      disable_in_macro = true;
+      disable_in_visualblock = false;
+      disable_in_replace_mode = true;
+      ignored_next_char = [=[[%w%%%'%[%"%.%`%$]]=];
+      enable_moveright = true;
+      enable_afterquote = true;
+      enable_check_bracket_line = true;
+      enable_bracket_in_quote = true;
+      enable_abbr = false;
+      break_undo = true;
+      check_ts = false;
+    };
+    event = "InsertEnter";
   },
 
   {
-    "norcalli/nvim-colorizer.lua",
-    event = 'VeryLazy',
+    "norcalli/nvim-colorizer.lua";
+    event = 'VeryLazy';
   },
 
   {
-    "monaqa/dial.nvim",
+    "monaqa/dial.nvim";
     dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
+      "nvim-lua/plenary.nvim";
+    };
     config = function()
       local dial = require "dial.config"
       local augend = require "dial.augend"
 
       dial.augends:register_group {
         default = {
-          augend.integer.alias.decimal,
-          augend.integer.alias.decimal_int,
-          augend.integer.alias.hex,
-          augend.integer.alias.octal,
-          augend.integer.alias.binary,
-          augend.date.alias["%Y/%m/%d"],
-          augend.date.alias["%m/%d/%Y"],
-          augend.date.alias["%d/%m/%Y"],
-          augend.date.alias["%m/%d/%y"],
-          augend.date.alias["%d/%m/%y"],
-          augend.date.alias["%m/%d"],
-          augend.date.alias["%-m/%-d"],
-          augend.date.alias["%Y-%m-%d"],
-          augend.date.alias["%Y年%-m月%-d日"],
-          augend.date.alias["%Y年%-m月%-d日(%ja)"],
-          augend.date.alias["%H:%M:%S"],
-          augend.date.alias["%H:%M"],
-          augend.constant.alias.ja_weekday,
-          augend.constant.alias.ja_weekday_full,
-          augend.constant.alias.bool,
-          augend.constant.alias.alpha,
-          augend.constant.alias.Alpha,
-          augend.semver.alias.semver,
-          -- augend.paren.alias.quote,
-          -- augend.paren.alias.brackets,
-          augend.paren.alias.lua_str_literal,
-          augend.paren.alias.rust_str_literal,
-          augend.misc.alias.markdown_header,
-        },
+          augend.integer.alias.decimal;
+          augend.integer.alias.decimal_int;
+          augend.integer.alias.hex;
+          augend.integer.alias.octal;
+          augend.integer.alias.binary;
+          augend.date.alias["%Y/%m/%d"];
+          augend.date.alias["%m/%d/%Y"];
+          augend.date.alias["%d/%m/%Y"];
+          augend.date.alias["%m/%d/%y"];
+          augend.date.alias["%d/%m/%y"];
+          augend.date.alias["%m/%d"];
+          augend.date.alias["%-m/%-d"];
+          augend.date.alias["%Y-%m-%d"];
+          augend.date.alias["%Y年%-m月%-d日"];
+          augend.date.alias["%Y年%-m月%-d日(%ja)"];
+          augend.date.alias["%H:%M:%S"];
+          augend.date.alias["%H:%M"];
+          augend.constant.alias.ja_weekday;
+          augend.constant.alias.ja_weekday_full;
+          augend.constant.alias.bool;
+          augend.constant.alias.alpha;
+          augend.constant.alias.Alpha;
+          augend.semver.alias.semver;
+          -- augend.paren.alias.quote;
+          -- augend.paren.alias.brackets;
+          augend.paren.alias.lua_str_literal;
+          augend.paren.alias.rust_str_literal;
+          augend.misc.alias.markdown_header;
+        };
       }
-    end,
+    end;
     keys = {
       { mode = 'n', "<C-a>",  function() require("dial.map").manipulate("increment", "normal") end,  desc = "Increment" },
       { mode = 'n', "<C-x>",  function() require("dial.map").manipulate("decrement", "normal") end,  desc = "Decrement" },
@@ -297,52 +297,52 @@ return {
       { mode = 'v', "<C-x>",  function() require("dial.map").manipulate("decrement", "visual") end,  desc = "vDecrement" },
       { mode = 'v', "g<C-a>", function() require("dial.map").manipulate("increment", "gvisual") end, desc = "gvIncrement" },
       { mode = 'v', "g<C-x>", function() require("dial.map").manipulate("decrement", "gvisual") end, desc = "gvDecrement" },
-    },
+    };
   },
 
   {
-    "shellRaining/hlchunk.nvim",
+    "shellRaining/hlchunk.nvim";
     config = function()
       require("hlchunk").setup {
         chunk = {
-          enable = true,
+          enable = true;
           style = {
-            { fg = "#22A0A0" },
-            { fg = "#CC2233" },
-          },
-          use_treesitter = true,
+            { fg = "#22A0A0" };
+            { fg = "#CC2233" };
+          };
+          use_treesitter = true;
           chars = {
-            horizontal_line = "─",
-            vertical_line = "│",
-            left_top = "┌",
-            left_bottom = "└",
-            right_arrow = ">",
-          },
-          textobject = "",
-          max_file_size = 1024 * 1024,
-          error_sign = true,
-          delay = 0,
-        },
+            horizontal_line = "─";
+            vertical_line = "│";
+            left_top = "┌";
+            left_bottom = "└";
+            right_arrow = ">";
+          };
+          textobject = "";
+          max_file_size = 1024 * 1024;
+          error_sign = true;
+          delay = 0;
+        };
         indent = {
-          enable = false,
-        },
+          enable = false;
+        };
       }
-    end,
-    event = 'VeryLazy',
+    end;
+    event = 'VeryLazy';
   },
 
   {
-    "folke/which-key.nvim",
+    "folke/which-key.nvim";
     opts = {
-      preset = 'modern',
+      preset = 'modern';
       delay = function(ctx)
         return ctx.plugin and 0 or 500
-      end,
+      end;
       win = {
-        border = 'single',
-      },
-    },
-    event = 'VeryLazy',
+        border = 'single';
+      };
+    };
+    event = 'VeryLazy';
     keys = {
       {
         mode = 'n',
@@ -352,15 +352,15 @@ return {
         end,
         desc = "Which Key"
       },
-    }
+    };
   },
 
   {
-    "phaazon/hop.nvim",
-    branch = "v2",
+    "phaazon/hop.nvim";
+    branch = "v2";
     opts = {
-      multi_windows = true,
-    },
+      multi_windows = true;
+    };
     keys = {
       { mode = 'n', '<LEADER>jj', "<CMD>HopWord<CR>",     desc = "Hop Word" },
       { mode = 'n', '<LEADER>ja', "<CMD>HopAnywhere<CR>", desc = "Hop Anywhere" },
@@ -369,26 +369,26 @@ return {
       { mode = 'n', '<LEADER>jc', "<CMD>HopChar1<CR>",    desc = "Hop Char1" },
       { mode = 'n', '<LEADER>j2', "<CMD>HopChar2<CR>",    desc = "Hop Char2" },
       { mode = 'n', '<LEADER>jp', "<CMD>HopPattern<CR>",  desc = "Hop Pattern" },
-    }
+    };
   },
 
   {
-    "kylechui/nvim-surround",
-    event = 'VeryLazy',
+    "kylechui/nvim-surround";
+    event = 'VeryLazy';
     config = function()
       require("nvim-surround").setup {}
     end
   },
 
   {
-    "mattn/emmet-vim",
-    event = 'VeryLazy',
+    "mattn/emmet-vim";
+    event = 'VeryLazy';
   },
 
   {
-    "folke/trouble.nvim",
-    opts = {},
-    cmd = "Trouble",
+    "folke/trouble.nvim";
+    opts = {};
+    cmd = "Trouble";
     keys = {
       {
         "<LEADER>xx",
@@ -420,15 +420,15 @@ return {
         "<CMD>Trouble qflist toggle<cr>",
         desc = "Quickfix List (Trouble)",
       },
-    },
+    };
   },
 
   {
-    "mfussenegger/nvim-dap",
+    "mfussenegger/nvim-dap";
     dependencies = {
-      "rcarriga/nvim-dap-ui",
-      "nvim-neotest/nvim-nio",
-    },
+      "rcarriga/nvim-dap-ui";
+      "nvim-neotest/nvim-nio";
+    };
     config = function()
       local dap, dapui = require("dap"), require("dapui")
       dap.listeners.before.attach.dapui_config = function()
@@ -443,8 +443,8 @@ return {
       dap.listeners.before.event_exited.dapui_config = function()
         dapui.close()
       end
-    end,
-    event = 'VeryLazy',
+    end;
+    event = 'VeryLazy';
   },
 
 }

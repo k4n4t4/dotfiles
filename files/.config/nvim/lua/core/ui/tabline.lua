@@ -8,34 +8,34 @@ local tabline_group = vim.api.nvim_create_augroup("TabLine", { clear = true })
 local function tabline_highlights()
   local hls = {
     {"TabLine", {
-      fg = "none",
-      bg = "#202020",
+      fg = "none";
+      bg = "#202020";
     }},
     {"TabLineFill", {
-      fg = "none",
-      bg = "#111111",
+      fg = "none";
+      bg = "#111111";
     }},
     {"TabLineFileName", {
-      fg = "#A0A0A0",
-      bg = "#202020",
+      fg = "#A0A0A0";
+      bg = "#202020";
     }},
     {"TabLineUntitled", {
-      fg = "#707070",
-      bg = "#202020",
-      italic = true,
+      fg = "#707070";
+      bg = "#202020";
+      italic = true;
     }},
     {"CurrentTabLine", {
-      fg = "none",
-      bg = "#404040",
+      fg = "none";
+      bg = "#404040";
     }},
     {"CurrentTabLineFileName", {
-      fg = "#E0E0E0",
-      bg = "#404040",
+      fg = "#E0E0E0";
+      bg = "#404040";
     }},
     {"CurrentTabLineUntitled", {
-      fg = "#909090",
-      bg = "#404040",
-      italic = true,
+      fg = "#909090";
+      bg = "#404040";
+      italic = true;
     }},
   }
   for _, v in pairs(hls) do
@@ -48,8 +48,8 @@ vim.api.nvim_create_autocmd({
   "VimEnter",
   "ColorScheme",
 }, {
-  group = tabline_group,
-  callback = tabline_highlights
+  group = tabline_group;
+  callback = tabline_highlights;
 })
 
 
@@ -60,7 +60,7 @@ vim.api.nvim_create_autocmd("VimEnter", {
     if result then
       devicons = ret
     end
-  end,
+  end;
 })
 
 
@@ -97,8 +97,8 @@ function TabLine()
         icon_hl = (is_current_tab and "Current" or "") .. "TabLineIcon@" .. filetype
 
         vim.api.nvim_set_hl(0, icon_hl, {
-          fg = color,
-          bg = is_current_tab and "#404040" or "#202020",
+          fg = color;
+          bg = is_current_tab and "#404040" or "#202020";
         })
 
         icon_hl = "%#" .. icon_hl .. "#"

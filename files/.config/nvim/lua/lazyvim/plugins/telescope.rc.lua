@@ -1,71 +1,71 @@
 return {
-  "nvim-telescope/telescope.nvim",
+  "nvim-telescope/telescope.nvim";
   dependencies = {
-    "nvim-lua/plenary.nvim",
-    "nvim-telescope/telescope-project.nvim",
+    "nvim-lua/plenary.nvim";
+    "nvim-telescope/telescope-project.nvim";
     {
-      "nvim-telescope/telescope-fzf-native.nvim",
-      build = "make",
-    },
-    "stevearc/aerial.nvim",
-  },
+      "nvim-telescope/telescope-fzf-native.nvim";
+      build = "make";
+    };
+    "stevearc/aerial.nvim";
+  };
   config = function()
     local telescope = require "telescope"
     local actions = require "telescope.actions"
     local project_actions = require "telescope._extensions.project.actions"
     telescope.setup {
       defaults = {
-        borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+        borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' };
         mappings = {
           n = {
-            ['<ESC>'] = actions.close,
-          },
-        },
-      },
+            ['<ESC>'] = actions.close;
+          };
+        };
+      };
       extensions = {
         fzf = {
-          fuzzy = true,
-          override_generic_sorter = true,
-          override_file_sorter = true,
-          case_mode = 'smart_case',
-        },
+          fuzzy = true;
+          override_generic_sorter = true;
+          override_file_sorter = true;
+          case_mode = 'smart_case';
+        };
         project = {
           base_dirs = {
-            '~/dotfiles',
-          },
-          hidden_files = true,
-          theme = "dropdown",
-          order_by = "asc",
-          search_by = "title",
-          sync_with_nvim_tree = true,
+            '~/dotfiles';
+          };
+          hidden_files = true;
+          theme = "dropdown";
+          order_by = "asc";
+          search_by = "title";
+          sync_with_nvim_tree = true;
           on_project_selected = function(prompt_bufnr)
             project_actions.change_working_directory(prompt_bufnr, false)
             require('neo-tree.command').execute {
-              action = "focus",
+              action = "focus";
             }
-          end,
+          end;
           mappings = {
             n = {
-              ['d'] = project_actions.delete_project,
-              ['r'] = project_actions.rename_project,
-              ['c'] = project_actions.add_project,
-              ['C'] = project_actions.add_project_cwd,
-              ['f'] = project_actions.find_project_files,
-              ['b'] = project_actions.browse_project_files,
-              ['s'] = project_actions.search_in_project_files,
-              ['R'] = project_actions.recent_project_files,
-              ['o'] = project_actions.next_cd_scope,
-              ['w'] = project_actions.change_working_directory,
-              ['W'] = project_actions.change_workspace,
-            },
+              ['d'] = project_actions.delete_project;
+              ['r'] = project_actions.rename_project;
+              ['c'] = project_actions.add_project;
+              ['C'] = project_actions.add_project_cwd;
+              ['f'] = project_actions.find_project_files;
+              ['b'] = project_actions.browse_project_files;
+              ['s'] = project_actions.search_in_project_files;
+              ['R'] = project_actions.recent_project_files;
+              ['o'] = project_actions.next_cd_scope;
+              ['w'] = project_actions.change_working_directory;
+              ['W'] = project_actions.change_workspace;
+            };
           }
-        },
-      },
+        };
+      };
     }
     telescope.load_extension "fzf"
     telescope.load_extension "project"
-  end,
-  cmd = "Telescope",
+  end;
+  cmd = "Telescope";
   keys = {
     { mode = 'n', "<LEADER>tt", "<CMD>Telescope<CR>",                           desc = "Telescope" },
     { mode = 'n', "<LEADER>tk", "<CMD>Telescope keymaps<CR>",                   desc = "Telescope Keymaps" },
@@ -77,5 +77,5 @@ return {
     { mode = 'n', "<LEADER>t/", "<CMD>Telescope current_buffer_fuzzy_find<CR>", desc = "Telescope Current Buffer Fuzzy Finder" },
     { mode = 'n', "<LEADER>tz", "<CMD>Telescope fzf<CR>",                       desc = "Telescope fzf" },
     { mode = 'n', "<LEADER>tp", "<CMD>Telescope project<CR>",                   desc = "Telescope Project" },
-  },
+  };
 }

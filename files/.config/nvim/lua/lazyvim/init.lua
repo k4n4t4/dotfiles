@@ -17,12 +17,12 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup {
   spec = {
     { import = "lazyvim.plugins" },
-  },
+  };
   default = {
-    lazy = true,
-    version = false,
-  },
+    lazy = true;
+    version = false;
+  };
   checker = {
-    enabled = false,
-  },
+    enabled = false;
+  };
 }

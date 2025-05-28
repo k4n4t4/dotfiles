@@ -9,95 +9,95 @@ local statusline_group = vim.api.nvim_create_augroup("StatusLine", { clear = tru
 
 -- Redraw statusline when mode changed. (e.g. 'ix' mode)
 vim.api.nvim_create_autocmd("ModeChanged", {
-  group = statusline_group,
+  group = statusline_group;
   callback = function()
     vim.cmd.redrawstatus()
-  end
+  end;
 })
 
 -- Override highlights
 local function status_line_highlights()
   local hls = {
     {"StatusLine", {
-      fg = "#EEEEEE",
-      bg = "none",
+      fg = "#EEEEEE";
+      bg = "none";
     }},
     {"StatusLineNC", {
-      fg = "#AAAAAA",
-      bg = "none",
+      fg = "#AAAAAA";
+      bg = "none";
     }},
 
     {"StatusLineModeNormal", {
-      fg = "#99EE99",
-      bg = "none",
+      fg = "#99EE99";
+      bg = "none";
     }},
     {"StatusLineModeInsert", {
-      fg = "#EE9999",
-      bg = "none",
+      fg = "#EE9999";
+      bg = "none";
     }},
     {"StatusLineModeReplace", {
-      fg = "#EEEE99",
-      bg = "none",
+      fg = "#EEEE99";
+      bg = "none";
     }},
     {"StatusLineModeVisual", {
-      fg = "#9999EE",
-      bg = "none",
+      fg = "#9999EE";
+      bg = "none";
     }},
     {"StatusLineModeConfirm", {
-      fg = "#999999",
-      bg = "none",
+      fg = "#999999";
+      bg = "none";
     }},
     {"StatusLineModeTerminal", {
-      fg = "#999999",
-      bg = "none",
+      fg = "#999999";
+      bg = "none";
     }},
     {"StatusLineModeOther", {
-      fg = "#EE99EE",
-      bg = "none",
+      fg = "#EE99EE";
+      bg = "none";
     }},
 
     {"StatusLineMacro", {
-      fg = "#BB77EE",
-      bg = "none",
+      fg = "#BB77EE";
+      bg = "none";
     }},
 
     {"StatusLineFileFlag", {
-      fg = "#DDEE99",
-      bg = "none",
+      fg = "#DDEE99";
+      bg = "none";
     }},
 
     {"StatusLineDiagnosticERROR", {
-      fg = "#EE9999",
-      bg = "none",
+      fg = "#EE9999";
+      bg = "none";
     }},
     {"StatusLineDiagnosticWARN", {
-      fg = "#EEEE99",
-      bg = "none",
+      fg = "#EEEE99";
+      bg = "none";
     }},
     {"StatusLineDiagnosticINFO", {
-      fg = "#99EEEE",
-      bg = "none",
+      fg = "#99EEEE";
+      bg = "none";
     }},
     {"StatusLineDiagnosticHINT", {
-      fg = "#99EE99",
-      bg = "none",
+      fg = "#99EE99";
+      bg = "none";
     }},
 
     {"StatusLineGitAdd", {
-      fg = "#55CC55",
-      bg = "none",
+      fg = "#55CC55";
+      bg = "none";
     }},
     {"StatusLineGitRemove", {
-      fg = "#CC5555",
-      bg = "none",
+      fg = "#CC5555";
+      bg = "none";
     }},
     {"StatusLineGitChange", {
-      fg = "#5555CC",
-      bg = "none",
+      fg = "#5555CC";
+      bg = "none";
     }},
     {"StatusLineGitBranch", {
-      fg = "#CC9955",
-      bg = "none",
+      fg = "#CC9955";
+      bg = "none";
     }},
   }
   for _, v in pairs(hls) do
@@ -110,164 +110,164 @@ vim.api.nvim_create_autocmd({
   "VimEnter",
   "ColorScheme",
 }, {
-  group = statusline_group,
-  callback = status_line_highlights
+  group = statusline_group;
+  callback = status_line_highlights;
 })
 
 
 local mode_props = {
   ["n"] = {
-    name = "N",
-    hi = "StatusLineModeNormal",
-  },
+    name = "N";
+    hi = "StatusLineModeNormal";
+  };
   ["no"] = {
-    name = "NO",
-    hi = "StatusLineModeNormal",
-  },
+    name = "NO";
+    hi = "StatusLineModeNormal";
+  };
   ["nov"] = {
-    name = "NOC",
-    hi = "StatusLineModeNormal",
-  },
+    name = "NOC";
+    hi = "StatusLineModeNormal";
+  };
   ["noV"] = {
-    name = "NOL",
-    hi = "StatusLineModeNormal",
-  },
+    name = "NOL";
+    hi = "StatusLineModeNormal";
+  };
   ["no"] = {
-    name = "NOB",
-    hi = "StatusLineModeNormal",
-  },
+    name = "NOB";
+    hi = "StatusLineModeNormal";
+  };
 
   ["niI"] = {
-    name = "NI",
-  },
+    name = "NI";
+  };
   ["niR"] = {
-    name = "NR",
-  },
+    name = "NR";
+  };
   ["niV"] = {
-    name = "NV",
-  },
+    name = "NV";
+  };
   ["nt"] = {
-    name = "NT",
-    hi = "StatusLineModeTerminal",
-  },
+    name = "NT";
+    hi = "StatusLineModeTerminal";
+  };
   ["ntT"] = {
-    name = "NTT",
-    hi = "StatusLineModeTerminal",
-  },
+    name = "NTT";
+    hi = "StatusLineModeTerminal";
+  };
 
   ["v"] = {
-    name = "V",
-    hi = "StatusLineModeVisual",
-  },
+    name = "V";
+    hi = "StatusLineModeVisual";
+  };
   ["vs"] = {
-    name = "VS",
-    hi = "StatusLineModeVisual",
-  },
+    name = "VS";
+    hi = "StatusLineModeVisual";
+  };
   ["V"] = {
-    name = "VL",
-    hi = "StatusLineModeVisual",
-  },
+    name = "VL";
+    hi = "StatusLineModeVisual";
+  };
   ["Vs"] = {
-    name = "VLS",
-    hi = "StatusLineModeVisual",
-  },
+    name = "VLS";
+    hi = "StatusLineModeVisual";
+  };
   [""] = {
-    name = "VB",
-    hi = "StatusLineModeVisual",
-  },
+    name = "VB";
+    hi = "StatusLineModeVisual";
+  };
   ["s"] = {
-    name = "VBS",
-    hi = "StatusLineModeVisual",
-  },
+    name = "VBS";
+    hi = "StatusLineModeVisual";
+  };
 
   ["s"] = {
-    name = "S",
-  },
+    name = "S";
+  };
   ["S"] = {
-    name = "SL",
-  },
+    name = "SL";
+  };
   [""] = {
-    name = "SB",
-  },
+    name = "SB";
+  };
 
   ["i"] = {
-    name = "I",
-    hi = "StatusLineModeInsert",
-  },
+    name = "I";
+    hi = "StatusLineModeInsert";
+  };
   ["ic"] = {
-    name = "IC",
-    hi = "StatusLineModeInsert",
-  },
+    name = "IC";
+    hi = "StatusLineModeInsert";
+  };
   ["ix"] = {
-    name = "IX",
-    hi = "StatusLineModeInsert",
-  },
+    name = "IX";
+    hi = "StatusLineModeInsert";
+  };
 
   ["R"] = {
-    name = "R",
+    name = "R";
     hi = "StatusLineModeReplace"
-  },
+  };
   ["Rc"] = {
-    name = "RC",
+    name = "RC";
     hi = "StatusLineModeReplace"
-  },
+  };
   ["Rx"] = {
-    name = "RX",
+    name = "RX";
     hi = "StatusLineModeReplace"
-  },
+  };
   ["Rv"] = {
-    name = "RV",
+    name = "RV";
     hi = "StatusLineModeReplace"
-  },
+  };
   ["Rvc"] = {
-    name = "RVC",
+    name = "RVC";
     hi = "StatusLineModeReplace"
-  },
+  };
   ["Rvx"] = {
-    name = "RVX",
+    name = "RVX";
     hi = "StatusLineModeReplace"
-  },
+  };
 
   ["c"] = {
-    name = "C",
-  },
+    name = "C";
+  };
   ["cr"] = {
-    name = "CR",
-  },
+    name = "CR";
+  };
 
   ["cv"] = {
-    name = "EX",
-  },
+    name = "EX";
+  };
   ["cvr"] = {
-    name = "EXR",
-  },
+    name = "EXR";
+  };
 
   ["r"] = {
-    name = "P",
-  },
+    name = "P";
+  };
   ["rm"] = {
-    name = "M",
-  },
+    name = "M";
+  };
   ["r?"] = {
-    name = "CF",
-    hi = "StatusLineModeConfirm",
-  },
+    name = "CF";
+    hi = "StatusLineModeConfirm";
+  };
   ["!"] = {
-    name = "SH",
-    hi = "StatusLineModeTerminal",
-  },
+    name = "SH";
+    hi = "StatusLineModeTerminal";
+  };
   ["t"] = {
-    name = "T",
-    hi = "StatusLineModeTerminal",
-  },
+    name = "T";
+    hi = "StatusLineModeTerminal";
+  };
 }
 local function status_mode()
   local mode = vim.api.nvim_get_mode()
   local blocking = mode.blocking
 
   local prop = mode_props[mode.mode] or {
-    name = nil,
-    hi = nil,
+    name = nil;
+    hi = nil;
   }
 
   local name = prop.name or "?"
@@ -292,9 +292,9 @@ local function status_fileformat()
 end
 
 local filetype_aliases = {
-  ["javascript"] = "js",
-  ["typescript"] = "ts",
-  ["python"]     = "py",
+  ["javascript"] = "js";
+  ["typescript"] = "ts";
+  ["python"]     = "py";
 }
 local function status_filetype(devicons)
   local ft = vim.bo.ft
@@ -308,8 +308,8 @@ local function status_filetype(devicons)
         icon_hl = "StatusLineIcon@" .. ft
 
         vim.api.nvim_set_hl(0,icon_hl, {
-          fg = color,
-          bg = "none",
+          fg = color;
+          bg = "none";
         })
 
         icon_hl = "%#" .. icon_hl .. "#"
@@ -330,20 +330,20 @@ end
 
 local git_props = {
   add = {
-    icon = "+",
-    hi = "StatusLineGitAdd",
-  },
+    icon = "+";
+    hi = "StatusLineGitAdd";
+  };
   remove = {
-    icon = "-",
-    hi = "StatusLineGitRemove",
-  },
+    icon = "-";
+    hi = "StatusLineGitRemove";
+  };
   change = {
-    icon = "~",
-    hi = "StatusLineGitChange",
-  },
+    icon = "~";
+    hi = "StatusLineGitChange";
+  };
   branch = {
-    hi = "StatusLineGitBranch",
-  },
+    hi = "StatusLineGitBranch";
+  };
 }
 local function status_git()
   local format = {}
@@ -374,21 +374,21 @@ end
 
 local diagnostic_props = {
   ERROR = {
-    icon = "!",
-    hi = "StatusLineDiagnosticERROR",
-  },
+    icon = "!";
+    hi = "StatusLineDiagnosticERROR";
+  };
   WARN = {
-    icon = "*",
-    hi = "StatusLineDiagnosticWARN",
-  },
+    icon = "*";
+    hi = "StatusLineDiagnosticWARN";
+  };
   INFO = {
-    icon = "i",
-    hi = "StatusLineDiagnosticINFO",
-  },
+    icon = "i";
+    hi = "StatusLineDiagnosticINFO";
+  };
   HINT = {
-    icon = "?",
-    hi = "StatusLineDiagnosticHINT",
-  },
+    icon = "?";
+    hi = "StatusLineDiagnosticHINT";
+  };
 }
 local utils_diagnostic = require "utils.diagnostic"
 local function status_diagnostic()
@@ -467,7 +467,7 @@ vim.api.nvim_create_autocmd("VimEnter", {
     if result then
       devicons = ret
     end
-  end,
+  end
 })
 
 function StatusLineActive()

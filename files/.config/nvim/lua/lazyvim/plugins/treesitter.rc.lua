@@ -1,10 +1,10 @@
 return {
   {
-    "nvim-treesitter/nvim-treesitter",
+    "nvim-treesitter/nvim-treesitter";
     dependencies = {
-      "nvim-treesitter/nvim-treesitter-textobjects",
-    },
-    build = ":TSUpdate",
+      "nvim-treesitter/nvim-treesitter-textobjects";
+    };
+    build = ":TSUpdate";
     config = function()
       require("nvim-treesitter.configs").setup {
         ensure_installed = {
@@ -12,17 +12,17 @@ return {
           "vim",
           "vimdoc",
           "query",
-        },
+        };
         highlight = {
-          enable = true,
-          disable = {},
-        },
+          enable = true;
+          disable = {};
+        };
         indent = {
-          enable = true,
-        },
+          enable = true;
+        };
       }
-    end,
-    event = 'VeryLazy',
+    end;
+    event = 'VeryLazy';
     cmd = {
       "TSUpdate",
       "TSInstall",
@@ -33,6 +33,6 @@ return {
       "TSBufToggle",
       "TSBufEnable",
       "TSBufDisable",
-    },
-  },
+    };
+  }
 }

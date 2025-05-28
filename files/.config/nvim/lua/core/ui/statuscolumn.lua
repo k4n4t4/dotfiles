@@ -8,20 +8,20 @@ local statuscolumn_group = vim.api.nvim_create_augroup("StatusColumn", { clear =
 local function status_column_highlights()
   local hls = {
     {"StatusColumn", {
-      fg = "#EEEEEE",
-      bg = "none",
+      fg = "#EEEEEE";
+      bg = "none";
     }},
     {"StatusColumnNC", {
-      fg = "#AAAAAA",
-      bg = "none",
+      fg = "#AAAAAA";
+      bg = "none";
     }},
     {"StatusColumnFoldHead", {
-      fg = "#4466CC",
-      bg = "none",
+      fg = "#4466CC";
+      bg = "none";
     }},
     {"StatusColumnFold", {
-      fg = "#224466",
-      bg = "none",
+      fg = "#224466";
+      bg = "none";
     }},
   }
   for _, v in pairs(hls) do
@@ -34,8 +34,8 @@ vim.api.nvim_create_autocmd({
   "VimEnter",
   "ColorScheme",
 }, {
-  group = statuscolumn_group,
-  callback = status_column_highlights
+  group = statuscolumn_group;
+  callback = status_column_highlights;
 })
 
 
@@ -61,7 +61,7 @@ local utils_fold
 vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
     utils_fold = require "utils.fold"
-  end,
+  end
 })
 
 local function status_fold()

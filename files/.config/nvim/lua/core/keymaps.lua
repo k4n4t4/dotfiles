@@ -48,7 +48,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     set('n', '<LEADER>le', function() vim.lsp.diagnostic.show_line_diagnostics() end, { desc = "Show Line Diagnostics" })
     set('n', '<LEADER>l[', function() vim.lsp.diagnostic.goto_prev() end, { desc = "Diagnostic Goto Prev" })
     set('n', '<LEADER>l]', function() vim.lsp.diagnostic.goto_next() end, { desc = "Diagnostic Goto Next" })
-  end,
+  end
 })
 
 
