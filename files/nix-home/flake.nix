@@ -53,8 +53,8 @@
         pkgs = nixpkgs.legacyPackages.${config.system};
         modules = [
           { inherit home; }
-          ./homes/common.nix
-          ./homes/desktop.nix
+          ./home/common.nix
+          ./home/desktop.nix
         ];
       };
     };
