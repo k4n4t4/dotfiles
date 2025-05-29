@@ -8,7 +8,7 @@
       dash
       zsh
       fish starship
-      neovim luajit luarocks lua-language-server
+      neovim luajit luarocks
       eza fd ripgrep fzf zoxide btop ncdu delta trash-cli tmux
     ];
   };
