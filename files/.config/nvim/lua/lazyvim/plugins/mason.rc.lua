@@ -28,6 +28,7 @@ return {
       local mason_lspconfig = require "mason-lspconfig"
 
       lspconfig.lua_ls.setup {
+        filetypes = { "lua" };
         settings = {
           Lua = {
             cmd = { "lua-language-server" };
@@ -50,25 +51,6 @@ return {
         };
       }
 
-      mason_lspconfig.setup {
-        ensure_installed = {
-          "vimls",
-          "pylsp",
-          "bashls",
-        };
-        automatic_installation = false;
-        handlers = {
-          function(server_name)
-            lspconfig[server_name].setup {}
-          end;
-          rust_analyzer = function()
-            lspconfig.rust_analyzer.setup = function()
-              return true
-            end
-          end;
-        };
-      }
-
       lspconfig.emmet_language_server.setup {
         filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "pug", "typescriptreact" };
         init_options = {
@@ -81,6 +63,21 @@ return {
           showSuggestionsAsSnippets = false;
           syntaxProfiles = {};
           variables = {};
+        };
+      }
+
+      mason_lspconfig.setup {
+        ensure_installed = {
+          "vimls",
+          "pylsp",
+          "bashls",
+        };
+        automatic_installation = false;
+        handlers = {
+          function(server_name)
+            print(server_name)
+            lspconfig[server_name].setup {}
+          end;
         };
       }
 

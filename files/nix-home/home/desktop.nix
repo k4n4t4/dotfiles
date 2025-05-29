@@ -19,10 +19,11 @@
       python3
       gnumake
       gcc
-      lua-language-server
-      markdownlint-cli
-      luarocks
       luajit
+      luarocks
+      lua-language-server
+      rust-analyzer
+      markdownlint-cli
     ];
   };
 }
