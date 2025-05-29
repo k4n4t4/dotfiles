@@ -7,12 +7,12 @@ return {
       };
     };
     cmd = {
-      "Mason";
-      "MasonUpdate";
-      "MasonInstall";
-      "MasonUninstall";
-      "MasonUninstallAll";
-      "MasonLog";
+      "Mason",
+      "MasonUpdate",
+      "MasonInstall",
+      "MasonUninstall",
+      "MasonUninstallAll",
+      "MasonLog",
     };
   },
   {
@@ -75,7 +75,6 @@ return {
         automatic_installation = false;
         handlers = {
           function(server_name)
-            print(server_name)
             lspconfig[server_name].setup {}
           end;
         };
