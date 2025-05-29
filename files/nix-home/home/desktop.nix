@@ -9,7 +9,6 @@
       zsh
       fish starship
       eza fd ripgrep fzf zoxide btop ncdu delta trash-cli tmux
-      lua-language-server
     ];
   };
 
@@ -18,6 +17,8 @@
     extraPackages = with pkgs; [
       nodejs
       python3
+      gnumake
+      gcc
       lua-language-server
       markdownlint-cli
       luarocks
