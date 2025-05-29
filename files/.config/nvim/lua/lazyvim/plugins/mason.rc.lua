@@ -27,9 +27,31 @@ return {
       local lspconfig = require "lspconfig"
       local mason_lspconfig = require "mason-lspconfig"
 
+      lspconfig.lua_ls.setup {
+        settings = {
+          Lua = {
+            cmd = { "lua-language-server" };
+            runtime = {
+              version = "LuaJIT";
+              pathStrict = true;
+              path = { "?.lua", "?/init.lua" };
+            };
+            workspace = {
+              library = vim.list_extend(vim.api.nvim_get_runtime_file("lua", true), {
+                vim.fn.stdpath("config") .. "/lua",
+                vim.env.VIMRUNTIME .. "/lua",
+                "${3rd}/luv/library",
+                "${3rd}/busted/library",
+                "${3rd}/luassert/library",
+              });
+              checkThirdParty = "Disable";
+            };
+          };
+        };
+      }
+
       mason_lspconfig.setup {
         ensure_installed = {
-          "lua_ls",
           "vimls",
           "pylsp",
           "bashls",
@@ -38,29 +60,6 @@ return {
         handlers = {
           function(server_name)
             lspconfig[server_name].setup {}
-          end;
-          lua_ls = function()
-            lspconfig.lua_ls.setup {
-              settings = {
-                Lua = {
-                  runtime = {
-                    version = "LuaJIT";
-                    pathStrict = true;
-                    path = { "?.lua", "?/init.lua" };
-                  };
-                  workspace = {
-                    library = vim.list_extend(vim.api.nvim_get_runtime_file("lua", true), {
-                      vim.fn.stdpath("config") .. "/lua",
-                      vim.env.VIMRUNTIME .. "/lua",
-                      "${3rd}/luv/library",
-                      "${3rd}/busted/library",
-                      "${3rd}/luassert/library",
-                    });
-                    checkThirdParty = "Disable";
-                  };
-                };
-              };
-            }
           end;
           rust_analyzer = function()
             lspconfig.rust_analyzer.setup = function()
