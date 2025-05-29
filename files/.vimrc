@@ -56,15 +56,29 @@ set wrapscan
 set ignorecase
 set smartcase
 
-set directory=~/.vim/swap
-set backupdir=~/.vim/backup
-set undodir=~/.vim/undo
 
-set noswapfile
-set undofile
-set nobackup
-set nowritebackup
+if empty(glob("~/.local/state/vim/swap"))
+  silent !mkdir -p ~/.local/state/vim/swap
+endif
+set swapfile
+set directory=~/.local/state/vim/swap//
+
+if empty(glob("~/.local/state/vim/backup"))
+  silent !mkdir -p ~/.local/state/vim/backup
+endif
+set backup
 set backupext=.bak
+set backupdir=~/.local/state/vim/backup//
+set writebackup
+
+if empty(glob("~/.local/state/vim/undo"))
+  silent !mkdir -p ~/.local/state/vim/undo
+endif
+set undofile
+set undodir=~/.local/state/vim/undo//
+
+set viminfo+=n~/.local/state/vim/.viminfo
+
 
 set title
 set mouse=a
@@ -103,20 +117,6 @@ set ttimeoutlen=10
 
 let mapleader = " "
 nnoremap <SPACE> <NOP>
-
-if empty(glob("~/.vim/tmp"))
-  silent !mkdir -p ~/.vim/tmp
-endif
-if empty(glob("~/.vim/swap"))
-  silent !mkdir -p ~/.vim/swap
-endif
-if empty(glob("~/.vim/backup"))
-  silent !mkdir -p ~/.vim/backup
-endif
-if empty(glob("~/.vim/undo"))
-  silent !mkdir -p ~/.vim/undo
-endif
-
 
 
 if has('vim_starting')
