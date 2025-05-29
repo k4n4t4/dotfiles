@@ -1,25 +1,30 @@
 local M = {}
 
-function M.TransparentBackground()
-  vim.cmd.highlight {"Normal",         "guibg=none", "ctermbg=none"}
-  vim.cmd.highlight {"NormalNC",       "guibg=none", "ctermbg=none"}
-  vim.cmd.highlight {"Folded",         "guibg=none", "ctermbg=none"}
-  vim.cmd.highlight {"FoldColumn",     "guibg=none", "ctermbg=none"}
-  vim.cmd.highlight {"NonText",        "guibg=none", "ctermbg=none"}
-  vim.cmd.highlight {"LineNr",         "guibg=none", "ctermbg=none"}
-  vim.cmd.highlight {"CursorLineNr",   "guibg=none", "ctermbg=none"}
-  vim.cmd.highlight {"SignColumn",     "guibg=none", "ctermbg=none"}
-  vim.cmd.highlight {"CursorLineSign", "guibg=none", "ctermbg=none"}
-  vim.cmd.highlight {"TabLine",        "guibg=none", "ctermbg=none"}
-  vim.cmd.highlight {"TabLineFill",    "guibg=none", "ctermbg=none"}
-  vim.cmd.highlight {"EndOfBuffer",    "guibg=none", "ctermbg=none"}
 
-  vim.cmd.highlight {"NeoTreeNormal",      "guibg=none", "ctermbg=none"}
-  vim.cmd.highlight {"NeoTreeNormalNC",    "guibg=none", "ctermbg=none"}
-  vim.cmd.highlight {"NeoTreeEndOfBuffer", "guibg=none", "ctermbg=none"}
-  vim.cmd.highlight {"NvimTreeNormal",      "guibg=none", "ctermbg=none"}
-  vim.cmd.highlight {"NvimTreeNormalNC",    "guibg=none", "ctermbg=none"}
-  vim.cmd.highlight {"NvimTreeEndOfBuffer", "guibg=none", "ctermbg=none"}
+local function bgnone(name)
+  vim.cmd.highlight {name, "guibg=none", "ctermbg=none"}
+end
+
+function M.TransparentBackground()
+  bgnone("Normal")
+  bgnone("NormalNC")
+  bgnone("Folded")
+  bgnone("FoldColumn")
+  bgnone("NonText")
+  bgnone("LineNr")
+  bgnone("CursorLineNr")
+  bgnone("SignColumn")
+  bgnone("CursorLineSign")
+  bgnone("TabLine")
+  bgnone("TabLineFill")
+  bgnone("EndOfBuffer")
+
+  bgnone("NeoTreeNormal")
+  bgnone("NeoTreeNormalNC")
+  bgnone("NeoTreeEndOfBuffer")
+  bgnone("NvimTreeNormal")
+  bgnone("NvimTreeNormalNC")
+  bgnone("NvimTreeEndOfBuffer")
 end
 
 function M.setup(config)
