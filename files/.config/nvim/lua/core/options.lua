@@ -85,15 +85,16 @@ vim.opt.smartcase = true
 vim.opt.inccommand = "split"
 
 
-vim.opt.directory = vim.fn.stdpath("data") .. "/swap"
-vim.opt.undodir   = vim.fn.stdpath("data") .. "/undo"
-vim.opt.backupdir = vim.fn.stdpath("data") .. "/backup"
+vim.opt.swapfile = true
+vim.opt.directory = vim.fn.stdpath("data") .. "/swap//"
 
-vim.opt.swapfile = false
 vim.opt.undofile = true
-vim.opt.backup   = false
-vim.opt.writebackup = false
+vim.opt.undodir = vim.fn.stdpath("data") .. "/undo//"
+
+vim.opt.backup = true
+vim.opt.writebackup = true
 vim.opt.backupext = ".bak"
+vim.opt.backupdir = vim.fn.stdpath("data") .. "/backup//"
 
 
 vim.opt.title = true
