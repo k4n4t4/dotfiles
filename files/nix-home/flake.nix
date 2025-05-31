@@ -71,6 +71,42 @@
             home-manager.useUserPackages = true;
             home-manager.users.${config.username} = { pkgs, ... }: {
               inherit home;
+
+              programs.home-manager.enable = true;
+
+              home = {
+                packages = with pkgs; [
+                  git
+                    vim
+                ];
+              };
+
+              fonts.fontconfig.enable = true;
+
+              home = {
+                packages = with pkgs; [
+                  kitty
+                    dash
+                    zsh
+                    fish starship
+                    eza fd ripgrep fzf zoxide btop ncdu delta trash-cli tmux
+                ];
+              };
+
+              programs.neovim = {
+                enable = true;
+                extraPackages = with pkgs; [
+                  nodejs
+                    python3
+                    gnumake
+                    gcc
+                    luajit
+                    luarocks
+                    lua-language-server
+                    rust-analyzer
+                    markdownlint-cli
+                ];
+              };
             };
           }
         ];
