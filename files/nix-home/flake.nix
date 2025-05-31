@@ -29,7 +29,7 @@
     isLinux = config.system == "x86_64-linux" || config.system == "aarch64-linux";
     isDarwin = config.system == "x86_64-darwin" || config.system == "aarch64-darwin";
 
-    home = {
+    default = {
       stateVersion = config.version;
       username = config.username;
       homeDirectory =
@@ -50,11 +50,19 @@
     };
   in {
     homeConfigurations = {
+      "common" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.${config.system};
+        extraSpecialArgs = { inherit inputs; };
+        modules = [
+          { inherit default; }
+          ./home/common.nix
+        ];
+      };
       "desktop" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.${config.system};
         extraSpecialArgs = { inherit inputs; };
         modules = [
-          { inherit home; }
+          { inherit default; }
           ./home/common.nix
           ./home/desktop.nix
         ];
@@ -73,7 +81,7 @@
               useUserPackages = true;
               extraSpecialArgs = { inherit inputs; };
               users.${config.username} = {
-                inherit home;
+                inherit default;
                 imports = [
                   ./home/common.nix
                   ./home/desktop.nix
