@@ -74,10 +74,6 @@
   };
 
   services = {
-    xserver.xkb = {
-      layout = "jp";
-      variant = "";
-    };
     greetd = {
       enable = true;
       settings.default_session = {
