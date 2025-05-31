@@ -30,6 +30,14 @@
       nerd-fonts.comic-shanns-mono
       nerd-fonts.hurmit
     ];
+
+    pointerCursor = {
+      gtk.enable = true;
+      x11.enable = true;
+      package = pkgs.rose-pine-cursor;
+      name = "rose-pine-cursor";
+      size = 300;
+    };
   };
 
   programs.neovim = {
