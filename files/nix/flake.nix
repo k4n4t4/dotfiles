@@ -9,6 +9,9 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    ags = {
+      url = "github:aylur/ags";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, ... } @ inputs: let
