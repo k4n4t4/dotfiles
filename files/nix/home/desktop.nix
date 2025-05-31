@@ -4,8 +4,6 @@
     inputs.ags.homeManagerModules.default
   ];
 
-  fonts.fontconfig.enable = true;
-
   home = {
     packages = with pkgs; [
       uwsm
@@ -28,6 +26,8 @@
       wlogout
       alsa-utils
       brightnessctl
+
+      nerd-fonts.comic-shanns-mono
     ];
   };
 
