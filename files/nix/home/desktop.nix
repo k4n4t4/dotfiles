@@ -26,6 +26,7 @@
       wl-clipboard
       cliphist
       wlogout
+      amixer
       brightnessctl
     ];
   };
