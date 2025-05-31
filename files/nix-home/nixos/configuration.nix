@@ -55,7 +55,6 @@
   };
 
   users = {
-
     users = {
       kanata = {
         description = "kanata";
@@ -71,11 +70,9 @@
         shell = pkgs.bash;
       };
     };
-
     groups = {
       kanata = {};
     };
-
   };
 
   programs.hyprland = {
@@ -87,7 +84,16 @@
     systemPackages = with pkgs; [
       git
       vim
+
+      hyprlock
+      hyprutils
+      hypridle
+      hyprwayland-scanner
+      hyprshot
+      uwsm
       kitty
+      fish
+      starship
       firefox
       feh
       st
