@@ -1,36 +1,33 @@
-msg_log " 1. home-manager"
-msg_log " 2. rebuild"
+msg_log "1. home-manager"
+msg_log "2. rebuild"
 
-printf %s " mode (defaut: home-manager): "
-read -r mode
+msg_ask "mode (defaut: home-manager): "
 
-case "$mode" in
+case "$RET" in
   ( 1 | "home-manager" )
-    mode="home-manager"
+    RET="home-manager"
     ;;
   ( 2 | "rebuild" )
-    mode="rebuild"
+    RET="rebuild"
     ;;
   ( * )
-    mode="home-manager"
+    RET="home-manager"
     ;;
 esac
 
-case "$mode" in
+case "$RET" in
   ( "home-manager" )
-    printf %s " name (defaut: common): "
-    read -r name
-    case "$name" in ( "" )
-      name="common"
+    msg_ask "name (defaut: common): "
+    case "$RET" in ( "" )
+      RET="common"
     esac
-    nix run home-manager/master -- switch --flake "$WORK_PATH/files/nix"#"$name"
+    nix run home-manager/master -- switch --flake "$WORK_PATH/files/nix#$RET"
   ;;
   ( "rebuild" )
-    printf %s " name (defaut: nixos): "
-    read -r name
-    case "$name" in ( "" )
-      name="nixos"
+    msg_ask "name (defaut: nixos): "
+    case "$RET" in ( "" )
+      RET="nixos"
     esac
-    sudo nixos-rebuild switch --flake "$WORK_PATH/files/nix"#"$name"
+    sudo nixos-rebuild switch --flake "$WORK_PATH/files/nix#$RET"
     ;;
 esac
