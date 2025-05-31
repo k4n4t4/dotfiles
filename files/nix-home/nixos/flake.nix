@@ -50,7 +50,7 @@
     };
   in {
     nixosConfigurations.${config.hostname} = nixpkgs.lib.nixosSystem {
-      system = ${config.system};
+      system = config.system;
       modules = [ ./configuration.nix ];
     };
     homeConfigurations = {
