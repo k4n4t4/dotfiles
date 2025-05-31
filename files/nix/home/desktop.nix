@@ -36,7 +36,6 @@
 
       alsa-utils
       brightnessctl
-      upower
 
       noto-fonts
       noto-fonts-cjk-sans
