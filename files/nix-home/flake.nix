@@ -49,6 +49,17 @@
         ;
     };
   in {
+    homeConfigurations = {
+      "desktop" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.${config.system};
+        extraSpecialArgs = { inherit inputs; };
+        modules = [
+          { inherit home; }
+          ./home/common.nix
+          ./home/desktop.nix
+        ];
+      };
+    };
     nixosConfigurations = {
       ${config.hostname} = nixpkgs.lib.nixosSystem {
         system = config.system;
@@ -58,19 +69,8 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.${config.username} = home;
+            home-manager.users.${config.username} = self.homeConfigurations.desktop;
           }
-        ];
-      };
-    };
-    homeConfigurations = {
-      "desktop" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.${config.system};
-        extraSpecialArgs = { inherit inputs; };
-        modules = [
-          { inherit home; }
-          ./home/common.nix
-          ./home/desktop.nix
         ];
       };
     };
