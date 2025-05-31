@@ -63,18 +63,22 @@
     nixosConfigurations = {
       ${config.hostname} = nixpkgs.lib.nixosSystem {
         system = config.system;
+        specialArgs = { inherit inputs; };
         modules = [
           ./nixos/configuration.nix
           home-manager.nixosModules.home-manager
           {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.${config.username} = {
-              inherit home;
-              imports = [
-                ./home/common.nix
-                ./home/desktop.nix
-              ];
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              extraSpecialArgs = { inherit inputs; };
+              users.${config.username} = {
+                inherit home;
+                imports = [
+                  ./home/common.nix
+                  ./home/desktop.nix
+                ];
+              };
             };
           }
         ];
