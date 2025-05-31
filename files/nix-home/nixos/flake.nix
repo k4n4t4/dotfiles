@@ -49,6 +49,10 @@
         ;
     };
   in {
+    nixosConfigurations.${config.hostname} = nixpkgs.lib.nixosSystem {
+      system = ${config.system};
+      modules = [ ./configuration.nix ];
+    };
     homeConfigurations = {
       "desktop" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.${config.system};
