@@ -47,21 +47,23 @@
 
   programs.ags = {
     enable = true;
-    extraPackages = with pkgs; [
-      inputs.ags.packages.${pkgs.system}.apps
-      inputs.ags.packages.${pkgs.system}.auth
-      inputs.ags.packages.${pkgs.system}.battery
-      inputs.ags.packages.${pkgs.system}.bluetooth
-      inputs.ags.packages.${pkgs.system}.cava
-      inputs.ags.packages.${pkgs.system}.greet
-      inputs.ags.packages.${pkgs.system}.hyprland
-      inputs.ags.packages.${pkgs.system}.mpris
-      inputs.ags.packages.${pkgs.system}.network
-      inputs.ags.packages.${pkgs.system}.notifd
-      inputs.ags.packages.${pkgs.system}.powerprofiles
-      inputs.ags.packages.${pkgs.system}.river
-      inputs.ags.packages.${pkgs.system}.tray
-      inputs.ags.packages.${pkgs.system}.wireplumber
+    extraPackages = let
+      agsPkgs = inputs.ags.packages.${pkgs.system};
+    in with pkgs; [
+      agsPkgs.apps
+      agsPkgs.auth
+      agsPkgs.battery
+      agsPkgs.bluetooth
+      agsPkgs.cava
+      agsPkgs.greet
+      agsPkgs.hyprland
+      agsPkgs.mpris
+      agsPkgs.network
+      agsPkgs.notifd
+      agsPkgs.powerprofiles
+      agsPkgs.river
+      agsPkgs.tray
+      agsPkgs.wireplumber
     ];
   };
 }
