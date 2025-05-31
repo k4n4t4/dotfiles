@@ -58,7 +58,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.${config.username} = self.homeConfigurations.desktop;
+            # home-manager.users.${config.username} = self.homeConfigurations.desktop;
           }
         ];
       };
