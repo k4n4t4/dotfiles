@@ -32,10 +32,11 @@
       wl-clipboard
       cliphist
       wlogout
+      adwaita-icon-theme
+
       alsa-utils
       brightnessctl
-
-      adwaita-icon-theme
+      upower
 
       noto-fonts
       noto-fonts-cjk-sans
