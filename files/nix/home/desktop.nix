@@ -9,28 +9,12 @@
   home = {
     packages = with pkgs; [
       uwsm
-      hyprlock
-      hyprutils
-      hypridle
-      hyprwayland-scanner
-      hyprshot
-      kitty
-      fish
-      zsh
-      starship
-      firefox
-      feh
-      st
-      wofi
-      swww
-      wl-clipboard
-      cliphist
-      wlogout
+      hyprlock hyprutils hypridle hyprwayland-scanner hyprshot
+      feh st wofi swww wl-clipboard cliphist wlogout
+      alsa-utils brightnessctl
       adwaita-icon-theme
-
-      alsa-utils
-      brightnessctl
-
+      kitty fish zsh starship
+      firefox
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-emoji
