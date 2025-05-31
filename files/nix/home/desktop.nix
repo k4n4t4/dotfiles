@@ -35,6 +35,8 @@
       alsa-utils
       brightnessctl
 
+      adwaita-icon-theme
+
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-emoji
