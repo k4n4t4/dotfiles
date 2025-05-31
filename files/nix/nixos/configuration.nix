@@ -49,17 +49,15 @@
     };
   };
 
-  services.xserver.xkb = {
-    layout = "jp";
-    variant = "";
-  };
-
-  users = {
+  users = let
+    username = "kanata";
+    usergroup = "kanata";
+  in {
     users = {
       kanata = {
-        description = "kanata";
-        home = "/home/kanata";
-        group = "kanata";
+        description = "${username}";
+        home = "/home/${username}";
+        group = "${usergroup}";
         extraGroups = [
           "wheel"
           "networkmanager"
@@ -71,7 +69,20 @@
       };
     };
     groups = {
-      kanata = {};
+      "${usergroup}" = {};
+    };
+  };
+
+  services = {
+    xserver.xkb = {
+      layout = "jp";
+      variant = "";
+    };
+    greetd = {
+      enable = true;
+      settings.default_session = {
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet -r --cmd Hyprland";
+      };
     };
   };
 
