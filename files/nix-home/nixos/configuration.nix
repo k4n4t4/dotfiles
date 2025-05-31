@@ -84,24 +84,6 @@
     systemPackages = with pkgs; [
       git
       vim
-
-      hyprlock
-      hyprutils
-      hypridle
-      hyprwayland-scanner
-      hyprshot
-      uwsm
-      kitty
-      fish
-      starship
-      firefox
-      feh
-      st
-      wofi
-      swww
-      wl-clipboard
-      cliphist
-      wlogout
     ];
   };
 

@@ -4,8 +4,17 @@
 
   home = {
     packages = with pkgs; [
-      git
-      vim
+      dash
+      eza
+      fd
+      ripgrep
+      fzf
+      zoxide
+      btop
+      ncdu
+      delta
+      trash-cli
+      tmux
     ];
   };
 }

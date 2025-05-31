@@ -4,11 +4,24 @@
 
   home = {
     packages = with pkgs; [
+      uwsm
+      hyprlock
+      hyprutils
+      hypridle
+      hyprwayland-scanner
+      hyprshot
       kitty
-      dash
+      fish
       zsh
-      fish starship
-      eza fd ripgrep fzf zoxide btop ncdu delta trash-cli tmux
+      starship
+      firefox
+      feh
+      st
+      wofi
+      swww
+      wl-clipboard
+      cliphist
+      wlogout
     ];
   };
 
