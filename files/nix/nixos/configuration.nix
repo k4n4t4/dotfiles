@@ -55,9 +55,9 @@
   in {
     users = {
       kanata = {
-        description = "${username}";
+        description = username;
         home = "/home/${username}";
-        group = "${usergroup}";
+        group = usergroup;
         extraGroups = [
           "wheel"
           "networkmanager"
@@ -69,7 +69,7 @@
       };
     };
     groups = {
-      "${usergroup}" = {};
+      ${usergroup} = {};
     };
   };
 
