@@ -49,10 +49,24 @@
         ;
     };
   in {
+    nixosConfigurations = {
+      ${config.hostname} = nixpkgs.lib.nixosSystem {
+        system = config.system;
+        modules = [
+          ./nixos/configuration.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.${config.username} = self.homeConfigurations.desktop;
+          }
+        ];
+      };
+    };
     homeConfigurations = {
       "desktop" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.${config.system};
-        specialArgs = { inherit inputs; };
+        extraSpecialArgs = { inherit inputs; };
         modules = [
           { inherit home; }
           ./home/common.nix
