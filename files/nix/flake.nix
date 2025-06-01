@@ -77,6 +77,24 @@
         specialArgs = { inherit inputs; };
         modules = [
           ./nixos/configuration.nix
+          {
+            services = {
+              upower = {
+                enable = true;
+              };
+              greetd = {
+                enable = true;
+                settings.default_session = {
+                  command = "${nixpkgs.legacyPackages.${config.system}.greetd.tuigreet}/bin/tuigreet -r --cmd Hyprland";
+                };
+              };
+            };
+
+            programs.hyprland = {
+              enable = true;
+              xwayland.enable = true;
+            };
+          }
           home-manager.nixosModules.home-manager
           {
             home-manager = {
