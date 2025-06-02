@@ -36,6 +36,30 @@
         { inherit home; }
       ] ++ modules;
     };
+
+    makeSystem = { name, modules ? [], homeModules ? [] }: nixpkgs.lib.nixosSystem {
+      inherit system;
+      specialArgs = {
+        inherit inputs;
+      };
+      modules = [
+        ./hosts/${name}/configuration.nix
+        home-manager.nixosModules.home-manager
+        {
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            extraSpecialArgs = {
+              inherit inputs;
+            };
+            users.${username} = {
+              inherit home;
+              imports = homeModules;
+            };
+          };
+        }
+      ] ++ modules;
+    };
   in {
     homeConfigurations = {
       "common" = makeHome {
@@ -51,106 +75,30 @@
       };
     };
     nixosConfigurations = {
-      "laptop" = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = { inherit inputs; };
+      "laptop" = makeSystem {
+        name = "laptop";
         modules = [
-          ./hosts/laptop/configuration.nix
-          {
-            services = {
-              upower = {
-                enable = true;
-              };
-              greetd = {
-                enable = true;
-                settings.default_session = {
-                  command = "${pkgs.greetd.tuigreet}/bin/tuigreet -r --cmd Hyprland";
-                };
-              };
-            };
-
-            programs.hyprland = {
-              enable = true;
-              xwayland.enable = true;
-            };
-          }
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              extraSpecialArgs = { inherit inputs; };
-              users.${username} = {
-                inherit home;
-                imports = [
-                  ./home/common.nix
-                  ./home/desktop.nix
-                ];
-              };
-            };
-          }
+          ./hosts/modules/hyprland.nix
+        ];
+        homeModules = [
+          ./home/common.nix
+          ./home/desktop.nix
         ];
       };
-      "desktop" = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = { inherit inputs; };
+      "desktop" = makeSystem {
+        name = "desktop";
         modules = [
-          ./hosts/laptop/configuration.nix
-          {
-            services = {
-              upower = {
-                enable = true;
-              };
-              greetd = {
-                enable = true;
-                settings.default_session = {
-                  command = "${pkgs.greetd.tuigreet}/bin/tuigreet -r --cmd Hyprland";
-                };
-              };
-            };
-
-            programs.hyprland = {
-              enable = true;
-              xwayland.enable = true;
-            };
-          }
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              extraSpecialArgs = { inherit inputs; };
-              users.${username} = {
-                inherit home;
-                imports = [
-                  ./home/common.nix
-                  ./home/desktop.nix
-                ];
-              };
-            };
-          }
+          ./hosts/modules/hyprland.nix
+        ];
+        homeModules = [
+          ./home/common.nix
+          ./home/desktop.nix
         ];
       };
-      "wsl" = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./hosts/wsl/configuration.nix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              extraSpecialArgs = { inherit inputs; };
-              users.${username} = {
-                inherit home;
-                imports = [
-                  ./home/common.nix
-                  ./home/modules/nvim
-                ];
-              };
-            };
-          }
+      "wsl" = makeSystem {
+        name = "wsl";
+        homeModules = [
+          ./home/common.nix
         ];
       };
     };
