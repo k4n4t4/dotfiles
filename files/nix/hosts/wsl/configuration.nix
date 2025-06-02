@@ -13,12 +13,6 @@
     };
   };
 
-  security = {
-    sudo = {
-      wheelNeedsPassword = false;
-    };
-  };
-
   wsl.enable = true;
   wsl.defaultUser = "kanata";
 
