@@ -76,7 +76,7 @@
         system = config.system;
         specialArgs = { inherit inputs; };
         modules = [
-          ./nixos/configuration.nix
+          ./hosts/nixos/configuration.nix
           {
             services = {
               upower = {
