@@ -1,9 +1,9 @@
 { inputs, pkgs, lib, config, ... }:
 {
   imports = [
-    ./modules/nvim
-    ./modules/ags
-    ./modules/fcitx5
+    ../modules/homes/nvim
+    ../modules/homes/ags
+    ../modules/homes/fcitx5
   ];
 
   home = {

@@ -64,13 +64,13 @@
     homeConfigurations = {
       "common" = makeHome {
         modules = [
-          ./home/common.nix
+          ./homes/common.nix
         ];
       };
       "desktop" = makeHome {
         modules = [
-          ./home/common.nix
-          ./home/desktop.nix
+          ./homes/common.nix
+          ./homes/desktop.nix
         ];
       };
     };
@@ -78,28 +78,28 @@
       "laptop" = makeSystem {
         name = "laptop";
         modules = [
-          ./hosts/modules/hyprland.nix
+          ./modules/hosts/hyprland
         ];
         homeModules = [
-          ./home/common.nix
-          ./home/desktop.nix
+          ./homes/common.nix
+          ./homes/desktop.nix
         ];
       };
       "desktop" = makeSystem {
         name = "desktop";
         modules = [
-          ./hosts/modules/hyprland.nix
+          ./modules/hosts/hyprland
         ];
         homeModules = [
-          ./home/common.nix
-          ./home/desktop.nix
+          ./homes/common.nix
+          ./homes/desktop.nix
         ];
       };
       "wsl" = makeSystem {
         name = "wsl";
         homeModules = [
-          ./home/common.nix
-          ./home/modules/nvim
+          ./homes/common.nix
+          ./modules/homes/nvim
         ];
       };
     };
