@@ -27,9 +27,9 @@ case "$RET" in
     nix run home-manager/master -- switch --flake "$WORK_PATH/files/nix#$RET"
   ;;
   ( "rebuild" )
-    msg_ask "name (defaut: nixos): "
+    msg_ask "name (defaut: laptop): "
     case "$RET" in ( "" )
-      RET="nixos"
+      RET="laptop"
     esac
     msg_log "selected name: $RET"
     sudo nixos-rebuild switch --flake "$WORK_PATH/files/nix#$RET"
