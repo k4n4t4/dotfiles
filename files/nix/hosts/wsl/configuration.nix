@@ -15,7 +15,7 @@
 
   security = {
     sudo = {
-      wheelNeedsPassword = true;
+      wheelNeedsPassword = false;
     };
   };
 
