@@ -99,6 +99,7 @@
         name = "wsl";
         homeModules = [
           ./home/common.nix
+          ./home/modules/nvim
         ];
       };
     };
