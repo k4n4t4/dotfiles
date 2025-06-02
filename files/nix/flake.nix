@@ -72,11 +72,51 @@
       };
     };
     nixosConfigurations = {
-      ${config.hostname} = nixpkgs.lib.nixosSystem {
+      "laptop" = nixpkgs.lib.nixosSystem {
         system = config.system;
         specialArgs = { inherit inputs; };
         modules = [
-          ./hosts/nixos/configuration.nix
+          ./hosts/laptop/configuration.nix
+          {
+            services = {
+              upower = {
+                enable = true;
+              };
+              greetd = {
+                enable = true;
+                settings.default_session = {
+                  command = "${nixpkgs.legacyPackages.${config.system}.greetd.tuigreet}/bin/tuigreet -r --cmd Hyprland";
+                };
+              };
+            };
+
+            programs.hyprland = {
+              enable = true;
+              xwayland.enable = true;
+            };
+          }
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              extraSpecialArgs = { inherit inputs; };
+              users.${config.username} = {
+                inherit home;
+                imports = [
+                  ./home/common.nix
+                  ./home/desktop.nix
+                ];
+              };
+            };
+          }
+        ];
+      };
+      "desktop" = nixpkgs.lib.nixosSystem {
+        system = config.system;
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/laptop/configuration.nix
           {
             services = {
               upower = {
