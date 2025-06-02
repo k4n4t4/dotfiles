@@ -13,7 +13,7 @@
       feh st wofi swww wl-clipboard cliphist wlogout
       alsa-utils brightnessctl
       adwaita-icon-theme
-      kitty fish zsh starship
+      kitty
       firefox
       noto-fonts
       noto-fonts-cjk-sans

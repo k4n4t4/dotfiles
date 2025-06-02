@@ -5,6 +5,9 @@
   home = {
     packages = with pkgs; [
       dash
+      fish
+      zsh
+      starship
       eza
       fd
       ripgrep
