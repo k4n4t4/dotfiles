@@ -21,19 +21,19 @@
 
     pkgs = nixpkgs.legacyPackages.${system};
 
-    home = {
-      stateVersion = version;
-      username = username;
-      homeDirectory = "/home/${username}";
-    };
-
     makeHome = { modules ? [] }: home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
       extraSpecialArgs = {
         inherit inputs;
       };
       modules = [
-        { inherit home; }
+        {
+          home = {
+            stateVersion = version;
+            username = username;
+            homeDirectory = "/home/${username}";
+          };
+        }
       ] ++ modules;
     };
 
@@ -53,7 +53,11 @@
               inherit inputs;
             };
             users.${username} = {
-              inherit home;
+              home = {
+                stateVersion = version;
+                username = username;
+                homeDirectory = "/home/${username}";
+              };
               imports = homeModules;
             };
           };
