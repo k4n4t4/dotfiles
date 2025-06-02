@@ -20,18 +20,29 @@ msg_log "selected mode: $RET"
 case "$RET" in
   ( "home-manager" )
     msg_ask "name (defaut: common): "
-    case "$RET" in ( "" )
-      RET="common"
+    case "$RET" in
+      ( "" )
+        RET="common"
+        ;;
     esac
     msg_log "selected name: $RET"
     nix run home-manager/master -- switch --flake "$WORK_PATH/files/nix#$RET"
   ;;
   ( "rebuild" )
     msg_ask "name (defaut: laptop): "
-    case "$RET" in ( "" )
-      RET="laptop"
+    case "$RET" in
+      ( "" )
+        RET="laptop"
+        ;;
     esac
     msg_log "selected name: $RET"
-    sudo nixos-rebuild switch --flake "$WORK_PATH/files/nix#$RET"
+    case "$RET" in
+      ( "wsl" )
+        sudo nixos-rebuild switch --flake "$WORK_PATH/files/nix#$RET" --impure
+        ;;
+      ( * )
+        sudo nixos-rebuild switch --flake "$WORK_PATH/files/nix#$RET"
+        ;;
+    esac
     ;;
 esac
