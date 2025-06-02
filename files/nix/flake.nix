@@ -18,38 +18,13 @@
     config = {
       version = "24.11";
       username = "kanata";
-      hostname = "nixos";
-      system =
-        "x86_64-linux"
-        # "aarch64-linux"
-        # "x86_64-darwin"
-        # "aarch64-darwin"
-      ;
-      # homeDirPrefix = "/home";
-      # homeDirSufix = "/kanata";
+      system = "x86_64-linux";
     };
-
-    isLinux = config.system == "x86_64-linux" || config.system == "aarch64-linux";
-    isDarwin = config.system == "x86_64-darwin" || config.system == "aarch64-darwin";
 
     home = {
       stateVersion = config.version;
       username = config.username;
-      homeDirectory =
-        if isLinux || isDarwin then
-          if config ? homeDirPrefix then
-            if config ? homeDirSufix then
-              "${config.homeDirPrefix}${config.homeDirSufix}"
-            else
-              "${config.homeDirPrefix}/${config.username}"
-          else
-            if isLinux then
-              "/home/${config.username}"
-            else
-              "/Users/${config.username}"
-        else
-          throw "\"${config.system}\" is unsupported system"
-        ;
+      homeDirectory = "/home/${config.username}";
     };
   in {
     homeConfigurations = {
