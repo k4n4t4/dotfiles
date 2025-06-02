@@ -1,6 +1,5 @@
-{ inputs, ... }: let
-  pkgs = inputs.nixpkgs.legacyPackages.${system};
-in {
+{ inputs, pkgs, lib, config, ... }:
+{
   services = {
     upower = {
       enable = true;
