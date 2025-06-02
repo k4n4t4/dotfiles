@@ -37,13 +37,12 @@
       ] ++ modules;
     };
 
-    makeSystem = { name, modules ? [], homeModules ? [] }: nixpkgs.lib.nixosSystem {
+    makeSystem = { modules ? [], homeModules ? [] }: nixpkgs.lib.nixosSystem {
       inherit system;
       specialArgs = {
         inherit inputs;
       };
       modules = [
-        ./hosts/${name}/configuration.nix
         home-manager.nixosModules.home-manager
         {
           home-manager = {
@@ -80,8 +79,8 @@
     };
     nixosConfigurations = {
       "laptop" = makeSystem {
-        name = "laptop";
         modules = [
+          ./hosts/laptop/configuration.nix
           ./modules/hosts/hyprland
         ];
         homeModules = [
@@ -90,8 +89,8 @@
         ];
       };
       "desktop" = makeSystem {
-        name = "desktop";
         modules = [
+          ./hosts/desktop/configuration.nix
           ./modules/hosts/hyprland
         ];
         homeModules = [
@@ -100,7 +99,9 @@
         ];
       };
       "wsl" = makeSystem {
-        name = "wsl";
+        modules = [
+          ./hosts/wsl/configuration.nix
+        ];
         homeModules = [
           ./homes/common.nix
           ./modules/homes/nvim
