@@ -19,6 +19,8 @@
     username = "kanata";
     system = "x86_64-linux";
 
+    pkgs = nixpkgs.legacyPackages.${system};
+
     home = {
       stateVersion = version;
       username = username;
@@ -27,7 +29,7 @@
   in {
     homeConfigurations = {
       "common" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.${system};
+        inherit pkgs;
         extraSpecialArgs = { inherit inputs; };
         modules = [
           { inherit home; }
@@ -35,7 +37,7 @@
         ];
       };
       "desktop" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.${system};
+        inherit pkgs;
         extraSpecialArgs = { inherit inputs; };
         modules = [
           { inherit home; }
@@ -58,7 +60,7 @@
               greetd = {
                 enable = true;
                 settings.default_session = {
-                  command = "${nixpkgs.legacyPackages.${system}.greetd.tuigreet}/bin/tuigreet -r --cmd Hyprland";
+                  command = "${pkgs.greetd.tuigreet}/bin/tuigreet -r --cmd Hyprland";
                 };
               };
             };
@@ -98,7 +100,7 @@
               greetd = {
                 enable = true;
                 settings.default_session = {
-                  command = "${nixpkgs.legacyPackages.${system}.greetd.tuigreet}/bin/tuigreet -r --cmd Hyprland";
+                  command = "${pkgs.greetd.tuigreet}/bin/tuigreet -r --cmd Hyprland";
                 };
               };
             };
