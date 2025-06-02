@@ -15,21 +15,19 @@
   };
 
   outputs = { self, nixpkgs, home-manager, ... } @ inputs: let
-    config = {
-      version = "24.11";
-      username = "kanata";
-      system = "x86_64-linux";
-    };
+    version = "24.11";
+    username = "kanata";
+    system = "x86_64-linux";
 
     home = {
-      stateVersion = config.version;
-      username = config.username;
-      homeDirectory = "/home/${config.username}";
+      stateVersion = version;
+      username = username;
+      homeDirectory = "/home/${username}";
     };
   in {
     homeConfigurations = {
       "common" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.${config.system};
+        pkgs = nixpkgs.legacyPackages.${system};
         extraSpecialArgs = { inherit inputs; };
         modules = [
           { inherit home; }
@@ -37,7 +35,7 @@
         ];
       };
       "desktop" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.${config.system};
+        pkgs = nixpkgs.legacyPackages.${system};
         extraSpecialArgs = { inherit inputs; };
         modules = [
           { inherit home; }
@@ -48,7 +46,7 @@
     };
     nixosConfigurations = {
       "laptop" = nixpkgs.lib.nixosSystem {
-        system = config.system;
+        inherit system;
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/laptop/configuration.nix
@@ -60,7 +58,7 @@
               greetd = {
                 enable = true;
                 settings.default_session = {
-                  command = "${nixpkgs.legacyPackages.${config.system}.greetd.tuigreet}/bin/tuigreet -r --cmd Hyprland";
+                  command = "${nixpkgs.legacyPackages.${system}.greetd.tuigreet}/bin/tuigreet -r --cmd Hyprland";
                 };
               };
             };
@@ -76,7 +74,7 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               extraSpecialArgs = { inherit inputs; };
-              users.${config.username} = {
+              users.${username} = {
                 inherit home;
                 imports = [
                   ./home/common.nix
@@ -88,7 +86,7 @@
         ];
       };
       "desktop" = nixpkgs.lib.nixosSystem {
-        system = config.system;
+        inherit system;
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/laptop/configuration.nix
@@ -100,7 +98,7 @@
               greetd = {
                 enable = true;
                 settings.default_session = {
-                  command = "${nixpkgs.legacyPackages.${config.system}.greetd.tuigreet}/bin/tuigreet -r --cmd Hyprland";
+                  command = "${nixpkgs.legacyPackages.${system}.greetd.tuigreet}/bin/tuigreet -r --cmd Hyprland";
                 };
               };
             };
@@ -116,11 +114,33 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               extraSpecialArgs = { inherit inputs; };
-              users.${config.username} = {
+              users.${username} = {
                 inherit home;
                 imports = [
                   ./home/common.nix
                   ./home/desktop.nix
+                ];
+              };
+            };
+          }
+        ];
+      };
+      "wsl" = nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/wsl/configuration.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              extraSpecialArgs = { inherit inputs; };
+              users.${username} = {
+                inherit home;
+                imports = [
+                  ./home/common.nix
+                  ./home/modules/nvim
                 ];
               };
             };
