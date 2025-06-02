@@ -26,21 +26,25 @@
       username = username;
       homeDirectory = "/home/${username}";
     };
+
+    makeHome = { modules ? [] }: home-manager.lib.homeManagerConfiguration {
+      inherit pkgs;
+      extraSpecialArgs = {
+        inherit inputs;
+      };
+      modules = [
+        { inherit home; }
+      ] ++ modules;
+    };
   in {
     homeConfigurations = {
-      "common" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = { inherit inputs; };
+      "common" = makeHome {
         modules = [
-          { inherit home; }
           ./home/common.nix
         ];
       };
-      "desktop" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = { inherit inputs; };
+      "desktop" = makeHome {
         modules = [
-          { inherit home; }
           ./home/common.nix
           ./home/desktop.nix
         ];
