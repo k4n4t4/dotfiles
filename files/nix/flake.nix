@@ -66,15 +66,10 @@
   in {
     homeConfigurations = {
       "common" = makeHome {
-        modules = [
-          ./homes/common.nix
-        ];
+        modules = [ ./homes/common ];
       };
       "desktop" = makeHome {
-        modules = [
-          ./homes/common.nix
-          ./homes/desktop.nix
-        ];
+        modules = [ ./homes/desktop ];
       };
     };
     nixosConfigurations = {
@@ -83,29 +78,20 @@
           ./hosts/laptop/configuration.nix
           ./modules/hosts/hyprland
         ];
-        homeModules = [
-          ./homes/common.nix
-          ./homes/desktop.nix
-        ];
+        homeModules = [ ./homes/desktop ];
       };
       "desktop" = makeSystem {
         modules = [
           ./hosts/desktop/configuration.nix
           ./modules/hosts/hyprland
         ];
-        homeModules = [
-          ./homes/common.nix
-          ./homes/desktop.nix
-        ];
+        homeModules = [ ./homes/desktop ];
       };
       "wsl" = makeSystem {
         modules = [
           ./hosts/wsl/configuration.nix
         ];
-        homeModules = [
-          ./homes/common.nix
-          ./modules/homes/nvim
-        ];
+        homeModules = [ ./homes/common ];
       };
     };
   };

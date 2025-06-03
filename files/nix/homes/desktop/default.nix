@@ -1,10 +1,13 @@
 { inputs, pkgs, lib, config, ... }:
 {
   imports = [
-    ../modules/homes/nvim
-    ../modules/homes/ags
-    ../modules/homes/fcitx5
+    ../../modules/homes/clitools
+    ../../modules/homes/nvim
+    ../../modules/homes/ags
+    ../../modules/homes/fcitx5
   ];
+
+  programs.home-manager.enable = true;
 
   home = {
     packages = with pkgs; [
