@@ -1,3 +1,4 @@
-files/.config/nvim/lua/config.lua
+/files/.config/nvim/lua/config.lua
 config.sh
 *.DS_Store
+/.env/
