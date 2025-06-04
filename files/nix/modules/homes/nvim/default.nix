@@ -3,6 +3,7 @@
   programs.neovim = {
     enable = true;
     extraPackages = with pkgs; [
+      unzip
       nodejs
       python3
       gnumake

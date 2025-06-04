@@ -42,6 +42,7 @@
 
   environment = {
     systemPackages = with pkgs; [
+      powershell
       git
       vim
     ];
