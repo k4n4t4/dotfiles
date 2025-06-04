@@ -76,6 +76,7 @@
       "laptop" = makeSystem {
         modules = [
           ./hosts/laptop/configuration.nix
+          ./modules/hosts/nvidia
           ./modules/hosts/hyprland
         ];
         homeModules = [ ./homes/desktop ];
@@ -83,6 +84,7 @@
       "desktop" = makeSystem {
         modules = [
           ./hosts/desktop/configuration.nix
+          ./modules/hosts/nvidia
           ./modules/hosts/hyprland
         ];
         homeModules = [ ./homes/desktop ];
