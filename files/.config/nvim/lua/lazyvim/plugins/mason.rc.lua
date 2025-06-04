@@ -71,8 +71,9 @@ return {
           "vimls",
           "pylsp",
           "bashls",
+          "ts_ls",
         };
-        automatic_installation = false;
+        automatic_installation = true;
         handlers = {
           function(server_name)
             lspconfig[server_name].setup {}
