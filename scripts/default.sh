@@ -37,6 +37,7 @@ if cmd_exist ags; then
   dotconf "ags" -r
   if [ ! -d "$DOT_TARGET_PATH/.config/ags/@girs" ]; then
     ags types -d "$DOT_TARGET_PATH/.config/ags" -p
+    npm install --prefix="$DOT_TARGET_PATH/.config/ags" typescript@5.7.3
   fi
 fi
 if cmd_exist fastfetch; then
