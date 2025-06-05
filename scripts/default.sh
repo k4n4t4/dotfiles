@@ -36,7 +36,7 @@ fi
 if cmd_exist ags; then
   dotconf "ags" -r
   if [ ! -d "$DOT_TARGET_PATH/.config/ags/@girs" ]; then
-    ags types -d "$DOT_TARGET_PATH/.config/ags"
+    ags types -d "$DOT_TARGET_PATH/.config/ags" -p
   fi
 fi
 if cmd_exist fastfetch; then
