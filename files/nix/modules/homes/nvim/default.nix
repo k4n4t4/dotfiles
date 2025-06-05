@@ -24,6 +24,7 @@
       markdownlint-cli
       libxml2
       imagemagick
+      emmet-language-server
     ];
   };
 }
