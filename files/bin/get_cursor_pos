@@ -14,4 +14,3 @@ pos="$(dd count=1 2>/dev/null)"
 stty "$old"
 
 printf "$pos" | cut -c3- | tr -d -- "R"
-

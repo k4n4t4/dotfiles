@@ -9,4 +9,3 @@ fi
 for i in "${@}"; do
   cat /proc/stat | grep -E "${i}"
 done
-

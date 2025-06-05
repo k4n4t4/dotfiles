@@ -9,4 +9,3 @@ stty raw -echo -icanon
 printf "$(dd count=${1:-1} 2>/dev/null)"
 
 stty "$old"
-

@@ -8,4 +8,3 @@ case "${1:-true}" in
     ;;
   "false" ) printf "\033[?1049l" ;;
 esac
-

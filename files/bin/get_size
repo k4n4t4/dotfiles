@@ -5,4 +5,3 @@ printf "\033[s\033[?25l\033[999B\033[999C" > /dev/tty
 far_pos=`get_cursor_pos`
 printf "\033[u\033[?25h" > /dev/tty
 echo "$far_pos"
-
