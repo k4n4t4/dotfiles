@@ -13,7 +13,7 @@ import SystemTray from "./system-tray"
 import Notifications from "./notifications"
 
 
-export default function Bar(gdkmonitor: Gdk.Monitor): Astal.Window {
+export default function Bar(gdkmonitor: Gdk.Monitor) {
   return (
     <window
       name="Bar"
