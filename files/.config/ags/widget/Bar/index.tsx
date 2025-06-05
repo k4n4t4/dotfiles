@@ -13,7 +13,7 @@ import SystemTray from "./system-tray"
 import Notifications from "./notifications"
 
 
-export default function Bar(gdkmonitor: Gdk.Monitor) {
+export default function Bar(gdkmonitor: Gdk.Monitor): Astal.Window {
   return (
     <window
       name="Bar"
@@ -31,27 +31,25 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
       layer={Astal.Layer.BOTTOM}
     >
       <box className="bar">
-        <centerbox>
-          <box hexpand halign={Gtk.Align.START} className="bar-left">
-            <Workspaces />
-            <Submap />
-          </box>
-          <box halign={Gtk.Align.CENTER} className="bar-center">
-            <Title />
-          </box>
-          <box hexpand halign={Gtk.Align.END} className="bar-right">
-            <SystemTray show_items={[
-              "Input Method",
-            ]} reveal={false} />
-            <Mpris />
-            <Audio />
-            <Bluetooth />
-            <Network />
-            <Battery />
-            <Clock show_date={false} show_seconds={true} />
-            <Notifications />
-          </box>
-        </centerbox>
+        <box hexpand halign={Gtk.Align.START} className="bar-left">
+          <Workspaces />
+          <Submap />
+        </box>
+        <box halign={Gtk.Align.CENTER} className="bar-center">
+          <Title />
+        </box>
+        <box hexpand halign={Gtk.Align.END} className="bar-right">
+          <SystemTray show_items={[
+            "Input Method",
+          ]} reveal={false} />
+          <Mpris />
+          <Audio />
+          <Bluetooth />
+          <Network />
+          <Battery />
+          <Clock show_date={false} show_seconds={true} />
+          <Notifications />
+        </box>
       </box>
     </window>
   )
