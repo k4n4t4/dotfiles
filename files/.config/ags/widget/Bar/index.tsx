@@ -1,16 +1,16 @@
 import { App, Astal, Gdk, Gtk } from "astal/gtk3"
 
-import Clock from "./clock"
-import Battery from "./battery"
-import Network from "./network"
-import Bluetooth from "./bluetooth"
-import Audio from "./audio"
-import Title from "./title"
-import Workspaces from "./workspaces"
-import Submap from "./submap"
-import Mpris from "./mpris"
-import SystemTray from "./system-tray"
-import Notifications from "./notifications"
+import Clock from "./elements/clock"
+import Battery from "./elements/battery"
+import Network from "./elements/network"
+import Bluetooth from "./elements/bluetooth"
+import Audio from "./elements/audio"
+import Title from "./elements/title"
+import Workspaces from "./elements/workspaces"
+import Submap from "./elements/submap"
+import Mpris from "./elements/mpris"
+import SystemTray from "./elements/system-tray"
+import Notifications from "./elements/notifications"
 
 
 export default function Bar(gdkmonitor: Gdk.Monitor) {
