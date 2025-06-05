@@ -7,8 +7,6 @@
   home.packages = with pkgs; [
     nodejs
     nodePackages.npm
-    nodePackages.express
-    nodePackages.react
   ];
 
   programs.ags = {
