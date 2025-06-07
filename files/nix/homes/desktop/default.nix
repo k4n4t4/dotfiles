@@ -17,7 +17,11 @@
       alsa-utils brightnessctl
       adwaita-icon-theme
       kitty
+
       firefox
+      thunderbird
+      obsidian
+
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-emoji
