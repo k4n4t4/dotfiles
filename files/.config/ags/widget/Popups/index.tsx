@@ -39,7 +39,7 @@ export default function Popups(gdkmonitor: Gdk.Monitor) {
       setup={self => {
         let timer: any = undefined
         let prevent = true
-        setTimeout(() => {prevent = false}, 100)
+        setTimeout(() => {prevent = false}, 1000)
         function show(name: string) {
           if (prevent) return
             if (!self.visible) {
