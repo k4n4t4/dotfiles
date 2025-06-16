@@ -118,11 +118,11 @@ set ttimeoutlen=10
 let mapleader = " "
 nnoremap <SPACE> <NOP>
 
-nnoremap <Char-127>
-inoremap <Char-127>
-vnoremap <Char-127>
-cnoremap <Char-127>
-onoremap <Char-127>
+nnoremap <Char-127> <BS>
+inoremap <Char-127> <BS>
+vnoremap <Char-127> <BS>
+cnoremap <Char-127> <BS>
+onoremap <Char-127> <BS>
 
 if has('vim_starting')
   let &t_SI .= "\e[6 q"
