@@ -136,6 +136,7 @@ if exists("syntax_on")
 endif
 hi clear
 
+
 hi LineNr ctermfg=240 ctermbg=234
 hi CursorLineNr ctermfg=252 ctermbg=236
 hi MatchParen ctermbg=242
@@ -149,8 +150,9 @@ hi String ctermfg=120
 hi Number ctermfg=63
 hi Function ctermfg=208
 
-
 nnoremap <TAB> 5j
 nnoremap <S-TAB> 5k
 vnoremap <TAB> 5j
 vnoremap <S-TAB> 5k
+
+nnoremap <LEADER>H <CMD>noh<CR>
