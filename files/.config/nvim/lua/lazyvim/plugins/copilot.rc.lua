@@ -3,13 +3,11 @@ return {
     "zbirenbaum/copilot.lua";
     cmd = "Copilot";
     event = "InsertEnter";
-    config = function ()
-      require("copilot").setup({
-        suggestion = { enabled = false };
-        panel = { enabled = false };
-        copilot_node_command = "node";
-      })
-    end;
+    opts = {
+      suggestion = { enabled = false };
+      panel = { enabled = false };
+      copilot_node_command = "node";
+    };
   },
   {
     "zbirenbaum/copilot-cmp",
@@ -32,6 +30,10 @@ return {
     };
     build = "make tiktoken";
     opts = {
+      window = {
+        layout = "float";
+        relative = "cursor";
+      };
       debug = false;
     };
     keys = {
