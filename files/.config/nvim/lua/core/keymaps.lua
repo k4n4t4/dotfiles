@@ -15,8 +15,8 @@ set('n', '<LEADER>p', "<CMD>Lazy<CR>")
 
 -- terminal
 set('t', '<ESC>', "<C-\\><C-N>")
-set('n', '<LEADER>c', "<CMD>belowright 10split<CR><CMD>terminal<CR>", { desc = "Terminal" })
-set('n', '<LEADER>C', "<CMD>terminal<CR>", { desc = "Terminal (full)" })
+set('n', '<LEADER>k', "<CMD>belowright 10split<CR><CMD>terminal<CR>", { desc = "Terminal" })
+set('n', '<LEADER>K', "<CMD>terminal<CR>", { desc = "Terminal (full)" })
 
 
 -- highlight, replace
@@ -51,11 +51,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end
 })
 
+set('n', '<LEADER>w', "<C-w><C-w>", { desc = "Window Cycle" })
+set('x', '<LEADER>w', "<C-w><C-w>", { desc = "Window Cycle" })
 
-set('n', '<TAB>', "5j")
-set('n', '<S-TAB>', "5k")
-set('x', '<TAB>', "5j")
-set('x', '<S-TAB>', "5k")
 
-set('i', '<S-CR>', "<C-O>O")
-set('i', '<S-TAB>', "<C-O><<")
+set('n', '<TAB>', "5j", { desc = "Scroll Down" })
+set('n', '<S-TAB>', "5k", { desc = "Scroll Up" })
+set('x', '<TAB>', "5j", { desc = "Scroll Down" })
+set('x', '<S-TAB>', "5k", { desc = "Scroll Up" })
+
+set('i', '<S-CR>', "<C-O>O", { desc = "Insert New Line Above" })
+set('i', '<S-TAB>', "<C-O><<", { desc = "Indent Line" })

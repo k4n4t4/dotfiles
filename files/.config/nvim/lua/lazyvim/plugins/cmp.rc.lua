@@ -17,6 +17,7 @@ return {
       "L3MON4D3/LuaSnip";
       "rafamadriz/friendly-snippets";
       "saadparwaiz1/cmp_luasnip";
+      "zbirenbaum/copilot-cmp";
     };
     config = function()
       local cmp = require "cmp"
@@ -26,25 +27,42 @@ return {
           format = lspkind.cmp_format {
             mode = "symbol_text";
             menu = {
-              buffer = "[Buffer]";
-              nvim_lsp = "[LSP]";
-              nvim_lua = "[Lua]";
-              luasnip = "[LuaSnip]";
+              copilot       = "[Copilot]";
+              string        = "[String]";
+              buffer        = "[Buffer]";
+              nvim_lsp      = "[LSP]";
+              nvim_lua      = "[Lua]";
+              luasnip       = "[LuaSnip]";
               latex_symbols = "[Latex]";
-              path = "[Path]";
-              git = "[Git]";
+              path          = "[Path]";
+              git           = "[Git]";
+            };
+            symbol_map = {
+              Copilot      = " ";
+              Snippet      = " ";
+              String       = " ";
+              Buffer       = " ";
+              NvimLsp      = " ";
+              NvimLua      = " ";
+              LuaSnip      = " ";
+              LatexSymbols = " ";
+              Path         = " ";
+              Git          = " ";
             };
           };
         };
         window = {
           completion = {
-            border = { '┌', '─', '┐', '│', '┘', '─', '└', '│' };
+            -- border = { '┌', '─', '┐', '│', '┘', '─', '└', '│' };
             side_padding = 0;
             col_offset = 0;
             winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None";
           };
           documentation = {
-            border = 'double';
+            -- border = { '╔', '═', '╗', '║', '╝', '═', '╚', '║' };
+            side_padding = 0;
+            col_offset = 0;
+            winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None";
           };
         };
         experimental = {
@@ -56,6 +74,7 @@ return {
           end;
         };
         sources = {
+          { name = 'copilot' },
           { name = 'nvim_lsp' },
           { name = 'nvim_lsp_signature_help' },
           { name = 'nvim_lua' },
