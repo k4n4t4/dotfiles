@@ -1,5 +1,5 @@
-function Config(config)
-  local config = config or {}
+function Config(cfg)
+  local config = cfg or {}
 
   if config then
 
@@ -10,12 +10,8 @@ function Config(config)
     if config.colorscheme then
 
       if config.colorscheme.transparent then
-        require("commands.transparent").setup {
-          events = {
-            "VimEnter",
-            "ColorScheme",
-          }
-        }
+        local plugins_transparent = require("plugins.transparent")
+        plugins_transparent.setup {}
       end
 
       if config.colorscheme.name then

@@ -1,7 +1,6 @@
 #!/bin/sh
 set -eu
 
-
 NL='
 '
 ESC="$(printf "\033")"

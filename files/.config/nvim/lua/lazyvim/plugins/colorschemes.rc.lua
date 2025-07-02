@@ -1,0 +1,43 @@
+return {
+  -- colorschemes
+  {
+    "navarasu/onedark.nvim";
+    opts = {
+      style = "darker";
+    };
+  },
+  {
+    "catppuccin/nvim";
+    name = "catppuccin";
+  },
+  {
+    "folke/tokyonight.nvim";
+  },
+  {
+    "sainnhe/everforest";
+    config = function()
+      vim.g.everforest_background = 'soft'
+    end
+  },
+  {
+    "sainnhe/gruvbox-material";
+    config = function()
+      vim.g.gruvbox_material_background = 'medium'
+    end
+  },
+  {
+    "EdenEast/nightfox.nvim";
+    opts = {
+      options = {
+        styles = {
+          comments = "italic";
+          keywords = "bold";
+          types = "italic,bold";
+        };
+      };
+    };
+  },
+  {
+    "tomasiser/vim-code-dark";
+  },
+}

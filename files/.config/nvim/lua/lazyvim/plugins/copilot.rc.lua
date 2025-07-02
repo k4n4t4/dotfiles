@@ -2,25 +2,26 @@ return {
   {
     "zbirenbaum/copilot.lua";
     cmd = "Copilot";
-    event = "InsertEnter";
+    event = 'InsertEnter';
     opts = {
-      suggestion = { enabled = false };
+      filetypes = {
+        ['*'] = true;
+      };
+      suggestion = {
+        enabled = false;
+        auto_trigger = true;
+        keymap = {
+          accept = "<M-l>";
+        };
+      };
       panel = { enabled = false };
-      copilot_node_command = "node";
     };
   },
   {
     "zbirenbaum/copilot-cmp",
     cmd = "Copilot";
-    event = "InsertEnter";
-    dependencies = {
-      "zbirenbaum/copilot.lua";
-      "hrsh7th/nvim-cmp";
-      "nvim-lua/plenary.nvim";
-    };
-    config = function ()
-      require("copilot_cmp").setup()
-    end
+    event = 'InsertEnter';
+    config = true;
   },
   {
     "CopilotC-Nvim/CopilotChat.nvim";

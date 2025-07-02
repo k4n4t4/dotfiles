@@ -18,11 +18,20 @@ require("lazy").setup {
   spec = {
     { import = "lazyvim.plugins" },
   };
-  default = {
+  defaults = {
     lazy = true;
     version = false;
   };
   checker = {
     enabled = false;
+  };
+  performance = {
+    cache = {
+      enabled = true;
+    };
+  };
+  change_detection = {
+    enabled = true;
+    notify = true;
   };
 }

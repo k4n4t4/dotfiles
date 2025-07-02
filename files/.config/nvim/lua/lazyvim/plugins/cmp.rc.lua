@@ -11,17 +11,18 @@ return {
       "hrsh7th/cmp-calc";
       "yutkat/cmp-mocword";
       "onsails/lspkind.nvim";
+      "nvimtreesitter/nvim-treesitter";
       "ray-x/cmp-treesitter";
-
-      "nvim-lua/plenary.nvim";
+      "zbirenbaum/copilot-cmp";
+      "saadparwaiz1/cmp_luasnip";
       "L3MON4D3/LuaSnip";
       "rafamadriz/friendly-snippets";
-      "saadparwaiz1/cmp_luasnip";
-      "zbirenbaum/copilot-cmp";
     };
     config = function()
       local cmp = require "cmp"
       local lspkind = require "lspkind"
+      local luasnip = require "luasnip"
+
       cmp.setup {
         formatting = {
           format = lspkind.cmp_format {
@@ -70,7 +71,7 @@ return {
         };
         snippet = {
           expand = function(args)
-            require("luasnip").lsp_expand(args.body)
+            luasnip.lsp_expand(args.body)
           end;
         };
         sources = {
@@ -94,26 +95,28 @@ return {
         });
       }
 
-      local hl = vim.api.nvim_set_hl
-      hl(0, "CmpItemAbbr", { fg = "#909090", bg = "none" })
-      hl(0, "CmpItemAbbrMatch", { fg = "#3333AA", bg = "none" })
-      hl(0, "CmpItemAbbrMatchFuzzy", { fg = "#3399AA", bg = "none" })
-
       cmp.setup.cmdline({ '/', '?' }, {
-        mapping = cmp.mapping.preset.cmdline();
         sources = cmp.config.sources {
           { name = 'buffer' },
-        }
-      })
-      cmp.setup.cmdline({ ':', '@', '-', '=', '>' }, {
+        };
         mapping = cmp.mapping.preset.cmdline();
+      })
+
+      cmp.setup.cmdline({ ':', '@', '-', '=', '>' }, {
         sources = cmp.config.sources {
           { name = 'path' },
           { name = 'cmdline' },
           { name = 'buffer' },
         };
+        mapping = cmp.mapping.preset.cmdline();
         matching = { disallow_symbol_nonprefix_matching = false }
       })
+
+      local hl = vim.api.nvim_set_hl
+      hl(0, "CmpItemAbbr", { fg = "#909090", bg = "none" })
+      hl(0, "CmpItemAbbrMatch", { fg = "#3333AA", bg = "none" })
+      hl(0, "CmpItemAbbrMatchFuzzy", { fg = "#3399AA", bg = "none" })
+
       require("luasnip.loaders.from_vscode").lazy_load()
     end;
     event = {

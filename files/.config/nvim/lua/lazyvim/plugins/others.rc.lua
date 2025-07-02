@@ -1,54 +1,4 @@
 return {
-
-  -- colorschemes
-  {
-    "navarasu/onedark.nvim";
-    lazy = true;
-    opts = {
-      style = "darker";
-    };
-  },
-  {
-    "catppuccin/nvim";
-    lazy = true;
-    name = "catppuccin";
-  },
-  {
-    "folke/tokyonight.nvim";
-    lazy = true;
-  },
-  {
-    "sainnhe/everforest";
-    lazy = true;
-    config = function()
-      vim.g.everforest_background = 'soft'
-    end
-  },
-  {
-    "sainnhe/gruvbox-material";
-    lazy = true;
-    config = function()
-      vim.g.gruvbox_material_background = 'medium'
-    end
-  },
-  {
-    "EdenEast/nightfox.nvim";
-    lazy = true;
-    opts = {
-      options = {
-        styles = {
-          comments = "italic";
-          keywords = "bold";
-          types = "italic,bold";
-        };
-      };
-    };
-  },
-  {
-    "tomasiser/vim-code-dark";
-    lazy = true;
-  },
-
   -- highlights
   {
     "fladson/vim-kitty";
@@ -74,13 +24,6 @@ return {
   {
     "folke/lsp-colors.nvim";
     event = 'VeryLazy';
-  },
-  {
-    "nvim-treesitter/nvim-treesitter-context";
-    event = 'VeryLazy';
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter";
-    };
   },
   {
     "JoosepAlviste/nvim-ts-context-commentstring";
@@ -123,7 +66,7 @@ return {
         large_file_cutoff = nil;
         large_file_overrides = nil;
         min_count_to_highlight = 1;
-        should_enable = function(bufnr) return true end;
+        should_enable = function() return true end;
         case_insensitive_regex = false;
       }
     end;
@@ -222,6 +165,9 @@ return {
     end
   },
 
+  {
+    "nvim-tree/nvim-web-devicons";
+  },
   {
     "windwp/nvim-autopairs";
     opts = {

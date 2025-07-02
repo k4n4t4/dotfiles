@@ -16,6 +16,8 @@
       delta
       trash-cli
       tmux
+      nodejs
+      gh
     ];
   };
 }
