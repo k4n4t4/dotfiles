@@ -10,7 +10,7 @@ function Config(cfg)
     if config.colorscheme then
 
       if config.colorscheme.transparent then
-        local plugins_transparent = require("plugins.transparent")
+        local plugins_transparent = require("utils.transparent")
         plugins_transparent.setup {}
       end
 
