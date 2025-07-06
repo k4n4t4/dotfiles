@@ -81,6 +81,13 @@
         ];
         homeModules = [ ./homes/desktop ];
       };
+      "laptop2" = makeSystem {
+        modules = [
+          ./hosts/laptop2/configuration.nix
+          ./modules/hosts/hyprland
+        ];
+        homeModules = [ ./homes/desktop ];
+      };
       "desktop" = makeSystem {
         modules = [
           ./hosts/desktop/configuration.nix
