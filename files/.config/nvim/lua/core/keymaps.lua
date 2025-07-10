@@ -60,5 +60,5 @@ set('n', '<S-TAB>', "5k", { desc = "Scroll Up" })
 set('x', '<TAB>', "5j", { desc = "Scroll Down" })
 set('x', '<S-TAB>', "5k", { desc = "Scroll Up" })
 
-set('i', '<S-CR>', "<C-O>O", { desc = "Insert New Line Above" })
-set('i', '<S-TAB>', "<C-O><<", { desc = "Indent Line" })
+set('i', '<M-CR>', "<C-o>O", { desc = "Insert New Line Above" })
+set('i', '<S-TAB>', "<C-o><<", { desc = "Indent Line" })
