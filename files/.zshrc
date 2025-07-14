@@ -216,7 +216,7 @@ if type broot > /dev/null 2>&1; then
   eval "$(broot --print-shell-function zsh)"
 fi
 
-if type sheldon > /dev/null 2>&1; then
+if type abbr > /dev/null 2>&1; then
 
   abbr -q -S c="clear"
   abbr -q -S "^"="command"
