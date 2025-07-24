@@ -1,6 +1,10 @@
 return {
   -- colorschemes
   {
+    "k4n4t4/theme.nvim";
+    name = "k4n4t4";
+  },
+  {
     "navarasu/onedark.nvim";
     opts = {
       style = "darker";
