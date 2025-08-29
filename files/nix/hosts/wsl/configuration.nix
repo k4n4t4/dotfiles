@@ -2,6 +2,7 @@
 {
   imports = [
     <nixos-wsl/modules>
+    ../../modules/configuration/users.nix
   ];
 
   nix = {
@@ -15,30 +16,6 @@
 
   wsl.enable = true;
   wsl.defaultUser = "kanata";
-
-  users = let
-    username = "kanata";
-    usergroup = "kanata";
-  in {
-    users = {
-      kanata = {
-        description = username;
-        home = "/home/${username}";
-        group = usergroup;
-        extraGroups = [
-          "wheel"
-          "networkmanager"
-        ];
-        isNormalUser = true;
-        packages = with pkgs; [
-        ];
-        shell = pkgs.bash;
-      };
-    };
-    groups = {
-      ${usergroup} = {};
-    };
-  };
 
   environment = {
     systemPackages = with pkgs; [

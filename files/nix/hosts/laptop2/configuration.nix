@@ -2,6 +2,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/configuration/users.nix
   ];
 
   nix = {
@@ -40,30 +41,6 @@
       LC_PAPER = "en_US.UTF-8";
       LC_TELEPHONE = "en_US.UTF-8";
       LC_TIME = "en_US.UTF-8";
-    };
-  };
-
-  users = let
-    username = "kanata";
-    usergroup = "kanata";
-  in {
-    users = {
-      kanata = {
-        description = username;
-        home = "/home/${username}";
-        group = usergroup;
-        extraGroups = [
-          "wheel"
-          "networkmanager"
-        ];
-        isNormalUser = true;
-        packages = with pkgs; [
-        ];
-        shell = pkgs.bash;
-      };
-    };
-    groups = {
-      ${usergroup} = {};
     };
   };
 
