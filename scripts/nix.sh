@@ -37,11 +37,8 @@ case "$RET" in
     esac
     msg_log "selected name: $RET"
     case "$RET" in
-      ( "wsl" )
-        sudo nixos-rebuild switch --flake "$WORK_PATH/files/nix#$RET" --impure
-        ;;
       ( * )
-        sudo nixos-rebuild switch --flake "$WORK_PATH/files/nix#$RET"
+        sudo nixos-rebuild switch --flake "$WORK_PATH/files/nix#$RET" --impure
         ;;
     esac
     ;;
