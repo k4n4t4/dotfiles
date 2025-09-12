@@ -17,6 +17,10 @@ if cmd_exist fish; then
   dotconf "fish" -r
 fi
 
+if cmd_exist nu; then
+  dotconf "nushell" -r
+fi
+
 if cmd_exist vim; then
   dot ".vimrc"
 fi
