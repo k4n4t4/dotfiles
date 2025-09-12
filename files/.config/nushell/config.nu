@@ -1,4 +1,5 @@
 # aliases
+alias l = ls
 alias ll = ls --long
 alias la = ls --all
 alias lla = ls --long --all
