@@ -4,6 +4,7 @@
     packages = with pkgs; [
       dash
       fish
+      nushell
       zsh
       starship
       eza
