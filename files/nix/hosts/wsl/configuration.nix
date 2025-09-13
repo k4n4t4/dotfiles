@@ -2,7 +2,7 @@
 {
   imports = [
     <nixos-wsl/modules>
-    ../../modules/configuration/users.nix
+    ../../modules/hosts/users
   ];
 
   nix = {
