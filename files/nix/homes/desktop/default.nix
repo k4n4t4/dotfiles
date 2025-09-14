@@ -7,6 +7,7 @@
     ../../modules/homes/fcitx5
   ];
 
+  nixpkgs.config.allowUnfree = true;
   programs.home-manager.enable = true;
 
   home = {
