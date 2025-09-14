@@ -10,5 +10,9 @@ alias q = exit
 alias v = nvim
 
 # starship prompt
-mkdir ($nu.data-dir | path join "vendor/autoload")
-starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
+if which starship | is-empty {
+  echo "Starship not found, please install it from https://starship.rs/"
+} else {
+  mkdir ($nu.data-dir | path join "vendor/autoload")
+  starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
+}
