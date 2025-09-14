@@ -75,15 +75,9 @@
     nixosConfigurations = {
       "laptop" = makeSystem {
         modules = [
-          ./hosts/laptop/configuration.nix
-          ./modules/hosts/nvidia
-          ./modules/hosts/hyprland
-        ];
-        homeModules = [ ./homes/desktop ];
-      };
-      "laptop2" = makeSystem {
-        modules = [
-          ./hosts/laptop2/configuration.nix
+          ./hosts/desktop/configuration.nix
+          ./modules/hosts/users
+          ./modules/hosts/intel
           ./modules/hosts/hyprland
         ];
         homeModules = [ ./homes/desktop ];
@@ -91,6 +85,7 @@
       "desktop" = makeSystem {
         modules = [
           ./hosts/desktop/configuration.nix
+          ./modules/hosts/users
           ./modules/hosts/nvidia
           ./modules/hosts/hyprland
         ];
@@ -99,6 +94,7 @@
       "wsl" = makeSystem {
         modules = [
           ./hosts/wsl/configuration.nix
+          ./modules/hosts/users
         ];
         homeModules = [ ./homes/common ];
       };

@@ -2,7 +2,6 @@
 {
   imports = [
     /etc/nixos/hardware-configuration.nix
-    ../../modules/hosts/users
   ];
 
   nix = {
