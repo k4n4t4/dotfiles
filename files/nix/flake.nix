@@ -26,6 +26,7 @@
         users = {
           ${username} = {
             description = username;
+            home = "/home/${username}";
             group = usergroup;
             extraGroups = [
               "wheel"
@@ -44,6 +45,7 @@
     makeHomeManagerSettings = { version, username }: {
       stateVersion = version;
       username = username;
+      homeDirectory = "/home/${username}";
     };
 
     makeHome = { modules ? [] }: home-manager.lib.homeManagerConfiguration {
