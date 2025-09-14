@@ -21,7 +21,28 @@
 
     pkgs = nixpkgs.legacyPackages.${system};
 
-    makeHomeSub = { version, username }: {
+    makeUser = { username, usergroup ? username }: {
+      users = {
+        users = {
+          ${username} = {
+            description = username;
+            home = "/home/${username}";
+            group = usergroup;
+            extraGroups = [
+              "wheel"
+              "networkmanager"
+            ];
+            isNormalUser = true;
+            shell = pkgs.bash;
+          };
+        };
+        groups = {
+          ${usergroup} = {};
+        };
+      };
+    };
+
+    makeHomeManagerSettings = { version, username }: {
       stateVersion = version;
       username = username;
       homeDirectory = "/home/${username}";
@@ -34,7 +55,7 @@
       };
       modules = [
         {
-          home = makeHomeSub { inherit version username; };
+          home = makeHomeManagerSettings { inherit version username; };
         }
       ] ++ modules;
     };
@@ -54,11 +75,12 @@
               inherit inputs;
             };
             users.${username} = {
-              home = makeHomeSub { inherit version username; };
+              home = makeHomeManagerSettings { inherit version username; };
               imports = homeModules;
             };
           };
         }
+        (makeUser { inherit username; })
       ] ++ modules;
     };
 
@@ -76,7 +98,6 @@
       "laptop" = makeSystem {
         modules = [
           ./hosts/desktop/configuration.nix
-          ./modules/hosts/users
           ./modules/hosts/intel
           ./modules/hosts/hyprland
         ];
@@ -85,7 +106,6 @@
       "desktop" = makeSystem {
         modules = [
           ./hosts/desktop/configuration.nix
-          ./modules/hosts/users
           ./modules/hosts/nvidia
           ./modules/hosts/hyprland
         ];
@@ -94,7 +114,6 @@
       "wsl" = makeSystem {
         modules = [
           ./hosts/wsl/configuration.nix
-          ./modules/hosts/users
         ];
         homeModules = [ ./homes/common ];
       };
