@@ -19,10 +19,9 @@ msg_log "selected mode: $RET"
 
 case "$RET" in
   ( "home-manager" )
-    for i in "$WORK_PATH/files/nix/homes/"*; do
-      base_name "$i"
-      echo "$RET"
-    done
+    echo "available configurations:"
+    echo "  - common"
+    echo "  - desktop"
     msg_ask "name (defaut: common): "
     case "$RET" in
       ( "" )
@@ -33,10 +32,10 @@ case "$RET" in
     nix run home-manager/master -- switch --flake "$WORK_PATH/files/nix#$RET" --impure
   ;;
   ( "rebuild" )
-    for i in "$WORK_PATH/files/nix/hosts/"*; do
-      base_name "$i"
-      echo "$RET"
-    done
+    echo "available configurations:"
+    echo "  - desktop"
+    echo "  - laptop"
+    echo "  - wsl"
     msg_ask "name (defaut: desktop): "
     case "$RET" in
       ( "" )
