@@ -37,10 +37,10 @@ case "$RET" in
       base_name "$i"
       echo "$RET"
     done
-    msg_ask "name (defaut: laptop): "
+    msg_ask "name (defaut: desktop): "
     case "$RET" in
       ( "" )
-        RET="laptop"
+        RET="desktop"
         ;;
     esac
     msg_log "selected name: $RET"
