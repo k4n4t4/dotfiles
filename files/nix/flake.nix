@@ -17,7 +17,14 @@
   outputs = { self, nixpkgs, home-manager, ... } @ inputs: let
     version = "24.11";
     username = "kanata";
-    system = "x86_64-linux";
+
+    system = builtins.currentSystem;
+    homeDirectory =
+      if builtins.match ".*-darwin" system != null then
+        "/Users/${username}"
+      else
+        "/home/${username}"
+      ;
 
     pkgs = nixpkgs.legacyPackages.${system};
 
@@ -26,7 +33,7 @@
         users = {
           ${username} = {
             description = username;
-            home = "/home/${username}";
+            home = homeDirectory;
             group = usergroup;
             extraGroups = [
               "wheel"
@@ -45,7 +52,7 @@
     makeHomeManagerSettings = { version, username }: {
       stateVersion = version;
       username = username;
-      homeDirectory = "/home/${username}";
+      homeDirectory = homeDirectory;
     };
 
     makeHome = { modules ? [] }: home-manager.lib.homeManagerConfiguration {
