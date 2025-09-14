@@ -101,6 +101,7 @@
         modules = [ ./homes/desktop ];
       };
     };
+
     nixosConfigurations = {
       "laptop" = makeSystem {
         modules = [
