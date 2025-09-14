@@ -30,7 +30,7 @@ case "$RET" in
         ;;
     esac
     msg_log "selected name: $RET"
-    nix run home-manager/master -- switch --flake "$WORK_PATH/files/nix#$RET"
+    nix run home-manager/master -- switch --flake "$WORK_PATH/files/nix#$RET" --impure
   ;;
   ( "rebuild" )
     for i in "$WORK_PATH/files/nix/hosts/"*; do
