@@ -7,11 +7,12 @@
     desktop.url = "path:./desktop";
   };
 
-  outputs = { self, ... }@inputs: {
-    make = config: {
-      wsl = inputs.wsl.make config;
-      laptop = inputs.laptop.make config;
-      desktop = inputs.desktop.make config;
-    };
+  outputs = { self, ... }@inputs: let
+    hosts = builtins.attrNames inputs;
+  in {
+    make = config: builtins.listToAttrs (map (h: {
+      name = h;
+      value = inputs.${h}.make config;
+    }) hosts);
   };
 }

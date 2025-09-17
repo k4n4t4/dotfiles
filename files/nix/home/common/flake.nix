@@ -1,5 +1,5 @@
 {
-  description = "wsl";
+  description = "common";
 
   inputs = {
     nixpkgs = {
@@ -14,12 +14,9 @@
   outputs = inputs: let
     libs = import ../../modules/libs inputs;
   in {
-    make = config: libs.makeSystem {
+    make = config: libs.makeHome {
       inherit config;
       modules = [
-        ../../modules/hosts/configurations/wsl.nix
-      ];
-      homeModules = [
         ../../modules/home/configurations/common.nix
         ../../modules/home/clitools
         ../../modules/home/nvim

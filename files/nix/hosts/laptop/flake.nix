@@ -13,17 +13,23 @@
     ags.url = "github:aylur/ags";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: let
-    libs = import ../../modules/libs { inherit nixpkgs home-manager inputs; };
+  outputs = inputs: let
+    libs = import ../../modules/libs inputs;
   in {
-    make = { username, version }: libs.makeSystem {
-      config = { inherit username version; };
+    make = config: libs.makeSystem {
+      inherit config;
       modules = [
-        ./configuration.nix
+        ../../modules/hosts/configurations/desktop.nix
         ../../modules/hosts/intel
         ../../modules/hosts/hyprland
       ];
-      homeModules = [ ../../home/desktop ];
+      homeModules = [
+        ../../modules/home/configurations/desktop.nix
+        ../../modules/home/clitools
+        ../../modules/home/nvim
+        ../../modules/home/ags
+        ../../modules/home/fcitx5
+      ];
     };
   };
 }

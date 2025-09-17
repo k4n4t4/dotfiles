@@ -2,27 +2,16 @@
   description = "Home";
 
   inputs = {
-    nixpkgs = {
-      url = "github:NixOS/nixpkgs/nixos-unstable";
-    };
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    common.url = "path:./common";
+    desktop.url = "path:./desktop";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: let
-    libs = import ../modules/libs { inherit nixpkgs home-manager inputs; };
+  outputs = { self, ... }@inputs: let
+    home = builtins.attrNames inputs;
   in {
-    make = { username, version }: {
-      "common" = libs.makeHome {
-        config = { inherit username version; };
-        modules = [ ./common ];
-      };
-      "desktop" = libs.makeHome {
-        config = { inherit username version; };
-        modules = [ ./desktop ];
-      };
-    };
+    make = config: builtins.listToAttrs (map (h: {
+      name = h;
+      value = inputs.${h}.make config;
+    }) home);
   };
 }

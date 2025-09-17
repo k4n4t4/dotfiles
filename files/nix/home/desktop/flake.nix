@@ -1,5 +1,5 @@
 {
-  description = "wsl";
+  description = "desktop";
 
   inputs = {
     nixpkgs = {
@@ -9,20 +9,21 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    ags.url = "github:aylur/ags";
   };
 
   outputs = inputs: let
     libs = import ../../modules/libs inputs;
   in {
-    make = config: libs.makeSystem {
+    make = config: libs.makeHome {
       inherit config;
       modules = [
-        ../../modules/hosts/configurations/wsl.nix
-      ];
-      homeModules = [
-        ../../modules/home/configurations/common.nix
+        ../../modules/home/configurations/desktop.nix
         ../../modules/home/clitools
         ../../modules/home/nvim
+        ../../modules/home/ags
+        ../../modules/home/fcitx5
       ];
     };
   };

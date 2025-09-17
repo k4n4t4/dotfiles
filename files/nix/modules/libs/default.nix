@@ -1,5 +1,6 @@
-{ nixpkgs, home-manager, inputs, ... }:
-let
+inputs: let
+  nixpkgs = inputs.nixpkgs;
+  home-manager = inputs.home-manager;
   pkgs = nixpkgs.legacyPackages.${builtins.currentSystem};
 
   makeHomeDirPath = { username }:
@@ -35,8 +36,7 @@ let
     username = username;
     homeDirectory = makeHomeDirPath { inherit username; };
   };
-in
-{
+in {
   makeHome = { config, modules ? [] }: let
     username = config.username;
     version = config.version;
