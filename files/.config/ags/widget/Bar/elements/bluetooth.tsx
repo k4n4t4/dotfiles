@@ -1,4 +1,4 @@
-import { bind } from "astal"
+import { createBinding } from "ags"
 
 import Bluetooth from "gi://AstalBluetooth"
 
@@ -6,7 +6,7 @@ import Bluetooth from "gi://AstalBluetooth"
 export default function BarBluetooth(): JSX.Element {
   const bluetooth = Bluetooth.get_default()
 
-  const bluetooth_status = bind(bluetooth, 'isConnected').as(connected => {
+  const bluetooth_status = createBinding(bluetooth, 'isConnected').as(connected => {
     if (connected) {
       return "󰂯"
     } else {
@@ -14,9 +14,9 @@ export default function BarBluetooth(): JSX.Element {
     }
   })
 
-  const icon = bind(bluetooth, 'isPowered').as(powered => {
+  const icon = createBinding(bluetooth, 'isPowered').as(powered => {
     if (powered) {
-      return <box className="bar-bluetooth">
+      return <box class="bar-bluetooth">
         <label label={bluetooth_status} />
       </box>
     } else {

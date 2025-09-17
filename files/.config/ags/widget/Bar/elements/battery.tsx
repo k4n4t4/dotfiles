@@ -1,4 +1,4 @@
-import { Variable, bind } from "astal"
+import { createBinding, createState } from "ags"
 
 import Battery from "gi://AstalBattery"
 import PowerProfiles from "gi://AstalPowerProfiles"
@@ -25,10 +25,10 @@ export default function BarBattery(): JSX.Element {
 
   if (battery.deviceType === 0) return (<box />)
 
-  const bat_status = bind(Variable.derive([
-    bind(battery, 'percentage'),
-    bind(battery, 'charging'),
-    bind(powerprofiles, 'active_profile'),
+  const bat_status = createBinding(createState.derive([
+    createBinding(battery, 'percentage'),
+    createBinding(battery, 'charging'),
+    createBinding(powerprofiles, 'active_profile'),
   ], (percentage, charging, profile) => {
     let label = ""
     const percent = Math.round(percentage * 100)
@@ -40,10 +40,10 @@ export default function BarBattery(): JSX.Element {
     return label
   }))
 
-  const class_name = bind(Variable.derive([
-    bind(battery, 'percentage'),
-    bind(battery, 'charging'),
-    bind(powerprofiles, 'active_profile'),
+  const class_name = createBinding(createState.derive([
+    createBinding(battery, 'percentage'),
+    createBinding(battery, 'charging'),
+    createBinding(powerprofiles, 'active_profile'),
   ], (percentage, charging, profile) => {
 
     const class_names = ["bar-battery"]
@@ -70,10 +70,10 @@ export default function BarBattery(): JSX.Element {
     return class_names.join(" ")
   }))
 
-  const tooltip_text = bind(Variable.derive([
-    bind(battery, 'percentage'),
-    bind(battery, 'charging'),
-    bind(powerprofiles, 'active_profile'),
+  const tooltip_text = createBinding(createState.derive([
+    createBinding(battery, 'percentage'),
+    createBinding(battery, 'charging'),
+    createBinding(powerprofiles, 'active_profile'),
   ], (percentage, charging, profile) => {
     const percent = percentage * 100
     return `${percent}% (${charging ? "charging": "not charging"})\n${profile}`
@@ -93,7 +93,7 @@ export default function BarBattery(): JSX.Element {
 
   return (
     <eventbox onClick={onClick}>
-      <box className={class_name}>
+      <box class={class_name}>
         <label tooltipText={tooltip_text} label={bat_status} />
       </box>
     </eventbox>

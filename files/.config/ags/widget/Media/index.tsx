@@ -1,5 +1,6 @@
-import { App, Astal, Gdk } from "astal/gtk3"
-import { Variable, bind } from "astal"
+import app from "ags/gtk4/app"
+import { Astal, Gdk } from "ags/gtk4"
+import { createBinding, createState } from "ags"
 
 import Mpris from "gi://AstalMpris"
 
@@ -20,51 +21,51 @@ function lengthStr(length: number) {
 function Player({player}: {player: Mpris.Player}): JSX.Element {
   const img = (
     <box
-      className="player-img"
-      css={bind(player, 'coverArt').as(coverArt => `background-image: url('${coverArt}');`)} >
+      class="player-img"
+      css={createBinding(player, 'coverArt').as(coverArt => `background-image: url('${coverArt}');`)} >
     </box>
   )
 
   const title = (
     <label
-      className="player-title"
+      class="player-title"
       wrap
-      label={bind(player, 'title')}
+      label={createBinding(player, 'title')}
     />
   )
 
   const artist = (
     <label
-      className="player-artist"
+      class="player-artist"
       wrap
-      label={bind(player, 'artist')}
+      label={createBinding(player, 'artist')}
     />
   )
 
   const slider = (
     <slider
-      className="player-position"
+      class="player-position"
       draw_value={false}
       onDragged={self => {
         player.position = self.value * player.length
       }}
-      value={bind(Variable.derive([
-        bind(player, 'position'),
-        bind(player, 'length'),
+      value={createBinding(createState.derive([
+        createBinding(player, 'position'),
+        createBinding(player, 'length'),
       ], (pos, len) => {
         const value = pos / len
         return value > 0 ? value : 0
       }))}
-      visible={bind(player, 'length').as(len => len > 0)}
+      visible={createBinding(player, 'length').as(len => len > 0)}
     />
   )
 
   const position_label = (
     <label
-      className="player-position-label"
-      label={bind(Variable.derive([
-        bind(player, 'position'),
-        bind(player, 'length'),
+      class="player-position-label"
+      label={createBinding(createState.derive([
+        createBinding(player, 'position'),
+        createBinding(player, 'length'),
       ], (pos, len) => {
         return lengthStr(len > 0 ? pos : 0)
       }))}
@@ -74,18 +75,18 @@ function Player({player}: {player: Mpris.Player}): JSX.Element {
 
   const length_label = (
     <label
-      className="player-length"
-      visible={bind(player, 'length').as(len => len > 0)}
-      label={bind(player, 'length').as(lengthStr)}
+      class="player-length"
+      visible={createBinding(player, 'length').as(len => len > 0)}
+      label={createBinding(player, 'length').as(lengthStr)}
     />
   )
 
   const icon = (
     <icon
-      className="player-icon"
+      class="player-icon"
       hexpand
       tooltipText={player.identity || ""}
-      icon={bind(player, 'entry').as(entry => {
+      icon={createBinding(player, 'entry').as(entry => {
         const name = `${entry}-symbolic`
         return Astal.Icon.lookup_icon(name) ? name : FALLBACK_ICON
       })}
@@ -94,12 +95,12 @@ function Player({player}: {player: Mpris.Player}): JSX.Element {
 
   const pause = (
     <button
-      className="player-play-pause"
+      class="player-play-pause"
       onClick={() => {player.play_pause()}}
-      visible={bind(player, 'can_pause')}
+      visible={createBinding(player, 'can_pause')}
     >
       <icon
-        icon={bind(player, 'playback_status').as(s => {
+        icon={createBinding(player, 'playback_status').as(s => {
           switch (s) {
             case Mpris.PlaybackStatus.PLAYING: return PAUSE_ICON
             case Mpris.PlaybackStatus.PAUSED:
@@ -112,9 +113,9 @@ function Player({player}: {player: Mpris.Player}): JSX.Element {
 
   const prev = (
     <button
-      className="player-play-prev"
+      class="player-play-prev"
       onClick={() => {player.previous()}}
-      visible={bind(player, 'can_go_previous')}
+      visible={createBinding(player, 'can_go_previous')}
     >
       <icon icon={PREV_ICON} />
     </button>
@@ -122,16 +123,16 @@ function Player({player}: {player: Mpris.Player}): JSX.Element {
 
   const next = (
     <button
-      className="player-play-next"
+      class="player-play-next"
       onClick={() => {player.next()}}
-      visible={bind(player, 'can_go_next')}
+      visible={createBinding(player, 'can_go_next')}
     >
       <icon icon={NEXT_ICON} />
     </button>
   )
 
   return (
-    <box className="player">
+    <box class="player">
       {img}
       <box vertical hexpand>
         <box>
@@ -166,15 +167,15 @@ export default function Media(gdkmonitor: Gdk.Monitor) {
         Astal.WindowAnchor.TOP |
         Astal.WindowAnchor.RIGHT
       }
-      application={App}
+      application={app}
       visible={false}
     >
       <box
-        className="media"
+        class="media"
         vertical
-        visible={bind(mpris, 'players').as(players => players.length > 0)}
+        visible={createBinding(mpris, 'players').as(players => players.length > 0)}
       >
-        {bind(mpris, 'players').as(players => players.map(player => <Player player={player} />))}
+        {createBinding(mpris, 'players').as(players => players.map(player => <Player player={player} />))}
       </box>
     </window>
   )

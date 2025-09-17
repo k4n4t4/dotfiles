@@ -1,5 +1,5 @@
-import { App } from "astal/gtk3"
-import { bind, Variable } from "astal"
+import app from "ags/gtk4/app"
+import { createBinding, createState } from "ags"
 
 import Mpris from "gi://AstalMpris"
 
@@ -7,8 +7,8 @@ import Mpris from "gi://AstalMpris"
 export default function BarMpris(): JSX.Element {
   const mpris = Mpris.get_default()
 
-  const class_name = bind(Variable.derive([
-    bind(mpris, 'players'),
+  const class_name = createBinding(createState.derive([
+    createBinding(mpris, 'players'),
   ], (players) => {
     const class_names = ["bar-mpris"]
     if (players.length > 0) {
@@ -17,8 +17,8 @@ export default function BarMpris(): JSX.Element {
     return class_names.join(" ")
   }))
 
-  const tooltip_text = bind(Variable.derive([
-    bind(mpris, 'players'),
+  const tooltip_text = createBinding(createState.derive([
+    createBinding(mpris, 'players'),
   ], (players) => {
       let str = ""
       for (let player of players) {
@@ -27,11 +27,11 @@ export default function BarMpris(): JSX.Element {
       return str
   }))
 
-  const icon = bind(mpris, 'players').as(players => {
+  const icon = createBinding(mpris, 'players').as(players => {
     if (players.length > 0) {
       return (
-        <eventbox onClick={() => {App.toggle_window("Media")}}>
-          <box className={class_name}>
+        <eventbox onClick={() => {app.toggle_window("Media")}}>
+          <box class={class_name}>
             <label label="󰎆 " />
           </box>
         </eventbox>

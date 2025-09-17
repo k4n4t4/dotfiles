@@ -1,7 +1,9 @@
-import { App, Astal, Gdk, Gtk } from "astal/gtk3"
-import { Variable, bind, GLib } from "astal"
+import app from "ags/gtk4/app"
+import { Astal, Gdk, Gtk } from "ags/gtk4"
+import { createBinding, createState } from "ags"
 
 import Notifd from "gi://AstalNotifd"
+import GLib from "gi://GLib?version=2.0"
 
 
 function notificationIcon({ app_icon, desktop_entry, image }: Notifd.Notification): JSX.Element {
@@ -46,36 +48,36 @@ function notificationUrgency(urgency: Notifd.Urgency): string {
 }
 
 function Notification(notification: Notifd.Notification, setup: (self: JSX.Element) => void): JSX.Element {
-  const truncate = Variable(true)
+  const truncate = createState(true)
 
   const title = (
     <label
-      className="notification-title"
+      class="notification-title"
       tooltipText={notification.summary}
       label={notification.summary}
       max-width-char={30}
       hexpand
       use_markup
-      truncate={bind(truncate)}
+      truncate={createBinding(truncate)}
       halign={Gtk.Align.START}
     />
   )
 
   const body = (
     <label
-      className="notification-body"
+      class="notification-body"
       label={notification.body}
       max-width-char={30}
       hexpand
       use_markup
-      truncate={bind(truncate)}
+      truncate={createBinding(truncate)}
       halign={Gtk.Align.START}
     />
   )
 
   const time = (
     <label
-      className="notification-time"
+      class="notification-time"
       label={`${(new Date(notification.time * 1000)).toLocaleString()}`}
       hexpand
       use_markup
@@ -85,7 +87,7 @@ function Notification(notification: Notifd.Notification, setup: (self: JSX.Eleme
 
   const icon = (
     <box
-      className="notification-icon"
+      class="notification-icon"
       tooltipText={notification.app_name}
       expand
     >
@@ -95,7 +97,7 @@ function Notification(notification: Notifd.Notification, setup: (self: JSX.Eleme
 
   const actions = (
     <box
-      className="notification-actions"
+      class="notification-actions"
     >
       {notification.actions.map(action => {
         function onClick() {
@@ -104,7 +106,7 @@ function Notification(notification: Notifd.Notification, setup: (self: JSX.Eleme
         }
         return (
           <button
-            className="notification-actions-button"
+            class="notification-actions-button"
             onClick={onClick}
             hexpand
           >
@@ -133,7 +135,7 @@ function Notification(notification: Notifd.Notification, setup: (self: JSX.Eleme
       setup={setup}
     >
       <box
-        className={`notification notification-${notificationUrgency(notification.urgency)}`}
+        class={`notification notification-${notificationUrgency(notification.urgency)}`}
         vertical
       >
         <box>
@@ -154,7 +156,7 @@ function Notification(notification: Notifd.Notification, setup: (self: JSX.Eleme
 export default function Notifications(gdkmonitor: Gdk.Monitor) {
   const notifd = Notifd.get_default()
 
-  const notifications = bind(notifd, 'notifications').as(notifications => {
+  const notifications = createBinding(notifd, 'notifications').as(notifications => {
     const children: JSX.Element[] = []
 
     for (const notification of notifications.sort((a, b) => b.id - a.id)) {
@@ -174,10 +176,10 @@ export default function Notifications(gdkmonitor: Gdk.Monitor) {
         Astal.WindowAnchor.RIGHT
       }
       layer={Astal.Layer.OVERLAY}
-      application={App}
+      application={app}
       visible={false}
     >
-      <box className="notifications">
+      <box class="notifications">
         <scrollable
           vscroll={Gtk.PolicyType.AUTOMATIC}
           hscroll={Gtk.PolicyType.AUTOMATIC}

@@ -1,4 +1,4 @@
-import { bind } from "astal"
+import { createBinding } from "ags"
 
 import Hyprland from "gi://AstalHyprland"
 
@@ -6,13 +6,13 @@ import Hyprland from "gi://AstalHyprland"
 export default function BarWorkspaces(): JSX.Element {
   const hyprland = Hyprland.get_default()
 
-  const workspaces = bind(hyprland, 'workspaces').as(wss => {
+  const workspaces = createBinding(hyprland, 'workspaces').as(wss => {
     const children: any[] = []
 
     for (let i = wss.length - 1; i >= 0; i--) {
       const ws = wss[i]
 
-      const class_name = bind(hyprland, 'focused_workspace').as(focused_ws => {
+      const class_name = createBinding(hyprland, 'focused_workspace').as(focused_ws => {
         const class_names = ["bar-workspace"]
         if (ws.id === focused_ws.id) {
           class_names.push("bar-current-workspace")
@@ -27,7 +27,7 @@ export default function BarWorkspaces(): JSX.Element {
       children.push(
         <box data-id={ws.id}>
           <eventbox onClick={onClick}>
-            <box className={class_name}>
+            <box class={class_name}>
               <label label={ws.name} />
             </box>
           </eventbox>
@@ -43,7 +43,7 @@ export default function BarWorkspaces(): JSX.Element {
   })
 
   return (
-    <box className="bar-workspaces">
+    <box class="bar-workspaces">
       {workspaces}
     </box>
   )

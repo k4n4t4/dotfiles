@@ -1,5 +1,5 @@
-import { execAsync } from "astal/process"
-import { Variable, bind } from "astal"
+import { execAsync } from "ags/process"
+import { createBinding, createState } from "ags"
 
 import Network from "gi://AstalNetwork"
 
@@ -10,10 +10,10 @@ export default function BarNetwork(): JSX.Element {
 
   function BarNetWorkWifi(): JSX.Element {
 
-    const wifi_status = bind(Variable.derive([
-      bind(network.wifi, 'strength'),
-      bind(network.wifi, 'internet'),
-      bind(network.wifi, 'enabled'),
+    const wifi_status = createBinding(createState.derive([
+      createBinding(network.wifi, 'strength'),
+      createBinding(network.wifi, 'internet'),
+      createBinding(network.wifi, 'enabled'),
     ], (strength, internet, enabled) => {
       if (enabled) {
         switch (internet) {
@@ -37,9 +37,9 @@ export default function BarNetwork(): JSX.Element {
       }
     }))
 
-    const tooltip_text = bind(Variable.derive([
-      bind(network.wifi, 'ssid'),
-      bind(network.wifi, 'strength'),
+    const tooltip_text = createBinding(createState.derive([
+      createBinding(network.wifi, 'ssid'),
+      createBinding(network.wifi, 'strength'),
     ], (ssid, strength) => {
       return `${ssid || "Unknown"} (${strength})`
     }))
@@ -53,8 +53,8 @@ export default function BarNetwork(): JSX.Element {
 
   function BarNetWorkWired(): JSX.Element {
 
-    const wired_status = bind(Variable.derive([
-      bind(network.wifi, 'internet'),
+    const wired_status = createBinding(createState.derive([
+      createBinding(network.wifi, 'internet'),
     ], (internet) => {
       switch (internet) {
         case Network.Internet.CONNECTED:
@@ -123,7 +123,7 @@ export default function BarNetwork(): JSX.Element {
     <eventbox onClick={onClick}>
       <box className="bar-network">
         <stack
-          shown={bind(network, 'primary').as(
+          shown={createBinding(network, 'primary').as(
             (primary: Network.Primary): string => {
               switch (primary) {
                 case Network.Primary.UNKNOWN:

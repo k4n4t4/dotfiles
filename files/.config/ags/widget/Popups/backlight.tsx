@@ -1,5 +1,5 @@
-import { Astal } from "astal/gtk3"
-import { Variable, bind } from "astal"
+import { Astal } from "ags/gtk4"
+import { createBinding, createState } from "ags"
 
 import Backlight from "../../services/backlight"
 
@@ -14,25 +14,25 @@ export default function PopupBacklight(): JSX.Element {
 
   const label = (
     <label
-      className="popups-backlight-label"
+      class="popups-backlight-label"
       label="backlight"
     />
   )
 
   const slider = (
     <slider
-      className="popups-backlight-slider"
+      class="popups-backlight-slider"
       hexpand
       onDragged={onDragged}
-      value={bind(backlight, 'screen')}
+      value={createBinding(backlight, 'screen')}
     />
   )
 
   const status = (
     <label
-      className="popups-backlight-status"
-      label={bind(Variable.derive([
-        bind(backlight, 'screen'),
+      class="popups-backlight-status"
+      label={createBinding(createState.derive([
+        createBinding(backlight, 'screen'),
       ], (value) => {
         return `${Math.round(value * 100)}%`
       }))}
@@ -40,7 +40,7 @@ export default function PopupBacklight(): JSX.Element {
   )
 
   return (
-    <box vertical name="backlight" className="popups-backlight">
+    <box vertical name="backlight" class="popups-backlight">
       {label}
       {slider}
       {status}

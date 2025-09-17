@@ -1,7 +1,8 @@
-import { GLib } from "astal"
-import { Gtk, Astal } from "astal/gtk3"
-import { type EventBox } from "astal/gtk3/widget"
+import { Gtk, Astal } from "ags/gtk4"
+import { type EventBox } from "ags/gtk4/widget"
 import Notifd from "gi://AstalNotifd"
+
+import GLib from "gi://GLib?version=2.0"
 
 const isIcon = (icon: string) =>
   !!Astal.Icon.lookup_icon(icon)

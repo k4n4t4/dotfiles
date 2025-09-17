@@ -1,4 +1,4 @@
-import { App } from "astal/gtk3"
+import app from "ags/gtk4/app"
 
 import style from "./style.scss"
 
@@ -9,10 +9,10 @@ import Notifications from "./widget/Notifications"
 import NotificationPopups from "./widget/NotificationPopups"
 
 
-App.start({
+app.start({
   css: style,
   main() {
-    App.get_monitors().map(m => {
+    app.get_monitors().map(m => {
       Bar(m)
       Popups(m)
       Media(m)

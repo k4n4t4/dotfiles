@@ -1,4 +1,4 @@
-import { Variable, bind } from "astal"
+import { createBinding, createState } from "ags"
 
 import Wp from "gi://AstalWp"
 
@@ -9,9 +9,9 @@ export default function BarAudio(): JSX.Element {
   const mic = wp?.audio.default_microphone!
 
 
-  const audio_status = bind(Variable.derive([
-    bind(audio, 'volume'),
-    bind(audio, 'mute'),
+  const audio_status = createBinding(createState.derive([
+    createBinding(audio, 'volume'),
+    createBinding(audio, 'mute'),
   ], (volume, isMuted) => {
     if (isMuted) {
       return "󰝟"
@@ -26,11 +26,11 @@ export default function BarAudio(): JSX.Element {
     }
   }))
 
-  const tooltip_text = bind(Variable.derive([
-    bind(audio, 'volume'),
-    bind(audio, 'mute'),
-    bind(mic, 'volume'),
-    bind(mic, 'mute'),
+  const tooltip_text = createBinding(createState.derive([
+    createBinding(audio, 'volume'),
+    createBinding(audio, 'mute'),
+    createBinding(mic, 'volume'),
+    createBinding(mic, 'mute'),
   ], (volume, isMuted, mic_volume, mic_isMuted) => {
     return `volume: ${Math.round(volume * 100)}%${isMuted ? " mute" : ""}\n`
          + `mic-volume: ${Math.round(mic_volume * 100)}%${mic_isMuted ? " mute" : ""}`

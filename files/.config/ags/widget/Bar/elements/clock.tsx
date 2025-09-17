@@ -1,5 +1,5 @@
-import { Astal, Gtk } from "astal/gtk3"
-import { Variable, bind } from "astal"
+import { Astal, Gtk } from "ags/gtk4"
+import { createBinding, createState } from "ags"
 
 
 type clock = {
@@ -20,7 +20,7 @@ type clock_params = {
 
 export default function BarClock(params: clock_params): JSX.Element {
 
-  const CLOCK = Variable({}).poll(1000, () => {
+  const CLOCK = createState({}).poll(1000, () => {
     const date = new Date()
     const days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"]
     return {
@@ -34,8 +34,8 @@ export default function BarClock(params: clock_params): JSX.Element {
     }
   })
 
-  const show_seconds = Variable(params.show_seconds)
-  const show_date = Variable(params.show_date)
+  const show_seconds = createState(params.show_seconds)
+  const show_date = createState(params.show_date)
 
   const seconds = CLOCK((clock: clock): string => {
     return `:${clock.seconds}`
@@ -51,7 +51,7 @@ export default function BarClock(params: clock_params): JSX.Element {
     <revealer
       transitionDuration={500}
       transitionType={Gtk.RevealerTransitionType.SLIDE_RIGHT}
-      revealChild={bind(show_seconds)} >
+      revealChild={createBinding(show_seconds)} >
       <label label={seconds} />
     </revealer>
   )
@@ -60,7 +60,7 @@ export default function BarClock(params: clock_params): JSX.Element {
     <revealer
       transitionDuration={500}
       transitionType={Gtk.RevealerTransitionType.SLIDE_LEFT}
-      revealChild={bind(show_date)} >
+      revealChild={createBinding(show_date)} >
       <label label={date} />
     </revealer>
   )
@@ -82,7 +82,7 @@ export default function BarClock(params: clock_params): JSX.Element {
 
   return (
     <eventbox onClick={onClick}>
-      <box className="bar-clock">
+      <box class="bar-clock">
         {revealer_left}
         {label}
         {revealer_right}

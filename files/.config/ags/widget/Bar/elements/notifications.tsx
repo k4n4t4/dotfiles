@@ -1,5 +1,6 @@
-import { App, Astal } from "astal/gtk3"
-import { bind } from "astal"
+import app from "ags/gtk4/app"
+import { Astal } from "ags/gtk4"
+import { createBinding } from "ags"
 
 import Notifd from "gi://AstalNotifd"
 
@@ -7,7 +8,7 @@ import Notifd from "gi://AstalNotifd"
 export default function BarNotifications(): JSX.Element {
   const notifd = Notifd.get_default()
 
-  const class_name = bind(notifd, 'notifications').as(n => {
+  const class_name = createBinding(notifd, 'notifications').as(n => {
     const class_names = ["bar-notifications"]
     if (n.length > 0) {
       class_names.push("bar-notifications-exist")
@@ -15,9 +16,9 @@ export default function BarNotifications(): JSX.Element {
     return class_names.join(" ")
   })
 
-  const tooltip_text = bind(notifd, 'notifications').as(n => `${n.length}`)
+  const tooltip_text = createBinding(notifd, 'notifications').as(n => `${n.length}`)
 
-  const icon = bind(notifd, 'notifications').as(n => {
+  const icon = createBinding(notifd, 'notifications').as(n => {
     if (n.length > 0) {
       return " "
     } else {
@@ -28,14 +29,14 @@ export default function BarNotifications(): JSX.Element {
   function onClick(_self: Astal.EventBox, event: Astal.ClickEvent) {
     switch (event.button) {
       case Astal.MouseButton.PRIMARY:
-        App.toggle_window("Notifications")
+        app.toggle_window("Notifications")
         break
     }
   }
 
   return (
     <eventbox onClick={onClick}>
-      <box className={class_name} >
+      <box class={class_name} >
         <label tooltipText={tooltip_text} label={icon} />
       </box>
     </eventbox>

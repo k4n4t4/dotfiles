@@ -1,4 +1,5 @@
-import { App, Astal, Gdk, Gtk } from "astal/gtk3"
+import app from "ags/gtk4/app"
+import { Astal, Gdk, Gtk } from "ags/gtk4"
 
 import Clock from "./elements/clock"
 import Battery from "./elements/battery"
@@ -27,19 +28,19 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
       margin-top={1}
       margin-left={1}
       margin-right={1}
-      application={App}
+      application={app}
       layer={Astal.Layer.BOTTOM}
     >
-      <box className="bar">
+      <box class="bar">
         <centerbox>
-          <box hexpand halign={Gtk.Align.START} className="bar-left">
+          <box hexpand halign={Gtk.Align.START} class="bar-left">
             <Workspaces />
             <Submap />
           </box>
-          <box halign={Gtk.Align.CENTER} className="bar-center">
+          <box halign={Gtk.Align.CENTER} class="bar-center">
             <Title />
           </box>
-          <box hexpand halign={Gtk.Align.END} className="bar-right">
+          <box hexpand halign={Gtk.Align.END} class="bar-right">
             <SystemTray show_items={[
               "Input Method",
             ]} reveal={false} />

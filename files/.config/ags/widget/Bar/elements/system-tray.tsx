@@ -1,5 +1,5 @@
-import { Astal, Gtk } from "astal/gtk3"
-import { bind, Variable } from "astal"
+import { Astal, Gtk } from "ags/gtk4"
+import { createBinding, createState } from "ags"
 
 import Tray from "gi://AstalTray"
 
@@ -13,12 +13,12 @@ function BarSystemTrayItem(item: Tray.TrayItem): JSX.Element {
   return (
     <box>
       <menubutton
-        className="bar-systemtray-item"
-        tooltipMarkup={bind(item, 'tooltipMarkup')}
+        class="bar-systemtray-item"
+        tooltipMarkup={createBinding(item, 'tooltipMarkup')}
         usePopover={false}
-        actionGroup={bind(item, 'actionGroup').as(ag => ['dbusmenu', ag])}
-        menuModel={bind(item, 'menuModel')}>
-        <icon gicon={bind(item, 'gicon')} />
+        actionGroup={createBinding(item, 'actionGroup').as(ag => ['dbusmenu', ag])}
+        menuModel={createBinding(item, 'menuModel')}>
+        <icon gicon={createBinding(item, 'gicon')} />
       </menubutton>
     </box>
   )
@@ -27,11 +27,11 @@ function BarSystemTrayItem(item: Tray.TrayItem): JSX.Element {
 export default function BarSystemTray(params: systemtray_params): JSX.Element {
   const tray = Tray.get_default()
 
-  const reveal = Variable(params.reveal || false)
+  const reveal = createState(params.reveal || false)
   const show_items = params.show_items || []
 
 
-  const system_tray_items = bind(tray, 'items').as(items => {
+  const system_tray_items = createBinding(tray, 'items').as(items => {
 
     const children = []
     const hide_children = []
@@ -55,8 +55,8 @@ export default function BarSystemTray(params: systemtray_params): JSX.Element {
 
     const reveal_button = hide_children.length > 0 ? (
       <eventbox onClick={onClick}>
-        <box className="bar-systemtray-reveal-button">
-          <label label={bind(reveal).as(b => {
+        <box class="bar-systemtray-reveal-button">
+          <label label={createBinding(reveal).as(b => {
             if (b) {
               return " "
             } else {
@@ -70,19 +70,19 @@ export default function BarSystemTray(params: systemtray_params): JSX.Element {
     )
 
     return (
-      <box className={"bar-systemtray bar-systemtray-" + (children.length + hide_children.length > 0 ? "exist" : "empty")}>
-        <box className={"bar-systemtray-hide-items bar-systemtray-hide-items-" + (hide_children.length > 0 ? "exist" : "empty")}>
+      <box class={"bar-systemtray bar-systemtray-" + (children.length + hide_children.length > 0 ? "exist" : "empty")}>
+        <box class={"bar-systemtray-hide-items bar-systemtray-hide-items-" + (hide_children.length > 0 ? "exist" : "empty")}>
           <revealer
             transitionDuration={500}
             transitionType={Gtk.RevealerTransitionType.SLIDE_RIGHT}
-            revealChild={bind(reveal)} >
+            revealChild={createBinding(reveal)} >
             <box>
               {hide_children}
             </box>
           </revealer>
         </box>
         {reveal_button}
-        <box className={"bar-systemtray-items bar-systemtray-items-" + (children.length > 0 ? "exist" : "empty")}>
+        <box class={"bar-systemtray-items bar-systemtray-items-" + (children.length > 0 ? "exist" : "empty")}>
           {children}
         </box>
       </box>
