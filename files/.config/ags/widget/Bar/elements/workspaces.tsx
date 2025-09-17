@@ -20,17 +20,17 @@ export default function BarWorkspaces(): JSX.Element {
         return class_names.join(" ")
       })
 
-      function onClick() {
+      function onClicked() {
         hyprland.dispatch("workspace", ws.name)
       }
 
       children.push(
         <box data-id={ws.id}>
-          <eventbox onClick={onClick}>
+          <button onClicked={onClicked}>
             <box class={class_name}>
               <label label={ws.name} />
             </box>
-          </eventbox>
+          </button>
         </box>
       )
     }
