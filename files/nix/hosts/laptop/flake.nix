@@ -11,6 +11,7 @@
     };
 
     ags.url = "github:aylur/ags";
+    astal.url = "github:aylur/astal";
   };
 
   outputs = inputs: let
