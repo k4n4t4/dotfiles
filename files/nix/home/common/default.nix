@@ -1,8 +1,8 @@
 { inputs, pkgs, lib, config, ... }:
 {
   imports = [
-    ../../modules/homes/clitools
-    ../../modules/homes/nvim
+    ../../modules/home/clitools
+    ../../modules/home/nvim
   ];
 
   programs.home-manager.enable = true;

@@ -1,10 +1,10 @@
 { inputs, pkgs, lib, config, ... }:
 {
   imports = [
-    ../../modules/homes/clitools
-    ../../modules/homes/nvim
-    ../../modules/homes/ags
-    ../../modules/homes/fcitx5
+    ../../modules/home/clitools
+    ../../modules/home/nvim
+    ../../modules/home/ags
+    ../../modules/home/fcitx5
   ];
 
   nixpkgs.config.allowUnfree = true;
