@@ -25,7 +25,6 @@
       else
         "/home/${username}"
       ;
-
     pkgs = nixpkgs.legacyPackages.${system};
 
     makeUser = { username, usergroup ? username }: {
