@@ -17,8 +17,6 @@
       delta
       trash-cli
       tmux
-      nodejs
-      nodePackages.npm
       gh
     ];
   };
