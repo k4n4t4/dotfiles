@@ -7,6 +7,7 @@
       fcitx5-gtk
     ];
   };
+
   home = {
     sessionVariables = {
       GTK_IM_MODULE = "fcitx";

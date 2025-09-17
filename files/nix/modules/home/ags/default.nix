@@ -4,16 +4,13 @@
     inputs.ags.homeManagerModules.default
   ];
 
-  home.packages = with pkgs; [
-    nodejs
-    nodePackages.npm
-  ];
-
   programs.ags = {
     enable = true;
     extraPackages = let
       agsPkgs = inputs.ags.packages.${pkgs.system};
     in with pkgs; [
+      nodejs
+      nodePackages.npm
       agsPkgs.apps
       agsPkgs.auth
       agsPkgs.battery
