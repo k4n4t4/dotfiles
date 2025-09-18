@@ -1,4 +1,4 @@
-import { createBinding } from "ags"
+import { createBinding, For } from "ags"
 
 import Hyprland from "gi://AstalHyprland"
 
@@ -25,7 +25,7 @@ export default function BarWorkspaces(): JSX.Element {
       }
 
       children.push(
-        <box data-id={ws.id}>
+        <box class={`ws_${ws.id}`}>
           <button onClicked={onClicked}>
             <box class={class_name}>
               <label label={ws.name} />
@@ -44,7 +44,9 @@ export default function BarWorkspaces(): JSX.Element {
 
   return (
     <box class="bar-workspaces">
-      {workspaces}
+      <For each={workspaces}>
+        {workspace => workspace}
+      </For>
     </box>
   )
 }
