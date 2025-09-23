@@ -1,4 +1,4 @@
-import { createBinding, createState } from "ags"
+import { createBinding, createState, With } from "ags"
 
 import Hyprland from "gi://AstalHyprland"
 
@@ -6,15 +6,15 @@ import Hyprland from "gi://AstalHyprland"
 export default function BarSubmap(): JSX.Element {
   const hyprland = Hyprland.get_default()
 
-  const current_submap = createState("");
+  const [current_submap, set_current_submap] = createState("");
 
   createBinding(hyprland, "connect")
 
   hyprland.connect("submap", (_, name) => {
-    current_submap.set(name)
+    set_current_submap(name)
   })
 
-  const submap = createBinding(current_submap).as(name => {
+  const submap = current_submap.as(name => {
     if (name === "") {
       return (
         <box />
@@ -30,7 +30,9 @@ export default function BarSubmap(): JSX.Element {
 
   return (
     <box>
-      {submap}
+      <With value={submap}>
+        {submap => submap}
+      </With>
     </box>
   )
 }

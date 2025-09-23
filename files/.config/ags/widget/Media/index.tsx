@@ -1,6 +1,6 @@
 import app from "ags/gtk4/app"
 import { Astal, Gdk } from "ags/gtk4"
-import { createBinding, createState } from "ags"
+import { createBinding, createComputed, For } from "ags"
 
 import Mpris from "gi://AstalMpris"
 
@@ -46,16 +46,16 @@ function Player({player}: {player: Mpris.Player}): JSX.Element {
     <slider
       class="player-position"
       draw_value={false}
-      onDragged={self => {
+      onChangeValue={self => {
         player.position = self.value * player.length
       }}
-      value={createBinding(createState.derive([
+      value={createComputed([
         createBinding(player, 'position'),
         createBinding(player, 'length'),
       ], (pos, len) => {
         const value = pos / len
         return value > 0 ? value : 0
-      }))}
+      })}
       visible={createBinding(player, 'length').as(len => len > 0)}
     />
   )
@@ -63,12 +63,12 @@ function Player({player}: {player: Mpris.Player}): JSX.Element {
   const position_label = (
     <label
       class="player-position-label"
-      label={createBinding(createState.derive([
+      label={createComputed([
         createBinding(player, 'position'),
         createBinding(player, 'length'),
       ], (pos, len) => {
         return lengthStr(len > 0 ? pos : 0)
-      }))}
+      })}
       wrap
     />
   )
@@ -82,11 +82,11 @@ function Player({player}: {player: Mpris.Player}): JSX.Element {
   )
 
   const icon = (
-    <icon
+    <image
       class="player-icon"
       hexpand
       tooltipText={player.identity || ""}
-      icon={createBinding(player, 'entry').as(entry => {
+      iconName={createBinding(player, 'entry').as(entry => {
         const name = `${entry}-symbolic`
         return Astal.Icon.lookup_icon(name) ? name : FALLBACK_ICON
       })}
@@ -96,11 +96,11 @@ function Player({player}: {player: Mpris.Player}): JSX.Element {
   const pause = (
     <button
       class="player-play-pause"
-      onClick={() => {player.play_pause()}}
+      onClicked={() => {player.play_pause()}}
       visible={createBinding(player, 'can_pause')}
     >
-      <icon
-        icon={createBinding(player, 'playback_status').as(s => {
+      <image
+        iconName={createBinding(player, 'playback_status').as(s => {
           switch (s) {
             case Mpris.PlaybackStatus.PLAYING: return PAUSE_ICON
             case Mpris.PlaybackStatus.PAUSED:
@@ -114,27 +114,27 @@ function Player({player}: {player: Mpris.Player}): JSX.Element {
   const prev = (
     <button
       class="player-play-prev"
-      onClick={() => {player.previous()}}
+      onClicked={() => {player.previous()}}
       visible={createBinding(player, 'can_go_previous')}
     >
-      <icon icon={PREV_ICON} />
+      <image iconName={PREV_ICON} />
     </button>
   )
 
   const next = (
     <button
       class="player-play-next"
-      onClick={() => {player.next()}}
+      onClicked={() => {player.next()}}
       visible={createBinding(player, 'can_go_next')}
     >
-      <icon icon={NEXT_ICON} />
+      <image iconName={NEXT_ICON} />
     </button>
   )
 
   return (
     <box class="player">
       {img}
-      <box vertical hexpand>
+      <box hexpand>
         <box>
           {title}
           {icon}
@@ -158,6 +158,10 @@ function Player({player}: {player: Mpris.Player}): JSX.Element {
 
 export default function Media(gdkmonitor: Gdk.Monitor) {
   const mpris = Mpris.get_default()
+
+  const visible = createBinding(mpris, 'players').as(players => players.length > 0)
+  const players = createBinding(mpris, 'players').as(players => players.map(player => <Player player={player} />))
+
   return (
     <window
       name="Media"
@@ -172,10 +176,11 @@ export default function Media(gdkmonitor: Gdk.Monitor) {
     >
       <box
         class="media"
-        vertical
-        visible={createBinding(mpris, 'players').as(players => players.length > 0)}
+        visible={visible}
       >
-        {createBinding(mpris, 'players').as(players => players.map(player => <Player player={player} />))}
+        <For each={players}>
+          {b => b}
+        </For>
       </box>
     </window>
   )

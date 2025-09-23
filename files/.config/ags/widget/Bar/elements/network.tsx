@@ -1,5 +1,5 @@
 import { execAsync } from "ags/process"
-import { createBinding, createState } from "ags"
+import { createBinding, createComputed } from "ags"
 
 import Network from "gi://AstalNetwork"
 
@@ -10,7 +10,7 @@ export default function BarNetwork(): JSX.Element {
 
   function BarNetWorkWifi(): JSX.Element {
 
-    const wifi_status = createBinding(createState.derive([
+    const wifi_status = createComputed([
       createBinding(network.wifi, 'strength'),
       createBinding(network.wifi, 'internet'),
       createBinding(network.wifi, 'enabled'),
@@ -34,18 +34,20 @@ export default function BarNetwork(): JSX.Element {
           case Network.Internet.DISCONNECTED:
             return "󰤮 "
         }
+      } else {
+        return ""
       }
-    }))
+    })
 
-    const tooltip_text = createBinding(createState.derive([
+    const tooltip_text = createComputed([
       createBinding(network.wifi, 'ssid'),
       createBinding(network.wifi, 'strength'),
     ], (ssid, strength) => {
       return `${ssid || "Unknown"} (${strength})`
-    }))
+    })
 
     return (
-      <box name="wifi" className="bar-network-wifi">
+      <box $type="named" name="wifi" class="bar-network-wifi">
         <label tooltipText={tooltip_text} label={wifi_status} />
       </box>
     )
@@ -53,7 +55,7 @@ export default function BarNetwork(): JSX.Element {
 
   function BarNetWorkWired(): JSX.Element {
 
-    const wired_status = createBinding(createState.derive([
+    const wired_status = createComputed([
       createBinding(network.wifi, 'internet'),
     ], (internet) => {
       switch (internet) {
@@ -62,10 +64,10 @@ export default function BarNetwork(): JSX.Element {
         default:
           return ""
       }
-    }))
+    })
 
     return (
-      <box name="wired" className="bar-network-wired">
+      <box $type="named" name="wired" class="bar-network-wired">
         <label label={wired_status} />
       </box>
     )
@@ -73,7 +75,7 @@ export default function BarNetwork(): JSX.Element {
 
   function BarNetWorkUnknown(): JSX.Element {
     return (
-      <box name="unknown" className="bar-network-unknown">
+      <box $type="named" name="unknown" class="bar-network-unknown">
         <label label="?" />
       </box>
     )
@@ -120,10 +122,10 @@ export default function BarNetwork(): JSX.Element {
 
 
   return (
-    <eventbox onClick={onClick}>
-      <box className="bar-network">
+    <button onClicked={onClick}>
+      <box class="bar-network">
         <stack
-          shown={createBinding(network, 'primary').as(
+          visibleChildName={createBinding(network, 'primary').as(
             (primary: Network.Primary): string => {
               switch (primary) {
                 case Network.Primary.UNKNOWN:
@@ -142,6 +144,6 @@ export default function BarNetwork(): JSX.Element {
           ]}
         />
       </box>
-    </eventbox>
+    </button>
   )
 }

@@ -1,4 +1,4 @@
-import { createBinding, createState } from "ags"
+import { createBinding, createComputed } from "ags"
 
 import Battery from "gi://AstalBattery"
 import PowerProfiles from "gi://AstalPowerProfiles"
@@ -25,7 +25,7 @@ export default function BarBattery(): JSX.Element {
 
   if (battery.deviceType === 0) return (<box />)
 
-  const bat_status = createBinding(createState.derive([
+  const bat_status = createComputed([
     createBinding(battery, 'percentage'),
     createBinding(battery, 'charging'),
     createBinding(powerprofiles, 'active_profile'),
@@ -38,9 +38,9 @@ export default function BarBattery(): JSX.Element {
     label += charging ? "󱐋" : ""
 
     return label
-  }))
+  })
 
-  const class_name = createBinding(createState.derive([
+  const class_name = createComputed([
     createBinding(battery, 'percentage'),
     createBinding(battery, 'charging'),
     createBinding(powerprofiles, 'active_profile'),
@@ -68,19 +68,19 @@ export default function BarBattery(): JSX.Element {
     class_names.push(`bar-battery-profile-${profile}`)
 
     return class_names.join(" ")
-  }))
+  })
 
-  const tooltip_text = createBinding(createState.derive([
+  const tooltip_text = createComputed([
     createBinding(battery, 'percentage'),
     createBinding(battery, 'charging'),
     createBinding(powerprofiles, 'active_profile'),
   ], (percentage, charging, profile) => {
     const percent = percentage * 100
     return `${percent}% (${charging ? "charging": "not charging"})\n${profile}`
-  }))
+  })
 
 
-  function onClick() {
+  function onClicked() {
     switch (powerprofiles.active_profile) {
       case 'balanced':
         powerprofiles.active_profile = 'power-saver'
@@ -92,10 +92,10 @@ export default function BarBattery(): JSX.Element {
   }
 
   return (
-    <eventbox onClick={onClick}>
+    <button onClicked={onClicked}>
       <box class={class_name}>
         <label tooltipText={tooltip_text} label={bat_status} />
       </box>
-    </eventbox>
+    </button>
   )
 }

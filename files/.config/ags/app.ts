@@ -4,7 +4,7 @@ import style from "./style.scss"
 
 import Bar from "./widget/Bar"
 // import Popups from "./widget/Popups"
-// import Media from "./widget/Media"
+import Media from "./widget/Media"
 // import Notifications from "./widget/Notifications"
 // import NotificationPopups from "./widget/NotificationPopups"
 
@@ -15,7 +15,7 @@ app.start({
     app.get_monitors().map(m => {
       Bar(m)
       // Popups(m)
-      // Media(m)
+      Media(m)
       // Notifications(m)
       // NotificationPopups(m)
     })

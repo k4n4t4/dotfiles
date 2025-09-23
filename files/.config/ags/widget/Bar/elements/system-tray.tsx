@@ -1,5 +1,5 @@
-import { Astal, Gtk } from "ags/gtk4"
-import { createBinding, createState } from "ags"
+import { Gtk } from "ags/gtk4"
+import { createBinding, createState, With } from "ags"
 
 import Tray from "gi://AstalTray"
 
@@ -15,10 +15,8 @@ function BarSystemTrayItem(item: Tray.TrayItem): JSX.Element {
       <menubutton
         class="bar-systemtray-item"
         tooltipMarkup={createBinding(item, 'tooltipMarkup')}
-        usePopover={false}
-        actionGroup={createBinding(item, 'actionGroup').as(ag => ['dbusmenu', ag])}
-        menuModel={createBinding(item, 'menuModel')}>
-        <icon gicon={createBinding(item, 'gicon')} />
+        menuModel={createBinding(item, 'menuModel')}
+        iconName={createBinding(item, 'iconName')}>
       </menubutton>
     </box>
   )
@@ -27,7 +25,7 @@ function BarSystemTrayItem(item: Tray.TrayItem): JSX.Element {
 export default function BarSystemTray(params: systemtray_params): JSX.Element {
   const tray = Tray.get_default()
 
-  const reveal = createState(params.reveal || false)
+  const [reveal, setReveal] = createState(params.reveal || false)
   const show_items = params.show_items || []
 
 
@@ -44,19 +42,10 @@ export default function BarSystemTray(params: systemtray_params): JSX.Element {
       }
     }
 
-    function onClick(_self: Astal.EventBox, event: Astal.ClickEvent) {
-      switch (event.button) {
-        case Astal.MouseButton.PRIMARY:
-        case Astal.MouseButton.SECONDARY:
-          reveal.set(!reveal.get())
-          break
-      }
-    }
-
     const reveal_button = hide_children.length > 0 ? (
-      <eventbox onClick={onClick}>
+      <button onClicked={() => setReveal(!reveal.get())}>
         <box class="bar-systemtray-reveal-button">
-          <label label={createBinding(reveal).as(b => {
+          <label label={reveal.as(b => {
             if (b) {
               return " "
             } else {
@@ -64,7 +53,7 @@ export default function BarSystemTray(params: systemtray_params): JSX.Element {
             }
           })} />
         </box>
-      </eventbox>
+      </button>
     ) : (
       <box />
     )
@@ -75,7 +64,7 @@ export default function BarSystemTray(params: systemtray_params): JSX.Element {
           <revealer
             transitionDuration={500}
             transitionType={Gtk.RevealerTransitionType.SLIDE_RIGHT}
-            revealChild={createBinding(reveal)} >
+            revealChild={reveal} >
             <box>
               {hide_children}
             </box>
@@ -92,7 +81,9 @@ export default function BarSystemTray(params: systemtray_params): JSX.Element {
 
   return (
     <box>
-      {system_tray_items}
+      <With value={system_tray_items}>
+        {system_tray_items => system_tray_items}
+      </With>
     </box>
   )
 }

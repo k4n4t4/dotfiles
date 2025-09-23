@@ -1,5 +1,4 @@
 import app from "ags/gtk4/app"
-import { Astal } from "ags/gtk4"
 import { createBinding } from "ags"
 
 import Notifd from "gi://AstalNotifd"
@@ -26,19 +25,11 @@ export default function BarNotifications(): JSX.Element {
     }
   })
 
-  function onClick(_self: Astal.EventBox, event: Astal.ClickEvent) {
-    switch (event.button) {
-      case Astal.MouseButton.PRIMARY:
-        app.toggle_window("Notifications")
-        break
-    }
-  }
-
   return (
-    <eventbox onClick={onClick}>
+    <button onClicked={() => app.toggle_window("Notifications")}>
       <box class={class_name} >
         <label tooltipText={tooltip_text} label={icon} />
       </box>
-    </eventbox>
+    </button>
   )
 }

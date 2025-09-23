@@ -1,4 +1,4 @@
-import { createBinding, createState } from "ags"
+import { createBinding, createComputed } from "ags"
 
 import Wp from "gi://AstalWp"
 
@@ -9,7 +9,7 @@ export default function BarAudio(): JSX.Element {
   const mic = wp?.audio.default_microphone!
 
 
-  const audio_status = createBinding(createState.derive([
+  const audio_status = createComputed([
     createBinding(audio, 'volume'),
     createBinding(audio, 'mute'),
   ], (volume, isMuted) => {
@@ -24,9 +24,9 @@ export default function BarAudio(): JSX.Element {
         return "󰕿"
       }
     }
-  }))
+  })
 
-  const tooltip_text = createBinding(createState.derive([
+  const tooltip_text = createComputed([
     createBinding(audio, 'volume'),
     createBinding(audio, 'mute'),
     createBinding(mic, 'volume'),
@@ -34,10 +34,10 @@ export default function BarAudio(): JSX.Element {
   ], (volume, isMuted, mic_volume, mic_isMuted) => {
     return `volume: ${Math.round(volume * 100)}%${isMuted ? " mute" : ""}\n`
          + `mic-volume: ${Math.round(mic_volume * 100)}%${mic_isMuted ? " mute" : ""}`
-  }))
+  })
 
   return (
-    <box className="bar-audio">
+    <box class="bar-audio">
       <label tooltipText={tooltip_text} label={audio_status} />
     </box>
   )

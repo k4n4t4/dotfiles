@@ -1,21 +1,22 @@
-import { createBinding, createState } from "ags"
+import Pango from "gi://Pango?version=1.0"
 
+import { createState } from "ags"
 import Hyprland from "gi://AstalHyprland"
 
 
 export default function BarTitle(): JSX.Element {
   const hyprland = Hyprland.get_default()
 
-  const label = createState("")
+  const [label, set_label] = createState("")
   hyprland.connect('event', (_source, event) => {
     switch (event) {
       case 'activewindowv2':
       case 'windowtitle':
       case 'windowtitlev2':
         if (hyprland.focused_client) {
-          label.set(hyprland.focused_client.title)
+          set_label(hyprland.focused_client.title)
         } else {
-          label.set("")
+          set_label("")
         }
         break
     }
@@ -23,7 +24,7 @@ export default function BarTitle(): JSX.Element {
 
   return (
     <box class="bar-title" >
-      <label truncate max-width-chars={50} label={createBinding(label)} />
+      <label ellipsize={Pango.EllipsizeMode.END} max-width-chars={-1} label={label} />
     </box>
   )
 }

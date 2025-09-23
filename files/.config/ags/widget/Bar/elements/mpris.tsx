@@ -1,5 +1,5 @@
 import app from "ags/gtk4/app"
-import { createBinding, createState } from "ags"
+import { createBinding, createComputed, With } from "ags"
 
 import Mpris from "gi://AstalMpris"
 
@@ -7,7 +7,7 @@ import Mpris from "gi://AstalMpris"
 export default function BarMpris(): JSX.Element {
   const mpris = Mpris.get_default()
 
-  const class_name = createBinding(createState.derive([
+  const class_name = createComputed([
     createBinding(mpris, 'players'),
   ], (players) => {
     const class_names = ["bar-mpris"]
@@ -15,9 +15,9 @@ export default function BarMpris(): JSX.Element {
       class_names.push("bar-mpris-exist-player")
     }
     return class_names.join(" ")
-  }))
+  })
 
-  const tooltip_text = createBinding(createState.derive([
+  const tooltip_text = createComputed([
     createBinding(mpris, 'players'),
   ], (players) => {
       let str = ""
@@ -25,16 +25,16 @@ export default function BarMpris(): JSX.Element {
         str += player.title + "\n"
       }
       return str
-  }))
+  })
 
   const icon = createBinding(mpris, 'players').as(players => {
     if (players.length > 0) {
       return (
-        <eventbox onClick={() => {app.toggle_window("Media")}}>
+        <button onClicked={() => {app.toggle_window("Media")}}>
           <box class={class_name}>
-            <label label="󰎆 " />
+            <label tooltipText={tooltip_text} label="󰎆 " />
           </box>
-        </eventbox>
+        </button>
       )
     } else {
       return <box />
@@ -43,7 +43,9 @@ export default function BarMpris(): JSX.Element {
 
   return (
     <box>
-      {icon}
+      <With value={icon}>
+        {icon => icon}
+      </With>
     </box>
   )
 }

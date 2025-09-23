@@ -1,4 +1,4 @@
-import { createBinding } from "ags"
+import { createBinding, With } from "ags"
 
 import Bluetooth from "gi://AstalBluetooth"
 
@@ -26,7 +26,9 @@ export default function BarBluetooth(): JSX.Element {
 
   return (
     <box>
-      {icon}
+      <With value={icon}>
+        {icon => icon}
+      </With>
     </box>
   )
 }

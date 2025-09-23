@@ -1,6 +1,6 @@
-import { Astal, Gtk } from "ags/gtk4"
-import { createBinding, createState } from "ags"
-
+import { Gtk } from "ags/gtk4"
+import { createState } from "ags"
+import { createPoll } from "ags/time"
 
 type clock = {
   month?: string,
@@ -13,14 +13,14 @@ type clock = {
 }
 
 type clock_params = {
-  show_date?: boolean
-  show_seconds?: boolean
+  show_date: boolean
+  show_seconds: boolean
 }
 
 
 export default function BarClock(params: clock_params): JSX.Element {
 
-  const CLOCK = createState({}).poll(1000, () => {
+  const CLOCK = createPoll<clock>({}, 1000, () => {
     const date = new Date()
     const days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"]
     return {
@@ -34,8 +34,8 @@ export default function BarClock(params: clock_params): JSX.Element {
     }
   })
 
-  const show_seconds = createState(params.show_seconds)
-  const show_date = createState(params.show_date)
+  const [show_seconds, set_show_seconds] = createState(params.show_seconds)
+  const [show_date, set_show_date] = createState(params.show_date)
 
   const seconds = CLOCK((clock: clock): string => {
     return `:${clock.seconds}`
@@ -51,7 +51,7 @@ export default function BarClock(params: clock_params): JSX.Element {
     <revealer
       transitionDuration={500}
       transitionType={Gtk.RevealerTransitionType.SLIDE_RIGHT}
-      revealChild={createBinding(show_seconds)} >
+      revealChild={show_seconds} >
       <label label={seconds} />
     </revealer>
   )
@@ -60,7 +60,7 @@ export default function BarClock(params: clock_params): JSX.Element {
     <revealer
       transitionDuration={500}
       transitionType={Gtk.RevealerTransitionType.SLIDE_LEFT}
-      revealChild={createBinding(show_date)} >
+      revealChild={show_date} >
       <label label={date} />
     </revealer>
   )
@@ -68,25 +68,19 @@ export default function BarClock(params: clock_params): JSX.Element {
   const label = (<label label={time} />)
 
 
-  function onClick(_self: Astal.EventBox, event: Astal.ClickEvent) {
-    switch (event.button) {
-      case Astal.MouseButton.PRIMARY:
-        show_seconds.set(!show_seconds.get())
-        break
-      case Astal.MouseButton.SECONDARY:
-        show_date.set(!show_date.get())
-        break
-    }
+  function onClicked() {
+    set_show_seconds(!show_seconds.get())
+    set_show_date(!show_date.get())
   }
 
 
   return (
-    <eventbox onClick={onClick}>
+    <button onClicked={onClicked}>
       <box class="bar-clock">
         {revealer_left}
         {label}
         {revealer_right}
       </box>
-    </eventbox>
+    </button>
   )
 }
