@@ -10,13 +10,25 @@ type systemtray_params = {
 
 
 function BarSystemTrayItem(item: Tray.TrayItem): JSX.Element {
+  const popover = Gtk.PopoverMenu.new_from_model(item.menuModel)
   return (
     <box>
       <menubutton
         class="bar-systemtray-item"
-        tooltipMarkup={createBinding(item, 'tooltipMarkup')}
-        menuModel={createBinding(item, 'menuModel')}
-        iconName={createBinding(item, 'iconName')}>
+        tooltipText={createBinding(item, 'tooltipMarkup')}
+        popover={popover}
+        iconName={createBinding(item, 'iconName')}
+        $={self => {
+          popover.insert_action_group("dbusmenu", item.actionGroup)
+
+          const actionGroupHandler = item.connect("notify::action-group", () => {
+            popover.insert_action_group("dbusmenu", item.actionGroup)
+          })
+
+          self.connect('destroy', () => {
+            item.disconnect(actionGroupHandler)
+          })
+        }} >
       </menubutton>
     </box>
   )
@@ -45,13 +57,7 @@ export default function BarSystemTray(params: systemtray_params): JSX.Element {
     const reveal_button = hide_children.length > 0 ? (
       <button onClicked={() => setReveal(!reveal.get())}>
         <box class="bar-systemtray-reveal-button">
-          <label label={reveal.as(b => {
-            if (b) {
-              return " "
-            } else {
-              return " "
-            }
-          })} />
+          <label label={reveal.as(b => b ? " " : " ")} />
         </box>
       </button>
     ) : (
@@ -59,6 +65,7 @@ export default function BarSystemTray(params: systemtray_params): JSX.Element {
     )
 
     return (
+      // TODO: string to accesser
       <box class={"bar-systemtray bar-systemtray-" + (children.length + hide_children.length > 0 ? "exist" : "empty")}>
         <box class={"bar-systemtray-hide-items bar-systemtray-hide-items-" + (hide_children.length > 0 ? "exist" : "empty")}>
           <revealer

@@ -1,6 +1,7 @@
 import { createBinding, For } from "ags"
 import Hyprland from "gi://AstalHyprland"
 
+
 export default function BarWorkspaces(): JSX.Element {
   const hyprland = Hyprland.get_default()
 
