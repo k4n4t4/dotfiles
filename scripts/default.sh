@@ -47,13 +47,19 @@ if cmd_exist wofi; then
 fi
 
 if cmd_exist ags; then
-  dotconf "ags" -r
   if [ ! -d "$DOT_TARGET_PATH/.config/ags/@girs" ]; then
-    msg_log "run: ags types --directory \"$DOT_TARGET_PATH/.config/ags\" --update"
-    ags types --directory "$DOT_TARGET_PATH/.config/ags" --update
-    msg_log "run: npm install --prefix=\"$DOT_TARGET_PATH/.config/ags\" typescript@5.7.3"
-    npm install --prefix="$DOT_TARGET_PATH/.config/ags" typescript@5.7.3
+    msg_log "run: ags init --directory \"$DOT_TARGET_PATH/.config/ags\" --force"
+    ags init --directory "$DOT_TARGET_PATH/.config/ags" --force
+    msg_log "run: rm \"$DOT_TARGET_PATH/.config/ags/app.ts\""
+    rm "$DOT_TARGET_PATH/.config/ags/app.ts"
+    msg_log "run: rm \"$DOT_TARGET_PATH/.config/ags/style.scss\""
+    rm "$DOT_TARGET_PATH/.config/ags/style.scss"
+    msg_log "run: rm \"$DOT_TARGET_PATH/.config/ags/widget/Bar.tsx\""
+    rm "$DOT_TARGET_PATH/.config/ags/widget/Bar.tsx"
+    msg_log "run: rmdir \"$DOT_TARGET_PATH/.config/ags/widget\""
+    rmdir "$DOT_TARGET_PATH/.config/ags/widget"
   fi
+  dotconf "ags" -r
 fi
 
 if cmd_exist fastfetch; then
