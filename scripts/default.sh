@@ -49,8 +49,8 @@ fi
 if cmd_exist ags; then
   dotconf "ags" -r
   if [ ! -d "$DOT_TARGET_PATH/.config/ags/@girs" ]; then
-    msg_log "run: ags types -d \"$DOT_TARGET_PATH/.config/ags\" -p"
-    ags types -d "$DOT_TARGET_PATH/.config/ags" -u
+    msg_log "run: ags types --directory \"$DOT_TARGET_PATH/.config/ags\" --update"
+    ags types --directory "$DOT_TARGET_PATH/.config/ags" --update
     msg_log "run: npm install --prefix=\"$DOT_TARGET_PATH/.config/ags\" typescript@5.7.3"
     npm install --prefix="$DOT_TARGET_PATH/.config/ags" typescript@5.7.3
   fi
