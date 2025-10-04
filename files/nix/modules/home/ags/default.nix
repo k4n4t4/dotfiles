@@ -4,6 +4,12 @@
     inputs.ags.homeManagerModules.default
   ];
 
+  home = {
+    packages = with pkgs; [
+      nodePackages.npm
+    ];
+  };
+
   programs.ags = {
     enable = true;
     extraPackages = let
