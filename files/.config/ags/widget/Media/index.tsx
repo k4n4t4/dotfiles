@@ -81,17 +81,17 @@ function Player({player}: {player: Mpris.Player}): JSX.Element {
     />
   )
 
-  const icon = (
-    <image
-      class="player-icon"
-      hexpand
-      tooltipText={player.identity || ""}
-      iconName={createBinding(player, 'entry').as(entry => {
-        const name = `${entry}-symbolic`
-        return Astal.Icon.lookup_icon(name) ? name : FALLBACK_ICON
-      })}
-    />
-  )
+  {/* const icon = ( */}
+  {/*   <image */}
+  {/*     class="player-icon" */}
+  {/*     hexpand */}
+  {/*     tooltipText={player.identity || ""} */}
+  {/*     iconName={createBinding(player, 'entry').as(entry => { */}
+  {/*       const name = `${entry}-symbolic` */}
+  {/*       return Astal.Icon.lookup_icon(name) ? name : FALLBACK_ICON */}
+  {/*     })} */}
+  {/*   /> */}
+  {/* ) */}
 
   const pause = (
     <button
@@ -137,7 +137,7 @@ function Player({player}: {player: Mpris.Player}): JSX.Element {
       <box hexpand>
         <box>
           {title}
-          {icon}
+          {/* {icon} */}
         </box>
         {artist}
         <box vexpand />
@@ -164,7 +164,9 @@ export default function Media(gdkmonitor: Gdk.Monitor) {
 
   return (
     <window
+      visible={false}
       name="Media"
+      namespace="Media"
       gdkmonitor={gdkmonitor}
       exclusivity={Astal.Exclusivity.NORMAL}
       anchor={
@@ -172,7 +174,6 @@ export default function Media(gdkmonitor: Gdk.Monitor) {
         Astal.WindowAnchor.RIGHT
       }
       application={app}
-      visible={false}
     >
       <box
         class="media"

@@ -1,27 +1,27 @@
 import app from "ags/gtk4/app"
 import { Astal, Gdk, Gtk } from "ags/gtk4"
-import { createBinding, createState } from "ags"
+import { Accessor, createState, For, Setter, State } from "ags"
 import { timeout } from "ags/time"
 
 import Notifd from "gi://AstalNotifd"
 
 import GLib from "gi://GLib?version=2.0"
+import GObject from "gnim/gobject"
 
 
 const TIMEOUT = 5000
 
 
-function notificationIcon({ app_icon, desktop_entry, image }: Notifd.Notification): JSX.Element {
+function notificationIcon({ app_icon, desktop_entry, image }: Notifd.Notification): GObject.Object {
   let icon = 'dialog-information-symbolic'
   let child;
 
   if (image) {
-    if (Astal.Icon.lookup_icon(image)) {
-      child = (<icon expand icon={image} />)
+    if (/* Astal.Icon.lookup_icon(image) */ false) {
+      child = (<image iconName={image} />)
     } else if (GLib.file_test(image, GLib.FileTest.EXISTS)) {
       child = (
         <box
-          expand
           css={`
             background-image: url("${image}");
             background-size: contain;
@@ -31,13 +31,13 @@ function notificationIcon({ app_icon, desktop_entry, image }: Notifd.Notificatio
         />
       )
     } else {
-      child = (<icon expand icon={icon} />)
+      child = (<image iconName={icon} />)
     }
   } else {
     if (app_icon || desktop_entry) {
       icon = app_icon || desktop_entry
     }
-    child = (<icon expand icon={icon} />)
+    child = (<image iconName={icon} />)
   }
 
   return child
@@ -52,9 +52,7 @@ function notificationUrgency(urgency: Notifd.Urgency): string {
   }
 }
 
-function NotificationPopup(notification: Notifd.Notification, setup: (self: JSX.Element) => void): JSX.Element {
-  const truncate = createState(true)
-
+function NotificationPopup(notification: Notifd.Notification, setup: (self: GObject.Object) => void): GObject.Object {
   const title = (
     <label
       class="notification-popup-title"
@@ -63,7 +61,6 @@ function NotificationPopup(notification: Notifd.Notification, setup: (self: JSX.
       max-width-char={30}
       hexpand
       use_markup
-      truncate={createBinding(truncate)}
       halign={Gtk.Align.START}
     />
   )
@@ -75,7 +72,6 @@ function NotificationPopup(notification: Notifd.Notification, setup: (self: JSX.
       max-width-char={30}
       hexpand
       use_markup
-      truncate={createBinding(truncate)}
       halign={Gtk.Align.START}
     />
   )
@@ -94,7 +90,6 @@ function NotificationPopup(notification: Notifd.Notification, setup: (self: JSX.
     <box
       class="notification-popup-icon"
       tooltipText={notification.app_name}
-      expand
     >
       {notificationIcon(notification)}
     </box>
@@ -105,14 +100,14 @@ function NotificationPopup(notification: Notifd.Notification, setup: (self: JSX.
       class="notification-popup-actions"
     >
       {notification.actions.map(action => {
-        function onClick() {
+        function onClicked() {
           notification.invoke(action.id)
           notification.dismiss()
         }
         return (
           <button
             class="notification-popup-actions-button"
-            onClick={onClick}
+            onClicked={onClicked}
             hexpand
           >
             <label label={action.label} />
@@ -123,29 +118,21 @@ function NotificationPopup(notification: Notifd.Notification, setup: (self: JSX.
   )
 
 
-  function onClick(_self: Astal.EventBox, event: Astal.ClickEvent) {
-    switch (event.button) {
-      case Astal.MouseButton.PRIMARY:
-        notification.dismiss()
-        break
-      case Astal.MouseButton.SECONDARY:
-        truncate.set(!truncate.get())
-        break
-    }
+  function onClicked() {
+    notification.dismiss()
   }
 
   return (
-    <eventbox
-      onClick={onClick}
-      setup={setup}
+    <button
+      onClicked={onClicked}
+      $={setup}
     >
       <box
         class={`notification-popup notification-popup-${notificationUrgency(notification.urgency)}`}
-        vertical
       >
         <box>
           {icon}
-          <box vertical halign={Gtk.Align.START}>
+          <box halign={Gtk.Align.START}>
             {time}
             {title}
             {body}
@@ -153,7 +140,7 @@ function NotificationPopup(notification: Notifd.Notification, setup: (self: JSX.
         </box>
         {actions}
       </box>
-    </eventbox>
+    </button>
   )
 }
 
@@ -161,11 +148,11 @@ function NotificationPopup(notification: Notifd.Notification, setup: (self: JSX.
 export default function NotificationPopups(gdkmonitor: Gdk.Monitor) {
   const notifd = Notifd.get_default()
 
-  const popupMap: Map<number, JSX.Element> = new Map()
-  const popups: createState<JSX.Element[]> = createState([])
+  const popupMap = new Map<number, GObject.Object>()
+  const [popups, setPopups] = createState<GObject.Object[]>([])
 
   function update() {
-    popups.set([...popupMap.values()].reverse())
+    setPopups([...popupMap.values()].reverse())
   }
 
   function delPopup(id: number) {
@@ -174,7 +161,7 @@ export default function NotificationPopups(gdkmonitor: Gdk.Monitor) {
     update()
   }
 
-  function setPopup(id: number, widget: JSX.Element) {
+  function setPopup(id: number, widget: GObject.Object) {
     popupMap.get(id)?.destroy()
     popupMap.set(id, widget)
     update()
@@ -207,8 +194,10 @@ export default function NotificationPopups(gdkmonitor: Gdk.Monitor) {
       application={app}
       layer={Astal.Layer.OVERLAY}
     >
-      <box vertical class="notification-popups">
-        {createBinding(popups)}
+      <box class="notification-popups">
+        <For each={popups}>
+          {v => v}
+        </For>
       </box>
     </window>
   )
