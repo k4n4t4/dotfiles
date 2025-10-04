@@ -8,14 +8,14 @@
       tree-sitter
       curl
       unzip
-      nodejs
       python3
+      nodejs
+      nodePackages.npm
       gnumake
       gcc
       fd
       ripgrep
       fzf
-      nodePackages.npm
       luajitPackages.luarocks
       lua51Packages.lua
       lua-language-server
