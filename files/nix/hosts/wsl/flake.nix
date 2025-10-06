@@ -18,6 +18,9 @@
       inherit config;
       modules = [
         ../../modules/hosts/configurations/wsl.nix
+        {
+          wsl.defaultUser = config.username;
+        }
       ];
       homeModules = [
         ../../modules/home/configurations/common.nix

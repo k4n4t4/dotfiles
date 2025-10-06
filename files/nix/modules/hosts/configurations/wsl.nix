@@ -14,7 +14,6 @@
   };
 
   wsl.enable = true;
-  wsl.defaultUser = "kanata";
 
   environment = {
     systemPackages = with pkgs; [
