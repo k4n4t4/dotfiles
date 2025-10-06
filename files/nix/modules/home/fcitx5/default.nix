@@ -24,15 +24,22 @@
           DefaultIM=mozc
 
           [Groups/0/Items/0]
-          Name=keyboard-jp
-          Layout=
-
-          [Groups/0/Items/1]
           Name=mozc
           Layout=
 
           [GroupOrder]
           0=Default
+        '';
+        force = true;
+      };
+      ".config/fcitx5/conf/mozc.conf" = {
+        text = ''
+          InitialMode=Direct
+          InputState="Follow Global Configuration"
+          Vertical=True
+          ExpandMode="On Focus"
+          PreeditCursorPositionAtBeginning=False
+          ExpandKey=
         '';
         force = true;
       };
