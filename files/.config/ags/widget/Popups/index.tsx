@@ -1,6 +1,6 @@
 import app from "ags/gtk4/app"
 import { Astal, Gdk } from "ags/gtk4"
-import { createBinding, createState } from "ags"
+import { createState } from "ags"
 
 import Backlight from "../../services/backlight"
 import Wp from "gi://AstalWp"
@@ -16,11 +16,11 @@ export default function Popups(gdkmonitor: Gdk.Monitor) {
   const mic = wp?.audio.default_microphone!
   const backlight = Backlight.get_default()
 
-  const shown = createState("speaker")
+  const [shown, set_shown] = createState("speaker")
 
   const stack = (
     <stack
-      shown={createBinding(shown)}
+      visibleChildName={shown}
       children={[
         <PopupAudioSpeaker />,
         <PopupAudioMicrophone />,
@@ -37,7 +37,7 @@ export default function Popups(gdkmonitor: Gdk.Monitor) {
       anchor={0}
       layer={Astal.Layer.OVERLAY}
       application={app}
-      setup={self => {
+      $={self => {
         let timer: any = undefined
         let prevent = true
         setTimeout(() => {prevent = false}, 1000)
@@ -46,7 +46,7 @@ export default function Popups(gdkmonitor: Gdk.Monitor) {
             if (!self.visible) {
               self.visible = true
             }
-            shown.set(name)
+            set_shown(name)
             if (timer !== undefined) {
               clearTimeout(timer)
             }

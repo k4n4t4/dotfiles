@@ -1,5 +1,5 @@
 import { Astal } from "ags/gtk4"
-import { createBinding, createState } from "ags"
+import { createBinding, createComputed } from "ags"
 
 import Wp from "gi://AstalWp"
 
@@ -24,7 +24,7 @@ export default function PopupAudioSpeaker(): JSX.Element {
     <slider
       class="popups-audio-speaker-slider"
       hexpand
-      onDragged={onDragged}
+      onChangeValue={onDragged}
       value={createBinding(speaker, 'volume')}
     />
   )
@@ -32,17 +32,17 @@ export default function PopupAudioSpeaker(): JSX.Element {
   const status = (
     <label
       class="popups-audio-speaker-status"
-      label={createBinding(createState.derive([
+      label={createComputed([
         createBinding(speaker, 'volume'),
         createBinding(speaker, 'mute'),
       ], (volume, isMuted) => {
         return `${Math.round(volume * 100)}%${isMuted ? " mute" : ""}`
-      }))}
+      })}
     />
   )
 
   return (
-    <box vertical name="speaker" class="popups-audio-speaker">
+    <box name="speaker" class="popups-audio-speaker">
       {label}
       {slider}
       {status}
