@@ -155,4 +155,6 @@ nnoremap <S-TAB> 5k
 vnoremap <TAB> 5j
 vnoremap <S-TAB> 5k
 
+nnoremap <LEADER>e <CMD>Lex<CR>
+nnoremap <LEADER>w <C-W><C-W>
 nnoremap <LEADER>H <CMD>noh<CR>
