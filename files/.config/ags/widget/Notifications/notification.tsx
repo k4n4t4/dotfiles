@@ -5,7 +5,7 @@ import Notifd from "gi://AstalNotifd"
 import GLib from "gi://GLib?version=2.0"
 
 const isIcon = (icon: string) =>
-  !!Astal.Icon.lookup_icon(icon)
+  Boolean(Astal.Icon.lookup_icon(icon))
 
 const fileExists = (path: string) =>
   GLib.file_test(path, GLib.FileTest.EXISTS)

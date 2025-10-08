@@ -40,7 +40,7 @@ export default function PopupBacklight(): JSX.Element {
   )
 
   return (
-    <box name="backlight" class="popups-backlight">
+    <box $type="named" name="backlight" class="popups-backlight">
       {label}
       {slider}
       {status}

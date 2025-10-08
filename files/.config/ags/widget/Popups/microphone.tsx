@@ -41,7 +41,7 @@ export default function PopupAudioMicrophone(): JSX.Element {
   )
 
   return (
-    <box name="microphone" class="popups-audio-microphone">
+    <box $type="named" name="microphone" class="popups-audio-microphone">
       {label}
       {slider}
       {status}

@@ -42,7 +42,7 @@ export default function PopupAudioSpeaker(): JSX.Element {
   )
 
   return (
-    <box name="speaker" class="popups-audio-speaker">
+    <box $type="named" name="speaker" class="popups-audio-speaker">
       {label}
       {slider}
       {status}
