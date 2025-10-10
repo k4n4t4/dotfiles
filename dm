@@ -1,9 +1,15 @@
 #!/bin/sh
 set -eu
 
+
+# Constants
+
 NL='
 '
 ESC="$(printf "\033")"
+
+
+# Utils
 
 dir_name() {
   RET="${1:-"."}"
@@ -264,6 +270,8 @@ false() {
 }
 
 
+# Message
+
 msg_log() {
   printf "%s\n" " ${ESC}[32m[ LOG ]${ESC}[90m: ${ESC}[m$*"
 }
@@ -297,6 +305,8 @@ msg_ask() {
   read -r RET
 }
 
+
+# Main
 
 usage() {
   echo "Usage"
@@ -635,10 +645,13 @@ EOL
 }
 
 
+# Initialization
+
 FILE_PATH="$(realpath "$0")"
 WORK_PATH="${FILE_PATH%"/"*}"
 [ "$WORK_PATH" = "" ] && WORK_PATH="/"
 KERNEL_NAME="$(uname -s)"
+
 SUBCOMMAND="unknown"
 
 
