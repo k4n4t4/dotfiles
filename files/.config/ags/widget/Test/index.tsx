@@ -4,27 +4,39 @@ import app from "ags/gtk4/app"
 import { Astal, Gdk, Gtk } from "ags/gtk4"
 
 // TODO :
-function Clickable({onClicked = 1, ...args}) {
+
+type ClickableOnClickedProps = (source: JSX.Element, gesture_click: Gtk.GestureClick, n_press: number, x: number, y: number) => void
+type ClickableProps = {
+  onClicked: ClickableOnClickedProps | undefined
+  onPrimaryClicked: ClickableOnClickedProps | undefined
+  onSecondaryClicked: ClickableOnClickedProps | undefined
+  onMiddleClicked: ClickableOnClickedProps | undefined
+}
+
+function Clickable({onClicked, onPrimaryClicked, onSecondaryClicked, onMiddleClicked, ...args}: ClickableProps) {
   return (
     <box {...args} $={self => {
-      const g = new Gtk.GestureClick()
-      const g0 = new Gtk.GestureClick()
-      const g1 = new Gtk.GestureClick()
-      const g2 = new Gtk.GestureClick()
-      g.set_button(0)
-      g0.set_button(Gdk.BUTTON_PRIMARY)
-      g1.set_button(Gdk.BUTTON_SECONDARY)
-      g2.set_button(Gdk.BUTTON_MIDDLE)
-      self.add_controller(g)
-      self.add_controller(g0)
-      self.add_controller(g1)
-      self.add_controller(g2)
-      g.connect("pressed", (g, n, x, y) => {
-        onClicked(self, g, n, x, y)
-      })
-      g0.connect("pressed", () => { print(0) })
-      g1.connect("pressed", () => { print(1) })
-      g2.connect("pressed", () => { print(2) })
+      const createClick = (button: number, onClicked: ClickableOnClickedProps) => {
+        const gesture_click = new Gtk.GestureClick()
+        gesture_click.set_button(button)
+        self.add_controller(gesture_click)
+        gesture_click.connect("pressed", (g, n, x, y) => {
+          onClicked(self, g, n, x, y)
+        })
+      }
+
+      if (onClicked) {
+        createClick(0, onClicked)
+      }
+      if (onPrimaryClicked) {
+        createClick(Gdk.BUTTON_PRIMARY, onPrimaryClicked)
+      }
+      if (onSecondaryClicked) {
+        createClick(Gdk.BUTTON_SECONDARY, onSecondaryClicked)
+      }
+      if (onMiddleClicked) {
+        createClick(Gdk.BUTTON_MIDDLE, onMiddleClicked)
+      }
     }}>
     </box>
   )
@@ -32,22 +44,9 @@ function Clickable({onClicked = 1, ...args}) {
 
 export default function Test(gdkmonitor: Gdk.Monitor) {
   const widget = (
-    <box $={self => {
-      const g0 = new Gtk.GestureClick()
-      const g1 = new Gtk.GestureClick()
-      const g2 = new Gtk.GestureClick()
-      g0.set_button(Gdk.BUTTON_PRIMARY)
-      g1.set_button(Gdk.BUTTON_SECONDARY)
-      g2.set_button(Gdk.BUTTON_MIDDLE)
-      self.add_controller(g0)
-      self.add_controller(g1)
-      self.add_controller(g2)
-      g0.connect("pressed", () => { print(0) })
-      g1.connect("pressed", () => { print(1) })
-      g2.connect("pressed", () => { print(2) })
-    }}>
+    <Clickable>
       <label label="Hello, World!!!" />
-    </box>
+    </Clickable>
   )
 
 
