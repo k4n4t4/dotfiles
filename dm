@@ -305,6 +305,12 @@ msg_ask() {
   read -r RET
 }
 
+msg_run() {
+  printf "%s\n" " ${ESC}[35m[ RUN ]${ESC}[90m: ${ESC}[m$*"
+  "$@"
+  return $?
+}
+
 
 # Main
 

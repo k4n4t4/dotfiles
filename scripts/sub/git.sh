@@ -11,11 +11,11 @@ if [ "$DOT_SCRIPT_MODE" = install ] && ! file_exist "$HOME/.gitconfig"; then
         ( * )
           msg_ask "    email: "
           if [ "$RET" != "" ]; then
-            git config --global user.email "$RET"
+            msg_run git config --global user.email "$RET"
           fi
           msg_ask "    name: "
           if [ "$RET" != "" ]; then
-            git config --global user.name "$RET"
+            msg_run git config --global user.name "$RET"
           fi
           ;;
       esac
@@ -25,10 +25,10 @@ if [ "$DOT_SCRIPT_MODE" = install ] && ! file_exist "$HOME/.gitconfig"; then
         case "$RET" in
           ( [nN] ) : ;;
           ( * )
-            git config --global core.pager "delta --line-numbers"
-            git config --global interactive.diffFilter "delta --color-only"
-            git config --global delta.navigate true
-            git config --global delta.light false
+            msg_run git config --global core.pager "delta --line-numbers"
+            msg_run git config --global interactive.diffFilter "delta --color-only"
+            msg_run git config --global delta.navigate true
+            msg_run git config --global delta.light false
             ;;
         esac
       fi

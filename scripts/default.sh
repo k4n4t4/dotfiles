@@ -48,16 +48,11 @@ fi
 
 if cmd_exist ags; then
   if [ ! -d "$DOT_TARGET_PATH/.config/ags/@girs" ]; then
-    msg_log "run: ags init --directory \"$DOT_TARGET_PATH/.config/ags\" --force"
-    ags init --directory "$DOT_TARGET_PATH/.config/ags" --force
-    msg_log "run: rm \"$DOT_TARGET_PATH/.config/ags/app.ts\""
-    rm "$DOT_TARGET_PATH/.config/ags/app.ts"
-    msg_log "run: rm \"$DOT_TARGET_PATH/.config/ags/style.scss\""
-    rm "$DOT_TARGET_PATH/.config/ags/style.scss"
-    msg_log "run: rm \"$DOT_TARGET_PATH/.config/ags/widget/Bar.tsx\""
-    rm "$DOT_TARGET_PATH/.config/ags/widget/Bar.tsx"
-    msg_log "run: rmdir \"$DOT_TARGET_PATH/.config/ags/widget\""
-    rmdir "$DOT_TARGET_PATH/.config/ags/widget"
+    msg_run ags init --directory "$DOT_TARGET_PATH/.config/ags" --force
+    msg_run rm "$DOT_TARGET_PATH/.config/ags/app.ts"
+    msg_run rm "$DOT_TARGET_PATH/.config/ags/style.scss"
+    msg_run rm "$DOT_TARGET_PATH/.config/ags/widget/Bar.tsx"
+    msg_run rmdir "$DOT_TARGET_PATH/.config/ags/widget"
   fi
   dotconf "ags" -r
 fi
