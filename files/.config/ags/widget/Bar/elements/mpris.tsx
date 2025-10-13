@@ -30,10 +30,8 @@ export default function BarMpris(): JSX.Element {
   const icon = createBinding(mpris, 'players').as(players => {
     if (players.length > 0) {
       return (
-        <button onClicked={() => {app.toggle_window("Media")}}>
-          <box class={class_name}>
-            <label tooltipText={tooltip_text} label="󰎆 " />
-          </box>
+        <button class={class_name} onClicked={() => {app.toggle_window("Media")}}>
+          <label tooltipText={tooltip_text} label="󰎆 " />
         </button>
       )
     } else {

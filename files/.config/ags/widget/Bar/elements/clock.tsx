@@ -1,6 +1,7 @@
-import { Gtk } from "ags/gtk4"
+import { Gdk, Gtk } from "ags/gtk4"
 import { createState } from "ags"
 import { createPoll } from "ags/time"
+import Clickable from "../../../utils/Clickable"
 
 type clock = {
   month?: string,
@@ -68,19 +69,27 @@ export default function BarClock(params: clock_params): JSX.Element {
   const label = (<label label={time} />)
 
 
-  function onClicked() {
-    set_show_seconds(!show_seconds.get())
-    set_show_date(!show_date.get())
+  function onClicked(_: JSX.Element, button: number) {
+    switch (button) {
+      case Gdk.BUTTON_PRIMARY:
+        set_show_date(!show_date.get())
+        break
+      case Gdk.BUTTON_SECONDARY:
+        set_show_seconds(!show_seconds.get())
+        break
+      case Gdk.BUTTON_MIDDLE:
+        set_show_date(!show_date.get())
+        set_show_seconds(!show_seconds.get())
+        break
+    }
   }
 
 
   return (
-    <button onClicked={onClicked}>
-      <box class="bar-clock">
-        {revealer_left}
-        {label}
-        {revealer_right}
-      </box>
-    </button>
+    <Clickable onAllClicked={onClicked} class="bar-clock">
+      {revealer_left}
+      {label}
+      {revealer_right}
+    </Clickable>
   )
 }

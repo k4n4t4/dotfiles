@@ -16,15 +16,9 @@ export default function BarSubmap(): JSX.Element {
 
   const submap = current_submap.as(name => {
     if (name === "") {
-      return (
-        <box />
-      )
+      return (<box />)
     } else {
-      return (
-        <box class="bar-submap">
-          <label label={name} />
-        </box>
-      )
+      return (<label class="bar-submap" label={name} />)
     }
   })
 

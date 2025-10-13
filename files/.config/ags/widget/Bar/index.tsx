@@ -32,29 +32,27 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
       application={app}
       layer={Astal.Layer.BOTTOM}
     >
-      <box class="bar">
-        <centerbox hexpand  orientation={Gtk.Orientation.HORIZONTAL}>
-          <box $type="start" class="bar-left">
-            <Workspaces />
-            <Submap />
-          </box>
-          <box $type="center" class="bar-center">
-            <Title />
-          </box>
-          <box $type="end" class="bar-right">
-            <SystemTray show_items={[
-              "Input Method",
-            ]} reveal={false} />
-            <Mpris />
-            <Audio />
-            <Bluetooth />
-            <Network />
-            <Battery />
-            <Clock show_date={false} show_seconds={false} />
-            <Notifications />
-          </box>
-        </centerbox>
-      </box>
+      <centerbox class="bar" hexpand orientation={Gtk.Orientation.HORIZONTAL}>
+        <box $type="start" class="bar-left">
+          <Workspaces />
+          <Submap />
+        </box>
+        <box $type="center" class="bar-center">
+          <Title />
+        </box>
+        <box $type="end" class="bar-right">
+          <SystemTray show_items={[
+            "Input Method",
+          ]} reveal={false} />
+          <Mpris />
+          <Audio />
+          <Bluetooth />
+          <Network />
+          <Battery />
+          <Clock show_date={false} show_seconds={false} />
+          <Notifications />
+        </box>
+      </centerbox>
     </window>
   )
 }

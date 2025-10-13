@@ -22,9 +22,5 @@ export default function BarTitle(): JSX.Element {
     }
   })
 
-  return (
-    <box class="bar-title" >
-      <label ellipsize={Pango.EllipsizeMode.END} max-width-chars={50} label={label} />
-    </box>
-  )
+  return (<label class="bar-title" ellipsize={Pango.EllipsizeMode.END} max-width-chars={50} label={label} />)
 }

@@ -46,11 +46,7 @@ export default function BarNetwork(): JSX.Element {
       return `${ssid || "Unknown"} (${strength})`
     })
 
-    return (
-      <box $type="named" name="wifi" class="bar-network-wifi">
-        <label tooltipText={tooltip_text} label={wifi_status} />
-      </box>
-    )
+    return (<label $type="named" name="wifi" class="bar-network-wifi" tooltipText={tooltip_text} label={wifi_status} />)
   }
 
   function BarNetWorkWired(): JSX.Element {
@@ -66,19 +62,11 @@ export default function BarNetwork(): JSX.Element {
       }
     })
 
-    return (
-      <box $type="named" name="wired" class="bar-network-wired">
-        <label label={wired_status} />
-      </box>
-    )
+    return (<label $type="named" name="wired" class="bar-network-wired" label={wired_status} />)
   }
 
   function BarNetWorkUnknown(): JSX.Element {
-    return (
-      <box $type="named" name="unknown" class="bar-network-unknown">
-        <label label="?" />
-      </box>
-    )
+    return (<label $type="named" name="unknown" class="bar-network-unknown" label="?" />)
   }
 
   function onClick() {
@@ -122,28 +110,26 @@ export default function BarNetwork(): JSX.Element {
 
 
   return (
-    <button onClicked={onClick}>
-      <box class="bar-network">
-        <stack
-          visibleChildName={createBinding(network, 'primary').as(
-            (primary: Network.Primary): string => {
-              switch (primary) {
-                case Network.Primary.UNKNOWN:
-                  return "unknown"
-                case Network.Primary.WIFI:
-                  return "wifi"
-                case Network.Primary.WIRED:
-                  return "wired"
-              }
+    <button onClicked={onClick} class="bar-network">
+      <stack
+        visibleChildName={createBinding(network, 'primary').as(
+          (primary: Network.Primary): string => {
+            switch (primary) {
+              case Network.Primary.UNKNOWN:
+                return "unknown"
+              case Network.Primary.WIFI:
+                return "wifi"
+              case Network.Primary.WIRED:
+                return "wired"
             }
-          )}
-          children={[
-            <BarNetWorkUnknown />,
-            <BarNetWorkWifi />,
-            <BarNetWorkWired />,
-          ]}
-        />
-      </box>
+          }
+        )}
+        children={[
+          <BarNetWorkUnknown />,
+          <BarNetWorkWifi />,
+          <BarNetWorkWired />,
+        ]}
+      />
     </button>
   )
 }

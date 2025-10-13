@@ -1,11 +1,9 @@
-// TEST:
-
-import app from "ags/gtk4/app"
-import { Astal, Gdk, Gtk } from "ags/gtk4"
+import { Gdk, Gtk } from "ags/gtk4"
 import { CCProps } from "ags"
 
 type ClickableOnClickedProps = (
   source: JSX.Element,
+  button: number,
   gesture_click: Gtk.GestureClick,
   n_press: number,
   x: number,
@@ -17,14 +15,16 @@ type ClickableProps = Partial<CCProps<Gtk.Box, Gtk.Box.ConstructorProps>> & {
   onPrimaryClicked?: ClickableOnClickedProps
   onSecondaryClicked?: ClickableOnClickedProps
   onMiddleClicked?: ClickableOnClickedProps
+  onAllClicked?: ClickableOnClickedProps
 }
 
-function Clickable(
+export default function Clickable(
   {
     onClicked,
     onPrimaryClicked,
     onSecondaryClicked,
     onMiddleClicked,
+    onAllClicked,
     ...args
   }: ClickableProps
 ): JSX.Element {
@@ -34,7 +34,7 @@ function Clickable(
       gesture_click.set_button(button)
       self.add_controller(gesture_click)
       gesture_click.connect("pressed", (g, n, x, y) => {
-        onClicked(self, g, n, x, y)
+        onClicked(self, button, g, n, x, y)
       })
     }
 
@@ -50,40 +50,13 @@ function Clickable(
     if (onMiddleClicked) {
       createClick(Gdk.BUTTON_MIDDLE, onMiddleClicked)
     }
+    if (onAllClicked) {
+      createClick(Gdk.BUTTON_PRIMARY, onAllClicked)
+      createClick(Gdk.BUTTON_SECONDARY, onAllClicked)
+      createClick(Gdk.BUTTON_MIDDLE, onAllClicked)
+    }
+
   }
 
   return (<box $={setup} {...args} />)
-}
-
-export default function Test(gdkmonitor: Gdk.Monitor) {
-  const widget = (
-    <Clickable>
-      <label label="Hello, World!!!" />
-      <Clickable />
-    </Clickable>
-  )
-
-
-  return (
-    <window
-      visible
-      name="Test"
-      gdkmonitor={gdkmonitor}
-      exclusivity={Astal.Exclusivity.EXCLUSIVE}
-      anchor={
-        Astal.WindowAnchor.TOP |
-        Astal.WindowAnchor.LEFT |
-        Astal.WindowAnchor.RIGHT
-      }
-      margin-top={1}
-      margin-left={1}
-      margin-right={1}
-      application={app}
-      layer={Astal.Layer.BOTTOM}
-    >
-      <box class="test">
-        {widget}
-      </box>
-    </window>
-  )
 }

@@ -36,9 +36,5 @@ export default function BarAudio(): JSX.Element {
          + `mic-volume: ${Math.round(mic_volume * 100)}%${mic_isMuted ? " mute" : ""}`
   })
 
-  return (
-    <box class="bar-audio">
-      <label tooltipText={tooltip_text} label={audio_status} />
-    </box>
-  )
+  return (<label class="bar-audio" tooltipText={tooltip_text} label={audio_status} />)
 }

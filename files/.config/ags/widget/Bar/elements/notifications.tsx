@@ -26,10 +26,8 @@ export default function BarNotifications(): JSX.Element {
   })
 
   return (
-    <button onClicked={() => app.toggle_window("Notifications")}>
-      <box class={class_name} >
-        <label tooltipText={tooltip_text} label={icon} />
-      </box>
+    <button onClicked={() => app.toggle_window("Notifications")} class={class_name}>
+      <label tooltipText={tooltip_text} label={icon} />
     </button>
   )
 }

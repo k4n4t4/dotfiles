@@ -92,10 +92,8 @@ export default function BarBattery(): JSX.Element {
   }
 
   return (
-    <button onClicked={onClicked}>
-      <box class={class_name}>
-        <label tooltipText={tooltip_text} label={bat_status} />
-      </box>
+    <button onClicked={onClicked} class={class_name}>
+      <label tooltipText={tooltip_text} label={bat_status} />
     </button>
   )
 }
