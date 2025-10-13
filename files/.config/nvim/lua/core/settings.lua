@@ -20,6 +20,16 @@ function Config(cfg)
 
     end
 
+    if config.mouse then
+      if config.mouse == true then
+        vim.opt.mouse = "a"
+      else
+        vim.opt.mouse = config.mouse
+      end
+    else
+      vim.opt.mouse = ""
+    end
+
     if config.run then
       config.run()
     end
