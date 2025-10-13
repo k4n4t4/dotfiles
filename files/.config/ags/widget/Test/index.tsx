@@ -8,7 +8,15 @@ import { CCProps } from "ags"
 // TODO :
 
 type BoxProps = CCProps<Gtk.Box, Gtk.Box.ConstructorProps>
-type ClickableOnClickedProps = (source: JSX.Element, gesture_click: Gtk.GestureClick, n_press: number, x: number, y: number) => void
+
+type ClickableOnClickedProps = (
+  source: JSX.Element,
+  gesture_click: Gtk.GestureClick,
+  n_press: number,
+  x: number,
+  y: number
+) => void
+
 type ClickableProps = BoxProps & {
   onClicked?: ClickableOnClickedProps
   onPrimaryClicked?: ClickableOnClickedProps
@@ -17,7 +25,15 @@ type ClickableProps = BoxProps & {
 }
 
 
-function Clickable({onClicked, onPrimaryClicked, onSecondaryClicked, onMiddleClicked, ...args}: ClickableProps): JSX.Element {
+function Clickable(
+  {
+    onClicked,
+    onPrimaryClicked,
+    onSecondaryClicked,
+    onMiddleClicked,
+    ...args
+  }: ClickableProps
+): JSX.Element {
   const setup = (self: Gtk.Box) => {
     const createClick = (button: number, onClicked: ClickableOnClickedProps) => {
       const gesture_click = new Gtk.GestureClick()
@@ -41,7 +57,8 @@ function Clickable({onClicked, onPrimaryClicked, onSecondaryClicked, onMiddleCli
       createClick(Gdk.BUTTON_MIDDLE, onMiddleClicked)
     }
   }
-  return jsx(Gtk.Box, { $: setup, ...args})
+
+  return (<box $={setup} {...args} />)
 }
 
 export default function Test(gdkmonitor: Gdk.Monitor) {
