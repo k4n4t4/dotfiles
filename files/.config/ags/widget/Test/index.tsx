@@ -2,12 +2,9 @@
 
 import app from "ags/gtk4/app"
 import { Astal, Gdk, Gtk } from "ags/gtk4"
-import { jsx, Node } from "gnim"
 import { CCProps } from "ags"
 
 // TODO :
-
-type BoxProps = CCProps<Gtk.Box, Gtk.Box.ConstructorProps>
 
 type ClickableOnClickedProps = (
   source: JSX.Element,
@@ -17,13 +14,12 @@ type ClickableOnClickedProps = (
   y: number
 ) => void
 
-type ClickableProps = BoxProps & {
+type ClickableProps = Partial<CCProps<Gtk.Box, Gtk.Box.ConstructorProps>> & {
   onClicked?: ClickableOnClickedProps
   onPrimaryClicked?: ClickableOnClickedProps
   onSecondaryClicked?: ClickableOnClickedProps
   onMiddleClicked?: ClickableOnClickedProps
 }
-
 
 function Clickable(
   {
