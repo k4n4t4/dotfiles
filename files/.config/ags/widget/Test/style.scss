@@ -1,2 +1,47 @@
 window#Test {
+
+  box.Clickable {
+    background: #8000AA;
+  }
+
+  switch.switch {
+    background: #8080AA;
+
+    slider {
+      background: #8020FA;
+      margin: 0.2rem;
+      border-radius: 0.3rem;
+    }
+
+    &:checked {
+      background: #8080FA;
+
+      slider {
+        background: #8020FA;
+        border: 1px solid #FF0000;
+      }
+    }
+
+  }
+
+  scale.slider {
+    padding: 0 0.5rem 0 0.5rem;
+    trough {
+      background: #303030;
+      border-radius: 1rem;
+      min-width: 100px;
+      min-height: 1rem;
+      highlight {
+        background: #EEAAEE;
+        border-radius: 1rem 0 0 1rem;
+        min-height: 1rem;
+      }
+      slider {
+        background: #EEEEEE;
+        border-radius: 1rem;
+        min-width: 1rem;
+        min-height: 1rem;
+      }
+    }
+  }
 }
