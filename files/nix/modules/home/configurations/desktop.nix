@@ -31,4 +31,9 @@
       size = 300;
     };
   };
+
+  wayland.windowManager.hyprland.plugins = with pkgs.hyprlandPlugins; [
+    hyprscrolling
+    overview
+  ];
 }
