@@ -2,51 +2,23 @@ import { Gdk, Gtk } from "ags/gtk4"
 import { createState } from "ags"
 import { createPoll } from "ags/time"
 import Clickable from "../../../utils/Clickable"
+import GLib from "gi://GLib?version=2.0"
 
-type clock = {
-  month?: string,
-  date?: string,
-  year?: string,
-  hours?: string,
-  minutes?: string,
-  seconds?: string,
-  day?: string,
-}
+const date_time = createPoll<GLib.DateTime>(GLib.DateTime.new_now_local(), 1000, () => GLib.DateTime.new_now_local())
 
 type clock_params = {
   show_date: boolean
   show_seconds: boolean
 }
 
-
 export default function BarClock(params: clock_params): JSX.Element {
-
-  const CLOCK = createPoll<clock>({}, 1000, () => {
-    const date = new Date()
-    const days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"]
-    return {
-      get month()   { return ("00"   + (date.getMonth()+1)).slice(-2) },
-      get date()    { return ("00"   + date.getDate()     ).slice(-2) },
-      get year()    { return ("0000" + date.getFullYear() ).slice(-4) },
-      get hours()   { return ("00"   + date.getHours()    ).slice(-2) },
-      get minutes() { return ("00"   + date.getMinutes()  ).slice(-2) },
-      get seconds() { return ("00"   + date.getSeconds()  ).slice(-2) },
-      get day()     { return days[date.getDay()] }
-    }
-  })
-
   const [show_seconds, set_show_seconds] = createState(params.show_seconds)
   const [show_date, set_show_date] = createState(params.show_date)
 
-  const seconds = CLOCK((clock: clock): string => {
-    return `:${clock.seconds}`
-  })
-  const date = CLOCK((clock: clock): string => {
-    return `${clock.month}-${clock.date}-${clock.year} (${clock.day}) `
-  })
-  const time = CLOCK((clock: clock): string => {
-    return `${clock.hours}:${clock.minutes}`
-  })
+  const seconds = date_time(t => t.format(":%S")!)
+  const date = date_time(t => t.format("%m-%d-%Y (%a) ")!)
+  const time = date_time(t => t.format("%H:%M")!)
+
 
   const revealer_right = (
     <revealer
