@@ -7,6 +7,7 @@
     packages = with pkgs; [
       uwsm
       hyprlock hyprutils hypridle hyprwayland-scanner hyprshot
+      # hyprlandPlugins.hyprscrolling
       feh st wofi swww wl-clipboard cliphist wlogout
       alsa-utils brightnessctl
       adwaita-icon-theme
