@@ -1,75 +1,67 @@
 $font: "ComicShannsMono Nerd Font";
 
 window#Bar {
-  .bar {
-    color: #E0E0E0;
-    border-radius: 0.2rem;
-    min-height: 2.5rem;
-    padding: 0.25rem;
-    font-family: $font;
-    font-size: 1.5rem;
-    background: rgba(20, 20, 20, 0.7);
-  }
+  margin: 1px;
 
-  .bar-clock {
+  color: #E0E0E0;
+  border-radius: 5px;
+  min-height: 2.5rem;
+  padding: 0.25rem;
+  font-family: $font;
+  font-size: 1.5rem;
+  background: rgba(20, 20, 20, 0.7);
+
+  .clock {
     color: #AAEEDD;
     margin: 0 0.4rem 0 0.4rem;
   }
 
-  .bar-battery {
+  .battery {
     margin: 0 0.4rem 0 0.4rem;
-  }
-  .bar-battery-critical {
-    color: #EE2222;
-  }
-  .bar-battery-low {
-    color: #EEAA22;
-  }
-  .bar-battery-middle {
-    color: #22AA22;
-  }
-  .bar-battery-high {
-    color: #22EE22;
-  }
-  .bar-battery-profile-power-saver {
-    color: #44DDCC;
+    .critical { color: #EE2222; }
+    .low { color: #EEAA22; }
+    .middle { color: #22AA22; }
+    .high { color: #22EE22; }
+    .profile-power-saver { color: #44DDCC; }
   }
 
-  .bar-network {
+  .network {
     color: #6666DD;
     margin: 0 0.4rem 0 0.4rem;
   }
 
-  .bar-bluetooth {
+  .bluetooth {
     color: #3636EE;
     margin: 0 0.4rem 0 0.4rem;
   }
 
-  .bar-audio {
+  .audio {
     color: #CCAA88;
     margin: 0 0.4rem 0 0.4rem;
   }
 
-  .bar-title {
+  .title {
     color: #CCCCCC;
     font-weight: bold;
   }
 
-  .bar-workspace {
-    background: #202020;
-    color: #888888;
-    border-radius: 0.1rem;
-    padding: 0 1.0rem 0 1.0rem;
-    margin: 0.1rem 0.2rem 0.1rem 0.2rem;
-  }
-  .bar-current-workspace {
-    background: #303030;
-    font-weight: bold;
-    color: #ACACAC;
-    border: 1px solid #999999;
+  .workspaces {
+    .workspace {
+      background: #202020;
+      color: #888888;
+      border-radius: 0.1rem;
+      padding: 0 1.0rem 0 1.0rem;
+      margin: 0.1rem 0.2rem 0.1rem 0.2rem;
+    }
+    .current-workspace {
+      background: #303030;
+      font-weight: bold;
+      color: #ACACAC;
+      border: 1px solid #999999;
+    }
   }
 
-  .bar-submap {
+  .submap {
     background: #202020;
     color: #E0B050;
     border-radius: 0.1rem;
@@ -77,40 +69,44 @@ window#Bar {
     margin: 0.1rem 0.2rem 0.1rem 0.2rem;
   }
 
-  .bar-mpris {
-    color: #404040;
+  .mpris {
     margin: 0 0.4rem 0 0.4rem;
-  }
-  .bar-mpris-exist-player {
-    color: #DD99EE;
-  }
-
-  .bar-systemtray-exist {
-    background: #202020;
-    border-radius: 0.1rem;
-    color: #E0E0E0;
-    padding: 0.1rem 0.2rem 0.1rem 0.2rem;
-    margin: 0.1rem 0.2rem 0.1rem 0.2rem;
+    .exist-player {
+      color: #DD99EE;
+    }
+    .not-exist-player {
+      color: #404040;
+    }
   }
 
-  .bar-systemtray-reveal-button {
-    border-radius: 1rem;
-    color: #505050;
+  .systemtray {
+    .exist {
+      background: #202020;
+      border-radius: 0.1rem;
+      color: #E0E0E0;
+      padding: 0.1rem 0.2rem 0.1rem 0.2rem;
+      margin: 0.1rem 0.2rem 0.1rem 0.2rem;
+    }
+    .reveal-button {
+      border-radius: 1rem;
+      color: #505050;
+    }
+    .item {
+      background: #404040;
+      border-radius: 0.1rem;
+      color: #D090A0;
+      padding: 0.5rem;
+      margin: 0.2rem 0.05rem 0.2rem 0.05rem;
+    }
   }
 
-  .bar-systemtray-item {
-    background: #404040;
-    border-radius: 0.1rem;
-    color: #D090A0;
-    padding: 0.5rem;
-    margin: 0.2rem 0.05rem 0.2rem 0.05rem;
-  }
 
-  .bar-notifications {
+
+  .notifications {
     color: #CCCCCC;
     margin: 0 0.4rem 0 0.4rem;
-  }
-  .bar-notifications-exist {
-    color: #CCAACC;
+    .exist {
+      color: #CCAACC;
+    }
   }
 }

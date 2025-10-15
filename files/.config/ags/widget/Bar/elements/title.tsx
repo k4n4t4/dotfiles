@@ -4,10 +4,11 @@ import { createState } from "ags"
 import Hyprland from "gi://AstalHyprland"
 
 
-export default function BarTitle(): JSX.Element {
+export default function() {
   const hyprland = Hyprland.get_default()
 
   const [label, set_label] = createState("")
+
   hyprland.connect('event', (_source, event) => {
     switch (event) {
       case 'activewindowv2':
@@ -22,5 +23,5 @@ export default function BarTitle(): JSX.Element {
     }
   })
 
-  return (<label class="bar-title" ellipsize={Pango.EllipsizeMode.END} max-width-chars={50} label={label} />)
+  return (<label class="title" ellipsize={Pango.EllipsizeMode.END} max-width-chars={50} label={label} />)
 }

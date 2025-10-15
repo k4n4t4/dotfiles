@@ -3,7 +3,7 @@ import { createBinding, createComputed } from "ags"
 import Wp from "gi://AstalWp"
 
 
-export default function BarAudio(): JSX.Element {
+export default function() {
   const wp = Wp.get_default()
   const audio = wp?.audio.default_speaker!
   const mic = wp?.audio.default_microphone!
@@ -36,5 +36,5 @@ export default function BarAudio(): JSX.Element {
          + `mic-volume: ${Math.round(mic_volume * 100)}%${mic_isMuted ? " mute" : ""}`
   })
 
-  return (<label class="bar-audio" tooltipText={tooltip_text} label={audio_status} />)
+  return (<label class="audio" tooltipText={tooltip_text} label={audio_status} />)
 }

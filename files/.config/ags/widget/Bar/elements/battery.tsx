@@ -18,8 +18,7 @@ function batIcon(percent: number) {
   return "󰂎"
 }
 
-
-export default function BarBattery(): JSX.Element {
+export default function() {
   const battery = Battery.get_default()
   const powerprofiles = PowerProfiles.get_default()
 
@@ -40,34 +39,34 @@ export default function BarBattery(): JSX.Element {
     return label
   })
 
-  const class_name = createComputed([
+  const class_names = createComputed([
     createBinding(battery, 'percentage'),
     createBinding(battery, 'charging'),
     createBinding(powerprofiles, 'active_profile'),
   ], (percentage, charging, profile) => {
 
-    const class_names = ["bar-battery"]
+    const class_names = []
     const percent = Math.round(percentage * 100)
 
     if (charging) {
-      class_names.push("bar-battery-charging")
+      class_names.push("charging")
     } else {
-      class_names.push("bar-battery-not-charging")
+      class_names.push("not-charging")
     }
 
     if (percent < 10) {
-      class_names.push("bar-battery-critical")
+      class_names.push("critical")
     } else if (percent < 30) {
-      class_names.push("bar-battery-low")
+      class_names.push("low")
     } else if (percent < 60) {
-      class_names.push("bar-battery-middle")
+      class_names.push("middle")
     } else {
-      class_names.push("bar-battery-high")
+      class_names.push("high")
     }
 
-    class_names.push(`bar-battery-profile-${profile}`)
+    class_names.push(`profile-${profile}`)
 
-    return class_names.join(" ")
+    return class_names
   })
 
   const tooltip_text = createComputed([
@@ -92,8 +91,8 @@ export default function BarBattery(): JSX.Element {
   }
 
   return (
-    <button onClicked={onClicked} class={class_name}>
-      <label tooltipText={tooltip_text} label={bat_status} />
+    <button onClicked={onClicked} class="battery">
+      <label cssClasses={class_names} tooltipText={tooltip_text} label={bat_status} />
     </button>
   )
 }

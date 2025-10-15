@@ -14,7 +14,7 @@ function BarSystemTrayItem(item: Tray.TrayItem): JSX.Element {
   return (
     <box>
       <menubutton
-        class="bar-systemtray-item"
+        class="item"
         tooltipText={createBinding(item, 'tooltipMarkup')}
         popover={popover}
         iconName={createBinding(item, 'iconName')}
@@ -56,7 +56,7 @@ export default function BarSystemTray(params: systemtray_params): JSX.Element {
 
     const reveal_button = hide_children.length > 0 ? (
       <button onClicked={() => setReveal(!reveal.get())}>
-        <box class="bar-systemtray-reveal-button">
+        <box class="reveal-button">
           <label label={reveal.as(b => b ? " " : " ")} />
         </box>
       </button>
@@ -66,8 +66,8 @@ export default function BarSystemTray(params: systemtray_params): JSX.Element {
 
     return (
       // TODO: string to accesser
-      <box class={"bar-systemtray bar-systemtray-" + (children.length + hide_children.length > 0 ? "exist" : "empty")}>
-        <box class={"bar-systemtray-hide-items bar-systemtray-hide-items-" + (hide_children.length > 0 ? "exist" : "empty")}>
+      <box class={children.length + hide_children.length > 0 ? "exist" : "empty"}>
+        <box class={"hide-items hide-items-" + (hide_children.length > 0 ? "exist" : "empty")}>
           <revealer
             transitionDuration={500}
             transitionType={Gtk.RevealerTransitionType.SLIDE_RIGHT}
@@ -78,7 +78,7 @@ export default function BarSystemTray(params: systemtray_params): JSX.Element {
           </revealer>
         </box>
         {reveal_button}
-        <box class={"bar-systemtray-items bar-systemtray-items-" + (children.length > 0 ? "exist" : "empty")}>
+        <box class={"items items-" + (children.length > 0 ? "exist" : "empty")}>
           {children}
         </box>
       </box>
@@ -87,7 +87,7 @@ export default function BarSystemTray(params: systemtray_params): JSX.Element {
 
 
   return (
-    <box>
+    <box class="systemtray">
       <With value={system_tray_items}>
         {system_tray_items => system_tray_items}
       </With>

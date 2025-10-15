@@ -3,6 +3,7 @@ import { Astal, Gdk } from "ags/gtk4"
 import { createBinding, createComputed, For } from "ags"
 
 import Mpris from "gi://AstalMpris"
+import Gio from "gi://Gio?version=2.0"
 
 const FALLBACK_ICON = "audio-x-generic-symbolic"
 const PLAY_ICON = "media-playback-start-symbolic"
@@ -81,17 +82,17 @@ function Player({player}: {player: Mpris.Player}): JSX.Element {
     />
   )
 
-  {/* const icon = ( */}
-  {/*   <image */}
-  {/*     class="player-icon" */}
-  {/*     hexpand */}
-  {/*     tooltipText={player.identity || ""} */}
-  {/*     iconName={createBinding(player, 'entry').as(entry => { */}
-  {/*       const name = `${entry}-symbolic` */}
-  {/*       return Astal.Icon.lookup_icon(name) ? name : FALLBACK_ICON */}
-  {/*     })} */}
-  {/*   /> */}
-  {/* ) */}
+  const icon = (
+    <image
+      class="player-icon"
+      hexpand
+      tooltipText={player.identity || ""}
+      gicon={createBinding(player, 'entry').as(entry => {
+        const name = `${entry}-symbolic`
+        return Gio.ThemedIcon.new(name)
+      })}
+    />
+  )
 
   const pause = (
     <button
@@ -137,7 +138,7 @@ function Player({player}: {player: Mpris.Player}): JSX.Element {
       <box hexpand>
         <box>
           {title}
-          {/* {icon} */}
+          {icon}
         </box>
         {artist}
         <box vexpand />

@@ -3,7 +3,7 @@
 import app from "ags/gtk4/app"
 import { Astal, Gdk } from "ags/gtk4"
 
-import Clickable from "../../utils/Clickable"
+import Clickable from "../../utils/elements/Clickable"
 
 
 export default function Test(gdkmonitor: Gdk.Monitor) {

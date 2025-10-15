@@ -18,17 +18,6 @@ export default function Popups(gdkmonitor: Gdk.Monitor) {
 
   const [shown, set_shown] = createState("speaker")
 
-  const stack = (
-    <stack
-      visibleChildName={shown}
-      children={[
-        <PopupAudioSpeaker />,
-        <PopupAudioMicrophone />,
-        <PopupBacklight />,
-      ]}
-    />
-  )
-
   return (
     <window
       name="Popups"
@@ -80,7 +69,13 @@ export default function Popups(gdkmonitor: Gdk.Monitor) {
       visible={false}
     >
       <box class="popups">
-        {stack}
+        <stack
+          visibleChildName={shown}
+        >
+          <PopupAudioSpeaker />
+          <PopupAudioMicrophone />
+          <PopupBacklight />
+        </stack>
       </box>
     </window>
   )

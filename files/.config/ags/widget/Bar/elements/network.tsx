@@ -1,15 +1,13 @@
-import { execAsync } from "ags/process"
 import { createBinding, createComputed } from "ags"
 
 import Network from "gi://AstalNetwork"
+import { runNmtui } from "../../../utils"
 
 
-export default function BarNetwork(): JSX.Element {
+export default function() {
   const network = Network.get_default()
 
-
-  function BarNetWorkWifi(): JSX.Element {
-
+  function BarNetWorkWifi() {
     const wifi_status = createComputed([
       createBinding(network.wifi, 'strength'),
       createBinding(network.wifi, 'internet'),
@@ -46,11 +44,10 @@ export default function BarNetwork(): JSX.Element {
       return `${ssid || "Unknown"} (${strength})`
     })
 
-    return (<label $type="named" name="wifi" class="bar-network-wifi" tooltipText={tooltip_text} label={wifi_status} />)
+    return (<label $type="named" name="wifi" class="wifi" tooltipText={tooltip_text} label={wifi_status} />)
   }
 
-  function BarNetWorkWired(): JSX.Element {
-
+  function BarNetWorkWired() {
     const wired_status = createComputed([
       createBinding(network.wifi, 'internet'),
     ], (internet) => {
@@ -62,74 +59,30 @@ export default function BarNetwork(): JSX.Element {
       }
     })
 
-    return (<label $type="named" name="wired" class="bar-network-wired" label={wired_status} />)
+    return (<label $type="named" name="wired" class="wired" label={wired_status} />)
   }
 
-  function BarNetWorkUnknown(): JSX.Element {
-    return (<label $type="named" name="unknown" class="bar-network-unknown" label="?" />)
+  function BarNetWorkUnknown() {
+    return (<label $type="named" name="unknown" class="unknown" label="?" />)
   }
-
-  function onClick() {
-    execAsync(`
-      st -f 'ComicShannsMono Nerd Font Mono-14' -i env NEWT_COLORS='
-      root=white,black
-      roottext=yellow,black
-
-      border=gray,black
-      window=gray,black
-      shadow=,
-      title=white,black
-
-      button=black,green
-      actbutton=white,green
-      compactbutton=black,cyan
-
-      checkbox=black,yellow
-      actcheckbox=green,yellow
-
-      entry=black,lightgray
-      disentry=white,black
-
-      label=lightgray,black
-
-      listbox=white,gray
-      actlistbox=lightgray,black
-      sellistbox=white,gray
-      actsellistbox=black,green
-
-      textbox=black,gray
-      acttextbox=black,cyan
-
-      emptyscale=,gray
-      fullscale=,cyan
-
-      helpline=yellow,cyan
-      ' nmtui
-    `)
-  }
-
 
   return (
-    <button onClicked={onClick} class="bar-network">
+    <button onClicked={() => {runNmtui()}} class="network">
       <stack
         visibleChildName={createBinding(network, 'primary').as(
           (primary: Network.Primary): string => {
             switch (primary) {
-              case Network.Primary.UNKNOWN:
-                return "unknown"
-              case Network.Primary.WIFI:
-                return "wifi"
-              case Network.Primary.WIRED:
-                return "wired"
+              case Network.Primary.UNKNOWN: return "unknown"
+              case Network.Primary.WIFI: return "wifi"
+              case Network.Primary.WIRED: return "wired"
             }
           }
         )}
-        children={[
-          <BarNetWorkUnknown />,
-          <BarNetWorkWifi />,
-          <BarNetWorkWired />,
-        ]}
-      />
+      >
+        <BarNetWorkUnknown />
+        <BarNetWorkWifi />
+        <BarNetWorkWired />
+      </stack>
     </button>
   )
 }

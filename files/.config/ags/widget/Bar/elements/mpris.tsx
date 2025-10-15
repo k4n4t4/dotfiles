@@ -4,17 +4,19 @@ import { createBinding, createComputed, With } from "ags"
 import Mpris from "gi://AstalMpris"
 
 
-export default function BarMpris(): JSX.Element {
+export default function() {
   const mpris = Mpris.get_default()
 
-  const class_name = createComputed([
+  const class_names = createComputed([
     createBinding(mpris, 'players'),
   ], (players) => {
-    const class_names = ["bar-mpris"]
+    const class_names = []
     if (players.length > 0) {
-      class_names.push("bar-mpris-exist-player")
+      class_names.push("exist-player")
+    } else {
+      class_names.push("not-exist-player")
     }
-    return class_names.join(" ")
+    return class_names
   })
 
   const tooltip_text = createComputed([
@@ -30,7 +32,7 @@ export default function BarMpris(): JSX.Element {
   const icon = createBinding(mpris, 'players').as(players => {
     if (players.length > 0) {
       return (
-        <button class={class_name} onClicked={() => {app.toggle_window("Media")}}>
+        <button cssClasses={class_names} onClicked={() => {app.toggle_window("Media")}}>
           <label tooltipText={tooltip_text} label="󰎆 " />
         </button>
       )
@@ -40,7 +42,7 @@ export default function BarMpris(): JSX.Element {
   })
 
   return (
-    <box>
+    <box class="mpris">
       <With value={icon}>
         {icon => icon}
       </With>

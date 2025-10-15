@@ -5,10 +5,10 @@ import { Clickable, createDateTime } from "../../../utils"
 
 const date_time = createDateTime(1000)
 
-export default function BarClock(params: {
+export default function(params: {
   show_date?: boolean
   show_seconds?: boolean
-}): JSX.Element {
+}) {
   const [show_seconds, set_show_seconds] = createState(params.show_seconds || false)
   const [show_date, set_show_date] = createState(params.show_date || false)
 
@@ -26,7 +26,7 @@ export default function BarClock(params: {
           set_show_seconds(!show_seconds.get())
           break
       }
-    }} class="bar-clock">
+    }} class="clock">
 
       <revealer
         transitionDuration={500}
