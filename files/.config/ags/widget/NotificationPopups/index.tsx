@@ -1,6 +1,6 @@
 import app from "ags/gtk4/app"
 import { Astal, Gdk, Gtk } from "ags/gtk4"
-import { Accessor, createState, For, Setter, State } from "ags"
+import { Accessor, createState, For, State } from "ags"
 import { timeout } from "ags/time"
 
 import Notifd from "gi://AstalNotifd"

@@ -1,4 +1,4 @@
-import { Astal } from "ags/gtk4"
+import { Astal, Gtk } from "ags/gtk4"
 import { createBinding, createComputed } from "ags"
 
 import Backlight from "../../services/backlight"
@@ -40,7 +40,7 @@ export default function PopupBacklight(): JSX.Element {
   )
 
   return (
-    <box $type="named" name="backlight" class="popups-backlight">
+    <box orientation={Gtk.Orientation.VERTICAL} $type="named" name="backlight" class="popups-backlight">
       {label}
       {slider}
       {status}

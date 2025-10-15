@@ -1,4 +1,4 @@
-import { Astal } from "ags/gtk4"
+import { Astal, Gtk } from "ags/gtk4"
 import { createBinding, createComputed } from "ags"
 
 import Wp from "gi://AstalWp"
@@ -42,7 +42,7 @@ export default function PopupAudioSpeaker(): JSX.Element {
   )
 
   return (
-    <box $type="named" name="speaker" class="popups-audio-speaker">
+    <box orientation={Gtk.Orientation.VERTICAL} $type="named" name="speaker" class="popups-audio-speaker">
       {label}
       {slider}
       {status}

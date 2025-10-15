@@ -1,4 +1,4 @@
-import GObject, { register, property } from "ags/gobject"
+import GObject, { register } from "ags/gobject"
 import { monitorFile, readFileAsync } from "ags/file"
 import { exec, execAsync } from "ags/process"
 
