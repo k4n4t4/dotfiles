@@ -2,8 +2,8 @@
 {
   imports = [
     /etc/nixos/hardware-configuration.nix
-    ../hyprland
-    ../tuigreet
+    ../../hosts/hyprland
+    ../../hosts/tuigreet
   ];
 
   nix = {
