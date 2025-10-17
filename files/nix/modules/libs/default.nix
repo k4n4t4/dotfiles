@@ -38,6 +38,8 @@ inputs: let
     homeDirectory = makeHomeDirPath { inherit username; };
   } settings;
 in {
+  inherit makeUser makeHomeDirPath makeHomeManagerSettings;
+
   makeHome = { config, modules ? [], settings ? {} }: let
     username = config.username;
     version = config.version;
@@ -77,7 +79,6 @@ in {
         };
         system.stateVersion = version;
       }
-      (makeUser { inherit username; })
     ] ++ modules;
   } settings );
 }

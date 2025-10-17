@@ -21,6 +21,7 @@
         {
           wsl.defaultUser = config.username;
         }
+        (libs.makeUser { username = config.username; })
       ];
       homeModules = [ ../../modules/configurations/home/common.nix ];
     };

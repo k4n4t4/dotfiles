@@ -22,6 +22,7 @@
       modules = [
         ../../modules/configurations/hosts/desktop.nix
         ../../modules/hosts/nvidia
+        (libs.makeUser { username = config.username; })
       ];
       homeModules = [ ../../modules/configurations/home/desktop.nix ];
     };
