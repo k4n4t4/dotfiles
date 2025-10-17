@@ -22,11 +22,7 @@
           wsl.defaultUser = config.username;
         }
       ];
-      homeModules = [
-        ../../modules/home/configurations/common.nix
-        ../../modules/home/clitools
-        ../../modules/home/nvim
-      ];
+      homeModules = [ ../../home/common ];
     };
   };
 }

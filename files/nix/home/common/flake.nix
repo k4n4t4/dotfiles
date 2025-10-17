@@ -16,11 +16,7 @@
   in {
     make = config: libs.makeHome {
       inherit config;
-      modules = [
-        ../../modules/home/configurations/common.nix
-        ../../modules/home/clitools
-        ../../modules/home/nvim
-      ];
+      modules = [ ./default.nix ];
     };
   };
 }

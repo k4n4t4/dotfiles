@@ -22,15 +22,8 @@
       modules = [
         ../../modules/hosts/configurations/desktop.nix
         ../../modules/hosts/nvidia
-        ../../modules/hosts/hyprland
       ];
-      homeModules = [
-        ../../modules/home/configurations/desktop.nix
-        ../../modules/home/clitools
-        ../../modules/home/nvim
-        ../../modules/home/ags
-        ../../modules/home/fcitx5
-      ];
+      homeModules = [ ../../home/desktop ];
     };
   };
 }
