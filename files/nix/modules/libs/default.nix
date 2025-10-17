@@ -2,6 +2,7 @@ inputs: let
   nixpkgs = inputs.nixpkgs;
   home-manager = inputs.home-manager;
   pkgs = nixpkgs.legacyPackages.${builtins.currentSystem};
+  lib = nixpkgs.lib;
 
   makeHomeDirPath = { username }:
     if builtins.match ".*-darwin" builtins.currentSystem != null then
@@ -31,16 +32,16 @@ inputs: let
     };
   };
 
-  makeHomeManagerSettings = { version, username }: {
+  makeHomeManagerSettings = { version, username, settings ? {} }: lib.recursiveUpdate {
     stateVersion = version;
     username = username;
     homeDirectory = makeHomeDirPath { inherit username; };
-  };
+  } settings;
 in {
-  makeHome = { config, modules ? [] }: let
+  makeHome = { config, modules ? [], settings ? {} }: let
     username = config.username;
     version = config.version;
-  in home-manager.lib.homeManagerConfiguration {
+  in home-manager.lib.homeManagerConfiguration ( lib.recursiveUpdate {
     inherit pkgs;
     extraSpecialArgs = {
       inherit inputs;
@@ -50,12 +51,12 @@ in {
         home = makeHomeManagerSettings { inherit version username; };
       }
     ] ++ modules;
-  };
+  } settings );
 
-  makeSystem = { config, modules ? [], homeModules ? [] }: let 
+  makeSystem = { config, modules ? [], homeModules ? [], settings ? {} }: let
     username = config.username;
     version = config.version;
-  in nixpkgs.lib.nixosSystem {
+  in nixpkgs.lib.nixosSystem ( lib.recursiveUpdate {
     system = builtins.currentSystem;
     specialArgs = {
       inherit inputs;
@@ -78,5 +79,5 @@ in {
       }
       (makeUser { inherit username; })
     ] ++ modules;
-  };
+  } settings );
 }
