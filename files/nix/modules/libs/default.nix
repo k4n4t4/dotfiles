@@ -74,6 +74,7 @@ in {
             imports = homeModules;
           };
         };
+        system.stateVersion = version;
       }
       (makeUser { inherit username; })
     ] ++ modules;

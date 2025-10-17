@@ -22,6 +22,4 @@
       vim
     ];
   };
-
-  system.stateVersion = "24.11";
 }
