@@ -17,12 +17,12 @@
     make = config: libs.makeSystem {
       inherit config;
       modules = [
-        ../../modules/hosts/configurations/wsl.nix
+        ../../modules/configurations/hosts/wsl.nix
         {
           wsl.defaultUser = config.username;
         }
       ];
-      homeModules = [ ../../home/common ];
+      homeModules = [ ../../modules/configurations/home/common.nix ];
     };
   };
 }

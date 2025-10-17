@@ -2,22 +2,10 @@
 {
   home = {
     packages = with pkgs; [
-      dash
-      fish
-      nushell
-      zsh
-      starship
-      eza
-      fd
-      ripgrep
-      fzf
-      zoxide
-      btop
-      ncdu
-      delta
-      trash-cli
-      tmux
-      gh
+      dash fish nushell zsh
+      starship eza fd ripgrep fzf delta
+      btop ncdu tmux gh
+      zoxide trash-cli
     ];
   };
 }

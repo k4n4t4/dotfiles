@@ -20,10 +20,10 @@
     make = config: libs.makeSystem {
       inherit config;
       modules = [
-        ../../modules/hosts/configurations/desktop.nix
+        ../../modules/configurations/hosts/desktop.nix
         ../../modules/hosts/intel
       ];
-      homeModules = [ ../../home/desktop ];
+      homeModules = [ ../../modules/configurations/home/desktop.nix ];
     };
   };
 }

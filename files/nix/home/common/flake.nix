@@ -16,7 +16,7 @@
   in {
     make = config: libs.makeHome {
       inherit config;
-      modules = [ ./default.nix ];
+      modules = [ ../../modules/configurations/home/common.nix ];
     };
   };
 }

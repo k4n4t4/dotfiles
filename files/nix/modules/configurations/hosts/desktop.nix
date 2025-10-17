@@ -3,6 +3,7 @@
   imports = [
     /etc/nixos/hardware-configuration.nix
     ../hyprland
+    ../tuigreet
   ];
 
   nix = {
