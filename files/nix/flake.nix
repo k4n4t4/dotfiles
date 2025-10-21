@@ -6,13 +6,8 @@
     home.url = "path:./home";
   };
 
-  outputs = { self, ... }@inputs: let
-    config = {
-      version = "24.11";
-      username = "kanata";
-    };
-  in {
-    nixosConfigurations = inputs.hosts.make config;
-    homeConfigurations = inputs.home.make config;
+  outputs = { hosts, home, ... }: {
+    nixosConfigurations = hosts;
+    homeConfigurations = home;
   };
 }

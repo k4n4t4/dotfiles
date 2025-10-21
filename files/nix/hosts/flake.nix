@@ -7,12 +7,10 @@
     desktop.url = "path:./desktop";
   };
 
-  outputs = { self, ... }@inputs: let
+  outputs = inputs: let
     hosts = builtins.attrNames inputs;
-  in {
-    make = config: builtins.listToAttrs (map (h: {
-      name = h;
-      value = inputs.${h}.make config;
-    }) hosts);
-  };
+  in builtins.listToAttrs (map (h: {
+    name = h;
+    value = inputs.${h};
+  }) hosts);
 }

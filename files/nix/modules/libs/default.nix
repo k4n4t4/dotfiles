@@ -6,9 +6,15 @@ inputs: let
 
   makeHomeDirPath = { username }:
     if builtins.match ".*-darwin" builtins.currentSystem != null then
-      "/Users/${username}"
+      if username == "root" then
+        "/var/root"
+      else
+        "/Users/${username}"
     else
-      "/home/${username}"
+      if username == "root" then
+        "/root"
+      else
+        "/home/${username}"
     ;
 
   makeUser = { username, usergroup ? username }: {
@@ -23,7 +29,6 @@ inputs: let
             "networkmanager"
           ];
           isNormalUser = true;
-          shell = pkgs.bash;
         };
       };
       groups = {
@@ -32,7 +37,7 @@ inputs: let
     };
   };
 
-  makeHomeManagerSettings = { version, username, settings ? {} }: lib.recursiveUpdate {
+  makeHomeManagerSettings = { version, username ? builtins.getEnv "USER", settings ? {} }: lib.recursiveUpdate {
     stateVersion = version;
     username = username;
     homeDirectory = makeHomeDirPath { inherit username; };
@@ -40,9 +45,8 @@ inputs: let
 in {
   inherit makeUser makeHomeDirPath makeHomeManagerSettings;
 
-  makeHome = { config, modules ? [], settings ? {} }: let
-    username = config.username;
-    version = config.version;
+  makeHome = { version, modules ? [], settings ? {} }: let
+    username = builtins.getEnv "USER";
   in home-manager.lib.homeManagerConfiguration ( lib.recursiveUpdate {
     inherit pkgs;
     extraSpecialArgs = {
@@ -55,9 +59,7 @@ in {
     ] ++ modules;
   } settings );
 
-  makeSystem = { config, modules ? [], homeModules ? [], settings ? {} }: let
-    username = config.username;
-    version = config.version;
+  makeSystem = { version, users, modules ? [], homeModules ? [], settings ? {} }: let
   in nixpkgs.lib.nixosSystem ( lib.recursiveUpdate {
     system = builtins.currentSystem;
     specialArgs = {
@@ -72,13 +74,20 @@ in {
           extraSpecialArgs = {
             inherit inputs;
           };
-          users.${username} = {
-            home = makeHomeManagerSettings { inherit version username; };
-            imports = homeModules;
-          };
+          users = lib.mapAttrs (name: value: let
+            modules = if value ? "modules" then
+              value.modules
+            else [];
+          in {
+            home = makeHomeManagerSettings {
+              username = name;
+              version = version;
+            };
+            imports = modules ++ homeModules;
+          }) users;
         };
         system.stateVersion = version;
       }
-    ] ++ modules;
+    ] ++ lib.mapAttrsToList (name: value: makeUser { username = name; } ) users ++ modules;
   } settings );
 }
