@@ -25,7 +25,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub.configurationLimit = 5;
 
-  networking.hostName = "nixos";
+  networking.hostName = "nixos-desktop";
   networking.networkmanager.enable = true;
 
   time.timeZone = "Asia/Tokyo";
