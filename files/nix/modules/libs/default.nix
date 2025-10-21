@@ -4,7 +4,7 @@ inputs: let
   pkgs = nixpkgs.legacyPackages.${builtins.currentSystem};
   lib = nixpkgs.lib;
 
-  makeHomeDirPath = { username }:
+  makeHomeDirPath = username:
     if builtins.match ".*-darwin" builtins.currentSystem != null then
       if username == "root" then
         "/var/root"
@@ -22,7 +22,7 @@ inputs: let
       users = {
         ${username} = {
           description = username;
-          home = makeHomeDirPath { inherit username; };
+          home = makeHomeDirPath username;
           group = usergroup;
           extraGroups = [
             "wheel"
@@ -36,14 +36,8 @@ inputs: let
       };
     };
   };
-
-  makeHomeManagerSettings = { version, username ? builtins.getEnv "USER", settings ? {} }: lib.recursiveUpdate {
-    stateVersion = version;
-    username = username;
-    homeDirectory = makeHomeDirPath { inherit username; };
-  } settings;
 in {
-  inherit makeUser makeHomeDirPath makeHomeManagerSettings;
+  inherit makeUser makeHomeDirPath;
 
   makeHome = { version, modules ? [], settings ? {} }: let
     username = builtins.getEnv "USER";
@@ -54,7 +48,11 @@ in {
     };
     modules = [
       {
-        home = makeHomeManagerSettings { inherit version username; };
+        home = {
+          inherit username;
+          stateVersion = version;
+          homeDirectory = makeHomeDirPath username;
+        };
       }
     ] ++ modules;
   } settings );
@@ -79,9 +77,10 @@ in {
               value.modules
             else [];
           in {
-            home = makeHomeManagerSettings {
+            home = {
               username = name;
-              version = version;
+              stateVersion = version;
+              homeDirectory = makeHomeDirPath name;
             };
             imports = modules ++ homeModules;
           }) users;
