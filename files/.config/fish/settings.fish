@@ -1,3 +1,5 @@
+# @fish-lsp-disable
+
 set fish_handle_reflow 0
 
 set fish_color_normal         brwhite
