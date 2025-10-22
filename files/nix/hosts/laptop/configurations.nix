@@ -4,6 +4,7 @@
     /etc/nixos/hardware-configuration.nix
     ../../modules/hosts/hyprland
     ../../modules/hosts/tuigreet
+    ../../modules/hosts/docker
   ];
 
   nix = {

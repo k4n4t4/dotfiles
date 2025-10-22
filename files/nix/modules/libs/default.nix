@@ -58,20 +58,19 @@ in {
   } settings );
 
   makeSystem = { version, users, modules ? [], homeModules ? [], settings ? {} }: let
+    specialArgs = {
+      inherit inputs users version;
+    };
   in nixpkgs.lib.nixosSystem ( lib.recursiveUpdate {
     system = builtins.currentSystem;
-    specialArgs = {
-      inherit inputs;
-    };
+    specialArgs = specialArgs;
     modules = [
       home-manager.nixosModules.home-manager
       {
         home-manager = {
           useGlobalPkgs = false;
           useUserPackages = true;
-          extraSpecialArgs = {
-            inherit inputs;
-          };
+          extraSpecialArgs = specialArgs;
           users = lib.mapAttrs (name: value: let
             modules = if value ? "modules" then
               value.modules
