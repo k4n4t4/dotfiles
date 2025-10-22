@@ -1,16 +1,17 @@
-alias dotconf="dot --origin-suffix=.config --target-suffix=.config"
+alias dothome="dot --origin-suffix=home"
+alias dotconf="dot --origin-suffix=home/.config --target-suffix=.config"
 
 dot "$WORK_PATH/dm" "bin/dm"
-dot "bin" -r
-dot ".fonts.conf"
-dot ".profile"
+dothome "bin" -r
+dothome ".fonts.conf"
+dothome ".profile"
 
 if cmd_exist bash; then
-  dot ".bashrc"
+  dothome ".bashrc"
 fi
 
 if cmd_exist zsh; then
-  dot ".zshrc"
+  dothome ".zshrc"
 fi
 
 if cmd_exist fish; then
@@ -22,7 +23,7 @@ if cmd_exist nu; then
 fi
 
 if cmd_exist vim; then
-  dot ".vimrc"
+  dothome ".vimrc"
 fi
 
 if cmd_exist nvim; then
@@ -31,7 +32,7 @@ fi
 
 if cmd_exist tmux; then
   dotconf "tmux" -r -i "tmux.conf"
-  dot ".config/tmux/tmux.conf" ".tmux.conf"
+  dothome ".config/tmux/tmux.conf" ".tmux.conf"
 fi
 
 if cmd_exist starship; then
