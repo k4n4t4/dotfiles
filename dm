@@ -302,7 +302,7 @@ msg_fatal() {
 
 msg_ask() {
   printf "%s" " ${ESC}[33m[ ASK ]${ESC}[90m: ${ESC}[m$*"
-  if $DOT_IS_FORCE_MODE; then
+  if $DOT_IS_YES_MODE; then
     RET="y"
   else
     read -r RET
@@ -345,7 +345,7 @@ run_script() {
   shift
 
   DOT_IS_QUIET=false
-  DOT_IS_FORCE_MODE=false
+  DOT_IS_YES_MODE=false
   DOT_TARGET_PATH="$HOME"
 
   opt_parser \
@@ -362,9 +362,9 @@ run_script() {
         shift
         DOT_IS_QUIET=true
         ;;
-      ( -f | --force )
+      ( -y | --yes )
         shift
-        DOT_IS_FORCE_MODE=true
+        DOT_IS_YES_MODE=true
         ;;
       ( -p | --path )
         shift
