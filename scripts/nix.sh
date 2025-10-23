@@ -27,7 +27,7 @@ case "$RET" in
       RET="common"
     esac
     msg_log "selected name: $RET"
-    msg_run nix run home-manager/master -- switch --flake "$WORK_PATH/files/nix#$RET" --impure
+    msg_run nix run --extra-experimental-features nix-command home-manager/master -- switch --flake "$WORK_PATH/files/nix#$RET" --impure
   ;;
   ( "rebuild" )
     msg_log "available configurations:"
