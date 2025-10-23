@@ -96,7 +96,7 @@ function fish_prompt
   echo -n "$user_color$USER@$hostname$reset_fg_color"
   echo -n " "(printf "\033[38;5;233m\033[48;5;232m")" "
   echo -n "$pwd_color"(prompt_pwd)"$reset_fg_color"
-  if _is_git_repo
+  if ggit:is_repo
     echo -n " "(printf "\033[38;5;232m\033[48;5;233m")" "
     echo -n $repo_type_color$repo_type
     echo -n $reset_fg_color"("$repo_branch_color$repo_branch$reset_fg_color")"
