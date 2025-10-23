@@ -302,7 +302,7 @@ msg_fatal() {
 
 msg_ask() {
   printf "%s" " ${ESC}[33m[ ASK ]${ESC}[90m: ${ESC}[m$*"
-  if DOT_IS_FORCE_MODE; then
+  if $DOT_IS_FORCE_MODE; then
     RET="y"
   else
     read -r RET
