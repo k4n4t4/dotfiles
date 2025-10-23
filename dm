@@ -302,7 +302,11 @@ msg_fatal() {
 
 msg_ask() {
   printf "%s" " ${ESC}[33m[ ASK ]${ESC}[90m: ${ESC}[m$*"
-  read -r RET
+  if DOT_IS_FORCE_MODE; then
+    RET="y"
+  else
+    read -r RET
+  fi
 }
 
 msg_run() {
@@ -341,9 +345,12 @@ run_script() {
   shift
 
   DOT_IS_QUIET=false
+  DOT_IS_FORCE_MODE=false
   DOT_TARGET_PATH="$HOME"
 
-  opt_parser p:1 path:1 -- "$@"
+  opt_parser \
+    p:1 path:1 \
+    -- "$@"
   eval "set -- $RET"
   while [ $# -gt 0 ]; do
     case "$1" in
@@ -354,6 +361,10 @@ run_script() {
       ( -q | --quiet )
         shift
         DOT_IS_QUIET=true
+        ;;
+      ( -f | --force )
+        shift
+        DOT_IS_FORCE_MODE=true
         ;;
       ( -p | --path )
         shift
