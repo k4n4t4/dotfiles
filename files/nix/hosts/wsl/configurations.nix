@@ -2,6 +2,7 @@
 {
   imports = [
     <nixos-wsl/modules>
+    ../../modules/hosts/docker
   ];
 
   nix = {
