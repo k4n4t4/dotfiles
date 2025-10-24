@@ -42,7 +42,7 @@ base_name() {
 }
 
 abs_path() {
-  OLD_PWD="$PWD"
+  TMP="$PWD"
   dir_name "$1"
   cd -- "$RET" || return 1
   base_name "$1"
@@ -61,7 +61,7 @@ abs_path() {
       ;;
     ( * ) RET="$1$2$3" ;;
   esac
-  cd -- "$OLD_PWD" || return 1
+  cd -- "$TMP" || return 1
 }
 
 cmd_exist() {
@@ -269,6 +269,31 @@ false() {
   return 1
 }
 
+_stack_params=""
+params_to_string() {
+  TMP=""
+  while [ $# -gt 0 ]; do
+    qesc "$1"
+    TMP="$TMP $RET"
+    shift
+  done
+  RET="$TMP"
+}
+push_params() {
+  params_to_string "$@"
+  qesc "$RET"
+  _stack_params="$RET $_stack_params"
+}
+# shellcheck disable=SC2120
+pop_params__temp=""
+pop_params() {
+  eval "set -- $_stack_params"
+  pop_params__temp="$1"
+  shift
+  params_to_string "$@"
+  _stack_params="$RET"
+  RET="$pop_params__temp"
+}
 
 # Message
 
