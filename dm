@@ -284,8 +284,8 @@ push_params() {
   qesc "$RET"
   _stack_params="$RET $_stack_params"
 }
-# shellcheck disable=SC2120
 pop_params__temp=""
+# shellcheck disable=SC2120
 pop_params() {
   eval "set -- $_stack_params"
   pop_params__temp="$1"
