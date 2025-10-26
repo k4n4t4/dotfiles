@@ -269,31 +269,40 @@ false() {
   return 1
 }
 
+
+# Parameter Stack
+
 _stack_params=""
-params_to_string() {
+
+push_params() {
   TMP=""
   while [ $# -gt 0 ]; do
     qesc "$1"
     TMP="$TMP $RET"
     shift
   done
-  RET="$TMP"
-}
-push_params() {
-  params_to_string "$@"
-  qesc "$RET"
+  qesc "$TMP"
   _stack_params="$RET $_stack_params"
 }
-pop_params__temp=""
+
 # shellcheck disable=SC2120
 pop_params() {
   eval "set -- $_stack_params"
-  pop_params__temp="$1"
+  TMP="$1"
   shift
-  params_to_string "$@"
-  _stack_params="$RET"
-  RET="$pop_params__temp"
+  _stack_params=""
+  while [ $# -gt 0 ]; do
+    qesc "$1"
+    _stack_params="$_stack_params $RET"
+    shift
+  done
+  RET="$TMP"
 }
+
+# shellcheck disable=SC2142
+alias PUSH_PARAMS='push_params "$@"'
+alias POP_PARAMS='pop_params && eval "set -- $RET"'
+
 
 # Message
 
