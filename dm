@@ -343,10 +343,6 @@ pop_params() {
   RET="$TMP"
 }
 
-# shellcheck disable=SC2142
-alias PUSH_PARAMS='push_params "$@"'
-alias POP_PARAMS='pop_params && eval "set -- $RET"'
-
 
 push_val() {
   qesc "$2"
@@ -364,22 +360,6 @@ pop_val() {
   done
   RET="$1"
 }
-
-
-# foreach
-
-# shellcheck disable=SC2142
-alias FOREACH='
-  PUSH_PARAMS;
-  eval "set -- $ARG";
-  while [ $# -gt 0 ]; do
-    RET="$1";
-'
-alias FOREACH_END='
-    shift;
-  done;
-  POP_PARAMS;
-'
 
 
 # Message
