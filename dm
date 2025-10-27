@@ -269,6 +269,18 @@ false() {
   return 1
 }
 
+get_files() {
+  TMP=""
+  for i in "$1"/* "$1"/.*; do
+    base_name "$i"
+    case "$RET" in ( ".." | "." | "*" | ".*" )
+      continue
+    esac
+    qesc "$i"
+    TMP="$TMP $RET"
+  done
+  RET="$TMP"
+}
 
 # Parameter Stack
 
@@ -302,6 +314,40 @@ pop_params() {
 # shellcheck disable=SC2142
 alias PUSH_PARAMS='push_params "$@"'
 alias POP_PARAMS='pop_params && eval "set -- $RET"'
+
+
+push_val() {
+  qesc "$2"
+  eval "$1"'="$'"$1"' $RET"'
+}
+
+pop_val() {
+  TMP="$1"
+  eval 'RET="$'"$1"'"'
+  eval "set -- $RET"
+  while [ $# -gt 1 ]; do
+    qesc "$1"
+    eval "$TMP"'="$'"$TMP"' $RET"'
+    shift
+  done
+  RET="$1"
+}
+
+
+# foreach
+
+# shellcheck disable=SC2142
+alias FOREACH='
+  PUSH_PARAMS;
+  eval "set -- $ARG";
+  while [ $# -gt 0 ]; do
+    RET="$1";
+'
+alias FOREACH_END='
+    shift;
+  done;
+  POP_PARAMS;
+'
 
 
 # Message
