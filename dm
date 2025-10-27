@@ -282,6 +282,38 @@ get_files() {
   RET="$TMP"
 }
 
+get_files_recursive() {
+  TMP=""
+  _dir_max_depth="${2:-1000}"
+  _include_dir="${3:-false}"
+  _dir_depth=0
+  set -- "$1"
+  while [ $# -gt 0 ]; do
+    _dir_stack=""
+    _dir_depth=$((_dir_depth + 1))
+    while [ $# -gt 0 ]; do
+      for i in "$1"/* "$1"/.*; do
+        base_name "$i"
+        case "$RET" in ( '.' | '..' | '*' | '.*' ) continue ;; esac
+        if [ -d "$i" ] && [ "$_dir_depth" -ne "$_dir_max_depth" ]; then
+          qesc "$i"
+          _dir_stack="$_dir_stack $RET"
+          if $_include_dir; then
+            TMP="$TMP $RET"
+          fi
+        else
+          qesc "$i"
+          TMP="$TMP $RET"
+        fi
+      done
+      shift
+    done
+    eval 'set -- "$@" '"$_dir_stack"
+  done
+  RET="$TMP"
+}
+
+
 # Parameter Stack
 
 _stack_params=""
