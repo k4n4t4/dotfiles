@@ -668,11 +668,11 @@ dot() {
         get_files_recursive "$dot__origin" "$dot__depth"
         eval "set -- $RET"
         while [ $# -gt 0 ]; do
-          [ -e "$1" ] || continue
           base_name "$1"
-          alt_match "$RET" "$dot__ignore" && continue
+          if ! alt_match "$RET" "$dot__ignore"; then
+            _dot "$1" "$dot__target/${1#"$dot__origin/"}"
+          fi
 
-          _dot "$1" "$dot__target/${1#"$dot__origin/"}"
           shift
         done
       else
@@ -813,13 +813,7 @@ main() {
   shift
   case "$main__sub_command" in
     ( help ) usage ;;
-    ( install )
-      run_script "$main__sub_command" "$@"
-      ;;
-    ( uninstall )
-      run_script "$main__sub_command" "$@"
-      ;;
-    ( check )
+    ( install | uninstall | check )
       run_script "$main__sub_command" "$@"
       ;;
     ( cd )
