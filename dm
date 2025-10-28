@@ -763,6 +763,220 @@ EOL
 }
 
 
+dot() {
+  :
+}
+dot_install() {
+  DOT_OPT_ORIGIN_PREFIX="$WORK_PATH/files"
+  DOT_OPT_ORIGIN_SUFFIX=""
+  DOT_OPT_TARGET_PREFIX="$DOT_TARGET_PATH"
+  DOT_OPT_TARGET_SUFFIX=""
+  DOT_OPT_RECURSIVE="no"
+  DOT_OPT_DEPTH=100
+  DOT_OPT_IGNORE=""
+
+  opt_parser \
+    d:1 depth:1 \
+    i:1 ignore:1 \
+    origin-prefix:1 \
+    origin-suffix:1 \
+    target-prefix:1 \
+    target-suffix:1 \
+    -- "$@"
+  eval "set -- $RET"
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      ( -- ) shift ; break ;;
+      ( --origin-prefix ) shift ; DOT_OPT_ORIGIN_PREFIX="$1" ; shift 1 ;;
+      ( --origin-suffix ) shift ; DOT_OPT_ORIGIN_SUFFIX="$1" ; shift 1 ;;
+      ( --target-prefix ) shift ; DOT_OPT_TARGET_PREFIX="$1" ; shift 1 ;;
+      ( --target-suffix ) shift ; DOT_OPT_TARGET_SUFFIX="$1" ; shift 1 ;;
+      ( -i | --ignore )
+        shift
+        qesc "$1"
+        DOT_OPT_IGNORE="$DOT_OPT_IGNORE $RET"
+        shift 1
+        ;;
+      ( -r | --recursive )
+        shift
+        DOT_OPT_RECURSIVE="yes"
+        ;;
+      ( -d | --depth )
+        shift
+        if is_number "$1"; then
+          DOT_OPT_DEPTH=$1
+        fi
+        shift 1
+        ;;
+      ( * )
+        msg_error "Invalid Option: $1"
+        return 1
+        ;;
+    esac
+  done
+  if [ $# -eq 0 ] || [ $# -gt 2 ]; then
+    msg_error "Wrong number of arguments."
+    return 1
+  fi
+
+  DOT_ARG_ORIGIN="$1"
+  case "$DOT_ARG_ORIGIN" in
+    ( "/"* )
+      : Is absolute path.
+      ;;
+    ( * )
+      case "$DOT_OPT_ORIGIN_SUFFIX" in
+        ( "" )
+          DOT_ARG_ORIGIN="$DOT_OPT_ORIGIN_PREFIX/$DOT_ARG_ORIGIN"
+          ;;
+        ( * )
+          DOT_ARG_ORIGIN="$DOT_OPT_ORIGIN_PREFIX/$DOT_OPT_ORIGIN_SUFFIX/$DOT_ARG_ORIGIN"
+          ;;
+      esac
+      ;;
+  esac
+  DOT_ARG_TARGET="${2:-"$1"}"
+  case "$DOT_ARG_TARGET" in
+    ( "/"* )
+      : Is absolute path.
+      ;;
+    ( * )
+      case "$DOT_OPT_TARGET_SUFFIX" in
+        ( "" )
+          DOT_ARG_TARGET="$DOT_OPT_TARGET_PREFIX/$DOT_ARG_TARGET"
+          ;;
+        ( * )
+          DOT_ARG_TARGET="$DOT_OPT_TARGET_PREFIX/$DOT_OPT_TARGET_SUFFIX/$DOT_ARG_TARGET"
+          ;;
+      esac
+      ;;
+  esac
+
+  if [ -e "$DOT_ARG_ORIGIN" ]; then
+    if [ -f "$DOT_ARG_ORIGIN" ] || [ -d "$DOT_ARG_ORIGIN" ]; then
+      if [ "$DOT_OPT_RECURSIVE" = "yes" ] && [ -d "$DOT_ARG_ORIGIN" ]; then
+        get_files_recursive "$DOT_ARG_ORIGIN" "$DOT_OPT_DEPTH"
+        eval "set -- $RET"
+        while [ $# -gt 0 ]; do
+          [ -e "$1" ] || continue
+          base_name "$1"
+          alt_match "$RET" "$DOT_OPT_IGNORE" && continue
+
+          case "$DOT_SCRIPT_MODE" in
+            ( 'install' )
+              _dot_link "$1" "$DOT_ARG_TARGET/${1#"$DOT_ARG_ORIGIN/"}"
+              ;;
+            ( 'uninstall' )
+              _dot_unlink "$1" "$DOT_ARG_TARGET/${1#"$DOT_ARG_ORIGIN/"}"
+              ;;
+            ( 'check' )
+              _dot_check "$1" "$DOT_ARG_TARGET/${1#"$DOT_ARG_ORIGIN/"}"
+              ;;
+          esac
+          shift
+        done
+      else
+        case "$DOT_SCRIPT_MODE" in
+          ( 'install' )
+            _dot_link "$DOT_ARG_ORIGIN" "$DOT_ARG_TARGET"
+            ;;
+          ( 'uninstall' )
+            _dot_unlink "$DOT_ARG_ORIGIN" "$DOT_ARG_TARGET"
+            ;;
+          ( 'check' )
+            _dot_check "$DOT_ARG_ORIGIN" "$DOT_ARG_TARGET"
+            ;;
+        esac
+      fi
+    else
+      msg_error "Not supported file type: $DOT_ARG_ORIGIN"
+    fi
+  else
+    msg_error "File not found: $DOT_ARG_ORIGIN"
+  fi
+}
+
+dot_uninstall() {
+  :
+}
+
+dot_check() {
+  :
+}
+
+run_script() {
+  run_script__quiet=false
+  run_script__yes_mode=false
+  run_script__target_path="$HOME"
+
+  run_script__mode="${1:-unknown}"
+  shift
+
+  case "$run_script__mode" in
+    ( install )
+      dot() {
+        dot_install "$@"
+      }
+      ;;
+    ( uninstall )
+      dot() {
+        dot_uninstall "$@"
+      }
+      ;;
+    ( check )
+      dot() {
+        dot_check "$@"
+      }
+      ;;
+  esac
+
+  opt_parser \
+    p:1 path:1 \
+    -- "$@"
+  eval "set -- $RET"
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      ( -- )
+        shift
+        break
+        ;;
+      ( -q | --quiet )
+        shift
+        run_script__quiet=true
+        ;;
+      ( -y | --yes )
+        shift
+        run_script__yes_mode=true
+        ;;
+      ( -p | --path )
+        shift
+        run_script__target_path="$1"
+        shift 1
+        ;;
+      ( * )
+        msg_error "Invalid Option."
+        return 1
+        ;;
+    esac
+  done
+
+  [ $# -eq 0 ] && set -- "default"
+
+  while [ $# -gt 0 ]; do
+    DOT_SCRIPT_NAME="$1"
+
+    if [ -f "$WORK_PATH/scripts/$DOT_SCRIPT_NAME.sh" ]; then
+      # shellcheck disable=SC1090
+      . "$WORK_PATH/scripts/$DOT_SCRIPT_NAME.sh"
+    else
+      msg_error "\"$DOT_SCRIPT_NAME\" is not found."
+      return 1
+    fi
+
+    shift
+  done
+}
+
 # Initialization
 
 FILE_PATH="$(realpath "$0")"
