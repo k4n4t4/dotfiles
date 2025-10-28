@@ -581,6 +581,8 @@ _dot_prase_option() {
   dot__recursive=false
   dot__depth=-1
   dot__ignore=""
+  dot__origin=""
+  dot__target=""
 
   opt_parser \
     d:1 depth:1 \
@@ -621,10 +623,12 @@ _dot_prase_option() {
         ;;
     esac
   done
+
   if [ $# -eq 0 ] || [ $# -gt 2 ]; then
     msg_error "Wrong number of arguments."
     return 1
   fi
+
   dot__origin="$1"
   case "$dot__origin" in
     ( "/"* )
@@ -641,6 +645,7 @@ _dot_prase_option() {
       esac
       ;;
   esac
+
   dot__target="${2:-"$1"}"
   case "$dot__target" in
     ( "/"* )
