@@ -762,10 +762,10 @@ WORK_PATH="${FILE_PATH%"/"*}"
 [ "$WORK_PATH" = "" ] && WORK_PATH="/"
 KERNEL_NAME="$(uname -s)"
 
-SUBCOMMAND="unknown"
-
 
 main() {
+  main__sub_command="unknown"
+
   case "$KERNEL_NAME" in
     ( Linux ) : ;;
     ( * )
@@ -776,22 +776,46 @@ main() {
 
   [ $# -eq 0 ] && set -- help
   case "$1" in
-    ( help | h | usage | '-?' | '-h' | '--help' ) SUBCOMMAND="help" ;;
-    ( install | i ) SUBCOMMAND="install" ;;
-    ( uninstall | u ) SUBCOMMAND="uninstall" ;;
-    ( check | c ) SUBCOMMAND="check" ;;
-    ( cd ) SUBCOMMAND="cd" ;;
-    ( shellenv ) SUBCOMMAND="shellenv" ;;
-    ( git | g ) SUBCOMMAND="git" ;;
-    ( pull | p ) SUBCOMMAND="pull" ;;
-    ( debug | d ) SUBCOMMAND="debug" ;;
-    ( * ) msg_error "Invalid Sub Command: \"$1\"" ;;
+    ( help | h | usage | '-?' | '-h' | '--help' )
+      main__sub_command="help"
+      ;;
+    ( install | i )
+      main__sub_command="install"
+      ;;
+    ( uninstall | u )
+      main__sub_command="uninstall"
+      ;;
+    ( check | c )
+      main__sub_command="check"
+      ;;
+    ( cd )
+      main__sub_command="cd"
+      ;;
+    ( shellenv )
+      main__sub_command="shellenv"
+      ;;
+    ( git | g )
+      main__sub_command="git"
+      ;;
+    ( pull | p )
+      main__sub_command="pull"
+      ;;
+    ( debug | d ) main__sub_command="debug" ;;
+    ( * )
+      msg_error "Invalid Sub Command: \"$1\""
+      ;;
   esac
   shift
-  case "$SUBCOMMAND" in
+  case "$main__sub_command" in
     ( help ) usage ;;
-    ( install | uninstall | check )
-      run_script "$SUBCOMMAND" "$@"
+    ( install )
+      run_script "$main__sub_command" "$@"
+      ;;
+    ( uninstall )
+      run_script "$main__sub_command" "$@"
+      ;;
+    ( check )
+      run_script "$main__sub_command" "$@"
       ;;
     ( cd )
       shell_cd "$@"
@@ -814,7 +838,7 @@ main() {
       msg_log "   FILE_PATH = \"$FILE_PATH\""
       msg_log "   WORK_PATH = \"$WORK_PATH\""
       msg_log " KERNEL_NAME = \"$KERNEL_NAME\""
-      msg_log "  SUBCOMMAND = \"$SUBCOMMAND\""
+      msg_log "  main__sub_command = \"$main__sub_command\""
       ;;
     ( * )
       usage
