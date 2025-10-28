@@ -366,8 +366,6 @@ pop_val() {
 
 # Constants
 
-NL='
-'
 ESC="$(printf "\033")"
 
 
@@ -433,200 +431,6 @@ usage() {
   echo "    shellenv         print shellenv"
   echo "    git              run git"
   echo "    pull             run git pull"
-}
-
-source_script() {
-  # shellcheck disable=SC1090
-  . "$WORK_PATH/scripts/$1.sh"
-}
-
-run_script() {
-  [ $# -eq 0 ] && return 1
-  DOT_SCRIPT_MODE="$1"
-  shift
-
-  DOT_IS_QUIET=false
-  DOT_IS_YES_MODE=false
-  DOT_TARGET_PATH="$HOME"
-
-  opt_parser \
-    p:1 path:1 \
-    -- "$@"
-  eval "set -- $RET"
-  while [ $# -gt 0 ]; do
-    case "$1" in
-      ( -- )
-        shift
-        break
-        ;;
-      ( -q | --quiet )
-        shift
-        DOT_IS_QUIET=true
-        ;;
-      ( -y | --yes )
-        shift
-        DOT_IS_YES_MODE=true
-        ;;
-      ( -p | --path )
-        shift
-        DOT_TARGET_PATH="$1"
-        shift 1
-        ;;
-      ( * )
-        msg_error "Invalid Option."
-        return 1
-        ;;
-    esac
-  done
-
-  [ $# -eq 0 ] && set -- "default"
-
-  while [ $# -gt 0 ]; do
-    DOT_SCRIPT_NAME="$1"
-
-    if [ -f "$WORK_PATH/scripts/$DOT_SCRIPT_NAME.sh" ]; then
-      source_script "$DOT_SCRIPT_NAME"
-    else
-      msg_error "\"$DOT_SCRIPT_NAME\" is not found."
-      return 1
-    fi
-
-    shift
-  done
-}
-
-dot() {
-  DOT_OPT_ORIGIN_PREFIX="$WORK_PATH/files"
-  DOT_OPT_ORIGIN_SUFFIX=""
-  DOT_OPT_TARGET_PREFIX="$DOT_TARGET_PATH"
-  DOT_OPT_TARGET_SUFFIX=""
-  DOT_OPT_RECURSIVE="no"
-  DOT_OPT_DEPTH=100
-  DOT_OPT_IGNORE=""
-
-  opt_parser \
-    d:1 depth:1 \
-    i:1 ignore:1 \
-    origin-prefix:1 \
-    origin-suffix:1 \
-    target-prefix:1 \
-    target-suffix:1 \
-    -- "$@"
-  eval "set -- $RET"
-  while [ $# -gt 0 ]; do
-    case "$1" in
-      ( -- ) shift ; break ;;
-      ( --origin-prefix ) shift ; DOT_OPT_ORIGIN_PREFIX="$1" ; shift 1 ;;
-      ( --origin-suffix ) shift ; DOT_OPT_ORIGIN_SUFFIX="$1" ; shift 1 ;;
-      ( --target-prefix ) shift ; DOT_OPT_TARGET_PREFIX="$1" ; shift 1 ;;
-      ( --target-suffix ) shift ; DOT_OPT_TARGET_SUFFIX="$1" ; shift 1 ;;
-      ( -i | --ignore )
-        shift
-        qesc "$1"
-        DOT_OPT_IGNORE="$DOT_OPT_IGNORE $RET"
-        shift 1
-        ;;
-      ( -r | --recursive )
-        shift
-        DOT_OPT_RECURSIVE="yes"
-        ;;
-      ( -d | --depth )
-        shift
-        if is_number "$1"; then
-          DOT_OPT_DEPTH=$1
-        fi
-        shift 1
-        ;;
-      ( * )
-        msg_error "Invalid Option: $1"
-        return 1
-        ;;
-    esac
-  done
-  if [ $# -eq 0 ] || [ $# -gt 2 ]; then
-    msg_error "Wrong number of arguments."
-    return 1
-  fi
-
-  DOT_ARG_ORIGIN="$1"
-  case "$DOT_ARG_ORIGIN" in
-    ( "/"* )
-      : Is absolute path.
-      ;;
-    ( * )
-      case "$DOT_OPT_ORIGIN_SUFFIX" in
-        ( "" )
-          DOT_ARG_ORIGIN="$DOT_OPT_ORIGIN_PREFIX/$DOT_ARG_ORIGIN"
-          ;;
-        ( * )
-          DOT_ARG_ORIGIN="$DOT_OPT_ORIGIN_PREFIX/$DOT_OPT_ORIGIN_SUFFIX/$DOT_ARG_ORIGIN"
-          ;;
-      esac
-      ;;
-  esac
-  DOT_ARG_TARGET="${2:-"$1"}"
-  case "$DOT_ARG_TARGET" in
-    ( "/"* )
-      : Is absolute path.
-      ;;
-    ( * )
-      case "$DOT_OPT_TARGET_SUFFIX" in
-        ( "" )
-          DOT_ARG_TARGET="$DOT_OPT_TARGET_PREFIX/$DOT_ARG_TARGET"
-          ;;
-        ( * )
-          DOT_ARG_TARGET="$DOT_OPT_TARGET_PREFIX/$DOT_OPT_TARGET_SUFFIX/$DOT_ARG_TARGET"
-          ;;
-      esac
-      ;;
-  esac
-
-  if [ -e "$DOT_ARG_ORIGIN" ]; then
-    if [ -f "$DOT_ARG_ORIGIN" ] || [ -d "$DOT_ARG_ORIGIN" ]; then
-      if [ "$DOT_OPT_RECURSIVE" = "yes" ] && [ -d "$DOT_ARG_ORIGIN" ]; then
-        OLD_IFS="$IFS"
-        IFS="$NL"
-        set -- "$DOT_ARG_ORIGIN"
-        _dot_rec_current_depth=0
-        while [ $# -gt 0 ]; do
-          _dot_rec_current_depth=$((_dot_rec_current_depth + 1))
-          _dot_rec_dir_stack=""
-          while [ $# -gt 0 ]; do
-            for _dot_rec_entry_origin in "$1"/* "$1"/.*; do
-              base_name "$_dot_rec_entry_origin"
-              case "$RET" in ( '.' | '..' ) continue ;; esac
-              [ -e "$_dot_rec_entry_origin" ] || continue
-              alt_match "$RET" "$DOT_OPT_IGNORE" && continue
-              if [ -d "$_dot_rec_entry_origin" ] && [ "$_dot_rec_current_depth" -ne "$DOT_OPT_DEPTH" ]; then
-                qesc "$_dot_rec_entry_origin"
-                _dot_rec_dir_stack="$_dot_rec_dir_stack $RET"
-              else
-                _dot_rec_entry_target="$DOT_ARG_TARGET/${_dot_rec_entry_origin#"$DOT_ARG_ORIGIN/"}"
-                case "$DOT_SCRIPT_MODE" in
-                  ( 'install' ) _dot_link "$_dot_rec_entry_origin" "$_dot_rec_entry_target" ;;
-                  ( 'uninstall' ) _dot_unlink "$_dot_rec_entry_origin" "$_dot_rec_entry_target" ;;
-                  ( 'check' ) _dot_check "$_dot_rec_entry_origin" "$_dot_rec_entry_target" ;;
-                esac
-              fi
-            done
-            shift
-          done
-          eval "set -- $_dot_rec_dir_stack"
-        done
-        IFS="$OLD_IFS"
-      else
-        case "$DOT_SCRIPT_MODE" in
-          ( 'install' ) _dot_link "$DOT_ARG_ORIGIN" "$DOT_ARG_TARGET" ;;
-          ( 'uninstall' ) _dot_unlink "$DOT_ARG_ORIGIN" "$DOT_ARG_TARGET" ;;
-          ( 'check' ) _dot_check "$DOT_ARG_ORIGIN" "$DOT_ARG_TARGET" ;;
-        esac
-      fi
-    else
-      msg_error "Not supported file type: $DOT_ARG_ORIGIN"
-    fi
-  else
-    msg_error "File not found: $DOT_ARG_ORIGIN"
-  fi
 }
 
 _dot_ask_continue() {
@@ -763,17 +567,20 @@ EOL
 }
 
 
-dot() {
+# dot
+
+_dot() {
   :
 }
-dot_install() {
-  DOT_OPT_ORIGIN_PREFIX="$WORK_PATH/files"
-  DOT_OPT_ORIGIN_SUFFIX=""
-  DOT_OPT_TARGET_PREFIX="$DOT_TARGET_PATH"
-  DOT_OPT_TARGET_SUFFIX=""
-  DOT_OPT_RECURSIVE="no"
-  DOT_OPT_DEPTH=100
-  DOT_OPT_IGNORE=""
+
+_dot_prase_option() {
+  dot__origin_prefix="$WORK_PATH/files"
+  dot__origin_suffix=""
+  dot__target_prefix="$DOT_TARGET_PATH"
+  dot__target_suffix=""
+  dot__recursive=false
+  dot__depth=-1
+  dot__ignore=""
 
   opt_parser \
     d:1 depth:1 \
@@ -787,24 +594,24 @@ dot_install() {
   while [ $# -gt 0 ]; do
     case "$1" in
       ( -- ) shift ; break ;;
-      ( --origin-prefix ) shift ; DOT_OPT_ORIGIN_PREFIX="$1" ; shift 1 ;;
-      ( --origin-suffix ) shift ; DOT_OPT_ORIGIN_SUFFIX="$1" ; shift 1 ;;
-      ( --target-prefix ) shift ; DOT_OPT_TARGET_PREFIX="$1" ; shift 1 ;;
-      ( --target-suffix ) shift ; DOT_OPT_TARGET_SUFFIX="$1" ; shift 1 ;;
+      ( --origin-prefix ) shift ; dot__origin_prefix="$1" ; shift 1 ;;
+      ( --origin-suffix ) shift ; dot__origin_suffix="$1" ; shift 1 ;;
+      ( --target-prefix ) shift ; dot__target_prefix="$1" ; shift 1 ;;
+      ( --target-suffix ) shift ; dot__target_suffix="$1" ; shift 1 ;;
       ( -i | --ignore )
         shift
         qesc "$1"
-        DOT_OPT_IGNORE="$DOT_OPT_IGNORE $RET"
+        dot__ignore="$dot__ignore $RET"
         shift 1
         ;;
       ( -r | --recursive )
         shift
-        DOT_OPT_RECURSIVE="yes"
+        dot__recursive="yes"
         ;;
       ( -d | --depth )
         shift
-        if is_number "$1"; then
-          DOT_OPT_DEPTH=$1
+        if is_int "$1"; then
+          dot__depth=$1
         fi
         shift 1
         ;;
@@ -818,114 +625,90 @@ dot_install() {
     msg_error "Wrong number of arguments."
     return 1
   fi
-
-  DOT_ARG_ORIGIN="$1"
-  case "$DOT_ARG_ORIGIN" in
+  dot__origin="$1"
+  case "$dot__origin" in
     ( "/"* )
       : Is absolute path.
       ;;
     ( * )
-      case "$DOT_OPT_ORIGIN_SUFFIX" in
+      case "$dot__origin_suffix" in
         ( "" )
-          DOT_ARG_ORIGIN="$DOT_OPT_ORIGIN_PREFIX/$DOT_ARG_ORIGIN"
+        dot__origin="$dot__origin_prefix/$dot__origin"
           ;;
         ( * )
-          DOT_ARG_ORIGIN="$DOT_OPT_ORIGIN_PREFIX/$DOT_OPT_ORIGIN_SUFFIX/$DOT_ARG_ORIGIN"
+        dot__origin="$dot__origin_prefix/$dot__origin_suffix/$dot__origin"
           ;;
       esac
       ;;
   esac
-  DOT_ARG_TARGET="${2:-"$1"}"
-  case "$DOT_ARG_TARGET" in
+  dot__target="${2:-"$1"}"
+  case "$dot__target" in
     ( "/"* )
       : Is absolute path.
       ;;
     ( * )
-      case "$DOT_OPT_TARGET_SUFFIX" in
+      case "$dot__target_suffix" in
         ( "" )
-          DOT_ARG_TARGET="$DOT_OPT_TARGET_PREFIX/$DOT_ARG_TARGET"
+        dot__target="$dot__target_prefix/$dot__target"
           ;;
         ( * )
-          DOT_ARG_TARGET="$DOT_OPT_TARGET_PREFIX/$DOT_OPT_TARGET_SUFFIX/$DOT_ARG_TARGET"
+        dot__target="$dot__target_prefix/$dot__target_suffix/$dot__target"
           ;;
       esac
       ;;
   esac
+}
 
-  if [ -e "$DOT_ARG_ORIGIN" ]; then
-    if [ -f "$DOT_ARG_ORIGIN" ] || [ -d "$DOT_ARG_ORIGIN" ]; then
-      if [ "$DOT_OPT_RECURSIVE" = "yes" ] && [ -d "$DOT_ARG_ORIGIN" ]; then
-        get_files_recursive "$DOT_ARG_ORIGIN" "$DOT_OPT_DEPTH"
+dot() {
+  _dot_prase_option "$@"
+
+  if [ -e "$dot__origin" ]; then
+    if [ -f "$dot__origin" ] || [ -d "$dot__origin" ]; then
+      if [ "$dot__recursive" = "yes" ] && [ -d "$dot__origin" ]; then
+        get_files_recursive "$dot__origin" "$dot__depth"
         eval "set -- $RET"
         while [ $# -gt 0 ]; do
           [ -e "$1" ] || continue
           base_name "$1"
-          alt_match "$RET" "$DOT_OPT_IGNORE" && continue
+          alt_match "$RET" "$dot__ignore" && continue
 
-          case "$DOT_SCRIPT_MODE" in
-            ( 'install' )
-              _dot_link "$1" "$DOT_ARG_TARGET/${1#"$DOT_ARG_ORIGIN/"}"
-              ;;
-            ( 'uninstall' )
-              _dot_unlink "$1" "$DOT_ARG_TARGET/${1#"$DOT_ARG_ORIGIN/"}"
-              ;;
-            ( 'check' )
-              _dot_check "$1" "$DOT_ARG_TARGET/${1#"$DOT_ARG_ORIGIN/"}"
-              ;;
-          esac
+          _dot "$1" "$dot__target/${1#"$dot__origin/"}"
           shift
         done
       else
-        case "$DOT_SCRIPT_MODE" in
-          ( 'install' )
-            _dot_link "$DOT_ARG_ORIGIN" "$DOT_ARG_TARGET"
-            ;;
-          ( 'uninstall' )
-            _dot_unlink "$DOT_ARG_ORIGIN" "$DOT_ARG_TARGET"
-            ;;
-          ( 'check' )
-            _dot_check "$DOT_ARG_ORIGIN" "$DOT_ARG_TARGET"
-            ;;
-        esac
+        _dot "$dot__origin" "$dot__target"
       fi
     else
-      msg_error "Not supported file type: $DOT_ARG_ORIGIN"
+      msg_error "Not supported file type: $dot__origin"
     fi
   else
-    msg_error "File not found: $DOT_ARG_ORIGIN"
+    msg_error "File not found: $dot__origin"
   fi
 }
 
-dot_uninstall() {
-  :
-}
-
-dot_check() {
-  :
-}
-
 run_script() {
-  run_script__quiet=false
-  run_script__yes_mode=false
-  run_script__target_path="$HOME"
+  DOT_IS_QUIET=false
+  DOT_IS_YES_MODE=false
+  DOT_TARGET_PATH="$HOME"
+  DOT_SCRIPT_NAME=""
+  DOT_SCRIPT_MODE="${1:-unknown}"
 
-  run_script__mode="${1:-unknown}"
   shift
 
-  case "$run_script__mode" in
+  case "$DOT_SCRIPT_MODE" in
     ( install )
-      dot() {
-        dot_install "$@"
+      _dot() {
+        _dot_link "$@"
       }
       ;;
     ( uninstall )
-      dot() {
-        dot_uninstall "$@"
+      _dot() {
+        _dot_unlink "$@"
       }
       ;;
     ( check )
-      dot() {
-        dot_check "$@"
+      _dot() {
+        _dot_check "$@"
       }
       ;;
   esac
@@ -942,15 +725,15 @@ run_script() {
         ;;
       ( -q | --quiet )
         shift
-        run_script__quiet=true
+        DOT_IS_QUIET=true
         ;;
       ( -y | --yes )
         shift
-        run_script__yes_mode=true
+        DOT_IS_YES_MODE=true
         ;;
       ( -p | --path )
         shift
-        run_script__target_path="$1"
+        DOT_TARGET_PATH="$1"
         shift 1
         ;;
       ( * )
