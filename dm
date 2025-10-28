@@ -415,7 +415,7 @@ msg_run() {
 }
 
 
-# Main
+# Sub Commands
 
 usage() {
   echo "Usage"
@@ -760,6 +760,7 @@ run_script() {
   done
 }
 
+
 # Initialization
 
 FILE_PATH="$(realpath "$0")"
@@ -767,6 +768,8 @@ WORK_PATH="${FILE_PATH%"/"*}"
 [ "$WORK_PATH" = "" ] && WORK_PATH="/"
 KERNEL_NAME="$(uname -s)"
 
+
+# Main
 
 main() {
   main__sub_command="unknown"
