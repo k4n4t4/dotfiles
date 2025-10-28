@@ -6,48 +6,48 @@ dothome "bin" -r
 dothome ".fonts.conf"
 dothome ".profile"
 
-if cmd_exist bash; then
+if cmd_exists bash; then
   dothome ".bashrc"
 fi
 
-if cmd_exist zsh; then
+if cmd_exists zsh; then
   dothome ".zshrc"
 fi
 
-if cmd_exist fish; then
+if cmd_exists fish; then
   dotconf "fish" -r
 fi
 
-if cmd_exist nu; then
+if cmd_exists nu; then
   dotconf "nushell" -r
 fi
 
-if cmd_exist vim; then
+if cmd_exists vim; then
   dothome ".vimrc"
 fi
 
-if cmd_exist nvim; then
+if cmd_exists nvim; then
   dotconf "nvim" -r -d1
 fi
 
-if cmd_exist tmux; then
+if cmd_exists tmux; then
   dotconf "tmux" -r -i "tmux.conf"
   dothome ".config/tmux/tmux.conf" ".tmux.conf"
 fi
 
-if cmd_exist starship; then
+if cmd_exists starship; then
   dotconf "starship/starship.toml" "starship.toml"
 fi
 
-if cmd_exist Hyprland; then
+if cmd_exists Hyprland; then
   dotconf "hypr" -r
 fi
 
-if cmd_exist wofi; then
+if cmd_exists wofi; then
   dotconf "wofi" -r
 fi
 
-if cmd_exist ags; then
+if cmd_exists ags; then
   if [ ! -d "$DOT_TARGET_PATH/.config/ags/@girs" ]; then
     msg_run ags init --directory "$DOT_TARGET_PATH/.config/ags" --force
     msg_run rm "$DOT_TARGET_PATH/.config/ags/app.ts"
@@ -58,27 +58,27 @@ if cmd_exist ags; then
   dotconf "ags" -r
 fi
 
-if cmd_exist fastfetch; then
+if cmd_exists fastfetch; then
   dotconf "fastfetch" -r
 fi
 
-if cmd_exist kitty; then
+if cmd_exists kitty; then
   dotconf "kitty" -r
 fi
 
-if cmd_exist sheldon; then
+if cmd_exists sheldon; then
   dotconf "sheldon" -r
 fi
 
-if cmd_exist eza; then
+if cmd_exists eza; then
   dotconf "eza" -r
 fi
 
-if cmd_exist wlogout; then
+if cmd_exists wlogout; then
   dotconf "wlogout" -r
 fi
 
-if cmd_exist firefox; then
+if cmd_exists firefox; then
   for folder in ~/.mozilla/firefox/*.default-release; do
     if [ -d "$folder" ]; then
       dothome ".config/firefox/user.js" "$folder/user.js"

@@ -1,4 +1,4 @@
-if cmd_exist git; then
+if cmd_exists git; then
   if [ "$DOT_SCRIPT_MODE" = install ] && ! file_exist "$HOME/.gitconfig"; then
     msg_info "git config"
     msg_ask "  Continue? [Y/n]: "
@@ -20,7 +20,7 @@ if cmd_exist git; then
             fi
             ;;
         esac
-        if cmd_exist delta; then
+        if cmd_exists delta; then
           msg_info "  git config delta"
           msg_ask "  Continue? [Y/n]: "
           case "$RET" in
