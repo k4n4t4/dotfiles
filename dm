@@ -433,99 +433,6 @@ usage() {
   echo "    pull             run git pull"
 }
 
-_dot_ask_continue() {
-  msg_ask "Continue? [Y/n]: "
-  case "$RET" in
-    ( [nN] )
-      RET=1
-      ;;
-    ( * )
-      RET=0
-      ;;
-  esac
-}
-_dot_msg() {
-  set -- "$1" "$2" "$3" "$4" "${5:-}"
-
-  if $DOT_IS_QUIET; then
-    case "$1" in
-      ( log | info )
-        return 0
-        ;;
-    esac
-  fi
-
-  case "$2" in
-    ( "$WORK_PATH/"* )
-      set -- "$1" "\$WORK_PATH${2#"$WORK_PATH"}" "$3" "$4" "$5"
-      ;;
-  esac
-  case "$4" in
-    ( "$HOME/"* )
-      set -- "$1" "$2" "$3" "~${4#"$HOME"}" "$5"
-      ;;
-  esac
-  if [ "$5" = "" ]; then
-    "msg_$1" "$2 ${ESC}[90m$3${ESC}[m $4"
-  else
-    "msg_$1" "$2 ${ESC}[90m$3${ESC}[m $4 ${ESC}[90m$5${ESC}[m"
-  fi
-}
-_dot_link() {
-  dir_name "$2"
-  if [ ! -d "$RET" ]; then
-    if file_exists "$RET"; then
-      msg_error "Cannot make directory: $RET (Already Exist)"
-      _dot_ask_continue
-      return "$RET"
-    else
-      if mkdir -p -- "$RET"; then
-        msg_log "Make directory: $RET"
-      else
-        msg_fatal "Cannot make directory: $RET (Faild)"
-        return 1
-      fi
-    fi
-  fi
-
-  if file_exists "$2"; then
-    if [ -L "$2" ] && [ "$(realpath "$2")" = "$1" ]; then
-      _dot_msg log "$1" "<->" "$2" "(Already Linked)"
-      return 0
-    else
-      _dot_msg error "$1" "--x" "$2" "(Already Exist)"
-      _dot_ask_continue
-      return "$RET"
-    fi
-  fi
-
-  if ln -s -- "$1" "$2"; then
-    _dot_msg success "$1" "-->" "$2"
-  else
-    _dot_msg fatal "$1" "--x" "$2" "(Faild)"
-    return 1
-  fi
-}
-_dot_unlink() {
-  if [ -e "$2" ] && [ -L "$2" ] && [ "$(realpath "$2")" = "$1" ]; then
-    if unlink -- "$2"; then
-      _dot_msg success "$1" "x-x" "$2"
-    else
-      _dot_msg fatal "$1" "-?-" "$2" "(Faild)"
-      return 1
-    fi
-  else
-    _dot_msg log "$1" "x-x" "$2" "(Already Unlinked)"
-  fi
-}
-_dot_check() {
-  if [ -e "$2" ] && [ -L "$2" ] && [ "$(realpath "$2")" = "$1" ]; then
-    _dot_msg success "$1" "<->" "$2"
-  else
-    _dot_msg warn "$1" "-?-" "$2"
-  fi
-}
-
 shell_cd() {
   if [ "${1:-}" = "" ]; then
     printf "%s\n" "$WORK_PATH"
@@ -569,15 +476,132 @@ EOL
 
 # dot
 
+_dot_ask_continue() {
+  msg_ask "Continue? [Y/n]: "
+  case "$RET" in
+    ( [nN] )
+      RET=1
+      ;;
+    ( * )
+      RET=0
+      ;;
+  esac
+}
+
+_dot_msg() {
+  set -- "$1" "$2" "$3" "$4" "${5:-}"
+
+  if $DOT_IS_QUIET; then
+    case "$1" in
+      ( log | info )
+        return 0
+        ;;
+    esac
+  fi
+
+  case "$2" in
+    ( "$WORK_PATH/"* )
+      set -- "$1" "\$WORK_PATH${2#"$WORK_PATH"}" "$3" "$4" "$5"
+      ;;
+  esac
+  case "$4" in
+    ( "$HOME/"* )
+      set -- "$1" "$2" "$3" "~${4#"$HOME"}" "$5"
+      ;;
+  esac
+  if [ "$5" = "" ]; then
+    "msg_$1" "$2 ${ESC}[90m$3${ESC}[m $4"
+  else
+    "msg_$1" "$2 ${ESC}[90m$3${ESC}[m $4 ${ESC}[90m$5${ESC}[m"
+  fi
+}
+
+_dot_link() {
+  dir_name "$2"
+  if [ ! -d "$RET" ]; then
+    if file_exists "$RET"; then
+      msg_error "Cannot make directory: $RET (Already Exist)"
+      _dot_ask_continue
+      return "$RET"
+    else
+      if mkdir -p -- "$RET"; then
+        msg_log "Make directory: $RET"
+      else
+        msg_fatal "Cannot make directory: $RET (Faild)"
+        return 1
+      fi
+    fi
+  fi
+
+  if file_exists "$2"; then
+    if [ -L "$2" ] && [ "$(realpath "$2")" = "$1" ]; then
+      _dot_msg log "$1" "<->" "$2" "(Already Linked)"
+      return 0
+    else
+      _dot_msg error "$1" "--x" "$2" "(Already Exist)"
+      _dot_ask_continue
+      return "$RET"
+    fi
+  fi
+
+  if ln -s -- "$1" "$2"; then
+    _dot_msg success "$1" "-->" "$2"
+  else
+    _dot_msg fatal "$1" "--x" "$2" "(Faild)"
+    return 1
+  fi
+}
+
+_dot_unlink() {
+  if [ -e "$2" ] && [ -L "$2" ] && [ "$(realpath "$2")" = "$1" ]; then
+    if unlink -- "$2"; then
+      _dot_msg success "$1" "x-x" "$2"
+    else
+      _dot_msg fatal "$1" "-?-" "$2" "(Faild)"
+      return 1
+    fi
+  else
+    _dot_msg log "$1" "x-x" "$2" "(Already Unlinked)"
+  fi
+}
+
+_dot_check() {
+  if [ -e "$2" ] && [ -L "$2" ] && [ "$(realpath "$2")" = "$1" ]; then
+    _dot_msg success "$1" "<->" "$2"
+  else
+    _dot_msg warn "$1" "-?-" "$2"
+  fi
+}
+
+_dot_decorate_path() {
+  RET="$1"
+  case "$1" in
+    ( "/"* )
+      :
+      ;;
+    ( * )
+      shift
+      while [ $# -gt 0 ]; do
+        if [ -n "$1" ]; then
+          RET="$1/$RET"
+        fi
+        shift
+      done
+      ;;
+  esac
+}
+
+
+
 _dot() {
   :
 }
 
-_dot_prase_option() {
-  dot__origin_prefix="$WORK_PATH/files"
-  dot__origin_suffix=""
-  dot__target_prefix="$DOT_TARGET_PATH"
-  dot__target_suffix=""
+dot() {
+  dot__origin_root="$DOT_ORIGIN_PATH"
+  dot__target_root="$DOT_TARGET_PATH"
+  dot__origin_prefix=""
+  dot__target_prefix=""
   dot__recursive=false
   dot__depth=-1
   dot__ignore=""
@@ -587,19 +611,19 @@ _dot_prase_option() {
   opt_parser \
     d:1 depth:1 \
     i:1 ignore:1 \
+    origin-root:1 \
+    target-root:1 \
     origin-prefix:1 \
-    origin-suffix:1 \
     target-prefix:1 \
-    target-suffix:1 \
     -- "$@"
   eval "set -- $RET"
   while [ $# -gt 0 ]; do
     case "$1" in
       ( -- ) shift ; break ;;
+      ( --origin-root ) shift ; dot__origin_root="$1" ; shift 1 ;;
+      ( --target-root ) shift ; dot__target_root="$1" ; shift 1 ;;
       ( --origin-prefix ) shift ; dot__origin_prefix="$1" ; shift 1 ;;
-      ( --origin-suffix ) shift ; dot__origin_suffix="$1" ; shift 1 ;;
       ( --target-prefix ) shift ; dot__target_prefix="$1" ; shift 1 ;;
-      ( --target-suffix ) shift ; dot__target_suffix="$1" ; shift 1 ;;
       ( -i | --ignore )
         shift
         qesc "$1"
@@ -630,42 +654,12 @@ _dot_prase_option() {
   fi
 
   dot__origin="$1"
-  case "$dot__origin" in
-    ( "/"* )
-      : Is absolute path.
-      ;;
-    ( * )
-      case "$dot__origin_suffix" in
-        ( "" )
-        dot__origin="$dot__origin_prefix/$dot__origin"
-          ;;
-        ( * )
-        dot__origin="$dot__origin_prefix/$dot__origin_suffix/$dot__origin"
-          ;;
-      esac
-      ;;
-  esac
-
+  _dot_decorate_path "$dot__origin" "$dot__origin_prefix" "$dot__origin_root"
+  dot__origin="$RET"
   dot__target="${2:-"$1"}"
-  case "$dot__target" in
-    ( "/"* )
-      : Is absolute path.
-      ;;
-    ( * )
-      case "$dot__target_suffix" in
-        ( "" )
-        dot__target="$dot__target_prefix/$dot__target"
-          ;;
-        ( * )
-        dot__target="$dot__target_prefix/$dot__target_suffix/$dot__target"
-          ;;
-      esac
-      ;;
-  esac
-}
+  _dot_decorate_path "$dot__target" "$dot__target_prefix" "$dot__target_root"
+  dot__target="$RET"
 
-dot() {
-  _dot_prase_option "$@"
 
   if [ -e "$dot__origin" ]; then
     if [ -f "$dot__origin" ] || [ -d "$dot__origin" ]; then
@@ -694,6 +688,7 @@ dot() {
 run_script() {
   DOT_IS_QUIET=false
   DOT_IS_YES_MODE=false
+  DOT_ORIGIN_PATH="$WORK_PATH/files"
   DOT_TARGET_PATH="$HOME"
   DOT_SCRIPT_NAME=""
   DOT_SCRIPT_MODE="${1:-unknown}"

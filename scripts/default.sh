@@ -1,5 +1,5 @@
-alias dothome="dot --origin-suffix=home"
-alias dotconf="dot --origin-suffix=home/.config --target-suffix=.config"
+alias dothome="dot --origin-prefix=home"
+alias dotconf="dot --origin-prefix=home/.config --target-prefix=.config"
 
 dot "$WORK_PATH/dm" "bin/dm"
 dothome "bin" -r
