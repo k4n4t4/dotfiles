@@ -54,7 +54,7 @@ abs_path() {
   cd -- "$TMP" || return 1
 }
 
-cmd_exist() {
+cmd_exists() {
   if command -v -- "$1" > /dev/null 2>&1; then
     return 0
   else
@@ -75,8 +75,16 @@ is_empty_dir() {
   return 0
 }
 
-file_exist() {
+file_exists() {
   if [ -e "$1" ] || [ -L "$1" ]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+symlink_exists() {
+  if [ -e "$1" ] && [ -L "$1" ]; then
     return 0
   else
     return 1
@@ -662,7 +670,7 @@ _dot_msg() {
 _dot_link() {
   dir_name "$2"
   if [ ! -d "$RET" ]; then
-    if file_exist "$RET"; then
+    if file_exists "$RET"; then
       msg_error "Cannot make directory: $RET (Already Exist)"
       _dot_ask_continue
       return "$RET"
@@ -676,7 +684,7 @@ _dot_link() {
     fi
   fi
 
-  if file_exist "$2"; then
+  if file_exists "$2"; then
     if [ -L "$2" ] && [ "$(realpath "$2")" = "$1" ]; then
       _dot_msg log "$1" "<->" "$2" "(Already Linked)"
       return 0
