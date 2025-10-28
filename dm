@@ -2,65 +2,55 @@
 set -eu
 
 
-# Constants
-
-NL='
-'
-ESC="$(printf "\033")"
-
-
 # Utils
 
 dir_name() {
-  RET="${1:-"."}"
-  RET="${RET%"${RET##*[!"/"]}"}"
+  RET="${1:-.}"
+  RET="${RET%"${RET##*[!/]}"}"
   case "$RET" in
-    ( "" ) RET="/" ;;
-    ( *"/"* )
-      RET="${RET%"/"*}"
-      RET="${RET%"${RET##*[!"/"]}"}"
-      case "$RET" in ( "" )
-        RET="/"
-      esac
+    ( "" )
+      RET="/"
       ;;
-    ( * ) RET="." ;;
+    ( *"/"* )
+      RET="${RET%/*}"
+      RET="${RET%"${RET##*[!/]}"}"
+      if [ -z "$RET" ]; then
+        RET="/"
+      fi
+      ;;
+    ( * )
+      RET="."
+      ;;
   esac
 }
 
 base_name() {
-  RET="${1:-}"
-  case "$RET" in
-    ( "" ) : ;;
-    ( * )
-      RET="${RET%"${RET##*[!"/"]}"}"
-      case "$RET" in
-        ( "" ) RET="/" ;;
-        ( * ) RET="${RET##*"/"}" ;;
-      esac
-      ;;
-  esac
+  RET="${1:-.}"
+  RET="${RET%"${RET##*[!/]}"}"
+  RET="${RET##*/}"
+  if [ -z "$RET" ]; then
+    RET="/"
+  fi
 }
 
 abs_path() {
   TMP="$PWD"
-  dir_name "$1"
-  cd -- "$RET" || return 1
-  base_name "$1"
-  set -- "$PWD" "/" "$RET"
-  case "$1" in
-    ( "/" | "//" )
-      set -- "$1" "" "$3"
-      ;;
-  esac
-  case "$3" in
-    ( "/" )  RET="$1$2" ;;
-    ( "." | "" )  RET="$1" ;;
-    ( ".." )
-      cd ..
-      RET="$PWD"
-      ;;
-    ( * ) RET="$1$2$3" ;;
-  esac
+  if [ -d "$1" ]; then
+    cd -- "$1" || return 1
+    RET="$PWD"
+  else
+    dir_name "$1"
+    cd -- "$RET" || return 1
+    base_name "$1"
+    case "$PWD" in
+      ( "/" | "//" )
+        RET="/$RET"
+        ;;
+      ( * )
+        RET="$PWD/$RET"
+        ;;
+    esac
+  fi
   cd -- "$TMP" || return 1
 }
 
@@ -95,6 +85,15 @@ file_exist() {
 
 is_broken_symlink() {
   if [ ! -e "$1" ] && [ -L "$1" ]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+is_deletable() {
+  dir_name "$1"
+  if [ -w "$RET" ] && [ -x "$RET" ]; then
     return 0
   else
     return 1
@@ -213,7 +212,7 @@ opt_parser() {
         fi
 
         _opt_parser_short_opts="${1#'-'}"
-        while [ "$_opt_parser_short_opts" != "" ]; do
+        while [ -n "$_opt_parser_short_opts" ]; do
           _opt_parser_short_opt="-${_opt_parser_short_opts%"${_opt_parser_short_opts#?}"}"
           opt_parser_get_arg_count "$_opt_parser_short_opt" "$_opt_parser_options"
           if [ "$RET" -eq 0 ] && [ "$_opt_parser_short_opt" != '--' ]; then
@@ -313,11 +312,7 @@ get_files_recursive() {
   RET="$TMP"
 }
 
-
-# Parameter Stack
-
 _stack_params=""
-
 push_params() {
   TMP=""
   while [ $# -gt 0 ]; do
@@ -343,7 +338,6 @@ pop_params() {
   RET="$TMP"
 }
 
-
 push_val() {
   qesc "$2"
   eval "$1"'="$'"$1"' $RET"'
@@ -360,6 +354,13 @@ pop_val() {
   done
   RET="$1"
 }
+
+
+# Constants
+
+NL='
+'
+ESC="$(printf "\033")"
 
 
 # Message
