@@ -423,7 +423,6 @@ usage() {
   echo
   echo "Sub Commands"
   echo "    help             show help"
-  echo "    debug            show debug"
   echo "    install          install dotfiles"
   echo "    uninstall        uninstall dotfiles"
   echo "    check            check dotfiles"
@@ -807,7 +806,6 @@ main() {
     ( pull | p )
       main__sub_command="pull"
       ;;
-    ( debug | d ) main__sub_command="debug" ;;
     ( * )
       msg_error "Invalid Sub Command: \"$1\""
       ;;
@@ -831,15 +829,6 @@ main() {
     ( pull )
       cd -- "$WORK_PATH"
       git pull
-      ;;
-    ( debug )
-      msg_info "Debug"
-      msg_log "        HOME = \"$HOME\""
-      msg_log "         PWD = \"$PWD\""
-      msg_log "   FILE_PATH = \"$FILE_PATH\""
-      msg_log "   WORK_PATH = \"$WORK_PATH\""
-      msg_log " KERNEL_NAME = \"$KERNEL_NAME\""
-      msg_log "  main__sub_command = \"$main__sub_command\""
       ;;
     ( * )
       usage
