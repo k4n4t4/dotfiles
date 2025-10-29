@@ -472,6 +472,81 @@ EOL
   esac
 }
 
+_dot_run_script() {
+  DOT_IS_QUIET=false
+  DOT_IS_YES_MODE=false
+  DOT_ORIGIN_PATH="$WORK_PATH/files"
+  DOT_TARGET_PATH="$HOME"
+  DOT_SCRIPT_NAME=""
+  DOT_SCRIPT_MODE="${1:-unknown}"
+
+  shift
+
+  case "$DOT_SCRIPT_MODE" in
+    ( install )
+      _dot() {
+        _dot_link "$@"
+      }
+      ;;
+    ( uninstall )
+      _dot() {
+        _dot_unlink "$@"
+      }
+      ;;
+    ( check )
+      _dot() {
+        _dot_check "$@"
+      }
+      ;;
+  esac
+
+  opt_parser \
+    p:1 path:1 \
+    -- "$@"
+  eval "set -- $RET"
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      ( -- )
+        shift
+        break
+        ;;
+      ( -q | --quiet )
+        shift
+        DOT_IS_QUIET=true
+        ;;
+      ( -y | --yes )
+        shift
+        DOT_IS_YES_MODE=true
+        ;;
+      ( -p | --path )
+        shift
+        DOT_TARGET_PATH="$1"
+        shift 1
+        ;;
+      ( * )
+        msg_error "Invalid Option."
+        return 1
+        ;;
+    esac
+  done
+
+  [ $# -eq 0 ] && set -- "default"
+
+  while [ $# -gt 0 ]; do
+    DOT_SCRIPT_NAME="$1"
+
+    if [ -f "$WORK_PATH/scripts/$DOT_SCRIPT_NAME.sh" ]; then
+      # shellcheck disable=SC1090
+      . "$WORK_PATH/scripts/$DOT_SCRIPT_NAME.sh"
+    else
+      msg_error "\"$DOT_SCRIPT_NAME\" is not found."
+      return 1
+    fi
+
+    shift
+  done
+}
+
 
 # dot
 
@@ -679,81 +754,6 @@ dot() {
   else
     msg_error "File not found: $dot__origin"
   fi
-}
-
-_dot_run_script() {
-  DOT_IS_QUIET=false
-  DOT_IS_YES_MODE=false
-  DOT_ORIGIN_PATH="$WORK_PATH/files"
-  DOT_TARGET_PATH="$HOME"
-  DOT_SCRIPT_NAME=""
-  DOT_SCRIPT_MODE="${1:-unknown}"
-
-  shift
-
-  case "$DOT_SCRIPT_MODE" in
-    ( install )
-      _dot() {
-        _dot_link "$@"
-      }
-      ;;
-    ( uninstall )
-      _dot() {
-        _dot_unlink "$@"
-      }
-      ;;
-    ( check )
-      _dot() {
-        _dot_check "$@"
-      }
-      ;;
-  esac
-
-  opt_parser \
-    p:1 path:1 \
-    -- "$@"
-  eval "set -- $RET"
-  while [ $# -gt 0 ]; do
-    case "$1" in
-      ( -- )
-        shift
-        break
-        ;;
-      ( -q | --quiet )
-        shift
-        DOT_IS_QUIET=true
-        ;;
-      ( -y | --yes )
-        shift
-        DOT_IS_YES_MODE=true
-        ;;
-      ( -p | --path )
-        shift
-        DOT_TARGET_PATH="$1"
-        shift 1
-        ;;
-      ( * )
-        msg_error "Invalid Option."
-        return 1
-        ;;
-    esac
-  done
-
-  [ $# -eq 0 ] && set -- "default"
-
-  while [ $# -gt 0 ]; do
-    DOT_SCRIPT_NAME="$1"
-
-    if [ -f "$WORK_PATH/scripts/$DOT_SCRIPT_NAME.sh" ]; then
-      # shellcheck disable=SC1090
-      . "$WORK_PATH/scripts/$DOT_SCRIPT_NAME.sh"
-    else
-      msg_error "\"$DOT_SCRIPT_NAME\" is not found."
-      return 1
-    fi
-
-    shift
-  done
 }
 
 
