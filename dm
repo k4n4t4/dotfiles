@@ -654,9 +654,9 @@ dot() {
   fi
 
   dot__origin="$1"
+  dot__target="${2:-"$1"}"
   _dot_decorate_path "$dot__origin" "$dot__origin_prefix" "$dot__origin_root"
   dot__origin="$RET"
-  dot__target="${2:-"$1"}"
   _dot_decorate_path "$dot__target" "$dot__target_prefix" "$dot__target_root"
   dot__target="$RET"
 
