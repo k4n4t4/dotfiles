@@ -590,8 +590,6 @@ _dot_decorate_path() {
   esac
 }
 
-
-
 _dot() {
   :
 }
