@@ -671,7 +671,6 @@ dot() {
           if ! alt_match "$RET" "$dot__ignore"; then
             _dot "$1" "$dot__target/${1#"$dot__origin/"}"
           fi
-
           shift
         done
       else
@@ -685,7 +684,7 @@ dot() {
   fi
 }
 
-run_script() {
+_dot_run_script() {
   DOT_IS_QUIET=false
   DOT_IS_YES_MODE=false
   DOT_ORIGIN_PATH="$WORK_PATH/files"
@@ -817,7 +816,7 @@ main() {
   case "$main__sub_command" in
     ( help ) usage ;;
     ( install | uninstall | check )
-      run_script "$main__sub_command" "$@"
+      _dot_run_script "$main__sub_command" "$@"
       ;;
     ( cd )
       shell_cd "$@"
