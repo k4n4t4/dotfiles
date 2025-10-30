@@ -475,8 +475,8 @@ EOL
 _dot_run_script() {
   DOT_IS_QUIET=false
   DOT_IS_YES_MODE=false
-  DOT_ORIGIN_PATH="$WORK_PATH/files"
-  DOT_TARGET_PATH="$HOME"
+  DOT_ORIGIN_PATH="$DOTFILES_PATH"
+  DOT_TARGET_PATH="$TARGET_PATH"
   DOT_SCRIPT_NAME=""
   DOT_SCRIPT_MODE="${1:-unknown}"
 
@@ -501,7 +501,7 @@ _dot_run_script() {
   esac
 
   opt_parser \
-    p:1 path:1 \
+    t:1 target-path:1 \
     -- "$@"
   eval "set -- $RET"
   while [ $# -gt 0 ]; do
@@ -518,7 +518,7 @@ _dot_run_script() {
         shift
         DOT_IS_YES_MODE=true
         ;;
-      ( -p | --path )
+      ( -t | --target-path )
         shift
         DOT_TARGET_PATH="$1"
         shift 1
@@ -535,9 +535,9 @@ _dot_run_script() {
   while [ $# -gt 0 ]; do
     DOT_SCRIPT_NAME="$1"
 
-    if [ -f "$WORK_PATH/scripts/$DOT_SCRIPT_NAME.sh" ]; then
+    if [ -f "$SCRIPTS_PATH/$DOT_SCRIPT_NAME.sh" ]; then
       # shellcheck disable=SC1090
-      . "$WORK_PATH/scripts/$DOT_SCRIPT_NAME.sh"
+      . "$SCRIPTS_PATH/$DOT_SCRIPT_NAME.sh"
     else
       msg_error "\"$DOT_SCRIPT_NAME\" is not found."
       return 1
@@ -760,9 +760,40 @@ dot() {
 # Initialization
 
 FILE_PATH="$(realpath "$0")"
-WORK_PATH="${FILE_PATH%"/"*}"
-[ "$WORK_PATH" = "" ] && WORK_PATH="/"
+dir_name "$FILE_PATH"
+WORK_PATH="$RET"
 KERNEL_NAME="$(uname -s)"
+
+DOTFILES_PATH="$WORK_PATH/files"
+SCRIPTS_PATH="$WORK_PATH/scripts"
+TARGET_PATH="$HOME"
+
+
+# Load Config
+
+SET_DIR_PATH() {
+  [ -z "${2:-}" ] && return 0
+
+  TMP="$PWD"
+  cd -- "$WORK_PATH" || return 1
+  if [ -d "$2" ]; then
+    cd -- "$2" || return 1
+
+    eval "$1"'="$PWD"'
+
+    cd -- "$TMP" || return 1
+    return 0
+  else
+    msg_error "Invalid path: $2"
+    cd -- "$TMP" || return 1
+    return 1
+  fi
+}
+
+if [ -f "$WORK_PATH/config.sh" ]; then
+  # shellcheck disable=SC1091
+  . "$WORK_PATH/config.sh"
+fi
 
 
 # Main
@@ -804,6 +835,9 @@ main() {
     ( pull | p )
       main__sub_command="pull"
       ;;
+    ( debug )
+      main__sub_command="debug"
+      ;;
     ( * )
       msg_error "Invalid Sub Command: \"$1\""
       ;;
@@ -827,6 +861,11 @@ main() {
     ( pull )
       cd -- "$WORK_PATH"
       git pull
+      ;;
+    ( debug )
+      echo "WORK_PATH: $WORK_PATH"
+      echo "KERNEL_NAME: $KERNEL_NAME"
+      echo "FILE_PATH: $FILE_PATH"
       ;;
     ( * )
       usage
