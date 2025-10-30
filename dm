@@ -54,6 +54,19 @@ abs_path() {
   cd -- "$TMP" || return 1
 }
 
+abs_path_prefix() {
+  set -- "$1" "${2:-.}" "$PWD"
+  if [ -d "$2" ]; then
+    cd -- "$2" || return 1
+    abs_path "$1"
+    cd -- "$3" || return 1
+    return 0
+  else
+    cd -- "$3" || return 1
+    return 1
+  fi
+}
+
 cmd_exists() {
   if command -v -- "$1" > /dev/null 2>&1; then
     return 0
