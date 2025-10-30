@@ -107,6 +107,7 @@ links:
     foreground: "#C09090"
   multi_link_file:
     foreground: "#C090C0"
+    background: "#303030"
 
 git:
   new:
