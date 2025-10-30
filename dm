@@ -787,18 +787,11 @@ TARGET_PATH="$HOME"
 SET_DIR_PATH() {
   [ -z "${2:-}" ] && return 0
 
-  TMP="$PWD"
-  cd -- "$WORK_PATH" || return 1
   if [ -d "$2" ]; then
-    cd -- "$2" || return 1
-
-    eval "$1"'="$PWD"'
-
-    cd -- "$TMP" || return 1
-    return 0
+    abs_path_prefix "$2" "$WORK_PATH"
+    eval "$1"'="$RET"'
   else
     msg_error "Invalid path: $2"
-    cd -- "$TMP" || return 1
     return 1
   fi
 }
