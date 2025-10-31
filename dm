@@ -485,6 +485,8 @@ EOL
   esac
 }
 
+# TODO: Add force option
+# TODO: Add backup option
 _dot_run_script() {
   DOT_IS_QUIET=false
   DOT_IS_YES_MODE=false
@@ -685,6 +687,7 @@ _dot() {
   :
 }
 
+# TODO: Add force option
 dot() {
   dot__origin_root="$DOT_ORIGIN_PATH"
   dot__target_root="$DOT_TARGET_PATH"
