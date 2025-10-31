@@ -447,9 +447,9 @@ usage() {
 
 shell_cd() {
   if [ "${1:-}" = "" ]; then
-    printf "%s\n" "$WORK_PATH"
+    printf "%s\n" "$DOTFILES_PATH"
   else
-    printf "%s\n" "$WORK_PATH/$1"
+    printf "%s\n" "$DOTFILES_PATH/$1"
   fi
 }
 
@@ -587,6 +587,9 @@ _dot_msg() {
   fi
 
   case "$2" in
+    ( "$DOTFILES_PATH/"* )
+      set -- "$1" "\$DOTFILES_PATH${2#"$DOTFILES_PATH"}" "$3" "$4" "$5"
+      ;;
     ( "$WORK_PATH/"* )
       set -- "$1" "\$WORK_PATH${2#"$WORK_PATH"}" "$3" "$4" "$5"
       ;;
