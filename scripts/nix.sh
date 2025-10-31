@@ -27,7 +27,7 @@ case "$RET" in
       RET="common"
     esac
     msg_log "selected name: $RET"
-    msg_run nix run --extra-experimental-features "nix-command flakes" home-manager/master -- switch --flake "$WORK_PATH/files/nix#$RET" --impure
+    msg_run nix run --extra-experimental-features "nix-command flakes" home-manager/master -- switch --flake "$DOTFILES_PATH/nix#$RET" --impure
   ;;
   ( "rebuild" )
     msg_log "available configurations:"
@@ -39,6 +39,6 @@ case "$RET" in
       RET="desktop"
     esac
     msg_log "selected name: $RET"
-    msg_run sudo nixos-rebuild switch --flake "$WORK_PATH/files/nix#$RET" --impure
+    msg_run sudo nixos-rebuild switch --flake "$DOTFILES_PATH/nix#$RET" --impure
     ;;
 esac
