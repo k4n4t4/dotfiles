@@ -15,7 +15,10 @@ return {
       "ray-x/cmp-treesitter";
       "zbirenbaum/copilot-cmp";
       "saadparwaiz1/cmp_luasnip";
-      "L3MON4D3/LuaSnip";
+      {
+        "L3MON4D3/LuaSnip";
+        build = "make install_jsregexp";
+      };
       "rafamadriz/friendly-snippets";
     };
     config = function()

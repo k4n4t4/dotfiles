@@ -24,7 +24,7 @@ return {
       "jayp0521/mason-null-ls.nvim";
     };
     config = function()
-      local lspconfig = require "lspconfig"
+      local lspconfig = vim.lsp.config
       local mason_lspconfig = require "mason-lspconfig"
 
       lspconfig.lua_ls.setup {

@@ -96,9 +96,10 @@ return {
       throttle = 1000 / 30;
     }
     require("notify").setup {
+      background_colour = "#000000";
       render = "wrapped-compact";
       stages = "slide";
-      timeout = 2000;
+      timeout = 4000;
       top_down = true;
     }
   end;
