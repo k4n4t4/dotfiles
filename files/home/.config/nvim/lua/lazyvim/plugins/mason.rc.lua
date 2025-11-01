@@ -1,6 +1,6 @@
 return {
   {
-    "williamboman/mason.nvim";
+    "mason-org/mason.nvim";
     opts = {
       ui = {
         border = 'double';
@@ -16,18 +16,17 @@ return {
     };
   },
   {
-    "williamboman/mason-lspconfig.nvim";
+    "mason-org/mason-lspconfig.nvim";
     dependencies = {
-      "williamboman/nvim-lsp-installer";
+      "mason-org/mason.nvim";
       "neovim/nvim-lspconfig";
       "nvimtools/none-ls.nvim";
       "jayp0521/mason-null-ls.nvim";
     };
     config = function()
       local lspconfig = vim.lsp.config
-      local mason_lspconfig = require "mason-lspconfig"
 
-      lspconfig.lua_ls.setup {
+      lspconfig("lua_ls", {
         filetypes = { "lua" };
         settings = {
           Lua = {
@@ -49,9 +48,9 @@ return {
             };
           };
         };
-      }
+      })
 
-      lspconfig.emmet_language_server.setup {
+      lspconfig("emmet_language_server", {
         filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "pug", "typescriptreact" };
         init_options = {
           includeLanguages = {};
@@ -64,16 +63,16 @@ return {
           syntaxProfiles = {};
           variables = {};
         };
-      }
+      })
 
-      mason_lspconfig.setup {
+      require("mason-lspconfig").setup {
         ensure_installed = {
           "vimls",
           "pylsp",
           "bashls",
           "ts_ls",
         };
-        automatic_installation = true;
+        automatic_enable = true;
         handlers = {
           function(server_name)
             lspconfig[server_name].setup {}
