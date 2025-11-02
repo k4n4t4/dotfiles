@@ -1,0 +1,3 @@
+[submodule ".dotfiles-manager"]
+	path = .dotfiles-manager
+	url = https://github.com/k4n4t4/dotfiles-manager.git
