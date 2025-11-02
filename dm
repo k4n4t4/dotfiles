@@ -485,8 +485,6 @@ EOL
   esac
 }
 
-# TODO: Add force option
-# TODO: Add backup option
 _dot_run_script() {
   DOT_IS_QUIET=false
   DOT_IS_YES_MODE=false
@@ -644,8 +642,9 @@ _dot_link() {
             return 1
           fi
         else
-          _dot_msg fatal "$1" "-?-" "$2" "(Not Deletable)"
-          return 1
+          _dot_msg error "$1" "-?-" "$2" "(Not Deletable)"
+          _dot_ask_continue
+          return "$RET"
         fi
       else
         _dot_msg error "$1" "--x" "$2" "(Already Exist)"
@@ -706,7 +705,6 @@ _dot() {
   :
 }
 
-# TODO: Add force option
 dot() {
   dot__origin_root="$DOT_ORIGIN_PATH"
   dot__target_root="$DOT_TARGET_PATH"
