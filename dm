@@ -635,9 +635,7 @@ _dot_link() {
     else
       if $DOT_IS_FORCE_MODE || $dot__is_force; then
         if is_deletable "$2"; then
-          if rm -rf -- "$2"; then
-            _dot_msg success "$2" "(Deleted)"
-          else
+          if ! msg_run rm -rf -- "$2"; then
             _dot_msg fatal "$1" "-?-" "$2" "(Not Deletable)"
             return 1
           fi
