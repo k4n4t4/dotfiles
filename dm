@@ -12,4 +12,4 @@ if ! [ -f "$DOTFILES_MANAGER" ]; then
 fi
 git submodule update
 
-CONFIG_PATH="$WORK_PATH/config.sh" "$DOTFILES_MANAGER" "$@"
+PARENT_SHELL="$(ps -o ppid= -p $$ | xargs -I{} ps -o comm= -p {})" CONFIG_PATH="$WORK_PATH/config.sh" "$DOTFILES_MANAGER" "$@"
