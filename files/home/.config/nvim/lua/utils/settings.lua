@@ -10,7 +10,7 @@
 
 ---@param cfg Config
 ---@return nil
-function Config(cfg)
+return function(cfg)
   ---@type Config
   local config = cfg or {}
 
