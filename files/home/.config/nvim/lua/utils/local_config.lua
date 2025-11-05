@@ -1,14 +1,14 @@
----@class Colorscheme
+---@class LocalConfigColorscheme
 ---@field name string|nil
 ---@field transparent boolean|nil
 
----@class Config
+---@class LocalConfig
 ---@field shell string|nil
----@field colorscheme Colorscheme|nil
+---@field colorscheme LocalConfigColorscheme|nil
 ---@field mouse string|boolean|nil
 ---@field run fun()|nil
 
----@param cfg Config
+---@param config LocalConfig
 ---@return nil
 return function(config)
   config = config or {}
