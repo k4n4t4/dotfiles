@@ -10,9 +10,8 @@
 
 ---@param cfg Config
 ---@return nil
-return function(cfg)
-  ---@type Config
-  local config = cfg or {}
+return function(config)
+  config = config or {}
 
   if config then
 
