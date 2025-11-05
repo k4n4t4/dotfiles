@@ -4,7 +4,7 @@ local set = keymap.set
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
---netrw
+-- netrw
 if not vim.g.loaded_netrw then
   vim.keymap.set("n", "<LEADER>e", "<CMD>Lexplore<CR>")
 end
