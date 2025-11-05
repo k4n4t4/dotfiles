@@ -36,18 +36,19 @@ set('x', '<LEADER>s',
 
 -- lsp
 vim.api.nvim_create_autocmd("LspAttach", {
-  callback = function()
-    set('n', '<LEADER>lf', vim.lsp.buf.format, { desc = "Format" })
-    set('n', '<LEADER>lr', vim.lsp.buf.rename, { desc = "Rename" })
-    set('n', '<LEADER>ld', vim.lsp.buf.definition, { desc = "Definition" })
-    set('n', '<LEADER>lt', vim.lsp.buf.type_definition, { desc = "Type Definition" })
-    set('n', '<LEADER>lh', vim.lsp.buf.hover, { desc = "Hover" })
-    set('n', '<LEADER>lc', vim.lsp.buf.code_action, { desc = "Code Action" })
-    set('n', '<LEADER>lg', vim.lsp.buf.references, { desc = "References" })
-    set('n', '<LEADER>ls', vim.lsp.buf.signature_help, { desc = "Signature Help" })
-    set('n', '<LEADER>le', function() vim.lsp.diagnostic.show_line_diagnostics() end, { desc = "Show Line Diagnostics" })
-    set('n', '<LEADER>l[', function() vim.lsp.diagnostic.goto_prev() end, { desc = "Diagnostic Goto Prev" })
-    set('n', '<LEADER>l]', function() vim.lsp.diagnostic.goto_next() end, { desc = "Diagnostic Goto Next" })
+  callback = function(event)
+    local buf = event.buf
+    set('n', '<LEADER>lf', vim.lsp.buf.format,          { buffer = buf, desc = "Format" })
+    set('n', '<LEADER>lr', vim.lsp.buf.rename,          { buffer = buf, desc = "Rename" })
+    set('n', '<LEADER>ld', vim.lsp.buf.definition,      { buffer = buf, desc = "Definition" })
+    set('n', '<LEADER>lt', vim.lsp.buf.type_definition, { buffer = buf, desc = "Type Definition" })
+    set('n', '<LEADER>lh', vim.lsp.buf.hover,           { buffer = buf, desc = "Hover" })
+    set('n', '<LEADER>lc', vim.lsp.buf.code_action,     { buffer = buf, desc = "Code Action" })
+    set('n', '<LEADER>lg', vim.lsp.buf.references,      { buffer = buf, desc = "References" })
+    set('n', '<LEADER>ls', vim.lsp.buf.signature_help,  { buffer = buf, desc = "Signature Help" })
+    set('n', '<LEADER>le', function() vim.lsp.diagnostic.show_line_diagnostics() end, { buffer = buf, desc = "Show Line Diagnostics" })
+    set('n', '<LEADER>l[', function() vim.lsp.diagnostic.goto_prev() end, { buffer = buf, desc = "Diagnostic Goto Prev" })
+    set('n', '<LEADER>l]', function() vim.lsp.diagnostic.goto_next() end, { buffer = buf, desc = "Diagnostic Goto Next" })
   end
 })
 
@@ -59,6 +60,3 @@ set('n', '<TAB>', "5j", { desc = "Scroll Down" })
 set('n', '<S-TAB>', "5k", { desc = "Scroll Up" })
 set('x', '<TAB>', "5j", { desc = "Scroll Down" })
 set('x', '<S-TAB>', "5k", { desc = "Scroll Up" })
-
-set('i', '<M-CR>', "<C-o>O", { desc = "Insert New Line Above" })
-set('i', '<S-TAB>', "<C-o><<", { desc = "Indent Line" })
