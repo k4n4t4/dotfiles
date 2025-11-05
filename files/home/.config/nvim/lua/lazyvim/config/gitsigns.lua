@@ -1,6 +1,5 @@
-return {
-  "lewis6991/gitsigns.nvim";
-  opts = {
+return function()
+  require("gitsigns").setup {
     signs = {
       add          = { text = '+' };
       change       = { text = '~' };
@@ -48,5 +47,4 @@ return {
       col = 1
     };
   };
-  event = 'VeryLazy';
-}
+end
