@@ -24,9 +24,9 @@ return {
       "jayp0521/mason-null-ls.nvim";
     };
     config = function()
-      local lspconfig = vim.lsp.config
+      local mason_lspconfig = require("mason-lspconfig")
 
-      lspconfig("lua_ls", {
+      vim.lsp.config("lua_ls", {
         filetypes = { "lua" };
         settings = {
           Lua = {
@@ -49,8 +49,9 @@ return {
           };
         };
       })
+      vim.lsp.enable("lua_ls")
 
-      lspconfig("emmet_language_server", {
+      vim.lsp.config("emmet_language_server", {
         filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "pug", "typescriptreact" };
         init_options = {
           includeLanguages = {};
@@ -64,8 +65,10 @@ return {
           variables = {};
         };
       })
+      vim.lsp.enable("emmet_language_server")
 
-      require("mason-lspconfig").setup {
+
+      mason_lspconfig.setup {
         ensure_installed = {
           "vimls",
           "pylsp",
@@ -73,11 +76,6 @@ return {
           "ts_ls",
         };
         automatic_enable = true;
-        handlers = {
-          function(server_name)
-            lspconfig[server_name].setup {}
-          end;
-        };
       }
 
     end;
