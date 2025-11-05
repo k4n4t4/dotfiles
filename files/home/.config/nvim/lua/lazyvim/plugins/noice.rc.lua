@@ -96,6 +96,7 @@ return {
       throttle = 1000 / 30;
     }
     require("notify").setup {
+      merge_duplicates = true;
       background_colour = "#000000";
       render = "wrapped-compact";
       stages = "slide";
