@@ -33,9 +33,9 @@ return {
       sort_case_insensitive = false;
       sort_function = function (a,b)
         if a.type == b.type then
-          return a.path > b.path
+          return a.path < b.path
         else
-          return a.type > b.type
+          return a.type < b.type
         end
       end;
       default_component_configs = {
