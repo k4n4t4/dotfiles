@@ -58,6 +58,8 @@ return {
           folder_closed = '';
           folder_open = '';
           folder_empty = '󰜌';
+          folder_empty_open = '󰜌';
+          use_filtered_colors = true;
           provider = function(icon, node, state)
             if node.type == 'file' or node.type == 'terminal' then
               local success, web_devicons = pcall(require, "nvim-web-devicons")
@@ -103,10 +105,12 @@ return {
           required_width = 122;
         };
         last_modified = {
+          format = "relative";
           enabled = true;
           required_width = 88;
         };
         created = {
+          format = "relative";
           enabled = true;
           required_width = 110;
         };
