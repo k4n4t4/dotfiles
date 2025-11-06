@@ -30,6 +30,7 @@ return {
       };
       diagnostics = {
         globals = is_nvim and { "vim" } or {};
+        disable = is_nvim and { "duplicate-doc-field" };
       }
     };
   };
