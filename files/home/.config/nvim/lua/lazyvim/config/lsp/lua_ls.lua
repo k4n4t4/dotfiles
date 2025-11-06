@@ -1,4 +1,4 @@
-local cwd = vim.loop.cwd()
+local cwd = vim.uv.cwd()
 local is_nvim = cwd ~= nil and (
   string.find(cwd, vim.fn.stdpath("config"), 1, true) ~= nil or
   string.find(cwd, "/nvim", 1, true) ~= nil
@@ -26,7 +26,7 @@ return {
             }
           )
         ) or {};
-        checkThirdParty = "Disable";
+        checkThirdParty = false;
       };
       diagnostics = {
         globals = is_nvim and { "vim" } or {};
