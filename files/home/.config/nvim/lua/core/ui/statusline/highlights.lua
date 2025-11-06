@@ -98,3 +98,12 @@ vim.api.nvim_create_autocmd({
   group = statusline_group;
   callback = status_line_highlights;
 })
+
+-- Redraw statusline when mode changed. (e.g. 'ix' mode)
+vim.api.nvim_create_autocmd("ModeChanged", {
+  group = statusline_group;
+  callback = function()
+    vim.cmd.redrawstatus()
+  end;
+})
+
