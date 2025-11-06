@@ -106,7 +106,7 @@ autocmd("BufEnter", {
 -- indent size
 autocmd("FileType", {
   group = group;
-  pattern = { "java", "python" };
+  pattern = { "java" };
   callback = function()
     vim.opt_local.tabstop = 4
     vim.opt_local.softtabstop = 4
