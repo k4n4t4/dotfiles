@@ -5,6 +5,6 @@ if not vim.g.vscode then
   require "lazyvim"
 end
 if vim.g.vscode then
-  require "vscode-neovim"
+  require "vscode-nvim"
 end
 pcall(require, "config")
