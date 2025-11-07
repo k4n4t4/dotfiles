@@ -1,1 +1,1 @@
-vim.opt.cmdheight = 4
+vim.opt.cmdheight = 2
