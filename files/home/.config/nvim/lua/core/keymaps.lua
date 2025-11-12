@@ -52,10 +52,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end
 })
 
-set('n', '<LEADER>w', "<C-w><C-w>", { desc = "Window Cycle" })
-set('x', '<LEADER>w', "<C-w><C-w>", { desc = "Window Cycle" })
-
-
 set('n', '<TAB>', "5j",   { desc = "Scroll Down" })
 set('n', '<S-TAB>', "5k", { desc = "Scroll Up" })
 set('x', '<TAB>', "5j",   { desc = "Scroll Down" })
