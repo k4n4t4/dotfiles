@@ -4,6 +4,7 @@ alias dotconf="dot --origin-prefix=home/.config --target-prefix=.config"
 dot "$REPO_PATH/dm" ".local/bin/dm"
 dothome "bin" ".local/bin" -r
 dothome ".fonts.conf"
+dothome ".profile"
 
 if cmd_exists bash; then
   dothome ".bashrc"
