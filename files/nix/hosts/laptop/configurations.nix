@@ -5,6 +5,7 @@
     ../../modules/hosts/hyprland
     ../../modules/hosts/tuigreet
     ../../modules/hosts/docker
+    ../../modules/hosts/ollama
   ];
 
   nix = {

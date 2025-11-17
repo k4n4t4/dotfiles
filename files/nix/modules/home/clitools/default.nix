@@ -7,7 +7,7 @@
       btop ncdu tmux gh
       zoxide trash-cli
       nodejs python3
-      ollama opencode
+      opencode
     ];
   };
 }

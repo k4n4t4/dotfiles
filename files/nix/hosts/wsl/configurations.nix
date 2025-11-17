@@ -3,6 +3,7 @@
   imports = [
     <nixos-wsl/modules>
     ../../modules/hosts/docker
+    ../../modules/hosts/ollama
   ];
 
   nix = {
