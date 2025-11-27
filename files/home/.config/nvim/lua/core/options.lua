@@ -43,9 +43,6 @@ vim.opt.wildmenu = true
 vim.opt.wildignorecase = true
 vim.opt.wildmode = "list:full"
 
-vim.opt.cmdheight = 0
-vim.opt.cmdwinheight = 10
-
 vim.opt.scroll = 10
 vim.opt.scrolloff = 3
 vim.opt.sidescroll = 1

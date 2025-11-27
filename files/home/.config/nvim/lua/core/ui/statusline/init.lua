@@ -9,5 +9,8 @@ vim.opt.showmode = false
 vim.opt.showcmd = true
 vim.opt.showcmdloc = 'statusline'
 
+vim.opt.cmdheight = 0
+vim.opt.cmdwinheight = 10
+
 vim.opt.laststatus = 3
 vim.opt.statusline = "%{% v:lua.StatusLine(g:actual_curwin == win_getid()) %}"
