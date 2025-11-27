@@ -23,9 +23,14 @@ vim.opt.ambiwidth = "single"
 vim.opt.debug = 'throw'
 
 
+vim.opt.termguicolors = true
+vim.opt.background = "dark"
+
 vim.opt.winblend = 20
 vim.opt.pumblend = 20
 
+vim.opt.pumheight = 10
+vim.opt.pumwidth = 10
 
 vim.opt.wrap = true
 vim.opt.display = "lastline"
@@ -40,8 +45,6 @@ vim.opt.wildmode = "list:full"
 
 vim.opt.cmdheight = 0
 vim.opt.cmdwinheight = 10
-
-vim.opt.pumheight = 10
 
 vim.opt.scroll = 10
 vim.opt.scrolloff = 3
@@ -122,9 +125,6 @@ vim.opt.completeopt = { "menuone", "preview" }
 vim.opt.viewoptions = { "folds", "cursor", "curdir" }
 
 vim.opt.synmaxcol = 1000
-
-vim.opt.termguicolors = true
-vim.opt.background = "dark"
 
 vim.opt.list = true
 vim.opt.listchars = {
