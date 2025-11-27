@@ -10,7 +10,10 @@ vim.opt.fileencodings = {
   "euc-jp",
   "sjis",
   "cp932",
+  "default",
+  "latin1",
 }
+
 vim.opt.fileformats = { "unix", "dos", "mac" }
 
 vim.opt.debug = 'throw'
