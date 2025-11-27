@@ -158,13 +158,3 @@ vim.g.loaded_shada_plugin       = 1
 vim.g.loaded_spellfile_plugin   = 1
 vim.g.loaded_tutor_mode_plugin  = 1
 vim.g.loaded_rrhelper           = 1
-
-if not vim.g.loaded_netrw then
-  vim.g.netrw_liststyle = 3
-  vim.g.netrw_banner = 0
-  vim.g.netrw_sizestyle = "H"
-  vim.g.netrw_timefmt = "%m-%d-%Y %a %H:%M:%S"
-  vim.g.netrw_preview = 1
-  vim.g.netrw_winsize = 30
-  vim.g.netrw_browse_split = 3
-end
