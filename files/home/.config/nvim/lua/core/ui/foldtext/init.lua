@@ -1,3 +1,8 @@
+vim.opt.foldenable = true
+vim.opt.foldmethod = "manual"
+vim.opt.foldmarker = "{{{,}}}"
+vim.opt.foldexpr = ""
+
 vim.opt.foldtext = ""
 
 

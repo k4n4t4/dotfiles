@@ -26,6 +26,8 @@ vim.opt.debug = 'throw'
 vim.opt.termguicolors = true
 vim.opt.background = "dark"
 
+vim.opt.cmdwinheight = 10
+
 vim.opt.winblend = 20
 vim.opt.pumblend = 20
 
@@ -49,12 +51,7 @@ vim.opt.sidescroll = 1
 vim.opt.sidescrolloff = 3
 
 vim.opt.spell = false
-vim.opt.spelllang = "en"
-
-vim.opt.foldenable = true
-vim.opt.foldmethod = "manual"
-vim.opt.foldmarker = "{{{,}}}"
--- vim.opt.foldexpr = ""
+vim.opt.spelllang = { "en", "ja" }
 
 vim.opt.belloff = "all"
 vim.opt.visualbell = true
