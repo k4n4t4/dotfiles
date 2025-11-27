@@ -1,4 +1,3 @@
--- encoding
 vim.opt.encoding     = "utf-8"
 vim.scriptencoding   = "utf-8"
 vim.opt.fileencoding = "utf-8"
@@ -15,20 +14,18 @@ vim.opt.fileencodings = {
   "default",
 }
 
-
--- file format
 vim.opt.fileformat = "unix"
 vim.opt.fileformats = { "unix", "dos", "mac" }
 
+vim.opt.ambiwidth = "single"
 
--- debug
+
 vim.opt.debug = 'throw'
 
 
 vim.opt.winblend = 20
 vim.opt.pumblend = 20
 
-vim.opt.ambiwidth = "single"
 
 vim.opt.wrap = true
 vim.opt.display = "lastline"
@@ -50,10 +47,6 @@ vim.opt.scroll = 10
 vim.opt.scrolloff = 3
 vim.opt.sidescroll = 1
 vim.opt.sidescrolloff = 3
-
-vim.opt.showmode = false
-vim.opt.showcmd = true
-vim.opt.showcmdloc = 'statusline'
 
 vim.opt.spell = false
 vim.opt.spelllang = "en"
