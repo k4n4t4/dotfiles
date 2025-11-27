@@ -25,15 +25,10 @@ vim.opt.fileformats = { "unix", "dos", "mac" }
 vim.opt.debug = 'throw'
 
 
--- display
-vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.signcolumn = "yes"
-vim.opt.numberwidth = 4
-
 vim.opt.cursorline = true
 vim.opt.cursorlineopt = "number"
 vim.opt.cursorcolumn = false
+vim.opt.colorcolumn = { 80, 160 }
 
 vim.opt.winblend = 20
 vim.opt.pumblend = 20
