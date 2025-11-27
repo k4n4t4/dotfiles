@@ -1,3 +1,4 @@
+-- encoding
 vim.opt.encoding     = "utf-8"
 vim.scriptencoding   = "utf-8"
 vim.opt.fileencoding = "utf-8"
@@ -10,14 +11,21 @@ vim.opt.fileencodings = {
   "euc-jp",
   "sjis",
   "cp932",
-  "default",
   "latin1",
+  "default",
 }
 
+
+-- file format
+vim.opt.fileformat = "unix"
 vim.opt.fileformats = { "unix", "dos", "mac" }
 
+
+-- debug
 vim.opt.debug = 'throw'
 
+
+-- display
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.signcolumn = "yes"
