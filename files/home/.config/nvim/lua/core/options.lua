@@ -25,11 +25,6 @@ vim.opt.fileformats = { "unix", "dos", "mac" }
 vim.opt.debug = 'throw'
 
 
-vim.opt.cursorline = true
-vim.opt.cursorlineopt = "number"
-vim.opt.cursorcolumn = false
-vim.opt.colorcolumn = { 80, 160 }
-
 vim.opt.winblend = 20
 vim.opt.pumblend = 20
 
