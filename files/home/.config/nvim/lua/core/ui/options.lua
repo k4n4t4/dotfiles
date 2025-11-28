@@ -13,6 +13,15 @@ vim.opt.fillchars = {
   foldopen = "v";
   foldsep = "¦";
   foldclose = ">";
+  horiz = "━";
+  horizup = "┻";
+  horizdown = "┳";
+  vert = "┃";
+  vertleft = "┨";
+  vertright = "┣";
+  verthoriz = "╋";
+  diff = "┃";
+  msgsep = "‾";
 }
 
 vim.diagnostic.config {
