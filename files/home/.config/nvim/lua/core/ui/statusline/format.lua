@@ -180,7 +180,7 @@ local filetype_aliases = {
   ["python"]     = "py";
 }
 local function status_filetype(devicons)
-  local ft = vim.bo.ft
+  local ft = vim.bo[vim.api.nvim_win_get_buf(vim.g.statusline_winid)].filetype
 
   local icon, icon_hl, color
   if devicons then
@@ -316,7 +316,8 @@ local function status_search_count()
 end
 
 local function status_file()
-  return vim.fn.expand("%:t")
+  local full_path = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(vim.g.statusline_winid))
+  return vim.fn.fnamemodify(full_path, ":t")
 end
 
 local function status_flag()
@@ -326,11 +327,11 @@ local function status_flag()
   if vim.o.previewwindow then
     table.insert(format, "p")
   end
-  if vim.bo.readonly then
+  if vim.bo[vim.api.nvim_win_get_buf(vim.g.statusline_winid)].readonly then
     table.insert(format, "r")
   else
-    if vim.bo.modifiable then
-      if vim.bo.modified then
+    if vim.bo[vim.api.nvim_win_get_buf(vim.g.statusline_winid)].modifiable then
+      if vim.bo[vim.api.nvim_win_get_buf(vim.g.statusline_winid)].modified then
         table.insert(format, "+")
       end
     else
@@ -434,11 +435,17 @@ function StatusLineSimple()
   return table.concat(status_line, "")
 end
 
-function StatusLine(active)
-  if vim.bo.ft == "neo-tree" then
+-- TODO: buf...
+function StatusLine()
+  local current_winid = vim.api.nvim_get_current_win()
+  local statusline_winid = vim.g.statusline_winid
+  local active = current_winid == statusline_winid
+  local statusline_bufnr = vim.api.nvim_win_get_buf(statusline_winid)
+
+  if vim.bo[statusline_bufnr].filetype == "neo-tree" then
     return StatusLineSimple()
   else
-    if active == 1 then
+    if active then
       return StatusLineActive()
     else
       return StatusLineInactive()

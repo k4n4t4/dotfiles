@@ -11,5 +11,5 @@ vim.opt.showcmdloc = 'statusline'
 
 vim.opt.cmdheight = 0
 
-vim.opt.laststatus = 3
-vim.opt.statusline = "%{% v:lua.StatusLine(g:actual_curwin == win_getid()) %}"
+vim.opt.laststatus = 2
+vim.opt.statusline = "%!v:lua.StatusLine()"
