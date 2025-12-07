@@ -56,3 +56,5 @@ set('n', '<TAB>', "5j",   { desc = "Scroll Down" })
 set('n', '<S-TAB>', "5k", { desc = "Scroll Up" })
 set('x', '<TAB>', "5j",   { desc = "Scroll Down" })
 set('x', '<S-TAB>', "5k", { desc = "Scroll Up" })
+
+set('n', '<LEADER>w', "<C-W><C-W>", { desc = "Switch Window" })
