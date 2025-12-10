@@ -6,13 +6,13 @@ local autocmd = vim.api.nvim_create_autocmd
 autocmd("InsertEnter", {
   group = group;
   callback = function()
-    vim.opt.relativenumber = false
+    vim.opt_local.relativenumber = false
   end;
 })
 
 autocmd("InsertLeave", {
   group = group;
   callback = function()
-    vim.opt.relativenumber = true
+    vim.opt_local.relativenumber = true
   end;
 })
