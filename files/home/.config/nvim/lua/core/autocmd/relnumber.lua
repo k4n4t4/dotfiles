@@ -1,4 +1,6 @@
-local group = vim.api.nvim_create_augroup("toggle_relative_number", { clear = true })
+local group_name = "toggle_relative_number"
+
+local group = vim.api.nvim_create_augroup(group_name, { clear = true })
 local autocmd = vim.api.nvim_create_autocmd
 
 
