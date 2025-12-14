@@ -1,27 +1,18 @@
+local utils_fold = require "utils.fold"
+
+
 local function status_line_number()
-  local line_number = ""
   if vim.v.virtnum == 0 then
     if vim.wo.relativenumber then
       if vim.v.lnum == vim.fn.line(".") then
-        line_number = line_number .. vim.v.lnum
-      else
-        line_number = line_number .. vim.v.relnum
+        return tostring(vim.v.lnum)
       end
-    else
-      line_number = line_number .. vim.v.lnum
+      return tostring(vim.v.relnum)
     end
-  else
-    line_number = line_number .. "▕"
+    return tostring(vim.v.lnum)
   end
-  return line_number
+  return "▕"
 end
-
-local utils_fold
-vim.api.nvim_create_autocmd("VimEnter", {
-  callback = function()
-    utils_fold = require "utils.fold"
-  end
-})
 
 local function status_fold()
   if utils_fold then
@@ -32,20 +23,20 @@ local function status_fold()
       if vim.v.virtnum == 0 then
         if fi.folded then
           return "%#StatusColumnFoldHead#>%*"
-        else
-          return "%#StatusColumnFoldHead#v%*"
         end
-      else
-        return "%#StatusColumnFold#¦%*"
+        return "%#StatusColumnFoldHead#v%*"
       end
-    elseif fi.level ~= 0 then
       return "%#StatusColumnFold#¦%*"
-    else
-      return " "
     end
-  else
-    return "%C"
+
+    if fi.level ~= 0 then
+      return "%#StatusColumnFold#¦%*"
+    end
+
+    return " "
   end
+
+  return "%C"
 end
 
 local function status_separator()

@@ -34,15 +34,24 @@ end
 
 M.lineFolded = C.lineFolded
 
+---@param winnr number
+---@return ffi.cdata*
 M.find_window = function(winnr)
   return C.find_window_by_handle(winnr, error)
 end
 
 
----@param winnr? number
+---@param winnr number
 ---@param lnum number
 ---@param wp? ffi.cdata*
----@return table<any>
+---@return {
+---  lnum: number;
+---  level: number;
+---  low_level: number;
+---  lines: number;
+---  folded: boolean;
+---  wp: ffi.cdata*;
+---}
 function M.get(winnr, lnum, wp)
   wp = wp or M.find_window(winnr)
   local fi = M.fold_info(wp, lnum)
