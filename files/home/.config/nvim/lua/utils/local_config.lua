@@ -1,20 +1,18 @@
----@class LocalConfigColorscheme
----@field name string|nil
----@field transparent boolean|nil
-
----@class LocalConfigNumber
----@field enable boolean|nil
----@field relative boolean|nil
----@field toggle_relative_number boolean|nil
-
----@class LocalConfig
----@field shell string|nil
----@field colorscheme LocalConfigColorscheme|nil
----@field number LocalConfigNumber|boolean|nil
----@field mouse string|boolean|nil
----@field run fun()|nil
-
----@param config LocalConfig
+---@param config? {
+---  shell?: string;
+---  colorscheme?: {
+---    name?: string;
+---    transparent?: boolean;
+---  };
+---  number?: {
+---    enable?: boolean;
+---    relative?: boolean;
+---    toggle_relative_number?: boolean;
+---  } | boolean;
+---  mouse?: string|boolean;
+---  shell?: string;
+---  run?: fun();
+---}
 ---@return nil
 return function(config)
   config = config or {}
