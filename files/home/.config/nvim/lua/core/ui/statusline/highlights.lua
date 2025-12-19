@@ -1,96 +1,103 @@
 local statusline_group = vim.api.nvim_create_augroup("StatusLine", { clear = true })
 
--- Override highlights
 local function status_line_highlights()
   local hls = {
-    {"StatusLine", {
+    StatusLine = {
       fg = "#EEEEEE";
       bg = "none";
-    }},
-    {"StatusLineNC", {
+    };
+    StatusLineNC = {
       fg = "#AAAAAA";
       bg = "none";
-    }},
+    };
 
-    {"StatusLineModeNormal", {
+    StlNormal = {
+      fg = "#EEEEEE";
+      bg = "none";
+    };
+    StlNC = {
+      fg = "#AAAAAA";
+      bg = "none";
+    };
+
+    StlModeNormal = {
       fg = "#99EE99";
       bg = "none";
-    }},
-    {"StatusLineModeInsert", {
+    };
+    StlModeInsert = {
       fg = "#EE9999";
       bg = "none";
-    }},
-    {"StatusLineModeReplace", {
+    };
+    StlModeReplace = {
       fg = "#EEEE99";
       bg = "none";
-    }},
-    {"StatusLineModeVisual", {
+    };
+    StlModeVisual = {
       fg = "#9999EE";
       bg = "none";
-    }},
-    {"StatusLineModeConfirm", {
+    };
+    StlModeConfirm = {
       fg = "#999999";
       bg = "none";
-    }},
-    {"StatusLineModeTerminal", {
+    };
+    StlModeTerminal = {
       fg = "#999999";
       bg = "none";
-    }},
-    {"StatusLineModeOther", {
+    };
+    StlModeOther = {
       fg = "#EE99EE";
       bg = "none";
-    }},
+    };
 
-    {"StatusLineMacro", {
+    StlMacro = {
       fg = "#BB77EE";
       bg = "none";
-    }},
+    };
 
-    {"StatusLineFileFlag", {
+    StlFileFlag = {
       fg = "#DDEE99";
       bg = "none";
-    }},
+    };
 
-    {"StatusLineDiagnosticERROR", {
+    StlDiagnosticERROR = {
       fg = "#EE9999";
       bg = "none";
-    }},
-    {"StatusLineDiagnosticWARN", {
+    };
+    StlDiagnosticWARN = {
       fg = "#EEEE99";
       bg = "none";
-    }},
-    {"StatusLineDiagnosticINFO", {
+    };
+    StlDiagnosticINFO = {
       fg = "#99EEEE";
       bg = "none";
-    }},
-    {"StatusLineDiagnosticHINT", {
+    };
+    StlDiagnosticHINT = {
       fg = "#99EE99";
       bg = "none";
-    }},
+    };
 
-    {"StatusLineGitAdd", {
+    StlGitAdd = {
       fg = "#55CC55";
       bg = "none";
-    }},
-    {"StatusLineGitRemove", {
+    };
+    StlGitRemove = {
       fg = "#CC5555";
       bg = "none";
-    }},
-    {"StatusLineGitChange", {
+    };
+    StlGitChange = {
       fg = "#5555CC";
       bg = "none";
-    }},
-    {"StatusLineGitBranch", {
+    };
+    StlGitBranch = {
       fg = "#CC9955";
       bg = "none";
-    }},
+    };
   }
-  for _, v in pairs(hls) do
-    local name = v[1]
-    local params = v[2]
-    vim.api.nvim_set_hl(0, name, params)
+  for name, spec in pairs(hls) do
+    vim.api.nvim_set_hl(0, name, spec)
   end
 end
+
 vim.api.nvim_create_autocmd({
   "VimEnter",
   "ColorScheme",
@@ -106,4 +113,3 @@ vim.api.nvim_create_autocmd("ModeChanged", {
     vim.cmd.redrawstatus()
   end;
 })
-

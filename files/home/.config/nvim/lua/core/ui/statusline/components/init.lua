@@ -27,7 +27,7 @@ function M.macro_recording()
   local format = {}
   local macro = vim.fn.reg_recording()
   if macro ~= "" then
-    table.insert(format, "%#StatusLineMacro#")
+    table.insert(format, "%#StlMacro#")
     table.insert(format, "@" .. macro)
     table.insert(format, "%*")
   end

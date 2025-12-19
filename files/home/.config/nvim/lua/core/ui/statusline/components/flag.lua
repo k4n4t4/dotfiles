@@ -1,7 +1,7 @@
 return function()
   local format = {}
 
-  table.insert(format, "%#StatusLineFileFlag#")
+  table.insert(format, "%#StlFileFlag#")
   if vim.o.previewwindow then
     table.insert(format, "p")
   end

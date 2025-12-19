@@ -1,18 +1,18 @@
 local git_props = {
   add = {
     icon = "+";
-    hi = "StatusLineGitAdd";
+    hi = "StlGitAdd";
   };
   remove = {
     icon = "-";
-    hi = "StatusLineGitRemove";
+    hi = "StlGitRemove";
   };
   change = {
     icon = "~";
-    hi = "StatusLineGitChange";
+    hi = "StlGitChange";
   };
   branch = {
-    hi = "StatusLineGitBranch";
+    hi = "StlGitBranch";
   };
 }
 

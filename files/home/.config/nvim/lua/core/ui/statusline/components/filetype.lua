@@ -23,7 +23,7 @@ return function()
     then
       icon, color = devicons.get_icon_color_by_filetype(ft)
       if icon then
-        icon_hl = "StatusLineIcon@" .. ft
+        icon_hl = "StlIcon@" .. ft
 
         vim.api.nvim_set_hl(0,icon_hl, {
           fg = color;

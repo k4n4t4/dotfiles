@@ -1,23 +1,23 @@
 local mode_props = {
   ["n"] = {
     name = "N";
-    hi = "StatusLineModeNormal";
+    hi = "StlModeNormal";
   };
   ["no"] = {
     name = "NO";
-    hi = "StatusLineModeNormal";
+    hi = "StlModeNormal";
   };
   ["nov"] = {
     name = "NOC";
-    hi = "StatusLineModeNormal";
+    hi = "StlModeNormal";
   };
   ["noV"] = {
     name = "NOL";
-    hi = "StatusLineModeNormal";
+    hi = "StlModeNormal";
   };
   ["no"] = {
     name = "NOB";
-    hi = "StatusLineModeNormal";
+    hi = "StlModeNormal";
   };
 
   ["niI"] = {
@@ -31,36 +31,36 @@ local mode_props = {
   };
   ["nt"] = {
     name = "NT";
-    hi = "StatusLineModeTerminal";
+    hi = "StlModeTerminal";
   };
   ["ntT"] = {
     name = "NTT";
-    hi = "StatusLineModeTerminal";
+    hi = "StlModeTerminal";
   };
 
   ["v"] = {
     name = "V";
-    hi = "StatusLineModeVisual";
+    hi = "StlModeVisual";
   };
   ["vs"] = {
     name = "VS";
-    hi = "StatusLineModeVisual";
+    hi = "StlModeVisual";
   };
   ["V"] = {
     name = "VL";
-    hi = "StatusLineModeVisual";
+    hi = "StlModeVisual";
   };
   ["Vs"] = {
     name = "VLS";
-    hi = "StatusLineModeVisual";
+    hi = "StlModeVisual";
   };
   [""] = {
     name = "VB";
-    hi = "StatusLineModeVisual";
+    hi = "StlModeVisual";
   };
   ["s"] = {
     name = "VBS";
-    hi = "StatusLineModeVisual";
+    hi = "StlModeVisual";
   };
 
   ["s"] = {
@@ -75,40 +75,40 @@ local mode_props = {
 
   ["i"] = {
     name = "I";
-    hi = "StatusLineModeInsert";
+    hi = "StlModeInsert";
   };
   ["ic"] = {
     name = "IC";
-    hi = "StatusLineModeInsert";
+    hi = "StlModeInsert";
   };
   ["ix"] = {
     name = "IX";
-    hi = "StatusLineModeInsert";
+    hi = "StlModeInsert";
   };
 
   ["R"] = {
     name = "R";
-    hi = "StatusLineModeReplace"
+    hi = "StlModeReplace"
   };
   ["Rc"] = {
     name = "RC";
-    hi = "StatusLineModeReplace"
+    hi = "StlModeReplace"
   };
   ["Rx"] = {
     name = "RX";
-    hi = "StatusLineModeReplace"
+    hi = "StlModeReplace"
   };
   ["Rv"] = {
     name = "RV";
-    hi = "StatusLineModeReplace"
+    hi = "StlModeReplace"
   };
   ["Rvc"] = {
     name = "RVC";
-    hi = "StatusLineModeReplace"
+    hi = "StlModeReplace"
   };
   ["Rvx"] = {
     name = "RVX";
-    hi = "StatusLineModeReplace"
+    hi = "StlModeReplace"
   };
 
   ["c"] = {
@@ -133,15 +133,15 @@ local mode_props = {
   };
   ["r?"] = {
     name = "CF";
-    hi = "StatusLineModeConfirm";
+    hi = "StlModeConfirm";
   };
   ["!"] = {
     name = "SH";
-    hi = "StatusLineModeTerminal";
+    hi = "StlModeTerminal";
   };
   ["t"] = {
     name = "T";
-    hi = "StatusLineModeTerminal";
+    hi = "StlModeTerminal";
   };
 }
 
@@ -155,7 +155,7 @@ return function()
   }
 
   local name = prop.name or "?"
-  local color = prop.hi or "StatusLineModeOther"
+  local color = prop.hi or "StlModeOther"
 
   local format = {
     "%#" .. color .. "#",

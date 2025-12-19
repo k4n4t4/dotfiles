@@ -1,19 +1,19 @@
 local diagnostic_props = {
   ERROR = {
     icon = "!";
-    hi = "StatusLineDiagnosticERROR";
+    hi = "StlDiagnosticERROR";
   };
   WARN = {
     icon = "*";
-    hi = "StatusLineDiagnosticWARN";
+    hi = "StlDiagnosticWARN";
   };
   INFO = {
     icon = "i";
-    hi = "StatusLineDiagnosticINFO";
+    hi = "StlDiagnosticINFO";
   };
   HINT = {
     icon = "?";
-    hi = "StatusLineDiagnosticHINT";
+    hi = "StlDiagnosticHINT";
   };
 }
 
