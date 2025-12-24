@@ -116,7 +116,11 @@ vim.opt.matchpairs = { "(:)", "{:}", "[:]", "<:>" }
 
 vim.opt.completeopt = { "menuone", "preview" }
 
-vim.opt.viewoptions = { "folds", "cursor", "curdir" }
+vim.opt.viewoptions = {
+  "folds",
+  "cursor",
+  "localoptions"
+}
 
 vim.opt.synmaxcol = 1000
 
