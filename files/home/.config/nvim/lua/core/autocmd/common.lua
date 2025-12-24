@@ -34,27 +34,3 @@ autocmd("BufEnter", {
     end
   end;
 })
-
--- indent size
-autocmd("FileType", {
-  group = group;
-  pattern = { "java" };
-  callback = function()
-    vim.opt_local.tabstop = 4
-    vim.opt_local.softtabstop = 4
-    vim.opt_local.shiftwidth = 4
-  end;
-})
-
--- fcitx
-if vim.fn.executable("fcitx5") == 1 then
-  autocmd("InsertLeave", {
-    group = group;
-    callback = function()
-      local out = vim.fn.system { "fcitx5-remote" }
-      if out == "2\n" then
-        vim.fn.system { "fcitx5-remote", "-c" }
-      end
-    end;
-  })
-end

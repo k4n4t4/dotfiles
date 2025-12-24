@@ -1,6 +1,11 @@
 local group = vim.api.nvim_create_augroup("remember_view", { clear = true })
 local autocmd = vim.api.nvim_create_autocmd
 
+vim.opt.viewoptions = {
+  "folds",
+  "cursor",
+  "localoptions",
+}
 
 -- make view
 autocmd("BufWinLeave", {

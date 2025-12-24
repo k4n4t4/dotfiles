@@ -1,4 +1,6 @@
 if not vim.g.loaded_netrw then
+  vim.keymap.set("n", "<LEADER>e", "<CMD>Lexplore<CR>")
+
   vim.g.netrw_liststyle = 3
   vim.g.netrw_banner = 0
   vim.g.netrw_sizestyle = "H"
