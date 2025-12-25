@@ -1,22 +1,22 @@
 return function()
-  local mason_lspconfig = require("mason-lspconfig")
+    local mason_lspconfig = require("mason-lspconfig")
 
-  local lsps = {
-    "lua_ls",
-    "emmet_language_server"
-  }
-  for _, value in ipairs(lsps) do
-    vim.lsp.config(value, require("lazyvim.config.lsp." .. value))
-    vim.lsp.enable(value)
-  end
+    local lsps = {
+        "lua_ls",
+        "emmet_language_server"
+    }
+    for _, value in ipairs(lsps) do
+        vim.lsp.config(value, require("lazyvim.config.lsp." .. value))
+        vim.lsp.enable(value)
+    end
 
-  mason_lspconfig.setup {
-    ensure_installed = {
-      "vimls",
-      "pylsp",
-      "bashls",
-      "ts_ls",
-    };
-    automatic_enable = true;
-  }
+    mason_lspconfig.setup {
+        ensure_installed = {
+            "vimls",
+            "pylsp",
+            "bashls",
+            "ts_ls",
+        };
+        automatic_enable = true;
+    }
 end

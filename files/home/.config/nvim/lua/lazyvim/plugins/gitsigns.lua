@@ -1,5 +1,5 @@
 return {
-  "lewis6991/gitsigns.nvim";
-  config = require "lazyvim.config.gitsigns";
-  event = 'VeryLazy';
+    "lewis6991/gitsigns.nvim";
+    config = require "lazyvim.config.gitsigns";
+    event = 'VeryLazy';
 }
