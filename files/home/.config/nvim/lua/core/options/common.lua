@@ -12,28 +12,22 @@ vim.opt.fileencodings = {
   "default",
 }
 
-vim.opt.clipboard:append "unnamedplus"
-
 vim.opt.shortmess:append 'I'
-
 vim.opt.belloff = "all"
-
-vim.opt.wildignorecase = true
-vim.opt.wildmode = "list:full"
-
 vim.opt.splitbelow = true
 vim.opt.splitright = true
-
 vim.opt.scrolloff = 3
 vim.opt.sidescrolloff = 3
 
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.inccommand = "split"
+vim.opt.wildignorecase = true
+vim.opt.wildmode = "list:full"
 
 vim.opt.undofile = true
-
 vim.opt.virtualedit = "block"
+vim.opt.clipboard:append "unnamedplus"
 
 vim.env.EDITOR = "nvim --server \"$NVIM\" --remote-tab"
 
