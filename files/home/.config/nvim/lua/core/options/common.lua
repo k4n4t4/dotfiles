@@ -36,3 +36,8 @@ vim.opt.undofile = true
 vim.opt.virtualedit = "block"
 
 vim.env.EDITOR = "nvim --server \"$NVIM\" --remote-tab"
+
+
+vim.opt.expandtab = true
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
