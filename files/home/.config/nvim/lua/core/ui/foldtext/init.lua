@@ -1,3 +1,5 @@
+vim.opt.foldtext = ""
+
 local namespace = vim.api.nvim_create_namespace("foldtext")
 
 vim.api.nvim_set_decoration_provider(namespace, {
