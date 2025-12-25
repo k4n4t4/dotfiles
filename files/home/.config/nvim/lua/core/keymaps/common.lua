@@ -1,12 +1,8 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-
 local keymap = vim.keymap
 local set = keymap.set
-
--- plugin
-set('n', '<LEADER>p', "<CMD>Lazy<CR>")
 
 
 -- terminal
@@ -23,14 +19,8 @@ set('x', '<LEADER>h',
   "<CMD>let @/='\\V'..escape(getregion(getpos('v'), getpos('.'), {'type': mode()})[0], '/\\')<CR><CMD>set hls<CR><ESC><CMD>call setpos('.', getpos(\"'<\"))<CR>",
   { desc = "Highlight" })
 
-set('n', '<LEADER>s', "viw:<C-u>%s/<C-r>=getregion(getpos(\"\'<\"), getpos(\"\'>\"))[0]<CR>//g<LEFT><LEFT>",
-  { desc = "Replace" })
-set('x', '<LEADER>s',
-  ":<C-u>%s/\\V<C-r>=escape(getregion(getpos(\"\'<\"), getpos(\"\'>\"))[0], '/\\')<CR>//g<LEFT><LEFT>",
-  { desc = "Replace" })
 
-
--- common
+-- move
 set('n', '<TAB>', "5j",   { desc = "Scroll Down" })
 set('n', '<S-TAB>', "5k", { desc = "Scroll Up" })
 set('x', '<TAB>', "5j",   { desc = "Scroll Down" })
