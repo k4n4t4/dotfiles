@@ -1,11 +1,3 @@
-vim.opt.foldenable = true
-vim.opt.foldmethod = "manual"
-vim.opt.foldmarker = "{{{,}}}"
-vim.opt.foldexpr = ""
-
-vim.opt.foldtext = ""
-
-
 local namespace = vim.api.nvim_create_namespace("foldtext")
 
 vim.api.nvim_set_decoration_provider(namespace, {
