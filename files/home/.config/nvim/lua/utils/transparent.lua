@@ -17,6 +17,8 @@ M.default_config = {
     "TabLine",
     "TabLineFill",
     "EndOfBuffer",
+    "StatusLine",
+    "StatusLineNC",
 
     "NeoTreeNormal",
     "NeoTreeNormalNC",
