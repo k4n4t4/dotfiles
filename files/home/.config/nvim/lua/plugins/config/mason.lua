@@ -6,7 +6,7 @@ return function()
         "emmet_language_server"
     }
     for _, value in ipairs(lsps) do
-        vim.lsp.config(value, require("lazyvim.config.lsp." .. value))
+        vim.lsp.config(value, require("plugins.config.lsp." .. value))
         vim.lsp.enable(value)
     end
 
