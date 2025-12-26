@@ -1,4 +1,4 @@
-local group = vim.api.nvim_create_augroup("terminal_ettings", { clear = true })
+local group = vim.api.nvim_create_augroup("terminal_settings", { clear = true })
 local autocmd = vim.api.nvim_create_autocmd
 
 
