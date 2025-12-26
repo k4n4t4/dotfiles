@@ -65,6 +65,7 @@ end
 local statusline_group = vim.api.nvim_create_augroup("StatusLine", { clear = true })
 
 vim.api.nvim_create_autocmd({
+    "VimEnter",
     "ColorScheme",
 }, {
     group = statusline_group;

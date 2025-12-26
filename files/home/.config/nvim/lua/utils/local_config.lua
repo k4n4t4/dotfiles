@@ -28,7 +28,7 @@ return function(config)
                 plugins_transparent.setup {}
             end
             if config.colorscheme.name then
-                vim.cmd.colorscheme(config.colorscheme.name)
+                pcall(vim.cmd.colorscheme, config.colorscheme.name)
             end
         end
 
