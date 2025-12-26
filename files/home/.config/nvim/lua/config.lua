@@ -1,6 +1,8 @@
-require("utils.local_config") {
+local config = require("utils.local_config")
+
+config.set_config {
     colorscheme = {
-        name = "theme";
+        name = "onedark";
         transparent = true;
     };
     number = {
@@ -11,3 +13,5 @@ require("utils.local_config") {
     mouse = true;
     shell = "fish";
 }
+
+config.load(config.config)

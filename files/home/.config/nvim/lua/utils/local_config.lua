@@ -1,4 +1,6 @@
----@param config? {
+local M = {}
+
+---@alias LocalConfig {
 ---    shell?: string;
 ---    colorscheme?: {
 ---        name?: string;
@@ -13,8 +15,32 @@
 ---    shell?: string;
 ---    run?: fun();
 ---}
+
+---@type LocalConfig
+M.config = {}
+
+---@param config LocalConfig?
 ---@return nil
-return function(config)
+function M.set_config(config)
+    M.config = config or {}
+end
+
+---@param config LocalConfig?
+---@return nil
+function M.setup(config)
+    M.set_config(config)
+
+    vim.api.nvim_create_autocmd("VimEnter", {
+        once = true;
+        callback = function()
+            M.load(M.config)
+        end;
+    })
+end
+
+---@param config LocalConfig?
+---@return nil
+function M.load(config)
     config = config or {}
 
     if config then
@@ -66,3 +92,6 @@ return function(config)
         end
     end
 end
+
+
+return M
