@@ -36,10 +36,14 @@ function M.transparent_background(highlight_groups)
     end
 end
 
+function M.load(config)
+    M.transparent_background(config.highlight_groups or M.default_config.highlight_groups)
+end
+
 function M.setup(config)
     vim.api.nvim_create_autocmd(config.events or M.default_config.events, {
         callback = function()
-            M.transparent_background(config.highlight_groups or M.default_config.highlight_groups)
+            M.load(config)
         end;
     })
 end
