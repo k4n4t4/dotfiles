@@ -31,6 +31,9 @@ vim.opt.clipboard:append "unnamedplus"
 
 vim.env.EDITOR = "nvim --server \"$NVIM\" --remote-tab"
 
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
 
 vim.opt.expandtab = true
 vim.opt.tabstop = 4
