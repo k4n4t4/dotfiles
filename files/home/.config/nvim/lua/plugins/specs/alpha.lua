@@ -1,6 +1,6 @@
 return {
     "goolord/alpha-nvim";
     enabled = false;
-    config = require "lazyvim.config.alpha";
+    config = require "plugins.config.alpha";
     event = 'VimEnter';
 }

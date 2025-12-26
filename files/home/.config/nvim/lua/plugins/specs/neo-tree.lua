@@ -23,7 +23,7 @@ return {
             end;
         };
     };
-    config = require "lazyvim.config.neo-tree";
+    config = require "plugins.config.neo-tree";
     event = 'User DirEnter';
     keys = {
         { mode = 'n', "<LEADER>e", "<CMD>Neotree toggle<CR>", desc = "Neotree Toggle" },

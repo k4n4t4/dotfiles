@@ -9,7 +9,7 @@ return {
         };
         "stevearc/aerial.nvim";
     };
-    config = require "lazyvim.config.telescope";
+    config = require "plugins.config.telescope";
     cmd = "Telescope";
     keys = {
         { mode = 'n', "<LEADER>tt", "<CMD>Telescope<CR>",                           desc = "Telescope" },

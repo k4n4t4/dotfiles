@@ -23,7 +23,7 @@ return {
             "nvimtools/none-ls.nvim";
             "jayp0521/mason-null-ls.nvim";
         };
-        config = require "lazyvim.config.mason";
+        config = require "plugins.config.mason";
         event = { "BufReadPre", "BufNewFile" };
     },
 

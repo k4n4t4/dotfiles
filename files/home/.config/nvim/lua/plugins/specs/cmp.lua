@@ -21,7 +21,7 @@ return {
             };
             "rafamadriz/friendly-snippets";
         };
-        config = require "lazyvim.config.cmp";
+        config = require "plugins.config.cmp";
         event = {
             'InsertEnter',
             'CmdlineEnter',

@@ -5,7 +5,7 @@ return {
             "nvim-treesitter/nvim-treesitter-textobjects";
         };
         build = ":TSUpdate";
-        config = require "lazyvim.config.treesitter";
+        config = require "plugins.config.treesitter";
         event = 'VeryLazy';
         cmd = {
             "TSUpdate",

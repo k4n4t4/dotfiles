@@ -5,6 +5,6 @@ return {
         "MunifTanjim/nui.nvim";
         "rcarriga/nvim-notify";
     };
-    config = require "lazyvim.config.noice";
+    config = require "plugins.config.noice";
     event = 'VeryLazy';
 }
