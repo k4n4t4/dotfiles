@@ -4,7 +4,7 @@ if vim.g.vscode then
     require "vscode-nvim"
 else
     require "core"
-    require "lazyvim"
+    require "plugins"
 end
 
 pcall(require, "config")
