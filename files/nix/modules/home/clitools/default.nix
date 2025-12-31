@@ -6,7 +6,6 @@
       starship eza fd ripgrep fzf delta
       btop ncdu tmux gh
       zoxide trash-cli
-      nodejs python3
       opencode
     ];
   };
