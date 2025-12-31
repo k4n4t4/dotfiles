@@ -15,7 +15,7 @@ app.start({
   main() {
     app.get_monitors().map(m => {
 
-      Test(m) // TEST:widget test
+      // Test(m) // TEST:widget test
 
       Bar(m)
       Popups(m)
