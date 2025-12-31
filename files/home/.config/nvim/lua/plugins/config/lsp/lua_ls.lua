@@ -29,11 +29,14 @@ return {
                 checkThirdParty = false;
             };
             diagnostics = {
-                globals = is_nvim and { "vim" } or {};
+                globals = is_nvim and {
+                    "vim"
+                } or {};
                 disable = is_nvim and {
                     "duplicate-doc-field",
                     "duplicate-doc-alias",
-                };
+                    "missing-fields",
+                } or {};
             }
         };
     };
