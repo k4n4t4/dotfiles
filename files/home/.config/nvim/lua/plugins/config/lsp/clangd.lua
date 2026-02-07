@@ -1,4 +1,4 @@
 return {
   cmd = { "clangd" };
-  filetypes = { "c", "cpp", "objc", "objcpp" };
+  filetypes = { "c", "cpp", "objc", "objcpp" },
 }

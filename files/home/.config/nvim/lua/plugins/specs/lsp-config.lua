@@ -1,29 +1,20 @@
 return {
     {
-        "mason-org/mason.nvim";
-        opts = {
-            ui = {
-                border = 'double';
-            };
-        };
-        cmd = {
-            "Mason",
-            "MasonUpdate",
-            "MasonInstall",
-            "MasonUninstall",
-            "MasonUninstallAll",
-            "MasonLog",
-        };
-    },
-    {
         "mason-org/mason-lspconfig.nvim";
         dependencies = {
-            "mason-org/mason.nvim";
+            {
+                "mason-org/mason.nvim";
+                opts = {
+                    ui = {
+                        border = 'double';
+                    };
+                };
+            },
             "neovim/nvim-lspconfig";
             "nvimtools/none-ls.nvim";
             "jayp0521/mason-null-ls.nvim";
         };
-        config = require "plugins.config.mason";
+        config = require "plugins.config.lsp-config";
         event = { "BufReadPre", "BufNewFile" };
     },
 
