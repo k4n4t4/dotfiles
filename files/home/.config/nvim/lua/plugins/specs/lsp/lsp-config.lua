@@ -1,6 +1,6 @@
 return {
     "mason-org/mason-lspconfig.nvim";
-    enabled = false;
+    enabled = true;
     dependencies = {
         {
             "mason-org/mason.nvim";
@@ -20,7 +20,6 @@ return {
         mason_lspconfig.setup {
             ensure_installed = {
                 "vimls",
-                "bashls",
             };
             automatic_enable = false;
         }
