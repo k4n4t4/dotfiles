@@ -26,5 +26,31 @@ function M.get(bufnr)
     return clients, others
 end
 
+---@alias LspRule { [1]: string|string[], [2]: string }
+---@param config_path string
+---@param lsp_rules LspRule[]
+function M.set(config_path, lsp_rules)
+    local configured = {}
+
+    for _, rule in ipairs(lsp_rules) do
+        local pattern, server_name = rule[1], rule[2]
+
+        vim.api.nvim_create_autocmd("FileType", {
+            pattern = pattern,
+            callback = function()
+                if not configured[server_name] then
+                    local ok, config = pcall(require, config_path .. "." .. server_name)
+                    if ok then
+                        vim.lsp.config(server_name, config)
+                        configured[server_name] = true
+                    end
+                end
+
+                vim.lsp.enable(server_name)
+            end,
+        })
+    end
+end
+
 
 return M

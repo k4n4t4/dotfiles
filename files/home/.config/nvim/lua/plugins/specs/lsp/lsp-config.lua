@@ -23,18 +23,10 @@ return {
                 };
                 automatic_enable = false;
             }
-
-
-            local lsps = {
-                "lua_ls",
-                "emmet_language_server",
-                "clangd",
-            }
-            for _, value in ipairs(lsps) do
-                vim.lsp.config(value, require("plugins.specs.lsp.config." .. value))
-                vim.lsp.enable(value)
-            end
         end;
-        event = { "BufReadPre", "BufNewFile" };
+        event = {
+            "BufReadPre",
+            "BufNewFile",
+        };
     },
 }

@@ -39,3 +39,5 @@ require("lazy").setup {
         notify = true;
     };
 }
+
+vim.keymap.set("n", "<leader>p", "<cmd>Lazy<CR>", { desc = "Plugin manager (lazy.nvim)" })
