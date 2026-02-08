@@ -22,7 +22,13 @@ return {
                     "vimls",
                 };
                 automatic_enable = false;
+                handlers = {
+                    function(server_name)
+                        require("lspconfig")[server_name].setup {}
+                    end
+                }
             }
+
         end;
         event = {
             "BufReadPre",
