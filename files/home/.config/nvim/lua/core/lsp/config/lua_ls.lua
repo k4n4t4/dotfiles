@@ -1,8 +1,4 @@
-local cwd = vim.uv.cwd()
-local is_nvim = cwd ~= nil and (
-    string.find(cwd, vim.fn.stdpath("config"), 1, true) ~= nil or
-    string.find(cwd, "/nvim", 1, true) ~= nil
-)
+local info = require "utils.info"
 
 return {
     filetypes = { "lua" };
@@ -15,7 +11,7 @@ return {
                 path = { "?.lua", "?/init.lua" };
             };
             workspace = {
-                library = is_nvim and (
+                library = info.is.nvim() and (
                     vim.list_extend(
                         vim.api.nvim_get_runtime_file("lua", true),
                         {
@@ -29,10 +25,10 @@ return {
                 checkThirdParty = false;
             };
             diagnostics = {
-                globals = is_nvim and {
+                globals = info.is.nvim() and {
                     "vim"
                 } or {};
-                disable = is_nvim and {
+                disable = info.is.nvim() and {
                     "duplicate-doc-field",
                     "duplicate-doc-alias",
                     "missing-fields",
