@@ -1,5 +1,6 @@
 return {
     "mason-org/mason-lspconfig.nvim";
+    enabled = false;
     dependencies = {
         {
             "mason-org/mason.nvim";

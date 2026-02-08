@@ -1,10 +1,10 @@
 local info = require "utils.info"
 
 return {
+    cmd = { "lua-language-server" };
     filetypes = { "lua" };
     settings = {
         Lua = {
-            cmd = { "lua-language-server" };
             runtime = {
                 version = "LuaJIT";
                 pathStrict = true;

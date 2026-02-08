@@ -1,4 +1,5 @@
 return {
+    cmd = { "emmet_language_server" };
     filetypes = {
         "css",
         "eruby",
