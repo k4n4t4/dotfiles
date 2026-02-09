@@ -59,6 +59,7 @@ return {
                 require "nvim-treesitter-textobjects.select".select_textobject("@parameter.inner", "textobjects")
             end)
         end;
+        lazy = false;
     },
     {
         "nvim-treesitter/nvim-treesitter-context";
@@ -66,5 +67,5 @@ return {
         dependencies = {
             "nvim-treesitter/nvim-treesitter";
         };
-    }
+    },
 }
