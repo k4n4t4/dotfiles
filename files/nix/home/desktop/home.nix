@@ -17,6 +17,7 @@
       firefox
       thunderbird
       obsidian
+      discord
 
       nerd-fonts.comic-shanns-mono
       nerd-fonts.hurmit
