@@ -17,7 +17,48 @@ return {
                 end;
             })
         end;
-        -- event = 'VeryLazy';
         lazy = false
-    }
+    },
+    {
+        "nvim-treesitter/nvim-treesitter-textobjects";
+        branch = "main";
+        init = function()
+            vim.g.no_plugin_maps = true
+        end,
+        config = function()
+            require("nvim-treesitter-textobjects").setup {
+                select = {
+                    lookahead = true;
+                };
+            }
+
+            local map = vim.keymap.set
+
+            map({ "x", "o" }, "af", function()
+                require "nvim-treesitter-textobjects.select".select_textobject("@function.outer", "textobjects")
+            end)
+            map({ "x", "o" }, "if", function()
+                require "nvim-treesitter-textobjects.select".select_textobject("@function.inner", "textobjects")
+            end)
+            map({ "x", "o" }, "ac", function()
+                require "nvim-treesitter-textobjects.select".select_textobject("@class.outer", "textobjects")
+            end)
+            map({ "x", "o" }, "ic", function()
+                require "nvim-treesitter-textobjects.select".select_textobject("@class.inner", "textobjects")
+            end)
+            map({ "x", "o" }, "ab", function()
+                require "nvim-treesitter-textobjects.select".select_textobject("@block.outer", "textobjects")
+            end)
+            map({ "x", "o" }, "ib", function()
+                require "nvim-treesitter-textobjects.select".select_textobject("@block.inner", "textobjects")
+            end)
+            map({ "x", "o" }, "aa", function()
+                require "nvim-treesitter-textobjects.select".select_textobject("@parameter.outer", "textobjects")
+            end)
+            map({ "x", "o" }, "ia", function()
+                require "nvim-treesitter-textobjects.select".select_textobject("@parameter.inner", "textobjects")
+            end)
+        end;
+        lazy = false;
+    },
 }
