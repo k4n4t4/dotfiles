@@ -1,5 +1,7 @@
 local M = {}
 
+local group = vim.api.nvim_create_augroup("Utils_transparent", { clear = true })
+
 M.default_config = {
     events = {
         'VimEnter',
@@ -42,6 +44,7 @@ end
 
 function M.setup(config)
     vim.api.nvim_create_autocmd(config.events or M.default_config.events, {
+        group = group;
         callback = function()
             M.load(config)
         end;

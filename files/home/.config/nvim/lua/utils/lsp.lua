@@ -1,5 +1,6 @@
 local M = {}
 
+local group = vim.api.nvim_create_augroup("Utils_lsp", { clear = true })
 
 function M.get_null_ls_sources()
     local sources = require "null-ls.sources"
@@ -36,6 +37,7 @@ function M.set(config_path, lsp_rules)
         local pattern, server_name = rule[1], rule[2]
 
         vim.api.nvim_create_autocmd("FileType", {
+            group = group;
             pattern = pattern;
             callback = vim.schedule_wrap(function()
                 if not configured[server_name] then

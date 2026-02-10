@@ -20,11 +20,9 @@ autocmd("BufWinLeave", {
 -- load view
 autocmd("BufWinEnter", {
     group = group;
-    callback = function()
+    callback = vim.schedule_wrap(function()
         if vim.fn.expand("%") ~= "" then
-            vim.schedule(function()
-                vim.cmd [[silent! loadview]]
-            end)
+            vim.cmd [[silent! loadview]]
         end
-    end;
+    end)
 })

@@ -1,4 +1,4 @@
-local statuscolumn_group = vim.api.nvim_create_augroup("StatusColumn", { clear = true })
+local group = vim.api.nvim_create_augroup("StatusColumn", { clear = true })
 
 -- Override highlights
 local function status_column_highlights()
@@ -30,6 +30,6 @@ vim.api.nvim_create_autocmd({
     "VimEnter",
     "ColorScheme",
 }, {
-    group = statuscolumn_group;
+    group = group;
     callback = status_column_highlights;
 })

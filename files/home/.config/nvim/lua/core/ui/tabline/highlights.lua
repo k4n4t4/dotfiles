@@ -1,4 +1,4 @@
-local tabline_group = vim.api.nvim_create_augroup("TabLine", { clear = true })
+local group = vim.api.nvim_create_augroup("TabLine", { clear = true })
 
 -- Override highlights
 local function tabline_highlights()
@@ -44,6 +44,6 @@ vim.api.nvim_create_autocmd({
     "VimEnter",
     "ColorScheme",
 }, {
-    group = tabline_group;
+    group = group;
     callback = tabline_highlights;
 })

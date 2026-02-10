@@ -62,19 +62,19 @@ local function status_line_highlights()
 end
 
 
-local statusline_group = vim.api.nvim_create_augroup("StatusLine", { clear = true })
+local group = vim.api.nvim_create_augroup("StatusLine", { clear = true })
 
 vim.api.nvim_create_autocmd({
     "VimEnter",
     "ColorScheme",
 }, {
-    group = statusline_group;
+    group = group;
     callback = status_line_highlights;
 })
 
 -- Redraw statusline when mode changed. (e.g. 'ix' mode)
 vim.api.nvim_create_autocmd("ModeChanged", {
-    group = statusline_group;
+    group = group;
     callback = function()
         vim.cmd.redrawstatus()
     end;
