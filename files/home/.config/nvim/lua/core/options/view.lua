@@ -12,7 +12,10 @@ autocmd("BufWinLeave", {
     callback = function()
         -- whether the current buffer is associated with a file
         if vim.fn.expand("%:p") ~= "" then
-            vim.cmd [[mkview]]
+            if vim.b.view_loaded then
+                vim.cmd [[mkview]]
+                vim.b.view_loaded = false
+            end
         end
     end;
 })
@@ -28,6 +31,7 @@ autocmd("BufWinEnter", {
                     return
                 end
                 vim.cmd [[silent! loadview]]
+                vim.b.view_loaded = true
             end)
         end
     end
