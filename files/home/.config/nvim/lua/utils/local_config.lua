@@ -29,13 +29,7 @@ end
 ---@return nil
 function M.setup(config)
     M.set_config(config)
-
-    vim.api.nvim_create_autocmd("VimEnter", {
-        once = true;
-        callback = function()
-            M.load(M.config)
-        end;
-    })
+    M.load(M.config)
 end
 
 ---@param config LocalConfig?

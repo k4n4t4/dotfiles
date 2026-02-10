@@ -1,6 +1,4 @@
-local config = require("utils.local_config")
-
-config.set_config {
+require("utils.local_config").setup {
     colorscheme = {
         name = "onedark";
         transparent = true;
@@ -13,5 +11,3 @@ config.set_config {
     mouse = true;
     shell = "fish";
 }
-
-config.load(config.config)
