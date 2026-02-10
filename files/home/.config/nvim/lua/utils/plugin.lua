@@ -1,29 +1,34 @@
 local M = {}
 
-
 local cache = {}
+local pending = {}
 
-function M.use(plugin_name)
-    if cache[plugin_name] ~= nil then
+
+--- @param plugin_name string
+--- @param event string
+--- @return any|nil
+function M.load(plugin_name, event)
+    if cache[plugin_name] then
         return cache[plugin_name]
-    end
-
-    local ok, plugin = pcall(require, plugin_name)
-    if ok then
-        cache[plugin_name] = plugin
-        return plugin
-    else
-        cache[plugin_name] = nil
+    elseif pending[plugin_name] then
         return nil
     end
-end
 
-function M.setup(plugin_name, opts)
-    local plugin = M.use(plugin_name)
-    if plugin and plugin.setup then
-        plugin.setup(opts or {})
-        return plugin
-    end
+    pending[plugin_name] = true
+
+    local group = vim.api.nvim_create_augroup("LazyLoad_" .. plugin_name, { clear = true })
+    vim.api.nvim_create_autocmd(event, {
+        group = group,
+        once = true,
+        callback = vim.schedule_wrap(function()
+            local ok, mod = pcall(require, plugin_name)
+            if ok then
+                cache[plugin_name] = mod
+            end
+            pending[plugin_name] = nil
+        end),
+    })
+
     return nil
 end
 
