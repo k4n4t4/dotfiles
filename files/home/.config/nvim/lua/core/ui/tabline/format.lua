@@ -1,12 +1,5 @@
-local devicons
-vim.api.nvim_create_autocmd("UIEnter", {
-    callback = function()
-        local result, ret = pcall(require, "nvim-web-devicons")
-        if result then
-            devicons = ret
-        end
-    end;
-})
+local plugin = require("utils.plugin")
+plugin.load("nvim-web-devicons", "UIEnter")
 
 function TabLine()
     local tab_length = vim.fn.tabpagenr('$')
@@ -34,6 +27,8 @@ function TabLine()
 
         local icon = ""
         local icon_hl = ""
+
+        local devicons = plugin.get("nvim-web-devicons")
         if devicons then
             local color
             icon, color = devicons.get_icon_color_by_filetype(filetype)

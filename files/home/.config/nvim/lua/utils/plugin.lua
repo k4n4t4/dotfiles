@@ -32,4 +32,10 @@ function M.load(plugin_name, event)
     return nil
 end
 
+--- @param plugin_name string
+--- @return any|nil
+function M.get(plugin_name)
+    return cache[plugin_name]
+end
+
 return M
