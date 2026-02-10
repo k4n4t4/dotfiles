@@ -22,7 +22,9 @@ autocmd("BufWinEnter", {
     group = group;
     callback = function()
         if vim.fn.expand("%") ~= "" then
-            vim.cmd [[silent! loadview]]
+            vim.schedule(function()
+                vim.cmd [[silent! loadview]]
+            end)
         end
     end;
 })

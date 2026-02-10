@@ -1,5 +1,5 @@
 local devicons
-vim.api.nvim_create_autocmd("VimEnter", {
+vim.api.nvim_create_autocmd("UIEnter", {
     callback = function()
         local result, ret = pcall(require, "nvim-web-devicons")
         if result then
