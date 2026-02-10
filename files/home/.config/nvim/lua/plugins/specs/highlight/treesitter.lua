@@ -12,6 +12,7 @@ return {
                     vim.wo[0][0].foldmethod = 'expr'
                     vim.opt.foldlevel = 99
                     vim.opt.foldlevelstart = 99
+                    -- vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
                 end
             end
             vim.api.nvim_create_autocmd("FileType", {
