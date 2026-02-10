@@ -11,7 +11,7 @@ autocmd("BufWinLeave", {
     group = group;
     callback = function()
         -- whether the current buffer is associated with a file
-        if vim.fn.expand("%") ~= "" then
+        if vim.fn.expand("%:p") ~= "" then
             vim.cmd [[mkview]]
         end
     end;
@@ -20,9 +20,15 @@ autocmd("BufWinLeave", {
 -- load view
 autocmd("BufWinEnter", {
     group = group;
-    callback = vim.schedule_wrap(function()
-        if vim.fn.expand("%") ~= "" then
-            vim.cmd [[silent! loadview]]
+    callback = function(args)
+        if vim.fn.expand("%:p") ~= "" then
+            vim.schedule(function()
+                if not vim.api.nvim_buf_is_valid(args.buf) or
+                    vim.api.nvim_get_current_buf() ~= args.buf then
+                    return
+                end
+                vim.cmd [[silent! loadview]]
+            end)
         end
-    end)
+    end
 })
