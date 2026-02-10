@@ -37,18 +37,16 @@ function M.set(config_path, lsp_rules)
 
         vim.api.nvim_create_autocmd("FileType", {
             pattern = pattern;
-            callback = function()
-                vim.schedule(function()
-                    if not configured[server_name] then
-                        local ok, config = pcall(require, config_path .. "." .. server_name)
-                        if ok then
-                            vim.lsp.config(server_name, config)
-                            vim.lsp.enable(server_name)
-                            configured[server_name] = true
-                        end
+            callback = vim.schedule_wrap(function()
+                if not configured[server_name] then
+                    local ok, config = pcall(require, config_path .. "." .. server_name)
+                    if ok then
+                        vim.lsp.config(server_name, config)
+                        vim.lsp.enable(server_name)
+                        configured[server_name] = true
                     end
-                end)
-            end;
+                end
+            end);
         })
     end
 end
