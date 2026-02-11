@@ -18,8 +18,8 @@ return {
         messages = {
             enabled = true;
             view = 'mini';
-            view_warn = 'notify';
-            view_error = 'notify';
+            view_warn = 'mini';
+            view_error = 'mini';
             view_history = 'messages';
             view_search = 'virtualtext';
         };
@@ -78,7 +78,7 @@ return {
             };
             message = {
                 enabled = true;
-                view = 'notify';
+                view = 'mini';
             };
         };
         presets = {
