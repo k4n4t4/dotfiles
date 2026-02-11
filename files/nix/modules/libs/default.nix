@@ -68,7 +68,6 @@ in {
       home-manager.nixosModules.home-manager
       {
         home-manager = {
-          useGlobalPkgs = true;
           useUserPackages = true;
           extraSpecialArgs = specialArgs;
           users = lib.mapAttrs (name: value: let
