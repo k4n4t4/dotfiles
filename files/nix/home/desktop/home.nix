@@ -18,6 +18,7 @@
       thunderbird
       obsidian
       discord
+      gimp
 
       nerd-fonts.comic-shanns-mono
       nerd-fonts.hurmit
