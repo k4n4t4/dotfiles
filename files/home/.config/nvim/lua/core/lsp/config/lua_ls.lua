@@ -11,7 +11,7 @@ return {
                 path = { "?.lua", "?/init.lua" };
             };
             workspace = {
-                library = info.is.nvim() and (
+                library = info.path.is_nvim_related() and (
                     vim.list_extend(
                         vim.api.nvim_get_runtime_file("lua", true),
                         {
@@ -25,10 +25,10 @@ return {
                 checkThirdParty = false;
             };
             diagnostics = {
-                globals = info.is.nvim() and {
+                globals = info.path.is_nvim_related() and {
                     "vim"
                 } or {};
-                disable = info.is.nvim() and {
+                disable = info.path.is_nvim_related() and {
                     "duplicate-doc-field",
                     "duplicate-doc-alias",
                     "missing-fields",
