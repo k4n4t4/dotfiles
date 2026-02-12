@@ -1,14 +1,15 @@
 local M = {}
 
+local group = vim.api.nvim_create_augroup("Utils_info", { clear = true })
 local uv = vim.uv or vim.loop
 
 
-local cache = {}
+M.cache = {}
 local function cached(key, fn)
-    if cache[key] == nil then
-        cache[key] = fn()
+    if M.cache[key] == nil then
+        M.cache[key] = fn()
     end
-    return cache[key]
+    return M.cache[key]
 end
 
 local function file_exists(path)
@@ -18,14 +19,6 @@ end
 local function path_contains(path, target)
     if not path or not target then return false end
     return string.find(path, target, 1, true) ~= nil
-end
-
-function M.reset()
-    cache = {}
-end
-
-function M.dump()
-    return vim.deepcopy(cache)
 end
 
 
@@ -100,5 +93,54 @@ function M.env.is_vscode()
     end)
 end
 
+
+M.buf = {}
+M.buf.cache = {}
+
+vim.api.nvim_create_autocmd("BufDelete", {
+    group = group;
+    callback = function(args)
+        M.buf.cache[args.buf] = nil
+    end;
+})
+
+local function cached_buf(bufnr, key, fn)
+    bufnr = (bufnr == 0 or bufnr == nil) and vim.api.nvim_get_current_buf() or bufnr
+    if not vim.api.nvim_buf_is_valid(bufnr) then return nil end
+
+    if not M.buf.cache[bufnr] then M.buf.cache[bufnr] = {} end
+    if M.buf.cache[bufnr][key] == nil then
+        M.buf.cache[bufnr][key] = fn(bufnr)
+    end
+    return M.buf.cache[bufnr][key]
+end
+
+function M.buf.get_opt(bufnr, name)
+    return vim.api.nvim_get_option_value(name, { buf = bufnr })
+end
+
+function M.buf.name(bufnr)
+    return cached_buf(bufnr, "name", function(b)
+        local path = vim.api.nvim_buf_get_name(b)
+        return path ~= "" and vim.fn.fnamemodify(path, ":t") or "[No Name]"
+    end)
+end
+
+function M.buf.path(bufnr)
+    return cached_buf(bufnr, "path", function(b)
+        return vim.api.nvim_buf_get_name(b)
+    end)
+end
+
+function M.buf.filetype(bufnr)
+    return cached_buf(bufnr, "filetype", function(b)
+        return M.buf.get_opt(b, "filetype")
+    end)
+end
+
+function M.buf.modified(bufnr)
+    local b = (bufnr == 0 or bufnr == nil) and vim.api.nvim_get_current_buf() or bufnr
+    return vim.api.nvim_buf_is_valid(b) and M.buf.get_opt(b, "modified") or false
+end
 
 return M
