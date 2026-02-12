@@ -1,7 +1,6 @@
 local utils_fold = require "utils.fold"
 
-function _G.ToggleFold()
-    print(1)
+function ToggleFold()
     local line = vim.fn.getmousepos().line
     if vim.fn.foldlevel(line) > 0 then
         if vim.fn.foldclosed(line) ~= -1 then
@@ -19,15 +18,14 @@ return function()
         local winnr = vim.api.nvim_get_current_win()
         local fi = utils_fold.get(winnr, vim.v.lnum)
 
+        s = s .. "%@v:lua.ToggleFold@"
         if fi.lnum == vim.v.lnum then
             if vim.v.virtnum == 0 then
-                s = s .. "%@v:lua.ToggleFold@"
                 if fi.folded then
                     s = s .. "%#StatusColumnFoldHead#>%*"
                 else
                     s = s .. "%#StatusColumnFoldHead#v%*"
                 end
-                s = s .. "%X"
             else
                 s = s .. "%#StatusColumnFold#¦%*"
             end
@@ -36,6 +34,7 @@ return function()
         else
             s = s .. " "
         end
+        s = s .. "%X"
 
         return s
     end
