@@ -49,6 +49,8 @@ return {
             })
 
             require("CopilotChat").setup {
+                diff = 'unified';
+                language = language;
                 window = {
                     layout = 'vertical';
                     width = 0.4;
@@ -57,6 +59,12 @@ return {
                 question_header = '## User ';
                 answer_header = '## Copilot ';
                 error_header = '## Error ';
+                mappings = {
+                    accept_diff = {
+                        normal = '<C-y>';
+                        insert = '<C-y>';
+                    };
+                };
                 prompts = {
                     Explain = {
                         prompt = "/COPILOT_EXPLAIN Please explain the code in " .. language .. ".";
@@ -97,12 +105,12 @@ return {
                 };
             };
 
-            vim.keymap.set('n', '<leader>cc', '<CMD>CopilotChatOpen<CR>', { desc = 'Copilot Chat Open' })
-            vim.keymap.set('n', '<leader>ct', '<CMD>CopilotChatToggle<CR>', { desc = 'Copilot Chat Toggle' })
-            vim.keymap.set('n', '<leader>cq', '<CMD>CopilotChatClose<CR>', { desc = 'Copilot Chat Close' })
-            vim.keymap.set('n', '<leader>cs', '<CMD>CopilotChatStop<CR>', { desc = 'Copilot Chat Stop' })
-            vim.keymap.set('n', '<leader>cr', '<CMD>CopilotChatReset<CR>', { desc = 'Copilot Chat Reset' })
-            vim.keymap.set('n', '<leader>cS', '<CMD>CopilotChatSave<CR>', { desc = 'Copilot Chat Save' })
+            vim.keymap.set({'n', 'v'}, '<leader>cc', '<CMD>CopilotChatOpen<CR>', { desc = 'Copilot Chat Open' })
+            vim.keymap.set({'n', 'v'}, '<leader>ct', '<CMD>CopilotChatToggle<CR>', { desc = 'Copilot Chat Toggle' })
+            vim.keymap.set({'n', 'v'}, '<leader>cq', '<CMD>CopilotChatClose<CR>', { desc = 'Copilot Chat Close' })
+            vim.keymap.set({'n', 'v'}, '<leader>cs', '<CMD>CopilotChatStop<CR>', { desc = 'Copilot Chat Stop' })
+            vim.keymap.set({'n', 'v'}, '<leader>cr', '<CMD>CopilotChatReset<CR>', { desc = 'Copilot Chat Reset' })
+            vim.keymap.set({'n', 'v'}, '<leader>cS', '<CMD>CopilotChatSave<CR>', { desc = 'Copilot Chat Save' })
         end;
     }
 }
