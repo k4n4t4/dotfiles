@@ -1,7 +1,6 @@
 return {
     {
         "zbirenbaum/copilot.lua";
-        enabled = false;
         cmd = "Copilot";
         event = 'VeryLazy';
         opts = {
@@ -20,14 +19,12 @@ return {
     },
     {
         "zbirenbaum/copilot-cmp",
-        enabled = false;
         cmd = "Copilot";
         event = 'VeryLazy';
         config = true;
     },
     {
         "CopilotC-Nvim/CopilotChat.nvim";
-        enabled = false;
         deprecations = {
             "zbirenbaum/copilot.lua";
             "nvim-lua/plenary.nvim";
