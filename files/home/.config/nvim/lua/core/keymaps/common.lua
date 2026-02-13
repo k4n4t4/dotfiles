@@ -11,7 +11,7 @@ set('n', '<LEADER>K', "<CMD>terminal<CR>", { desc = "Terminal (full)" })
 set({'n', 'o', 'x'}, '<TAB>', "5j",   { desc = "Scroll Down" })
 set({'n', 'o', 'x'}, '<S-TAB>', "5k", { desc = "Scroll Up" })
 
-set('n', '<LEADER>w', "<C-W><C-W>", { desc = "Switch Window" })
+set({'n', 'x'}, '<LEADER>w', "<C-W><C-W>", { desc = "Switch Window" })
 
 set('n', '<LEADER>H', "<CMD>noh<CR>", { desc = "No hlsearch" })
 

@@ -5,7 +5,7 @@ return {
         event = 'VeryLazy';
         opts = {
             filetypes = {
-                ['*'] = true;
+                ["*"] = true;
             };
             suggestion = {
                 enabled = false;
@@ -33,51 +33,76 @@ return {
             "nvim-lua/plenary.nvim";
         };
         build = "make tiktoken";
-        opts = {
-            window = {
-                layout = "float";
-                relative = "cursor";
+        event = 'VeryLazy';
+        config = function()
+            local language = "japanese"
+
+            vim.api.nvim_create_augroup("CopilotChatNoNumber", { clear = true })
+            vim.api.nvim_create_autocmd("FileType", {
+                group = "CopilotChatNoNumber";
+                pattern = "copilot-chat";
+                callback = function()
+                    vim.opt_local.number = false
+                    vim.opt_local.relativenumber = false
+                    vim.opt_local.signcolumn = "no"
+                end;
+            })
+
+            require("CopilotChat").setup {
+                window = {
+                    layout = 'vertical';
+                    width = 0.4;
+                };
+                debug = false;
+                question_header = '## User ';
+                answer_header = '## Copilot ';
+                error_header = '## Error ';
+                prompts = {
+                    Explain = {
+                        prompt = "/COPILOT_EXPLAIN Please explain the code in " .. language .. ".";
+                        mapping = '<leader>ce';
+                        description = "Ask for code explanation";
+                    };
+                    Review = {
+                        prompt = '/COPILOT_REVIEW Please review the code in ' .. language .. '.';
+                        mapping = '<leader>cv';
+                        description = "Ask for code review";
+                    };
+                    Fix = {
+                        prompt = "/COPILOT_FIX There is a problem with this code. Please show the fixed code and explain in " .. language .. ".";
+                        mapping = '<leader>cf';
+                        description = "Ask for code fix";
+                    };
+                    Optimize = {
+                        prompt = "/COPILOT_REFACTOR Please optimize the selected code for performance and readability, and explain in " .. language .. ".";
+                        mapping = '<leader>co';
+                        description = "Ask for code optimization";
+                    };
+                    Docs = {
+                        prompt = "/COPILOT_GENERATE Please generate documentation comments for the selected code in " .. language .. ".";
+                        mapping = '<leader>cg';
+                        description = "Ask for code documentation";
+                    };
+                    Tests = {
+                        prompt = "/COPILOT_TESTS Please write detailed unit tests for the selected code and explain in " .. language .. ".";
+                        mapping = '<leader>cd';
+                        description = "Ask for test code";
+                    };
+                    FixDiagnostic = {
+                        prompt = 'Please fix the issues according to the code diagnostics and explain the changes in ' .. language .. '.';
+                        mapping = '<leader>cF';
+                        description = "Ask for code fix";
+                        selection = require('CopilotChat.select').diagnostics;
+                    };
+                };
             };
-            debug = false;
-        };
-        keys = {
-            { mode = { "n", "x" }, "<LEADER>ct", "<CMD>CopilotChatToggle<CR>", desc = "Copilot Chat Toggle" },
-            { mode = { "n", "x" }, "<LEADER>cc", "<CMD>CopilotChatOpen<CR>", desc = "Copilot Chat Open" },
-            { mode = { "n", "x" }, "<LEADER>cq", "<CMD>CopilotChatClose<CR>", desc = "Copilot Chat Close" },
-            { mode = { "n", "x" }, "<LEADER>cr", "<CMD>CopilotChatReset<CR>", desc = "Copilot Chat Reset" },
-            { mode = { "n", "x" }, "<LEADER>cs", "<CMD>CopilotChatStop<CR>", desc = "Copilot Chat Stop" },
-            { mode = { "n", "x" }, "<LEADER>cw", "<CMD>CopilotChatSave<CR>", desc = "Copilot Chat Save" },
-            { mode = { "n", "x" }, "<LEADER>cl", "<CMD>CopilotChatLoad<CR>", desc = "Copilot Chat Load" },
-            { mode = { "n", "x" }, "<LEADER>cp", "<CMD>CopilotChatPrompts<CR>", desc = "Copilot Chat Prompts" },
-            { mode = { "n", "x" }, "<LEADER>cd", "<CMD>CopilotChatDocs<CR>", desc = "Copilot Chat Docs" },
-            { mode = { "n", "x" }, "<LEADER>cx", "<CMD>CopilotChatExplain<CR>", desc = "Copilot Chat Explain" },
-            { mode = { "n", "x" }, "<LEADER>cf", "<CMD>CopilotChatFix<CR>", desc = "Copilot Chat Fix" },
-            { mode = { "n", "x" }, "<LEADER>co", "<CMD>CopilotChatOptimize<CR>", desc = "Copilot Chat Optimize" },
-            { mode = { "n", "x" }, "<LEADER>cT", "<CMD>CopilotChatTests<CR>", desc = "Copilot Chat Tests" },
-            { mode = { "n", "x" }, "<LEADER>cA", "<CMD>CopilotChatAgents<CR>", desc = "Copilot Chat Agents" },
-            { mode = { "n", "x" }, "<LEADER>cM", "<CMD>CopilotChatModels<CR>", desc = "Copilot Chat Models" },
-            { mode = { "n", "x" }, "<LEADER>cR", "<CMD>CopilotChatReview<CR>", desc = "Copilot Chat Review" },
-            { mode = { "n", "x" }, "<LEADER>cC", "<CMD>CopilotChatCommit<CR>", desc = "Copilot Chat Commit" },
-        };
-        cmd = {
-            "CopilotChat",
-            "CopilotChatOpen",
-            "CopilotChatClose",
-            "CopilotChatToggle",
-            "CopilotChatStop",
-            "CopilotChatReset",
-            "CopilotChatSave",
-            "CopilotChatLoad",
-            "CopilotChatPrompts",
-            "CopilotChatModels",
-            "CopilotChatAgents",
-            "CopilotChatExplain",
-            "CopilotChatReview",
-            "CopilotChatFix",
-            "CopilotChatOptimize",
-            "CopilotChatDocs",
-            "CopilotChatTests",
-            "CopilotChatCommit",
-        };
+
+            vim.keymap.set('n', '<leader>cc', '<CMD>CopilotChatOpen<CR>', { desc = 'Copilot Chat Open' })
+            vim.keymap.set('n', '<leader>ct', '<CMD>CopilotChatToggle<CR>', { desc = 'Copilot Chat Toggle' })
+            vim.keymap.set('n', '<leader>cq', '<CMD>CopilotChatClose<CR>', { desc = 'Copilot Chat Close' })
+            vim.keymap.set('n', '<leader>cs', '<CMD>CopilotChatStop<CR>', { desc = 'Copilot Chat Stop' })
+            vim.keymap.set('n', '<leader>cr', '<CMD>CopilotChatReset<CR>', { desc = 'Copilot Chat Reset' })
+            vim.keymap.set('n', '<leader>cS', '<CMD>CopilotChatSave<CR>', { desc = 'Copilot Chat Save' })
+        end;
     }
 }
