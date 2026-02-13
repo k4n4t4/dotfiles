@@ -1,6 +1,6 @@
 local M = {}
 
-local group = vim.api.nvim_create_augroup("Utils_highlight", { clear = true })
+M.group = vim.api.nvim_create_augroup("Utils_highlight", { clear = true })
 
 M.registry = {}
 
@@ -20,7 +20,7 @@ function M.refresh()
 end
 
 vim.api.nvim_create_autocmd({"VimEnter", "ColorScheme"}, {
-    group = group;
+    group = M.group;
     callback = function()
         M.refresh()
     end;
