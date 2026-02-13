@@ -105,12 +105,22 @@ return {
                 };
             };
 
-            vim.keymap.set({'n', 'v'}, '<leader>cc', '<CMD>CopilotChatOpen<CR>', { desc = 'Copilot Chat Open' })
-            vim.keymap.set({'n', 'v'}, '<leader>ct', '<CMD>CopilotChatToggle<CR>', { desc = 'Copilot Chat Toggle' })
-            vim.keymap.set({'n', 'v'}, '<leader>cq', '<CMD>CopilotChatClose<CR>', { desc = 'Copilot Chat Close' })
-            vim.keymap.set({'n', 'v'}, '<leader>cs', '<CMD>CopilotChatStop<CR>', { desc = 'Copilot Chat Stop' })
-            vim.keymap.set({'n', 'v'}, '<leader>cr', '<CMD>CopilotChatReset<CR>', { desc = 'Copilot Chat Reset' })
-            vim.keymap.set({'n', 'v'}, '<leader>cS', '<CMD>CopilotChatSave<CR>', { desc = 'Copilot Chat Save' })
+            vim.keymap.set({'n', 'v'}, '<leader>cc',
+                function()
+                    require("CopilotChat").open {
+                        sticky = {
+                            "#buffer",
+                            "#gitdiff:staged",
+                            "#selection",
+                        };
+                    }
+                end,
+            { desc = 'Copilot Chat Open' })
+            vim.keymap.set({'n', 'v'}, '<leader>ct', function() require("CopilotChat").toggle() end, { desc = 'Copilot Chat Toggle' })
+            vim.keymap.set({'n', 'v'}, '<leader>cq', function() require("CopilotChat").close() end, { desc = 'Copilot Chat Close' })
+            vim.keymap.set({'n', 'v'}, '<leader>cs', function() require("CopilotChat").stop() end, { desc = 'Copilot Chat Stop' })
+            vim.keymap.set({'n', 'v'}, '<leader>cr', function() require("CopilotChat").reset() end, { desc = 'Copilot Chat Reset' })
+            vim.keymap.set({'n', 'v'}, '<leader>cS', function() require("CopilotChat").save() end, { desc = 'Copilot Chat Save' })
         end;
     }
 }
