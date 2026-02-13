@@ -27,6 +27,14 @@ function HandleBufClick(bufnr, _, button, _)
     end
 end
 
+local function get_icon_for_filetype(filetype)
+    local devicons = plugin.get("nvim-web-devicons")
+    if devicons then
+        return devicons.get_icon_color_by_filetype(filetype)
+    end
+    return nil, nil
+end
+
 local function buf_format(bufnr, is_active_tab)
     local cur_buf = vim.api.nvim_get_current_buf()
     local is_buf_active = (bufnr == cur_buf)
@@ -34,27 +42,23 @@ local function buf_format(bufnr, is_active_tab)
     local filetype = info.buf.filetype(bufnr)
     local is_untitled = (name == "[No Name]")
 
+    -- TODO:
     local hl_prefix = is_active_tab and "CurrentTabLine" or "TabLine"
     local hl_suffix = is_untitled and "Untitled" or "FileName"
     local base_bg = is_active_tab and "#404040" or "#202020"
 
-    local icon = ""
     local icon_hl = ""
 
-    local devicons = plugin.get("nvim-web-devicons")
-    if devicons then
-        local color
-        icon, color = devicons.get_icon_color_by_filetype(filetype)
-        if icon then
-            local hl_name = (is_active_tab and "Current" or "") .. "TabLineIcon@" .. filetype
-            vim.api.nvim_set_hl(0, hl_name, {
-                fg = color,
-                bg = base_bg,
-            })
-            icon_hl = "%#" .. hl_name .. "#"
-        else
-            icon = ""
-        end
+    local icon, color = get_icon_for_filetype(filetype)
+    if icon then
+        local hl_name = (is_active_tab and "Current" or "") .. "TabLineIcon@" .. filetype
+        vim.api.nvim_set_hl(0, hl_name, {
+            fg = color,
+            bg = base_bg,
+        })
+        icon_hl = "%#" .. hl_name .. "#"
+    else
+        icon = ""
     end
 
     local buf_hi = is_buf_active and "%#" .. hl_prefix .. hl_suffix .. "#" or "%#" .. hl_prefix .. "#"

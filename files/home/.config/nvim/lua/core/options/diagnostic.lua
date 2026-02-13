@@ -11,3 +11,6 @@ vim.diagnostic.config {
         };
     };
 }
+
+local highlight = require "utils.highlight"
+highlight.set("DiagnosticUnnecessary", { link = "NONE", default = false })
