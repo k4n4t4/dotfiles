@@ -42,7 +42,7 @@ return {
         };
         keys = {
             { mode = { "n", "x" }, "<LEADER>ct", "<CMD>CopilotChatToggle<CR>", desc = "Copilot Chat Toggle" },
-            { mode = { "n", "x" }, "<LEADER>c:", "<CMD>CopilotChatOpen<CR>", desc = "Copilot Chat Open" },
+            { mode = { "n", "x" }, "<LEADER>cc", "<CMD>CopilotChatOpen<CR>", desc = "Copilot Chat Open" },
             { mode = { "n", "x" }, "<LEADER>cq", "<CMD>CopilotChatClose<CR>", desc = "Copilot Chat Close" },
             { mode = { "n", "x" }, "<LEADER>cr", "<CMD>CopilotChatReset<CR>", desc = "Copilot Chat Reset" },
             { mode = { "n", "x" }, "<LEADER>cs", "<CMD>CopilotChatStop<CR>", desc = "Copilot Chat Stop" },
