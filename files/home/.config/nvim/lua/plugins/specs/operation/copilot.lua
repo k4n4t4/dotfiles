@@ -49,7 +49,6 @@ return {
             })
 
             require("CopilotChat").setup {
-                diff = 'unified';
                 language = language;
                 window = {
                     layout = 'vertical';
