@@ -11,3 +11,4 @@ lsp.set("core.lsp.config", {
     { {"lua"}, "lua_ls" },
     { {"sh", "bash"}, "bashls" },
 })
+lsp.auto_set()

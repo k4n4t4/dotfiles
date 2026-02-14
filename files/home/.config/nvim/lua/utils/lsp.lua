@@ -59,19 +59,23 @@ function M.set(config_path, lsp_rules)
 end
 
 function M.auto_set()
-    local lspconfig = require("lspconfig")
-    local filetype_map = require("mason-lspconfig.mappings").get_filetype_map()
     vim.api.nvim_create_autocmd("FileType", {
-        callback = function(args)
+        group = group;
+        pattern = "*";
+        callback = vim.schedule_wrap(function(args)
+            local filetype_map = require("mason-lspconfig.mappings").get_filetype_map()
             local ft = args.match
             local servers = filetype_map[ft] or {}
             local installed = require("mason-lspconfig").get_installed_servers()
+            print("Available servers for " .. ft .. " count: " .. #servers)
             for _, server in ipairs(servers) do
-                if vim.tbl_contains(installed, server) and lspconfig[server] and not lspconfig[server].manager then
-                    lspconfig[server].setup {}
+                print("Checking " .. server .. " for " .. ft)
+                if vim.tbl_contains(installed, server) then
+                    print(server .. " is available for " .. ft)
+                    vim.lsp.enable(server)
                 end
             end
-        end,
+        end);
     })
 end
 
