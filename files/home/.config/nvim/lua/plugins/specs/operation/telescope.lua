@@ -74,6 +74,26 @@ return {
     end;
     cmd = "Telescope";
     keys = {
+        { mode = 'n', "<LEADER>tc", function()
+          require('telescope.builtin').find_files {
+            attach_mappings = function(_, map)
+              map('i', '<CR>', function(prompt_bufnr)
+                local entry = require('telescope.actions.state').get_selected_entry()
+                local actions = require('telescope.actions')
+                vim.fn.setreg('+', entry.path)
+                actions.close(prompt_bufnr)
+              end)
+              map('n', '<CR>', function(prompt_bufnr)
+                local entry = require('telescope.actions.state').get_selected_entry()
+                local actions = require('telescope.actions')
+                vim.fn.setreg('+', entry.path)
+                actions.close(prompt_bufnr)
+              end)
+              return true
+            end
+          }
+        end,
+        desc = "Telescope Copy Path." },
         { mode = 'n', "<LEADER>tt", "<CMD>Telescope<CR>",                           desc = "Telescope" },
         { mode = 'n', "<LEADER>tk", "<CMD>Telescope keymaps<CR>",                   desc = "Telescope Keymaps" },
         { mode = 'n', "<LEADER>tr", "<CMD>Telescope oldfiles<CR>",                   desc = "Telescope Oldfiles" },
