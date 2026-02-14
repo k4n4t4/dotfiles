@@ -1,5 +1,6 @@
 return {
     "andersevenrud/nvim_context_vt";
+    enabled = false;
     event = 'VeryLazy';
     opts = {
         enabled = true;

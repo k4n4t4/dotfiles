@@ -1,26 +1,26 @@
 local M = {}
 
-local group = vim.api.nvim_create_augroup("Utils_transparent", { clear = true })
+local hi = require "utils.highlight"
 
 M.default_config = {
-    events = {
-        'VimEnter',
-        'ColorScheme',
-    };
     highlight_groups = {
         "Normal",
         "NormalNC",
         "Folded",
         "FoldColumn",
         "NonText",
+        "LineNr",
+        "LineNrAbove",
+        "LineNrBelow",
         "CursorLineNr",
         "SignColumn",
         "CursorLineSign",
-        "TabLine",
-        "TabLineFill",
         "EndOfBuffer",
+
         "StatusLine",
         "StatusLineNC",
+        "TabLine",
+        "TabLineFill",
 
         "NeoTreeNormal",
         "NeoTreeNormalNC",
@@ -34,21 +34,15 @@ M.default_config = {
 
 function M.transparent_background(highlight_groups)
     for _, name in ipairs(highlight_groups) do
-        vim.api.nvim_set_hl(0, name, { bg = "none" })
+        hi.set(name, {
+            fg = "#A0A0A0";
+            bg = "none";
+        })
     end
 end
 
-function M.load(config)
-    M.transparent_background(config.highlight_groups or M.default_config.highlight_groups)
-end
-
 function M.setup(config)
-    vim.api.nvim_create_autocmd(config.events or M.default_config.events, {
-        group = group;
-        callback = function()
-            M.load(config)
-        end;
-    })
+    M.transparent_background(config.highlight_groups or M.default_config.highlight_groups)
 end
 
 return M

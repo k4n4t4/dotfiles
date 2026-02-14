@@ -265,7 +265,10 @@ end
 M.tab = {}
 M.tab.cache = {}
 
-vim.api.nvim_create_autocmd("TabClosed", {
+vim.api.nvim_create_autocmd({
+    "TabClosed", "WinClosed", "WinNew", "TabEnter",
+    "WinEnter", "WinLeave", "BufWinEnter", "BufWinLeave"
+}, {
     group = group,
     callback = function()
         M.tab.cache = {}
@@ -284,36 +287,44 @@ local function cached_tab(tabnr, key, fn)
 end
 
 function M.tab.number(tabpage)
-    local tp = (tabpage == 0 or tabpage == nil) and vim.api.nvim_get_current_tabpage() or tabpage
-    return vim.api.nvim_tabpage_get_number(tp)
+    return cached_tab(tabpage, "number", function(tp)
+        tp = (tp == 0 or tp == nil) and vim.api.nvim_get_current_tabpage() or tp
+        return vim.api.nvim_tabpage_get_number(tp)
+    end)
 end
 
 function M.tab.buflist(tabpage)
-    local tp = (tabpage == 0 or tabpage == nil) and vim.api.nvim_get_current_tabpage() or tabpage
-    if not vim.api.nvim_tabpage_is_valid(tp) then return {} end
+    return cached_tab(tabpage, "buflist", function(tp)
+        tp = (tp == 0 or tp == nil) and vim.api.nvim_get_current_tabpage() or tp
+        if not vim.api.nvim_tabpage_is_valid(tp) then return {} end
 
-    local wins = vim.api.nvim_tabpage_list_wins(tp)
-    local bufs = {}
-    for _, win in ipairs(wins) do
-        table.insert(bufs, vim.api.nvim_win_get_buf(win))
-    end
-    return bufs
+        local wins = vim.api.nvim_tabpage_list_wins(tp)
+        local bufs = {}
+        for _, win in ipairs(wins) do
+            table.insert(bufs, vim.api.nvim_win_get_buf(win))
+        end
+        return bufs
+    end)
 end
 
 function M.tab.active_buf(tabpage)
-    local tp = (tabpage == 0 or tabpage == nil) and vim.api.nvim_get_current_tabpage() or tabpage
-    if not vim.api.nvim_tabpage_is_valid(tp) then return nil end
+    return cached_tab(tabpage, "active_buf", function(tp)
+        tp = (tp == 0 or tp == nil) and vim.api.nvim_get_current_tabpage() or tp
+        if not vim.api.nvim_tabpage_is_valid(tp) then return nil end
 
-    local win = vim.api.nvim_tabpage_get_win(tp)
-    return vim.api.nvim_win_get_buf(win)
+        local win = vim.api.nvim_tabpage_get_win(tp)
+        return vim.api.nvim_win_get_buf(win)
+    end)
 end
 
 function M.tab.is_modified(tabpage)
-    local bufs = M.tab.buflist(tabpage)
-    for _, bufnr in ipairs(bufs) do
-        if M.buf.modified(bufnr) then return true end
-    end
-    return false
+    return cached_tab(tabpage, "is_modified", function(tp)
+        local bufs = M.tab.buflist(tp)
+        for _, bufnr in ipairs(bufs) do
+            if M.buf.modified(bufnr) then return true end
+        end
+        return false
+    end)
 end
 
 

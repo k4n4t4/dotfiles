@@ -1,99 +1,124 @@
+local info = require "utils.info"
+local hi = require "utils.highlight"
+
+function HandleTabClick(tabnr, _, button, _)
+    if button == "l" then
+        vim.cmd(tabnr .. "tabnext")
+    elseif button == "m" then
+        vim.cmd(tabnr .. "tabclose")
+    end
+end
+
+function HandleBufClick(bufnr, _, button, _)
+    if button == "l" then
+        vim.api.nvim_set_current_buf(bufnr)
+    elseif button == "m" then
+        vim.api.nvim_buf_delete(bufnr, { force = false })
+    end
+end
+
 local plugin = require("utils.plugin")
 plugin.load("nvim-web-devicons", "UIEnter")
+local function get_icon_for_filetype(filetype)
+    local devicons = plugin.get("nvim-web-devicons")
+    if devicons then
+        return devicons.get_icon_color_by_filetype(filetype)
+    end
+    return nil, nil
+end
 
-function TabLine()
-    local tab_length = vim.fn.tabpagenr('$')
-    local tabline_items = {}
+local function buf_format(bufnr)
+    local cur_buf = vim.api.nvim_get_current_buf()
+    local is_active_buf = (bufnr == cur_buf)
+    local name = info.buf.name(bufnr)
+    if name == "" then name = "[Untitled]" end
+    local filetype = info.buf.filetype(bufnr)
 
-    for tabnr = 1, tab_length do
-        local tab_id = "%" .. tabnr .. "T"
-        local is_current_tab = tabnr == vim.fn.tabpagenr()
+    local icon, icon_color = get_icon_for_filetype(filetype)
+    local icon_hl = ""
+    if icon then
+        local icon_hl_name = (is_active_buf and "TabLineSelIcon" or "TabLineIcon") .. "@" .. filetype
+        hi.set(icon_hl_name, {
+            fg = icon_color;
+            bg = hi.get(is_active_buf and "TabLineSel" or "TabLine").bg;
+        })
 
-        local buf_list = vim.fn.tabpagebuflist(tabnr)
-        local winnr = vim.fn.tabpagewinnr(tabnr)
-        local bufnr = buf_list[winnr]
-        local bufname = vim.fn.bufname(bufnr)
-        local buf_count = #buf_list
-        local buf_modified = vim.bo[bufnr].modified
-        local filename = vim.fn.fnamemodify(bufname, ":t")
-        local filetype = vim.bo[bufnr].ft or ""
-
-        local tabline_hl
-        if is_current_tab then
-            tabline_hl = "%#CurrentTabLine#"
-        else
-            tabline_hl = "%#TabLine#"
-        end
-
-        local icon = ""
-        local icon_hl = ""
-
-        local devicons = plugin.get("nvim-web-devicons")
-        if devicons then
-            local color
-            icon, color = devicons.get_icon_color_by_filetype(filetype)
-            if icon then
-                icon_hl = (is_current_tab and "Current" or "") .. "TabLineIcon@" .. filetype
-
-                vim.api.nvim_set_hl(0, icon_hl, {
-                    fg = color;
-                    bg = is_current_tab and "#404040" or "#202020";
-                })
-
-                icon_hl = "%#" .. icon_hl .. "#"
-            else
-                icon = ""
-            end
-        end
-
-        local filename_fmt = ""
-        local file_name_hl
-        if filename == "" then
-            filename_fmt = "Untitled"
-            if is_current_tab then
-                file_name_hl = "%#CurrentTabLineUntitled#"
-            else
-                file_name_hl = "%#TabLineUntitled#"
-            end
-        else
-            filename_fmt = filename
-            if is_current_tab then
-                file_name_hl = "%#CurrentTabLineFileName#"
-            else
-                file_name_hl = "%#TabLineFileName#"
-            end
-        end
-
-        local buf_count_fmt
-        if not is_current_tab and buf_count > 1 then
-            buf_count_fmt = "(" .. buf_count .. ")"
-        else
-            buf_count_fmt = ""
-        end
-
-        local buf_modified_fmt
-        if buf_modified then
-            buf_modified_fmt = "*"
-        else
-            buf_modified_fmt = ""
-        end
-
-        local components = {
-            tabline_hl,
-            tab_id,
-            icon == "" and "" or " ",
-            icon_hl,
-            icon,
-            " ",
-            file_name_hl,
-            buf_modified_fmt,
-            filename_fmt,
-            buf_count_fmt,
-            " ",
-        }
-
-        table.insert(tabline_items, table.concat(components, ""))
+        icon_hl = "%#" .. icon_hl_name .. "#"
+    else
+        icon = ""
     end
 
-    return table.concat(tabline_items, "") .. "%#TabLineFill#" .. "%T"
+    local buf_hi = hi.use(is_active_buf and "TabLineSel" or "TabLine")
+    local mod = info.buf.modified(bufnr) and " +" or ""
+    local ro = info.buf.is_readonly(bufnr) and " R" or ""
+
+
+    return table.concat({
+        "%", bufnr, "@v:lua.HandleBufClick@",
+        buf_hi, "[",
+        icon_hl, icon, (icon ~= "" and " " or ""),
+        buf_hi, name, mod, ro, "]",
+        "%X"
+    })
+end
+
+local function tab_format(opts)
+    local tabnr = opts.tabnr
+    local is_active_tab = opts.is_current_tab
+
+    local tabpages = vim.api.nvim_list_tabpages()
+    local tabpage = tabpages[tabnr]
+    if not tabpage then return "" end
+
+    local tab_hi = hi.use(is_active_tab and "TabLineSel" or "TabLine")
+    local bufs = info.tab.buflist(tabpage)
+
+
+    return table.concat({
+        "%", tabnr, "@v:lua.HandleTabClick@",
+        tab_hi, "<", tabnr, ":",
+        (function()
+            local bufstrs = {}
+            for _, bufnr in ipairs(bufs) do
+                if info.buf.is_real_file(bufnr) then
+                    table.insert(bufstrs, buf_format(bufnr))
+                end
+            end
+            return table.concat(bufstrs)
+        end)(),
+        tab_hi, ">",
+        "%X"
+    })
+end
+
+function TabLine()
+    local all_tab_bufs = {}
+
+    local tab_count = vim.fn.tabpagenr('$')
+    local current_tabnr = vim.fn.tabpagenr()
+    local tabpages = vim.api.nvim_list_tabpages()
+
+    local s = ""
+    for tabnr = 1, tab_count do
+        s = s .. tab_format {
+            tabnr = tabnr,
+            is_current_tab = tabnr == current_tabnr,
+        }
+
+        local tabpage = tabpages[tabnr]
+        if tabpage then
+            for _, b in ipairs(info.tab.buflist(tabpage)) do
+                all_tab_bufs[b] = true
+            end
+        end
+    end
+
+    for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+        if info.buf.is_real_file(bufnr) and not all_tab_bufs[bufnr] then
+            s = s .. buf_format(bufnr) .. " "
+        end
+    end
+
+    s = s .. "%#TabLineFill#%="
+    return s
 end
