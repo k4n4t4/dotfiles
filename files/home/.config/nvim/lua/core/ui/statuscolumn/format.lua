@@ -18,7 +18,7 @@ function StatusColumn()
             "%s" ..
             "%=" ..
             (vim.wo[winid].number and "%l" or "") ..
-            (vim.wo[winid].number and status.fold() or "") ..
+            status.fold() ..
             (vim.wo[winid].number and "│" or "")
         )
     end

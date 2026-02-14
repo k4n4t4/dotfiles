@@ -42,9 +42,11 @@ return {
                 group = group;
                 pattern = "copilot-chat";
                 callback = function()
-                    vim.opt_local.number = false
-                    vim.opt_local.relativenumber = false
-                    vim.opt_local.signcolumn = "no"
+                    vim.schedule(function()
+                        vim.opt_local.number = false
+                        vim.opt_local.relativenumber = false
+                        vim.opt_local.signcolumn = "no"
+                    end)
                 end;
             })
 

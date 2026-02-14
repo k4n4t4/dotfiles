@@ -15,7 +15,7 @@ return function()
     if utils_fold then
         local s = ""
 
-        local winnr = vim.api.nvim_get_current_win()
+        local winnr = vim.g.statusline_winid
         local fi = utils_fold.get(winnr, vim.v.lnum)
 
         s = s .. "%@v:lua.ToggleFold@"
