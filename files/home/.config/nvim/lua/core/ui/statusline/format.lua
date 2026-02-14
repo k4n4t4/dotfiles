@@ -8,7 +8,11 @@ function StatusLine()
 
     local status_line
 
-    if vim.bo[statusline_bufnr].filetype == "neo-tree" then
+    local special_filetypes = {
+        ["neo-tree"] = true;
+        ["NvimTree"] = true;
+    }
+    if special_filetypes[vim.bo[statusline_bufnr].filetype] then
         status_line = {
             "%=",
             status.filetype(),
