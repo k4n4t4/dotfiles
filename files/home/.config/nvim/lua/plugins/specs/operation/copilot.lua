@@ -37,9 +37,9 @@ return {
         config = function()
             local language = "japanese"
 
-            vim.api.nvim_create_augroup("CopilotChatNoNumber", { clear = true })
+            local group = vim.api.nvim_create_augroup("CopilotChatNoNumber", { clear = true })
             vim.api.nvim_create_autocmd("FileType", {
-                group = "CopilotChatNoNumber";
+                group = group;
                 pattern = "copilot-chat";
                 callback = function()
                     vim.opt_local.number = false
