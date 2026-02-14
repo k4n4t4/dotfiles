@@ -4,6 +4,7 @@
     <nixos-wsl/modules>
     ../../modules/hosts/docker
     ../../modules/hosts/ollama
+    ../../modules/hosts/nix-ld
   ];
 
   nix = {

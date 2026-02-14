@@ -6,6 +6,7 @@
     ../../modules/hosts/tuigreet
     ../../modules/hosts/docker
     ../../modules/hosts/ollama
+    ../../modules/hosts/nix-ld
   ];
 
   nix = {
