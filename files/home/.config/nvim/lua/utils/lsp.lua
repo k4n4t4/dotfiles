@@ -58,21 +58,60 @@ function M.set(config_path, lsp_rules)
     end
 end
 
-function M.auto_set()
+function M.auto_set(config_path)
     vim.api.nvim_create_autocmd("FileType", {
         group = group;
         pattern = "*";
         callback = vim.schedule_wrap(function(args)
-            local filetype_map = require("mason-lspconfig.mappings").get_filetype_map()
-            local ft = args.match
-            local servers = filetype_map[ft] or {}
-            local installed = require("mason-lspconfig").get_installed_servers()
-            print("Available servers for " .. ft .. " count: " .. #servers)
-            for _, server in ipairs(servers) do
-                print("Checking " .. server .. " for " .. ft)
-                if vim.tbl_contains(installed, server) then
-                    print(server .. " is available for " .. ft)
-                    vim.lsp.enable(server)
+            if not vim.api.nvim_buf_is_valid(args.buf) or
+                vim.api.nvim_get_current_buf() ~= args.buf then
+                return
+            end
+
+            local installed_servers = {}
+            do
+                local ok, mason_lspconfig = pcall(require, "mason-lspconfig")
+                if ok then
+                    installed_servers = mason_lspconfig.get_installed_servers()
+                else
+                    return
+                end
+            end
+
+            local servers = {}
+            do
+                local ok, mason_lspconfig_mappings = pcall(require, "mason-lspconfig.mappings")
+
+                if ok then
+                    local filetype_map = mason_lspconfig_mappings.get_filetype_map()
+                    servers = filetype_map[args.match] or {}
+                else
+                    return
+                end
+            end
+
+            for _, server_name in ipairs(servers) do
+                if not M.configured[server_name] then
+                    local installed = vim.tbl_contains(installed_servers, server_name)
+
+                    local had_myconfig, config = pcall(require, config_path .. "." .. server_name)
+                    if had_myconfig
+                        and (not installed)
+                        and config
+                        and config.cmd
+                        and #config.cmd > 0
+                    then
+                        local bin = config.cmd[1]
+                        if vim.fn.executable(bin) == 1 then
+                            installed = true
+                        end
+                    end
+
+                    if installed then
+                        if had_myconfig then vim.lsp.config(server_name, config) end
+                        vim.lsp.enable(server_name)
+                        M.configured[server_name] = true
+                    end
                 end
             end
         end);
