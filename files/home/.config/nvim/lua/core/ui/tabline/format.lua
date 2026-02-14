@@ -71,7 +71,6 @@ local function tab_format(opts)
     if not tabpage then return "" end
 
     local tab_hi = hi.use(is_active_tab and "TabLineSel" or "TabLine")
-    local bufs = info.tab.buflist(tabpage) or {}
 
 
     return table.concat({
@@ -79,7 +78,7 @@ local function tab_format(opts)
         tab_hi, "<", tabnr, ":",
         (function()
             local bufstrs = {}
-            for _, bufnr in ipairs(bufs) do
+            for _, bufnr in ipairs(info.tab.buflist(tabpage) or {}) do
                 if info.buf.is_real_file(bufnr) then
                     table.insert(bufstrs, buf_format(bufnr))
                 end
@@ -107,7 +106,7 @@ function TabLine()
 
         local tabpage = tabpages[tabnr]
         if tabpage then
-            for _, b in ipairs(info.tab.buflist(tabpage)) do
+            for _, b in ipairs(info.tab.buflist(tabpage) or {}) do
                 all_tab_bufs[b] = true
             end
         end
