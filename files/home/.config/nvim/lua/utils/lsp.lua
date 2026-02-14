@@ -58,6 +58,7 @@ function M.set(config_path, lsp_rules)
     end
 end
 
+---@param config_path string
 function M.auto_set(config_path)
     vim.api.nvim_create_autocmd("FileType", {
         group = group;
@@ -94,21 +95,18 @@ function M.auto_set(config_path)
                 if not M.configured[server_name] then
                     local installed = vim.tbl_contains(installed_servers, server_name)
 
-                    local had_myconfig, config = pcall(require, config_path .. "." .. server_name)
-                    if had_myconfig
+                    local had_custom_config, config = pcall(require, config_path .. "." .. server_name)
+                    if had_custom_config
                         and (not installed)
                         and config
                         and config.cmd
                         and #config.cmd > 0
                     then
-                        local bin = config.cmd[1]
-                        if vim.fn.executable(bin) == 1 then
-                            installed = true
-                        end
+                        installed = installed or vim.fn.executable(config.cmd[1]) == 1
                     end
 
                     if installed then
-                        if had_myconfig then vim.lsp.config(server_name, config) end
+                        if had_custom_config then vim.lsp.config(server_name, config) end
                         vim.lsp.enable(server_name)
                         M.configured[server_name] = true
                     end
