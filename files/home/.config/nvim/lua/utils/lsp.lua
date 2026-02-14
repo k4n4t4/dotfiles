@@ -27,12 +27,13 @@ function M.get(bufnr)
     return clients, others
 end
 
+
+M.configured = {}
+
 ---@alias LspRule { [1]: string|string[], [2]: string }
 ---@param config_path string
 ---@param lsp_rules LspRule[]
 function M.set(config_path, lsp_rules)
-    local configured = {}
-
     for _, rule in ipairs(lsp_rules) do
         local pattern, server_name = rule[1], rule[2]
 
@@ -44,17 +45,34 @@ function M.set(config_path, lsp_rules)
                     vim.api.nvim_get_current_buf() ~= args.buf then
                     return
                 end
-                if not configured[server_name] then
+                if not M.configured[server_name] then
                     local ok, config = pcall(require, config_path .. "." .. server_name)
                     if ok then
                         vim.lsp.config(server_name, config)
                         vim.lsp.enable(server_name)
-                        configured[server_name] = true
+                        M.configured[server_name] = true
                     end
                 end
             end);
         })
     end
+end
+
+function M.auto_set()
+    local lspconfig = require("lspconfig")
+    local filetype_map = require("mason-lspconfig.mappings").get_filetype_map()
+    vim.api.nvim_create_autocmd("FileType", {
+        callback = function(args)
+            local ft = args.match
+            local servers = filetype_map[ft] or {}
+            local installed = require("mason-lspconfig").get_installed_servers()
+            for _, server in ipairs(servers) do
+                if vim.tbl_contains(installed, server) and lspconfig[server] and not lspconfig[server].manager then
+                    lspconfig[server].setup {}
+                end
+            end
+        end,
+    })
 end
 
 

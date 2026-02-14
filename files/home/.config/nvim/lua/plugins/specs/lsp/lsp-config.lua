@@ -22,7 +22,6 @@ return {
             };
             automatic_enable = false;
         }
-
     end;
     event = "VeryLazy";
 }
