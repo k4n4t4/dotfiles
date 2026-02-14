@@ -71,7 +71,7 @@ local function tab_format(opts)
     if not tabpage then return "" end
 
     local tab_hi = hi.use(is_active_tab and "TabLineSel" or "TabLine")
-    local bufs = info.tab.buflist(tabpage)
+    local bufs = info.tab.buflist(tabpage) or {}
 
 
     return table.concat({
