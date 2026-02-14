@@ -11,14 +11,18 @@ function M.enable()
     autocmd("InsertEnter", {
         group = M.group;
         callback = function()
-            vim.opt_local.relativenumber = false
+            if vim.opt_local.number:get() then
+                vim.opt_local.relativenumber = false
+            end
         end;
     })
 
     autocmd("InsertLeave", {
         group = M.group;
         callback = function()
-            vim.opt_local.relativenumber = true
+            if vim.opt_local.number:get() then
+                vim.opt_local.relativenumber = true
+            end
         end;
     })
 end
