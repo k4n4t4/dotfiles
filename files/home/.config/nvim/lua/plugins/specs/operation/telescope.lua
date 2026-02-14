@@ -3,11 +3,11 @@ return {
     dependencies = {
         "nvim-lua/plenary.nvim";
         "nvim-telescope/telescope-project.nvim";
+        "nvim-telescope/telescope-ui-select.nvim";
         {
             "nvim-telescope/telescope-fzf-native.nvim";
             build = "make";
         };
-        "stevearc/aerial.nvim";
     };
     config = function()
         local telescope = require "telescope"
@@ -23,13 +23,19 @@ return {
                 };
             };
             extensions = {
-                fzf = {
+                ["ui-select"] = {
+                    require("telescope.themes").get_dropdown {
+                        previewer = false;
+                        borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' };
+                    }
+                };
+                ["fzf"] = {
                     fuzzy = true;
                     override_generic_sorter = true;
                     override_file_sorter = true;
                     case_mode = 'smart_case';
                 };
-                project = {
+                ["project"] = {
                     base_dirs = {
                         '~/dotfiles';
                     };
@@ -62,6 +68,7 @@ return {
                 };
             };
         }
+        telescope.load_extension "ui-select"
         telescope.load_extension "fzf"
         telescope.load_extension "project"
     end;
