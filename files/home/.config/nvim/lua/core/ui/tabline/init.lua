@@ -6,7 +6,9 @@
 
 
 require "core.ui.tabline.highlights"
+
 local info = require "utils.info"
+local highlights = require "utils.highlight"
 local plugin = require("utils.plugin")
 
 plugin.load("nvim-web-devicons", "UIEnter")
@@ -40,7 +42,7 @@ local function buf_format(bufnr, is_active_tab)
     local is_buf_active = (bufnr == cur_buf)
     local name = info.buf.name(bufnr)
     local filetype = info.buf.filetype(bufnr)
-    local is_untitled = (name == "[No Name]")
+    local is_untitled = (name == "")
 
     -- TODO:
     local hl_prefix = is_active_tab and "CurrentTabLine" or "TabLine"
@@ -52,7 +54,7 @@ local function buf_format(bufnr, is_active_tab)
     local icon, color = get_icon_for_filetype(filetype)
     if icon then
         local hl_name = (is_active_tab and "Current" or "") .. "TabLineIcon@" .. filetype
-        vim.api.nvim_set_hl(0, hl_name, {
+        highlights.set(hl_name, {
             fg = color,
             bg = base_bg,
         })
@@ -65,7 +67,14 @@ local function buf_format(bufnr, is_active_tab)
     local mod = info.buf.modified(bufnr) and " +" or ""
     local ro = info.buf.is_readonly(bufnr) and " R" or ""
 
-    return icon_hl .. icon .. buf_hi .. "%" .. bufnr .. "@v:lua.HandleBufClick@[" .. name .. mod .. ro .. "]%X"
+    return table.concat({
+        icon_hl, icon,
+
+        buf_hi,
+        "%", bufnr, "@v:lua.HandleBufClick@",
+        "[", name, mod, ro, "]",
+        "%k"
+    })
 end
 
 local function tab_format(opts)

@@ -149,7 +149,7 @@ end
 function M.buf.name(bufnr)
     return cached_buf(bufnr, "name", function(b)
         local path = vim.api.nvim_buf_get_name(b)
-        return path ~= "" and vim.fn.fnamemodify(path, ":t") or "[No Name]"
+        return path ~= "" and vim.fn.fnamemodify(path, ":t") or path
     end)
 end
 
