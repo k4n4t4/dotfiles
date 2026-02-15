@@ -1,23 +1,23 @@
 return {
-    "folke/which-key.nvim";
+    "folke/which-key.nvim",
     config = function()
         local which_key = require "which-key"
         which_key.setup {
-            preset = 'modern';
-            delay = 1000;
+            preset = 'modern',
+            delay = 1000,
             win = {
-                border = 'single';
-            };
+                border = 'single',
+            },
         };
 
         which_key.add {
-            { "cs*",  group = "+surround change" },
-            { "ds*",  group = "+surround delete" },
-            { "ys*",  group = "+surround add" },
-            { "S",    group = "+surround visual",  mode = "v" },
+            { "cs*", group = "+surround change" },
+            { "ds*", group = "+surround delete" },
+            { "ys*", group = "+surround add" },
+            { "S",   group = "+surround visual", mode = "v" },
         }
-    end;
-    event = 'VeryLazy';
+    end,
+    event = 'VeryLazy',
     keys = {
         {
             mode = "n",
@@ -27,5 +27,5 @@ return {
             end,
             desc = "Which Key"
         },
-    };
+    },
 }

@@ -5,7 +5,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
     if vim.v.shell_error ~= 0 then
         vim.api.nvim_echo({
             { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-            { out, "WarningMsg" },
+            { out,                            "WarningMsg" },
             { "\nPress any key to exit..." },
         }, true, {})
         vim.fn.getchar()
@@ -22,23 +22,23 @@ require("lazy").setup {
         { import = "plugins.specs.ui" },
         { import = "plugins.specs.debug" },
         { import = "plugins.specs" },
-    };
+    },
     defaults = {
-        lazy = true;
-        version = false;
-    };
+        lazy = true,
+        version = false,
+    },
     checker = {
-        enabled = false;
-    };
+        enabled = false,
+    },
     performance = {
         cache = {
-            enabled = true;
-        };
-    };
+            enabled = true,
+        },
+    },
     change_detection = {
-        enabled = true;
-        notify = true;
-    };
+        enabled = true,
+        notify = true,
+    },
 }
 
 vim.keymap.set("n", "<leader>p", "<cmd>Lazy<CR>", { desc = "Plugin manager (lazy.nvim)" })

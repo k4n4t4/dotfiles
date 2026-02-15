@@ -9,21 +9,21 @@ function M.enable()
 
     -- toggle relativenumber when enter insert mode
     autocmd("InsertEnter", {
-        group = M.group;
+        group = M.group,
         callback = function()
             if vim.opt_local.number:get() then
                 vim.opt_local.relativenumber = false
             end
-        end;
+        end,
     })
 
     autocmd("InsertLeave", {
-        group = M.group;
+        group = M.group,
         callback = function()
             if vim.opt_local.number:get() then
                 vim.opt_local.relativenumber = true
             end
-        end;
+        end,
     })
 end
 

@@ -6,13 +6,11 @@ function M.echo(list)
     vim.api.nvim_echo(list, true, {})
 end
 
-
 ---@param fmt string
 ---@param ... any
 function M.log(fmt, ...)
     M.echo { { string.format(fmt, ...), "None" } }
 end
-
 
 ---@param fmt string
 ---@param ... any
@@ -20,13 +18,11 @@ function M.warn(fmt, ...)
     M.echo { { string.format(fmt, ...), "WarningMsg" } }
 end
 
-
 ---@param fmt string
 ---@param ... any
 function M.error(fmt, ...)
     M.echo { { string.format(fmt, ...), "ErrorMsg" } }
 end
-
 
 ---@param tbl table<any>
 ---@param elm any
@@ -90,6 +86,5 @@ end
 function M.table(tbl)
     M.echo { { table_to_str(tbl), "None" } }
 end
-
 
 return M

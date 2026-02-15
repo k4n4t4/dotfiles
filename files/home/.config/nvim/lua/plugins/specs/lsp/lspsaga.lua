@@ -1,27 +1,27 @@
 return {
-    'nvimdev/lspsaga.nvim';
+    'nvimdev/lspsaga.nvim',
     dependencies = {
-        'nvim-tree/nvim-web-devicons';
-    };
+        'nvim-tree/nvim-web-devicons',
+    },
     opts = {
         symbol_in_winbar = {
-            enable = true;
-        };
+            enable = true,
+        },
         outline = {
-            layout = 'float';
-        };
+            layout = 'float',
+        },
         callhierarchy = {
-            layout = 'float';
-        };
+            layout = 'float',
+        },
         code_action = {
-            show_server_name = true;
-        };
+            show_server_name = true,
+        },
         ui = {
-            border = 'single';
-            code_action = '';
-        };
-    };
-    event = 'VeryLazy';
+            border = 'single',
+            code_action = '',
+        },
+    },
+    event = 'VeryLazy',
     keys = {
         { mode = 'n', '<LEADER>go',  "<CMD>Lspsaga outline<CR>",                 desc = "Lspsaga Outline" },
         { mode = 'n', '<LEADER>gf',  "<CMD>Lspsaga finder<CR>",                  desc = "Lspsaga Finder" },
@@ -38,5 +38,5 @@ return {
         { mode = 'n', '<LEADER>gt',  "<CMD>Lspsaga term_toggle<CR>",             desc = "Lspsaga FloatTerminal" },
         { mode = 'n', '<LEADER>gh',  "<CMD>Lspsaga hover_doc<CR>",               desc = "Lspsaga Hover" },
         { mode = 'n', '<LEADER>gr',  "<CMD>Lspsaga rename<CR>",                  desc = "Lspsaga Rename" },
-    };
+    },
 }

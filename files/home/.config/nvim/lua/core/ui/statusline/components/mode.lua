@@ -1,148 +1,148 @@
 local mode_props = {
     ["n"] = {
-        name = "N";
-        hi = "StlModeNormal";
-    };
+        name = "N",
+        hi = "StlModeNormal",
+    },
     ["no"] = {
-        name = "NO";
-        hi = "StlModeNormal";
-    };
+        name = "NO",
+        hi = "StlModeNormal",
+    },
     ["nov"] = {
-        name = "NOC";
-        hi = "StlModeNormal";
-    };
+        name = "NOC",
+        hi = "StlModeNormal",
+    },
     ["noV"] = {
-        name = "NOL";
-        hi = "StlModeNormal";
-    };
+        name = "NOL",
+        hi = "StlModeNormal",
+    },
     ["no"] = {
-        name = "NOB";
-        hi = "StlModeNormal";
-    };
+        name = "NOB",
+        hi = "StlModeNormal",
+    },
 
     ["niI"] = {
-        name = "NI";
-    };
+        name = "NI",
+    },
     ["niR"] = {
-        name = "NR";
-    };
+        name = "NR",
+    },
     ["niV"] = {
-        name = "NV";
-    };
+        name = "NV",
+    },
     ["nt"] = {
-        name = "NT";
-        hi = "StlModeTerminal";
-    };
+        name = "NT",
+        hi = "StlModeTerminal",
+    },
     ["ntT"] = {
-        name = "NTT";
-        hi = "StlModeTerminal";
-    };
+        name = "NTT",
+        hi = "StlModeTerminal",
+    },
 
     ["v"] = {
-        name = "V";
-        hi = "StlModeVisual";
-    };
+        name = "V",
+        hi = "StlModeVisual",
+    },
     ["vs"] = {
-        name = "VS";
-        hi = "StlModeVisual";
-    };
+        name = "VS",
+        hi = "StlModeVisual",
+    },
     ["V"] = {
-        name = "VL";
-        hi = "StlModeVisual";
-    };
+        name = "VL",
+        hi = "StlModeVisual",
+    },
     ["Vs"] = {
-        name = "VLS";
-        hi = "StlModeVisual";
-    };
+        name = "VLS",
+        hi = "StlModeVisual",
+    },
     [""] = {
-        name = "VB";
-        hi = "StlModeVisual";
-    };
+        name = "VB",
+        hi = "StlModeVisual",
+    },
     ["s"] = {
-        name = "VBS";
-        hi = "StlModeVisual";
-    };
+        name = "VBS",
+        hi = "StlModeVisual",
+    },
 
     ["s"] = {
-        name = "S";
-    };
+        name = "S",
+    },
     ["S"] = {
-        name = "SL";
-    };
+        name = "SL",
+    },
     [""] = {
-        name = "SB";
-    };
+        name = "SB",
+    },
 
     ["i"] = {
-        name = "I";
-        hi = "StlModeInsert";
-    };
+        name = "I",
+        hi = "StlModeInsert",
+    },
     ["ic"] = {
-        name = "IC";
-        hi = "StlModeInsert";
-    };
+        name = "IC",
+        hi = "StlModeInsert",
+    },
     ["ix"] = {
-        name = "IX";
-        hi = "StlModeInsert";
-    };
+        name = "IX",
+        hi = "StlModeInsert",
+    },
 
     ["R"] = {
-        name = "R";
+        name = "R",
         hi = "StlModeReplace"
-    };
+    },
     ["Rc"] = {
-        name = "RC";
+        name = "RC",
         hi = "StlModeReplace"
-    };
+    },
     ["Rx"] = {
-        name = "RX";
+        name = "RX",
         hi = "StlModeReplace"
-    };
+    },
     ["Rv"] = {
-        name = "RV";
+        name = "RV",
         hi = "StlModeReplace"
-    };
+    },
     ["Rvc"] = {
-        name = "RVC";
+        name = "RVC",
         hi = "StlModeReplace"
-    };
+    },
     ["Rvx"] = {
-        name = "RVX";
+        name = "RVX",
         hi = "StlModeReplace"
-    };
+    },
 
     ["c"] = {
-        name = "C";
-    };
+        name = "C",
+    },
     ["cr"] = {
-        name = "CR";
-    };
+        name = "CR",
+    },
 
     ["cv"] = {
-        name = "EX";
-    };
+        name = "EX",
+    },
     ["cvr"] = {
-        name = "EXR";
-    };
+        name = "EXR",
+    },
 
     ["r"] = {
-        name = "P";
-    };
+        name = "P",
+    },
     ["rm"] = {
-        name = "M";
-    };
+        name = "M",
+    },
     ["r?"] = {
-        name = "CF";
-        hi = "StlModeConfirm";
-    };
+        name = "CF",
+        hi = "StlModeConfirm",
+    },
     ["!"] = {
-        name = "SH";
-        hi = "StlModeTerminal";
-    };
+        name = "SH",
+        hi = "StlModeTerminal",
+    },
     ["t"] = {
-        name = "T";
-        hi = "StlModeTerminal";
-    };
+        name = "T",
+        hi = "StlModeTerminal",
+    },
 }
 
 return function()
@@ -150,8 +150,8 @@ return function()
     local blocking = mode.blocking
 
     local prop = mode_props[mode.mode] or {
-        name = nil;
-        hi = nil;
+        name = nil,
+        hi = nil,
     }
 
     local name = prop.name or "?"

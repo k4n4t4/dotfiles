@@ -29,14 +29,14 @@ M.default_config = {
         "NvimTreeNormal",
         "NvimTreeNormalNC",
         "NvimTreeEndOfBuffer",
-    };
+    },
 }
 
 function M.transparent_background(highlight_groups)
     for _, name in ipairs(highlight_groups) do
         hi.set(name, {
-            fg = "#A0A0A0";
-            bg = "none";
+            fg = "#A0A0A0",
+            bg = "none",
         })
     end
 end

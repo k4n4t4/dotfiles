@@ -1,9 +1,9 @@
 return {
-    "mfussenegger/nvim-dap";
+    "mfussenegger/nvim-dap",
     dependencies = {
-        "rcarriga/nvim-dap-ui";
-        "nvim-neotest/nvim-nio";
-    };
+        "rcarriga/nvim-dap-ui",
+        "nvim-neotest/nvim-nio",
+    },
     config = function()
         local dap, dapui = require("dap"), require("dapui")
 
@@ -26,6 +26,6 @@ return {
         for _, lang in ipairs(languages) do
             require("plugins.specs.debug.config." .. lang)
         end
-    end;
-    event = 'VeryLazy';
+    end,
+    event = 'VeryLazy',
 }

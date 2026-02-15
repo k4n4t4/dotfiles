@@ -1,5 +1,5 @@
 return {
-    cmd = { "emmet_language_server" };
+    cmd = { "emmet_language_server" },
     filetypes = {
         "css",
         "eruby",
@@ -11,16 +11,16 @@ return {
         "scss",
         "pug",
         "typescriptreact"
-    };
+    },
     init_options = {
-        includeLanguages = {};
-        excludeLanguages = {};
-        extensionsPath = {};
-        preferences = {};
-        showAbbreviationSuggestions = true;
-        showExpandedAbbreviation = "always";
-        showSuggestionsAsSnippets = false;
-        syntaxProfiles = {};
-        variables = {};
-    };
+        includeLanguages = {},
+        excludeLanguages = {},
+        extensionsPath = {},
+        preferences = {},
+        showAbbreviationSuggestions = true,
+        showExpandedAbbreviation = "always",
+        showSuggestionsAsSnippets = false,
+        syntaxProfiles = {},
+        variables = {},
+    },
 }

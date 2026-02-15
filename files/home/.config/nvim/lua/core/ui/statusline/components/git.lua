@@ -1,19 +1,19 @@
 local git_props = {
     add = {
-        icon = "+";
-        hi = "StlGitAdd";
-    };
+        icon = "+",
+        hi = "StlGitAdd",
+    },
     remove = {
-        icon = "-";
-        hi = "StlGitRemove";
-    };
+        icon = "-",
+        hi = "StlGitRemove",
+    },
     change = {
-        icon = "~";
-        hi = "StlGitChange";
-    };
+        icon = "~",
+        hi = "StlGitChange",
+    },
     branch = {
-        hi = "StlGitBranch";
-    };
+        hi = "StlGitBranch",
+    },
 }
 
 return function()
@@ -33,4 +33,3 @@ return function()
     end
     return table.concat(format, "")
 end
-

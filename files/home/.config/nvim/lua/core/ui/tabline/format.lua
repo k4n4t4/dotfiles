@@ -39,8 +39,8 @@ local function buf_format(bufnr)
     if icon then
         local icon_hl_name = (is_active_buf and "TabLineSelIcon" or "TabLineIcon") .. "@" .. filetype
         hi.set(icon_hl_name, {
-            fg = icon_color;
-            bg = hi.get(is_active_buf and "TabLineSel" or "TabLine").bg;
+            fg = icon_color,
+            bg = hi.get(is_active_buf and "TabLineSel" or "TabLine").bg,
         })
 
         icon_hl = "%#" .. icon_hl_name .. "#"

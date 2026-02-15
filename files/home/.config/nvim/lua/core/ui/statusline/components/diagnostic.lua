@@ -1,20 +1,20 @@
 local diagnostic_props = {
     ERROR = {
-        icon = "!";
-        hi = "StlDiagnosticERROR";
-    };
+        icon = "!",
+        hi = "StlDiagnosticERROR",
+    },
     WARN = {
-        icon = "*";
-        hi = "StlDiagnosticWARN";
-    };
+        icon = "*",
+        hi = "StlDiagnosticWARN",
+    },
     INFO = {
-        icon = "i";
-        hi = "StlDiagnosticINFO";
-    };
+        icon = "i",
+        hi = "StlDiagnosticINFO",
+    },
     HINT = {
-        icon = "?";
-        hi = "StlDiagnosticHINT";
-    };
+        icon = "?",
+        hi = "StlDiagnosticHINT",
+    },
 }
 
 local function get_diagnoses(bufnr, severity_list)
@@ -53,4 +53,3 @@ return function()
     end
     return table.concat(format, "")
 end
-

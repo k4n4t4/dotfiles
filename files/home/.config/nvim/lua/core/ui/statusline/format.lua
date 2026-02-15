@@ -9,8 +9,8 @@ function StatusLine()
     local status_line
 
     local special_filetypes = {
-        ["neo-tree"] = true;
-        ["NvimTree"] = true;
+        ["neo-tree"] = true,
+        ["NvimTree"] = true,
     }
     if special_filetypes[vim.bo[statusline_bufnr].filetype] then
         status_line = {

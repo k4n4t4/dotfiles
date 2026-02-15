@@ -20,4 +20,3 @@ return function()
 
     return table.concat(format, "")
 end
-

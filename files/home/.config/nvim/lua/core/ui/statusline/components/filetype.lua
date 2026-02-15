@@ -2,9 +2,9 @@ local plugin = require("utils.plugin")
 plugin.load("nvim-web-devicons", "UIEnter")
 
 local filetype_aliases = {
-    ["javascript"] = "js";
-    ["typescript"] = "ts";
-    ["python"]     = "py";
+    ["javascript"] = "js",
+    ["typescript"] = "ts",
+    ["python"]     = "py",
 }
 
 
@@ -19,9 +19,9 @@ return function()
         if icon then
             icon_hl = "StlIcon@" .. ft
 
-            vim.api.nvim_set_hl(0,icon_hl, {
-                fg = color;
-                bg = "none";
+            vim.api.nvim_set_hl(0, icon_hl, {
+                fg = color,
+                bg = "none",
             })
 
             icon_hl = "%#" .. icon_hl .. "#"

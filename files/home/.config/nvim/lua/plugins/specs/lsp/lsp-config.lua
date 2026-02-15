@@ -1,27 +1,27 @@
 return {
-    "mason-org/mason-lspconfig.nvim";
+    "mason-org/mason-lspconfig.nvim",
     dependencies = {
         {
-            "mason-org/mason.nvim";
+            "mason-org/mason.nvim",
             opts = {
                 ui = {
-                    border = 'double';
-                };
-            };
+                    border = 'double',
+                },
+            },
         },
-        "neovim/nvim-lspconfig";
-        "nvimtools/none-ls.nvim";
-        "jayp0521/mason-null-ls.nvim";
-    };
+        "neovim/nvim-lspconfig",
+        "nvimtools/none-ls.nvim",
+        "jayp0521/mason-null-ls.nvim",
+    },
     config = function()
         local mason_lspconfig = require("mason-lspconfig")
 
         mason_lspconfig.setup {
             ensure_installed = {
                 "vimls",
-            };
-            automatic_enable = false;
+            },
+            automatic_enable = false,
         }
-    end;
-    event = "VeryLazy";
+    end,
+    event = "VeryLazy",
 }

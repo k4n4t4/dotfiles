@@ -18,24 +18,24 @@ vim.api.nvim_set_decoration_provider(namespace, {
                     local virt_texts = {
                         {
                             " ▼ ",
-                            {"Bold", "Comment"},
+                            { "Bold", "Comment" },
                         },
                         {
                             " " ..
-                                (fold_level == 1 and "" or fold_level .. ": ") ..
-                                fold_start .. " - " .. fold_end .. " " ..
-                                "(" .. (fold_end - fold_start) .. ")" ..
-                                " ",
-                            {"Comment", "Underlined"},
+                            (fold_level == 1 and "" or fold_level .. ": ") ..
+                            fold_start .. " - " .. fold_end .. " " ..
+                            "(" .. (fold_end - fold_start) .. ")" ..
+                            " ",
+                            { "Comment", "Underlined" },
                         },
                     }
 
-                    pcall(vim.api.nvim_buf_set_extmark, bufnr, namespace, lnum-1, 0, {
-                        ephemeral = true;
-                        virt_text_pos = 'overlay';
-                        virt_text_win_col = vim.fn.strdisplaywidth(line_text);
-                        hl_mode = 'combine';
-                        virt_text = virt_texts;
+                    pcall(vim.api.nvim_buf_set_extmark, bufnr, namespace, lnum - 1, 0, {
+                        ephemeral = true,
+                        virt_text_pos = 'overlay',
+                        virt_text_win_col = vim.fn.strdisplaywidth(line_text),
+                        hl_mode = 'combine',
+                        virt_text = virt_texts,
                     })
 
                     lnum = fold_end + 1

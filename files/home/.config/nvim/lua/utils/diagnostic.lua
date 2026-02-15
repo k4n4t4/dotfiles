@@ -25,5 +25,4 @@ function M.get(bufnr, severity_list)
     return diagnoses
 end
 
-
 return M

@@ -25,10 +25,10 @@ local error = ffi.new "Error"
 M.fold_info = function(wp, lnum)
     local foldinfo = C.fold_info(wp, lnum)
     return {
-        lnum = foldinfo.fi_lnum;
-        level = foldinfo.fi_level;
-        low_level = foldinfo.fi_low_level;
-        lines = foldinfo.fi_lines;
+        lnum = foldinfo.fi_lnum,
+        level = foldinfo.fi_level,
+        low_level = foldinfo.fi_low_level,
+        lines = foldinfo.fi_lines,
     }
 end
 
@@ -56,14 +56,13 @@ function M.get(winnr, lnum, wp)
     wp = wp or M.find_window(winnr)
     local fi = M.fold_info(wp, lnum)
     return {
-        lnum = fi.lnum;
-        level = fi.level;
-        low_level = fi.low_level;
-        lines = fi.lines;
-        folded = M.lineFolded(wp, lnum);
-        wp = wp;
+        lnum = fi.lnum,
+        level = fi.level,
+        low_level = fi.low_level,
+        lines = fi.lines,
+        folded = M.lineFolded(wp, lnum),
+        wp = wp,
     }
 end
-
 
 return M

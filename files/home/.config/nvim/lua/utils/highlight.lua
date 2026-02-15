@@ -6,8 +6,8 @@ M.registry = {}
 
 function M.force_get(group_name)
     return vim.api.nvim_get_hl(0, {
-        name = group_name;
-        link = false;
+        name = group_name,
+        link = false,
     })
 end
 
@@ -37,11 +37,11 @@ function M.refresh()
     end
 end
 
-vim.api.nvim_create_autocmd({"VimEnter", "ColorScheme"}, {
-    group = M.group;
+vim.api.nvim_create_autocmd({ "VimEnter", "ColorScheme" }, {
+    group = M.group,
     callback = function()
         M.refresh()
-    end;
+    end,
 })
 
 return M

@@ -1,15 +1,15 @@
 local info = require "utils.info"
 
 return {
-    cmd = { "lua-language-server" };
-    filetypes = { "lua" };
+    cmd = { "lua-language-server" },
+    filetypes = { "lua" },
     settings = {
         Lua = {
             runtime = {
-                version = "LuaJIT";
-                pathStrict = true;
-                path = { "?.lua", "?/init.lua" };
-            };
+                version = "LuaJIT",
+                pathStrict = true,
+                path = { "?.lua", "?/init.lua" },
+            },
             workspace = {
                 library = info.path.is_nvim_related() and (
                     vim.list_extend(
@@ -21,19 +21,19 @@ return {
                             "${3rd}/luassert/library",
                         }
                     )
-                ) or {};
-                checkThirdParty = false;
-            };
+                ) or {},
+                checkThirdParty = false,
+            },
             diagnostics = {
                 globals = info.path.is_nvim_related() and {
                     "vim"
-                } or {};
+                } or {},
                 disable = info.path.is_nvim_related() and {
                     "duplicate-doc-field",
                     "duplicate-doc-alias",
                     "missing-fields",
-                } or {};
+                } or {},
             }
-        };
-    };
+        },
+    },
 }

@@ -11,7 +11,6 @@ function M.get_null_ls_sources()
     return availables
 end
 
-
 ---@param bufnr number
 ---@return string[], table<string, string[]>
 function M.get(bufnr)
@@ -27,7 +26,6 @@ function M.get(bufnr)
     return clients, others
 end
 
-
 M.configured = {}
 
 ---@alias LspRule { [1]: string|string[], [2]: string }
@@ -38,8 +36,8 @@ function M.set(config_path, lsp_rules)
         local pattern, server_name = rule[1], rule[2]
 
         vim.api.nvim_create_autocmd("FileType", {
-            group = group;
-            pattern = pattern;
+            group = group,
+            pattern = pattern,
             callback = vim.schedule_wrap(function(args)
                 if not vim.api.nvim_buf_is_valid(args.buf) or
                     vim.api.nvim_get_current_buf() ~= args.buf then
@@ -53,7 +51,7 @@ function M.set(config_path, lsp_rules)
                         M.configured[server_name] = true
                     end
                 end
-            end);
+            end),
         })
     end
 end
@@ -61,8 +59,8 @@ end
 ---@param config_path string
 function M.auto_set(config_path)
     vim.api.nvim_create_autocmd("FileType", {
-        group = group;
-        pattern = "*";
+        group = group,
+        pattern = "*",
         callback = vim.schedule_wrap(function(args)
             if not vim.api.nvim_buf_is_valid(args.buf) or
                 vim.api.nvim_get_current_buf() ~= args.buf then
@@ -112,9 +110,8 @@ function M.auto_set(config_path)
                     end
                 end
             end
-        end);
+        end),
     })
 end
-
 
 return M

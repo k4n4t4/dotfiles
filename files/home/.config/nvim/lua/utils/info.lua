@@ -57,7 +57,6 @@ function M.path.is_nvim_related()
     end)
 end
 
-
 M.env = {}
 
 --- @return string
@@ -104,42 +103,41 @@ function M.env.is_vscode()
     end)
 end
 
-
 M.buf = {}
 M.buf.cache = {}
 
 vim.api.nvim_create_autocmd("DiagnosticChanged", {
-    group = group;
+    group = group,
     callback = function(args)
         M.buf.cache[args.buf] = M.buf.cache[args.buf] or {}
         M.buf.cache[args.buf].diagnostics = nil
-    end;
+    end,
 })
 
 vim.api.nvim_create_autocmd("LspAttach", {
-    group = group;
+    group = group,
     callback = function(args)
         M.buf.cache[args.buf] = M.buf.cache[args.buf] or {}
         M.buf.cache[args.buf].lsp_clients = nil
-    end;
+    end,
 })
 
 vim.api.nvim_create_autocmd("OptionSet", {
-    group = group;
+    group = group,
     pattern = { "fileformat", "fileencoding", "filetype" },
     callback = function(args)
         local bufnr = vim.api.nvim_get_current_buf()
         if M.buf.cache[bufnr] then
             M.buf.cache[bufnr][args.match] = nil
         end
-    end;
+    end,
 })
 
 vim.api.nvim_create_autocmd("BufDelete", {
-    group = group;
+    group = group,
     callback = function(args)
         M.buf.cache[args.buf] = nil
-    end;
+    end,
 })
 
 local function cached_buf(bufnr, key, fn)
@@ -250,10 +248,10 @@ function M.buf.diagnostics(bufnr)
     return cached_buf(bufnr, "diagnostics", function(b)
         if not vim.api.nvim_buf_is_valid(b) then return {} end
         return {
-            error = vim.diagnostic.get(b, { severity = vim.diagnostic.severity.ERROR });
-            warn  = vim.diagnostic.get(b, { severity = vim.diagnostic.severity.WARN });
-            info  = vim.diagnostic.get(b, { severity = vim.diagnostic.severity.INFO });
-            hint  = vim.diagnostic.get(b, { severity = vim.diagnostic.severity.HINT });
+            error = vim.diagnostic.get(b, { severity = vim.diagnostic.severity.ERROR }),
+            warn  = vim.diagnostic.get(b, { severity = vim.diagnostic.severity.WARN }),
+            info  = vim.diagnostic.get(b, { severity = vim.diagnostic.severity.INFO }),
+            hint  = vim.diagnostic.get(b, { severity = vim.diagnostic.severity.HINT }),
         }
     end)
 end
@@ -298,13 +296,12 @@ function M.buf.gitsigns(bufnr)
     if not status then return nil end
 
     return {
-        head   = status.head;
-        added  = status.added;
-        changed = status.changed;
-        removed = status.removed;
+        head    = status.head,
+        added   = status.added,
+        changed = status.changed,
+        removed = status.removed,
     }
 end
-
 
 M.tab = {}
 M.tab.cache = {}
@@ -371,14 +368,13 @@ end
 --- @return boolean|nil
 function M.tab.is_modified(tabpage)
     return cached_tab(tabpage, "is_modified", function(tp)
-        local bufs = M.tab.buflist(tp)
+        local bufs = M.tab.buflist(tp) or {}
         for _, bufnr in ipairs(bufs) do
             if M.buf.modified(bufnr) then return true end
         end
         return false
     end)
 end
-
 
 M.edit = {}
 

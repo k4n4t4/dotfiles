@@ -1,26 +1,26 @@
 return {
     {
-        "hrsh7th/nvim-cmp";
+        "hrsh7th/nvim-cmp",
         dependencies = {
-            "hrsh7th/cmp-nvim-lsp";
-            "hrsh7th/cmp-emoji";
-            "hrsh7th/cmp-buffer";
-            "hrsh7th/cmp-path";
-            "hrsh7th/cmp-git";
-            "hrsh7th/cmp-cmdline";
-            "hrsh7th/cmp-calc";
-            "yutkat/cmp-mocword";
-            "onsails/lspkind.nvim";
-            "nvimtreesitter/nvim-treesitter";
-            "ray-x/cmp-treesitter";
-            "zbirenbaum/copilot-cmp";
-            "saadparwaiz1/cmp_luasnip";
+            "hrsh7th/cmp-nvim-lsp",
+            "hrsh7th/cmp-emoji",
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-path",
+            "hrsh7th/cmp-git",
+            "hrsh7th/cmp-cmdline",
+            "hrsh7th/cmp-calc",
+            "yutkat/cmp-mocword",
+            "onsails/lspkind.nvim",
+            "nvimtreesitter/nvim-treesitter",
+            "ray-x/cmp-treesitter",
+            "zbirenbaum/copilot-cmp",
+            "saadparwaiz1/cmp_luasnip",
             {
-                "L3MON4D3/LuaSnip";
-                build = "make install_jsregexp";
-            };
-            "rafamadriz/friendly-snippets";
-        };
+                "L3MON4D3/LuaSnip",
+                build = "make install_jsregexp",
+            },
+            "rafamadriz/friendly-snippets",
+        },
         config = function()
             local cmp = require "cmp"
             local lspkind = require "lspkind"
@@ -29,54 +29,54 @@ return {
             cmp.setup {
                 formatting = {
                     format = lspkind.cmp_format {
-                        mode = "symbol_text";
+                        mode = "symbol_text",
                         menu = {
-                            copilot       = "[Copilot]";
-                            string        = "[String]";
-                            buffer        = "[Buffer]";
-                            nvim_lsp      = "[LSP]";
-                            nvim_lua      = "[Lua]";
-                            luasnip       = "[LuaSnip]";
-                            latex_symbols = "[Latex]";
-                            path          = "[Path]";
-                            git           = "[Git]";
-                        };
+                            copilot       = "[Copilot]",
+                            string        = "[String]",
+                            buffer        = "[Buffer]",
+                            nvim_lsp      = "[LSP]",
+                            nvim_lua      = "[Lua]",
+                            luasnip       = "[LuaSnip]",
+                            latex_symbols = "[Latex]",
+                            path          = "[Path]",
+                            git           = "[Git]",
+                        },
                         symbol_map = {
-                            Copilot      = " ";
-                            Snippet      = " ";
-                            String       = " ";
-                            Buffer       = " ";
-                            NvimLsp      = " ";
-                            NvimLua      = " ";
-                            LuaSnip      = " ";
-                            LatexSymbols = " ";
-                            Path         = " ";
-                            Git          = " ";
-                        };
-                    };
-                };
+                            Copilot      = " ",
+                            Snippet      = " ",
+                            String       = " ",
+                            Buffer       = " ",
+                            NvimLsp      = " ",
+                            NvimLua      = " ",
+                            LuaSnip      = " ",
+                            LatexSymbols = " ",
+                            Path         = " ",
+                            Git          = " ",
+                        },
+                    },
+                },
                 window = {
                     completion = {
                         -- border = { '┌', '─', '┐', '│', '┘', '─', '└', '│' };
-                        side_padding = 0;
-                        col_offset = 0;
-                        winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None";
-                    };
+                        side_padding = 0,
+                        col_offset = 0,
+                        winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None",
+                    },
                     documentation = {
                         -- border = { '╔', '═', '╗', '║', '╝', '═', '╚', '║' };
-                        side_padding = 0;
-                        col_offset = 0;
-                        winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None";
-                    };
-                };
+                        side_padding = 0,
+                        col_offset = 0,
+                        winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None",
+                    },
+                },
                 experimental = {
-                    ghost_text = false;
-                };
+                    ghost_text = false,
+                },
                 snippet = {
                     expand = function(args)
                         luasnip.lsp_expand(args.body)
-                    end;
-                };
+                    end,
+                },
                 sources = {
                     { name = 'copilot' },
                     { name = 'nvim_lsp' },
@@ -89,20 +89,20 @@ return {
                     { name = 'calc' },
                     { name = 'mocword' },
                     { name = 'treesitter' },
-                };
+                },
                 mapping = cmp.mapping.preset.insert({
-                    ['<C-e>'] = cmp.mapping.abort();
-                    ['<S-TAB>'] = cmp.mapping.select_prev_item();
-                    ['<TAB>'] = cmp.mapping.select_next_item();
-                    ['<CR>'] = cmp.mapping.confirm({ select = false });
-                });
+                    ['<C-e>'] = cmp.mapping.abort(),
+                    ['<S-TAB>'] = cmp.mapping.select_prev_item(),
+                    ['<TAB>'] = cmp.mapping.select_next_item(),
+                    ['<CR>'] = cmp.mapping.confirm({ select = false }),
+                }),
             }
 
             cmp.setup.cmdline({ '/', '?' }, {
                 sources = cmp.config.sources {
                     { name = 'buffer' },
-                };
-                mapping = cmp.mapping.preset.cmdline();
+                },
+                mapping = cmp.mapping.preset.cmdline(),
             })
 
             cmp.setup.cmdline({ ':', '@', '-', '=', '>' }, {
@@ -110,8 +110,8 @@ return {
                     { name = 'path' },
                     { name = 'cmdline' },
                     { name = 'buffer' },
-                };
-                mapping = cmp.mapping.preset.cmdline();
+                },
+                mapping = cmp.mapping.preset.cmdline(),
                 matching = { disallow_symbol_nonprefix_matching = false }
             })
 
@@ -124,11 +124,11 @@ return {
 
             local cmp_autopairs = require("nvim-autopairs.completion.cmp")
             cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
-        end;
+        end,
         event = {
             'InsertEnter',
             'CmdlineEnter',
-        };
-        cmd = "CmpStatus";
+        },
+        cmd = "CmpStatus",
     }
 }

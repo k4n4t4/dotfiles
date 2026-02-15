@@ -1,7 +1,7 @@
 return {
     {
-        "nvim-treesitter/nvim-treesitter";
-        build = ":TSUpdate";
+        "nvim-treesitter/nvim-treesitter",
+        build = ":TSUpdate",
         config = function()
             require("nvim-treesitter").setup()
 
@@ -18,26 +18,26 @@ return {
             vim.api.nvim_create_autocmd("FileType", {
                 callback = function()
                     treesitter_start()
-                end;
+                end,
             })
             treesitter_start()
-        end;
-        event = "VeryLazy";
+        end,
+        event = "VeryLazy",
     },
     {
-        "nvim-treesitter/nvim-treesitter-textobjects";
+        "nvim-treesitter/nvim-treesitter-textobjects",
         dependencies = {
             "nvim-treesitter/nvim-treesitter",
-        };
-        branch = "main";
+        },
+        branch = "main",
         init = function()
             vim.g.no_plugin_maps = true
         end,
         config = function()
             require("nvim-treesitter-textobjects").setup {
                 select = {
-                    lookahead = true;
-                };
+                    lookahead = true,
+                },
             }
 
             local map = vim.keymap.set
@@ -66,14 +66,14 @@ return {
             map({ "x", "o" }, "ia", function()
                 require "nvim-treesitter-textobjects.select".select_textobject("@parameter.inner", "textobjects")
             end)
-        end;
-        event = 'VeryLazy';
+        end,
+        event = 'VeryLazy',
     },
     {
-        "nvim-treesitter/nvim-treesitter-context";
-        event = 'VeryLazy';
+        "nvim-treesitter/nvim-treesitter-context",
+        event = 'VeryLazy',
         dependencies = {
-            "nvim-treesitter/nvim-treesitter";
-        };
+            "nvim-treesitter/nvim-treesitter",
+        },
     },
 }

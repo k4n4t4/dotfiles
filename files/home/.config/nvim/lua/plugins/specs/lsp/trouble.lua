@@ -1,7 +1,7 @@
 return {
-    "folke/trouble.nvim";
-    opts = {};
-    cmd = "Trouble";
+    "folke/trouble.nvim",
+    opts = {},
+    cmd = "Trouble",
     keys = {
         {
             "<LEADER>xx",
@@ -33,5 +33,5 @@ return {
             "<CMD>Trouble qflist toggle<cr>",
             desc = "Quickfix List (Trouble)",
         },
-    };
+    },
 }

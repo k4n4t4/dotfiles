@@ -8,7 +8,7 @@ vim.opt.viewoptions = {
 
 -- make view
 autocmd("BufWinLeave", {
-    group = group;
+    group = group,
     callback = function()
         -- whether the current buffer is associated with a file
         if vim.fn.expand("%:p") ~= "" then
@@ -17,12 +17,12 @@ autocmd("BufWinLeave", {
                 vim.b.view_loaded = false
             end
         end
-    end;
+    end,
 })
 
 -- load view
 autocmd("BufWinEnter", {
-    group = group;
+    group = group,
     callback = function(args)
         if vim.fn.expand("%:p") ~= "" then
             vim.schedule(function()

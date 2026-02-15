@@ -1,50 +1,50 @@
 return {
     -- colorschemes
     {
-        "k4n4t4/theme.nvim";
-        name = "k4n4t4";
+        "k4n4t4/theme.nvim",
+        name = "k4n4t4",
     },
     {
-        "navarasu/onedark.nvim";
+        "navarasu/onedark.nvim",
         opts = {
-            style = "darker";
-        };
+            style = "darker",
+        },
     },
     {
-        "catppuccin/nvim";
-        name = "catppuccin";
+        "catppuccin/nvim",
+        name = "catppuccin",
     },
     {
-        "folke/tokyonight.nvim";
+        "folke/tokyonight.nvim",
     },
     {
-        "sainnhe/everforest";
+        "sainnhe/everforest",
         config = function()
             vim.g.everforest_background = 'soft'
         end
     },
     {
-        "sainnhe/gruvbox-material";
+        "sainnhe/gruvbox-material",
         config = function()
             vim.g.gruvbox_material_background = 'medium'
         end
     },
     {
-        "EdenEast/nightfox.nvim";
+        "EdenEast/nightfox.nvim",
         opts = {
             options = {
                 styles = {
-                    comments = "italic";
-                    keywords = "bold";
-                    types = "italic,bold";
-                };
-            };
-        };
+                    comments = "italic",
+                    keywords = "bold",
+                    types = "italic,bold",
+                },
+            },
+        },
     },
     {
-        "tomasiser/vim-code-dark";
+        "tomasiser/vim-code-dark",
     },
     {
-        "Mofiqul/vscode.nvim";
+        "Mofiqul/vscode.nvim",
     },
 }
