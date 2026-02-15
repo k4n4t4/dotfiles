@@ -37,7 +37,7 @@ return {
                 };
                 ["project"] = {
                     base_dirs = {
-                        '~/dotfiles';
+                        '~/.dotfiles';
                     };
                     hidden_files = true;
                     theme = "dropdown";

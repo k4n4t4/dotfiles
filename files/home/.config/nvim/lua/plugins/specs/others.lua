@@ -14,6 +14,10 @@ return {
         };
     },
     {
+        "mattn/emmet-vim";
+        ft = {"html", "css", "javascript", "typescript", "typescriptreact", "*.tsx", "*.jsx"};
+    },
+    {
         "leafgarland/typescript-vim";
         ft = {"typescript", "typescriptreact", "*.tsx", "*.jsx"};
     },
@@ -33,11 +37,6 @@ return {
     {
         "m-demare/hlargs.nvim";
         event = 'VeryLazy';
-    },
-    {
-        "unblevable/quick-scope";
-        event = 'VeryLazy';
-        enabled = false;
     },
     {
         "RRethy/vim-illuminate";
@@ -78,11 +77,6 @@ return {
     },
     {
         "norcalli/nvim-colorizer.lua";
-        event = 'VeryLazy';
-    },
-
-    {
-        "mattn/emmet-vim";
         event = 'VeryLazy';
     },
 }
