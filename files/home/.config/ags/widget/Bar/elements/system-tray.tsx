@@ -1,5 +1,5 @@
 import { Gdk, Gtk } from "ags/gtk4"
-import { createBinding, createState, For, onCleanup } from "ags"
+import { createBinding, createState, For, onCleanup, With } from "ags"
 
 import Tray from "gi://AstalTray"
 
@@ -170,17 +170,6 @@ export default function BarSystemTray(params: systemtray_params): JSX.Element {
     return items.some((item) => item.id !== null && !show_items.includes(item.title))
   })
 
-  const revealButton = hasHiddenItems.as(has => {
-    if (!has) return <box />
-    return (
-      <button onClicked={() => setReveal(!reveal.get())}>
-        <box class="reveal-button">
-          <label label={reveal.as(b => b ? " " : " ")} />
-        </box>
-      </button>
-    )
-  })
-
   return (
     <box class="systemtray">
       <box class={items.as(items => items.length > 0 ? "exist" : "empty")}>
@@ -191,7 +180,15 @@ export default function BarSystemTray(params: systemtray_params): JSX.Element {
         >
           {hiddenContent}
         </revealer>
-        {revealButton}
+        <button 
+          visible={hasHiddenItems}
+          tooltipText={reveal.as(b => b ? "hide" : "show")}
+          onClicked={() => setReveal(!reveal.get())}
+        >
+          <box class="reveal-button">
+            <image iconName={reveal.as(b => b ? "pan-end-symbolic" : "pan-start-symbolic")} />
+          </box>
+        </button>
         {content}
       </box>
     </box>
