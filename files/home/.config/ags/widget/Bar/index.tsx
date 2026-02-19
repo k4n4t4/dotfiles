@@ -41,7 +41,7 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
         <box $type="end">
           <SystemTray show_items={[
             "Input Method",
-          ]} reveal={false} />
+          ]} reveal={true} />
           <Mpris />
           <Audio />
           <Bluetooth />

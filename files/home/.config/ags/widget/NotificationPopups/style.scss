@@ -16,6 +16,33 @@ window#NotificationPopups {
     border-radius: 1rem;
     border: 1px solid #EEAAEE;
     background: rgba(20, 20, 20, 0.8);
+    margin-bottom: 0.5rem;
+    
+    &:hover {
+      background: rgba(30, 30, 30, 0.9);
+    }
+  }
+
+  .notification-popup-close-button {
+    min-width: 2rem;
+    min-height: 2rem;
+    margin-left: 0.5rem;
+    padding: 0.2rem;
+    border-radius: 0.5rem;
+    background: rgba(80, 40, 60, 0.5);
+    
+    label {
+      color: #EE99DD;
+      font-size: 1.2rem;
+    }
+    
+    &:hover {
+      background: rgba(120, 50, 80, 0.8);
+      
+      label {
+        color: #FF88BB;
+      }
+    }
   }
 
   .notification-popup-icon {

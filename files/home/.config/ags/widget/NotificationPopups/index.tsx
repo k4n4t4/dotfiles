@@ -1,12 +1,13 @@
 import app from "ags/gtk4/app"
 import { Astal, Gdk, Gtk } from "ags/gtk4"
-import { Accessor, createState, For, State } from "ags"
+import { Accessor, createState, For, State, createBinding } from "ags"
 import { timeout } from "ags/time"
 
 import Notifd from "gi://AstalNotifd"
 
 import GLib from "gi://GLib?version=2.0"
 import GObject from "gnim/gobject"
+import Pango from "gi://Pango?version=1.0"
 
 
 const TIMEOUT = 5000
@@ -17,7 +18,7 @@ function notificationIcon({ app_icon, desktop_entry, image }: Notifd.Notificatio
   let child;
 
   if (image) {
-    if (/* Astal.Icon.lookup_icon(image) */ false) {
+    if (Astal.Icon.lookup_icon(image)) {
       child = (<image iconName={image} />)
     } else if (GLib.file_test(image, GLib.FileTest.EXISTS)) {
       child = (
@@ -52,26 +53,47 @@ function notificationUrgency(urgency: Notifd.Urgency): string {
   }
 }
 
-function NotificationPopup(notification: Notifd.Notification, setup: (self: GObject.Object) => void): GObject.Object {
-  const title = (
+function NotificationPopup(notification: Notifd.Notification, isExpanded: boolean, toggleExpanded: () => void): GObject.Object {
+  const title = isExpanded ? (
     <label
       class="notification-popup-title"
       tooltipText={notification.summary}
       label={notification.summary}
-      max-width-char={30}
       hexpand
       use_markup
+      wrap
+      halign={Gtk.Align.START}
+    />
+  ) : (
+    <label
+      class="notification-popup-title"
+      tooltipText={notification.summary}
+      label={notification.summary}
+      max_width_chars={30}
+      hexpand
+      use_markup
+      ellipsize={Pango.EllipsizeMode.END}
       halign={Gtk.Align.START}
     />
   )
 
-  const body = (
+  const body = isExpanded ? (
     <label
       class="notification-popup-body"
       label={notification.body}
-      max-width-char={30}
       hexpand
       use_markup
+      wrap
+      halign={Gtk.Align.START}
+    />
+  ) : (
+    <label
+      class="notification-popup-body"
+      label={notification.body}
+      max_width_chars={30}
+      hexpand
+      use_markup
+      ellipsize={Pango.EllipsizeMode.END}
       halign={Gtk.Align.START}
     />
   )
@@ -118,14 +140,14 @@ function NotificationPopup(notification: Notifd.Notification, setup: (self: GObj
   )
 
 
-  function onClicked() {
+  function onDismiss(event: Astal.ClickEvent) {
+    event.stopPropagation()
     notification.dismiss()
   }
 
   return (
     <button
-      onClicked={onClicked}
-      $={setup}
+      onClicked={toggleExpanded}
     >
       <box
         class={`notification-popup notification-popup-${notificationUrgency(notification.urgency)}`}
@@ -137,6 +159,13 @@ function NotificationPopup(notification: Notifd.Notification, setup: (self: GObj
             {title}
             {body}
           </box>
+          <button
+            class="notification-popup-close-button"
+            onClicked={onDismiss}
+            valign={Gtk.Align.START}
+          >
+            <label label="✕" />
+          </button>
         </box>
         {actions}
       </box>
@@ -149,6 +178,7 @@ export default function NotificationPopups(gdkmonitor: Gdk.Monitor) {
   const notifd = Notifd.get_default()
 
   const popupMap = new Map<number, GObject.Object>()
+  const expandedMap = new Map<number, boolean>()
   const [popups, setPopups] = createState<GObject.Object[]>([])
 
   function update() {
@@ -158,6 +188,7 @@ export default function NotificationPopups(gdkmonitor: Gdk.Monitor) {
   function delPopup(id: number) {
     popupMap.get(id)?.destroy()
     popupMap.delete(id)
+    expandedMap.delete(id)
     update()
   }
 
@@ -167,15 +198,31 @@ export default function NotificationPopups(gdkmonitor: Gdk.Monitor) {
     update()
   }
 
+  function rebuildPopup(id: number) {
+    const notification = notifd.get_notification(id)
+    if (!notification) return
+    
+    const isExpanded = expandedMap.get(id) || false
+    const toggleExpanded = () => {
+      expandedMap.set(id, !isExpanded)
+      rebuildPopup(id)
+    }
+    
+    const widget = NotificationPopup(notification, isExpanded, toggleExpanded)
+    setPopup(id, widget)
+    
+    // Auto dismiss after TIMEOUT
+    timeout(TIMEOUT, () => {
+      if (popupMap.has(id)) {
+        delPopup(id)
+      }
+    })
+  }
+
   notifd.connect('notified', (_, id) => {
-    setPopup(
-      id,
-      NotificationPopup(notifd.get_notification(id)!, _self => {
-        timeout(TIMEOUT, () => {
-          delPopup(id)
-        })
-      })
-  )})
+    expandedMap.set(id, false)
+    rebuildPopup(id)
+  })
 
   notifd.connect('resolved', (_, id) => {
     delPopup(id)

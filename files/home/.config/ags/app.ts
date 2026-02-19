@@ -2,12 +2,12 @@ import app from "ags/gtk4/app"
 
 import style from "./style.scss"
 
-import Test from "./widget/Test"
+// import Test from "./widget/Test"
 import Bar from "./widget/Bar"
 import Popups from "./widget/Popups"
 import Media from "./widget/Media"
-// import Notifications from "./widget/Notifications"
-// import NotificationPopups from "./widget/NotificationPopups"
+import Notifications from "./widget/Notifications"
+import NotificationPopups from "./widget/NotificationPopups"
 
 
 app.start({
@@ -20,8 +20,8 @@ app.start({
       Bar(m)
       Popups(m)
       Media(m)
-      // Notifications(m)
-      // NotificationPopups(m)
+      Notifications(m)
+      NotificationPopups(m)
     })
   },
 })

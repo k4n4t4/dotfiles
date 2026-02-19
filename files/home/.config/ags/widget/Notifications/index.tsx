@@ -1,9 +1,10 @@
 import app from "ags/gtk4/app"
 import { Astal, Gdk, Gtk } from "ags/gtk4"
-import { createBinding, createState } from "ags"
+import { createBinding, createComputed, createState, With } from "ags"
 
 import Notifd from "gi://AstalNotifd"
 import GLib from "gi://GLib?version=2.0"
+import Pango from "gi://Pango?version=1.0"
 
 
 function notificationIcon({ app_icon, desktop_entry, image }: Notifd.Notification): JSX.Element {
@@ -12,11 +13,12 @@ function notificationIcon({ app_icon, desktop_entry, image }: Notifd.Notificatio
 
   if (image) {
     if (Astal.Icon.lookup_icon(image)) {
-      child = (<icon expand icon={image} />)
+      child = (<image hexpand vexpand iconName={image} />)
     } else if (GLib.file_test(image, GLib.FileTest.EXISTS)) {
       child = (
         <box
-          expand
+          hexpand
+          vexpand
           css={`
             background-image: url("${image}");
             background-size: contain;
@@ -26,13 +28,13 @@ function notificationIcon({ app_icon, desktop_entry, image }: Notifd.Notificatio
         />
       )
     } else {
-      child = (<icon expand icon={icon} />)
+      child = (<image hexpand vexpand iconName={icon} />)
     }
   } else {
     if (app_icon || desktop_entry) {
       icon = app_icon || desktop_entry
     }
-    child = (<icon expand icon={icon} />)
+    child = (<image hexpand vexpand iconName={icon} />)
   }
 
   return child
@@ -47,30 +49,47 @@ function notificationUrgency(urgency: Notifd.Urgency): string {
   }
 }
 
-function Notification(notification: Notifd.Notification, setup: (self: JSX.Element) => void): JSX.Element {
-  const truncate = createState(true)
-
-  const title = (
+function Notification(notification: Notifd.Notification, isExpanded: boolean, toggleExpanded: () => void): JSX.Element {
+  const title = isExpanded ? (
     <label
       class="notification-title"
       tooltipText={notification.summary}
       label={notification.summary}
-      max-width-char={30}
       hexpand
       use_markup
-      truncate={createBinding(truncate)}
+      wrap
+      halign={Gtk.Align.START}
+    />
+  ) : (
+    <label
+      class="notification-title"
+      tooltipText={notification.summary}
+      label={notification.summary}
+      max_width_chars={30}
+      hexpand
+      use_markup
+      ellipsize={Pango.EllipsizeMode.END}
       halign={Gtk.Align.START}
     />
   )
 
-  const body = (
+  const body = isExpanded ? (
     <label
       class="notification-body"
       label={notification.body}
-      max-width-char={30}
       hexpand
       use_markup
-      truncate={createBinding(truncate)}
+      wrap
+      halign={Gtk.Align.START}
+    />
+  ) : (
+    <label
+      class="notification-body"
+      label={notification.body}
+      max_width_chars={30}
+      hexpand
+      use_markup
+      ellipsize={Pango.EllipsizeMode.END}
       halign={Gtk.Align.START}
     />
   )
@@ -89,7 +108,8 @@ function Notification(notification: Notifd.Notification, setup: (self: JSX.Eleme
     <box
       class="notification-icon"
       tooltipText={notification.app_name}
-      expand
+      hexpand
+      vexpand
     >
       {notificationIcon(notification)}
     </box>
@@ -100,14 +120,14 @@ function Notification(notification: Notifd.Notification, setup: (self: JSX.Eleme
       class="notification-actions"
     >
       {notification.actions.map(action => {
-        function onClick() {
+        function onClicked() {
           notification.invoke(action.id)
           notification.dismiss()
         }
         return (
           <button
             class="notification-actions-button"
-            onClick={onClick}
+            onClicked={onClicked}
             hexpand
           >
             <label label={action.label} />
@@ -118,37 +138,37 @@ function Notification(notification: Notifd.Notification, setup: (self: JSX.Eleme
   )
 
 
-  function onClick(_self: Astal.EventBox, event: Astal.ClickEvent) {
-    switch (event.button) {
-      case Astal.MouseButton.PRIMARY:
-        notification.dismiss()
-        break
-      case Astal.MouseButton.SECONDARY:
-        truncate.set(!truncate.get())
-        break
-    }
+  function onDismiss(event: Astal.ClickEvent) {
+    event.stopPropagation()
+    notification.dismiss()
   }
 
   return (
-    <eventbox
-      onClick={onClick}
-      setup={setup}
+    <button
+      onClicked={toggleExpanded}
     >
       <box
         class={`notification notification-${notificationUrgency(notification.urgency)}`}
-        vertical
+        orientation={Gtk.Orientation.VERTICAL}
       >
         <box>
           {icon}
-          <box vertical halign={Gtk.Align.START}>
+          <box orientation={Gtk.Orientation.VERTICAL} halign={Gtk.Align.START}>
             {time}
             {title}
             {body}
           </box>
+          <button
+            class="notification-close-button"
+            onClicked={onDismiss}
+            valign={Gtk.Align.START}
+          >
+            <label label="✕" />
+          </button>
         </box>
         {actions}
       </box>
-    </eventbox>
+    </button>
   )
 }
 
@@ -156,15 +176,35 @@ function Notification(notification: Notifd.Notification, setup: (self: JSX.Eleme
 export default function Notifications(gdkmonitor: Gdk.Monitor) {
   const notifd = Notifd.get_default()
 
-  const notifications = createBinding(notifd, 'notifications').as(notifications => {
+  const [expandedMap, setExpandedMap] = createState<Map<number, boolean>>(new Map())
+  const [trigger, setTrigger] = createState(0)
+
+  function makeNotifications() {
+    const notifications = notifd.get_notifications()
     const children: JSX.Element[] = []
 
     for (const notification of notifications.sort((a, b) => b.id - a.id)) {
-      children.push(Notification(notification, () => {}))
+      const notifId = notification.id
+      const isExpanded = expandedMap.get(notifId) || false
+      
+      const toggleExpanded = () => {
+        const newMap = new Map(expandedMap)
+        newMap.set(notifId, !isExpanded)
+        setExpandedMap(newMap)
+        setTrigger(trigger + 1)  // Force re-render
+      }
+      
+      children.push(Notification(notification, isExpanded, toggleExpanded))
     }
 
     return children
-  })
+  }
+
+  // Update on trigger change or notifd changes
+  notifd.connect('notified', () => setTrigger(trigger + 1))
+  notifd.connect('resolved', () => setTrigger(trigger + 1))
+
+  const notifications = createComputed([trigger], () => makeNotifications())
 
   return (
     <window
@@ -180,14 +220,14 @@ export default function Notifications(gdkmonitor: Gdk.Monitor) {
       visible={false}
     >
       <box class="notifications">
-        <scrollable
-          vscroll={Gtk.PolicyType.AUTOMATIC}
-          hscroll={Gtk.PolicyType.AUTOMATIC}
+        <scrolledwindow
+          vscrollbar_policy={Gtk.PolicyType.AUTOMATIC}
+          hscrollbar_policy={Gtk.PolicyType.AUTOMATIC}
         >
-          <box vertical>
+          <box orientation={Gtk.Orientation.VERTICAL}>
             {notifications}
           </box>
-        </scrollable>
+        </scrolledwindow>
       </box>
     </window>
   )
