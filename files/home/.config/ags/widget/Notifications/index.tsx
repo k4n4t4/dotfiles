@@ -1,6 +1,6 @@
 import app from "ags/gtk4/app"
 import { Astal, Gdk, Gtk } from "ags/gtk4"
-import { createBinding, createComputed, createState, With } from "ags"
+import { createState, For, onCleanup } from "ags"
 
 import Notifd from "gi://AstalNotifd"
 import GLib from "gi://GLib?version=2.0"
@@ -13,7 +13,7 @@ function notificationIcon({ app_icon, desktop_entry, image }: Notifd.Notificatio
 
   if (image) {
     if (Astal.Icon.lookup_icon(image)) {
-      child = (<image hexpand vexpand iconName={image} />)
+      child = (<image hexpand vexpand iconName={image} pixelSize={48} />)
     } else if (GLib.file_test(image, GLib.FileTest.EXISTS)) {
       child = (
         <box
@@ -24,17 +24,19 @@ function notificationIcon({ app_icon, desktop_entry, image }: Notifd.Notificatio
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
+            min-width: 48px;
+            min-height: 48px;
           `}
         />
       )
     } else {
-      child = (<image hexpand vexpand iconName={icon} />)
+      child = (<image hexpand vexpand iconName={icon} pixelSize={48} />)
     }
   } else {
     if (app_icon || desktop_entry) {
       icon = app_icon || desktop_entry
     }
-    child = (<image hexpand vexpand iconName={icon} />)
+    child = (<image hexpand vexpand iconName={icon} pixelSize={48} />)
   }
 
   return child
@@ -49,7 +51,7 @@ function notificationUrgency(urgency: Notifd.Urgency): string {
   }
 }
 
-function Notification(notification: Notifd.Notification, isExpanded: boolean, toggleExpanded: () => void): JSX.Element {
+function Notification({ notification, isExpanded, toggleExpanded }: { notification: Notifd.Notification, isExpanded: boolean, toggleExpanded: () => void }): JSX.Element {
   const title = isExpanded ? (
     <label
       class="notification-title"
@@ -137,38 +139,41 @@ function Notification(notification: Notifd.Notification, isExpanded: boolean, to
     </box>
   )
 
-
   function onDismiss(event: Astal.ClickEvent) {
     event.stopPropagation()
     notification.dismiss()
   }
 
   return (
-    <button
-      onClicked={toggleExpanded}
+    <box
+      class={`notification notification-${notificationUrgency(notification.urgency)}`}
+      orientation={Gtk.Orientation.VERTICAL}
     >
-      <box
-        class={`notification notification-${notificationUrgency(notification.urgency)}`}
-        orientation={Gtk.Orientation.VERTICAL}
-      >
-        <box>
-          {icon}
-          <box orientation={Gtk.Orientation.VERTICAL} halign={Gtk.Align.START}>
-            {time}
-            {title}
-            {body}
+      <box>
+        <button
+          class="notification-expand-button"
+          onClicked={toggleExpanded}
+          hexpand
+        >
+          <box>
+            {icon}
+            <box orientation={Gtk.Orientation.VERTICAL} halign={Gtk.Align.START}>
+              {time}
+              {title}
+              {body}
+            </box>
           </box>
-          <button
-            class="notification-close-button"
-            onClicked={onDismiss}
-            valign={Gtk.Align.START}
-          >
-            <label label="✕" />
-          </button>
-        </box>
-        {actions}
+        </button>
+        <button
+          class="notification-close-button"
+          onClicked={onDismiss}
+          valign={Gtk.Align.START}
+        >
+          <label label="✕" />
+        </button>
       </box>
-    </button>
+      {actions}
+    </box>
   )
 }
 
@@ -176,35 +181,32 @@ function Notification(notification: Notifd.Notification, isExpanded: boolean, to
 export default function Notifications(gdkmonitor: Gdk.Monitor) {
   const notifd = Notifd.get_default()
 
+  const [notifications, setNotifications] = createState<Notifd.Notification[]>([])
   const [expandedMap, setExpandedMap] = createState<Map<number, boolean>>(new Map())
-  const [trigger, setTrigger] = createState(0)
 
-  function makeNotifications() {
-    const notifications = notifd.get_notifications()
-    const children: JSX.Element[] = []
-
-    for (const notification of notifications.sort((a, b) => b.id - a.id)) {
-      const notifId = notification.id
-      const isExpanded = expandedMap.get(notifId) || false
-      
-      const toggleExpanded = () => {
-        const newMap = new Map(expandedMap)
-        newMap.set(notifId, !isExpanded)
-        setExpandedMap(newMap)
-        setTrigger(trigger + 1)  // Force re-render
-      }
-      
-      children.push(Notification(notification, isExpanded, toggleExpanded))
-    }
-
-    return children
+  function updateNotifications() {
+    setNotifications(notifd.get_notifications())
   }
 
-  // Update on trigger change or notifd changes
-  notifd.connect('notified', () => setTrigger(trigger + 1))
-  notifd.connect('resolved', () => setTrigger(trigger + 1))
+  const notifiedHandler = notifd.connect('notified', () => {
+    updateNotifications()
+  })
 
-  const notifications = createComputed([trigger], () => makeNotifications())
+  const resolvedHandler = notifd.connect('resolved', (_, id) => {
+    updateNotifications()
+    // Clean up expanded state for removed notification
+    const newMap = new Map(expandedMap.get())
+    newMap.delete(id)
+    setExpandedMap(newMap)
+  })
+
+  onCleanup(() => {
+    notifd.disconnect(notifiedHandler)
+    notifd.disconnect(resolvedHandler)
+  })
+
+  // Initialize with existing notifications
+  updateNotifications()
 
   return (
     <window
@@ -225,7 +227,26 @@ export default function Notifications(gdkmonitor: Gdk.Monitor) {
           hscrollbar_policy={Gtk.PolicyType.AUTOMATIC}
         >
           <box orientation={Gtk.Orientation.VERTICAL}>
-            {notifications}
+            <For each={notifications}>
+              {(notification) => {
+                const notifId = notification.id
+                const isExpanded = expandedMap.get().get(notifId) || false
+                
+                const toggleExpanded = () => {
+                  const newMap = new Map(expandedMap.get())
+                  newMap.set(notifId, !newMap.get(notifId))
+                  setExpandedMap(newMap)
+                }
+                
+                return (
+                  <Notification 
+                    notification={notification} 
+                    isExpanded={isExpanded}
+                    toggleExpanded={toggleExpanded}
+                  />
+                )
+              }}
+            </For>
           </box>
         </scrolledwindow>
       </box>

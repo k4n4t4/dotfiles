@@ -17,7 +17,6 @@ function BarSystemTrayItem(item: Tray.TrayItem): JSX.Element {
         class="item"
         tooltipText={createBinding(item, 'tooltipMarkup')}
         popover={popover}
-        iconName={createBinding(item, 'iconName')}
         $={self => {
           popover.insert_action_group("dbusmenu", item.actionGroup)
 
@@ -29,6 +28,7 @@ function BarSystemTrayItem(item: Tray.TrayItem): JSX.Element {
             item.disconnect(actionGroupHandler)
           })
         }} >
+        <image gicon={createBinding(item, 'gicon')} />
       </menubutton>
     </box>
   )
