@@ -24,6 +24,7 @@ vim.opt.smartcase = true
 vim.opt.inccommand = "split"
 vim.opt.wildignorecase = true
 vim.opt.wildmode = "list:full"
+vim.opt.pumheight = 10
 
 vim.opt.undofile = true
 vim.opt.virtualedit = "block"
@@ -33,7 +34,6 @@ vim.env.EDITOR = "nvim --server \"$NVIM\" --remote-tab"
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-
 
 vim.opt.expandtab = true
 vim.opt.tabstop = 4
