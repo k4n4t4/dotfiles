@@ -13,13 +13,17 @@ return {
         local telescope = require "telescope"
         local actions = require "telescope.actions"
         local project_actions = require "telescope._extensions.project.actions"
+
         telescope.setup {
             defaults = {
                 borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
                 mappings = {
-                    n = {
+                    i = {
                         ['<ESC>'] = actions.close,
                     },
+                },
+                layout_config = {
+                    width = 0.75,
                 },
             },
             extensions = {
@@ -68,6 +72,7 @@ return {
                 },
             },
         }
+
         telescope.load_extension "ui-select"
         telescope.load_extension "fzf"
         telescope.load_extension "project"

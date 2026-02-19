@@ -29,6 +29,23 @@ local group = vim.api.nvim_create_augroup("StatusLine", { clear = true })
 vim.api.nvim_create_autocmd("ModeChanged", {
     group = group,
     callback = function()
+        local ignore_ft = {
+            "TelescopePrompt",
+            "NvimTree",
+            "neo-tree",
+            "fzf",
+        }
+        local ignore_bt = {
+            "terminal",
+            "nofile",
+            "prompt",
+        }
+
+        if vim.tbl_contains(ignore_ft, vim.bo.filetype) or
+           vim.tbl_contains(ignore_bt, vim.bo.buftype) then
+            return
+        end
+
         vim.cmd.redrawstatus()
     end,
 })
