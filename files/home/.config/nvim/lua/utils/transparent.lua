@@ -25,6 +25,7 @@ M.default_config = {
         "NeoTreeNormal",
         "NeoTreeNormalNC",
         "NeoTreeEndOfBuffer",
+        "NeoTreeIndentMarker",
 
         "NvimTreeNormal",
         "NvimTreeNormalNC",
