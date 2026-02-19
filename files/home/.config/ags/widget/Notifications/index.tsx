@@ -1,6 +1,6 @@
 import app from "ags/gtk4/app"
 import { Astal, Gdk, Gtk } from "ags/gtk4"
-import { createState, For, onCleanup } from "ags"
+import { createState, For, onCleanup, createBinding } from "ags"
 
 import Notifd from "gi://AstalNotifd"
 import GLib from "gi://GLib?version=2.0"
@@ -51,7 +51,7 @@ function notificationUrgency(urgency: Notifd.Urgency): string {
   }
 }
 
-function Notification({ notification, isExpanded, toggleExpanded }: { notification: Notifd.Notification, isExpanded: boolean, toggleExpanded: () => void }): JSX.Element {
+function Notification({ notification, isExpanded, toggleExpanded, onClose }: { notification: Notifd.Notification, isExpanded: boolean, toggleExpanded: () => void, onClose: () => void }): JSX.Element {
   const title = isExpanded ? (
     <label
       class="notification-title"
@@ -140,8 +140,8 @@ function Notification({ notification, isExpanded, toggleExpanded }: { notificati
   )
 
   function onDismiss(event: Astal.ClickEvent) {
-    event.stopPropagation()
     notification.dismiss()
+    onClose()
   }
 
   return (
@@ -181,32 +181,12 @@ function Notification({ notification, isExpanded, toggleExpanded }: { notificati
 export default function Notifications(gdkmonitor: Gdk.Monitor) {
   const notifd = Notifd.get_default()
 
-  const [notifications, setNotifications] = createState<Notifd.Notification[]>([])
   const [expandedMap, setExpandedMap] = createState<Map<number, boolean>>(new Map())
 
-  function updateNotifications() {
-    setNotifications(notifd.get_notifications())
-  }
-
-  const notifiedHandler = notifd.connect('notified', () => {
-    updateNotifications()
-  })
-
-  const resolvedHandler = notifd.connect('resolved', (_, id) => {
-    updateNotifications()
-    // Clean up expanded state for removed notification
-    const newMap = new Map(expandedMap.get())
-    newMap.delete(id)
-    setExpandedMap(newMap)
-  })
-
-  onCleanup(() => {
-    notifd.disconnect(notifiedHandler)
-    notifd.disconnect(resolvedHandler)
-  })
-
-  // Initialize with existing notifications
-  updateNotifications()
+  // Use binding instead of manual state management
+  const notifications = createBinding(notifd, 'notifications').as(notifs => 
+    notifs.sort((a, b) => b.id - a.id)
+  )
 
   return (
     <window
@@ -243,6 +223,7 @@ export default function Notifications(gdkmonitor: Gdk.Monitor) {
                     notification={notification} 
                     isExpanded={isExpanded}
                     toggleExpanded={toggleExpanded}
+                    onClose={() => notification.dismiss()}
                   />
                 )
               }}

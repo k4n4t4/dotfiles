@@ -1,6 +1,6 @@
 import app from "ags/gtk4/app"
 import { Astal, Gdk, Gtk } from "ags/gtk4"
-import { createState, For, onCleanup, With } from "ags"
+import { createState, For, onCleanup, With, createBinding } from "ags"
 import { timeout } from "ags/time"
 
 import Notifd from "gi://AstalNotifd"
@@ -62,7 +62,6 @@ function NotificationPopup({ notification, onDismiss }: { notification: Notifd.N
   }
   
   const handleDismiss = (event: Astal.ClickEvent) => {
-    event.stopPropagation()
     notification.dismiss()
     onDismiss()
   }
@@ -91,67 +90,73 @@ function NotificationPopup({ notification, onDismiss }: { notification: Notifd.N
       class={`notification-popup notification-popup-${notificationUrgency(notification.urgency)}`}
       orientation={Gtk.Orientation.VERTICAL}
     >
-      <button onClicked={toggleExpanded}>
-        <box>
-          {icon}
-          <box orientation={Gtk.Orientation.VERTICAL} halign={Gtk.Align.START}>
-            {time}
-            <With value={isExpanded}>
-              {(expanded) => expanded ? (
-                <label
-                  class="notification-popup-title"
-                  tooltipText={notification.summary}
-                  label={notification.summary}
-                  hexpand
-                  use_markup
-                  wrap
-                  halign={Gtk.Align.START}
-                />
-              ) : (
-                <label
-                  class="notification-popup-title"
-                  tooltipText={notification.summary}
-                  label={notification.summary}
-                  max_width_chars={30}
-                  hexpand
-                  use_markup
-                  ellipsize={Pango.EllipsizeMode.END}
-                  halign={Gtk.Align.START}
-                />
-              )}
-            </With>
-            <With value={isExpanded}>
-              {(expanded) => expanded ? (
-                <label
-                  class="notification-popup-body"
-                  label={notification.body}
-                  hexpand
-                  use_markup
-                  wrap
-                  halign={Gtk.Align.START}
-                />
-              ) : (
-                <label
-                  class="notification-popup-body"
-                  label={notification.body}
-                  max_width_chars={30}
-                  hexpand
-                  use_markup
-                  ellipsize={Pango.EllipsizeMode.END}
-                  halign={Gtk.Align.START}
-                />
-              )}
-            </With>
+      <box>
+        <button 
+          class="notification-popup-expand-button"
+          onClicked={toggleExpanded}
+          hexpand
+        >
+          <box>
+            {icon}
+            <box orientation={Gtk.Orientation.VERTICAL} halign={Gtk.Align.START}>
+              {time}
+              <With value={isExpanded}>
+                {(expanded) => expanded ? (
+                  <label
+                    class="notification-popup-title"
+                    tooltipText={notification.summary}
+                    label={notification.summary}
+                    hexpand
+                    use_markup
+                    wrap
+                    halign={Gtk.Align.START}
+                  />
+                ) : (
+                  <label
+                    class="notification-popup-title"
+                    tooltipText={notification.summary}
+                    label={notification.summary}
+                    max_width_chars={30}
+                    hexpand
+                    use_markup
+                    ellipsize={Pango.EllipsizeMode.END}
+                    halign={Gtk.Align.START}
+                  />
+                )}
+              </With>
+              <With value={isExpanded}>
+                {(expanded) => expanded ? (
+                  <label
+                    class="notification-popup-body"
+                    label={notification.body}
+                    hexpand
+                    use_markup
+                    wrap
+                    halign={Gtk.Align.START}
+                  />
+                ) : (
+                  <label
+                    class="notification-popup-body"
+                    label={notification.body}
+                    max_width_chars={30}
+                    hexpand
+                    use_markup
+                    ellipsize={Pango.EllipsizeMode.END}
+                    halign={Gtk.Align.START}
+                  />
+                )}
+              </With>
+            </box>
           </box>
-          <button
-            class="notification-popup-close-button"
-            onClicked={handleDismiss}
-            valign={Gtk.Align.START}
-          >
-            <label label="✕" />
-          </button>
-        </box>
-      </button>
+        </button>
+        <button
+          class="notification-popup-close-button"
+          onClicked={handleDismiss}
+          valign={Gtk.Align.START}
+        >
+          <label label="✕" />
+        </button>
+      </box>
       {notification.actions.length > 0 && (
         <box class="notification-popup-actions">
           {notification.actions.map(action => (
@@ -176,33 +181,11 @@ function NotificationPopup({ notification, onDismiss }: { notification: Notifd.N
 
 export default function NotificationPopups(gdkmonitor: Gdk.Monitor) {
   const notifd = Notifd.get_default()
-  const [notifications, setNotifications] = createState<Notifd.Notification[]>([])
 
-  function removeNotification(id: number) {
-    setNotifications(notifications.get().filter(n => n.id !== id))
-  }
-
-  const notifiedHandler = notifd.connect('notified', (_, id) => {
-    const notification = notifd.get_notification(id)
-    if (notification) {
-      setNotifications([notification, ...notifications.get()])
-      
-      // Auto dismiss after TIMEOUT
-      timeout(TIMEOUT, () => {
-        removeNotification(id)
-      })
-    }
-  })
-
-  const resolvedHandler = notifd.connect('resolved', (_, id) => {
-    removeNotification(id)
-  })
-
-  onCleanup(() => {
-    notifd.disconnect(notifiedHandler)
-    notifd.disconnect(resolvedHandler)
-  })
-
+  // Use binding like Notifications window
+  const notifications = createBinding(notifd, 'notifications').as(notifs => 
+    notifs.sort((a, b) => b.id - a.id)
+  )
 
   return (
     <window
@@ -225,7 +208,7 @@ export default function NotificationPopups(gdkmonitor: Gdk.Monitor) {
           {(notification) => (
             <NotificationPopup 
               notification={notification} 
-              onDismiss={() => removeNotification(notification.id)}
+              onDismiss={() => notification.dismiss()}
             />
           )}
         </For>
