@@ -1,4 +1,4 @@
-import { Gtk } from "ags/gtk4"
+import { Gdk, Gtk } from "ags/gtk4"
 import { createBinding, createState, With } from "ags"
 
 import Tray from "gi://AstalTray"
@@ -10,26 +10,84 @@ type systemtray_params = {
 
 
 function BarSystemTrayItem(item: Tray.TrayItem): JSX.Element {
-  const popover = Gtk.PopoverMenu.new_from_model(item.menuModel)
+  let popovermenu: Gtk.PopoverMenu
+
   return (
-    <box>
-      <menubutton
-        class="item"
-        tooltipText={createBinding(item, 'tooltipMarkup')}
-        popover={popover}
-        $={self => {
-          popover.insert_action_group("dbusmenu", item.actionGroup)
+    <box
+      class="item"
+      $={(self) => {
+        const visibleConn = popovermenu.connect("notify::visible", ({ visible }) =>
+          self[visible ? "add_css_class" : "remove_css_class"]("active")
+        )
 
-          const actionGroupHandler = item.connect("notify::action-group", () => {
-            popover.insert_action_group("dbusmenu", item.actionGroup)
+        self.connect("destroy", () => {
+          popovermenu.disconnect(visibleConn)
+        })
+      }}
+    >
+      <image
+        class="tray-icon"
+        $={(self) => {
+          const updateIcon = () => {
+            self.gicon = item.gicon
+          }
+          updateIcon()
+          const iconConn = item.connect("notify::gicon", updateIcon)
+          
+          const updateTooltip = () => {
+            self.tooltipMarkup = item.tooltipMarkup || ""
+          }
+          updateTooltip()
+          const tooltipConn = item.connect("notify::tooltip-markup", updateTooltip)
+          
+          self.connect("destroy", () => {
+            item.disconnect(iconConn)
+            item.disconnect(tooltipConn)
           })
+        }}
+      />
+      <Gtk.GestureClick
+        onPressed={() => item.about_to_show()}
+        onReleased={(ctrl, _, x, y) => {
+          const button = ctrl.get_current_button()
+          if (button === Gdk.BUTTON_PRIMARY) {
+            item.activate(x, y)
+          } else if (button === Gdk.BUTTON_SECONDARY) {
+            if (popovermenu) {
+              if (popovermenu.visible) {
+                popovermenu.popdown()
+              } else {
+                popovermenu.popup()
+              }
+            }
+          } else if (button === Gdk.BUTTON_MIDDLE) {
+            item.secondary_activate(x, y)
+          }
+        }}
+        button={0}
+      />
+      <Gtk.PopoverMenu
+        menuModel={item.menuModel}
+        position={Gtk.PositionType.BOTTOM}
+        $={(self) => {
+          popovermenu = self
+          self.insert_action_group("dbusmenu", item.actionGroup)
 
-          self.connect('destroy', () => {
-            item.disconnect(actionGroupHandler)
+          const conns = [
+            item.connect("notify::action-group", (item) => {
+              self.insert_action_group("dbusmenu", item.actionGroup)
+            }),
+
+            item.connect("notify::menu-model", (item) => {
+              self.set_menu_model(item.menuModel)
+            }),
+          ]
+
+          self.connect("destroy", () => {
+            conns.forEach((id) => item.disconnect(id))
           })
-        }} >
-        <image gicon={createBinding(item, 'gicon')} />
-      </menubutton>
+        }}
+      />
     </box>
   )
 }

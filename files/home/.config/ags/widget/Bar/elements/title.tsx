@@ -14,7 +14,7 @@ export default function() {
       case 'activewindowv2':
       case 'windowtitle':
       case 'windowtitlev2':
-        if (hyprland.focused_client) {
+        if (hyprland.focused_client && hyprland.focused_client.title) {
           set_label(hyprland.focused_client.title)
         } else {
           set_label("")

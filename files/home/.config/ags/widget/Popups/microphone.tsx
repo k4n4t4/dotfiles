@@ -41,7 +41,7 @@ export default function PopupAudioMicrophone(): JSX.Element {
   )
 
   return (
-    <box orientation={Gtk.Orientation.VERTICAL} $type="named" name="microphone" class="popups-audio-microphone">
+    <box name="microphone" orientation={Gtk.Orientation.VERTICAL} class="popups-audio-microphone">
       {label}
       {slider}
       {status}

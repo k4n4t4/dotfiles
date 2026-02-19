@@ -40,7 +40,7 @@ export default function PopupBacklight(): JSX.Element {
   )
 
   return (
-    <box orientation={Gtk.Orientation.VERTICAL} $type="named" name="backlight" class="popups-backlight">
+    <box name="backlight" orientation={Gtk.Orientation.VERTICAL} class="popups-backlight">
       {label}
       {slider}
       {status}

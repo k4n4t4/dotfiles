@@ -21,18 +21,88 @@ tooltip {
 }
 
 menu {
-  background: rgba(30, 30, 30, 0.8);
+  background: rgba(30, 30, 30, 0.95);
   padding: 0.5rem;
   border-radius: 0.5rem;
+  border: 2px solid #505050;
 
   menuitem {
     background: rgba(50, 50, 50, 0.8);
     margin: 0.2rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.3rem;
+    color: #EEEEEE;
+    font-size: 1.4rem;
+    min-height: 2rem;
+    border: 1px solid transparent;
+    
+    &:hover {
+      background: rgba(70, 70, 70, 0.9);
+      color: #FFFFFF;
+      border-color: #606060;
+    }
+
+    &:active {
+      background: rgba(80, 80, 80, 0.95);
+    }
+
+    &:disabled {
+      background: rgba(30, 30, 30, 0.6);
+      color: #555555;
+    }
+
+    label {
+      color: inherit;
+    }
+  }
+
+  separator {
+    background: #505050;
+    min-height: 2px;
+    margin: 0.3rem 0.5rem;
+  }
+}
+
+popover {
+  background: rgba(30, 30, 30, 0.95);
+  border: 2px solid #505050;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+
+  contents {
     padding: 0.3rem;
-    border-radius: 0.2rem;
-    color: #E0C0E0;
-  }:hover {
+  }
+
+  menu {
+    background: transparent;
+    border: none;
+  }
+}
+
+// Alternative selectors for PopoverMenu
+popover.menu,
+popover.background.menu {
+  background: rgba(30, 30, 30, 0.95);
+  border: 2px solid #505050;
+  border-radius: 0.5rem;
+  padding: 0.3rem;
+}
+
+// GTK4 modelbutton (used in some popovers)
+modelbutton {
+  background: rgba(50, 50, 50, 0.8);
+  color: #EEEEEE;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.3rem;
+  margin: 0.15rem;
+  min-height: 2rem;
+  
+  &:hover {
     background: rgba(70, 70, 70, 0.9);
-    color: #E080E0;
+    color: #FFFFFF;
+  }
+
+  &:disabled {
+    color: #555555;
   }
 }

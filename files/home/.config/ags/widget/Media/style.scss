@@ -1,52 +1,112 @@
 $font: "ComicShannsMono Nerd Font";
 
 window#Media {
+  .media {
+    background: rgba(20, 20, 20, 0.9);
+    border-radius: 0.8rem;
+    border: 2px solid #303030;
+    padding: 0.5rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+  }
+
   .player {
     font-family: $font;
-    padding: 10px;
-    min-width: 350px;
-    background: rgba(20, 20, 20, 0.5);
-    border-radius: 1rem;
+    padding: 1rem;
+    min-width: 400px;
+    background: rgba(25, 25, 25, 0.8);
+    border-radius: 0.8rem;
+    border: 1px solid #353535;
 
     .player-img {
       min-width: 100px;
       min-height: 100px;
       background-size: cover;
       background-position: center;
-      border-radius: 13px;
-      margin-right: 1em;
+      background-repeat: no-repeat;
+      border-radius: 0.6rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+      border: 2px solid #404040;
     }
 
     .player-title {
-      font-size: 1.2em;
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #EEEEEE;
     }
 
     .player-artist {
-      font-size: 1.1em;
-      color: #DDEEDD;
+      font-size: 1.2rem;
+      color: #AAAAAA;
     }
 
-    scale {
-      padding: 0;
-      margin-bottom: .3em;
-      background: #404040;
+    .player-icon {
+      min-width: 32px;
+      min-height: 32px;
+      color: #888888;
+    }
+
+    .player-position {
+      min-height: 8px;
+      
       trough {
         min-height: 8px;
+        background: #353535;
+        border-radius: 4px;
       }
+      
       highlight {
-        background: #408840;
+        background: linear-gradient(90deg, #5588DD, #66AAFF);
+        border-radius: 4px;
       }
+      
       slider {
         all: unset;
       }
     }
 
+    .player-position-label,
+    .player-length {
+      font-size: 1.1rem;
+      color: #AAAAAA;
+      min-width: 3rem;
+    }
+
     button {
-      min-height: 1em;
-      min-width: 1em;
-      padding: .3em;
-    }.player-play-pause {
-      margin: 0 .3em;
+      min-height: 2.5rem;
+      min-width: 2.5rem;
+      padding: 0.5rem;
+      background: rgba(50, 50, 50, 0.8);
+      border-radius: 0.4rem;
+      border: 1px solid #404040;
+      color: #DDDDDD;
+      transition: all 200ms ease;
+      
+      &:hover {
+        background: rgba(70, 70, 70, 0.9);
+        border-color: #555555;
+        color: #FFFFFF;
+      }
+
+      &:active {
+        background: rgba(80, 80, 80, 1);
+        border-color: #666666;
+      }
+
+      image {
+        color: inherit;
+        min-width: 20px;
+        min-height: 20px;
+      }
+    }
+
+    .player-play-pause {
+      min-height: 3rem;
+      min-width: 3rem;
+      
+      image {
+        min-width: 24px;
+        min-height: 24px;
+      }
     }
   }
 }

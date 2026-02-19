@@ -1,5 +1,5 @@
 import app from "ags/gtk4/app"
-import { Astal, Gdk } from "ags/gtk4"
+import { Astal, Gdk, Gtk } from "ags/gtk4"
 import { createBinding, createComputed, For } from "ags"
 
 import Mpris from "gi://AstalMpris"
@@ -133,25 +133,29 @@ function Player({player}: {player: Mpris.Player}): JSX.Element {
   )
 
   return (
-    <box class="player">
+    <box class="player" spacing={12}>
       {img}
-      <box hexpand>
-        <box>
-          {title}
+      <box orientation={Gtk.Orientation.VERTICAL} hexpand spacing={8}>
+        <box spacing={8} hexpand>
+          <box orientation={Gtk.Orientation.VERTICAL} hexpand spacing={4}>
+            {title}
+            {artist}
+          </box>
           {icon}
         </box>
-        {artist}
         <box vexpand />
-        {slider}
-        <centerbox>
-          {position_label}
-          <box>
-            {prev}
-            {pause}
-            {next}
-          </box>
-          {length_label}
-        </centerbox>
+        <box orientation={Gtk.Orientation.VERTICAL} spacing={4}>
+          {slider}
+          <centerbox>
+            {position_label}
+            <box spacing={4}>
+              {prev}
+              {pause}
+              {next}
+            </box>
+            {length_label}
+          </centerbox>
+        </box>
       </box>
     </box>
   )

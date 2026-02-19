@@ -42,7 +42,7 @@ export default function PopupAudioSpeaker(): JSX.Element {
   )
 
   return (
-    <box orientation={Gtk.Orientation.VERTICAL} $type="named" name="speaker" class="popups-audio-speaker">
+    <box name="speaker" orientation={Gtk.Orientation.VERTICAL} class="popups-audio-speaker">
       {label}
       {slider}
       {status}

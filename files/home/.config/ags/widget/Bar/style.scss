@@ -71,11 +71,54 @@ window#Bar {
 
   .mpris {
     margin: 0 0.4rem 0 0.4rem;
+    
+    button {
+      background: rgba(40, 40, 40, 0.8);
+      border-radius: 0.4rem;
+      padding: 0.3rem 0.6rem;
+      border: 1px solid #404040;
+      transition: all 150ms ease;
+      
+      &:hover {
+        background: rgba(60, 60, 60, 0.9);
+        border-color: #555555;
+      }
+    }
+    
     .exist-player {
       color: #DD99EE;
+      border-color: #884499;
+      
+      &:hover {
+        background: rgba(70, 50, 80, 0.9);
+        border-color: #AA66BB;
+      }
     }
+    
     .not-exist-player {
       color: #404040;
+    }
+
+    .mpris-cover {
+      min-width: 24px;
+      min-height: 24px;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      border-radius: 0.2rem;
+      border: 1px solid #555555;
+    }
+
+    .mpris-icon {
+      min-width: 16px;
+      min-height: 16px;
+      color: inherit;
+    }
+
+    .mpris-count {
+      font-size: 0.9rem;
+      color: #AAAAAA;
+      padding: 0 0.2rem;
     }
   }
 
@@ -95,8 +138,21 @@ window#Bar {
       background: #404040;
       border-radius: 0.1rem;
       color: #D090A0;
-      padding: 0.5rem;
+      padding: 0.2rem;
       margin: 0.2rem 0.05rem 0.2rem 0.05rem;
+
+      &.active {
+        background: #505050;
+      }
+
+      .tray-icon {
+        padding: 0.3rem;
+        
+        &:hover {
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 0.1rem;
+        }
+      }
     }
   }
 
