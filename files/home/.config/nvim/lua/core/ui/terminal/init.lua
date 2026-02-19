@@ -27,7 +27,7 @@ local function create_floating_window(opts)
     col = col,
     row = row,
     style = "minimal",
-    border = "rounded",
+    border = "single",
   }
 
   local win = vim.api.nvim_open_win(buf, true, win_config)
@@ -40,8 +40,8 @@ end
 local toggle_terminal = function()
   if not vim.api.nvim_win_is_valid(state.floating.win) then
     state.floating = create_floating_window {
-        buf = state.floating.buf;
-        winblend = 10;
+        buf = state.floating.buf,
+        winblend = 10,
     }
     if vim.bo[state.floating.buf].buftype ~= "terminal" then
       vim.cmd.term()
