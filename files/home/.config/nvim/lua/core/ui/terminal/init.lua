@@ -32,14 +32,17 @@ local function create_floating_window(opts)
 
   local win = vim.api.nvim_open_win(buf, true, win_config)
 
-  vim.wo[win].winblend = 10
+  vim.wo[win].winblend = opts.winblend or 0
 
   return { buf = buf, win = win }
 end
 
 local toggle_terminal = function()
   if not vim.api.nvim_win_is_valid(state.floating.win) then
-    state.floating = create_floating_window({ buf = state.floating.buf })
+    state.floating = create_floating_window {
+        buf = state.floating.buf;
+        winblend = 10;
+    }
     if vim.bo[state.floating.buf].buftype ~= "terminal" then
       vim.cmd.term()
     end
@@ -55,5 +58,5 @@ local set = keymap.set
 -- terminal
 set('t', '<esc>', "<C-\\><C-n>")
 set('n', '<leader>kk', "<cmd>belowright 10split<cr><cmd>terminal<cr>", { desc = "Terminal" })
-set({"n", "t"}, "<leader>kf", toggle_terminal, { desc = "Terminal (floating)" })
+set("n", "<leader>kf", toggle_terminal, { desc = "Terminal (floating)" })
 set('n', '<leader>K', "<cmd>terminal<cr>", { desc = "Terminal (full)" })
