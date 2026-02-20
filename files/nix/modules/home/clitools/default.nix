@@ -7,6 +7,7 @@
       btop ncdu tmux gh
       zoxide trash-cli
       opencode
+      lazygit lazydocker
     ];
   };
 }
