@@ -1,10 +1,10 @@
-import GObject, { register, getter, setter } from "ags/gobject"
+import GObject, { register } from "ags/gobject"
 import { monitorFile, readFileAsync } from "ags/file"
 import { exec, execAsync } from "ags/process"
 
 const get = (args: string) => Number(exec(`brightnessctl ${args}`))
-const screen = exec(`bash -c "ls -w1 /sys/class/backlight | head -1"`)
-const kbd = exec(`bash -c "ls -w1 /sys/class/leds | head -1"`)
+const screenDevice = exec(`bash -c "ls -w1 /sys/class/backlight | head -1"`).trim()
+const kbdDevice = exec(`bash -c "ls -w1 /sys/class/leds | head -1"`).trim()
 
 @register({ GTypeName: "Brightness" })
 export default class Brightness extends GObject.Object {
@@ -16,29 +16,36 @@ export default class Brightness extends GObject.Object {
         return this.instance
     }
 
-    #kbdMax = get(`--device ${kbd} max`)
-    #kbd = get(`--device ${kbd} get`)
+    #kbdMax = get(`--device ${kbdDevice} max`)
+    #kbd = get(`--device ${kbdDevice} get`)
     #screenMax = get("max")
     #screen = get("get") / (get("max") || 1)
 
-    @getter(Number)
+    #screenCallbacks = new Set<() => void>()
+
+    watchScreen(cb: () => void) {
+        this.#screenCallbacks.add(cb)
+        return () => this.#screenCallbacks.delete(cb)
+    }
+
+    #emitScreen() {
+        this.#screenCallbacks.forEach(cb => cb())
+    }
+
     get kbd() { return this.#kbd }
 
-    @setter(Number)
     set kbd(value) {
         if (value < 0 || value > this.#kbdMax)
             return
 
-        execAsync(`brightnessctl -d ${kbd} s ${value} -q`).then(() => {
+        execAsync(`brightnessctl -d ${kbdDevice} s ${value} -q`).then(() => {
             this.#kbd = value
             this.notify("kbd")
         })
     }
 
-    @getter(Number)
     get screen() { return this.#screen }
 
-    @setter(Number)
     set screen(percent) {
         if (percent < 0)
             percent = 0
@@ -46,22 +53,21 @@ export default class Brightness extends GObject.Object {
         if (percent > 1)
             percent = 1
 
-        execAsync(`brightnessctl set ${Math.floor(percent * 100)}% -q`).then(() => {
-            this.#screen = percent
-            this.notify("screen")
-        })
+        this.#screen = percent
+        this.#emitScreen()
+        execAsync(`brightnessctl set ${Math.floor(percent * 100)}% -q`)
     }
 
     constructor() {
         super()
 
-        const screenPath = `/sys/class/backlight/${screen}/brightness`
-        const kbdPath = `/sys/class/leds/${kbd}/brightness`
+        const screenPath = `/sys/class/backlight/${screenDevice}/brightness`
+        const kbdPath = `/sys/class/leds/${kbdDevice}/brightness`
 
         monitorFile(screenPath, async f => {
             const v = await readFileAsync(f)
             this.#screen = Number(v) / this.#screenMax
-            this.notify("screen")
+            this.#emitScreen()
         })
 
         monitorFile(kbdPath, async f => {

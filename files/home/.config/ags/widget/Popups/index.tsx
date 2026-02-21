@@ -28,7 +28,7 @@ export default function Popups(gdkmonitor: Gdk.Monitor) {
       $={self => {
         let timer: any = undefined
         let prevent = true
-        setTimeout(() => {prevent = false}, 1000)
+        setTimeout(() => { prevent = false }, 1000)
         function show(name: string) {
           if (prevent) return
           if (!self.visible) {
@@ -52,25 +52,23 @@ export default function Popups(gdkmonitor: Gdk.Monitor) {
             show('speaker')
           }
         })
-        let mic_tmp_volume = 0
-        let mic_tmp_mute = false
-        if (mic) mic.connect('notify', mic => {
-          if (mic_tmp_volume !== mic.volume || mic_tmp_mute !== mic.mute) {
-            mic_tmp_volume = mic.volume
-            mic_tmp_mute = mic.mute
-            show('microphone')
-          }
-        })
-        if (backlight) backlight.connect('notify', _backlight => {
-          show('backlight')
-        })
+        if (mic) {
+          let mic_tmp_volume = 0
+          let mic_tmp_mute = false
+          mic.connect('notify', mic => {
+            if (mic_tmp_volume !== mic.volume || mic_tmp_mute !== mic.mute) {
+              mic_tmp_volume = mic.volume
+              mic_tmp_mute = mic.mute
+              show('microphone')
+            }
+          })
+        }
+        backlight.watchScreen(() => show('backlight'))
       }}
       visible={false}
     >
       <box class="popups">
-        <stack
-          $={stack => { stackRef = stack }}
-        >
+        <stack $={s => { stackRef = s }}>
           <PopupAudioSpeaker $type="named" />
           <PopupAudioMicrophone $type="named" />
           <PopupBacklight $type="named" />
