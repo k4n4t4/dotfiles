@@ -1,5 +1,5 @@
 import { Gdk, Gtk } from "ags/gtk4"
-import { createBinding, createState, For, onCleanup, With } from "ags"
+import { createBinding, createState, For, onCleanup } from "ags"
 
 import Tray from "gi://AstalTray"
 
