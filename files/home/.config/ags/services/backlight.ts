@@ -1,4 +1,4 @@
-import GObject, { register } from "ags/gobject"
+import GObject, { register, getter, setter } from "ags/gobject"
 import { monitorFile, readFileAsync } from "ags/file"
 import { exec, execAsync } from "ags/process"
 
@@ -21,8 +21,10 @@ export default class Brightness extends GObject.Object {
     #screenMax = get("max")
     #screen = get("get") / (get("max") || 1)
 
+    @getter(Number)
     get kbd() { return this.#kbd }
 
+    @setter(Number)
     set kbd(value) {
         if (value < 0 || value > this.#kbdMax)
             return
@@ -33,8 +35,10 @@ export default class Brightness extends GObject.Object {
         })
     }
 
+    @getter(Number)
     get screen() { return this.#screen }
 
+    @setter(Number)
     set screen(percent) {
         if (percent < 0)
             percent = 0
