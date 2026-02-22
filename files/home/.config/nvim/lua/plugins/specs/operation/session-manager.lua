@@ -16,5 +16,4 @@ return {
         { "<leader>sl", "<cmd>SessionManager load_session<cr>",         desc = "List Sessions" },
         { "<leader>ss", "<cmd>SessionManager save_current_session<cr>", desc = "Save Session" },
     },
-    event = "VeryLazy",
 }

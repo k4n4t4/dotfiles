@@ -27,13 +27,17 @@ return {
     },
     {
         "folke/lsp-colors.nvim",
+        event = 'VeryLazy',
     },
     {
         "JoosepAlviste/nvim-ts-context-commentstring",
         dependencies = { "nvim-treesitter/nvim-treesitter" },
+        event = 'VeryLazy',
     },
     {
         "m-demare/hlargs.nvim",
+        config = function() require("hlargs").setup() end,
+        event = 'VeryLazy',
     },
     {
         "nvim-tree/nvim-web-devicons",
@@ -41,5 +45,7 @@ return {
     },
     {
         "norcalli/nvim-colorizer.lua",
+        config = function() require("colorizer").setup() end,
+        cmd = { "ColorizerToggle", "ColorizerAttachToBuffer", "ColorizerDetachFromBuffer", "ColorizerReloadAllBuffers" },
     },
 }
