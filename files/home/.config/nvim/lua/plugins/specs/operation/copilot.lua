@@ -2,7 +2,7 @@ return {
     {
         "zbirenbaum/copilot.lua",
         cmd = "Copilot",
-        event = 'VeryLazy',
+        event = 'InsertEnter',
         opts = {
             filetypes = {
                 ["*"] = true,
@@ -23,7 +23,7 @@ return {
             "zbirenbaum/copilot.lua",
         },
         cmd = "Copilot",
-        event = 'VeryLazy',
+        event = 'InsertEnter',
         config = true,
     },
     {
@@ -33,7 +33,27 @@ return {
             "nvim-lua/plenary.nvim",
         },
         build = "make tiktoken",
-        event = 'VeryLazy',
+        keys = {
+            {
+                "<leader>cc",
+                function()
+                    require("CopilotChat").open {
+                        sticky = {
+                            "#buffer",
+                            "#gitdiff:staged",
+                            "#selection",
+                        },
+                    }
+                end,
+                mode = { "n", "v" },
+                desc = "Copilot Chat Open"
+            },
+            { "<leader>ct", function() require("CopilotChat").toggle() end, mode = { "n", "v" }, desc = "Copilot Chat Toggle" },
+            { "<leader>cq", function() require("CopilotChat").close() end,  mode = { "n", "v" }, desc = "Copilot Chat Close" },
+            { "<leader>cs", function() require("CopilotChat").stop() end,   mode = { "n", "v" }, desc = "Copilot Chat Stop" },
+            { "<leader>cr", function() require("CopilotChat").reset() end,  mode = { "n", "v" }, desc = "Copilot Chat Reset" },
+            { "<leader>cS", function() require("CopilotChat").save() end,   mode = { "n", "v" }, desc = "Copilot Chat Save" },
+        },
         config = function()
             local language = "japanese"
 
@@ -132,45 +152,6 @@ return {
                     },
                 },
             };
-
-            local map = vim.keymap.set
-
-            map({ 'n', 'v' }, '<leader>cc',
-                function()
-                    require("CopilotChat").open {
-                        sticky = {
-                            "#buffer",
-                            "#gitdiff:staged",
-                            "#selection",
-                        },
-                    }
-                end,
-                { desc = 'Copilot Chat Open' })
-            map({ 'n', 'v' }, '<leader>ct',
-                function()
-                    require("CopilotChat").toggle()
-                end,
-                { desc = 'Copilot Chat Toggle' })
-            map({ 'n', 'v' }, '<leader>cq',
-                function()
-                    require("CopilotChat").close()
-                end,
-                { desc = 'Copilot Chat Close' })
-            map({ 'n', 'v' }, '<leader>cs',
-                function()
-                    require("CopilotChat").stop()
-                end,
-                { desc = 'Copilot Chat Stop' })
-            map({ 'n', 'v' }, '<leader>cr',
-                function()
-                    require("CopilotChat").reset()
-                end,
-                { desc = 'Copilot Chat Reset' })
-            map({ 'n', 'v' }, '<leader>cS',
-                function()
-                    require("CopilotChat").save()
-                end,
-                { desc = 'Copilot Chat Save' })
         end,
     }
 }
