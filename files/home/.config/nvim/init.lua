@@ -1,3 +1,5 @@
+vim.loader.enable()
+
 local info = require "utils.info"
 
 if info.env.is_vscode() then
