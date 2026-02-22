@@ -28,7 +28,15 @@ vim.opt.pumheight = 10
 
 vim.opt.undofile = true
 vim.opt.virtualedit = "block"
-vim.opt.clipboard:append "unnamedplus"
+
+
+vim.opt.clipboard = ""
+vim.api.nvim_create_autocmd("UIEnter", {
+  once = true,
+  callback = function()
+    vim.opt.clipboard = "unnamedplus"
+  end,
+})
 
 vim.env.EDITOR = "nvim --server \"$NVIM\" --remote-tab"
 
