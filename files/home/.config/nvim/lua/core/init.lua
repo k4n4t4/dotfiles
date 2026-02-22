@@ -1,5 +1,5 @@
 require "core.options"
-require "core.keymaps"
 require "core.autocmd"
-require "core.ui"
 require "core.lsp"
+require "core.keymaps"
+require "core.ui"
