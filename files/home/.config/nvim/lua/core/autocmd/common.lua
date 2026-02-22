@@ -24,7 +24,7 @@ autocmd("TextYankPost", {
 
 
 -- restore cursor position
-vim.api.nvim_create_autocmd("BufReadPost", {
+autocmd("BufReadPost", {
     group = group,
     callback = function()
         local mark = vim.api.nvim_buf_get_mark(0, '"')
