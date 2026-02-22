@@ -72,52 +72,33 @@ local function tab_format(opts)
 
     local tab_hi = hi.use(is_active_tab and "TabLineSel" or "TabLine")
 
-
     return table.concat({
         "%", tabnr, "@v:lua.HandleTabClick@",
-        tab_hi, "<", tabnr, ":",
-        (function()
-            local bufstrs = {}
-            for _, bufnr in ipairs(info.tab.buflist(tabpage) or {}) do
-                if info.buf.is_real_file(bufnr) then
-                    table.insert(bufstrs, buf_format(bufnr))
-                end
-            end
-            return table.concat(bufstrs)
-        end)(),
-        tab_hi, ">",
+        tab_hi, " ", tostring(tabnr), " ",
         "%X"
     })
 end
 
 function TabLine()
-    local all_tab_bufs = {}
+    local s = ""
+
+    local bufs = vim.t.bufs or {}
+    for _, bufnr in ipairs(bufs) do
+        if vim.api.nvim_buf_is_valid(bufnr) then
+            s = s .. buf_format(bufnr)
+        end
+    end
+
+    s = s .. "%#TabLineFill#%="
 
     local tab_count = vim.fn.tabpagenr('$')
     local current_tabnr = vim.fn.tabpagenr()
-    local tabpages = vim.api.nvim_list_tabpages()
-
-    local s = ""
     for tabnr = 1, tab_count do
         s = s .. tab_format {
             tabnr = tabnr,
             is_current_tab = tabnr == current_tabnr,
         }
-
-        local tabpage = tabpages[tabnr]
-        if tabpage then
-            for _, b in ipairs(info.tab.buflist(tabpage) or {}) do
-                all_tab_bufs[b] = true
-            end
-        end
     end
 
-    for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
-        if info.buf.is_real_file(bufnr) and not all_tab_bufs[bufnr] then
-            s = s .. buf_format(bufnr) .. " "
-        end
-    end
-
-    s = s .. "%#TabLineFill#%="
     return s
 end
