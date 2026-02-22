@@ -9,4 +9,9 @@ else
     require "plugins"
 end
 
-pcall(require, "config")
+vim.api.nvim_create_autocmd("VimEnter", {
+    once = true,
+    callback = function()
+        pcall(require, "config")
+    end,
+})
