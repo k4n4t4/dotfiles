@@ -1,6 +1,20 @@
 return {
     "folke/noice.nvim",
-    enabled = true,
+    dependencies = {
+        "MunifTanjim/nui.nvim",
+        {
+            "rcarriga/nvim-notify",
+            opts = {
+                merge_duplicates = true,
+                background_colour = "#000000",
+                render = "wrapped-compact",
+                stages = "slide",
+                timeout = 4000,
+                top_down = true,
+            },
+        },
+    },
+    event = 'VeryLazy',
     opts = {
         cmdline = {
             enabled = true,
@@ -90,19 +104,4 @@ return {
         },
         throttle = 1000 / 30,
     },
-    dependencies = {
-        "MunifTanjim/nui.nvim",
-        {
-            "rcarriga/nvim-notify",
-            opts = {
-                merge_duplicates = true,
-                background_colour = "#000000",
-                render = "wrapped-compact",
-                stages = "slide",
-                timeout = 4000,
-                top_down = true,
-            },
-        },
-    },
-    event = 'VeryLazy',
 }
