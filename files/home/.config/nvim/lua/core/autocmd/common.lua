@@ -23,7 +23,7 @@ autocmd("TextYankPost", {
 })
 
 
--- emit direnter
+-- User DirEnter
 autocmd("BufEnter", {
     group = group,
     callback = function(args)
