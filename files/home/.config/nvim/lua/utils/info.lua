@@ -62,7 +62,7 @@ M.env = {}
 --- @return string
 function M.env.os_name()
     return cached("env_os_name", function()
-        return vim.loop.os_uname().sysname
+        return uv.os_uname().sysname
     end)
 end
 
