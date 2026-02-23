@@ -2,6 +2,7 @@ return {
     {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
+        event = "VeryLazy",
         config = function()
             require("nvim-treesitter").setup()
 
@@ -22,7 +23,6 @@ return {
             })
             treesitter_start()
         end,
-        event = "VeryLazy",
     },
     {
         "nvim-treesitter/nvim-treesitter-textobjects",
@@ -30,6 +30,7 @@ return {
             "nvim-treesitter/nvim-treesitter",
         },
         branch = "main",
+        event = 'VeryLazy',
         init = function()
             vim.g.no_plugin_maps = true
         end,
@@ -67,13 +68,12 @@ return {
                 require "nvim-treesitter-textobjects.select".select_textobject("@parameter.inner", "textobjects")
             end)
         end,
-        event = 'VeryLazy',
     },
     {
         "nvim-treesitter/nvim-treesitter-context",
-        event = 'VeryLazy',
         dependencies = {
             "nvim-treesitter/nvim-treesitter",
         },
+        event = 'VeryLazy',
     },
 }

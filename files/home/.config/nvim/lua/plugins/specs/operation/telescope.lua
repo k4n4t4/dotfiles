@@ -9,6 +9,43 @@ return {
             build = "make",
         },
     },
+    cmd = "Telescope",
+    keys = {
+        {
+            mode = 'n',
+            "<LEADER>tc",
+            function()
+                require('telescope.builtin').find_files {
+                    attach_mappings = function(_, map)
+                        map('i', '<CR>', function(prompt_bufnr)
+                            local entry = require('telescope.actions.state').get_selected_entry()
+                            local actions = require('telescope.actions')
+                            vim.fn.setreg('+', entry.path)
+                            actions.close(prompt_bufnr)
+                        end)
+                        map('n', '<CR>', function(prompt_bufnr)
+                            local entry = require('telescope.actions.state').get_selected_entry()
+                            local actions = require('telescope.actions')
+                            vim.fn.setreg('+', entry.path)
+                            actions.close(prompt_bufnr)
+                        end)
+                        return true
+                    end
+                }
+            end,
+            desc = "Telescope Copy Path."
+        },
+        { mode = 'n', "<LEADER>tt", "<CMD>Telescope<CR>",                           desc = "Telescope" },
+        { mode = 'n', "<LEADER>tk", "<CMD>Telescope keymaps<CR>",                   desc = "Telescope Keymaps" },
+        { mode = 'n', "<LEADER>tr", "<CMD>Telescope oldfiles<CR>",                  desc = "Telescope Oldfiles" },
+        { mode = 'n', "<LEADER>tf", "<CMD>Telescope find_files<CR>",                desc = "Telescope Find Files" },
+        { mode = 'n', "<LEADER>tg", "<CMD>Telescope live_grep<CR>",                 desc = "Telescope Live Grep" },
+        { mode = 'n', "<LEADER>tb", "<CMD>Telescope buffers<CR>",                   desc = "Telescope Buffers" },
+        { mode = 'n', "<LEADER>th", "<CMD>Telescope help_tags<CR>",                 desc = "Telescope Help Tags" },
+        { mode = 'n', "<LEADER>t/", "<CMD>Telescope current_buffer_fuzzy_find<CR>", desc = "Telescope Current Buffer Fuzzy Finder" },
+        { mode = 'n', "<LEADER>tz", "<CMD>Telescope fzf<CR>",                       desc = "Telescope fzf" },
+        { mode = 'n', "<LEADER>tp", "<CMD>Telescope project<CR>",                   desc = "Telescope Project" },
+    },
     config = function()
         local telescope = require "telescope"
         local actions = require "telescope.actions"
@@ -77,41 +114,4 @@ return {
         telescope.load_extension "fzf"
         telescope.load_extension "project"
     end,
-    cmd = "Telescope",
-    keys = {
-        {
-            mode = 'n',
-            "<LEADER>tc",
-            function()
-                require('telescope.builtin').find_files {
-                    attach_mappings = function(_, map)
-                        map('i', '<CR>', function(prompt_bufnr)
-                            local entry = require('telescope.actions.state').get_selected_entry()
-                            local actions = require('telescope.actions')
-                            vim.fn.setreg('+', entry.path)
-                            actions.close(prompt_bufnr)
-                        end)
-                        map('n', '<CR>', function(prompt_bufnr)
-                            local entry = require('telescope.actions.state').get_selected_entry()
-                            local actions = require('telescope.actions')
-                            vim.fn.setreg('+', entry.path)
-                            actions.close(prompt_bufnr)
-                        end)
-                        return true
-                    end
-                }
-            end,
-            desc = "Telescope Copy Path."
-        },
-        { mode = 'n', "<LEADER>tt", "<CMD>Telescope<CR>",                           desc = "Telescope" },
-        { mode = 'n', "<LEADER>tk", "<CMD>Telescope keymaps<CR>",                   desc = "Telescope Keymaps" },
-        { mode = 'n', "<LEADER>tr", "<CMD>Telescope oldfiles<CR>",                  desc = "Telescope Oldfiles" },
-        { mode = 'n', "<LEADER>tf", "<CMD>Telescope find_files<CR>",                desc = "Telescope Find Files" },
-        { mode = 'n', "<LEADER>tg", "<CMD>Telescope live_grep<CR>",                 desc = "Telescope Live Grep" },
-        { mode = 'n', "<LEADER>tb", "<CMD>Telescope buffers<CR>",                   desc = "Telescope Buffers" },
-        { mode = 'n', "<LEADER>th", "<CMD>Telescope help_tags<CR>",                 desc = "Telescope Help Tags" },
-        { mode = 'n', "<LEADER>t/", "<CMD>Telescope current_buffer_fuzzy_find<CR>", desc = "Telescope Current Buffer Fuzzy Finder" },
-        { mode = 'n', "<LEADER>tz", "<CMD>Telescope fzf<CR>",                       desc = "Telescope fzf" },
-        { mode = 'n', "<LEADER>tp", "<CMD>Telescope project<CR>",                   desc = "Telescope Project" },
-    },
 }

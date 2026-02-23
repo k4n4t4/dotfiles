@@ -1,5 +1,15 @@
 return {
     "folke/which-key.nvim",
+    keys = {
+        {
+            mode = "n",
+            '<LEADER>?',
+            function()
+                require("which-key").show({ global = true })
+            end,
+            desc = "Which Key"
+        },
+    },
     config = function()
         local which_key = require "which-key"
         which_key.setup {
@@ -17,15 +27,4 @@ return {
             { "S",   group = "+surround visual", mode = "v" },
         }
     end,
-    event = 'VeryLazy',
-    keys = {
-        {
-            mode = "n",
-            '<LEADER>?',
-            function()
-                require("which-key").show({ global = true })
-            end,
-            desc = "Which Key"
-        },
-    },
 }

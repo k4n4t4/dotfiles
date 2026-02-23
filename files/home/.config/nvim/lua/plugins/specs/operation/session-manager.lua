@@ -4,6 +4,11 @@ return {
         "nvim-lua/plenary.nvim",
         "nvim-telescope/telescope.nvim",
     },
+    keys = {
+        { "<leader>sd", "<cmd>SessionManager delete_session<cr>",       desc = "Delete Sessions" },
+        { "<leader>sl", "<cmd>SessionManager load_session<cr>",         desc = "List Sessions" },
+        { "<leader>ss", "<cmd>SessionManager save_current_session<cr>", desc = "Save Session" },
+    },
     config = function()
         local config = require('session_manager.config')
         require('session_manager').setup({
@@ -11,9 +16,4 @@ return {
             autoload_mode = config.AutoloadMode.CurrentDir,
         })
     end,
-    keys = {
-        { "<leader>sd", "<cmd>SessionManager delete_session<cr>",       desc = "Delete Sessions" },
-        { "<leader>sl", "<cmd>SessionManager load_session<cr>",         desc = "List Sessions" },
-        { "<leader>ss", "<cmd>SessionManager save_current_session<cr>", desc = "Save Session" },
-    },
 }

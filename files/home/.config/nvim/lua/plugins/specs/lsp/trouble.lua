@@ -1,6 +1,5 @@
 return {
     "folke/trouble.nvim",
-    opts = {},
     cmd = "Trouble",
     keys = {
         {
@@ -34,4 +33,5 @@ return {
             desc = "Quickfix List (Trouble)",
         },
     },
+    opts = {},
 }

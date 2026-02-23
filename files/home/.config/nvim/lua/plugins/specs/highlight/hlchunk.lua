@@ -1,5 +1,6 @@
 return {
     "shellRaining/hlchunk.nvim",
+    event = 'VeryLazy',
     config = function()
         require("hlchunk").setup {
             chunk = {
@@ -26,5 +27,4 @@ return {
             },
         }
     end,
-    event = 'VeryLazy',
 }

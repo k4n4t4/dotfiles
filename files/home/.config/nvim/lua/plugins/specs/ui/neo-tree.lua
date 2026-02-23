@@ -23,6 +23,11 @@ return {
             end,
         },
     },
+    event = 'User DirEnter',
+    keys = {
+        { mode = 'n', "<LEADER>e", "<CMD>Neotree toggle<CR>", desc = "Neotree Toggle" },
+        { mode = 'n', "<LEADER>E", "<CMD>Neotree focus<CR>",  desc = "Neotree Focus" },
+    },
     opts = {
         close_if_last_window = false,
         popup_border_style = 'double',
@@ -251,10 +256,5 @@ return {
                 }
             }
         }
-    },
-    event = 'User DirEnter',
-    keys = {
-        { mode = 'n', "<LEADER>e", "<CMD>Neotree toggle<CR>", desc = "Neotree Toggle" },
-        { mode = 'n', "<LEADER>E", "<CMD>Neotree focus<CR>",  desc = "Neotree Focus" },
     },
 }

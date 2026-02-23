@@ -13,6 +13,7 @@ return {
         "nvimtools/none-ls.nvim",
         "jayp0521/mason-null-ls.nvim",
     },
+    event = "VeryLazy",
     config = function()
         local mason_lspconfig = require("mason-lspconfig")
 
@@ -23,5 +24,4 @@ return {
             automatic_enable = false,
         }
     end,
-    event = "VeryLazy",
 }

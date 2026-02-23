@@ -1,6 +1,10 @@
 return {
     "kylechui/nvim-surround",
     version = "^3.0.0",
+    event = {
+        'InsertEnter',
+        'CmdlineEnter',
+    },
     opts = {
         keymaps = {
             normal      = "ys",
@@ -11,9 +15,5 @@ return {
             delete      = "ds",
             change      = "cs",
         },
-    },
-    event = {
-        'InsertEnter',
-        'CmdlineEnter',
     },
 }

@@ -1,7 +1,9 @@
 return {
     "nvimtools/none-ls.nvim",
-    enabled = true,
-
+    event = {
+        'InsertEnter',
+        'CmdlineEnter',
+    },
     config = function()
         local null_ls = require "null-ls"
         null_ls.setup {
@@ -10,9 +12,4 @@ return {
             },
         }
     end,
-
-    event = {
-        'InsertEnter',
-        'CmdlineEnter',
-    },
 }

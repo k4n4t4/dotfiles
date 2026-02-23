@@ -1,7 +1,6 @@
 return {
     "saghen/blink.cmp",
     version = '*',
-    event = { "InsertEnter", "CmdLineEnter" },
     dependencies = {
         {
             "L3MON4D3/LuaSnip",
@@ -33,6 +32,7 @@ return {
         "hrsh7th/cmp-calc",
         "yutkat/cmp-mocword",
     },
+    event = { "InsertEnter", "CmdLineEnter" },
     config = function()
         require("blink.cmp").setup {
             fuzzy = { implementation = "prefer_rust_with_warning" },
