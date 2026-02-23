@@ -162,12 +162,13 @@ return {
                     git = {
                         module = 'blink-cmp-git',
                         name = 'Git',
-                        enabled = function()
-                            return vim.tbl_contains({ 'octo', 'gitcommit', 'markdown' }, vim.bo.filetype)
-                        end,
                         score_offset = 250,
                         async = true,
-                        opts = { },
+                        opts = {
+                            commit = {
+                                triggers = { ";" },
+                            }
+                        },
                     },
                     emoji = {
                         module = "blink-emoji",
