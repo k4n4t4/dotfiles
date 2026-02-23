@@ -1,16 +1,38 @@
 return {
     "saghen/blink.cmp",
-    enabled = false,
+    enabled = true,
     version = '*',
     event = { "InsertEnter", "CmdLineEnter" },
     dependencies = {
-        "L3MON4D3/LuaSnip",
-        "rafamadriz/friendly-snippets",
+        {
+            "L3MON4D3/LuaSnip",
+            dependencies = { "rafamadriz/friendly-snippets" },
+            config = function()
+                require("luasnip.loaders.from_vscode").lazy_load()
+            end,
+        },
         {
             "Kaiser-Yang/blink-cmp-dictionary",
             dependencies = { "nvim-lua/plenary.nvim" },
         },
         "giuxtaposition/blink-cmp-copilot",
+        'brenoprata10/nvim-highlight-colors',
+        "moyiz/blink-emoji.nvim",
+        {
+            "xzbdmw/colorful-menu.nvim",
+            dependencies = { "nvim-treesitter/nvim-treesitter" },
+            config = function()
+                require("colorful-menu").setup {}
+            end,
+        },
+        'Kaiser-Yang/blink-cmp-git',
+
+        {
+            "saghen/blink.compat",
+            version = false,
+        },
+        "hrsh7th/cmp-calc",
+        "yutkat/cmp-mocword",
     },
     config = function()
         require("blink.cmp").setup {
@@ -18,18 +40,148 @@ return {
                 documentation = {
                     auto_show = true,
                     window = {
-                    }
+                        border = "none",
+                        winblend = 10,
+                    },
                 },
-                ghost_text = {
-                    enabled = true,
+                ghost_text = { enabled = true },
+                menu = {
+                    max_height = 10,
+                    winblend = 10,
+                    draw = {
+                        columns = { { "kind_icon" }, { "label", gap = 1 } },
+                        components = {
+                            label = {
+                                width = { fill = true, max = 60 },
+                                text = function(ctx)
+                                    local highlights_info = require("colorful-menu").blink_highlights(ctx)
+                                    if highlights_info ~= nil then
+                                        return highlights_info.label
+                                    else
+                                        return ctx.label
+                                    end
+                                end,
+                                highlight = function(ctx)
+                                    local highlights = {}
+                                    local highlights_info = require("colorful-menu").blink_highlights(ctx)
+                                    if highlights_info ~= nil then
+                                        highlights = highlights_info.highlights
+                                    end
+                                    for _, idx in ipairs(ctx.label_matched_indices) do
+                                        table.insert(highlights, { idx, idx + 1, group = "BlinkCmpLabelMatch" })
+                                    end
+                                    return highlights
+                                end,
+                            },
+                            kind_icon = {
+                                text = function(ctx)
+                                    local icon = ctx.kind_icon
+                                    if ctx.item.source_name == "LSP" then
+                                        local color_item = require("nvim-highlight-colors").format(
+                                            ctx.item.documentation,
+                                            { kind = ctx.kind })
+                                        if color_item and color_item.abbr ~= "" then
+                                            icon = color_item.abbr
+                                        end
+                                    end
+                                    return icon .. ctx.icon_gap
+                                end,
+                                highlight = function(ctx)
+                                    local highlight = "BlinkCmpKind" .. ctx.kind
+                                    if ctx.item.source_name == "LSP" then
+                                        local color_item = require("nvim-highlight-colors").format(
+                                            ctx.item.documentation,
+                                            { kind = ctx.kind })
+                                        if color_item and color_item.abbr_hl_group then
+                                            highlight = color_item.abbr_hl_group
+                                        end
+                                    end
+                                    return highlight
+                                end,
+                            },
+                        },
+                    },
                 },
             },
             snippets = {
                 preset = "luasnip",
             },
+            cmdline = {
+                enabled = true,
+                sources = function()
+                    local type = vim.fn.getcmdtype()
+                    if type == "/" or type == "?" then
+                        return { "buffer" }
+                    end
+                    if type == ":" then
+                        return { "cmdline" }
+                    end
+                    return {}
+                end,
+                keymap = {
+                    preset = "cmdline",
+                    ["<Right>"] = false,
+                    ["<Left>"] = false,
+                },
+                completion = {
+                    list = { selection = { preselect = false } },
+                    menu = {
+                        auto_show = function(_)
+                            return vim.fn.getcmdtype() == ":"
+                        end,
+                    },
+                    ghost_text = { enabled = true },
+                },
+            },
             sources = {
-                default = { "snippets", "lsp", "path", "buffer", "dictionary", "copilot" },
+                default = {
+                    "snippets",
+                    "lsp",
+                    "path",
+                    "buffer",
+                    "dictionary",
+                    "copilot",
+                    "emoji",
+                    "calc",
+                    "mocword",
+                    "git",
+                },
                 providers = {
+                    calc = {
+                        name = "calc",
+                        module = "blink.compat.source",
+                        score_offset = 100,
+                        async = true,
+                    },
+                    mocword = {
+                        name = "mocword",
+                        module = "blink.compat.source",
+                        score_offset = 150,
+                        async = true,
+                    },
+                    git = {
+                        module = 'blink-cmp-git',
+                        name = 'Git',
+                        score_offset = 250,
+                        async = true,
+                        opts = {
+                            commit = {
+                                triggers = { ";" },
+                            }
+                        },
+                    },
+                    emoji = {
+                        module = "blink-emoji",
+                        name = "Emoji",
+                        score_offset = 200,
+                        opts = {
+                            insert = true,
+                            trigger = function()
+                                return { ":" }
+                            end,
+                        },
+                        async = true,
+                    },
                     copilot = {
                         name = "Copilot",
                         module = "blink-cmp-copilot",
@@ -81,12 +233,7 @@ return {
             },
         }
 
-        require("luasnip.loaders.from_vscode").lazy_load()
-
         local hl = vim.api.nvim_set_hl
-
-        hl(0, "CmpItemAbbr", { fg = "#909090", bg = "none" })
-        hl(0, "CmpItemAbbrMatch", { fg = "#3333AA", bg = "none" })
-        hl(0, "CmpItemAbbrMatchFuzzy", { fg = "#3399AA", bg = "none" })
+        hl(0, "BlinkCmpGhostText", { link = "Comment" })
     end,
 }
