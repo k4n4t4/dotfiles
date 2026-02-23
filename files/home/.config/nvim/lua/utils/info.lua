@@ -313,6 +313,7 @@ vim.api.nvim_create_autocmd({
     group = group,
     callback = function()
         M.tab.cache = {}
+        M.win.cache = {}
     end
 })
 
@@ -373,6 +374,71 @@ function M.tab.is_modified(tabpage)
             if M.buf.modified(bufnr) then return true end
         end
         return false
+    end)
+end
+
+M.win = {}
+M.win.cache = {}
+
+local function cached_win(winnr, key, fn)
+    winnr = (winnr == 0 or winnr == nil) and vim.api.nvim_get_current_win() or winnr
+    if not vim.api.nvim_win_is_valid(winnr) then return nil end
+
+    if not M.win.cache[winnr] then M.win.cache[winnr] = {} end
+    if M.win.cache[winnr][key] == nil then
+        M.win.cache[winnr][key] = fn(winnr)
+    end
+    return M.win.cache[winnr][key]
+end
+
+--- @param winnr integer
+--- @return integer|nil
+function M.win.buf(winnr)
+    return cached_win(winnr, "buf", function(w)
+        return vim.api.nvim_win_get_buf(w)
+    end)
+end
+
+--- @param winnr integer
+--- @return integer|nil
+function M.win.width(winnr)
+    return cached_win(winnr, "width", function(w)
+        return vim.api.nvim_win_get_width(w)
+    end)
+end
+
+--- @param winnr integer
+--- @return integer|nil
+function M.win.height(winnr)
+    return cached_win(winnr, "height", function(w)
+        return vim.api.nvim_win_get_height(w)
+    end)
+end
+
+--- @param winnr integer
+--- @return boolean|nil
+function M.win.is_float(winnr)
+    return cached_win(winnr, "is_float", function(w)
+        local config = vim.api.nvim_win_get_config(w)
+        return config.relative ~= ""
+    end)
+end
+
+--- @param winnr integer
+--- @return { row: integer, col: integer }|nil
+function M.win.cursor(winnr)
+    local w = (winnr == 0 or winnr == nil) and vim.api.nvim_get_current_win() or winnr
+    if not vim.api.nvim_win_is_valid(w) then return nil end
+    local pos = vim.api.nvim_win_get_cursor(w)
+    return { row = pos[1], col = pos[2] }
+end
+
+--- @param winnr integer
+--- @return { row: integer, col: integer }|nil  top-left position on screen
+function M.win.position(winnr)
+    return cached_win(winnr, "position", function(w)
+        local pos = vim.api.nvim_win_get_position(w)
+        return { row = pos[1], col = pos[2] }
     end)
 end
 
