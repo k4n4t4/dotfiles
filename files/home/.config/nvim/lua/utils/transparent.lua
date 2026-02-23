@@ -30,6 +30,8 @@ M.default_config = {
         "NvimTreeNormal",
         "NvimTreeNormalNC",
         "NvimTreeEndOfBuffer",
+
+        "RenderMarkdownTableFill",
     },
 }
 
