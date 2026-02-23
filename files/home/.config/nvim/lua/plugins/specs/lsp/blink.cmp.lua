@@ -37,6 +37,7 @@ return {
     config = function()
         require("blink.cmp").setup {
             completion = {
+                ghost_text = { enabled = true },
                 documentation = {
                     auto_show = true,
                     window = {
@@ -44,7 +45,13 @@ return {
                         winblend = 10,
                     },
                 },
-                ghost_text = { enabled = true },
+                fuzzy = { implementation = "lua" },
+                signature = {
+                    enabled = true,
+                    window = {
+                        winblend = 10,
+                    }
+                },
                 menu = {
                     max_height = 10,
                     winblend = 10,
@@ -167,7 +174,7 @@ return {
                         end,
                         score_offset = 250,
                         async = true,
-                        opts = { },
+                        opts = {},
                     },
                     emoji = {
                         module = "blink-emoji",
@@ -207,7 +214,7 @@ return {
                 },
             },
             keymap = {
-                ['<C-s>'] = { 'show', 'show_documentation', 'hide_documentation' },
+                ['<C-c>'] = { 'show', 'show_documentation', 'hide_documentation' },
                 ['<C-h>'] = { 'hide', 'fallback' },
                 ['<C-e>'] = { 'cancel', 'fallback' },
                 ['<C-y>'] = { 'accept', 'fallback' },
