@@ -1,6 +1,5 @@
 return {
     "saghen/blink.cmp",
-    enabled = true,
     version = '*',
     event = { "InsertEnter", "CmdLineEnter" },
     dependencies = {
@@ -36,6 +35,18 @@ return {
     },
     config = function()
         require("blink.cmp").setup {
+            fuzzy = { implementation = "prefer_rust_with_warning" },
+            signature = {
+                enabled = true,
+                window = {
+                    winblend = 10,
+                    show_documentation = true,
+                }
+            },
+            appearance = {
+                use_nvim_cmp_as_default = true,
+                nerd_font_variant = 'mono',
+            },
             completion = {
                 ghost_text = { enabled = true },
                 documentation = {
@@ -44,13 +55,6 @@ return {
                         border = "none",
                         winblend = 10,
                     },
-                },
-                fuzzy = { implementation = "lua" },
-                signature = {
-                    enabled = true,
-                    window = {
-                        winblend = 10,
-                    }
                 },
                 menu = {
                     max_height = 10,
