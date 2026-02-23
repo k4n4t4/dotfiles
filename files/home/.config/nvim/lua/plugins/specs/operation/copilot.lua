@@ -18,15 +18,6 @@ return {
         },
     },
     {
-        "zbirenbaum/copilot-cmp",
-        deprecations = {
-            "zbirenbaum/copilot.lua",
-        },
-        cmd = "Copilot",
-        event = 'InsertEnter',
-        config = true,
-    },
-    {
         "CopilotC-Nvim/CopilotChat.nvim",
         deprecations = {
             "zbirenbaum/copilot.lua",

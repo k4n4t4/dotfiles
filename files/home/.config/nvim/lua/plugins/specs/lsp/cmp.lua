@@ -1,6 +1,17 @@
 return {
     {
+        "zbirenbaum/copilot-cmp",
+        enabled = true,
+        deprecations = {
+            "zbirenbaum/copilot.lua",
+        },
+        cmd = "Copilot",
+        event = 'InsertEnter',
+        config = true,
+    },
+    {
         "hrsh7th/nvim-cmp",
+        enabled = true,
         dependencies = {
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-emoji",
