@@ -52,7 +52,6 @@ return {
                 documentation = {
                     auto_show = true,
                     window = {
-                        border = "none",
                         winblend = 10,
                     },
                 },
