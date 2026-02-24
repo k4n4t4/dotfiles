@@ -1,11 +1,14 @@
 local M = {}
 
+local group = vim.api.nvim_create_augroup("Tabline", { clear = true })
+
 require"utils.tabuf".setup()
 
 
 M.min_tabs = 0
 
 vim.api.nvim_create_autocmd("User", {
+    group = group,
     pattern = "TabufUpdated",
     callback = function()
         if vim.t.bufs and #vim.t.bufs >= M.min_tabs then
