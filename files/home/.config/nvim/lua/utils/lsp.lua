@@ -80,27 +80,31 @@ function M.auto_set(config_path)
             local servers = {}
             do
                 local ok, mason_lspconfig_mappings = pcall(require, "mason-lspconfig.mappings")
-
                 if ok then
                     local filetype_map = mason_lspconfig_mappings.get_filetype_map()
                     servers = filetype_map[args.match] or {}
-                else
-                    return
                 end
             end
 
             for _, server_name in ipairs(servers) do
                 if not M.configured[server_name] then
+                    local had_custom_config, config = pcall(require, config_path .. "." .. server_name)
+
                     local installed = vim.tbl_contains(installed_servers, server_name)
 
-                    local had_custom_config, config = pcall(require, config_path .. "." .. server_name)
-                    if had_custom_config
-                        and (not installed)
-                        and config
-                        and config.cmd
-                        and #config.cmd > 0
-                    then
-                        installed = installed or vim.fn.executable(config.cmd[1]) == 1
+                    if not installed then
+                        local cmd
+                        if had_custom_config and config and config.cmd and #config.cmd > 0 then
+                            cmd = config.cmd
+                        else
+                            local registered = vim.lsp.config[server_name]
+                            if registered and registered.cmd and #registered.cmd > 0 then
+                                cmd = registered.cmd
+                            end
+                        end
+                        if cmd then
+                            installed = vim.fn.executable(cmd[1]) == 1
+                        end
                     end
 
                     if installed then
