@@ -48,6 +48,7 @@ return {
                 nerd_font_variant = 'mono',
             },
             completion = {
+                list = { selection = { preselect = false } },
                 ghost_text = { enabled = true },
                 documentation = {
                     auto_show = true,

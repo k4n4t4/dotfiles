@@ -4,19 +4,20 @@ local set = keymap.set
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(event)
         local buf = event.buf
-        set('n', '<LEADER>lf', vim.lsp.buf.format, { buffer = buf, desc = "Format" })
-        set('n', '<LEADER>lr', vim.lsp.buf.rename, { buffer = buf, desc = "Rename" })
-        set('n', '<LEADER>ld', vim.lsp.buf.definition, { buffer = buf, desc = "Definition" })
-        set('n', '<LEADER>lt', vim.lsp.buf.type_definition, { buffer = buf, desc = "Type Definition" })
-        set('n', '<LEADER>lh', vim.lsp.buf.hover, { buffer = buf, desc = "Hover" })
-        set('n', '<LEADER>lc', vim.lsp.buf.code_action, { buffer = buf, desc = "Code Action" })
-        set('n', '<LEADER>lg', vim.lsp.buf.references, { buffer = buf, desc = "References" })
-        set('n', '<LEADER>ls', vim.lsp.buf.signature_help, { buffer = buf, desc = "Signature Help" })
-        set('n', '<LEADER>le', function() vim.lsp.diagnostic.show_line_diagnostics() end,
+        set('n', 'K', vim.lsp.buf.format, { buffer = buf, desc = "Format" })
+        set('n', '<Leader>lf', vim.lsp.buf.format, { buffer = buf, desc = "Format" })
+        set('n', '<Leader>lr', vim.lsp.buf.rename, { buffer = buf, desc = "Rename" })
+        set('n', '<Leader>ld', vim.lsp.buf.definition, { buffer = buf, desc = "Definition" })
+        set('n', '<Leader>lt', vim.lsp.buf.type_definition, { buffer = buf, desc = "Type Definition" })
+        set('n', '<Leader>lh', vim.lsp.buf.hover, { buffer = buf, desc = "Hover" })
+        set('n', '<Leader>lc', vim.lsp.buf.code_action, { buffer = buf, desc = "Code Action" })
+        set('n', '<Leader>lg', vim.lsp.buf.references, { buffer = buf, desc = "References" })
+        set('n', '<Leader>ls', vim.lsp.buf.signature_help, { buffer = buf, desc = "Signature Help" })
+        set('n', '<Leader>le', function() vim.lsp.diagnostic.show_line_diagnostics() end,
             { buffer = buf, desc = "Show Line Diagnostics" })
-        set('n', '<LEADER>l[', function() vim.lsp.diagnostic.goto_prev() end,
+        set('n', '<Leader>l[', function() vim.lsp.diagnostic.goto_prev() end,
             { buffer = buf, desc = "Diagnostic Goto Prev" })
-        set('n', '<LEADER>l]', function() vim.lsp.diagnostic.goto_next() end,
+        set('n', '<Leader>l]', function() vim.lsp.diagnostic.goto_next() end,
             { buffer = buf, desc = "Diagnostic Goto Next" })
     end
 })
