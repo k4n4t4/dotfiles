@@ -2,6 +2,8 @@ local M = {}
 
 local group = vim.api.nvim_create_augroup("Utils_lsp", { clear = true })
 
+--- Returns a list of available null-ls source names for the current buffer's filetype.
+--- @return string[] List of null-ls source names
 function M.get_null_ls_sources()
     local sources = require "null-ls.sources"
     local availables = {}
@@ -11,6 +13,7 @@ function M.get_null_ls_sources()
     return availables
 end
 
+--- Returns active LSP client names and null-ls sources for a buffer.
 ---@param bufnr number
 ---@return string[], table<string, string[]>
 function M.get(bufnr)
@@ -26,6 +29,7 @@ function M.get(bufnr)
     return clients, others
 end
 
+--- Adds the Mason bin directory to PATH if it is not already present.
 function M.add_mason_bin_path()
     local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
     if not vim.env.PATH:find(mason_bin, 1, true) then
@@ -35,9 +39,12 @@ end
 
 M.configured = {}
 
+--- Registers FileType autocmds to lazily load and enable LSP servers based on explicit rules.
+--- Each rule maps one or more filetypes to a server name; the server config is loaded
+--- from `config_path.<server_name>` on first FileType match.
 ---@alias LspRule { [1]: string|string[], [2]: string }
----@param config_path string
----@param lsp_rules LspRule[]
+---@param config_path string Lua module prefix for server config files (e.g. "lsp")
+---@param lsp_rules LspRule[] List of {filetype_pattern, server_name} rules
 function M.set(config_path, lsp_rules)
     for _, rule in ipairs(lsp_rules) do
         local pattern, server_name = rule[1], rule[2]
@@ -63,7 +70,10 @@ function M.set(config_path, lsp_rules)
     end
 end
 
----@param config_path string
+--- Registers a catch-all FileType autocmd that auto-detects and enables LSP servers
+--- installed via Mason (or available on PATH) for each filetype, optionally loading
+--- custom configs from `config_path.<server_name>`.
+---@param config_path string Lua module prefix for server config files (e.g. "lsp")
 function M.auto_set(config_path)
     vim.api.nvim_create_autocmd("FileType", {
         group = group,

@@ -35,6 +35,8 @@ M.default_config = {
     },
 }
 
+--- Sets the specified highlight groups to use a transparent background.
+--- @param highlight_groups string[] List of highlight group names to make transparent
 function M.transparent_background(highlight_groups)
     for _, name in ipairs(highlight_groups) do
         hi.set(name, {
@@ -44,6 +46,8 @@ function M.transparent_background(highlight_groups)
     end
 end
 
+--- Sets up transparent background using the provided config or module defaults.
+--- @param config { highlight_groups?: string[] }
 function M.setup(config)
     M.transparent_background(config.highlight_groups or M.default_config.highlight_groups)
 end

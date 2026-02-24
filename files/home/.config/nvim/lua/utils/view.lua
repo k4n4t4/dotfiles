@@ -3,6 +3,10 @@ local M = {}
 local group = vim.api.nvim_create_augroup("remember_view", { clear = true })
 
 
+--- Sets up automatic saving and restoring of window views per buffer.
+--- On `BufWinLeave` the view is saved with `:mkview`; on `BufWinEnter` it is
+--- restored with `:loadview`.
+--- @param viewoptions? string[] Value to set for `'viewoptions'` (e.g. `{"folds", "cursor"}`)
 function M.setup(viewoptions)
     if viewoptions then
         vim.opt.viewoptions = viewoptions

@@ -1,25 +1,29 @@
 local M = {}
 
 
+--- Prints a list of `{text, highlight_group}` pairs using `nvim_echo`.
 ---@param list [string, string][]
 function M.echo(list)
     vim.api.nvim_echo(list, true, {})
 end
 
----@param fmt string
----@param ... any
+--- Prints a formatted message with no special highlight (Normal).
+---@param fmt string Format string (same as string.format)
+---@param ... any Arguments for the format string
 function M.log(fmt, ...)
     M.echo { { string.format(fmt, ...), "None" } }
 end
 
----@param fmt string
----@param ... any
+--- Prints a formatted warning message using the WarningMsg highlight.
+---@param fmt string Format string (same as string.format)
+---@param ... any Arguments for the format string
 function M.warn(fmt, ...)
     M.echo { { string.format(fmt, ...), "WarningMsg" } }
 end
 
----@param fmt string
----@param ... any
+--- Prints a formatted error message using the ErrorMsg highlight.
+---@param fmt string Format string (same as string.format)
+---@param ... any Arguments for the format string
 function M.error(fmt, ...)
     M.echo { { string.format(fmt, ...), "ErrorMsg" } }
 end
@@ -82,6 +86,7 @@ local function table_to_str(tbl, indent_count, ignore_tables)
 end
 
 
+--- Pretty-prints a table as an indented string using `nvim_echo`.
 ---@param tbl table<any>
 function M.table(tbl)
     M.echo { { table_to_str(tbl), "None" } }

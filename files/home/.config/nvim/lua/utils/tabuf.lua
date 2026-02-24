@@ -20,6 +20,7 @@ local function buf_index(bufnr)
     end
 end
 
+--- Switches to the next buffer in the current tab's scoped buffer list (wraps around).
 function M.next()
     local bufs = vim.t.bufs or {}
     if #bufs == 0 then return end
@@ -31,6 +32,7 @@ function M.next()
     set_buf(idx == #bufs and bufs[1] or bufs[idx + 1])
 end
 
+--- Switches to the previous buffer in the current tab's scoped buffer list (wraps around).
 function M.prev()
     local bufs = vim.t.bufs or {}
     if #bufs == 0 then return end
@@ -42,7 +44,8 @@ function M.prev()
     set_buf(idx == 1 and bufs[#bufs] or bufs[idx - 1])
 end
 
---- @param bufnr? integer
+--- Closes a buffer, prompting for force-close if it has unsaved changes.
+--- @param bufnr? integer Buffer to close; defaults to the current buffer
 function M.close(bufnr)
     bufnr = bufnr or cur_buf()
     if not api.nvim_buf_is_valid(bufnr) then return end
@@ -63,6 +66,8 @@ local function init_tab_bufs()
     end, api.nvim_list_bufs())
 end
 
+--- Sets up tab-scoped buffer tracking: each tab maintains its own buffer list
+--- via `vim.t.bufs`, kept in sync by BufAdd/BufDelete/TabNew/TabEnter autocmds.
 function M.setup()
     init_tab_bufs()
 

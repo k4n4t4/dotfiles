@@ -4,9 +4,11 @@ local cache = {}
 local pending = {}
 
 
---- @param plugin_name string
---- @param event string
---- @return any|nil
+--- Schedules a plugin to be loaded on the first occurrence of the given event.
+--- Returns the cached module immediately if it has already been loaded, or `nil` while pending.
+--- @param plugin_name string Lua module name to require (e.g. "nvim-treesitter")
+--- @param event string Neovim autocmd event that triggers the load (e.g. "BufReadPost")
+--- @return any|nil The loaded module, or nil if not yet available
 function M.load(plugin_name, event)
     if cache[plugin_name] then
         return cache[plugin_name]
@@ -32,7 +34,8 @@ function M.load(plugin_name, event)
     return nil
 end
 
---- @param plugin_name string
+--- Returns a previously loaded plugin module from cache, or nil if not yet loaded.
+--- @param plugin_name string Lua module name
 --- @return any|nil
 function M.get(plugin_name)
     return cache[plugin_name]

@@ -24,11 +24,13 @@ end
 
 M.path = {}
 
+--- Returns the current working directory (cached per session).
 --- @return string
 function M.path.cwd()
     return cached("path_cwd", uv.cwd)
 end
 
+--- Returns the Neovim config directory path (cached).
 --- @return string
 function M.path.config()
     return cached("path_config", function()
@@ -36,6 +38,7 @@ function M.path.config()
     end)
 end
 
+--- Returns true if the cwd is inside the Neovim config directory (cached).
 --- @return boolean
 function M.path.in_config_dir()
     return cached("path_in_config_dir", function()
@@ -43,6 +46,7 @@ function M.path.in_config_dir()
     end)
 end
 
+--- Returns true if the cwd contains "/nvim" in its path (cached).
 --- @return boolean
 function M.path.in_nvim_repo()
     return cached("path_in_nvim_repo", function()
@@ -50,6 +54,7 @@ function M.path.in_nvim_repo()
     end)
 end
 
+--- Returns true if the cwd is in the config dir or a Neovim-related repository (cached).
 --- @return boolean
 function M.path.is_nvim_related()
     return cached("path_is_nvim_related", function()
@@ -59,6 +64,7 @@ end
 
 M.env = {}
 
+--- Returns the OS name (e.g. "Linux", "Darwin") as reported by libuv (cached).
 --- @return string
 function M.env.os_name()
     return cached("env_os_name", function()
@@ -66,6 +72,7 @@ function M.env.os_name()
     end)
 end
 
+--- Returns true if the current OS is Linux (cached).
 --- @return boolean
 function M.env.is_linux()
     return cached("env_is_linux", function()
@@ -73,6 +80,7 @@ function M.env.is_linux()
     end)
 end
 
+--- Returns true if running on NixOS (detected via /etc/NIXOS or /run/current-system) (cached).
 --- @return boolean
 function M.env.is_nixos()
     return cached("env_is_nixos", function()
@@ -81,6 +89,7 @@ function M.env.is_nixos()
     end)
 end
 
+--- Returns true if running inside a Docker container (cached).
 --- @return boolean
 function M.env.is_docker()
     return cached("env_is_docker", function()
@@ -89,6 +98,7 @@ function M.env.is_docker()
     end)
 end
 
+--- Returns true if running inside WSL (Windows Subsystem for Linux) (cached).
 --- @return boolean
 function M.env.is_wsl()
     return cached("env_is_wsl", function()
@@ -96,6 +106,7 @@ function M.env.is_wsl()
     end)
 end
 
+--- Returns true if Neovim is running as a VSCode extension host (cached).
 --- @return boolean
 function M.env.is_vscode()
     return cached("env_is_vscode", function()
@@ -151,13 +162,15 @@ local function cached_buf(bufnr, key, fn)
     return M.buf.cache[bufnr][key]
 end
 
---- @param bufnr integer
---- @param name string
+--- Gets an option value for a buffer.
+--- @param bufnr integer Buffer number (0 for current)
+--- @param name string Option name
 --- @return any
 function M.buf.get_opt(bufnr, name)
     return vim.api.nvim_get_option_value(name, { buf = bufnr })
 end
 
+--- Returns the filename (tail) of the buffer's path (cached per buffer).
 --- @param bufnr integer
 --- @return string|nil
 function M.buf.name(bufnr)
@@ -167,6 +180,7 @@ function M.buf.name(bufnr)
     end)
 end
 
+--- Returns the full path of the buffer (cached per buffer).
 --- @param bufnr integer
 --- @return string|nil
 function M.buf.path(bufnr)
@@ -175,6 +189,7 @@ function M.buf.path(bufnr)
     end)
 end
 
+--- Returns the filetype of the buffer (cached per buffer, invalidated on OptionSet).
 --- @param bufnr integer
 --- @return string|nil
 function M.buf.filetype(bufnr)
@@ -183,6 +198,7 @@ function M.buf.filetype(bufnr)
     end)
 end
 
+--- Returns the buftype of the buffer (cached per buffer). Empty string means a normal file.
 --- @param bufnr integer
 --- @return string|nil
 function M.buf.buftype(bufnr)
@@ -191,6 +207,7 @@ function M.buf.buftype(bufnr)
     end)
 end
 
+--- Returns the file encoding of the buffer, falling back to `vim.o.encoding` (cached).
 --- @param bufnr integer
 --- @return string|nil
 function M.buf.encoding(bufnr)
@@ -200,6 +217,7 @@ function M.buf.encoding(bufnr)
     end)
 end
 
+--- Returns the file format of the buffer (e.g. "unix", "dos") (cached).
 --- @param bufnr integer
 --- @return string|nil
 function M.buf.fileformat(bufnr)
@@ -208,6 +226,7 @@ function M.buf.fileformat(bufnr)
     end)
 end
 
+--- Returns true if the buffer has unsaved modifications.
 --- @param bufnr integer
 --- @return boolean
 function M.buf.modified(bufnr)
@@ -215,6 +234,7 @@ function M.buf.modified(bufnr)
     return vim.api.nvim_buf_is_valid(b) and M.buf.get_opt(b, "modified") or false
 end
 
+--- Returns true if the buffer is modifiable.
 --- @param bufnr integer
 --- @return boolean
 function M.buf.is_modifiable(bufnr)
@@ -222,6 +242,7 @@ function M.buf.is_modifiable(bufnr)
     return vim.api.nvim_buf_is_valid(b) and M.buf.get_opt(b, "modifiable") or false
 end
 
+--- Returns true if the buffer is read-only.
 --- @param bufnr integer
 --- @return boolean
 function M.buf.is_readonly(bufnr)
@@ -229,12 +250,14 @@ function M.buf.is_readonly(bufnr)
     return vim.api.nvim_buf_is_valid(b) and M.buf.get_opt(b, "readonly") or false
 end
 
+--- Returns true if the buffer is a real file (buftype == "").
 --- @param bufnr integer
 --- @return boolean
 function M.buf.is_real_file(bufnr)
     return M.buf.buftype(bufnr) == ""
 end
 
+--- Returns true if the buffer is a preview window buffer.
 --- @param bufnr integer
 --- @return boolean
 function M.buf.is_preview(bufnr)
@@ -242,8 +265,9 @@ function M.buf.is_preview(bufnr)
     return vim.api.nvim_buf_is_valid(b) and M.buf.get_opt(b, "previewwindow") or false
 end
 
+--- Returns diagnostics for the buffer grouped by severity (cached, invalidated on DiagnosticChanged).
 --- @param bufnr integer
---- @return table|nil
+--- @return table|nil Table with keys `error`, `warn`, `info`, `hint`
 function M.buf.diagnostics(bufnr)
     return cached_buf(bufnr, "diagnostics", function(b)
         if not vim.api.nvim_buf_is_valid(b) then return {} end
@@ -256,8 +280,9 @@ function M.buf.diagnostics(bufnr)
     end)
 end
 
+--- Returns a list of LSP client names attached to the buffer (cached, invalidated on LspAttach).
 --- @param bufnr integer
---- @return table|nil
+--- @return table|nil List of client name strings
 function M.buf.lsp_clients(bufnr)
     return cached_buf(bufnr, "lsp_clients", function(b)
         local clients = vim.lsp.get_clients({ bufnr = b })
@@ -269,8 +294,10 @@ function M.buf.lsp_clients(bufnr)
     end)
 end
 
+--- Returns the current search count for the buffer (only for the active buffer with `hlsearch` on).
+--- Returns nil if the buffer is not active, hlsearch is off, or there are no matches.
 --- @param bufnr integer
---- @return table|nil
+--- @return table|nil searchcount result (see `:h searchcount()`)
 function M.buf.search_count(bufnr)
     local b = (bufnr == 0 or bufnr == nil) and vim.api.nvim_get_current_buf() or bufnr
     if b ~= vim.api.nvim_get_current_buf() or vim.v.hlsearch == 0 then
@@ -285,8 +312,9 @@ function M.buf.search_count(bufnr)
     return search
 end
 
+--- Returns gitsigns status for the buffer (head, added, changed, removed), or nil if unavailable.
 --- @param bufnr integer
---- @return table|nil
+--- @return table|nil Table with keys `head`, `added`, `changed`, `removed`
 function M.buf.gitsigns(bufnr)
     local b = (bufnr == 0 or bufnr == nil) and vim.api.nvim_get_current_buf() or bufnr
     if not vim.api.nvim_buf_is_valid(b) then return nil end
@@ -328,7 +356,8 @@ local function cached_tab(tabnr, key, fn)
     return M.tab.cache[tabnr][key]
 end
 
---- @param tabpage integer
+--- Returns the tab number (1-based) for a tabpage handle (cached).
+--- @param tabpage integer Tabpage handle (0 for current)
 --- @return integer|nil
 function M.tab.number(tabpage)
     return cached_tab(tabpage, "number", function(tp)
@@ -337,8 +366,9 @@ function M.tab.number(tabpage)
     end)
 end
 
---- @param tabpage integer
---- @return table|nil
+--- Returns the list of buffer handles currently open in all windows of a tabpage (cached).
+--- @param tabpage integer Tabpage handle (0 for current)
+--- @return table|nil List of buffer handles
 function M.tab.buflist(tabpage)
     return cached_tab(tabpage, "buflist", function(tp)
         tp = (tp == 0 or tp == nil) and vim.api.nvim_get_current_tabpage() or tp
@@ -353,8 +383,9 @@ function M.tab.buflist(tabpage)
     end)
 end
 
---- @param tabpage integer
---- @return integer|nil
+--- Returns the buffer handle of the focused window in a tabpage (cached).
+--- @param tabpage integer Tabpage handle (0 for current)
+--- @return integer|nil Buffer handle
 function M.tab.active_buf(tabpage)
     return cached_tab(tabpage, "active_buf", function(tp)
         tp = (tp == 0 or tp == nil) and vim.api.nvim_get_current_tabpage() or tp
@@ -365,7 +396,8 @@ function M.tab.active_buf(tabpage)
     end)
 end
 
---- @param tabpage integer
+--- Returns true if any buffer in the tabpage has unsaved modifications (cached).
+--- @param tabpage integer Tabpage handle (0 for current)
 --- @return boolean|nil
 function M.tab.is_modified(tabpage)
     return cached_tab(tabpage, "is_modified", function(tp)
@@ -391,7 +423,8 @@ local function cached_win(winnr, key, fn)
     return M.win.cache[winnr][key]
 end
 
---- @param winnr integer
+--- Returns the buffer handle displayed in a window (cached).
+--- @param winnr integer Window handle (0 for current)
 --- @return integer|nil
 function M.win.buf(winnr)
     return cached_win(winnr, "buf", function(w)
@@ -399,7 +432,8 @@ function M.win.buf(winnr)
     end)
 end
 
---- @param winnr integer
+--- Returns the width of a window in columns (cached).
+--- @param winnr integer Window handle (0 for current)
 --- @return integer|nil
 function M.win.width(winnr)
     return cached_win(winnr, "width", function(w)
@@ -407,7 +441,8 @@ function M.win.width(winnr)
     end)
 end
 
---- @param winnr integer
+--- Returns the height of a window in rows (cached).
+--- @param winnr integer Window handle (0 for current)
 --- @return integer|nil
 function M.win.height(winnr)
     return cached_win(winnr, "height", function(w)
@@ -415,7 +450,8 @@ function M.win.height(winnr)
     end)
 end
 
---- @param winnr integer
+--- Returns true if the window is a floating window (cached).
+--- @param winnr integer Window handle (0 for current)
 --- @return boolean|nil
 function M.win.is_float(winnr)
     return cached_win(winnr, "is_float", function(w)
@@ -424,7 +460,8 @@ function M.win.is_float(winnr)
     end)
 end
 
---- @param winnr integer
+--- Returns the cursor position in a window as `{row, col}` (not cached).
+--- @param winnr integer Window handle (0 for current)
 --- @return { row: integer, col: integer }|nil
 function M.win.cursor(winnr)
     local w = (winnr == 0 or winnr == nil) and vim.api.nvim_get_current_win() or winnr
@@ -433,7 +470,8 @@ function M.win.cursor(winnr)
     return { row = pos[1], col = pos[2] }
 end
 
---- @param winnr integer
+--- Returns the top-left screen position of a window as `{row, col}` (cached).
+--- @param winnr integer Window handle (0 for current)
 --- @return { row: integer, col: integer }|nil  top-left position on screen
 function M.win.position(winnr)
     return cached_win(winnr, "position", function(w)
@@ -444,7 +482,8 @@ end
 
 M.edit = {}
 
---- @return string
+--- Returns the name of the register currently being recorded to, or "" if not recording.
+--- @return string Register name (e.g. "q"), or "" if no macro is recording
 function M.edit.macro()
     local reg = vim.fn.reg_recording()
     if reg == "" then
@@ -453,8 +492,9 @@ function M.edit.macro()
     return reg
 end
 
---- @param reg string
---- @return string
+--- Returns the contents of a named register.
+--- @param reg string Register name (e.g. "a", "+", "*")
+--- @return string Register contents
 function M.edit.get_register(reg)
     return vim.fn.getreg(reg)
 end

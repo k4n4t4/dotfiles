@@ -3,9 +3,10 @@ local M = {}
 M.SEVERITY = vim.diagnostic.severity
 
 
----@param bufnr number
----@param severity_list? vim.diagnostic.Severity[]
----@return table<vim.diagnostic.Severity, vim.Diagnostic[]>
+--- Returns diagnostics for a buffer, grouped by severity.
+---@param bufnr number Buffer number (0 for current buffer)
+---@param severity_list? vim.diagnostic.Severity[] Severities to include; defaults to all four levels
+---@return table<vim.diagnostic.Severity, vim.Diagnostic[]> Map from severity to list of diagnostics
 function M.get(bufnr, severity_list)
     severity_list = severity_list or {
         M.SEVERITY.ERROR,

@@ -18,12 +18,14 @@ local M = {}
 ---@type LocalConfig
 M.config = {}
 
+--- Stores the given config as the active local config without applying it.
 ---@param config LocalConfig?
 ---@return nil
 function M.set_config(config)
     M.config = config or {}
 end
 
+--- Stores and immediately applies the given local config.
 ---@param config LocalConfig?
 ---@return nil
 function M.setup(config)
@@ -31,6 +33,7 @@ function M.setup(config)
     M.load(M.config)
 end
 
+--- Applies the given local config: sets shell, colorscheme, number options, mouse, and runs custom code.
 ---@param config LocalConfig?
 ---@return nil
 function M.load(config)
