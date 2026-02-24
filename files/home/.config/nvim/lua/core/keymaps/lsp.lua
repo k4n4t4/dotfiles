@@ -12,23 +12,41 @@ vim.api.nvim_create_autocmd("LspAttach", {
         set('n', '<Leader>lt', vim.lsp.buf.type_definition, { buffer = buf, desc = "Type Definition" })
         set('n', '<Leader>lc', vim.lsp.buf.code_action, { buffer = buf, desc = "Code Action" })
         set('n', '<Leader>lg', vim.lsp.buf.references, { buffer = buf, desc = "References" })
+
         set('n', '<Leader>lh', function()
-            vim.lsp.buf.hover({ border = "none", winblend = 10 })
+            vim.lsp.buf.hover {
+                border = "none",
+                winblend = 10,
+                focusable = true,
+            }
         end, { buffer = buf, desc = "Hover" })
+
         set('n', '<Leader>ls', function()
-            vim.lsp.buf.signature_help({ border = "none", winblend = 10 })
+            vim.lsp.buf.signature_help {
+                border = "none",
+                winblend = 10,
+                focusable = true,
+            }
         end, { buffer = buf, desc = "Signature Help" })
+
         set('n', 'K', function()
-            vim.lsp.buf.hover({ border = "none", winblend = 10 })
+            vim.lsp.buf.hover {
+                border = "none",
+                winblend = 10,
+                focusable = true,
+            }
         end, { buffer = buf, desc = "Hover" })
-        set('n', '<C-K>', function()
-            vim.lsp.buf.signature_help({ border = "none", winblend = 10 })
+
+        set('n', '<C-k>', function()
+            vim.lsp.buf.signature_help {
+                border = "none",
+                winblend = 10,
+                focusable = true,
+            }
         end, { buffer = buf, desc = "Signature Help" })
-        set('n', '<Leader>le', function() vim.lsp.diagnostic.show_line_diagnostics() end,
-            { buffer = buf, desc = "Show Line Diagnostics" })
-        set('n', '<Leader>l[', function() vim.lsp.diagnostic.goto_prev() end,
-            { buffer = buf, desc = "Diagnostic Goto Prev" })
-        set('n', '<Leader>l]', function() vim.lsp.diagnostic.goto_next() end,
-            { buffer = buf, desc = "Diagnostic Goto Next" })
+
+        set('n', '<Leader>le', function() vim.lsp.diagnostic.show_line_diagnostics() end, { buffer = buf, desc = "Show Line Diagnostics" })
+        set('n', '<Leader>l[', function() vim.lsp.diagnostic.goto_prev() end, { buffer = buf, desc = "Diagnostic Goto Prev" })
+        set('n', '<Leader>l]', function() vim.lsp.diagnostic.goto_next() end, { buffer = buf, desc = "Diagnostic Goto Next" })
     end
 })
