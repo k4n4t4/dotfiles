@@ -2,9 +2,8 @@ local M = {}
 
 M.group = vim.api.nvim_create_augroup("Tabline", { clear = true })
 
-require "utils.tabuf".setup()
-
 M.min_tabs = 0
+M.show_tabline = true
 
 function M.show()
     vim.opt.showtabline = 2
@@ -14,7 +13,14 @@ function M.hide()
     vim.opt.showtabline = 0
 end
 
-function M.setup()
+function M.setup(opts)
+    opts = opts or {}
+    M.show_tabline = opts.show_tabline or M.show_tabline
+    if not M.show_tabline then return end
+
+    M.min_tabs = opts.min_tabs or M.min_tabs
+
+    require "utils.tabuf".setup()
     require "core.ui.tabline.highlights"
 
     vim.opt.showtabline = 0
