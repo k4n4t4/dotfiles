@@ -1,7 +1,9 @@
+local hi = require("utils.highlight")
+
 return function()
     if vim.v.lnum == vim.fn.line(".") then
-        return "%#CursorLineNr#▌%*"
+        return hi.use("CursorLineNr") .. "▌%*"
     else
-        return "%#LineNr#│%*"
+        return hi.use("LineNr") .. "│%*"
     end
 end

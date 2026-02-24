@@ -1,4 +1,6 @@
 local plugin = require("utils.plugin")
+local info = require("utils.info")
+
 plugin.load("nvim-web-devicons", "UIEnter")
 
 local filetype_aliases = {
@@ -7,32 +9,17 @@ local filetype_aliases = {
     ["python"]     = "py",
 }
 
-
 return function()
-    local ft = vim.bo[vim.api.nvim_win_get_buf(vim.g.statusline_winid)].filetype
-
-    local icon, icon_hl, color
+    local bufnr = vim.api.nvim_win_get_buf(vim.g.statusline_winid)
+    local ft = info.buf.filetype(bufnr)
 
     local devicons = plugin.get("nvim-web-devicons")
     if devicons then
-        icon, color = devicons.get_icon_color_by_filetype(ft)
+        local icon, color = devicons.get_icon_color_by_filetype(ft)
         if icon then
-            icon_hl = "StlIcon@" .. ft
-
-            vim.api.nvim_set_hl(0, icon_hl, {
-                fg = color,
-                bg = "none",
-            })
-
-            icon_hl = "%#" .. icon_hl .. "#"
-
-            local format = {
-                icon_hl,
-                icon,
-                "%*",
-            }
-
-            return table.concat(format, "")
+            local icon_hl = "StlIcon@" .. ft
+            vim.api.nvim_set_hl(0, icon_hl, { fg = color, bg = "none" })
+            return "%#" .. icon_hl .. "#" .. icon .. "%*"
         end
     end
 

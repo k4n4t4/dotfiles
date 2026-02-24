@@ -1,4 +1,5 @@
 local utils_fold = require "utils.fold"
+local hi = require("utils.highlight")
 
 function ToggleFold()
     local line = vim.fn.getmousepos().line
@@ -22,15 +23,15 @@ return function()
         if fi.lnum == vim.v.lnum then
             if vim.v.virtnum == 0 then
                 if fi.folded then
-                    s = s .. "%#StatusColumnFoldHead#>%*"
+                    s = s .. hi.use("StatusColumnFoldHead") .. ">%*"
                 else
-                    s = s .. "%#StatusColumnFoldHead#v%*"
+                    s = s .. hi.use("StatusColumnFoldHead") .. "v%*"
                 end
             else
-                s = s .. "%#StatusColumnFold#¦%*"
+                s = s .. hi.use("StatusColumnFold") .. "¦%*"
             end
         elseif fi.level ~= 0 then
-            s = s .. "%#StatusColumnFold#¦%*"
+            s = s .. hi.use("StatusColumnFold") .. "¦%*"
         else
             s = s .. " "
         end

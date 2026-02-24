@@ -1,3 +1,5 @@
+local hi = require("utils.highlight")
+
 local mode_props = {
     ["n"] = {
         name = "N",
@@ -145,24 +147,9 @@ local mode_props = {
     },
 }
 
+
 return function()
     local mode = vim.api.nvim_get_mode()
-    local blocking = mode.blocking
-
-    local prop = mode_props[mode.mode] or {
-        name = nil,
-        hi = nil,
-    }
-
-    local name = prop.name or "?"
-    local color = prop.hi or "StlModeOther"
-
-    local format = {
-        "%#" .. color .. "#",
-        name,
-        blocking and "=" or "",
-        "%*",
-    }
-
-    return table.concat(format, "")
+    local prop = mode_props[mode.mode] or {}
+    return hi.use(prop.hi or "StlModeOther") .. (prop.name or "?") .. (mode.blocking and "=" or "") .. "%*"
 end

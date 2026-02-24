@@ -1,17 +1,24 @@
 local M = {}
 
+local hi = require("utils.highlight")
+local info = require("utils.info")
+
 M.mode = require("core.ui.statusline.components.mode")
 M.filetype = require("core.ui.statusline.components.filetype")
 M.git = require("core.ui.statusline.components.git")
 M.diagnostic = require("core.ui.statusline.components.diagnostic")
 M.flag = require("core.ui.statusline.components.flag")
 
+local function stl_buf()
+    return vim.api.nvim_win_get_buf(vim.g.statusline_winid)
+end
+
 function M.encoding()
-    return vim.o.fenc or vim.o.enc
+    return info.buf.encoding(stl_buf())
 end
 
 function M.fileformat()
-    return vim.o.ff
+    return info.buf.fileformat(stl_buf())
 end
 
 local utils_lsp = require "utils.lsp"
@@ -24,31 +31,23 @@ function M.lsp()
 end
 
 function M.macro_recording()
-    local format = {}
-    local macro = vim.fn.reg_recording()
+    local macro = info.edit.macro()
     if macro ~= "" then
-        table.insert(format, "%#StlMacro#")
-        table.insert(format, "@" .. macro)
-        table.insert(format, "%*")
+        return hi.use("StlMacro") .. "@" .. macro .. "%*"
     end
-    return table.concat(format, "")
+    return ""
 end
 
 function M.search_count()
-    local format = {}
-
-    local search = vim.fn.searchcount()
-
-    if search.total ~= nil and vim.v.hlsearch == 1 then
-        table.insert(format, "[" .. search.current .. "/" .. search.total .. "] ")
+    local search = info.buf.search_count(0)
+    if search then
+        return "[" .. search.current .. "/" .. search.total .. "] "
     end
-
-    return table.concat(format, "")
+    return ""
 end
 
 function M.file()
-    local full_path = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(vim.g.statusline_winid))
-    return vim.fn.fnamemodify(full_path, ":t")
+    return info.buf.name(stl_buf()) or ""
 end
 
 return M
