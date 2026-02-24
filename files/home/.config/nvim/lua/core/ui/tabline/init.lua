@@ -1,4 +1,5 @@
-require "core.ui.tabline.autocmds"
+require"utils.tabuf".setup()
+
 require "core.ui.tabline.highlights"
 require "core.ui.tabline.format"
 
