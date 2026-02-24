@@ -20,7 +20,7 @@ hi.set("StlDiagnosticHINT", { fg = hi.ref("DiagnosticHint", 'fg') })
 hi.set("StlGitAdd", { fg = hi.ref("GitSignsAdd", 'fg') })
 hi.set("StlGitRemove", { fg = hi.ref("GitSignsDelete", 'fg') })
 hi.set("StlGitChange", { fg = hi.ref("GitSignsChange", 'fg') })
-hi.set("StlGitBranch", { fg = "#CC9955" })
+hi.set("StlGitBranch", { fg = hi.ref("GitBranch", "fg") })
 
 
 local group = vim.api.nvim_create_augroup("StatusLine", { clear = true })

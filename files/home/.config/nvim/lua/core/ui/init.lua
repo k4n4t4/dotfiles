@@ -2,6 +2,7 @@ local hl = require("utils.highlight")
 
 hl.link("MacroRecord", "Operator")
 hl.link("FileModified", "WarningMsg")
+hl.link("GitBranch", "Constant")
 
 require "core.ui.statusline"
 require "core.ui.statuscolumn"

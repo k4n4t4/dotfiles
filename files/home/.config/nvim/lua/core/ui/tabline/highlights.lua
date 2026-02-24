@@ -1,15 +1,15 @@
-local highlight = require("utils.highlight")
+local hl = require("utils.highlight")
 
-highlight.set("TabLine", {
-    fg = "#888888",
+hl.set("TabLine", {
+    fg = hl.ref("LineNr", "fg"),
     bg = "#202020",
 })
-highlight.set("TabLineSel", {
-    fg = "#C0C0C0",
+hl.set("TabLineSel", {
+    fg = hl.ref("Normal", "fg"),
     bg = "#303030",
     bold = true,
 })
-highlight.set("TabLineFill", {
-    fg = "#404040",
+hl.set("TabLineFill", {
+    fg = hl.ref("LineNr", "fg"),
     bg = "#101010",
 })
