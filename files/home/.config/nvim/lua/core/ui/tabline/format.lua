@@ -52,12 +52,19 @@ local function buf_format(bufnr)
     local mod = info.buf.modified(bufnr) and " +" or ""
     local ro = info.buf.is_readonly(bufnr) and " R" or ""
 
+    local sep_hi_name = (is_active_buf and "TabLineSelInv" or "TabLineInv") .. "@" .. filetype
+    hi.set(sep_hi_name, {
+        fg = hi.get(is_active_buf and "TabLineSel" or "TabLine").bg,
+        bg = hi.get("TabLineFill").bg,
+    })
+    local sep_hi = "%#" .. sep_hi_name .. "#"
 
     return table.concat({
         "%", bufnr, "@v:lua.HandleBufClick@",
-        buf_hi, "[",
+        sep_hi, "🮋", buf_hi,
         icon_hl, icon, (icon ~= "" and " " or ""),
-        buf_hi, name, mod, ro, "]",
+        buf_hi, name, mod, ro,
+        sep_hi, "▉", buf_hi,
         "%X"
     })
 end
