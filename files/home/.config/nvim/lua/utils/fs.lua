@@ -6,14 +6,14 @@ local uv = vim.uv or vim.loop
 --- @param path string Dot-separated path (e.g. "foo.bar.baz")
 --- @return string Filesystem path (e.g. "foo/bar/baz")
 function M.to_path(path)
-    return path:gsub("%.", "/")
+    return (path:gsub("%.", "/"))
 end
 
 --- Converts a filesystem path to a dot-separated module path (replaces '/' with '.').
 --- @param path string Filesystem path (e.g. "foo/bar/baz")
 --- @return string Dot-separated path (e.g. "foo.bar.baz")
 function M.to_dot(path)
-    return path:gsub("/", ".")
+    return (path:gsub("/", "."))
 end
 
 --- Returns the filename (last path component) from a path.
