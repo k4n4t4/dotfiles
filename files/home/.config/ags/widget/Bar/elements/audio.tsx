@@ -1,6 +1,7 @@
 import { createBinding, createComputed } from "ags"
 
 import Wp from "gi://AstalWp"
+import Gtk from "gi://Gtk"
 
 
 export default function() {
@@ -36,5 +37,20 @@ export default function() {
          + `mic-volume: ${Math.round(mic_volume * 100)}%${mic_isMuted ? " mute" : ""}`
   })
 
-  return (<label class="audio" tooltipText={tooltip_text} label={audio_status} />)
+  return (
+    <box
+      $={(self) => {
+        const scrollCtrl = new Gtk.EventControllerScroll({
+          flags: Gtk.EventControllerScrollFlags.VERTICAL | Gtk.EventControllerScrollFlags.DISCRETE,
+        })
+        const step = 0.05
+        scrollCtrl.connect("scroll", (_ctrl, _dx, dy) => {
+          audio.volume = Math.max(0, Math.min(1, audio.volume - dy * step))
+        })
+        self.add_controller(scrollCtrl)
+      }}
+    >
+      <label class="audio" tooltipText={tooltip_text} label={audio_status} />
+    </box>
+  )
 }
