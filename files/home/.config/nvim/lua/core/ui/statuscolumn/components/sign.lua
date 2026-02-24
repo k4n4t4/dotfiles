@@ -4,7 +4,6 @@
 local function get_max_slots(winid)
     local sc = vim.wo[winid].signcolumn
     if sc == "no" or sc == "number" then return 0 end
-    -- "yes:N" / "auto:N" → N slots, otherwise 1
     local n = sc:match(":(%d+)$")
     return tonumber(n) or 1
 end
@@ -52,8 +51,6 @@ return function(winid)
     for i = 1, slots do
         local s = signs[i]
         if s then
-            -- Neovim returns sign_text padded to 2 display cells,
-            -- so no need to cut with string.sub (cutting by bytes breaks multibyte chars)
             local text = s.text
             if s.hl ~= "" then
                 result = result .. "%#" .. s.hl .. "#" .. text .. "%*"
