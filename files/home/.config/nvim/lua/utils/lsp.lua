@@ -27,6 +27,14 @@ function M.get(bufnr)
 end
 
 M.configured = {}
+-- M.config_path = {}
+--
+-- function M.load_config_path(path)
+--     local ok, config = pcall(require, path)
+--     if ok then
+--         M.config_path = config
+--     end
+-- end
 
 ---@alias LspRule { [1]: string|string[], [2]: string }
 ---@param config_path string
@@ -55,6 +63,34 @@ function M.set(config_path, lsp_rules)
         })
     end
 end
+
+-- function M.auto_set_2(config_path)
+--     vim.api.nvim_create_autocmd("FileType", {
+--         group = group,
+--         pattern = "*",
+--         callback = vim.schedule_wrap(function(args)
+--             if not vim.api.nvim_buf_is_valid(args.buf) or
+--                 vim.api.nvim_get_current_buf() ~= args.buf then
+--                 return
+--             end
+--
+--             local fs = require "utils.fs"
+--             local files = fs.scandir(fs.to_path(config_path))
+--             for _, file in ipairs(files) do
+--                 local server_name = fs.get_basename(file)
+--                 if not M.configured[server_name] then
+--                     local ok, config = pcall(require, config_path .. "." .. server_name)
+--                     if ok then
+--                         vim.lsp.config(server_name, config)
+--                         vim.lsp.enable(server_name)
+--                         M.configured[server_name] = true
+--                     end
+--                 end
+--             end
+--
+--         end),
+--     })
+-- end
 
 ---@param config_path string
 function M.auto_set(config_path)
