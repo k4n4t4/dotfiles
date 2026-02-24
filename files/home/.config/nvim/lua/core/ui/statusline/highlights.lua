@@ -8,18 +8,18 @@ hi.set("StlModeConfirm", { fg = "#999999" })
 hi.set("StlModeTerminal", { fg = "#999999" })
 hi.set("StlModeOther", { fg = "#EE99EE" })
 
-hi.set("StlMacro", { fg = "#BB77EE" })
+hi.set("StlMacro", { fg = hi.ref("MacroRecord", 'fg') })
 
-hi.set("StlFileFlag", { fg = hi.get("FileModified").fg })
+hi.set("StlFileFlag", { fg = hi.ref("FileModified", 'fg') })
 
-hi.set("StlDiagnosticERROR", { fg = hi.get("DiagnosticError").fg })
-hi.set("StlDiagnosticWARN", { fg = hi.get("DiagnosticWarn").fg })
-hi.set("StlDiagnosticINFO", { fg = hi.get("DiagnosticInfo").fg })
-hi.set("StlDiagnosticHINT", { fg = hi.get("DiagnosticHint").fg })
+hi.set("StlDiagnosticERROR", { fg = hi.ref("DiagnosticError", 'fg') })
+hi.set("StlDiagnosticWARN", { fg = hi.ref("DiagnosticWarn", 'fg') })
+hi.set("StlDiagnosticINFO", { fg = hi.ref("DiagnosticInfo", 'fg') })
+hi.set("StlDiagnosticHINT", { fg = hi.ref("DiagnosticHint", 'fg') })
 
-hi.set("StlGitAdd", { fg = hi.get("GitSignsAdd").fg })
-hi.set("StlGitRemove", { fg = hi.get("GitSignsDelete").fg })
-hi.set("StlGitChange", { fg = hi.get("GitSignsChange").fg })
+hi.set("StlGitAdd", { fg = hi.ref("GitSignsAdd", 'fg') })
+hi.set("StlGitRemove", { fg = hi.ref("GitSignsDelete", 'fg') })
+hi.set("StlGitChange", { fg = hi.ref("GitSignsChange", 'fg') })
 hi.set("StlGitBranch", { fg = "#CC9955" })
 
 
@@ -42,7 +42,7 @@ vim.api.nvim_create_autocmd("ModeChanged", {
         }
 
         if vim.tbl_contains(ignore_ft, vim.bo.filetype) or
-           vim.tbl_contains(ignore_bt, vim.bo.buftype) then
+            vim.tbl_contains(ignore_bt, vim.bo.buftype) then
             return
         end
 

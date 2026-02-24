@@ -1,5 +1,6 @@
 local hl = require("utils.highlight")
 
+hl.link("MacroRecord", "Operator")
 hl.link("FileModified", "WarningMsg")
 
 require "core.ui.statusline"
