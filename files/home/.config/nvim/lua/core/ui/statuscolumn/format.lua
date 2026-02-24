@@ -7,7 +7,7 @@ function StatusColumn()
 
     if is_active then
         return (
-            "%s" ..
+            status.sign(winid) ..
             "%=" ..
             (vim.wo[winid].number and status.number() or "") ..
             status.fold() ..
