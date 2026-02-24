@@ -49,7 +49,7 @@ function M.load(config)
             if config.colorscheme.transparent == true then
                 t.enable()
             elseif type(config.colorscheme.transparent) == "table" then
-                t.enable(config.colorscheme.transparent)
+                t.enable(config.colorscheme.transparent --[[@as TransparentConfig]])
             end
         end
         if config.colorscheme.name then
