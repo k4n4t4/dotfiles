@@ -26,6 +26,13 @@ function M.get(bufnr)
     return clients, others
 end
 
+function M.add_mason_bin_path()
+    local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
+    if not vim.env.PATH:find(mason_bin, 1, true) then
+        vim.env.PATH = mason_bin .. ":" .. vim.env.PATH
+    end
+end
+
 M.configured = {}
 
 ---@alias LspRule { [1]: string|string[], [2]: string }
