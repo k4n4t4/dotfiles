@@ -4,13 +4,6 @@ M.group = vim.api.nvim_create_augroup("Utils_highlight", { clear = true })
 
 M.registry = {}
 
-function M.force_get(group_name)
-    return vim.api.nvim_get_hl(0, {
-        name = group_name,
-        link = false,
-    })
-end
-
 function M.get(group_name)
     return M.registry[group_name] or M.force_get(group_name)
 end
@@ -20,6 +13,20 @@ function M.set(group_name, opts)
         M.registry[group_name] = opts
         vim.api.nvim_set_hl(0, group_name, opts)
     end
+end
+
+function M.link(group_name, target_group)
+    if not M.registry[group_name] then
+        M.registry[group_name] = { link = target_group }
+        vim.api.nvim_set_hl(0, group_name, { link = target_group })
+    end
+end
+
+function M.force_get(group_name)
+    return vim.api.nvim_get_hl(0, {
+        name = group_name,
+        link = false,
+    })
 end
 
 function M.force_set(group_name, opts)

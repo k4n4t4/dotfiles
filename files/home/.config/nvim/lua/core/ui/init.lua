@@ -1,3 +1,7 @@
+local hl = require("utils.highlight")
+
+hl.link("FileModified", "WarningMsg")
+
 require "core.ui.statusline"
 require "core.ui.statuscolumn"
 require "core.ui.tabline"
