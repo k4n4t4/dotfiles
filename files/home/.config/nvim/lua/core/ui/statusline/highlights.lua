@@ -21,32 +21,3 @@ hi.set("StlGitAdd", { fg = hi.ref("GitSignsAdd", 'fg') })
 hi.set("StlGitRemove", { fg = hi.ref("GitSignsDelete", 'fg') })
 hi.set("StlGitChange", { fg = hi.ref("GitSignsChange", 'fg') })
 hi.set("StlGitBranch", { fg = hi.ref("GitBranch", "fg") })
-
-
-local group = vim.api.nvim_create_augroup("StatusLine", { clear = true })
-
--- Redraw statusline when mode changed. (e.g. 'ix' mode)
-vim.api.nvim_create_autocmd("ModeChanged", {
-    group = group,
-    callback = function()
-        local ignore_ft = {
-            "TelescopePrompt",
-            "NvimTree",
-            "neo-tree",
-            "fzf",
-            "copilot-chat",
-        }
-        local ignore_bt = {
-            "terminal",
-            "nofile",
-            "prompt",
-        }
-
-        if vim.tbl_contains(ignore_ft, vim.bo.filetype) or
-            vim.tbl_contains(ignore_bt, vim.bo.buftype) then
-            return
-        end
-
-        vim.cmd.redrawstatus()
-    end,
-})

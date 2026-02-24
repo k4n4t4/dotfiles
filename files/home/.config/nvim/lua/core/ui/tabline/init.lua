@@ -1,23 +1,10 @@
 local M = {}
 
-local group = vim.api.nvim_create_augroup("Tabline", { clear = true })
+M.group = vim.api.nvim_create_augroup("Tabline", { clear = true })
 
-require"utils.tabuf".setup()
-
+require "utils.tabuf".setup()
 
 M.min_tabs = 0
-
-vim.api.nvim_create_autocmd("User", {
-    group = group,
-    pattern = "TabufUpdated",
-    callback = function()
-        if vim.t.bufs and #vim.t.bufs >= M.min_tabs then
-            M.show()
-        else
-            M.hide()
-        end
-    end,
-})
 
 function M.show()
     vim.opt.showtabline = 2
@@ -32,6 +19,18 @@ function M.setup()
 
     vim.opt.showtabline = 0
     vim.opt.tabline = "%!v:lua.require('core.ui.tabline.format')()"
+
+    vim.api.nvim_create_autocmd("User", {
+        group = M.group,
+        pattern = "TabufUpdated",
+        callback = function()
+            if vim.t.bufs and #vim.t.bufs >= M.min_tabs then
+                M.show()
+            else
+                M.hide()
+            end
+        end,
+    })
 end
 
 M.setup()
