@@ -5,7 +5,14 @@ M.group = vim.api.nvim_create_augroup("Utils_highlight", { clear = true })
 M.registry = {}
 
 function M.get(group_name)
-    return M.registry[group_name] or M.force_get(group_name)
+    local entry = M.registry[group_name]
+    if entry then
+        if entry._link or entry.link then
+            return M.force_get(group_name)
+        end
+        return entry
+    end
+    return M.force_get(group_name)
 end
 
 function M.set(group_name, opts)
