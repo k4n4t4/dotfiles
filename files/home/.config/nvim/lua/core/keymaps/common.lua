@@ -17,3 +17,5 @@ set('n', '<M-k>', require"utils.tabuf".prev, { desc = "Tabuf Prev" })
 set('n', '<M-x>', require"utils.tabuf".close, { desc = "Tabuf Close" })
 set('n', '<leader>mh', vim.cmd.tabprevious, { desc = "Tab Left" })
 set('n', '<leader>ml', vim.cmd.tabnext, { desc = "Tab Right" })
+
+set('n', '<leader>T', require"utils.transparent".toggle)

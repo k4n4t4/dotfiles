@@ -4,7 +4,7 @@ local M = {}
 ---    shell?: string;
 ---    colorscheme?: {
 ---        name?: string;
----        transparent?: boolean;
+---        transparent?: boolean | TransparentConfig;
 ---    };
 ---    number?: {
 ---        enable?: boolean;
@@ -45,8 +45,12 @@ function M.load(config)
 
     if config.colorscheme then
         if config.colorscheme.transparent then
-            local plugins_transparent = require("utils.transparent")
-            plugins_transparent.setup {}
+            local t = require("utils.transparent")
+            if config.colorscheme.transparent == true then
+                t.enable()
+            elseif type(config.colorscheme.transparent) == "table" then
+                t.enable(config.colorscheme.transparent)
+            end
         end
         if config.colorscheme.name then
             pcall(vim.cmd.colorscheme, config.colorscheme.name)
