@@ -10,8 +10,6 @@ return {
             },
         },
         "neovim/nvim-lspconfig",
-        "nvimtools/none-ls.nvim",
-        "jayp0521/mason-null-ls.nvim",
     },
     event = "VeryLazy",
     config = function()
