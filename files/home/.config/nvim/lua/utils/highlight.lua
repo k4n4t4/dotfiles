@@ -61,6 +61,22 @@ function M.link(group_name, target_group, overrides)
     end
 end
 
+function M.from(source_group, attrs)
+    local result = {}
+    for _, attr in ipairs(attrs) do
+        result[attr] = M.ref(source_group, attr)
+    end
+    return result
+end
+
+function M.set_from(group_name, source_group, attrs, overrides)
+    local opts = M.from(source_group, attrs)
+    if overrides then
+        opts = vim.tbl_extend("force", opts, overrides)
+    end
+    M.set(group_name, opts)
+end
+
 function M.force_get(group_name)
     return vim.api.nvim_get_hl(0, { name = group_name, link = false })
 end
