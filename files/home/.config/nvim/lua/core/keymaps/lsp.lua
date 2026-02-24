@@ -1,7 +1,9 @@
+local group = vim.api.nvim_create_augroup("LspKeymaps", { clear = true })
 local keymap = vim.keymap
 local set = keymap.set
 
 vim.api.nvim_create_autocmd("LspAttach", {
+    group = group,
     callback = function(event)
         local buf = event.buf
         set('n', 'K', vim.lsp.buf.format, { buffer = buf, desc = "Format" })
