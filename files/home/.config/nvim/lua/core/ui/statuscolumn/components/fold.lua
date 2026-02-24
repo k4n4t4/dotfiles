@@ -23,15 +23,15 @@ return function()
         if fi.lnum == vim.v.lnum then
             if vim.v.virtnum == 0 then
                 if fi.folded then
-                    s = s .. hi.use("StatusColumnFoldHead") .. ">%*"
+                    s = s .. hi.use("StatusColumnFoldHead") .. "%*"
                 else
-                    s = s .. hi.use("StatusColumnFoldHead") .. "v%*"
+                    s = s .. hi.use("StatusColumnFoldHead") .. "%*"
                 end
             else
-                s = s .. hi.use("StatusColumnFold") .. "¦%*"
+                s = s .. hi.use("StatusColumnFold") .. "┊%*"
             end
         elseif fi.level ~= 0 then
-            s = s .. hi.use("StatusColumnFold") .. "¦%*"
+            s = s .. hi.use("StatusColumnFold") .. "│%*"
         else
             s = s .. " "
         end
