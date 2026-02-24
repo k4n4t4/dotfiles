@@ -48,7 +48,7 @@ end
 function M.get(group_name)
     local entry = M.registry[group_name]
     if entry then
-        if entry._link or entry.link or M.has_refs(entry) then
+        if entry._link or entry.link or entry._patch or M.has_refs(entry) then
             return M.force_get(group_name)
         end
         return entry
@@ -125,12 +125,25 @@ function M.force_set(group_name, opts)
     vim.api.nvim_set_hl(0, group_name, opts)
 end
 
+--- Patches specific attributes of a highlight group, preserving all other attributes.
+--- On ColorScheme refresh, re-fetches the base attrs and re-applies the patch.
+--- @param group_name string
+--- @param changes table Attributes to change (e.g. `{ bg = "none" }`)
+function M.patch(group_name, changes)
+    M.registry[group_name] = { _patch = true, _changes = changes }
+    local base = M.force_get(group_name)
+    vim.api.nvim_set_hl(0, group_name, vim.tbl_extend("force", base, changes))
+end
+
 --- Re-applies all registered highlight groups. Called automatically on VimEnter and ColorScheme.
 function M.refresh()
     for name, opts in pairs(M.registry) do
         if opts._link then
             local base = M.force_get(opts._link)
             vim.api.nvim_set_hl(0, name, vim.tbl_extend("force", base, opts._overrides))
+        elseif opts._patch then
+            local base = M.force_get(name)
+            vim.api.nvim_set_hl(0, name, vim.tbl_extend("force", base, opts._changes))
         elseif M.has_refs(opts) then
             vim.api.nvim_set_hl(0, name, M.resolve_opts(opts))
         else

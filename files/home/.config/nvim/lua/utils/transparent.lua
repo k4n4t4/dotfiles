@@ -19,7 +19,6 @@ M.default_config = {
 
         "StatusLine",
         "StatusLineNC",
-        "TabLine",
         "TabLineFill",
 
         "NeoTreeNormal",
@@ -35,12 +34,12 @@ M.default_config = {
     },
 }
 
---- Sets the specified highlight groups to use a transparent background.
+--- Sets the specified highlight groups to use a transparent background,
+--- preserving all other attributes (fg, bold, etc.).
 --- @param highlight_groups string[] List of highlight group names to make transparent
 function M.transparent_background(highlight_groups)
     for _, name in ipairs(highlight_groups) do
-        hi.set(name, {
-            fg = "#A0A0A0",
+        hi.patch(name, {
             bg = "none",
         })
     end
