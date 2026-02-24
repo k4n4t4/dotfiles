@@ -1,7 +1,7 @@
 local buf_format = require "core.ui.tabline.components.buf"
 local tab_format = require "core.ui.tabline.components.tab"
 
-function TabLine()
+return function()
     local s = ""
 
     local bufs = vim.t.bufs or {}

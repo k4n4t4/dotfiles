@@ -99,6 +99,7 @@ function M.setup()
             end
 
             vim.t.bufs = bufs
+            api.nvim_exec_autocmds("User", { pattern = "TabufUpdated", modeline = false })
         end,
     })
 
@@ -112,6 +113,7 @@ function M.setup()
                         if bufnr == args.buf then
                             table.remove(bufs, i)
                             vim.t[tab].bufs = bufs
+                            api.nvim_exec_autocmds("User", { pattern = "TabufUpdated", modeline = false })
                             break
                         end
                     end
