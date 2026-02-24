@@ -34,6 +34,7 @@ vim.api.nvim_create_autocmd("ModeChanged", {
             "NvimTree",
             "neo-tree",
             "fzf",
+            "copilot-chat",
         }
         local ignore_bt = {
             "terminal",
