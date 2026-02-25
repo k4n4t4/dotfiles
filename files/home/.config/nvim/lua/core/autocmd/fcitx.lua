@@ -1,10 +1,10 @@
 local group = vim.api.nvim_create_augroup("fcitx5", { clear = true })
 local autocmd = vim.api.nvim_create_autocmd
 
-autocmd("VimEnter", {
+autocmd("UIEnter", {
     group = group,
     once = true,
-    callback = function()
+    callback = vim.schedule_wrap(function()
         if vim.fn.executable("fcitx5") == 1 then
             autocmd("InsertLeave", {
                 group = group,
@@ -16,5 +16,5 @@ autocmd("VimEnter", {
                 end,
             })
         end
-    end,
+    end),
 })

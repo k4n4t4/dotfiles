@@ -2,18 +2,6 @@ local group = vim.api.nvim_create_augroup("Settings", { clear = true })
 local autocmd = vim.api.nvim_create_autocmd
 
 
--- hide column when command line window
-autocmd("BufEnter", {
-    group = group,
-    callback = function()
-        if vim.fn.getcmdwintype() ~= "" then
-            vim.opt_local.foldcolumn = '0'
-            vim.opt_local.signcolumn = "no"
-        end
-    end,
-})
-
-
 -- highlight yank area
 autocmd("TextYankPost", {
     group = group,
