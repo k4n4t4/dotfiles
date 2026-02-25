@@ -30,7 +30,6 @@ return {
             version = false,
         },
         "hrsh7th/cmp-calc",
-        "yutkat/cmp-mocword",
     },
     event = { "InsertEnter", "CmdLineEnter" },
     config = function()
@@ -154,7 +153,6 @@ return {
                     "copilot",
                     "emoji",
                     "calc",
-                    "mocword",
                     "git",
                 },
                 providers = {
@@ -162,12 +160,6 @@ return {
                         name = "calc",
                         module = "blink.compat.source",
                         score_offset = 100,
-                        async = true,
-                    },
-                    mocword = {
-                        name = "mocword",
-                        module = "blink.compat.source",
-                        score_offset = 150,
                         async = true,
                     },
                     git = {
