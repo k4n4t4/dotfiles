@@ -4,7 +4,7 @@ local set = keymap.set
 
 vim.api.nvim_create_autocmd("LspAttach", {
     group = group,
-    callback = function(event)
+    callback = vim.schedule_wrap(function(event)
         local buf = event.buf
         set('n', '<Leader>lf', vim.lsp.buf.format, { buffer = buf, desc = "Format" })
         set('n', '<Leader>lr', vim.lsp.buf.rename, { buffer = buf, desc = "Rename" })
@@ -64,5 +64,5 @@ vim.api.nvim_create_autocmd("LspAttach", {
         set('n', '<Leader>le', function() vim.lsp.diagnostic.show_line_diagnostics() end, { buffer = buf, desc = "Show Line Diagnostics" })
         set('n', '<Leader>l[', function() vim.lsp.diagnostic.goto_prev() end, { buffer = buf, desc = "Diagnostic Goto Prev" })
         set('n', '<Leader>l]', function() vim.lsp.diagnostic.goto_next() end, { buffer = buf, desc = "Diagnostic Goto Next" })
-    end
+    end),
 })
