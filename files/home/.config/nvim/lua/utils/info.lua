@@ -2,6 +2,7 @@ local M = {}
 
 local group = vim.api.nvim_create_augroup("Utils_info", { clear = true })
 local uv = vim.uv or vim.loop
+local mapping = require("utils.mapping")
 
 
 M.cache = {}
@@ -590,43 +591,21 @@ function M.state.mode.is_select()
     end)
 end
 
---- Returns a short human-readable label for the current mode (cached).
---- @return string e.g. "NORMAL", "INSERT", "VISUAL"
+--- Returns a short abbreviated name for the current mode (cached).
+--- Uses `utils.mapping.mode` — e.g. "N", "I", "VB".
+--- @return string
+function M.state.mode.name()
+    return cached_state("mode_name", function()
+        return mapping.mode.get(M.state.mode.raw()).name
+    end)
+end
+
+--- Returns a long human-readable label for the current mode (cached).
+--- Uses `utils.mapping.mode` — e.g. "NORMAL", "INSERT", "V-BLOCK".
+--- @return string
 function M.state.mode.label()
     return cached_state("mode_label", function()
-        local labels = {
-            n = "NORMAL",
-            no = "O-PENDING",
-            nov = "O-PENDING",
-            noV = "O-PENDING",
-            ["\22o"] = "O-PENDING",
-            nt = "NORMAL",
-            niI = "NORMAL",
-            niR = "NORMAL",
-            niV = "NORMAL",
-            v = "VISUAL",
-            V = "V-LINE",
-            ["\22"] = "V-BLOCK",
-            s = "SELECT",
-            S = "S-LINE",
-            ["\19"] = "S-BLOCK",
-            i = "INSERT",
-            ic = "INSERT",
-            ix = "INSERT",
-            R = "REPLACE",
-            Rc = "REPLACE",
-            Rv = "V-REPLACE",
-            Rvc = "V-REPLACE",
-            Rvx = "V-REPLACE",
-            c = "COMMAND",
-            cv = "EX",
-            r = "ENTER",
-            rm = "MORE",
-            ["r?"] = "CONFIRM",
-            ["!"] = "SHELL",
-            t = "TERMINAL",
-        }
-        return labels[M.state.mode.raw()] or M.state.mode.raw():upper()
+        return mapping.mode.get(M.state.mode.raw()).label
     end)
 end
 
