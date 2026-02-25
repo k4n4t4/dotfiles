@@ -44,6 +44,9 @@ function M.load(config)
     end
 
     if config.colorscheme then
+        if config.colorscheme.name then
+            pcall(vim.cmd.colorscheme, config.colorscheme.name)
+        end
         if config.colorscheme.transparent then
             local t = require("utils.transparent")
             if config.colorscheme.transparent == true then
@@ -51,9 +54,6 @@ function M.load(config)
             elseif type(config.colorscheme.transparent) == "table" then
                 t.enable(config.colorscheme.transparent --[[@as TransparentConfig]])
             end
-        end
-        if config.colorscheme.name then
-            pcall(vim.cmd.colorscheme, config.colorscheme.name)
         end
     end
 
