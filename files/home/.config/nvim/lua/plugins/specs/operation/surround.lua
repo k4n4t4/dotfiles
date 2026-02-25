@@ -3,7 +3,6 @@ return {
     version = "^3.0.0",
     event = {
         'InsertEnter',
-        'CmdlineEnter',
     },
     opts = {
         keymaps = {
