@@ -31,7 +31,7 @@ function M.lsp()
 end
 
 function M.macro_recording()
-    local macro = info.edit.macro()
+    local macro = info.state.macro()
     if macro ~= "" then
         return hi.use("StlMacro") .. "@" .. macro .. "%*"
     end

@@ -480,23 +480,154 @@ function M.win.position(winnr)
     end)
 end
 
-M.edit = {}
+M.state = {}
+M.state.cache = {}
+
+vim.api.nvim_create_autocmd("ModeChanged", {
+    group = group,
+    callback = function()
+        M.state.cache = {}
+    end,
+})
+
+local function cached_state(key, fn)
+    if M.state.cache[key] == nil then
+        M.state.cache[key] = fn()
+    end
+    return M.state.cache[key]
+end
 
 --- Returns the name of the register currently being recorded to, or "" if not recording.
---- @return string Register name (e.g. "q"), or "" if no macro is recording
-function M.edit.macro()
-    local reg = vim.fn.reg_recording()
-    if reg == "" then
-        return ""
-    end
-    return reg
+--- @return string Register name (e.g. "q"), or ""
+function M.state.macro()
+    return vim.fn.reg_recording()
+end
+
+--- Returns true if a macro is currently being recorded.
+--- @return boolean
+function M.state.is_recording()
+    return vim.fn.reg_recording() ~= ""
 end
 
 --- Returns the contents of a named register.
 --- @param reg string Register name (e.g. "a", "+", "*")
 --- @return string Register contents
-function M.edit.get_register(reg)
+function M.state.get_register(reg)
     return vim.fn.getreg(reg)
+end
+
+--- Returns the pending operator count (v:count), or 0 if none.
+--- @return integer
+function M.state.count()
+    return vim.v.count
+end
+
+M.state.mode = {}
+
+--- Returns the raw mode string from nvim_get_mode() (cached, invalidated on ModeChanged).
+--- @return string
+function M.state.mode.raw()
+    return cached_state("mode_raw", function()
+        return vim.api.nvim_get_mode().mode
+    end)
+end
+
+--- Returns true if the current mode is Normal (including operator-pending variants).
+--- @return boolean
+function M.state.mode.is_normal()
+    return cached_state("mode_is_normal", function()
+        return vim.startswith(M.state.mode.raw(), "n")
+    end)
+end
+
+--- Returns true if the current mode is Insert.
+--- @return boolean
+function M.state.mode.is_insert()
+    return cached_state("mode_is_insert", function()
+        return vim.startswith(M.state.mode.raw(), "i")
+    end)
+end
+
+--- Returns true if the current mode is any Visual mode (char, line, or block).
+--- @return boolean
+function M.state.mode.is_visual()
+    return cached_state("mode_is_visual", function()
+        local m = M.state.mode.raw()
+        return m == "v" or m == "V" or m == "\22"
+    end)
+end
+
+--- Returns true if the current mode is Replace or Virtual Replace.
+--- @return boolean
+function M.state.mode.is_replace()
+    return cached_state("mode_is_replace", function()
+        return vim.startswith(M.state.mode.raw(), "R")
+    end)
+end
+
+--- Returns true if the current mode is Command-line.
+--- @return boolean
+function M.state.mode.is_command()
+    return cached_state("mode_is_command", function()
+        return vim.startswith(M.state.mode.raw(), "c")
+    end)
+end
+
+--- Returns true if the current mode is Terminal.
+--- @return boolean
+function M.state.mode.is_terminal()
+    return cached_state("mode_is_terminal", function()
+        return vim.startswith(M.state.mode.raw(), "t")
+    end)
+end
+
+--- Returns true if the current mode is Select (char, line, or block).
+--- @return boolean
+function M.state.mode.is_select()
+    return cached_state("mode_is_select", function()
+        local m = M.state.mode.raw()
+        return m == "s" or m == "S" or m == "\19"
+    end)
+end
+
+--- Returns a short human-readable label for the current mode (cached).
+--- @return string e.g. "NORMAL", "INSERT", "VISUAL"
+function M.state.mode.label()
+    return cached_state("mode_label", function()
+        local labels = {
+            n = "NORMAL",
+            no = "O-PENDING",
+            nov = "O-PENDING",
+            noV = "O-PENDING",
+            ["\22o"] = "O-PENDING",
+            nt = "NORMAL",
+            niI = "NORMAL",
+            niR = "NORMAL",
+            niV = "NORMAL",
+            v = "VISUAL",
+            V = "V-LINE",
+            ["\22"] = "V-BLOCK",
+            s = "SELECT",
+            S = "S-LINE",
+            ["\19"] = "S-BLOCK",
+            i = "INSERT",
+            ic = "INSERT",
+            ix = "INSERT",
+            R = "REPLACE",
+            Rc = "REPLACE",
+            Rv = "V-REPLACE",
+            Rvc = "V-REPLACE",
+            Rvx = "V-REPLACE",
+            c = "COMMAND",
+            cv = "EX",
+            r = "ENTER",
+            rm = "MORE",
+            ["r?"] = "CONFIRM",
+            ["!"] = "SHELL",
+            t = "TERMINAL",
+        }
+        return labels[M.state.mode.raw()] or M.state.mode.raw():upper()
+    end)
 end
 
 return M
