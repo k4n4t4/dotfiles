@@ -115,8 +115,15 @@ function M.auto_set(config_path)
                             cmd = config.cmd
                         else
                             local registered = vim.lsp.config[server_name]
-                            if registered and registered.cmd and #registered.cmd > 0 then
-                                cmd = registered.cmd
+                            if registered then
+                                if type(registered.cmd) == "table" and #registered.cmd > 0 then
+                                    cmd = registered.cmd
+                                elseif type(registered.cmd) == "function" then
+                                    local ok, result = pcall(registered.cmd)
+                                    if ok and type(result) == "table" and #result > 0 then
+                                        cmd = result
+                                    end
+                                end
                             end
                         end
                         if cmd then
