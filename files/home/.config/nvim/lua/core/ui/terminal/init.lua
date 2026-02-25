@@ -80,17 +80,11 @@ function M.setup()
 
     autocmd("TermClose", {
         group = M.group,
-        pattern = 'term://*fish',
-        callback = function()
-            vim.api.nvim_input("<CR>")
-        end,
-    })
-
-    autocmd("BufEnter", {
-        group = M.group,
         pattern = 'term://*',
-        callback = function()
-            vim.cmd [[startinsert]]
+        callback = function(ev)
+            if vim.api.nvim_buf_is_valid(ev.buf) then
+                vim.api.nvim_buf_delete(ev.buf, { force = true })
+            end
         end,
     })
 end
