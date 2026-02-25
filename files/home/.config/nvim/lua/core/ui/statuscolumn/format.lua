@@ -1,6 +1,6 @@
-local status = require("core.ui.statuscolumn.components")
+return function()
+    local status = require("core.ui.statuscolumn.components")
 
-function StatusColumn()
     local winid = vim.g.statusline_winid
     local curwin = vim.api.nvim_get_current_win()
     local is_active = winid == curwin

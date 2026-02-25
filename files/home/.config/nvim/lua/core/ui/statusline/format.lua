@@ -1,6 +1,6 @@
-local status = require("core.ui.statusline.components")
+return function()
+    local status = require("core.ui.statusline.components")
 
-function StatusLine()
     local current_winid = vim.api.nvim_get_current_win()
     local statusline_winid = vim.g.statusline_winid
     local active = current_winid == statusline_winid
