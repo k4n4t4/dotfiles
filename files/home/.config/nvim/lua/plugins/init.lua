@@ -21,7 +21,6 @@ require("lazy").setup {
         { import = "plugins.specs.lsp" },
         { import = "plugins.specs.ui" },
         { import = "plugins.specs.debug" },
-        { import = "plugins.specs" },
     },
     defaults = {
         lazy = true,
