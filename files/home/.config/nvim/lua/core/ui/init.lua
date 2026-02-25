@@ -1,5 +1,5 @@
 local plugin = require "utils.plugin"
-plugin.load("nvim-web-devicons", "User", "UIEnterPost")
+plugin.load("nvim-web-devicons", "User", "Ready")
 
 local hl = require "utils.highlight"
 

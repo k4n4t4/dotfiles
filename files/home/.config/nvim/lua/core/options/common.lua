@@ -32,7 +32,7 @@ vim.opt.virtualedit = "block"
 
 vim.opt.clipboard = ""
 vim.api.nvim_create_autocmd("User", {
-    pattern = "UIEnterPost",
+    pattern = "Ready",
     once = true,
     callback = function()
         vim.opt.clipboard = "unnamedplus"
