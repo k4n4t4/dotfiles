@@ -6,7 +6,7 @@ function M.setup()
     vim.opt.signcolumn = "yes"
     vim.opt.cursorline = true
     vim.opt.cursorlineopt = "number"
-    vim.opt.tabline = "%!v:lua.require('core.ui.statuscolumn.format')()"
+    vim.opt.statuscolumn = "%!v:lua.require('core.ui.statuscolumn.format')()"
 end
 
 M.setup()

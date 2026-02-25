@@ -1,4 +1,7 @@
-local hl = require("utils.highlight")
+local plugin = require "utils.plugin"
+plugin.load("nvim-web-devicons", "UIEnter")
+
+local hl = require "utils.highlight"
 
 hl.link("MacroRecord", "Operator")
 hl.link("FileModified", "WarningMsg")

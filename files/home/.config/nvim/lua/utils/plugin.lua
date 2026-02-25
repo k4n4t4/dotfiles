@@ -9,7 +9,7 @@ local pending = {}
 --- @param plugin_name string Lua module name to require (e.g. "nvim-treesitter")
 --- @param event string Neovim autocmd event that triggers the load (e.g. "BufReadPost")
 --- @return any|nil The loaded module, or nil if not yet available
-function M.load(plugin_name, event)
+function M.load(plugin_name, event, pattern)
     if cache[plugin_name] then
         return cache[plugin_name]
     elseif pending[plugin_name] then
@@ -18,9 +18,11 @@ function M.load(plugin_name, event)
 
     pending[plugin_name] = true
 
+
     local group = vim.api.nvim_create_augroup("LazyLoad_" .. plugin_name, { clear = true })
     vim.api.nvim_create_autocmd(event, {
         group = group,
+        pattern = pattern or "*",
         once = true,
         callback = vim.schedule_wrap(function()
             local ok, mod = pcall(require, plugin_name)
@@ -38,7 +40,7 @@ end
 --- @param plugin_name string Lua module name
 --- @return any|nil
 function M.get(plugin_name)
-    return cache[plugin_name]
+    return cache[plugin_name] or nil
 end
 
 return M

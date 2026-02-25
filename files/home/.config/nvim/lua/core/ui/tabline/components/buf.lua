@@ -1,8 +1,7 @@
 local info = require "utils.info"
 local hi = require "utils.highlight"
+local plugin = require "utils.plugin"
 
-local plugin = require("utils.plugin")
-plugin.load("nvim-web-devicons", "UIEnter")
 local function get_icon_for_filetype(filetype)
     local devicons = plugin.get("nvim-web-devicons")
     if devicons then
