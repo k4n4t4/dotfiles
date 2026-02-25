@@ -1,5 +1,6 @@
-local plugin = require "utils.plugin"
-local info = require "utils.info"
+local plugin  = require "utils.plugin"
+local info    = require "utils.info"
+local mapping = require "utils.mapping"
 
 local function get_icon_for_filetype(filetype)
     local devicons = plugin.get("nvim-web-devicons")
@@ -8,12 +9,6 @@ local function get_icon_for_filetype(filetype)
     end
     return nil, nil
 end
-
-local filetype_aliases = {
-    ["javascript"] = "js",
-    ["typescript"] = "ts",
-    ["python"]     = "py",
-}
 
 return function()
     local bufnr = vim.api.nvim_win_get_buf(vim.g.statusline_winid)
@@ -29,5 +24,5 @@ return function()
         end
     end
 
-    return (not ft or ft == "") and "" or (filetype_aliases[ft] or ft)
+    return (not ft or ft == "") and "" or (mapping.filetype_alias.get(ft))
 end

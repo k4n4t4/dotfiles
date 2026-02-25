@@ -1,155 +1,28 @@
-local hi = require("utils.highlight")
+local mapping = require("utils.mapping")
+local hi      = require("utils.highlight")
 
-local mode_props = {
-    ["n"] = {
-        name = "N",
-        hi = "StlModeNormal",
-    },
-    ["no"] = {
-        name = "NO",
-        hi = "StlModeNormal",
-    },
-    ["nov"] = {
-        name = "NOC",
-        hi = "StlModeNormal",
-    },
-    ["noV"] = {
-        name = "NOL",
-        hi = "StlModeNormal",
-    },
-    ["no"] = {
-        name = "NOB",
-        hi = "StlModeNormal",
-    },
-
-    ["niI"] = {
-        name = "NI",
-    },
-    ["niR"] = {
-        name = "NR",
-    },
-    ["niV"] = {
-        name = "NV",
-    },
-    ["nt"] = {
-        name = "NT",
-        hi = "StlModeTerminal",
-    },
-    ["ntT"] = {
-        name = "NTT",
-        hi = "StlModeTerminal",
-    },
-
-    ["v"] = {
-        name = "V",
-        hi = "StlModeVisual",
-    },
-    ["vs"] = {
-        name = "VS",
-        hi = "StlModeVisual",
-    },
-    ["V"] = {
-        name = "VL",
-        hi = "StlModeVisual",
-    },
-    ["Vs"] = {
-        name = "VLS",
-        hi = "StlModeVisual",
-    },
-    [""] = {
-        name = "VB",
-        hi = "StlModeVisual",
-    },
-    ["s"] = {
-        name = "VBS",
-        hi = "StlModeVisual",
-    },
-
-    ["s"] = {
-        name = "S",
-    },
-    ["S"] = {
-        name = "SL",
-    },
-    [""] = {
-        name = "SB",
-    },
-
-    ["i"] = {
-        name = "I",
-        hi = "StlModeInsert",
-    },
-    ["ic"] = {
-        name = "IC",
-        hi = "StlModeInsert",
-    },
-    ["ix"] = {
-        name = "IX",
-        hi = "StlModeInsert",
-    },
-
-    ["R"] = {
-        name = "R",
-        hi = "StlModeReplace"
-    },
-    ["Rc"] = {
-        name = "RC",
-        hi = "StlModeReplace"
-    },
-    ["Rx"] = {
-        name = "RX",
-        hi = "StlModeReplace"
-    },
-    ["Rv"] = {
-        name = "RV",
-        hi = "StlModeReplace"
-    },
-    ["Rvc"] = {
-        name = "RVC",
-        hi = "StlModeReplace"
-    },
-    ["Rvx"] = {
-        name = "RVX",
-        hi = "StlModeReplace"
-    },
-
-    ["c"] = {
-        name = "C",
-    },
-    ["cr"] = {
-        name = "CR",
-    },
-
-    ["cv"] = {
-        name = "EX",
-    },
-    ["cvr"] = {
-        name = "EXR",
-    },
-
-    ["r"] = {
-        name = "P",
-    },
-    ["rm"] = {
-        name = "M",
-    },
-    ["r?"] = {
-        name = "CF",
-        hi = "StlModeConfirm",
-    },
-    ["!"] = {
-        name = "SH",
-        hi = "StlModeTerminal",
-    },
-    ["t"] = {
-        name = "T",
-        hi = "StlModeTerminal",
-    },
+-- Maps the first character of the raw mode string to a highlight group.
+local mode_hi = {
+    ["n"] = "StlModeNormal",
+    ["i"] = "StlModeInsert",
+    ["R"] = "StlModeReplace",
+    ["v"] = "StlModeVisual",
+    ["V"] = "StlModeVisual",
+    [""] = "StlModeVisual",
+    ["t"] = "StlModeTerminal",
+    ["!"] = "StlModeTerminal",
+    ["r?"] = "StlModeConfirm",
 }
 
+-- Fixed display width to prevent statusline layout shifts when switching modes.
+-- Covers all common labels (TERMINAL=8, V-REPLACE=9, N-TERMINAL=10).
+local MODE_WIDTH = 10
 
 return function()
-    local mode = vim.api.nvim_get_mode()
-    local prop = mode_props[mode.mode] or {}
-    return hi.use(prop.hi or "StlModeOther") .. (prop.name or "?") .. (mode.blocking and "=" or "") .. "%*"
+    local mode  = vim.api.nvim_get_mode()
+    local raw   = mode.mode
+    local prop  = mapping.mode.get(raw)
+    local hl    = mode_hi[raw] or mode_hi[raw:sub(1, 1)] or "StlModeOther"
+    local label = string.format("%-" .. MODE_WIDTH .. "s", prop.label)
+    return hi.use(hl) .. label .. (mode.blocking and "=" or "") .. "%*"
 end

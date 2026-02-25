@@ -2,6 +2,7 @@ local M = {}
 
 local hi = require("utils.highlight")
 local info = require("utils.info")
+local mapping = require("utils.mapping")
 
 M.mode = require("core.ui.statusline.components.mode")
 M.filetype = require("core.ui.statusline.components.filetype")
@@ -18,7 +19,8 @@ function M.encoding()
 end
 
 function M.fileformat()
-    return info.buf.fileformat(stl_buf())
+    local fmt = info.buf.fileformat(stl_buf()) or ""
+    return mapping.fileformat.get(fmt).label
 end
 
 local utils_lsp = require "utils.lsp"
