@@ -6,11 +6,11 @@ vim.diagnostic.config {
         text = {
             [vim.diagnostic.severity.ERROR] = "!",
             [vim.diagnostic.severity.WARN] = "*",
-            [vim.diagnostic.severity.HINT] = "?",
             [vim.diagnostic.severity.INFO] = "i",
+            [vim.diagnostic.severity.HINT] = "?",
         },
     },
 }
 
-local highlight = require "utils.highlight"
-highlight.set("DiagnosticUnnecessary", { link = "NONE", default = false })
+local hl = require "utils.highlight"
+hl.set("DiagnosticUnnecessary", { link = "NONE", default = false })
