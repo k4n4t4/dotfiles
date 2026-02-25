@@ -1,6 +1,6 @@
 return {
     "lewis6991/gitsigns.nvim",
-    event = 'VeryLazy',
+    event = 'User Ready',
     opts = {
         signs = {
             add          = { text = '┃' },
