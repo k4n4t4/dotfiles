@@ -1,9 +1,4 @@
-local state = {
-    floating = {
-        buf = -1,
-        win = -1,
-    }
-}
+local M = {}
 
 local function create_floating_window(opts)
     opts = opts or {}
@@ -37,56 +32,69 @@ local function create_floating_window(opts)
     return { buf = buf, win = win }
 end
 
-local function toggle_terminal()
-    if not vim.api.nvim_win_is_valid(state.floating.win) then
-        state.floating = create_floating_window {
-            buf = state.floating.buf,
+M.group = vim.api.nvim_create_augroup("Terminal", { clear = true })
+
+M.state = {
+    floating = {
+        buf = -1,
+        win = -1,
+    }
+}
+
+function M.toggle_terminal()
+    if not vim.api.nvim_win_is_valid(M.state.floating.win) then
+        M.state.floating = create_floating_window {
+            buf = M.state.floating.buf,
             winblend = 10,
         }
-        if vim.bo[state.floating.buf].buftype ~= "terminal" then
+        if vim.bo[M.state.floating.buf].buftype ~= "terminal" then
             vim.cmd.term()
         end
     else
-        vim.api.nvim_win_hide(state.floating.win)
+        vim.api.nvim_win_hide(M.state.floating.win)
     end
 end
 
+function M.setup()
+    local keymap = vim.keymap
+    local set = keymap.set
 
-local keymap = vim.keymap
-local set = keymap.set
+    -- terminal
+    set('t', '<esc>', "<C-\\><C-n>")
+    set('n', '<leader>kk', "<cmd>belowright 10split<cr><cmd>terminal<cr>", { desc = "Terminal" })
+    set("n", "<leader>kf", M.toggle_terminal, { desc = "Terminal (floating)" })
+    set('n', '<leader>K', "<cmd>terminal<cr>", { desc = "Terminal (full)" })
 
--- terminal
-set('t', '<esc>', "<C-\\><C-n>")
-set('n', '<leader>kk', "<cmd>belowright 10split<cr><cmd>terminal<cr>", { desc = "Terminal" })
-set("n", "<leader>kf", toggle_terminal, { desc = "Terminal (floating)" })
-set('n', '<leader>K', "<cmd>terminal<cr>", { desc = "Terminal (full)" })
+    local autocmd = vim.api.nvim_create_autocmd
 
-local group = vim.api.nvim_create_augroup("Terminal", { clear = true })
-local autocmd = vim.api.nvim_create_autocmd
+    autocmd("TermOpen", {
+        group = M.group,
+        callback = function()
+            vim.opt_local.number = false
+            vim.opt_local.relativenumber = false
+            vim.opt_local.foldcolumn = '0'
+            vim.opt_local.signcolumn = "no"
+            vim.cmd [[startinsert]]
+        end,
+    })
 
-autocmd("TermOpen", {
-    group = group,
-    callback = function()
-        vim.opt_local.number = false
-        vim.opt_local.relativenumber = false
-        vim.opt_local.foldcolumn = '0'
-        vim.opt_local.signcolumn = "no"
-        vim.cmd [[startinsert]]
-    end,
-})
+    autocmd("TermClose", {
+        group = M.group,
+        pattern = 'term://*fish',
+        callback = function()
+            vim.api.nvim_input("<CR>")
+        end,
+    })
 
-autocmd("TermClose", {
-    group = group,
-    pattern = 'term://*fish',
-    callback = function()
-        vim.api.nvim_input("<CR>")
-    end,
-})
+    autocmd("BufEnter", {
+        group = M.group,
+        pattern = 'term://*',
+        callback = function()
+            vim.cmd [[startinsert]]
+        end,
+    })
+end
 
-autocmd("BufEnter", {
-    group = group,
-    pattern = 'term://*',
-    callback = function()
-        vim.cmd [[startinsert]]
-    end,
-})
+M.setup()
+
+return M
