@@ -1,7 +1,8 @@
 local group = vim.api.nvim_create_augroup("fcitx5", { clear = true })
 local autocmd = vim.api.nvim_create_autocmd
 
-autocmd("UIEnter", {
+autocmd("User", {
+    pattern = "UIEnterPost",
     group = group,
     once = true,
     callback = vim.schedule_wrap(function()

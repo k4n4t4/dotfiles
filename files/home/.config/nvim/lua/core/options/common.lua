@@ -31,11 +31,12 @@ vim.opt.virtualedit = "block"
 
 
 vim.opt.clipboard = ""
-vim.api.nvim_create_autocmd("UIEnter", {
-  once = true,
-  callback = function()
-    vim.opt.clipboard = "unnamedplus"
-  end,
+vim.api.nvim_create_autocmd("User", {
+    pattern = "UIEnterPost",
+    once = true,
+    callback = function()
+        vim.opt.clipboard = "unnamedplus"
+    end,
 })
 
 vim.env.EDITOR = "nvim --server \"$NVIM\" --remote-tab"
