@@ -152,6 +152,11 @@ else if type -q vim
   abbr --add v  "vim"
 end
 
+alias lazyvim   'NVIM_APPNAME=lazyvim nvim'
+alias nvchad    'NVIM_APPNAME=nvchad nvim'
+alias astronvim 'NVIM_APPNAME=astronvim nvim'
+
+
 if type -q xsel
   alias pbcopy "xsel --clipboard --input"
   alias pbpaste "xsel --clipboard --output"
