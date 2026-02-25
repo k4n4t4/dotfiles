@@ -24,7 +24,7 @@ return {
             "nvim-lua/plenary.nvim",
         },
         build = "make tiktoken",
-        event = 'VeryLazy',
+        event = 'User Ready',
         keys = {
             {
                 "<leader>cc",

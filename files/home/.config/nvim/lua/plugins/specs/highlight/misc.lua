@@ -1,21 +1,21 @@
 return {
     {
         "folke/lsp-colors.nvim",
-        event = 'VeryLazy',
+        event = 'User Ready',
     },
     {
         "JoosepAlviste/nvim-ts-context-commentstring",
         dependencies = { "nvim-treesitter/nvim-treesitter" },
-        event = 'VeryLazy',
+        event = 'User Ready',
     },
     {
         "m-demare/hlargs.nvim",
-        event = 'VeryLazy',
+        event = 'User Ready',
     },
     {
         "RRethy/vim-illuminate",
         enabled = false,
-        event = 'VeryLazy',
+        event = 'User Ready',
         config = function()
             local illuminate = require("illuminate")
             illuminate.configure {
@@ -47,6 +47,6 @@ return {
     },
     {
         "norcalli/nvim-colorizer.lua",
-        event = 'VeryLazy',
+        event = 'User Ready',
     },
 }
