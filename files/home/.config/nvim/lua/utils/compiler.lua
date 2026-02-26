@@ -3,7 +3,10 @@ local M = {}
 local fs = require("utils.fs")
 
 M.cache_dir = vim.fn.stdpath("cache") .. "/compiled/"
-M.mem_cahce = {}
+M.mem_cache = {}
+M.manifest_path = M.cache_dir .. "manifest.luac"
+M.manifest = nil
+
 
 function M.compile(path)
     local chunk, err = loadfile(path)
@@ -24,7 +27,7 @@ function M.load(path)
 end
 
 function M.cached_require(path)
-    local cached = M.mem_cahce[path]
+    local cached = M.mem_cache[path]
     if cached then return cached.result end
 
     local cache_dir = M.cache_dir
@@ -49,8 +52,62 @@ function M.cached_require(path)
         end
     end
 
-    M.mem_cahce[path] = { result = M.load(cache_path) }
-    return M.mem_cahce[path].result
+    M.mem_cache[path] = { result = M.load(cache_path) }
+    return M.mem_cache[path].result
+end
+
+function M.load_manifest()
+    if M.manifest then return M.manifest end
+    local result = M.load(M.manifest_path)
+    M.manifest = type(result) == "table" and result or {}
+    return M.manifest
+end
+
+function M.save_manifest()
+    local bytecode = M.compile_value(M.manifest)
+    if not bytecode then
+        vim.notify("[compiler] failed to compile manifest", vim.log.levels.WARN)
+        return false
+    end
+    local ok = fs.write(M.manifest_path, bytecode)
+    if not ok then
+        vim.notify("[compiler] failed to write manifest: " .. M.manifest_path, vim.log.levels.WARN)
+        return false
+    end
+    return true
+end
+
+function M.manifest_require(path)
+    local cached = M.mem_cache[path]
+    if cached then return cached.result end
+
+    local manifest = M.load_manifest()
+
+    local src = fs.read(path)
+    if not src then
+        vim.notify("[compiler] source not found: " .. path, vim.log.levels.WARN)
+        return nil
+    end
+
+    local hash = vim.fn.sha256(src)
+    local cache_path = fs.join(M.cache_dir, (path:gsub("%.lua$", ".luac")))
+
+    if manifest[path] ~= hash or not fs.exists(cache_path) then
+        local bytecode = M.compile(path)
+        if not bytecode then return nil end
+
+        local ok = fs.write(cache_path, bytecode)
+        if not ok then
+            vim.notify("[compiler] failed to write cache: " .. cache_path, vim.log.levels.WARN)
+            return nil
+        end
+
+        manifest[path] = hash
+        M.save_manifest()
+    end
+
+    M.mem_cache[path] = { result = M.load(cache_path) }
+    return M.mem_cache[path].result
 end
 
 return M
