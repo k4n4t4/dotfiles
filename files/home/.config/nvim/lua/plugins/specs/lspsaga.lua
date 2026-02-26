@@ -3,7 +3,7 @@ return {
     dependencies = {
         'nvim-tree/nvim-web-devicons',
     },
-    event = 'LspAttach',
+    event = 'User Ready',
     keys = {
         { mode = 'n', '<LEADER>go',  "<CMD>Lspsaga outline<CR>",                 desc = "Lspsaga Outline" },
         { mode = 'n', '<LEADER>gf',  "<CMD>Lspsaga finder<CR>",                  desc = "Lspsaga Finder" },
