@@ -9,4 +9,4 @@ else
     require "plugins"
 end
 
-require"utils.compiler".manifest_require(vim.fn.stdpath("config") .. "/lua/config.lua")
+pcall(require, "config")
