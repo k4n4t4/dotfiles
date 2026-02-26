@@ -9,4 +9,4 @@ else
     require "plugins"
 end
 
-require"utils.compiler".cached_require(vim.fn.stdpath("config") .. "/lua/config.lua")
+require"utils.compiler".manifest_require(vim.fn.stdpath("config") .. "/lua/config.lua")
