@@ -14,23 +14,30 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local compiler = require("utils.compiler")
-local specs_dir = vim.fn.stdpath("config") .. "/lua/plugins/specs/"
-local cache_dir = vim.fn.stdpath("cache") .. "/lazy_specs/"
-
-local files = vim.fn.glob(specs_dir .. "*/*.lua", false, true)
-table.sort(files)
-
-local entries = {}
-for _, path in ipairs(files) do
-    local key = path:sub(#specs_dir + 1):gsub("/", "_"):gsub("%.lua$", "") .. ".luac"
-    table.insert(entries, { src = path, key = key })
-end
-
-local spec = compiler.load_merged(cache_dir, entries) or {}
+-- local compiler = require("utils.compiler")
+-- local specs_dir = vim.fn.stdpath("config") .. "/lua/plugins/specs/"
+-- local cache_dir = vim.fn.stdpath("cache") .. "/lazy_specs/"
+--
+-- local files = vim.fn.glob(specs_dir .. "*/*.lua", false, true)
+-- table.sort(files)
+--
+-- local entries = {}
+-- for _, path in ipairs(files) do
+--     local key = path:sub(#specs_dir + 1):gsub("/", "_"):gsub("%.lua$", "") .. ".luac"
+--     table.insert(entries, { src = path, key = key })
+-- end
+--
+-- local spec = compiler.load_merged(cache_dir, entries) or {}
 
 require("lazy").setup {
-    spec = spec,
+    spec = {
+        { import = "plugins.specs.debug" },
+        { import = "plugins.specs.highlight" },
+        { import = "plugins.specs.lang" },
+        { import = "plugins.specs.lsp" },
+        { import = "plugins.specs.operation" },
+        { import = "plugins.specs.ui" },
+    },
     defaults = {
         lazy = true,
         version = false,
