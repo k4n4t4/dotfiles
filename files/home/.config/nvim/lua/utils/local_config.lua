@@ -39,56 +39,58 @@ end
 function M.load(config)
     config = config or {}
 
-    if config.shell then
-        vim.opt.shell = config.shell
-    end
-
-    if config.colorscheme then
-        if config.colorscheme.name then
-            pcall(vim.cmd.colorscheme, config.colorscheme.name)
+    vim.schedule(function()
+        if config.shell then
+            vim.opt.shell = config.shell
         end
-        if config.colorscheme.transparent then
-            local t = require("utils.transparent")
-            if config.colorscheme.transparent == true then
-                t.enable()
-            elseif type(config.colorscheme.transparent) == "table" then
-                t.enable(config.colorscheme.transparent --[[@as TransparentConfig]])
+
+        if config.colorscheme then
+            if config.colorscheme.name then
+                pcall(vim.cmd.colorscheme, config.colorscheme.name)
+            end
+            if config.colorscheme.transparent then
+                local t = require("utils.transparent")
+                if config.colorscheme.transparent == true then
+                    t.enable()
+                elseif type(config.colorscheme.transparent) == "table" then
+                    t.enable(config.colorscheme.transparent --[[@as TransparentConfig]])
+                end
             end
         end
-    end
 
-    if config.number then
-        if config.number.enable == false then
+        if config.number then
+            if config.number.enable == false then
+                vim.opt.number = false
+            else
+                vim.opt.number = true
+            end
+            if config.number.relative == false then
+                vim.opt.relativenumber = false
+                require("utils.toggle_relnumber").disable()
+            else
+                vim.opt.relativenumber = true
+                if config.number.toggle_relative_number then
+                    require("utils.toggle_relnumber").enable()
+                end
+            end
+        elseif config.number == false then
             vim.opt.number = false
-        else
-            vim.opt.number = true
         end
-        if config.number.relative == false then
-            vim.opt.relativenumber = false
-            require("utils.toggle_relnumber").disable()
-        else
-            vim.opt.relativenumber = true
-            if config.number.toggle_relative_number then
-                require("utils.toggle_relnumber").enable()
+
+        if config.mouse then
+            if config.mouse == true then
+                vim.opt.mouse = "a"
+            else
+                vim.opt.mouse = config.mouse
             end
-        end
-    elseif config.number == false then
-        vim.opt.number = false
-    end
-
-    if config.mouse then
-        if config.mouse == true then
-            vim.opt.mouse = "a"
         else
-            vim.opt.mouse = config.mouse
+            vim.opt.mouse = ""
         end
-    else
-        vim.opt.mouse = ""
-    end
 
-    if config.run then
-        config.run()
-    end
+        if config.run then
+            config.run()
+        end
+    end)
 end
 
 return M

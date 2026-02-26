@@ -23,7 +23,7 @@ function M.setup(opts)
     require "utils.tabuf".setup()
     require "core.ui.tabline.highlights"
 
-    vim.opt.showtabline = 0
+    vim.opt.showtabline = 2
     vim.opt.tabline = "%!v:lua.require('core.ui.tabline.format')()"
 
     vim.api.nvim_create_autocmd("User", {
