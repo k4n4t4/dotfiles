@@ -16,12 +16,4 @@ return {
         "mattn/emmet-vim",
         ft = { "html", "css", "javascript", "typescript", "typescriptreact", "*.tsx", "*.jsx" },
     },
-    {
-        "leafgarland/typescript-vim",
-        ft = { "typescript", "typescriptreact", "*.tsx", "*.jsx" },
-    },
-    {
-        "peitalin/vim-jsx-typescript",
-        ft = { "typescript", "typescriptreact", "*.tsx", "*.jsx" },
-    },
 }
