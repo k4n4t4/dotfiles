@@ -9,12 +9,4 @@ else
     require "plugins"
 end
 
-pcall(require, "config")
-
-
--- TEST: compile and load a lua file
-
--- local compiler = require("utils.compiler")
--- local src = vim.fn.stdpath("config") .. "/lua/config.lua"
---
--- local result = compiler.cached_require(src)
+require"utils.compiler".cached_require(vim.fn.stdpath("config") .. "/lua/config.lua")
