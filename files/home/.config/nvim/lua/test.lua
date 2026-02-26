@@ -1,2 +1,0 @@
--- TEST:
-return "Hello, Compiler!"
