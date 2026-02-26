@@ -4,7 +4,7 @@ local fs = require("utils.fs")
 
 M.cache_dir = vim.fn.stdpath("cache") .. "/compiled/"
 M.mem_cache = {}
-M.manifest_path = M.cache_dir .. "manifest.luac"
+M.manifest_path = M.cache_dir .. "manifest.msgpack"
 M.manifest = nil
 
 
@@ -63,19 +63,24 @@ function M.load_manifest()
         M.save_manifest()
         return M.manifest
     end
-    local result = M.load(M.manifest_path)
-    M.manifest = type(result) == "table" and result or {}
+    local data = fs.read(M.manifest_path)
+    if data then
+        local ok, result = pcall(vim.mpack.decode, data)
+        M.manifest = (ok and type(result) == "table") and result or {}
+    else
+        M.manifest = {}
+    end
     return M.manifest
 end
 
 function M.save_manifest()
-    local bytecode = M.compile_value(M.manifest)
-    if not bytecode then
-        vim.notify("[compiler] failed to compile manifest", vim.log.levels.WARN)
+    local ok, encoded = pcall(vim.mpack.encode, M.manifest)
+    if not ok then
+        vim.notify("[compiler] failed to encode manifest", vim.log.levels.WARN)
         return false
     end
-    local ok = fs.write(M.manifest_path, bytecode)
-    if not ok then
+    local ok2 = fs.write(M.manifest_path, encoded)
+    if not ok2 then
         vim.notify("[compiler] failed to write manifest: " .. M.manifest_path, vim.log.levels.WARN)
         return false
     end
