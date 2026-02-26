@@ -58,6 +58,11 @@ end
 
 function M.load_manifest()
     if M.manifest then return M.manifest end
+    if not fs.exists(M.manifest_path) then
+        M.manifest = {}
+        M.save_manifest()
+        return M.manifest
+    end
     local result = M.load(M.manifest_path)
     M.manifest = type(result) == "table" and result or {}
     return M.manifest
