@@ -3,6 +3,7 @@ local M = {}
 local fs = require("utils.fs")
 
 M.cache_dir = vim.fn.stdpath("cache") .. "/compiled/"
+M.mem_cahce = {}
 
 function M.compile(path)
     local chunk, err = loadfile(path)
@@ -23,6 +24,9 @@ function M.load(path)
 end
 
 function M.cached_require(path)
+    local cached = M.mem_cahce[path]
+    if cached then return cached.result end
+
     local cache_dir = M.cache_dir
     local cache_path = fs.join(cache_dir, (path:gsub("%.lua$", ".luac")))
 
@@ -45,7 +49,8 @@ function M.cached_require(path)
         end
     end
 
-    return M.load(cache_path)
+    M.mem_cahce[path] = { result = M.load(cache_path) }
+    return M.mem_cahce[path].result
 end
 
 return M

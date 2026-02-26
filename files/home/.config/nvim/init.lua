@@ -14,16 +14,7 @@ pcall(require, "config")
 
 -- TEST: compile and load a lua file
 
-local compiler = require("utils.compiler")
-local src = vim.fn.stdpath("config") .. "/lua/config.lua"
-
-local result = compiler.cached_require(src)
-result = compiler.cached_require(src)
-result = compiler.cached_require(src)
-result = compiler.cached_require(src)
-result = compiler.cached_require(src)
-result = compiler.cached_require(src)
-result = compiler.cached_require(src)
-result = compiler.cached_require(src)
-result = compiler.cached_require(src)
-result = compiler.cached_require(src)
+-- local compiler = require("utils.compiler")
+-- local src = vim.fn.stdpath("config") .. "/lua/config.lua"
+--
+-- local result = compiler.cached_require(src)
