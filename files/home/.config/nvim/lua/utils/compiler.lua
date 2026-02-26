@@ -1,5 +1,9 @@
 local M = {}
 
+local fs = require("utils.fs")
+
+M.cache_dir = vim.fn.stdpath("cache") .. "/compiled/"
+
 function M.compile(path)
     local chunk, err = loadfile(path)
     if chunk then return string.dump(chunk, true) end
@@ -16,6 +20,32 @@ function M.load(path)
     if ok then return val end
     vim.notify("[compiler] load error: " .. tostring(val), vim.log.levels.WARN)
     return nil
+end
+
+function M.cached_require(path)
+    local cache_dir = M.cache_dir
+    local cache_path = fs.join(cache_dir, (path:gsub("%.lua$", ".luac")))
+
+    local src_mtime = fs.mtime(path)
+    if not src_mtime then
+        vim.notify("[compiler] source not found: " .. path, vim.log.levels.WARN)
+        return nil
+    end
+
+    local cache_mtime = fs.mtime(cache_path)
+
+    if not cache_mtime or src_mtime > cache_mtime then
+        local bytecode = M.compile(path)
+        if not bytecode then return nil end
+
+        local ok = fs.write(cache_path, bytecode)
+        if not ok then
+            vim.notify("[compiler] failed to write cache: " .. cache_path, vim.log.levels.WARN)
+            return nil
+        end
+    end
+
+    return M.load(cache_path)
 end
 
 return M
