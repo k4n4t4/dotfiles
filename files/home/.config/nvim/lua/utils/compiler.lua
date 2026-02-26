@@ -81,4 +81,73 @@ function M.load(cache_dir, entries)
     return results
 end
 
+--- Returns true if the merged cache is stale (missing or any source is newer).
+---@param cache_dir string
+---@param entries { src: string, key: string }[]
+---@return boolean
+function M.is_merged_stale(cache_dir, entries)
+    local stat = vim.uv.fs_stat(cache_dir .. "merged.luac")
+    if not stat then return true end
+    local mtime = stat.mtime.sec
+    for _, e in ipairs(entries) do
+        local s = vim.uv.fs_stat(e.src)
+        if s and s.mtime.sec > mtime then return true end
+    end
+    return false
+end
+
+--- Combines all spec entries into a single Lua chunk and compiles it to merged.luac.
+--- Each spec may return either a single plugin table or an array of plugin tables.
+---@param cache_dir string
+---@param entries { src: string, key: string }[]
+---@return boolean success
+function M.compile_merged(cache_dir, entries)
+    vim.fn.mkdir(cache_dir, "p")
+    local parts = { "local _specs = {}\n" }
+    for _, e in ipairs(entries) do
+        local f = io.open(e.src, "r")
+        if f then
+            local src = f:read("*a")
+            f:close()
+            table.insert(parts, "do\n  local function _spec()\n" .. src .. "\n  end\n")
+            table.insert(parts, "  local _t = _spec()\n")
+            table.insert(parts, "  if type(_t[1]) == 'table' then\n    for _, _i in ipairs(_t) do _specs[#_specs+1] = _i end\n  else\n    _specs[#_specs+1] = _t\n  end\nend\n")
+        else
+            vim.notify("[compile] cannot read: " .. e.src, vim.log.levels.WARN)
+        end
+    end
+    table.insert(parts, "return _specs\n")
+    local chunk, err = load(table.concat(parts), "merged_specs")
+    if not chunk then
+        vim.notify("[compile] merge error: " .. tostring(err), vim.log.levels.WARN)
+        return false
+    end
+    local f = io.open(cache_dir .. "merged.luac", "wb")
+    if not f then
+        vim.notify("[compile] cannot write merged.luac", vim.log.levels.WARN)
+        return false
+    end
+    f:write(string.dump(chunk, true))
+    f:close()
+    return true
+end
+
+--- Loads the merged compiled spec, recompiling if stale.
+--- Returns a flat array of all plugin specs, or nil on failure.
+---@param cache_dir string
+---@param entries { src: string, key: string }[]
+---@return any[] | nil
+function M.load_merged(cache_dir, entries)
+    if M.is_merged_stale(cache_dir, entries) then
+        if not M.compile_merged(cache_dir, entries) then return nil end
+    end
+    local ok, val = pcall(dofile, cache_dir .. "merged.luac")
+    if ok then
+        return val
+    else
+        vim.notify("[compile] load merged error: " .. tostring(val), vim.log.levels.WARN)
+        return nil
+    end
+end
+
 return M
