@@ -1,6 +1,3 @@
---- Utility to compile Lua files into LuaJIT bytecode and cache them on disk.
---- Loading bytecode directly via dofile is faster than require at startup.
-
 local M = {}
 
 --- Builds an entries list from a file path or directory path.
@@ -106,6 +103,7 @@ end
 function M.load(cache_dir, entries)
     entries = resolve(entries)
     if M.is_stale(cache_dir, entries) then
+        vim.notify("[compile] cache stale, recompiling " .. #entries .. " entries", vim.log.levels.INFO)
         M.compile(cache_dir, entries)
     end
     local mf = io.open(cache_dir .. "manifest", "r")
