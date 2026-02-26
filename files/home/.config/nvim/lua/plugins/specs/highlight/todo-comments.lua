@@ -64,15 +64,5 @@ return {
                 pattern = [[\b(KEYWORDS):]],
             },
         }
-
-        vim.keymap.set("n", "]t", function()
-            todo_comments.jump_next()
-        end, { desc = "Next todo comment" })
-        vim.keymap.set("n", "[t", function()
-            todo_comments.jump_prev()
-        end, { desc = "Previous todo comment" })
-        vim.keymap.set("n", "]t", function()
-            todo_comments.jump_next({ keywords = { "ERROR", "WARNING" } })
-        end, { desc = "Next error/warning todo comment" })
-    end
+    end,
 }
