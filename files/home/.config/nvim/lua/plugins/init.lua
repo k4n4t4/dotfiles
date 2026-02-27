@@ -14,10 +14,9 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup {
-    spec = {
-        { import = "plugins.specs" },
-    },
+require("lazy").setup({
+    { import = "plugins.specs" },
+}, {
     defaults = {
         lazy = true,
     },
@@ -71,6 +70,6 @@ require("lazy").setup {
         enabled = true,
         notify = true,
     },
-}
+})
 
 vim.keymap.set("n", "<leader>p", "<cmd>Lazy<CR>", { desc = "Plugin manager (lazy.nvim)" })
