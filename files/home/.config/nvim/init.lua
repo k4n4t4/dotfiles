@@ -1,6 +1,6 @@
 vim.loader.enable()
-
 require"utils.disable_plugins".setup()
+
 local info = require "utils.info"
 
 if info.env.is_vscode() then
