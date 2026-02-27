@@ -3,8 +3,25 @@ local M = {}
 local api = vim.api
 local info = require "utils.info"
 
+M.cache = {}
+
+local function cur_tab()
+    return api.nvim_get_current_tabpage()
+end
+
 local function cur_buf()
     return api.nvim_get_current_buf()
+end
+
+local function cached_tabuf(tabnr, key, fn)
+    tabnr = (tabnr == 0 or tabnr == nil) and cur_tab() or tabnr
+    if not api.nvim_tabpage_is_valid(tabnr) then return nil end
+
+    if not M.cache[tabnr] then M.cache[tabnr] = {} end
+    if M.cache[tabnr][key] == nil then
+        M.cache[tabnr][key] = fn(tabnr)
+    end
+    return M.cache[tabnr][key]
 end
 
 local function set_buf(bufnr)
@@ -18,6 +35,47 @@ local function buf_index(bufnr)
     for i, v in ipairs(bufs) do
         if v == bufnr then return i end
     end
+end
+
+--- Returns the tab-scoped buffer list for a tabpage (cached, invalidated on TabufUpdated).
+--- @param tabnr? integer Tabpage handle (0 or nil for current)
+--- @return integer[]
+function M.bufs(tabnr)
+    return cached_tabuf(tabnr, "bufs", function(tp)
+        return vim.t[tp].bufs or {}
+    end)
+end
+
+--- Returns the number of buffers in the tab-scoped buffer list (cached).
+--- @param tabnr? integer Tabpage handle (0 or nil for current)
+--- @return integer
+function M.count(tabnr)
+    return cached_tabuf(tabnr, "count", function(tp)
+        return #(vim.t[tp].bufs or {})
+    end)
+end
+
+--- Returns the 1-based index of a buffer in the tab-scoped buffer list, or nil if not found (cached per tab).
+--- @param tabnr? integer Tabpage handle (0 or nil for current)
+--- @param bufnr? integer Buffer handle (0 or nil for current)
+--- @return integer|nil
+function M.index(tabnr, bufnr)
+    bufnr = (bufnr == 0 or bufnr == nil) and cur_buf() or bufnr
+    local bufs = M.bufs(tabnr)
+    for i, v in ipairs(bufs) do
+        if v == bufnr then return i end
+    end
+end
+
+--- Returns the active buffer handle for a tabpage (cached).
+--- @param tabnr? integer Tabpage handle (0 or nil for current)
+--- @return integer|nil
+function M.active(tabnr)
+    return cached_tabuf(tabnr, "active", function(tp)
+        if not api.nvim_tabpage_is_valid(tp) then return nil end
+        local win = api.nvim_tabpage_get_win(tp)
+        return api.nvim_win_get_buf(win)
+    end)
 end
 
 --- Switches to the next buffer in the current tab's scoped buffer list (wraps around).
@@ -125,6 +183,14 @@ function M.setup()
     api.nvim_create_autocmd("TabEnter", {
         group = group,
         callback = init_tab_bufs,
+    })
+
+    api.nvim_create_autocmd("User", {
+        group = group,
+        pattern = "TabufUpdated",
+        callback = function()
+            M.cache = {}
+        end,
     })
 end
 
