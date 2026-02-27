@@ -14,18 +14,11 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup {
-    spec = {
-        { import = "plugins.specs.debug" },
-        { import = "plugins.specs.highlight" },
-        { import = "plugins.specs.lang" },
-        { import = "plugins.specs.lsp" },
-        { import = "plugins.specs.operation" },
-        { import = "plugins.specs.ui" },
-    },
+require("lazy").setup({
+    { import = "plugins.specs" },
+}, {
     defaults = {
         lazy = true,
-        version = false,
     },
     checker = {
         enabled = false,
@@ -51,6 +44,25 @@ require("lazy").setup {
                 "tarPlugin",
                 "tutor",
                 "zipPlugin",
+                "2html_plugin",
+                "getscript",
+                "getscriptPlugin",
+                "logipat",
+                "netrw",
+                "netrwSettings",
+                "netrwFileHandlers",
+                "tar",
+                "rrhelper",
+                "spellfile_plugin",
+                "vimball",
+                "vimballPlugin",
+                "zip",
+                "syntax",
+                "synmenu",
+                "optwin",
+                "compiler",
+                "bugreport",
+                "ftplugin",
             },
         },
     },
@@ -58,6 +70,6 @@ require("lazy").setup {
         enabled = false,
         notify = false,
     },
-}
+})
 
 vim.keymap.set("n", "<leader>p", "<cmd>Lazy<CR>", { desc = "Plugin manager (lazy.nvim)" })
