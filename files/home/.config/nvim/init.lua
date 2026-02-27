@@ -1,3 +1,14 @@
+local start = vim.uv.hrtime()
+vim.api.nvim_create_autocmd("UIEnter", {
+    once = true,
+    callback = function()
+        local finish = vim.uv.hrtime()
+        vim.cmd.sleep("1000m")
+        vim.notify(tostring((finish - start) / 1e6) .. "ms")
+    end,
+})
+
+
 vim.loader.enable()
 require"utils.disable_plugins".setup()
 
