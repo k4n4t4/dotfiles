@@ -86,10 +86,12 @@ end
 --- @param path string
 --- @return string|nil
 function M.read(path)
-    local fd = uv.fs_open(path, "r", 438)
+    local fd = uv.fs_open(path, "r", tonumber('644', 8))
     if not fd then return nil end
     local stat = uv.fs_fstat(fd)
-    if not stat then uv.fs_close(fd); return nil end
+    if not stat then
+        uv.fs_close(fd); return nil
+    end
     local data = uv.fs_read(fd, stat.size, 0)
     uv.fs_close(fd)
     return data
@@ -102,27 +104,25 @@ end
 function M.write(path, data)
     local dir = M.get_dirname(path)
     if dir then M.mkdir_p(dir) end
-    local fd = uv.fs_open(path, "w", 438) -- 438 = 0644
+    local fd = uv.fs_open(path, "w", tonumber('644', 8))
     if not fd then return false end
     uv.fs_write(fd, data, 0)
     uv.fs_close(fd)
     return true
 end
 
---- Scans a directory and returns a list of all filenames in it.
---- @param path string Absolute path to the directory
---- @return string[] List of filenames (not full paths)
-function M.scandir(path)
-    local files = {}
-    local scandir = uv.fs_scandir(path)
-    if scandir then
-        while true do
-            local name = uv.fs_scandir_next(scandir)
-            if not name then break end
-            table.insert(files, name)
-        end
+function M.scandir(path, callback)
+    local handle = vim.uv.fs_scandir(path)
+
+    while handle do
+        local name, t = vim.uv.fs_scandir_next(handle)
+
+        if not name then break end
+
+        local fname = path .. "/" .. name
+
+        if callback(fname, name, t or vim.uv.fs_stat(fname).type) == false then break end
     end
-    return files
 end
 
 return M
