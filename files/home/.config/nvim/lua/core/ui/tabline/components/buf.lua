@@ -52,10 +52,12 @@ return function(bufnr)
 
     return table.concat({
         "%", bufnr, "@v:lua.HandleBufClick@",
-        sep_hi, "🮋", buf_hi,
+        sep_hi, "▐", buf_hi,
+        " ",
         icon_hl, icon, (icon ~= "" and " " or ""),
         buf_hi, name, mod, ro,
-        sep_hi, "▉", buf_hi,
+        " ",
+        sep_hi, "▌", buf_hi,
         "%X"
     })
 end
