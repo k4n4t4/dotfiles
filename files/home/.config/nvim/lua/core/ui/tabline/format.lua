@@ -1,3 +1,5 @@
+local str = require "utils.str"
+
 local buf_format = require "core.ui.tabline.components.buf"
 local tab_format = require "core.ui.tabline.components.tab"
 
@@ -22,7 +24,12 @@ return function()
         }
     end
 
-    s = bufline .. "%#TabLineFill#%=" .. tabline
+    local bufline_len = str.tbl.eval(bufline).width
+    local tabline_len = str.tbl.eval(tabline).width
+    local width = vim.o.columns
+    local remainder_width = width - bufline_len - tabline_len
+
+    s = bufline .. (remainder_width) .. "%#TabLineFill#%=" .. tabline
 
     return s
 end
