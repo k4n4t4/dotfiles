@@ -1,10 +1,9 @@
 local start = vim.uv.hrtime()
-vim.api.nvim_create_autocmd("UIEnter", {
+vim.api.nvim_create_autocmd("SafeState", {
     once = true,
     callback = function()
         local finish = vim.uv.hrtime()
-        vim.cmd.sleep("1000m")
-        vim.notify(tostring((finish - start) / 1e6) .. "ms")
+        vim.g.startup_time = tostring((finish - start) / 1e6) .. "ms"
     end,
 })
 
