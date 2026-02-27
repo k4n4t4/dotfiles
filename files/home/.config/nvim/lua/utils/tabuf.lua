@@ -39,7 +39,7 @@ end
 
 --- Returns the tab-scoped buffer list for a tabpage (cached, invalidated on TabufUpdated).
 --- @param tabnr? integer Tabpage handle (0 or nil for current)
---- @return integer[]
+--- @return integer[] | nil
 function M.bufs(tabnr)
     return cached_tabuf(tabnr, "bufs", function(tp)
         return vim.t[tp].bufs or {}
@@ -48,7 +48,7 @@ end
 
 --- Returns the number of buffers in the tab-scoped buffer list (cached).
 --- @param tabnr? integer Tabpage handle (0 or nil for current)
---- @return integer
+--- @return integer | nil
 function M.count(tabnr)
     return cached_tabuf(tabnr, "count", function(tp)
         return #(vim.t[tp].bufs or {})
@@ -62,7 +62,7 @@ end
 function M.index(tabnr, bufnr)
     bufnr = (bufnr == 0 or bufnr == nil) and cur_buf() or bufnr
     local bufs = M.bufs(tabnr)
-    for i, v in ipairs(bufs) do
+    for i, v in ipairs(bufs or {}) do
         if v == bufnr then return i end
     end
 end
