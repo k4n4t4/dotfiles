@@ -19,7 +19,7 @@ return function()
         }
     end
 
-    local tabline_width = str.tbl.eval(tabline).width
+    local tabline_width = str.tbl.get_width(tabline)
 
 
     local buffer_table = {}
@@ -32,12 +32,12 @@ return function()
 
     local buf_widths = {}
     for i, item in ipairs(buffer_table) do
-        buf_widths[i] = str.tbl.eval(item).width
+        buf_widths[i] = str.tbl.get_width(item)
     end
 
     local available_width = vim.o.columns - tabline_width
     local truncate_icon = "%#tabline#" .. "…" .. "%*"
-    local truncate_icon_width = str.tbl.eval(truncate_icon).width
+    local truncate_icon_width = str.tbl.get_width(truncate_icon)
 
     local function calc_last_index(from)
         local w = 0
