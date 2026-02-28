@@ -2,7 +2,7 @@ return {
     {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
-        event = "VeryLazy",
+        event = "User Ready",
         config = function()
             require("nvim-treesitter").setup()
 
@@ -30,7 +30,7 @@ return {
             "nvim-treesitter/nvim-treesitter",
         },
         branch = "main",
-        event = 'VeryLazy',
+        event = 'User Ready',
         init = function()
             vim.g.no_plugin_maps = true
         end,
@@ -74,6 +74,6 @@ return {
         dependencies = {
             "nvim-treesitter/nvim-treesitter",
         },
-        event = 'VeryLazy',
+        event = 'User Ready',
     },
 }
