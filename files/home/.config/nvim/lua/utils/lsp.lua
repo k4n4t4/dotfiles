@@ -149,7 +149,7 @@ function M.auto_set(config_path)
     vim.api.nvim_create_autocmd("FileType", {
         group = group,
         pattern = "*",
-        callback = vim.schedule_wrap(function(args)
+        callback = vim.schedule_wrap(vim.schedule_wrap(function(args)
             if not vim.api.nvim_buf_is_valid(args.buf) or
                 vim.api.nvim_get_current_buf() ~= args.buf then
                 return
@@ -165,7 +165,7 @@ function M.auto_set(config_path)
                     M.configured[server_name] = true
                 end
             end
-        end),
+        end)),
     })
 end
 
