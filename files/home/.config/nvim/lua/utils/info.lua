@@ -39,6 +39,12 @@ function M.path.config()
     end)
 end
 
+function M.path.stdpath(type)
+    return cached("path_stdpath_" .. type, function()
+        return vim.fn.stdpath(type)
+    end)
+end
+
 --- Returns true if the cwd is inside the Neovim config directory (cached).
 --- @return boolean
 function M.path.in_config_dir()

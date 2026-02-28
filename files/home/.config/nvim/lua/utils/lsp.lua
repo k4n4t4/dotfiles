@@ -1,5 +1,9 @@
 local M = {}
 
+local compiler = require("utils.compiler")
+local info = require("utils.info")
+local fs = require("utils.fs")
+
 local group = vim.api.nvim_create_augroup("Utils_lsp", { clear = true })
 
 function M.hover(opts)
@@ -59,11 +63,54 @@ end
 
 --- Adds the Mason bin directory to PATH if it is not already present.
 function M.add_mason_bin_path()
-    local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
+    local mason_bin = info.path.stdpath("data") .. "/mason/bin"
     if not vim.env.PATH:find(mason_bin, 1, true) then
         vim.env.PATH = mason_bin .. ":" .. vim.env.PATH
     end
 end
+
+M.ft_to_servers_cache_filepath = info.path.stdpath("cache") .. "/utils/lsp/lsp_ft_servers_cache.lua"
+M.ft_to_servers_cache = nil
+local function build_cache()
+    M.ft_to_servers_cache = {}
+
+    local server_files = vim.api.nvim_get_runtime_file("lua/lspconfig/configs/*.lua", true)
+
+    for _, file in ipairs(server_files) do
+        local server_name = vim.fn.fnamemodify(file, ":t:r")
+        local ok, mod = pcall(require, "lspconfig.configs." .. server_name)
+
+        if ok and mod.default_config then
+            local filetypes = mod.default_config.filetypes
+            if filetypes then
+                for _, ft in ipairs(filetypes) do
+                    if not M.ft_to_servers_cache[ft] then
+                        M.ft_to_servers_cache[ft] = {}
+                    end
+                    table.insert(M.ft_to_servers_cache[ft], server_name)
+                end
+            end
+        end
+    end
+
+    local compiled = compiler.compile_table(M.ft_to_servers_cache)
+    if not compiled then return nil end
+
+    return fs.write(M.ft_to_servers_cache_filepath, compiled)
+end
+
+function M.ft_to_servers(ft)
+    if not M.ft_to_servers_cache then
+        M.ft_to_servers_cache = compiler.load(M.ft_to_servers_cache_filepath)
+
+        if not M.ft_to_servers_cache then
+            build_cache()
+        end
+    end
+
+    return M.ft_to_servers_cache[ft] or {}
+end
+
 
 M.configured = {}
 
@@ -98,9 +145,6 @@ function M.set(config_path, lsp_rules)
     end
 end
 
---- Registers a catch-all FileType autocmd that auto-detects and enables LSP servers
---- installed via Mason (or available on PATH) for each filetype, optionally loading
---- custom configs from `config_path.<server_name>`.
 ---@param config_path string Lua module prefix for server config files (e.g. "lsp")
 function M.auto_set(config_path)
     vim.api.nvim_create_autocmd("FileType", {
@@ -112,60 +156,18 @@ function M.auto_set(config_path)
                 return
             end
 
-            local installed_servers = {}
-            do
-                local ok, mason_lspconfig = pcall(require, "mason-lspconfig")
-                if ok then
-                    installed_servers = mason_lspconfig.get_installed_servers()
-                else
-                    return
-                end
-            end
-
-            local servers = {}
-            do
-                local ok, mason_lspconfig_mappings = pcall(require, "mason-lspconfig.mappings")
-                if ok then
-                    local filetype_map = mason_lspconfig_mappings.get_filetype_map()
-                    servers = filetype_map[args.match] or {}
-                end
-            end
+            local servers = M.ft_to_servers(args.match)
 
             for _, server_name in ipairs(servers) do
                 if not M.configured[server_name] then
-                    local had_custom_config, config = pcall(require, config_path .. "." .. server_name)
+                    local had_custom_config, custom_config = pcall(require, config_path .. "." .. server_name)
+                    if had_custom_config then vim.lsp.config(server_name, custom_config) end
 
-                    local installed = vim.tbl_contains(installed_servers, server_name)
-
-                    if not installed then
-                        local cmd
-                        if had_custom_config and config and config.cmd and #config.cmd > 0 then
-                            cmd = config.cmd
-                        else
-                            local registered = vim.lsp.config[server_name]
-                            if registered then
-                                if type(registered.cmd) == "table" and #registered.cmd > 0 then
-                                    cmd = registered.cmd
-                                elseif type(registered.cmd) == "function" then
-                                    local ok, result = pcall(registered.cmd)
-                                    if ok and type(result) == "table" and #result > 0 then
-                                        cmd = result
-                                    end
-                                end
-                            end
-                        end
-                        if cmd then
-                            installed = vim.fn.executable(cmd[1]) == 1
-                        end
-                    end
-
-                    if installed then
-                        if had_custom_config then vim.lsp.config(server_name, config) end
-                        vim.lsp.enable(server_name)
-                        M.configured[server_name] = true
-                    end
+                    pcall(vim.lsp.enable, server_name)
+                    M.configured[server_name] = true
                 end
             end
+
         end),
     })
 end
