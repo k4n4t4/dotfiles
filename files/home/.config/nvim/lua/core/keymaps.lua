@@ -27,8 +27,11 @@ vim.api.nvim_create_autocmd("User", {
 vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup("LspKeymaps", { clear = true }),
     callback = vim.schedule_wrap(function(event)
-        local lsp = require "utils.lsp"
         local buf = event.buf
+        if vim.b[buf].lsp_keymap_mapped then return end
+        vim.b[buf].lsp_keymap_mapped = true
+
+        local lsp = require "utils.lsp"
 
         set('n', '<Leader>lf', vim.lsp.buf.format, { buffer = buf, desc = "Format" })
         set('n', '<Leader>lr', vim.lsp.buf.rename, { buffer = buf, desc = "Rename" })
