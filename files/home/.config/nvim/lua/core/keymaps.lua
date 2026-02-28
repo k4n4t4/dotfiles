@@ -1,5 +1,8 @@
 local set = vim.keymap.set
 
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
 vim.api.nvim_create_autocmd("User", {
     pattern = "Ready",
     once = true,
@@ -25,6 +28,7 @@ vim.api.nvim_create_autocmd("User", {
         set('n', '<leader>T', require "utils.transparent".toggle)
     end,
 })
+
 
 vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup("LspKeymaps", { clear = true }),
