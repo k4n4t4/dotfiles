@@ -1,8 +1,9 @@
-local mapping = require("utils.mapping")
-local hi      = require("utils.highlight")
+local mapping    = require("utils.mapping")
+local hi         = require("utils.highlight")
+local str        = require("utils.str")
 
 -- Maps the first character of the raw mode string to a highlight group.
-local mode_hi = {
+local mode_hi    = {
     ["n"] = "StlModeNormal",
     ["i"] = "StlModeInsert",
     ["R"] = "StlModeReplace",
@@ -23,6 +24,6 @@ return function()
     local raw   = mode.mode
     local prop  = mapping.mode.get(raw)
     local hl    = mode_hi[raw] or mode_hi[raw:sub(1, 1)] or "StlModeOther"
-    local label = string.format("%-" .. MODE_WIDTH .. "s", prop.label)
+    local label = str.center(prop.label, MODE_WIDTH)
     return hi.use(hl) .. label .. (mode.blocking and "=" or "") .. "%*"
 end
