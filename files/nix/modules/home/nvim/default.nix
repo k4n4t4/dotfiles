@@ -28,11 +28,7 @@
       ccls
       harper
       sourcekit-lsp
-
-      (python3.withPackages (ps: with ps; [
-        pip
-        setuptools
-      ]))
+      python3
     ];
   };
 }
