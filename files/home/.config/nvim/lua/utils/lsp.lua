@@ -111,7 +111,6 @@ function M.ft_to_servers(ft)
     return M.ft_to_servers_cache[ft] or {}
 end
 
-
 M.configured = {}
 
 --- Registers FileType autocmds to lazily load and enable LSP servers based on explicit rules.
