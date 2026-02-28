@@ -2,6 +2,34 @@ local M = {}
 
 local group = vim.api.nvim_create_augroup("Utils_lsp", { clear = true })
 
+function M.hover(opts)
+    local params = vim.lsp.util.make_position_params(0, 'utf-8')
+    vim.lsp.buf_request(0, "textDocument/hover", params, function(_, result)
+        if not (result and result.contents) then return end
+        local markdown_lines = vim.lsp.util.convert_input_to_markdown_lines(result.contents)
+        if vim.tbl_isempty(markdown_lines) then return end
+        local _, winid = vim.lsp.util.open_floating_preview(markdown_lines, "markdown", opts or {})
+
+        if opts and opts.winblend then
+            vim.wo[winid].winblend = opts.winblend
+        end
+    end)
+end
+
+function M.signature_help(opts)
+    local params = vim.lsp.util.make_position_params(0, 'utf-8')
+    vim.lsp.buf_request(0, "textDocument/signatureHelp", params, function(_, result)
+        if not (result) then return end
+        local markdown_lines = vim.lsp.util.convert_signature_help_to_markdown_lines(result, vim.bo.filetype) or {}
+        if vim.tbl_isempty(markdown_lines) then return end
+        local _, winid = vim.lsp.util.open_floating_preview(markdown_lines, "markdown", opts or {})
+
+        if opts and opts.winblend then
+            vim.wo[winid].winblend = opts.winblend
+        end
+    end)
+end
+
 --- Returns a list of available null-ls source names for the current buffer's filetype.
 --- @return string[] List of null-ls source names
 function M.get_null_ls_sources()
