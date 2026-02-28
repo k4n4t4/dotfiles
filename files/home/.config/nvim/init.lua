@@ -1,5 +1,5 @@
 vim.loader.enable()
-require"utils.startup_time".setup()
+require"utils.startup_time".setup({ show = true })
 require"utils.disable_plugins".setup()
 
 local info = require "utils.info"
