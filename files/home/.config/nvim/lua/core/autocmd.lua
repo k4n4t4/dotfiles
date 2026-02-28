@@ -54,6 +54,14 @@ vim.api.nvim_create_autocmd("User", {
     end),
 })
 
+-- trigger User event after SafeState
+vim.api.nvim_create_autocmd("SafeState", {
+    once = true,
+    callback = vim.schedule_wrap(function()
+        vim.api.nvim_exec_autocmds("User", { pattern = "Safe", modeline = false })
+    end),
+})
+
 -- trigger User event after UIEnter
 vim.api.nvim_create_autocmd("UIEnter", {
     once = true,
