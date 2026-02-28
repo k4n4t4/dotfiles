@@ -50,12 +50,5 @@ vim.api.nvim_create_autocmd("LspAttach", {
         set('n', 'gD', function() vim.lsp.buf.declaration() end, { buffer = buf, desc = "Declaration" })
         set('n', 'gr', function() vim.lsp.buf.references() end, { buffer = buf, desc = "References" })
         set('n', 'gi', function() vim.lsp.buf.implementation() end, { buffer = buf, desc = "Implementation" })
-
-        set('n', '<Leader>le', function() vim.lsp.diagnostic.show_line_diagnostics() end,
-            { buffer = buf, desc = "Show Line Diagnostics" })
-        set('n', '<Leader>l[', function() vim.lsp.diagnostic.goto_prev() end,
-            { buffer = buf, desc = "Diagnostic Goto Prev" })
-        set('n', '<Leader>l]', function() vim.lsp.diagnostic.goto_next() end,
-            { buffer = buf, desc = "Diagnostic Goto Next" })
     end),
 })

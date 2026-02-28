@@ -13,11 +13,9 @@ function M.new(tbl, fallback)
             local v = tbl[key]
             return v ~= nil and v or fallback(key)
         end,
-        --- Updates a single entry.
         set = function(key, value)
             tbl[key] = value
         end,
-        --- Merges multiple entries at once.
         --- @param entries table<string, any>
         extend = function(entries)
             for k, v in pairs(entries) do
@@ -27,9 +25,6 @@ function M.new(tbl, fallback)
     }
 end
 
---- Vim mode mapping: raw mode string -> { name, label }
---- name  = abbreviated display name (e.g. "N", "I", "VB")
---- label = full display name       (e.g. "NORMAL", "INSERT", "V-BLOCK")
 M.mode = M.new({
     ["n"]   = { name = "N",   label = "NORMAL" },
     ["no"]  = { name = "NO",  label = "O-PENDING" },
@@ -70,18 +65,12 @@ M.mode = M.new({
     ["t"]   = { name = "T",   label = "TERMINAL" },
 }, function(k) return { name = k:upper(), label = k:upper() } end)
 
---- File format mapping: vim fileformat string -> { label, symbol }
---- label  = short display label (e.g. "LF", "CRLF", "CR")
---- symbol = Unicode symbol       (e.g. "↲", "↵", "←")
 M.fileformat = M.new({
     ["unix"] = { label = "LF",   symbol = "↲" },
     ["dos"]  = { label = "CRLF", symbol = "↵" },
     ["mac"]  = { label = "CR",   symbol = "←" },
 }, function(k) return { label = k, symbol = k } end)
 
---- Diagnostic severity mapping: severity name string -> { icon, label }
---- icon  = short single-char indicator
---- label = human-readable severity name
 M.severity = M.new({
     ["ERROR"] = { icon = "!", label = "Error" },
     ["WARN"]  = { icon = "*", label = "Warn" },
@@ -89,7 +78,12 @@ M.severity = M.new({
     ["HINT"]  = { icon = "?", label = "Hint" },
 }, function(k) return { icon = "·", label = k } end)
 
---- Filetype alias mapping: long filetype name -> short display name
+M.git = M.new({
+    ["add"]    = { icon = "+", label = "Added" },
+    ["remove"] = { icon = "-", label = "Removed" },
+    ["change"] = { icon = "~", label = "Changed" },
+}, function(k) return { icon = "·", label = k } end)
+
 M.filetype_alias = M.new({
     ["javascript"] = "js",
     ["typescript"] = "ts",

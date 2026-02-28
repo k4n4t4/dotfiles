@@ -13,7 +13,7 @@ return function()
     local format = {}
     local status = info.buf.gitsigns(bufnr)
     if status then
-        table.insert(format, hi.use(git_props.branch.hi) .. "" .. status.head .. "%*")
+        table.insert(format, hi.use(git_props.branch.hi) .. "" .. (status.head or "") .. "%*")
         if status.added   and status.added   > 0 then table.insert(format, hi.use(git_props.add.hi)    .. git_props.add.icon    .. status.added   .. "%*") end
         if status.removed and status.removed > 0 then table.insert(format, hi.use(git_props.remove.hi) .. git_props.remove.icon .. status.removed .. "%*") end
         if status.changed and status.changed > 0 then table.insert(format, hi.use(git_props.change.hi) .. git_props.change.icon .. status.changed .. "%*") end
