@@ -8,7 +8,6 @@
       tree-sitter
       curl
       unzip
-      python3
       nodejs
       nodePackages.npm
       gnumake
@@ -25,6 +24,15 @@
       libxml2
       imagemagick
       emmet-language-server
+      ast-grep
+      ccls
+      harper
+      sourcekit-lsp
+
+      (python3.withPackages (ps: with ps; [
+        pip
+        setuptools
+      ]))
     ];
   };
 }
