@@ -18,16 +18,8 @@
       luajitPackages.luarocks
       lua51Packages.lua
       lua-language-server
-      rust-analyzer
-      cargo
       markdownlint-cli
       libxml2
-      imagemagick
-      emmet-language-server
-      ast-grep
-      ccls
-      harper
-      sourcekit-lsp
       python3
     ];
   };
