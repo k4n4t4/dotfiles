@@ -63,6 +63,11 @@ return {
                     width = 0.75,
                 },
             },
+            pickers = {
+                colorscheme = {
+                    enable_preview = false,
+                },
+            },
             extensions = {
                 ["ui-select"] = {
                     require("telescope.themes").get_dropdown {
