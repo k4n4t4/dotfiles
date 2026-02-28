@@ -354,4 +354,12 @@ return {
             }
         end,
     },
+
+    {
+        'RaafatTurki/hex.nvim',
+        event = 'User Ready',
+        config = function()
+            require('hex').setup()
+        end
+    }
 }
