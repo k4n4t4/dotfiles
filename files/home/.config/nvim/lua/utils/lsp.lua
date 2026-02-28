@@ -157,7 +157,6 @@ function M.auto_set(config_path)
             end
 
             local servers = M.ft_to_servers(args.match)
-
             for _, server_name in ipairs(servers) do
                 if not M.configured[server_name] then
                     local had_custom_config, custom_config = pcall(require, config_path .. "." .. server_name)
@@ -167,7 +166,6 @@ function M.auto_set(config_path)
                     M.configured[server_name] = true
                 end
             end
-
         end),
     })
 end

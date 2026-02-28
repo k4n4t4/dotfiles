@@ -92,6 +92,7 @@ vim.api.nvim_create_autocmd("User", {
     end,
 })
 
+
 local lsp = require "utils.lsp"
 
 lsp.add_mason_bin_path()
