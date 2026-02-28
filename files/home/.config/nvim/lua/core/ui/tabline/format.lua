@@ -1,8 +1,10 @@
 local str = require "utils.str"
 local tabuf = require "utils.tabuf"
 
-local buf_format = require "core.ui.tabline.components.buf"
-local tab_format = require "core.ui.tabline.components.tab"
+local components = require "core.ui.tabline.components"
+
+local buf_format = components.buf
+local tab_format = components.tab
 
 return function()
     local s = ""
