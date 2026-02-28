@@ -25,7 +25,7 @@ vim.api.nvim_create_autocmd("User", {
 })
 
 vim.api.nvim_create_autocmd("LspAttach", {
-    once = true,
+    group = vim.api.nvim_create_augroup("LspKeymaps", { clear = true }),
     callback = vim.schedule_wrap(function(event)
         local lsp = require "utils.lsp"
         local buf = event.buf
