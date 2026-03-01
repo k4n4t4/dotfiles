@@ -162,8 +162,8 @@ function M.auto_set(config_path)
                     local ok, config = pcall(require, config_path .. "." .. server_name)
                     if not ok then config = server.default_config end
                     if vim.fn.executable(config.cmd[1]) == 1 then
-                        vim.lsp.config(server_name, config)
-                        pcall(vim.lsp.enable, server_name)
+                        if ok then vim.lsp.config(server_name, config) end
+                        vim.lsp.enable(server_name)
                         M.configured[server_name] = true
                     end
                 end
