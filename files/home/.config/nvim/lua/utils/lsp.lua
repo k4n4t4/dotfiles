@@ -150,7 +150,9 @@ function M.set(config_path, lsp_rules)
 end
 
 ---@param config_path string Lua module prefix for server config files (e.g. "lsp")
-function M.auto_set(config_path)
+---@param opts? { exclude?: string[] } Optional settings; `exclude` lists server names to skip
+function M.auto_set(config_path, opts)
+    local exclude = opts and opts.exclude or {}
     vim.api.nvim_create_autocmd("FileType", {
         group = group,
         pattern = "*",
@@ -163,7 +165,8 @@ function M.auto_set(config_path)
             local servers = M.ft_to_servers(args.match)
             for _, server in ipairs(servers) do
                 local server_name = server.name
-                if not M.configured[server_name] then
+                if not M.configured[server_name] and
+                    not vim.tbl_contains(exclude, server_name) then
                     local ok, config = pcall(require, config_path .. "." .. server_name)
                     if not ok then config = server.default_config end
                     if vim.fn.executable(config.cmd[1]) == 1 then
