@@ -6,6 +6,7 @@ local fs = require("utils.fs")
 
 local group = vim.api.nvim_create_augroup("Utils_lsp", { clear = true })
 
+
 function M.hover(opts)
     local params = vim.lsp.util.make_position_params(0, 'utf-8')
     vim.lsp.buf_request(0, "textDocument/hover", params, function(_, result)
@@ -34,6 +35,7 @@ function M.signature_help(opts)
     end)
 end
 
+
 --- Returns a list of available null-ls source names for the current buffer's filetype.
 --- @return string[] List of null-ls source names
 function M.get_null_ls_sources()
@@ -61,6 +63,7 @@ function M.get(bufnr)
     return clients, others
 end
 
+
 --- Adds the Mason bin directory to PATH if it is not already present.
 function M.add_mason_bin_path()
     local mason_bin = info.path.stdpath("data") .. "/mason/bin"
@@ -68,6 +71,7 @@ function M.add_mason_bin_path()
         vim.env.PATH = mason_bin .. ":" .. vim.env.PATH
     end
 end
+
 
 M.ft_to_servers_cache_filepath = info.path.stdpath("cache") .. "/utils/lsp/lsp_ft_servers_cache.lua"
 M.ft_to_servers_cache = nil
@@ -110,6 +114,7 @@ function M.ft_to_servers(ft)
 
     return M.ft_to_servers_cache[ft] or {}
 end
+
 
 M.configured = {}
 
