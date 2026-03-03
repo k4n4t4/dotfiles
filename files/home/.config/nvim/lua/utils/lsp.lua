@@ -125,11 +125,37 @@ local wrapper_executables = {
     coursier = true, pwsh = true,
 }
 
+-- Flags whose next argument is inline code, not a file or module name.
+local code_flags = { ['-e'] = true, ['-c'] = true, ['-Command'] = true }
+
+--- Checks if a Ruby gem binstub has its gem actually installed.
+--- Ruby may ship binstubs for gems that aren't present (e.g. typeprof via Nix).
+---@param exe_path string Absolute path to the executable
+---@param gem_name string The gem name to check
+---@return boolean|nil true/false if Ruby binstub, nil otherwise
+local function check_ruby_gem(exe_path, gem_name)
+    local f = io.open(exe_path, "r")
+    if not f then return nil end
+    local shebang = f:read("*l") or ""
+    f:close()
+    if not shebang:match("ruby") then return nil end
+    local interp = shebang:match("^#!%s*(%S+)")
+    if not interp then return nil end
+    if vim.fn.fnamemodify(interp, ":t") == "env" then
+        interp = shebang:match("^#!%s*%S+%s+(%S+)")
+    end
+    if not interp or vim.fn.executable(interp) ~= 1 then return nil end
+    vim.fn.system({ interp, "-e", "gem '" .. gem_name .. "', '>= 0.a'" })
+    return vim.v.shell_error == 0
+end
+
 --- Checks if an LSP server command is actually available.
---- Unlike checking just cmd[1], this handles wrapper commands (python, npx, node, etc.)
---- by verifying the actual tool rather than just the wrapper executable.
---- For wrappers with inline code (julia -e, R -e, perl -e), returns false
---- since package availability cannot be verified without running the interpreter.
+--- Handles wrapper commands (python, npx, node, etc.) with flag-aware logic:
+---   - `python -m module`: verifies the module is importable via the same interpreter.
+---   - `-e`/`-c`/`-Command` (inline code): returns true if the interpreter is available,
+---     since package availability cannot be verified without execution.
+---   - Other non-flag args: checked as executable or existing file path.
+--- For standalone executables, also detects Ruby gem binstubs and verifies gem availability.
 ---@param cmd string[]?
 ---@return boolean
 function M.is_cmd_available(cmd)
@@ -138,18 +164,36 @@ function M.is_cmd_available(cmd)
     local bin = vim.fn.fnamemodify(cmd[1], ":t")
 
     if not wrapper_executables[bin] then
-        return vim.fn.executable(cmd[1]) == 1
+        if vim.fn.executable(cmd[1]) ~= 1 then return false end
+        local exe_path = vim.fn.exepath(cmd[1])
+        if exe_path ~= "" then
+            local gem_ok = check_ruby_gem(exe_path, bin)
+            if gem_ok ~= nil then return gem_ok end
+        end
+        return true
     end
 
     if vim.fn.executable(cmd[1]) ~= 1 then return false end
     if #cmd < 2 then return false end
 
-    -- Find the first non-flag argument (the actual tool/script/module)
-    for i = 2, #cmd do
+    local i = 2
+    while i <= #cmd do
         local arg = cmd[i]
-        if arg and not arg:match("^%-") then
+        if code_flags[arg] then
+            -- -e/-c/-Command: next arg is inline code.
+            -- Can't verify package availability; interpreter being present is sufficient.
+            return true
+        elseif arg == '-m' and bin:match('^python') then
+            -- python -m module: verify the module is importable
+            if i + 1 <= #cmd then
+                vim.fn.system({ cmd[1], '-c', 'import ' .. cmd[i + 1] })
+                return vim.v.shell_error == 0
+            end
+            return false
+        elseif not arg:match("^%-") then
             return vim.fn.executable(arg) == 1 or vim.uv.fs_stat(arg) ~= nil
         end
+        i = i + 1
     end
 
     return false
