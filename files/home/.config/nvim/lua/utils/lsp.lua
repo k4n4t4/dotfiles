@@ -149,11 +149,16 @@ local function check_ruby_gem(exe_path, gem_name)
     return vim.v.shell_error == 0
 end
 
+-- Wrappers whose first non-flag argument is a subcommand, not a program to run.
+local subcommand_wrappers = { coursier = true }
+
 --- Checks if an LSP server command is actually available.
 --- Handles wrapper commands (python, npx, node, etc.) with flag-aware logic:
 ---   - `python -m module`: verifies the module is importable via the same interpreter.
+---   - `perl -MModule`: verifies the Perl module is loadable.
 ---   - `-e`/`-c`/`-Command` (inline code): returns true if the interpreter is available,
 ---     since package availability cannot be verified without execution.
+---   - Subcommand wrappers (coursier): only require the wrapper to be executable.
 ---   - Other non-flag args: checked as executable or existing file path.
 --- For standalone executables, also detects Ruby gem binstubs and verifies gem availability.
 ---@param cmd string[]?
@@ -176,6 +181,8 @@ function M.is_cmd_available(cmd)
     if vim.fn.executable(cmd[1]) ~= 1 then return false end
     if #cmd < 2 then return false end
 
+    if subcommand_wrappers[bin] then return true end
+
     local i = 2
     while i <= #cmd do
         local arg = cmd[i]
@@ -190,6 +197,13 @@ function M.is_cmd_available(cmd)
                 return vim.v.shell_error == 0
             end
             return false
+        elseif arg:match('^%-M') and bin == 'perl' then
+            -- perl -MModule::Name: verify the module is loadable
+            local module = arg:sub(3):match('^[^=]+')
+            if module and module ~= '' then
+                vim.fn.system({ cmd[1], '-e', 'use ' .. module })
+                return vim.v.shell_error == 0
+            end
         elseif not arg:match("^%-") then
             return vim.fn.executable(arg) == 1 or vim.uv.fs_stat(arg) ~= nil
         end
