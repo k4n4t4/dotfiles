@@ -94,5 +94,7 @@ local lsp = require "utils.lsp"
 
 lsp.add_mason_bin_path()
 lsp.auto_set("core.lsp-config", {
-    exclude = { "tvm_ffi_navigator" },
+    exclude = {
+        -- "tvm_ffi_navigator",
+    },
 })

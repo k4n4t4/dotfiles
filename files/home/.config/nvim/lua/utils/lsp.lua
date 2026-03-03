@@ -116,6 +116,46 @@ function M.ft_to_servers(ft)
 end
 
 
+local wrapper_executables = {
+    python = true, python3 = true, python2 = true,
+    node = true, npx = true,
+    ruby = true, perl = true,
+    dotnet = true, java = true,
+    julia = true, R = true,
+    coursier = true, pwsh = true,
+}
+
+--- Checks if an LSP server command is actually available.
+--- Unlike checking just cmd[1], this handles wrapper commands (python, npx, node, etc.)
+--- by verifying the actual tool rather than just the wrapper executable.
+--- For wrappers with inline code (julia -e, R -e, perl -e), returns false
+--- since package availability cannot be verified without running the interpreter.
+---@param cmd string[]?
+---@return boolean
+function M.is_cmd_available(cmd)
+    if not cmd or #cmd == 0 then return false end
+
+    local bin = vim.fn.fnamemodify(cmd[1], ":t")
+
+    if not wrapper_executables[bin] then
+        return vim.fn.executable(cmd[1]) == 1
+    end
+
+    if vim.fn.executable(cmd[1]) ~= 1 then return false end
+    if #cmd < 2 then return false end
+
+    -- Find the first non-flag argument (the actual tool/script/module)
+    for i = 2, #cmd do
+        local arg = cmd[i]
+        if arg and not arg:match("^%-") then
+            return vim.fn.executable(arg) == 1 or vim.uv.fs_stat(arg) ~= nil
+        end
+    end
+
+    return false
+end
+
+
 M.configured = {}
 
 --- Registers FileType autocmds to lazily load and enable LSP servers based on explicit rules.
@@ -169,7 +209,7 @@ function M.auto_set(config_path, opts)
                     not vim.tbl_contains(exclude, server_name) then
                     local ok, config = pcall(require, config_path .. "." .. server_name)
                     if not ok then config = server.default_config end
-                    if vim.fn.executable(config.cmd[1]) == 1 then
+                    if M.is_cmd_available(config.cmd) then
                         if ok then vim.lsp.config(server_name, config) end
                         vim.lsp.enable(server_name)
                         M.configured[server_name] = true
