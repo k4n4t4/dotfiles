@@ -3,27 +3,16 @@ return {
         "neovim/nvim-lspconfig",
     },
     {
-        "mason-org/mason-lspconfig.nvim",
+        "mason-org/mason.nvim",
         dependencies = {
-            {
-                "mason-org/mason.nvim",
-                opts = {
-                    ui = {
-                        border = 'double',
-                    },
-                },
-            },
             "neovim/nvim-lspconfig",
         },
         event = "VeryLazy",
         config = function()
-            local mason_lspconfig = require("mason-lspconfig")
-
-            mason_lspconfig.setup {
-                ensure_installed = {
-                    "vimls",
+            require("mason").setup {
+                ui = {
+                    border = 'double',
                 },
-                automatic_enable = false,
             }
         end,
     },

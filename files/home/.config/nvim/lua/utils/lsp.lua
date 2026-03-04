@@ -78,7 +78,7 @@ M.ft_to_servers_cache = nil
 local function build_cache()
     M.ft_to_servers_cache = {}
 
-    local server_files = vim.api.nvim_get_runtime_file("lua/lspconfig/configs/*.lua", true)
+    local server_files = vim.api.nvim_get_runtime_file("lsp/*.lua", true)
 
     for _, file in ipairs(server_files) do
         local server_name = vim.fn.fnamemodify(file, ":t:r")
