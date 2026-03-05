@@ -1,5 +1,5 @@
 return {
-    cmd = { "emmet_language_server" },
+    cmd = { "emmet-language-server", "--stdio" },
     filetypes = {
         "css",
         "eruby",
