@@ -24,12 +24,30 @@ function M.fileformat()
 end
 
 local utils_lsp = require "utils.lsp"
+M.lsp_show = true
+function StlToggleLspShow()
+    M.lsp_show = not M.lsp_show
+    vim.cmd.redrawstatus()
+end
 function M.lsp()
+    local s = ""
+
     local clients, others = utils_lsp.get(0)
     if others["null-ls"] and #others["null-ls"] > 0 then
         table.insert(clients, "null-ls:[" .. table.concat(others["null-ls"], ", ") .. "]")
     end
-    return table.concat(clients, ", ")
+
+    if #clients == 0 then
+        return ""
+    end
+
+    if not M.lsp_show then
+        s = "LSP(" .. #clients .. ")"
+    else
+        s = table.concat(clients, ", ")
+    end
+
+    return "%@v:lua.StlToggleLspShow@" .. s .. "%X"
 end
 
 function M.macro_recording()

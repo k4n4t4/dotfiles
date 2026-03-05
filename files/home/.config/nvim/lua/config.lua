@@ -1,7 +1,7 @@
 require("utils.local_config").setup {
     colorscheme = {
         name = "onedark",
-        transparent = true,
+        transparent = false,
     },
     number = {
         enable = true,

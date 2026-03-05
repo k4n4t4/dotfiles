@@ -196,6 +196,10 @@ function M.stl.eval(str, opts)
     return { str = result.str, width = result.width, highlights = result.highlights }
 end
 
+function M.stl.get_width(str, opts)
+    return M.stl.eval(str, opts).width
+end
+
 --- Returns the rendered display width of a statusline format string.
 --- @param str string
 --- @param winid? integer  Default: current window
@@ -296,6 +300,10 @@ function M.tbl.eval(str, opts)
     end
     local result = vim.api.nvim_eval_statusline(str, eval_opts)
     return { str = result.str, width = result.width, highlights = result.highlights }
+end
+
+function M.tbl.get_width(str, opts)
+    return M.tbl.eval(str, opts).width
 end
 
 --- Returns the rendered display width of a tabline format string.

@@ -1,17 +1,17 @@
 local M = {}
 
+local info = require("utils.info")
 local fs = require("utils.fs")
 
-M.cache_dir = vim.fn.stdpath("cache") .. "/compiled/"
+M.cache_dir = info.path.stdpath("cache") .. "/compiled/"
 M.mem_cache = {}
 M.manifest_path = M.cache_dir .. "manifest.msgpack"
 M.manifest = nil
 
 
 function M.compile(path)
-    local chunk, err = loadfile(path)
+    local chunk, _ = loadfile(path)
     if chunk then return string.dump(chunk, true) end
-    vim.notify("[compiler] compile error: " .. tostring(err), vim.log.levels.WARN)
     return nil
 end
 
@@ -19,10 +19,19 @@ function M.compile_value(value)
     return string.dump(function() return value end, true)
 end
 
+function M.compile_table(value)
+    local source_code = "return " .. vim.inspect(value)
+    local chunk = load(source_code)
+
+    if not chunk then return nil end
+
+    local bytecode = string.dump(chunk, true)
+    return bytecode
+end
+
 function M.load(path)
     local ok, val = pcall(dofile, path)
     if ok then return val end
-    vim.notify("[compiler] load error: " .. tostring(val), vim.log.levels.WARN)
     return nil
 end
 
@@ -34,10 +43,7 @@ function M.cached_require(path)
     local cache_path = fs.join(cache_dir, (path:gsub("%.lua$", ".luac")))
 
     local src_mtime = fs.mtime(path)
-    if not src_mtime then
-        vim.notify("[compiler] source not found: " .. path, vim.log.levels.WARN)
-        return nil
-    end
+    if not src_mtime then return nil end
 
     local cache_mtime = fs.mtime(cache_path)
 
@@ -46,10 +52,7 @@ function M.cached_require(path)
         if not bytecode then return nil end
 
         local ok = fs.write(cache_path, bytecode)
-        if not ok then
-            vim.notify("[compiler] failed to write cache: " .. cache_path, vim.log.levels.WARN)
-            return nil
-        end
+        if not ok then return nil end
     end
 
     M.mem_cache[path] = { result = M.load(cache_path) }
@@ -75,15 +78,9 @@ end
 
 function M.save_manifest()
     local ok, encoded = pcall(vim.mpack.encode, M.manifest)
-    if not ok then
-        vim.notify("[compiler] failed to encode manifest", vim.log.levels.WARN)
-        return false
-    end
+    if not ok then return false end
     local ok2 = fs.write(M.manifest_path, encoded)
-    if not ok2 then
-        vim.notify("[compiler] failed to write manifest: " .. M.manifest_path, vim.log.levels.WARN)
-        return false
-    end
+    if not ok2 then return false end
     return true
 end
 
@@ -94,10 +91,7 @@ function M.manifest_require(path)
     local manifest = M.load_manifest()
 
     local src = fs.read(path)
-    if not src then
-        vim.notify("[compiler] source not found: " .. path, vim.log.levels.WARN)
-        return nil
-    end
+    if not src then return nil end
 
     local hash = vim.fn.sha256(src)
     local cache_path = fs.join(M.cache_dir, (path:gsub("%.lua$", ".luac")))
@@ -107,10 +101,7 @@ function M.manifest_require(path)
         if not bytecode then return nil end
 
         local ok = fs.write(cache_path, bytecode)
-        if not ok then
-            vim.notify("[compiler] failed to write cache: " .. cache_path, vim.log.levels.WARN)
-            return nil
-        end
+        if not ok then return nil end
 
         manifest[path] = hash
         M.save_manifest()

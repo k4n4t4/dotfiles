@@ -8,7 +8,6 @@
       tree-sitter
       curl
       unzip
-      python3
       nodejs
       nodePackages.npm
       gnumake
@@ -19,12 +18,9 @@
       luajitPackages.luarocks
       lua51Packages.lua
       lua-language-server
-      rust-analyzer
-      cargo
       markdownlint-cli
       libxml2
-      imagemagick
-      emmet-language-server
+      python3
     ];
   };
 }
