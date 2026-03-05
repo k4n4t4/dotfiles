@@ -75,6 +75,7 @@ return {
                     enable = false,
                 },
             }
+            vim.api.nvim_set_hl(0, "Hlchunk1", { link = "Comment" })
         end,
     },
 
