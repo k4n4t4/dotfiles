@@ -1,4 +1,5 @@
 require("utils.local_config").setup {
+    shell = "fish",
     colorscheme = {
         name = "onedark",
         transparent = false,
@@ -9,5 +10,10 @@ require("utils.local_config").setup {
         toggle_relative_number = true,
     },
     mouse = true,
-    shell = "fish",
+    indent = {
+        expandtab = true,
+        tabstop = 4,
+        shiftwidth = 4,
+    },
+    scrolloff = 5,
 }

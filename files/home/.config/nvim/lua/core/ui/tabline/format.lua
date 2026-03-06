@@ -44,8 +44,9 @@ return function()
         local last = from - 1
         local left_icon_w = from > 1 and truncate_icon_width or 0
         for i = from, #buffer_table do
-            if w + buf_widths[i] + truncate_icon_width + left_icon_w > available_width then break end
-            w = w + buf_widths[i]
+            local current_width = buf_widths[i] or 0
+            if w + current_width + truncate_icon_width + left_icon_w > available_width then break end
+            w = w + current_width
             last = i
         end
         return last
@@ -61,8 +62,9 @@ return function()
         offset_index = buf_index
         for i = buf_index, 1, -1 do
             local left_icon_w = i > 1 and truncate_icon_width or 0
-            if w + buf_widths[i] + truncate_icon_width + left_icon_w > available_width then break end
-            w = w + buf_widths[i]
+            local current_width = buf_widths[i] or 0
+            if w + current_width + truncate_icon_width + left_icon_w > available_width then break end
+            w = w + current_width
             offset_index = i
         end
         last_index = calc_last_index(offset_index)
