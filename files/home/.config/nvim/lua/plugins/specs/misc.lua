@@ -100,7 +100,9 @@ return {
             require("tiny-inline-diagnostic").setup {
                 preset = "nonerdfont",
                 hi = {
+                    arrow = "Comment",
                     background = "Normal",
+                    mixing_color = "none",
                 }
             }
             vim.diagnostic.config { virtual_text = false }
