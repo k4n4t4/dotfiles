@@ -79,6 +79,35 @@ return {
     },
 
     {
+        'Bekaboo/dropbar.nvim',
+        dependencies = {
+            'nvim-telescope/telescope-fzf-native.nvim',
+            build = 'make'
+        },
+        event = 'User Ready',
+        config = function()
+            local dropbar_api = require('dropbar.api')
+            vim.keymap.set('n', '<Leader>;', dropbar_api.pick, { desc = 'Pick symbols in winbar' })
+            vim.keymap.set('n', '[;', dropbar_api.goto_context_start, { desc = 'Go to start of current context' })
+            vim.keymap.set('n', '];', dropbar_api.select_next_context, { desc = 'Select next context' })
+        end
+    },
+
+    {
+        "rachartier/tiny-inline-diagnostic.nvim",
+        event = "User Ready",
+        config = function()
+            require("tiny-inline-diagnostic").setup {
+                preset = "nonerdfont",
+                hi = {
+                    background = "Normal",
+                }
+            }
+            vim.diagnostic.config { virtual_text = false }
+        end,
+    },
+
+    {
         "monaqa/dial.nvim",
         dependencies = {
             "nvim-lua/plenary.nvim",

@@ -75,7 +75,9 @@ end
 
 M.ft_to_servers_cache_filepath = info.path.stdpath("cache") .. "/utils/lsp/lsp_ft_servers_cache.lua"
 M.ft_to_servers_cache = nil
-local function build_cache()
+local function build_ft_servers_cache()
+    if not pcall(require, "lspconfig") then return end
+
     M.ft_to_servers_cache = {}
 
     local server_files = vim.api.nvim_get_runtime_file("lsp/*.lua", true)
@@ -108,7 +110,7 @@ function M.ft_to_servers(ft)
         M.ft_to_servers_cache = compiler.load(M.ft_to_servers_cache_filepath)
 
         if not M.ft_to_servers_cache then
-            build_cache()
+            build_ft_servers_cache()
         end
     end
 
