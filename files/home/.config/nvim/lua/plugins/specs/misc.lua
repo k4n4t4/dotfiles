@@ -55,8 +55,8 @@ return {
                 chunk = {
                     enable = true,
                     style = {
-                        { fg = "#22A0A0" },
-                        { fg = "#CC2233" },
+                        { fg = "#303030" },
+                        { fg = "#903020" },
                     },
                     use_treesitter = true,
                     chars = {
@@ -75,7 +75,6 @@ return {
                     enable = false,
                 },
             }
-            vim.api.nvim_set_hl(0, "Hlchunk1", { link = "Comment" })
         end,
     },
 

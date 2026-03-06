@@ -1,4 +1,4 @@
-local hl = require("utils.highlight")
+local hi = require("utils.highlight")
 
-hl.link("StatusColumnFoldHead", "FoldColumn")
-hl.link("StatusColumnFold", "NonText")
+hi.set("StatusColumnFoldHead", { fg = hi.ref("FoldColumn", 'fg') })
+hi.set("StatusColumnFold", {fg = "#505050"})
