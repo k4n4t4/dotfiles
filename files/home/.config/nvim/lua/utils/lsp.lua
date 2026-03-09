@@ -93,7 +93,7 @@ local function build_ft_servers_cache()
                     if not M.ft_to_servers_cache[ft] then
                         M.ft_to_servers_cache[ft] = {}
                     end
-                    table.insert(M.ft_to_servers_cache[ft], { name = server_name, default_config = mod.default_config})
+                    table.insert(M.ft_to_servers_cache[ft], { name = server_name })
                 end
             end
         end
@@ -268,7 +268,6 @@ function M.auto_set(config_path, opts)
                 if not M.configured[server_name] and
                     not vim.tbl_contains(exclude, server_name) then
                     local ok, config = pcall(require, config_path .. "." .. server_name)
-                    if not ok then config = server.default_config end
                     if M.is_cmd_available(config.cmd) then
                         if ok then vim.lsp.config(server_name, config) end
                         vim.lsp.enable(server_name)

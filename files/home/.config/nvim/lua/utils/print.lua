@@ -57,7 +57,7 @@ end
 ---@param tbl table<any>
 ---@param indent_count? number
 ---@param ignore_tables? table<any>
-local function table_to_str(tbl, indent_count, ignore_tables)
+function M.table_to_str(tbl, indent_count, ignore_tables)
     indent_count = indent_count or 0
     ignore_tables = ignore_tables or { _G }
     local indent = string.rep("  ", indent_count)
@@ -70,7 +70,7 @@ local function table_to_str(tbl, indent_count, ignore_tables)
                 value = tostring(v)
             else
                 table.insert(ignore_tables, v)
-                value = table_to_str(v, indent_count + 1, ignore_tables)
+                value = M.table_to_str(v, indent_count + 1, ignore_tables)
             end
         else
             if type(v) == 'string' then
@@ -89,7 +89,7 @@ end
 --- Pretty-prints a table as an indented string using `nvim_echo`.
 ---@param tbl table<any>
 function M.table(tbl)
-    M.echo { { table_to_str(tbl), "None" } }
+    M.echo { { M.table_to_str(tbl), "None" } }
 end
 
 return M

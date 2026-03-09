@@ -1,5 +1,52 @@
 local M = {}
 
+function M.serialize(val, visited, depth)
+  visited = visited or {}
+  depth = depth or 1
+  local indent = string.rep("  ", depth)
+
+  if type(val) == "number" then
+    if val ~= val then return "(0/0)" end
+    if val == math.huge then return "math.huge" end
+    if val == -math.huge then return "(-math.huge)" end
+    return tostring(val)
+  elseif type(val) == "boolean" then
+    return tostring(val)
+  elseif type(val) == "string" then
+    return string.format("%q", val)
+  elseif type(val) == "function" then
+    local ok, bytecode = pcall(string.dump, val)
+    if ok then
+      return string.format("load(%q)", bytecode)
+    else
+      return "nil --[[ unsupported C function ]]"
+    end
+  elseif type(val) == "table" then
+    if visited[val] then return "nil --[[ cyclic reference ]]" end
+    visited[val] = true
+
+    local res = "{\n"
+    for k, v in pairs(val) do
+      local key_str
+      if type(k) == "string" then key_str = string.format("[%q]", k)
+      elseif type(k) == "number" then
+        if k ~= k then key_str = "[(0/0)]"
+        elseif k == math.huge then key_str = "[math.huge]"
+        elseif k == -math.huge then key_str = "[(-math.huge)]"
+        else key_str = string.format("[%s]", tostring(k)) end
+      elseif type(k) == "boolean" then key_str = string.format("[%s]", tostring(k))
+      else key_str = "nil" end
+
+      if key_str ~= "nil" then
+        res = res .. indent .. key_str .. " = " .. M.serialize(v, visited, depth + 1) .. ",\n"
+      end
+    end
+    return res .. string.rep("  ", depth - 1) .. "}"
+  else
+    return "nil"
+  end
+end
+
 --- Trims leading and trailing whitespace.
 --- @param s string
 --- @return string
