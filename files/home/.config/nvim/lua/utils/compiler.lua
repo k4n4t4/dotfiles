@@ -2,6 +2,7 @@ local M = {}
 
 local info = require("utils.info")
 local fs = require("utils.fs")
+local str = require("utils.str")
 
 M.cache_dir = info.path.stdpath("cache") .. "/compiled/"
 M.mem_cache = {}
@@ -20,7 +21,7 @@ function M.compile_value(value)
 end
 
 function M.compile_table(value)
-    local source_code = "return " .. vim.inspect(value)
+    local source_code = "return " .. str.serialize(value)
     local chunk = load(source_code)
 
     if not chunk then return nil end
