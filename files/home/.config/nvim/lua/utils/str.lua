@@ -1,17 +1,26 @@
 local M = {}
 
-function M.serialize(value)
-    if type(value) == "table" then
-        local result = "{"
-        for k, v in pairs(value) do
-            result = result .. "[" .. M.serialize(k) .. "]=" .. M.serialize(v) .. ","
-        end
-        return result .. "}"
-    elseif type(value) == "string" then
-        return string.format("%q", value)
+function M.serialize(tbl)
+  local function ser_val(v)
+    if type(v) == "string" then
+      return string.format("%q", v)
+    elseif type(v) == "number" or type(v) == "boolean" then
+      return tostring(v)
+    elseif type(v) == "table" then
+      return M.serialize(v)
+    elseif type(v) == "function" then
+      return string.format("loadstring(%q)", string.dump(v))
     else
-        return tostring(value)
+      return "nil"
     end
+  end
+  local str = "{"
+  for k, v in pairs(tbl) do
+    local key = type(k) == "string" and string.format("[%q]", k) or "["..tostring(k).."]"
+    str = str..key.."="..ser_val(v)..","
+  end
+  str = str.."}"
+  return str
 end
 
 --- Trims leading and trailing whitespace.
