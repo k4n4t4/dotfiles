@@ -29,6 +29,7 @@ return {
 
         local languages = {
             "cpp",
+            "java",
         }
         for _, lang in ipairs(languages) do
             require("plugins.specs.debug.config." .. lang)

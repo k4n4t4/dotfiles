@@ -40,11 +40,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
         local lsp = require "utils.lsp"
 
         set('n', '<Leader>lf', vim.lsp.buf.format, { buffer = buf, desc = "Format" })
-        set('n', '<Leader>lr', vim.lsp.buf.rename, { buffer = buf, desc = "Rename" })
+        set('n', '<Leader>ln', vim.lsp.buf.rename, { buffer = buf, desc = "Rename" })
         set('n', '<Leader>ld', vim.lsp.buf.definition, { buffer = buf, desc = "Definition" })
         set('n', '<Leader>lt', vim.lsp.buf.type_definition, { buffer = buf, desc = "Type Definition" })
         set('n', '<Leader>lc', vim.lsp.buf.code_action, { buffer = buf, desc = "Code Action" })
-        set('n', '<Leader>lg', vim.lsp.buf.references, { buffer = buf, desc = "References" })
+        set('n', '<Leader>lr', vim.lsp.buf.references, { buffer = buf, desc = "References" })
+        set('n', '<Leader>li', vim.lsp.buf.implementation, { buffer = buf, desc = "Implementation" })
+        set('n', '<Leader>lD', vim.lsp.buf.declaration, { buffer = buf, desc = "Declaration" })
 
         set('n', '<Leader>lh', function()
             lsp.hover {
@@ -76,8 +78,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
         end, { buffer = buf, desc = "Signature Help" })
 
         set('n', 'gd', function() vim.lsp.buf.definition() end, { buffer = buf, desc = "Definition" })
-        set('n', 'gD', function() vim.lsp.buf.declaration() end, { buffer = buf, desc = "Declaration" })
-        set('n', 'gr', function() vim.lsp.buf.references() end, { buffer = buf, desc = "References" })
         set('n', 'gi', function() vim.lsp.buf.implementation() end, { buffer = buf, desc = "Implementation" })
     end),
 })

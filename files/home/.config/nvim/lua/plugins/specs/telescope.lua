@@ -45,6 +45,12 @@ return {
         { mode = 'n', "<LEADER>t/", "<CMD>Telescope current_buffer_fuzzy_find<CR>", desc = "Telescope Current Buffer Fuzzy Finder" },
         { mode = 'n', "<LEADER>tz", "<CMD>Telescope fzf<CR>",                       desc = "Telescope fzf" },
         { mode = 'n', "<LEADER>tp", "<CMD>Telescope project<CR>",                   desc = "Telescope Project" },
+
+        { mode = 'n', "<LEADER>tld", "<CMD>Telescope lsp_definitons<CR>",            desc = "Telescope LSP Definitions" },
+        { mode = 'n', "<LEADER>tlt", "<CMD>Telescope lsp_type_definitons<CR>",       desc = "Telescope LSP Type Definitions" },
+        { mode = 'n', "<LEADER>tlr", "<CMD>Telescope lsp_references<CR>",            desc = "Telescope LSP Reference" },
+        { mode = 'n', "<LEADER>tli", "<CMD>Telescope lsp_implementations<CR>",       desc = "Telescope LSP Implementations" },
+
     },
     config = function()
         local telescope = require "telescope"
