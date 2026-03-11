@@ -24,7 +24,7 @@ function M.fileformat()
 end
 
 local utils_lsp = require "utils.lsp"
-M.lsp_show = true
+M.lsp_show = false
 function StlToggleLspShow()
     M.lsp_show = not M.lsp_show
     vim.cmd.redrawstatus()
