@@ -35,7 +35,6 @@ function M.signature_help(opts)
     end)
 end
 
-
 --- Returns a list of available null-ls source names for the current buffer's filetype.
 --- @return string[] List of null-ls source names
 function M.get_null_ls_sources()
@@ -63,7 +62,6 @@ function M.get(bufnr)
     return clients, others
 end
 
-
 --- Adds the Mason bin directory to PATH if it is not already present.
 function M.add_mason_bin_path()
     local mason_bin = info.path.stdpath("data") .. "/mason/bin"
@@ -72,13 +70,20 @@ function M.add_mason_bin_path()
     end
 end
 
-
 M.ft_to_servers_cache_filepath = info.path.stdpath("cache") .. "/utils/lsp/lsp_ft_servers_cache.lua"
 M.ft_to_servers_cache = nil
+M.ft_to_servers_get_cache = false
+
+function M.server_to_config(server_name)
+    local ok, config = pcall(require, "lspconfig.configs." .. server_name)
+    if ok and config.default_config then return config.default_config end
+    return nil
+end
+
 local function build_ft_servers_cache()
     if not pcall(require, "lspconfig") then return end
 
-    M.ft_to_servers_cache = {}
+    local cache = {}
 
     local server_files = vim.api.nvim_get_runtime_file("lsp/*.lua", true)
 
@@ -90,41 +95,52 @@ local function build_ft_servers_cache()
             local filetypes = mod.default_config.filetypes
             if filetypes then
                 for _, ft in ipairs(filetypes) do
-                    if not M.ft_to_servers_cache[ft] then
-                        M.ft_to_servers_cache[ft] = {}
-                    end
-                    table.insert(M.ft_to_servers_cache[ft], { name = server_name, cmd = mod.default_config.cmd })
+                    if not cache[ft] then cache[ft] = {} end
+
+                    table.insert(cache[ft], server_name)
                 end
             end
         end
     end
 
-    local compiled = compiler.compile_table(M.ft_to_servers_cache)
+    local compiled = compiler.compile_table(cache)
     if not compiled then return nil end
 
-    return fs.write(M.ft_to_servers_cache_filepath, compiled)
+    fs.write(M.ft_to_servers_cache_filepath, compiled)
+
+    return cache
 end
 
 function M.ft_to_servers(ft)
-    if not M.ft_to_servers_cache then
-        M.ft_to_servers_cache = compiler.load(M.ft_to_servers_cache_filepath)
-
-        if not M.ft_to_servers_cache then
-            build_ft_servers_cache()
-        end
+    if not M.ft_to_servers_get_cache then
+        local cache = compiler.load(M.ft_to_servers_cache_filepath)
+        if not cache then cache = build_ft_servers_cache() end
+        M.ft_to_servers_get_cache = true
+        M.ft_to_servers_cache = vim.tbl_extend("keep", (M.ft_to_servers_cache or {}), cache)
     end
 
     return M.ft_to_servers_cache[ft] or {}
 end
 
+function M.register_ft_servers(ft, servers)
+    M.ft_to_servers_cache = M.ft_to_servers_cache or {}
+    M.ft_to_servers_cache[ft] = servers
+end
 
 local wrapper_executables = {
-    python = true, python3 = true, python2 = true,
-    node = true, npx = true,
-    ruby = true, perl = true,
-    dotnet = true, java = true,
-    julia = true, R = true,
-    coursier = true, pwsh = true,
+    python = true,
+    python3 = true,
+    python2 = true,
+    node = true,
+    npx = true,
+    ruby = true,
+    perl = true,
+    dotnet = true,
+    java = true,
+    julia = true,
+    R = true,
+    coursier = true,
+    pwsh = true,
 }
 
 -- Flags whose next argument is inline code, not a file or module name.
@@ -215,7 +231,6 @@ function M.is_cmd_available(cmd)
     return false
 end
 
-
 M.configured = {}
 
 --- Registers FileType autocmds to lazily load and enable LSP servers based on explicit rules.
@@ -261,13 +276,10 @@ function M.auto_set(opts)
             end
 
             local servers = M.ft_to_servers(args.match)
-            for _, server in ipairs(servers) do
-                local server_name = server.name
-
+            for _, server_name in ipairs(servers) do
                 if not M.configured[server_name] and
                     not vim.tbl_contains(exclude, server_name) then
-
-                    if M.is_cmd_available(server.cmd) then
+                    if M.is_cmd_available(M.server_to_config(server_name).cmd) then
                         vim.lsp.enable(server_name)
                         M.configured[server_name] = true
                     end
