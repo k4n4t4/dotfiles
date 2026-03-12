@@ -28,11 +28,11 @@ return {
         vim.keymap.set('n', '<Leader>b', function() dap.toggle_breakpoint() end)
 
         local fs = require "utils.fs"
-        fs.scandir_dot("plugins.specs.debug", function(fname, name, t)
+        fs.scandir_dot("plugins.dap", function(fname, name, t)
             local ex = fs.get_extension(fname)
             if t == "file" and ex == "lua" then
                 local lang = fs.get_basename(name)
-                require("plugins.debug." .. lang)
+                require("plugins.dap." .. lang)
             end
         end)
     end,

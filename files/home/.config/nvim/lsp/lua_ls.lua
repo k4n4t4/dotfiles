@@ -1,7 +1,12 @@
 local info = require "utils.info"
+local lsp = require "utils.lsp"
+
+local cmd = { "lua-language-server" }
+
+if not lsp.is_cmd_available(cmd) then return nil end
 
 return {
-    cmd = { "lua-language-server" },
+    cmd = cmd,
     filetypes = { "lua" },
     settings = {
         Lua = {
