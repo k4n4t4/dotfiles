@@ -32,7 +32,7 @@ return {
             local ex = fs.get_extension(fname)
             if t == "file" and ex == "lua" then
                 local lang = fs.get_basename(name)
-                require("plugins.specs.debug." .. lang)
+                require("plugins.debug." .. lang)
             end
         end)
     end,

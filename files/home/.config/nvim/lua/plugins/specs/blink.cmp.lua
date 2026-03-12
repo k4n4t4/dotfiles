@@ -8,7 +8,7 @@ return {
             config = function()
                 local luasnip = require "luasnip"
                 local fs = require "utils.fs"
-                local snip_path = "plugins.specs.snippets.luasnip"
+                local snip_path = "plugins.snippets.luasnip"
 
                 fs.scandir_dot(snip_path, function(fname, name, t)
                     local ex = fs.get_extension(fname)
