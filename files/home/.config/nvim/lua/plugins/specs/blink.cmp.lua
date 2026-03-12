@@ -6,14 +6,15 @@ return {
             "L3MON4D3/LuaSnip",
             dependencies = { "rafamadriz/friendly-snippets" },
             config = function()
-                local luasnip = require("luasnip")
-
+                local luasnip = require "luasnip"
                 local fs = require "utils.fs"
-                fs.scandir_dot("plugins.specs.snippets", function(fname, name, t)
+                local snip_path = "plugins.specs.snippets.luasnip"
+
+                fs.scandir_dot(snip_path, function(fname, name, t)
                     local ex = fs.get_extension(fname)
                     if t == "file" and ex == "lua" then
                         local lang = fs.get_basename(name)
-                        local snippets = require("plugins.specs.snippets." .. lang)
+                        local snippets = require(snip_path .. "." .. lang)
                         luasnip.add_snippets(lang, snippets)
                     end
                 end)

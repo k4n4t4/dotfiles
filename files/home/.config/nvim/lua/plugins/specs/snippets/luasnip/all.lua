@@ -6,7 +6,7 @@ local i = ls.insert_node
 local f = ls.function_node
 
 return {
-  s("todo", {
-    t("TODO: "), i(1), t(" ("), f(function() return os.date("%Y-%m-%d") end), t(")")
-  }),
+    s("todo", {
+        t("TODO: "), i(1), t(" ("), f(function() return os.date("%Y-%m-%d") end), t(")")
+    }),
 }
