@@ -10,6 +10,7 @@ return {
         "css",
         "eruby",
         "html",
+        "jsp",
         "javascript",
         "javascriptreact",
         "less",
@@ -17,16 +18,5 @@ return {
         "scss",
         "pug",
         "typescriptreact"
-    },
-    init_options = {
-        includeLanguages = {},
-        excludeLanguages = {},
-        extensionsPath = {},
-        preferences = {},
-        showAbbreviationSuggestions = true,
-        showExpandedAbbreviation = "always",
-        showSuggestionsAsSnippets = false,
-        syntaxProfiles = {},
-        variables = {},
     },
 }
