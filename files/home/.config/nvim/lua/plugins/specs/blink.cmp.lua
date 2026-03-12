@@ -158,32 +158,46 @@ return {
             },
             sources = {
                 default = {
-                    "snippets",
-                    "lsp",
-                    "path",
-                    "buffer",
-                    "dictionary",
                     "copilot",
-                    "emoji",
+                    "lsp",
+                    "snippets",
+                    "path",
                     "calc",
+                    "emoji",
+                    "buffer",
                     "git",
+                    "dictionary",
                 },
                 providers = {
+                    copilot = {
+                        name = "Copilot",
+                        module = "blink-cmp-copilot",
+                        score_offset = 700,
+                        async = true,
+                    },
+                    lsp = {
+                        module = "blink.cmp.sources.lsp",
+                        name = "LSP",
+                        score_offset = 600,
+                        async = true,
+                    },
+                    snippets = {
+                        module = "blink.cmp.sources.snippets",
+                        name = "Snip",
+                        score_offset = 500,
+                        async = true,
+                    },
+                    path = {
+                        module = "blink.cmp.sources.path",
+                        name = "Path",
+                        score_offset = 400,
+                        async = true,
+                    },
                     calc = {
                         name = "calc",
                         module = "blink.compat.source",
-                        score_offset = 100,
+                        score_offset = 300,
                         async = true,
-                    },
-                    git = {
-                        module = 'blink-cmp-git',
-                        name = 'Git',
-                        enabled = function()
-                            return vim.tbl_contains({ 'octo', 'gitcommit', 'markdown' }, vim.bo.filetype)
-                        end,
-                        score_offset = 250,
-                        async = true,
-                        opts = {},
                     },
                     emoji = {
                         module = "blink-emoji",
@@ -197,18 +211,28 @@ return {
                         },
                         async = true,
                     },
-                    copilot = {
-                        name = "Copilot",
-                        module = "blink-cmp-copilot",
-                        score_offset = 400,
+                    buffer = {
+                        module = "blink.cmp.sources.buffer",
+                        name = "Buffer",
+                        score_offset = 100,
                         async = true,
+                    },
+                    git = {
+                        module = 'blink-cmp-git',
+                        name = 'Git',
+                        enabled = function()
+                            return vim.tbl_contains({ 'octo', 'gitcommit', 'markdown' }, vim.bo.filetype)
+                        end,
+                        score_offset = 0,
+                        async = true,
+                        opts = {},
                     },
                     dictionary = {
                         module = "blink-cmp-dictionary",
                         name = "Dict",
                         min_keyword_length = 3,
                         async = true,
-                        score_offset = -1000,
+                        score_offset = 0,
                         max_items = 5,
                         opts = {
                             dictionary_files = (function()
