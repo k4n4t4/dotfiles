@@ -6,20 +6,11 @@ return {
             "L3MON4D3/LuaSnip",
             dependencies = { "rafamadriz/friendly-snippets" },
             config = function()
-                local luasnip = require "luasnip"
-                local fs = require "utils.fs"
-                local snip_path = "plugins.snippets.luasnip"
-
-                fs.scandir_dot(snip_path, function(fname, name, t)
-                    local ex = fs.get_extension(fname)
-                    if t == "file" and ex == "lua" then
-                        local lang = fs.get_basename(name)
-                        local snippets = require(snip_path .. "." .. lang)
-                        luasnip.add_snippets(lang, snippets)
-                    end
-                end)
-
-                require("luasnip.loaders.from_vscode").lazy_load()
+                local loader = require("luasnip.loaders.from_vscode")
+                loader.lazy_load()
+                loader.lazy_load {
+                    paths = { vim.fn.stdpath("config") .. "/snippets" }
+                }
             end,
         },
         {

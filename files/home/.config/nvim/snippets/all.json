@@ -1,0 +1,9 @@
+{
+    "Todo with Date": {
+        "prefix": "todo",
+        "body": [
+            "TODO: ${1:task} ($CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE)$0"
+        ],
+        "description": "Add a TODO comment with current date"
+    }
+}

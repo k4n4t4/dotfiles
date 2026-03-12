@@ -1,0 +1,60 @@
+{
+    "Servlet Class": {
+        "prefix": "servlet",
+        "body": [
+            "@WebServlet(\"/${1:endpoint}\")",
+            "public class ${TM_FILENAME_BASE} extends HttpServlet {",
+            "    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {",
+            "        $2",
+            "    }",
+            "",
+            "    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {",
+            "        doGet(request, response);",
+            "    }",
+            "}"
+        ],
+        "description": "Create a Java Servlet class"
+    },
+    "Import Servlet Packages": {
+        "prefix": "iservlet",
+        "body": [
+            "import java.io.IOException;",
+            "import java.io.PrintWriter;",
+            "import javax.servlet.ServletException;",
+            "import javax.servlet.annotation.WebServlet;",
+            "import javax.servlet.http.HttpServlet;",
+            "import javax.servlet.http.HttpServletRequest;",
+            "import javax.servlet.http.HttpServletResponse;",
+            ""
+        ],
+        "description": "Import common Servlet packages"
+    },
+    "Print Writer": {
+        "prefix": "pwriter",
+        "body": [
+            "PrintWriter out = response.getWriter();$0"
+        ],
+        "description": "Get response writer"
+    },
+    "Get Parameter": {
+        "prefix": "getparam",
+        "body": [
+            "String ${1:var} = request.getParameter(\"${2:param}\");$0"
+        ],
+        "description": "Get request parameter"
+    },
+    "Request Forward": {
+        "prefix": "forward",
+        "body": [
+            "request.getRequestDispatcher(\"${1:/WEB-INF/jsp/index.jsp}\").forward(request, response);$0"
+        ],
+        "description": "Forward request to another resource"
+    },
+    "Set Attribute": {
+        "prefix": "setattr",
+        "body": [
+            "request.setAttribute(\"${1:name}\", ${2:value});$0"
+        ],
+        "description": "Set request attribute"
+    }
+}
