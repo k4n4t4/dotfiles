@@ -150,8 +150,8 @@ return {
             sources = {
                 default = {
                     "copilot",
-                    "snippets",
                     "lsp",
+                    "snippets",
                     "path",
                     "calc",
                     "emoji",
@@ -163,25 +163,25 @@ return {
                     copilot = {
                         name = "Copilot",
                         module = "blink-cmp-copilot",
-                        score_offset = 700,
-                        async = true,
-                    },
-                    snippets = {
-                        module = "blink.cmp.sources.snippets",
-                        name = "Snip",
                         score_offset = 600,
                         async = true,
                     },
                     lsp = {
                         module = "blink.cmp.sources.lsp",
                         name = "LSP",
-                        score_offset = 500,
+                        score_offset = 520,
+                        async = true,
+                    },
+                    snippets = {
+                        module = "blink.cmp.sources.snippets",
+                        name = "Snip",
+                        score_offset = 510,
                         async = true,
                     },
                     path = {
                         module = "blink.cmp.sources.path",
                         name = "Path",
-                        score_offset = 400,
+                        score_offset = 500,
                         async = true,
                     },
                     calc = {
