@@ -34,7 +34,7 @@ end
 --- @param path string
 --- @return string|nil
 function M.get_basename(path)
-    return path:match("([^/]+)%.?[^%.]*$")
+    return path:match("([^/]+)%.([^%.]+)$") or path:match("([^/]+)$")
 end
 
 --- Returns the directory component of a path (everything before the last '/').
@@ -123,6 +123,11 @@ function M.scandir(path, callback)
 
         if callback(fname, name, t or vim.uv.fs_stat(fname).type) == false then break end
     end
+end
+
+function M.scandir_dot(path, callback)
+    path = vim.fn.stdpath("config") .. "/lua/" .. M.to_path(path)
+    return M.scandir(path, callback)
 end
 
 return M

@@ -27,12 +27,13 @@ return {
         vim.keymap.set('n', '<F12>', function() dap.step_out() end)
         vim.keymap.set('n', '<Leader>b', function() dap.toggle_breakpoint() end)
 
-        local languages = {
-            "cpp",
-            "java",
-        }
-        for _, lang in ipairs(languages) do
-            require("plugins.specs.debug.config." .. lang)
-        end
+        local fs = require "utils.fs"
+        fs.scandir_dot("plugins.specs.debug", function(fname, name, t)
+            local ex = fs.get_extension(fname)
+            if t == "file" and ex == "lua" then
+                local lang = fs.get_basename(name)
+                require("plugins.specs.debug." .. lang)
+            end
+        end)
     end,
 }
