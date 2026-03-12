@@ -61,7 +61,16 @@ function M.setup()
 
     -- terminal
     set('t', '<esc>', "<C-\\><C-n>")
-    set('n', '<leader>kk', "<cmd>belowright 10split<cr><cmd>terminal<cr>", { desc = "Terminal" })
+    set('n', '<leader>kk', function()
+        local height = math.floor(vim.o.lines * 0.3)
+        vim.cmd('belowright ' .. height .. 'split')
+        vim.cmd('terminal')
+    end, { desc = "Terminal" })
+    set('n', '<leader>kv', function()
+        local width = math.floor(vim.o.columns * 0.4)
+        vim.cmd('belowright ' .. width .. 'vsplit')
+        vim.cmd('terminal')
+    end, { desc = "Terminal (vertical split)" })
     set("n", "<leader>kf", M.toggle_terminal, { desc = "Terminal (floating)" })
     set('n', '<leader>K', "<cmd>terminal<cr>", { desc = "Terminal (full)" })
 
