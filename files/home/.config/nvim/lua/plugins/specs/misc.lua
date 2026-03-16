@@ -385,10 +385,4 @@ return {
             }
         end,
     },
-
-    {
-        "heavenshell/vim-jsdoc",
-        ft = { "javascript", "typescript", "javascriptreact", "typescriptreact" },
-        build = "make install",
-    }
 }
