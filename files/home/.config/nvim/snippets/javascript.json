@@ -1,0 +1,11 @@
+{
+    "JSDoc": {
+        "prefix": "doc",
+        "body": [
+            "/**",
+            " * $1",
+            " */"
+        ],
+        "description": "Create a JSDoc"
+    }
+}
