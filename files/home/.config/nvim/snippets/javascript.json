@@ -6,6 +6,6 @@
             " * $1",
             " */"
         ],
-        "description": "Create a JSDoc"
+        "description": "Create JSDoc"
     }
 }
