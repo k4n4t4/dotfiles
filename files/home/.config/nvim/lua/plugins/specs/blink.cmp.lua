@@ -150,12 +150,12 @@ return {
             sources = {
                 default = {
                     "copilot",
+                    "path",
                     "lsp",
                     "snippets",
-                    "path",
+                    "buffer",
                     "calc",
                     "emoji",
-                    "buffer",
                     "git",
                     "dictionary",
                 },
@@ -166,22 +166,28 @@ return {
                         score_offset = 600,
                         async = true,
                     },
+                    path = {
+                        module = "blink.cmp.sources.path",
+                        name = "Path",
+                        score_offset = 513,
+                        async = true,
+                    },
                     lsp = {
                         module = "blink.cmp.sources.lsp",
                         name = "LSP",
-                        score_offset = 520,
+                        score_offset = 510,
                         async = true,
                     },
                     snippets = {
                         module = "blink.cmp.sources.snippets",
                         name = "Snip",
-                        score_offset = 510,
+                        score_offset = 509,
                         async = true,
                     },
-                    path = {
-                        module = "blink.cmp.sources.path",
-                        name = "Path",
-                        score_offset = 500,
+                    buffer = {
+                        module = "blink.cmp.sources.buffer",
+                        name = "Buffer",
+                        score_offset = 507,
                         async = true,
                     },
                     calc = {
@@ -200,12 +206,6 @@ return {
                                 return { ":" }
                             end,
                         },
-                        async = true,
-                    },
-                    buffer = {
-                        module = "blink.cmp.sources.buffer",
-                        name = "Buffer",
-                        score_offset = 100,
                         async = true,
                     },
                     git = {
