@@ -34,6 +34,8 @@ M.default_groups = {
     "NvimTreeEndOfBuffer",
 
     "RenderMarkdownTableFill",
+
+    "TinyInlineDiagnosticVirtualTextArrow",
 }
 
 ---@alias TransparentConfig
