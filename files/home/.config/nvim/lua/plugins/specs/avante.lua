@@ -48,6 +48,13 @@ return {
                 auto_set_keymaps = true,
                 auto_apply_diff_after_generation = false,
             },
+            provider = "copilot",
+            auto_suggestions_provider = "copilot",
+            providers = {
+                copilot = {
+                    model = "gpt-4o",
+                },
+            },
 
             mappings = {
                 ask = mapping_prefix .. "c",
@@ -126,13 +133,6 @@ return {
                     code = "c",
                     resp = "r",
                     input = "i",
-                },
-            },
-
-            provider = "copilot",
-            providers = {
-                copilot = {
-                    model = "gpt-4.1",
                 },
             },
         }
