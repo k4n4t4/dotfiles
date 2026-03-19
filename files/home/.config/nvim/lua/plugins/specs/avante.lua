@@ -39,7 +39,7 @@ return {
         },
     },
     config = function()
-        local mapping_prefix = "<leader>A"
+        local mapping_prefix = "<leader>c"
         require("avante").setup {
             hints = {
                 enabled = false,
@@ -49,7 +49,7 @@ return {
             },
 
             mappings = {
-                ask = mapping_prefix .. "a",
+                ask = mapping_prefix .. "c",
                 edit = mapping_prefix .. "e",
                 new_ask = mapping_prefix .. "n",
                 zen_mode = mapping_prefix .. "z",
@@ -64,7 +64,7 @@ return {
                     repomap = mapping_prefix .. "R",
                 },
                 files = {
-                    add_current = mapping_prefix .. "c",
+                    add_current = mapping_prefix .. "a",
                     add_all_buffers = mapping_prefix .. "B",
                 },
                 select_model = mapping_prefix .. "?",
