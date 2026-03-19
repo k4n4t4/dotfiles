@@ -40,6 +40,7 @@ return {
     },
     config = function()
         local mapping_prefix = "<leader>c"
+
         require("avante").setup {
             hints = {
                 enabled = false,

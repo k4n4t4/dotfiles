@@ -36,6 +36,10 @@ M.default_groups = {
     "RenderMarkdownTableFill",
 
     "TinyInlineDiagnosticVirtualTextArrow",
+
+    "AvanteSideBarNormal",
+    "AvanteSideBarWinSeparator",
+    "AvanteSideBarWinHorizontalSeparator",
 }
 
 ---@alias TransparentConfig
