@@ -28,6 +28,7 @@ return {
             end,
         },
         'Kaiser-Yang/blink-cmp-git',
+        'Kaiser-Yang/blink-cmp-avante',
 
         {
             "saghen/blink.compat",
@@ -150,6 +151,7 @@ return {
             sources = {
                 default = {
                     "copilot",
+                    "avante",
                     "path",
                     "lsp",
                     "snippets",
@@ -163,6 +165,12 @@ return {
                     copilot = {
                         name = "Copilot",
                         module = "blink-cmp-copilot",
+                        score_offset = 600,
+                        async = true,
+                    },
+                    avante = {
+                        name = "Avante",
+                        module = "blink-cmp-avante",
                         score_offset = 600,
                         async = true,
                     },
