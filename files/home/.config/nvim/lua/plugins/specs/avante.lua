@@ -42,12 +42,13 @@ return {
         local mapping_prefix = "<leader>c"
 
         require("avante").setup {
-            hints = {
-                enabled = false,
-            },
             behaviour = {
                 auto_set_keymaps = true,
                 auto_apply_diff_after_generation = false,
+                auto_focus_on_diff_view = true,
+            },
+            selection = {
+                hint_display = "none",
             },
             provider = "copilot",
             auto_suggestions_provider = "copilot",
@@ -56,9 +57,21 @@ return {
                     model = "gpt-4o",
                 },
             },
+            windows = {
+                edit = {
+                    border = { "┌", "─", "┐", "│", "┘", "─", "└", "│" },
+                    start_insert = true,
+                },
+                ask = {
+                    floating = true,
+                    border = { "┌", "─", "┐", "│", "┘", "─", "└", "│" },
+                    start_insert = true,
+                    focus_on_apply = "theirs",
+                },
+            },
 
             mappings = {
-                ask = mapping_prefix .. "c",
+                ask = mapping_prefix .. "a",
                 edit = mapping_prefix .. "e",
                 new_ask = mapping_prefix .. "n",
                 zen_mode = mapping_prefix .. "z",
@@ -66,14 +79,14 @@ return {
                 focus = mapping_prefix .. "f",
                 stop = mapping_prefix .. "S",
                 toggle = {
-                    default = mapping_prefix .. "t",
+                    default = mapping_prefix .. "c",
                     debug = mapping_prefix .. "d",
                     selection = mapping_prefix .. "C",
                     suggestion = mapping_prefix .. "s",
                     repomap = mapping_prefix .. "R",
                 },
                 files = {
-                    add_current = mapping_prefix .. "a",
+                    add_current = mapping_prefix .. "A",
                     add_all_buffers = mapping_prefix .. "B",
                 },
                 select_model = mapping_prefix .. "?",
