@@ -69,3 +69,20 @@ vim.api.nvim_create_autocmd("UIEnter", {
         vim.api.nvim_exec_autocmds("User", { pattern = "Ready", modeline = false })
     end)),
 })
+
+-- unlist some filetypes and map q to close
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = {
+        "help",
+        "man",
+        "lspinfo",
+        "checkhealth",
+        "qf",
+        "query",
+        "scratch",
+    },
+    callback = function(event)
+        vim.bo[event.buf].buflisted = false
+        vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+    end,
+})
