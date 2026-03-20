@@ -32,6 +32,9 @@ return {
         enable_git_status = true,
         enable_diagnostics = true,
         filesystem = {
+            window = {
+                width = 30,
+            },
             filtered_items = {
                 hide_dotfiles = false,
             },
