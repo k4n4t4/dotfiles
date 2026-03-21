@@ -31,7 +31,7 @@ require("lazy").setup({
             reset = true,
             disabled_plugins = {
                 "tohtml",
-                "editorconfig",
+                -- "editorconfig",
                 "gzip",
                 "man",
                 "matchit",
