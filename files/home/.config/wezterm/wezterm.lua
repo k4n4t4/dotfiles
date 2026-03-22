@@ -2,17 +2,20 @@ local wezterm = require 'wezterm'
 local act = wezterm.action
 
 local config = {}
-
 if wezterm.config_builder then
   config = wezterm.config_builder()
 end
 
 
+config.automatically_reload_config = true
+
 config.color_scheme = 'Tokyo Night'
 
 -- Font
-config.font = wezterm.font("ComicShannsMono Nerd Font", { weight = "Medium", stretch = "Normal", style = "Normal" })
-
+config.font = wezterm.font(
+    "ComicShannsMono Nerd Font",
+    { weight = "Medium", stretch = "Normal", style = "Normal" }
+)
 config.font_size = 13
 
 -- Window
