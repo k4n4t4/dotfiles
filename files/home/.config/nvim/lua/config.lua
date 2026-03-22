@@ -1,7 +1,7 @@
 require("utils.local_config").setup {
     shell = "fish",
     colorscheme = {
-        name = "vscode",
+        name = "solarized-osaka",
         transparent = false,
     },
     number = {
