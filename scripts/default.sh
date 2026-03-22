@@ -40,7 +40,7 @@ if cmd_exists starship; then
 fi
 
 if cmd_exists wezterm; then
-  dothome ".wezterm.lua"
+  dotconf "wezterm" -r
 fi
 
 if cmd_exists Hyprland; then
