@@ -10,15 +10,26 @@ end
 
 config.color_scheme = 'Tokyo Night'
 
-config.window_background_opacity = 0.85
-
+-- Font
 config.font = wezterm.font("ComicShannsMono Nerd Font", { weight = "Medium", stretch = "Normal", style = "Normal" })
 
-config.font_size = 14
+config.font_size = 13
 
+-- Window
+config.initial_cols = 120
+config.initial_rows = 30
+config.window_padding = {
+    left = 0,
+    right = 0,
+    top = 0,
+    bottom = 0,
+}
 config.window_decorations = "RESIZE"
 config.hide_tab_bar_if_only_one_tab = true
+config.window_background_opacity = 0.85
 
+
+-- Key Bindings
 config.disable_default_key_bindings = true
 config.keys = {
     -- Toggle full screen
@@ -67,6 +78,8 @@ config.keys = {
     },
 }
 
+-- Mouse Bindings
+config.disable_default_mouse_bindings = false
 config.mouse_bindings = {
     -- Drag window
     {
