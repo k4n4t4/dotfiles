@@ -39,6 +39,10 @@ if cmd_exists starship; then
   dotconf "starship/starship.toml" "starship.toml"
 fi
 
+if cmd_exists wezterm; then
+  dothome ".wezterm.lua"
+fi
+
 if cmd_exists Hyprland; then
   dotconf "hypr" -r
 fi
