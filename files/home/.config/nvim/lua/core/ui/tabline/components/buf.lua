@@ -1,6 +1,7 @@
 local info = require "utils.info"
 local hi = require "utils.highlight"
 local plugin = require "utils.plugin"
+local transparent = require "utils.transparent"
 
 local function get_icon_for_filetype(filetype)
     local devicons = plugin.get("nvim-web-devicons")
@@ -49,15 +50,17 @@ return function(bufnr)
         bg = hi.ref("TabLineFill", "bg"),
     })
     local sep_hi = "%#" .. sep_hi_name .. "#"
+    local sep_left = transparent.state.enabled and " " or "▐"
+    local sep_right = transparent.state.enabled and " " or "▌"
 
     return table.concat({
         "%", bufnr, "@v:lua.HandleBufClick@",
-        sep_hi, "▐", buf_hi,
+        sep_hi, sep_left, buf_hi,
         " ",
         icon_hl, icon, (icon ~= "" and " " or ""),
         buf_hi, name, mod, ro,
         " ",
-        sep_hi, "▌", buf_hi,
+        sep_hi, sep_right, buf_hi,
         "%X"
     })
 end
