@@ -25,7 +25,7 @@ vim.api.nvim_create_autocmd("User", {
         set('n', '<M-l>', vim.cmd.tabnext, { desc = "Tab Right" })
         set('n', '<M-S-x>', vim.cmd.tabclose, { desc = "Tab Close" })
 
-        set('n', '<leader>T', require "utils.transparent".toggle)
+        set('n', '<leader>T', require "utils.transparent".toggle, { desc = "Toggle Transparency" })
     end,
 })
 
