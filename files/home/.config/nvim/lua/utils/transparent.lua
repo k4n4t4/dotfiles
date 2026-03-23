@@ -89,7 +89,7 @@ end
 function M.disable()
     if not M.state.enabled then return end
     for _, name in ipairs(M.state.groups) do
-        hi.registry[name] = nil
+        hi.unregister(name)
     end
     M.state.enabled = false
     M.state.groups = {}

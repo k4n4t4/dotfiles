@@ -2,7 +2,45 @@ local M = {}
 
 M.group = vim.api.nvim_create_augroup("Utils_highlight", { clear = true })
 
-M.registry = {}
+M.registry = {
+    set = {},
+    ref = {},
+    link = {},
+    patch = {},
+}
+
+local registry_order = { "set", "ref", "link", "patch" }
+
+--- @param kind "set"|"ref"|"link"|"patch"
+--- @param group_name string
+--- @param opts table
+local function registry_put(kind, group_name, opts)
+    M.registry[kind][group_name] = opts
+    for _, other_kind in ipairs(registry_order) do
+        if other_kind ~= kind then
+            M.registry[other_kind][group_name] = nil
+        end
+    end
+end
+
+--- @param group_name string
+--- @return table|nil, "set"|"ref"|"link"|"patch"|nil
+local function registry_get(group_name)
+    for _, kind in ipairs(registry_order) do
+        local entry = M.registry[kind][group_name]
+        if entry then
+            return entry, kind
+        end
+    end
+    return nil, nil
+end
+
+--- @param group_name string
+--- @return boolean
+local function registry_has(group_name)
+    local entry = registry_get(group_name)
+    return entry ~= nil
+end
 
 
 --- Creates a deferred reference to a specific attribute of another highlight group.
@@ -46,9 +84,9 @@ end
 --- @param group_name string
 --- @return table Highlight attributes
 function M.get(group_name)
-    local entry = M.registry[group_name]
+    local entry, kind = registry_get(group_name)
     if entry then
-        if entry._link or entry.link or entry._patch or M.has_refs(entry) then
+        if kind == "ref" or kind == "link" or kind == "patch" then
             return M.force_get(group_name)
         end
         return entry
@@ -60,8 +98,9 @@ end
 --- @param group_name string
 --- @param opts table Highlight options (fg, bg, bold, italic, etc.)
 function M.set(group_name, opts)
-    if not M.registry[group_name] then
-        M.registry[group_name] = opts
+    if not registry_has(group_name) then
+        local kind = M.has_refs(opts) and "ref" or "set"
+        registry_put(kind, group_name, opts)
         vim.api.nvim_set_hl(0, group_name, M.resolve_opts(opts))
     end
 end
@@ -72,13 +111,13 @@ end
 --- @param target_group string The group to link to
 --- @param overrides? table Attributes to override from the linked group
 function M.link(group_name, target_group, overrides)
-    if not M.registry[group_name] then
+    if not registry_has(group_name) then
         if overrides then
-            M.registry[group_name] = { _link = target_group, _overrides = overrides }
+            registry_put("link", group_name, { _link = target_group, _overrides = overrides })
             local base = vim.api.nvim_get_hl(0, { name = target_group, link = false })
             vim.api.nvim_set_hl(0, group_name, vim.tbl_extend("force", base, overrides))
         else
-            M.registry[group_name] = { link = target_group }
+            registry_put("link", group_name, { link = target_group })
             vim.api.nvim_set_hl(0, group_name, { link = target_group })
         end
     end
@@ -121,7 +160,8 @@ end
 --- @param group_name string
 --- @param opts table Highlight options
 function M.force_set(group_name, opts)
-    M.registry[group_name] = opts
+    local kind = M.has_refs(opts) and "ref" or "set"
+    registry_put(kind, group_name, opts)
     vim.api.nvim_set_hl(0, group_name, opts)
 end
 
@@ -130,24 +170,38 @@ end
 --- @param group_name string
 --- @param changes table Attributes to change (e.g. `{ bg = "none" }`)
 function M.patch(group_name, changes)
-    M.registry[group_name] = { _patch = true, _changes = changes }
+    registry_put("patch", group_name, { _patch = true, _changes = changes })
     local base = M.force_get(group_name)
     vim.api.nvim_set_hl(0, group_name, vim.tbl_extend("force", base, changes))
 end
 
+--- Removes a group from all local registries.
+--- @param group_name string
+function M.unregister(group_name)
+    for _, kind in ipairs(registry_order) do
+        M.registry[kind][group_name] = nil
+    end
+end
+
 --- Re-applies all registered highlight groups. Called automatically on VimEnter and ColorScheme.
 function M.refresh()
-    for name, opts in pairs(M.registry) do
-        if opts._link then
-            local base = M.force_get(opts._link)
-            vim.api.nvim_set_hl(0, name, vim.tbl_extend("force", base, opts._overrides))
-        elseif opts._patch then
-            local base = M.force_get(name)
-            vim.api.nvim_set_hl(0, name, vim.tbl_extend("force", base, opts._changes))
-        elseif M.has_refs(opts) then
-            vim.api.nvim_set_hl(0, name, M.resolve_opts(opts))
-        else
-            vim.api.nvim_set_hl(0, name, opts)
+    for _, kind in ipairs(registry_order) do
+        for name, opts in pairs(M.registry[kind]) do
+            if kind == "set" then
+                vim.api.nvim_set_hl(0, name, opts)
+            elseif kind == "ref" then
+                vim.api.nvim_set_hl(0, name, M.resolve_opts(opts))
+            elseif kind == "link" then
+                if opts._link then
+                    local base = M.force_get(opts._link)
+                    vim.api.nvim_set_hl(0, name, vim.tbl_extend("force", base, opts._overrides))
+                else
+                    vim.api.nvim_set_hl(0, name, { link = opts.link })
+                end
+            elseif kind == "patch" then
+                local base = M.force_get(name)
+                vim.api.nvim_set_hl(0, name, vim.tbl_extend("force", base, opts._changes))
+            end
         end
     end
 end
