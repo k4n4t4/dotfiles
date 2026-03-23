@@ -7,7 +7,6 @@ return {
         dependencies = {
             "neovim/nvim-lspconfig",
         },
-        event = "VeryLazy",
         config = function()
             require("mason").setup {
                 ui = {
@@ -15,5 +14,13 @@ return {
                 },
             }
         end,
+        cmd = {
+            "Mason",
+            "MasonInstall",
+            "MasonUninstall",
+            "MasonUninstallAll",
+            "MasonLog",
+            "MasonUpdate",
+        },
     },
 }

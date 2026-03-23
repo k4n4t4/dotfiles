@@ -3,7 +3,7 @@ return {
     build = vim.fn.has("win32") ~= 0
         and "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false"
         or "make",
-    event = "VeryLazy",
+    event = "User Ready",
     version = false,
     dependencies = {
         "nvim-lua/plenary.nvim",
@@ -18,7 +18,6 @@ return {
         "zbirenbaum/copilot.lua",
         {
             "HakonHarnes/img-clip.nvim",
-            event = "VeryLazy",
             opts = {
                 default = {
                     embed_image_as_base64 = false,
