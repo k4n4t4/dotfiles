@@ -10,6 +10,7 @@ M.registry = {
 }
 
 local registry_order = { "set", "ref", "link", "patch" }
+local refresh_order = { "set", "patch", "ref", "link" }
 
 --- @param kind "set"|"ref"|"link"|"patch"
 --- @param group_name string
@@ -185,7 +186,7 @@ end
 
 --- Re-applies all registered highlight groups. Called automatically on VimEnter and ColorScheme.
 function M.refresh()
-    for _, kind in ipairs(registry_order) do
+    for _, kind in ipairs(refresh_order) do
         for name, opts in pairs(M.registry[kind]) do
             if kind == "set" then
                 vim.api.nvim_set_hl(0, name, opts)
