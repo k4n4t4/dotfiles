@@ -31,7 +31,7 @@ return function(bufnr)
         local icon_hl_name = (is_active_buf and "TabLineSelIcon" or "TabLineIcon") .. "@" .. filetype
         hi.set(icon_hl_name, {
             fg = icon_color,
-            bg = hi.get(is_active_buf and "TabLineSel" or "TabLine").bg,
+            bg = hi.ref(is_active_buf and "TabLineSel" or "TabLine", "bg"),
         })
 
         icon_hl = "%#" .. icon_hl_name .. "#"
@@ -45,8 +45,8 @@ return function(bufnr)
 
     local sep_hi_name = (is_active_buf and "TabLineSelInv" or "TabLineInv") .. "@" .. filetype
     hi.set(sep_hi_name, {
-        fg = hi.get(is_active_buf and "TabLineSel" or "TabLine").bg,
-        bg = hi.get("TabLineFill").bg,
+        fg = hi.ref(is_active_buf and "TabLineSel" or "TabLine", "bg"),
+        bg = hi.ref("TabLineFill", "bg"),
     })
     local sep_hi = "%#" .. sep_hi_name .. "#"
 

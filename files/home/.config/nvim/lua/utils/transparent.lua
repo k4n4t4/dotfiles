@@ -22,6 +22,8 @@ M.default_groups = {
     "StatusLineNC",
     "StatusLineTerm",
     "StatusLineTermNC",
+    "TabLine",
+    "TabLineSel",
     "TabLineFill",
 
     "NeoTreeNormal",
