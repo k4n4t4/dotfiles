@@ -5,5 +5,26 @@
             "TODO: ${1:task} ($CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE)$0"
         ],
         "description": "Add a TODO comment with current date"
+    },
+    "Fixme with Date": {
+        "prefix": "fixme",
+        "body": [
+            "FIXME: ${1:issue} ($CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE)$0"
+        ],
+        "description": "Add a FIXME comment with current date"
+    },
+    "Note with Date": {
+        "prefix": "note",
+        "body": [
+            "NOTE: ${1:note} ($CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE)$0"
+        ],
+        "description": "Add a NOTE comment with current date"
+    },
+    "Debug with Date": {
+        "prefix": "debug",
+        "body": [
+            "DEBUG: ${1:debug_info} ($CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE)$0"
+        ],
+        "description": "Add a DEBUG comment with current date and time"
     }
 }
