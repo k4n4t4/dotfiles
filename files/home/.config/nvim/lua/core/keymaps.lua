@@ -26,6 +26,27 @@ vim.api.nvim_create_autocmd("User", {
         set('n', '<M-S-x>', vim.cmd.tabclose, { desc = "Tab Close" })
 
         set('n', '<leader>T', require "utils.transparent".toggle, { desc = "Toggle Transparency" })
+
+        set("x", "A",
+            function()
+                if vim.fn.mode(0) == "V" then
+                    return "<C-v>0o$A"
+                else
+                    return "A"
+                end
+            end,
+            { expr = true, desc = "Append to end of line in visual mode" }
+        )
+        set("x", "I",
+            function()
+                if vim.fn.mode(0) == "V" then
+                    return "<C-v>0o^I"
+                else
+                    return "I"
+                end
+            end,
+            { expr = true, desc = "Insert at beginning of line in visual mode" }
+        )
     end,
 })
 
