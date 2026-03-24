@@ -209,6 +209,8 @@ config.mouse_bindings = {
 
 
 if is_windows then
+    config.audible_bell = "Disabled"
+
     config.wsl_domains = {
         {
             name = 'WSL:NixOS',
