@@ -1,6 +1,8 @@
 local wezterm = require 'wezterm'
 local act = wezterm.action
 
+local is_windows = wezterm.target_triple:find("windows") ~= nil
+
 local config = {}
 if wezterm.config_builder then
     config = wezterm.config_builder()
@@ -12,10 +14,10 @@ config.color_scheme = 'Tokyo Night'
 
 -- Font
 config.font = wezterm.font(
-    "ComicShannsMono Nerd Font",
+    "Terminess Nerd Font",
     { weight = "Medium", stretch = "Normal", style = "Normal" }
 )
-config.font_size = 13
+config.font_size = 18
 config.cell_width = 1.1
 config.line_height = 1.2
 
@@ -64,18 +66,18 @@ config.keys = {
     },
     -- Copy/Paste
     {
-        key = 'c',
+        key = 'y',
         mods = 'CTRL|ALT',
         action = act.CopyTo 'Clipboard',
     },
     {
-        key = 'v',
+        key = 'p',
         mods = 'CTRL|ALT',
         action = act.PasteFrom 'Clipboard',
     },
-    -- Pager
+    -- Copy Mode
     {
-        key = 'p',
+        key = 'c',
         mods = 'CTRL|ALT',
         action = act.ActivateCopyMode,
     },
@@ -204,5 +206,19 @@ config.mouse_bindings = {
         action = act.StartWindowDrag,
     },
 }
+
+
+if is_windows then
+    config.wsl_domains = {
+        {
+            name = 'WSL:NixOS',
+            distribution = 'NixOS',
+            default_cwd = "~",
+        },
+    }
+
+    config.default_domain = 'WSL:NixOS'
+end
+
 
 return config
