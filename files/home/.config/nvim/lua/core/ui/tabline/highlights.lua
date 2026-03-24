@@ -1,5 +1,5 @@
-local hl = require("utils.highlight")
+local hi = require("utils.highlight")
 
-hl.patch("TabLineSel", {
+hi.patch("TabLineSel", {
     bold = true,
 })

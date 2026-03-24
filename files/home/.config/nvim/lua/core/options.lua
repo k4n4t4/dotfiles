@@ -84,8 +84,8 @@ vim.api.nvim_create_autocmd("User", {
             },
         }
 
-        local hl = require "utils.highlight"
-        hl.set("DiagnosticUnnecessary", { link = "NONE", default = false })
+        local hi = require "utils.highlight"
+        hi.set("DiagnosticUnnecessary", { link = "NONE", default = false })
     end,
 })
 

@@ -74,6 +74,13 @@ return {
         dependencies = {
             "nvim-treesitter/nvim-treesitter",
         },
+        config = function()
+            require("treesitter-context").setup {
+                enable = true,
+            }
+            local hi = require "utils.highlight"
+            hi.set("TreesitterContext", { bg = hi.ref("WinSeparator", "fg") })
+        end,
         event = 'User Ready',
     },
 }

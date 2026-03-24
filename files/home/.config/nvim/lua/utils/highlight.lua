@@ -168,12 +168,13 @@ end
 
 --- Patches specific attributes of a highlight group, preserving all other attributes.
 --- On ColorScheme refresh, re-fetches the base attrs and re-applies the patch.
+--- Supports M.ref() for deferred attribute references.
 --- @param group_name string
 --- @param changes table Attributes to change (e.g. `{ bg = "none" }`)
 function M.patch(group_name, changes)
     registry_put("patch", group_name, { _patch = true, _changes = changes })
     local base = M.force_get(group_name)
-    vim.api.nvim_set_hl(0, group_name, vim.tbl_extend("force", base, changes))
+    vim.api.nvim_set_hl(0, group_name, vim.tbl_extend("force", base, M.resolve_opts(changes)))
 end
 
 --- Removes a group from all local registries.
@@ -201,7 +202,7 @@ function M.refresh()
                 end
             elseif kind == "patch" then
                 local base = M.force_get(name)
-                vim.api.nvim_set_hl(0, name, vim.tbl_extend("force", base, opts._changes))
+                vim.api.nvim_set_hl(0, name, vim.tbl_extend("force", base, M.resolve_opts(opts._changes)))
             end
         end
     end

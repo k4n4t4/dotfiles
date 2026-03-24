@@ -2,7 +2,7 @@ require("utils.local_config").setup {
     shell = "fish",
     colorscheme = {
         name = "solarized-osaka",
-        transparent = false,
+        transparent = true,
     },
     number = {
         enable = true,
