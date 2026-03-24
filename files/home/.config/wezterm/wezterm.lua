@@ -161,6 +161,16 @@ config.keys = {
         mods = 'CTRL|ALT',
         action = act.ActivatePaneDirection 'Right',
     },
+    {
+        key = '.',
+        mods = 'CTRL|ALT',
+        action = act.ActivatePaneDirection 'Next',
+    },
+    {
+        key = ',',
+        mods = 'CTRL|ALT',
+        action = act.ActivatePaneDirection 'Prev',
+    },
     -- Resize Panes
     {
         key = 'j',
