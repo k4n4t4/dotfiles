@@ -149,5 +149,7 @@ return {
                 },
             },
         }
+
+        require("utils.highlight").refresh()
     end,
 }
