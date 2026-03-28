@@ -17,10 +17,10 @@ inputs: let
         "/home/${username}"
     ;
 
-  makeUser = { username, usergroup ? username }: {
+  makeUser = { username, usergroup ? username, userConfig ? {} }: {
     users = {
       users = {
-        ${username} = {
+        ${username} = lib.recursiveUpdate {
           description = username;
           home = makeHomeDirPath username;
           group = usergroup;
@@ -29,7 +29,7 @@ inputs: let
             "networkmanager"
           ];
           isNormalUser = true;
-        };
+        } userConfig;
       };
       groups = {
         ${usergroup} = {};
@@ -85,6 +85,13 @@ in {
         };
         system.stateVersion = version;
       }
-    ] ++ lib.mapAttrsToList (name: value: makeUser { username = name; } ) users ++ modules;
+    ] ++ lib.mapAttrsToList (name: value: makeUser {
+      username = name;
+      usergroup = if value ? "usergroup" then value.usergroup else name;
+      userConfig = builtins.removeAttrs value [
+        "modules"
+        "usergroup"
+      ];
+    }) users ++ modules;
   } settings );
 }
