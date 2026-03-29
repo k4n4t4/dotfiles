@@ -12,6 +12,7 @@
 
   home = {
     packages = with pkgs; [
+      wezterm
       kitty
 
       firefox
