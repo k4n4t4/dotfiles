@@ -2,6 +2,9 @@ local wezterm = require 'wezterm'
 local act = wezterm.action
 
 local is_windows = wezterm.target_triple:find("windows") ~= nil
+local is_linux = wezterm.target_triple:find("linux") ~= nil
+local is_macos = wezterm.target_triple:find("darwin") ~= nil
+
 
 local config = {}
 if wezterm.config_builder then
@@ -10,15 +13,15 @@ end
 config.automatically_reload_config = true
 
 
-config.color_scheme = 'Tokyo Night'
+config.color_scheme = 'Tango (terminal.sexy)'
 
 -- Font
 config.font = wezterm.font(
-    "Terminess Nerd Font",
+    "ComicShannsMono Nerd Font",
     { weight = "Medium", stretch = "Normal", style = "Normal" }
 )
 config.font_size = 18
-config.cell_width = 1.1
+config.cell_width = 1.0
 config.line_height = 1.2
 
 -- Window
@@ -31,7 +34,7 @@ config.window_padding = {
     bottom = 0,
 }
 config.window_decorations = 'RESIZE'
-config.window_background_opacity = 0.90
+config.window_background_opacity = 0.70
 config.window_frame = {
     inactive_titlebar_bg = "none",
     active_titlebar_bg = "none",
@@ -230,6 +233,10 @@ if is_windows then
     }
 
     config.default_domain = 'WSL:NixOS'
+end
+
+if is_linux or is_macos then
+    config.default_prog = { "bash", "-l" }
 end
 
 
