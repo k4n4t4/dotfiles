@@ -236,7 +236,7 @@ if is_windows then
 end
 
 if is_linux or is_macos then
-    config.default_prog = { "bash", "-l" }
+    config.default_prog = { "fish", "--login" }
 end
 
 
