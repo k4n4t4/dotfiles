@@ -237,6 +237,8 @@ end
 
 if is_linux or is_macos then
     config.default_prog = { "fish", "--login" }
+
+    config.enable_wayland = false
 end
 
 
