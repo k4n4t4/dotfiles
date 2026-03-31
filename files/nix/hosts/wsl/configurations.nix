@@ -2,7 +2,7 @@
 {
   imports = [
     <nixos-wsl/modules>
-    ../../modules/hosts/docker
+    ../../modules/hosts/podman
     ../../modules/hosts/ollama
     ../../modules/hosts/nix-ld
   ];

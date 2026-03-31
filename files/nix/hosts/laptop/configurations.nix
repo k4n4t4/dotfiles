@@ -4,7 +4,7 @@
     /etc/nixos/hardware-configuration.nix
     ../../modules/hosts/hyprland
     ../../modules/hosts/tuigreet
-    ../../modules/hosts/docker
+    ../../modules/hosts/podman
     ../../modules/hosts/ollama
     ../../modules/hosts/nix-ld
   ];

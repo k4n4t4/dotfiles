@@ -5,7 +5,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    docker-buildx 
+    docker-buildx
   ];
 
   users.users = lib.mapAttrs (name: value: {
