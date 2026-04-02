@@ -21,6 +21,11 @@
       markdownlint-cli
       libxml2
       python3
+      cargo
+      rustc
+      rust-analyzer
+      pkg-config
+      openssl
     ];
   };
 }
