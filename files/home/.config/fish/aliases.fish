@@ -163,3 +163,7 @@ if type -q xsel
 
   alias pwdcopy 'pwd | tr -d "\n" | pbcopy'
 end
+
+if type -q podman
+    alias docker "podman"
+end
