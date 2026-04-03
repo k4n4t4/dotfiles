@@ -94,3 +94,24 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
     end,
 })
+
+-- User FileTypeAfter
+vim.api.nvim_create_autocmd("FileType", {
+    group = group,
+    callback = function(args)
+        local bufnr = args.buf
+        local filetype = args.match
+
+        vim.api.nvim_create_autocmd("SafeState", {
+            once = true,
+            callback = function()
+                if vim.api.nvim_buf_is_valid(bufnr) then
+                    vim.api.nvim_exec_autocmds("User", {
+                        pattern = "FileTypeAfter",
+                        data = { buf = bufnr, filetype = filetype },
+                    })
+                end
+            end
+        })
+    end,
+})
