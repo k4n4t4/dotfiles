@@ -182,6 +182,9 @@ local subcommand_wrappers = { coursier = true }
 ---@param cmd string[]?
 ---@return boolean
 function M.is_cmd_available(cmd)
+    if type(cmd) == "function" then
+        return false
+    end
     if not cmd or #cmd == 0 then return false end
 
     local bin = vim.fn.fnamemodify(cmd[1], ":t")
@@ -243,7 +246,9 @@ function M.auto_set()
             local servers = M.ft_to_servers(ft)
 
             for _, name in ipairs(servers) do
-                if vim.lsp.config[name] and M.is_cmd_available(vim.lsp.config[name].cmd) then
+                if vim.lsp.config[name] and
+                    vim.lsp.config[name].cmd and
+                    M.is_cmd_available(vim.lsp.config[name].cmd) then
                     vim.lsp.enable(name)
                 end
                 M.configured[ft] = true
