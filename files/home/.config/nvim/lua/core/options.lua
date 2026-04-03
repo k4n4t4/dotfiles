@@ -98,8 +98,7 @@ vim.filetype.add {
 
 
 local lsp = require "utils.lsp"
+lsp.add_mason_bin_path()
 
 lsp.register_ft_servers("jsp", { "html", "emmet_language_server" })
-
-lsp.add_mason_bin_path()
 lsp.auto_set()

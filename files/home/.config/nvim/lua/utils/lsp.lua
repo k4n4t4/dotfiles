@@ -233,57 +233,20 @@ end
 
 M.configured = {}
 
---- Registers FileType autocmds to lazily load and enable LSP servers based on explicit rules.
---- Each rule maps one or more filetypes to a server name; the server config is loaded
---- from `config_path.<server_name>` on first FileType match.
----@alias LspRule { [1]: string|string[], [2]: string }
----@param config_path string Lua module prefix for server config files (e.g. "lsp")
----@param lsp_rules LspRule[] List of {filetype_pattern, server_name} rules
-function M.set(config_path, lsp_rules)
-    for _, rule in ipairs(lsp_rules) do
-        local pattern, server_name = rule[1], rule[2]
-
-        vim.api.nvim_create_autocmd("FileType", {
-            group = group,
-            pattern = pattern,
-            callback = vim.schedule_wrap(function(args)
-                if not vim.api.nvim_buf_is_valid(args.buf) or
-                    vim.api.nvim_get_current_buf() ~= args.buf then
-                    return
-                end
-                if not M.configured[server_name] then
-                    local ok, config = pcall(require, config_path .. "." .. server_name)
-                    if ok then
-                        vim.lsp.config(server_name, config)
-                        vim.lsp.enable(server_name)
-                        M.configured[server_name] = true
-                    end
-                end
-            end),
-        })
-    end
-end
-
-function M.auto_set(opts)
-    local exclude = opts and opts.exclude or {}
-    vim.api.nvim_create_autocmd("FileType", {
-        group = group,
-        pattern = "*",
+function M.auto_set()
+    vim.api.nvim_create_autocmd("User", {
+        pattern = "FileTypeAfter",
         callback = vim.schedule_wrap(function(args)
-            if not vim.api.nvim_buf_is_valid(args.buf) or
-                vim.api.nvim_get_current_buf() ~= args.buf then
-                return
-            end
+            local ft = args.data.match
+            if M.configured[ft] then return end
 
-            local servers = M.ft_to_servers(args.match)
-            for _, server_name in ipairs(servers) do
-                if not M.configured[server_name] and
-                    not vim.tbl_contains(exclude, server_name) then
-                    if M.is_cmd_available(M.server_to_config(server_name).cmd) then
-                        vim.lsp.enable(server_name)
-                        M.configured[server_name] = true
-                    end
+            local servers = M.ft_to_servers(ft)
+
+            for _, name in ipairs(servers) do
+                if vim.lsp.config[name] and M.is_cmd_available(vim.lsp.config[name].cmd) then
+                    vim.lsp.enable(name)
                 end
+                M.configured[ft] = true
             end
         end),
     })

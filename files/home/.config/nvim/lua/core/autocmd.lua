@@ -99,16 +99,13 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.api.nvim_create_autocmd("FileType", {
     group = group,
     callback = function(args)
-        local bufnr = args.buf
-        local filetype = args.match
-
         vim.api.nvim_create_autocmd("SafeState", {
             once = true,
             callback = function()
-                if vim.api.nvim_buf_is_valid(bufnr) then
+                if vim.api.nvim_buf_is_valid(args.buf) then
                     vim.api.nvim_exec_autocmds("User", {
                         pattern = "FileTypeAfter",
-                        data = { buf = bufnr, filetype = filetype },
+                        data = args,
                     })
                 end
             end
