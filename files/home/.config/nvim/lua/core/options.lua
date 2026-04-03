@@ -91,9 +91,9 @@ vim.api.nvim_create_autocmd("User", {
 
 
 vim.filetype.add {
-  extension = {
-    jsp = "jsp",
-  },
+    extension = {
+        jsp = "jsp",
+    },
 }
 
 
