@@ -236,6 +236,25 @@ end
 
 M.configured = {}
 
+function M.set(ft, servers)
+    if M.configured[ft] then return end
+
+    vim.api.nvim_create_autocmd("User", {
+        pattern = "FileTypeAfter",
+        callback = vim.schedule_wrap(function(args)
+            if args.data.match == ft then
+
+                for _, name in ipairs(servers) do
+                    vim.lsp.enable(name)
+                    M.configured[ft] = true
+                end
+
+                vim.api.nvim_del_autocmd(args.id)
+            end
+        end),
+    })
+end
+
 function M.auto_set()
     vim.api.nvim_create_autocmd("User", {
         pattern = "FileTypeAfter",
@@ -251,8 +270,9 @@ function M.auto_set()
                     M.is_cmd_available(vim.lsp.config[name].cmd) then
                     vim.lsp.enable(name)
                 end
-                M.configured[ft] = true
             end
+
+            M.configured[ft] = true
         end),
     })
 end

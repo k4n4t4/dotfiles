@@ -99,3 +99,6 @@ vim.filetype.add {
 
 local lsp = require "utils.lsp"
 lsp.add_mason_bin_path()
+lsp.set("jsp", { "html", "emmet_language_server" })
+lsp.set("cs", { "omnisharp" })
+lsp.auto_set()
