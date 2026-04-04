@@ -90,6 +90,8 @@ return {
                 },
                 select_model = mapping_prefix .. "?",
                 select_history = mapping_prefix .. "h",
+                select_acp_model = mapping_prefix .. "M",
+                select_acp_mode = mapping_prefix .. "m",
 
                 submit = {
                     normal = "<CR>",
