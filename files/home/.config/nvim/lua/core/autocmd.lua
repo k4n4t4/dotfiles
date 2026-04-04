@@ -115,7 +115,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 vim.api.nvim_create_autocmd("User", {
     pattern = "Ready",
-    callback = function(args)
+    callback = function()
         require("utils.project_config").setup()
     end,
 })
