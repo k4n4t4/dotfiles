@@ -2,18 +2,9 @@
     "name": "custom-snippets",
     "contributes": {
         "snippets": [
-            {
-                "language": "all",
-                "path": "./all.json"
-            },
-            {
-                "language": "java",
-                "path": "./java.json"
-            },
-            {
-                "language": "javascript",
-                "path": "./javascript.json"
-            }
+            { "language": "all", "path": "./all.json" },
+            { "language": "java", "path": "./java.json" },
+            { "language": "javascript", "path": "./javascript.json" }
         ]
     }
 }
