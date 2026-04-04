@@ -13,3 +13,5 @@ else
 end
 
 pcall(require, "config")
+
+require("utils.project_config").setup()

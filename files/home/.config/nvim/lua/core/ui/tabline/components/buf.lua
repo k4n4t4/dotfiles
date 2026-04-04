@@ -23,7 +23,8 @@ return function(bufnr)
     local cur_buf = vim.api.nvim_get_current_buf()
     local is_active_buf = (bufnr == cur_buf)
     local name = info.buf.name(bufnr)
-    if name == "" then name = "[Untitled]" end
+    if not name or name == "" then name = "[Untitled]" end
+    name = name:gsub("%%", "%%%%")
     local filetype = info.buf.filetype(bufnr)
 
     local icon, icon_color = get_icon_for_filetype(filetype)
