@@ -1,5 +1,5 @@
 return function()
-    local status = require("core.ui.statusline.components")
+    local status = require("utils.statusline.components")
     local hi = require("utils.highlight")
 
     local sep = hi.use("StlSep") .. "│" .. "%*"

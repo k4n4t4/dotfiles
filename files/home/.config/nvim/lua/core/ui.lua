@@ -7,8 +7,8 @@ hi.link("MacroRecord", "Operator")
 hi.link("FileModified", "WarningMsg")
 hi.link("GitBranch", "Constant")
 
-require "core.ui.statusline"
-require "core.ui.statuscolumn"
-require "core.ui.tabline"
-require "core.ui.foldtext"
-require "core.ui.terminal"
+require("utils.statusline").setup()
+require("utils.statuscolumn").setup()
+require("utils.tabline").setup()
+require("utils.foldtext").setup()
+require("utils.terminal").setup()

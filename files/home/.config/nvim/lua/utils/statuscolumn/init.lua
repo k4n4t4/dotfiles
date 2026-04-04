@@ -3,12 +3,12 @@ local M = {}
 M.group = vim.api.nvim_create_augroup("StatusColumn", { clear = true })
 
 function M.setup()
-    require "core.ui.statuscolumn.highlights"
+    require "utils.statuscolumn.highlights"
 
     vim.opt.signcolumn = "yes"
     vim.opt.cursorline = true
     vim.opt.cursorlineopt = "number"
-    vim.opt.statuscolumn = "%!v:lua.require('core.ui.statuscolumn.format')()"
+    vim.opt.statuscolumn = "%!v:lua.require('utils.statuscolumn.format')()"
 
     vim.api.nvim_create_autocmd("BufEnter", {
         group = M.group,
@@ -20,7 +20,5 @@ function M.setup()
         end,
     })
 end
-
-M.setup()
 
 return M

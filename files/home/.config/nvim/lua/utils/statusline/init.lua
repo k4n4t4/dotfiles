@@ -4,12 +4,12 @@ M.group = vim.api.nvim_create_augroup("StatusLine", { clear = true })
 
 
 function M.setup()
-    require "core.ui.statusline.highlights"
+    require "utils.statusline.highlights"
 
     vim.opt.showcmdloc = 'statusline'
     vim.opt.cmdheight = 0
     vim.opt.laststatus = 3
-    vim.opt.statusline = "%!v:lua.require('core.ui.statusline.format')()"
+    vim.opt.statusline = "%!v:lua.require('utils.statusline.format')()"
 
     -- Redraw statusline when mode changed. (e.g. 'ix' mode)
     vim.api.nvim_create_autocmd("ModeChanged", {
@@ -37,7 +37,5 @@ function M.setup()
         end,
     })
 end
-
-M.setup()
 
 return M

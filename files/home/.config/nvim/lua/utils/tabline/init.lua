@@ -21,10 +21,10 @@ function M.setup(opts)
     M.min_tabs = opts.min_tabs or M.min_tabs
 
     require "utils.tabuf".setup()
-    require "core.ui.tabline.highlights"
+    require "utils.tabline.highlights"
 
     vim.opt.showtabline = 2
-    vim.opt.tabline = "%!v:lua.require('core.ui.tabline.format')()"
+    vim.opt.tabline = "%!v:lua.require('utils.tabline.format')()"
 
     vim.api.nvim_create_autocmd("User", {
         group = M.group,
@@ -38,7 +38,5 @@ function M.setup(opts)
         end,
     })
 end
-
-M.setup()
 
 return M
