@@ -9,7 +9,6 @@
       curl
       unzip
       nodejs
-      nodePackages.npm
       gnumake
       gcc
       fd
