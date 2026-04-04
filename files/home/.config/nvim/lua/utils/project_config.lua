@@ -1,7 +1,7 @@
 local M = {}
 
 function M.get_project_config_path(cwd)
-    local cwd_str = require("utils.str").path_to_percent(cwd)
+    local cwd_str = require("utils.fs").path_to_percent(cwd)
     return M.project_cache_dir .. "/" .. cwd_str .. ".lua"
 end
 
