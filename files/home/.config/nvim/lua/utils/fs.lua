@@ -5,15 +5,29 @@ local uv = vim.uv or vim.loop
 --- Converts a dot-separated module path to a filesystem path (replaces '.' with '/').
 --- @param path string Dot-separated path (e.g. "foo.bar.baz")
 --- @return string Filesystem path (e.g. "foo/bar/baz")
-function M.to_path(path)
+function M.dot_to_path(path)
     return (path:gsub("%.", "/"))
 end
 
 --- Converts a filesystem path to a dot-separated module path (replaces '/' with '.').
 --- @param path string Filesystem path (e.g. "foo/bar/baz")
 --- @return string Dot-separated path (e.g. "foo.bar.baz")
-function M.to_dot(path)
+function M.path_to_dot(path)
     return (path:gsub("/", "."))
+end
+
+--- Converts a filesystem path to a percent-separated path (replaces '/', '\', and ':' with '%').
+--- @param path string Filesystem path (e.g. "/home/user/project")
+--- @return string Percent-separated path (e.g. "%home%user%project")
+function M.path_to_percent(path)
+    return (path:gsub("[/\\:]", "%%"))
+end
+
+--- Converts a percent-separated path back to a filesystem path (replaces '%' with '/').
+--- @param path string Percent-separated path (e.g. "%home%user%project")
+--- @return string Filesystem path (e.g. "/home/user/project")
+function M.percent_to_path(path)
+    return (path:gsub("%%", "/"))
 end
 
 --- Returns the filename (last path component) from a path.
@@ -126,7 +140,7 @@ function M.scandir(path, callback)
 end
 
 function M.scandir_dot(path, callback)
-    path = vim.fn.stdpath("config") .. "/lua/" .. M.to_path(path)
+    path = vim.fn.stdpath("config") .. "/lua/" .. M.dot_to_path(path)
     return M.scandir(path, callback)
 end
 
