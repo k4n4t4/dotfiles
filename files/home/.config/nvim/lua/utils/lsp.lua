@@ -234,29 +234,26 @@ function M.is_cmd_available(cmd)
     return false
 end
 
-M.configured = {}
-
 function M.set(ft, servers)
-    if M.configured[ft] then return end
-
     vim.api.nvim_create_autocmd("User", {
+        group = group,
         pattern = "FileTypeAfter",
         callback = vim.schedule_wrap(function(args)
             if args.data.match == ft then
-
                 for _, name in ipairs(servers) do
                     vim.lsp.enable(name)
-                    M.configured[ft] = true
                 end
-
                 vim.api.nvim_del_autocmd(args.id)
             end
         end),
     })
 end
 
+M.configured = {}
+
 function M.auto_set()
     vim.api.nvim_create_autocmd("User", {
+        group = group,
         pattern = "FileTypeAfter",
         callback = vim.schedule_wrap(function(args)
             local ft = args.data.match
