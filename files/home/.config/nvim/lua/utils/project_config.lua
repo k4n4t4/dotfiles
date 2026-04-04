@@ -1,5 +1,7 @@
 local M = {}
 
+M.project_cache_dir = vim.fn.stdpath("cache") .. "/utils/project_configs"
+
 function M.get_path(cwd)
     local cwd_str = require("utils.fs").path_to_percent(cwd)
     return M.project_cache_dir .. "/" .. cwd_str .. ".lua"
@@ -16,19 +18,22 @@ function M.edit(path)
 end
 
 function M.setup()
-    M.project_cache_dir = vim.fn.stdpath("cache") .. "/utils/project_configs"
-
     if vim.fn.isdirectory(M.project_cache_dir) == 0 then
         vim.fn.mkdir(M.project_cache_dir, "p")
     end
 
-    local path = M.get_path(vim.fn.getcwd())
-    M.load(path)
+    local global_config_path = M.get_path("global")
+    local config_path = M.get_path(vim.fn.getcwd())
+    M.load(global_config_path)
+    M.load(config_path)
 
     vim.api.nvim_create_user_command("EditConfig", function()
-        local config_path = M.get_path(vim.fn.getcwd())
         M.edit(config_path)
-    end, {})
+    end, { desc = "Edit Config" })
+
+    vim.api.nvim_create_user_command("EditGlobalConfig", function()
+        M.edit(global_config_path)
+    end, { desc = "Edit Global Config" })
 end
 
 return M
