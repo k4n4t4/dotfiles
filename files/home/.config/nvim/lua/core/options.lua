@@ -68,7 +68,8 @@ vim.api.nvim_create_autocmd("User", {
         vim.opt.wildmode = "list:full"
         vim.opt.pumheight = 10
         vim.opt.pumblend = 10
-
+        vim.opt.winborder = "none"
+        vim.opt.pumborder = "none"
 
         vim.diagnostic.config {
             virtual_text = true,
