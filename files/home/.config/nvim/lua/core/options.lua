@@ -95,22 +95,12 @@ vim.filetype.add {
     extension = {
         jsp = "jsp",
     },
-    pattern = {
-        [".*%.lua"] = function(path)
-            if require("utils.info").path.is_nvim_related(path) then
-                return "neovim-lua"
-            end
-        end,
-    },
 }
 
 vim.treesitter.language.register("html", "jsp")
-vim.treesitter.language.register("lua", "neovim-lua")
-
 
 local lsp = require "utils.lsp"
 lsp.add_mason_bin_path()
-lsp.set("neovim-lua", { "lua_ls" })
 lsp.set("jsp", { "html", "emmet_language_server" })
 lsp.set("cs", { "omnisharp" })
 lsp.auto_set()
