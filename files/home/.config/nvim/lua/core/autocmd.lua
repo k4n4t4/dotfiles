@@ -39,7 +39,7 @@ vim.api.nvim_create_autocmd("UIEnter", {
 
 -- User FileTypeAfter
 vim.api.nvim_create_autocmd("FileType", {
-    group = group,
+    group = vim.api.nvim_create_augroup("FileTypeAfter", { clear = true }),
     callback = function(args)
         vim.api.nvim_create_autocmd("SafeState", {
             once = true,
@@ -57,7 +57,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- highlight yank area
 autocmd("TextYankPost", {
-    group = group,
+    group = vim.api.nvim_create_augroup("TextYankPost", { clear = true }),
     callback = function()
         vim.highlight.on_yank { hlgroup = "Visual", timeout = 150 }
     end,
@@ -84,7 +84,7 @@ vim.api.nvim_create_autocmd("User", {
 
 -- restore cursor position
 autocmd("BufReadPost", {
-    group = group,
+    group = vim.api.nvim_create_augroup("RestoreCursorPosition", { clear = true }),
     callback = function()
         local mark = vim.api.nvim_buf_get_mark(0, '"')
         local lcount = vim.api.nvim_buf_line_count(0)
@@ -96,6 +96,7 @@ autocmd("BufReadPost", {
 
 -- unlist some filetypes and map q to close
 vim.api.nvim_create_autocmd("FileType", {
+    group = vim.api.nvim_create_augroup("UnlistSomeFileType", { clear = true }),
     pattern = {
         "help",
         "man",
@@ -117,5 +118,18 @@ vim.api.nvim_create_autocmd("User", {
     pattern = "Ready",
     callback = function()
         require("utils.project_config").setup()
+    end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+    group = vim.api.nvim_create_augroup("TreesitterStart", { clear = true }),
+    callback = function(_)
+        local ok, _ = pcall(vim.treesitter.start)
+        if ok then
+            vim.opt_local.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+            vim.opt_local.foldmethod = 'expr'
+            vim.opt_local.foldlevel = 99
+            vim.opt_local.foldlevelstart = 99
+        end
     end,
 })

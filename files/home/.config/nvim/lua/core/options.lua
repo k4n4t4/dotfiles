@@ -103,19 +103,3 @@ lsp.add_mason_bin_path()
 lsp.set("jsp", { "html", "emmet_language_server" })
 lsp.set("cs", { "omnisharp" })
 lsp.auto_set()
-
-
-local function treesitter_start(_)
-    local ok, _ = pcall(vim.treesitter.start)
-    if ok then
-        vim.opt_local.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-        vim.opt_local.foldmethod = 'expr'
-        vim.opt_local.foldlevel = 99
-        vim.opt_local.foldlevelstart = 99
-    end
-end
-vim.api.nvim_create_autocmd("FileType", {
-    callback = function(args)
-        treesitter_start(args)
-    end,
-})
