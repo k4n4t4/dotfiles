@@ -7,7 +7,7 @@ if not lsp.is_cmd_available(cmd) then return nil end
 
 return {
     cmd = cmd,
-    filetypes = { "lua" },
+    filetypes = { "lua", "neovim-lua" },
     settings = {
         Lua = {
             runtime = {
