@@ -105,17 +105,17 @@ lsp.set("cs", { "omnisharp" })
 lsp.auto_set()
 
 
-local function treesitter_start()
+local function treesitter_start(_)
     local ok, _ = pcall(vim.treesitter.start)
     if ok then
-        vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-        vim.wo[0][0].foldmethod = 'expr'
-        vim.opt.foldlevel = 99
-        vim.opt.foldlevelstart = 99
+        vim.opt_local.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+        vim.opt_local.foldmethod = 'expr'
+        vim.opt_local.foldlevel = 99
+        vim.opt_local.foldlevelstart = 99
     end
 end
 vim.api.nvim_create_autocmd("FileType", {
-    callback = function()
-        treesitter_start()
+    callback = function(args)
+        treesitter_start(args)
     end,
 })
