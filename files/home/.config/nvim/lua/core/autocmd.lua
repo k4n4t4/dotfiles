@@ -1,9 +1,9 @@
-local group = vim.api.nvim_create_augroup("Settings", { clear = true })
 local autocmd = vim.api.nvim_create_autocmd
+local augroup = vim.api.nvim_create_augroup
 
 -- User DirEnter
-vim.api.nvim_create_autocmd("BufEnter", {
-    group = vim.api.nvim_create_augroup("DirEnter", { clear = true }),
+autocmd("BufEnter", {
+    group = augroup("DirEnter", { clear = true }),
     callback = function(args)
         local bufname = vim.api.nvim_buf_get_name(args.buf)
         local stat = vim.uv.fs_stat(bufname)
@@ -14,7 +14,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
 })
 
 -- User BufFirstRead
-vim.api.nvim_create_autocmd("BufReadPost", {
+autocmd("BufReadPost", {
     once = true,
     callback = vim.schedule_wrap(function()
         vim.api.nvim_exec_autocmds("User", { pattern = "BufFirstRead", modeline = false })
@@ -22,7 +22,7 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 })
 
 -- User Safe
-vim.api.nvim_create_autocmd("SafeState", {
+autocmd("SafeState", {
     once = true,
     callback = vim.schedule_wrap(function()
         vim.api.nvim_exec_autocmds("User", { pattern = "Safe", modeline = false })
@@ -30,7 +30,7 @@ vim.api.nvim_create_autocmd("SafeState", {
 })
 
 -- User Ready
-vim.api.nvim_create_autocmd("UIEnter", {
+autocmd("UIEnter", {
     once = true,
     callback = vim.schedule_wrap(vim.schedule_wrap(function()
         vim.api.nvim_exec_autocmds("User", { pattern = "Ready", modeline = false })
@@ -38,10 +38,10 @@ vim.api.nvim_create_autocmd("UIEnter", {
 })
 
 -- User FileTypeAfter
-vim.api.nvim_create_autocmd("FileType", {
-    group = vim.api.nvim_create_augroup("FileTypeAfter", { clear = true }),
+autocmd("FileType", {
+    group = augroup("FileTypeAfter", { clear = true }),
     callback = function(args)
-        vim.api.nvim_create_autocmd("SafeState", {
+        autocmd("SafeState", {
             once = true,
             callback = function()
                 if vim.api.nvim_buf_is_valid(args.buf) then
@@ -57,20 +57,20 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- highlight yank area
 autocmd("TextYankPost", {
-    group = vim.api.nvim_create_augroup("TextYankPost", { clear = true }),
+    group = augroup("TextYankPost", { clear = true }),
     callback = function()
         vim.highlight.on_yank { hlgroup = "Visual", timeout = 150 }
     end,
 })
 
 -- fcitx5
-vim.api.nvim_create_autocmd("User", {
+autocmd("User", {
     pattern = "Ready",
     once = true,
     callback = vim.schedule_wrap(function()
         if vim.fn.executable("fcitx5") == 1 then
-            vim.api.nvim_create_autocmd("InsertLeave", {
-                group = vim.api.nvim_create_augroup("fcitx5", { clear = true }),
+            autocmd("InsertLeave", {
+                group = augroup("fcitx5", { clear = true }),
                 callback = function()
                     local out = vim.fn.system { "fcitx5-remote" }
                     if out == "2\n" then
@@ -84,7 +84,7 @@ vim.api.nvim_create_autocmd("User", {
 
 -- restore cursor position
 autocmd("BufReadPost", {
-    group = vim.api.nvim_create_augroup("RestoreCursorPosition", { clear = true }),
+    group = augroup("RestoreCursorPosition", { clear = true }),
     callback = function()
         local mark = vim.api.nvim_buf_get_mark(0, '"')
         local lcount = vim.api.nvim_buf_line_count(0)
@@ -95,8 +95,8 @@ autocmd("BufReadPost", {
 })
 
 -- unlist some filetypes and map q to close
-vim.api.nvim_create_autocmd("FileType", {
-    group = vim.api.nvim_create_augroup("UnlistSomeFileType", { clear = true }),
+autocmd("FileType", {
+    group = augroup("UnlistSomeFileType", { clear = true }),
     pattern = {
         "help",
         "man",
@@ -113,7 +113,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- project config
-vim.api.nvim_create_autocmd("User", {
+autocmd("User", {
     once = true,
     pattern = "Ready",
     callback = function()
@@ -121,8 +121,8 @@ vim.api.nvim_create_autocmd("User", {
     end,
 })
 
-vim.api.nvim_create_autocmd("FileType", {
-    group = vim.api.nvim_create_augroup("TreesitterStart", { clear = true }),
+autocmd("FileType", {
+    group = augroup("TreesitterStart", { clear = true }),
     callback = function(_)
         local ok, _ = pcall(vim.treesitter.start)
         if ok then
