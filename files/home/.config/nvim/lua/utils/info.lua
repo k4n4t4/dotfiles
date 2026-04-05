@@ -46,26 +46,32 @@ function M.path.stdpath(type)
 end
 
 --- Returns true if the cwd is inside the Neovim config directory (cached).
+--- @param path? string Optional path to check (defaults to cwd)
 --- @return boolean
-function M.path.in_config_dir()
+function M.path.in_config_dir(path)
+    path = path or M.path.cwd()
     return cached("path_in_config_dir", function()
-        return path_contains(M.path.cwd(), M.path.config())
+        return path_contains(path, M.path.config())
     end)
 end
 
 --- Returns true if the cwd contains "/nvim" in its path (cached).
+--- @param path? string Optional path to check (defaults to cwd)
 --- @return boolean
-function M.path.in_nvim_repo()
+function M.path.in_nvim_repo(path)
+    path = path or M.path.cwd()
     return cached("path_in_nvim_repo", function()
-        return path_contains(M.path.cwd(), "/nvim")
+        return path_contains(path, "/nvim")
     end)
 end
 
 --- Returns true if the cwd is in the config dir or a Neovim-related repository (cached).
+--- @param path? string Optional path to check (defaults to cwd)
 --- @return boolean
-function M.path.is_nvim_related()
+function M.path.is_nvim_related(path)
+    path = path or M.path.cwd()
     return cached("path_is_nvim_related", function()
-        return M.path.in_config_dir() or M.path.in_nvim_repo()
+        return M.path.in_config_dir(path) or M.path.in_nvim_repo(path)
     end)
 end
 
