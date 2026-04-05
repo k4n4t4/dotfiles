@@ -1,35 +1,11 @@
 return {
-    {
-        "nvim-tree/nvim-web-devicons",
-    },
+    { "nvim-tree/nvim-web-devicons" },
 
-    {
-        "m-demare/hlargs.nvim",
-        event = 'User Ready',
-    },
-    {
-        "norcalli/nvim-colorizer.lua",
-        event = 'User Ready',
-    },
+    { "m-demare/hlargs.nvim", event = 'User Ready' },
 
-    {
-        "windwp/nvim-autopairs",
-        event = "InsertEnter",
-        opts = {
-            check_ts = true,
-            disable_filetype = { "TelescopePrompt", "spectre_panel" },
-            disable_in_macro = true,
-            disable_in_visualblock = false,
-            disable_in_replace_mode = true,
-            ignored_next_char = [=[[%w%%%'%[%"%.%`%$]]=],
-            enable_moveright = true,
-            enable_afterquote = true,
-            enable_check_bracket_line = true,
-            enable_bracket_in_quote = true,
-            enable_abbr = false,
-            break_undo = true,
-        },
-    },
+    { "norcalli/nvim-colorizer.lua", event = 'User Ready' },
+
+    { "windwp/nvim-autopairs", event = "InsertEnter" },
 
     {
         "folke/flash.nvim",
@@ -91,22 +67,6 @@ return {
             vim.keymap.set('n', '[;', dropbar_api.goto_context_start, { desc = 'Go to start of current context' })
             vim.keymap.set('n', '];', dropbar_api.select_next_context, { desc = 'Select next context' })
         end
-    },
-
-    {
-        "rachartier/tiny-inline-diagnostic.nvim",
-        event = "User Ready",
-        config = function()
-            require("tiny-inline-diagnostic").setup {
-                preset = "nonerdfont",
-                hi = {
-                    arrow = "Comment",
-                    background = "Normal",
-                    mixing_color = "none",
-                }
-            }
-            vim.diagnostic.config { virtual_text = false }
-        end,
     },
 
     {
@@ -180,51 +140,6 @@ return {
                 autosave_last_session = true,
                 autoload_mode = config.AutoloadMode.CurrentDir,
             })
-        end,
-    },
-
-    {
-        "mrcjkb/rustaceanvim",
-        ft = "rust",
-        version = '^5',
-        config = function()
-            vim.g.rustaceanvim = {
-                tools = {
-                    enable_clippy = true,
-                },
-                server = {
-                    default_settings = {
-                        ['rust-analyzer'] = {
-                            assist = {
-                                importGranularity = "module",
-                                importEnforceGranularity = true,
-                                importPrefix = 'crate',
-                            },
-                            useLibraryCodeForTypes = true,
-                            autoSearchPaths = true,
-                            autoImportCompletions = true,
-                            reportMissingImports = true,
-                            followImportForHints = true,
-                            cargo = {
-                                allFeatures = true,
-                            },
-                            check = {
-                                command = "clippy",
-                            },
-                            checkOnSave = {
-                                command = "clippy"
-                            },
-                            inlayHints = { locationLinks = false },
-                            diagnostics = {
-                                enable = true,
-                                experimental = {
-                                    enable = true,
-                                },
-                            },
-                        },
-                    },
-                }
-            }
         end,
     },
 

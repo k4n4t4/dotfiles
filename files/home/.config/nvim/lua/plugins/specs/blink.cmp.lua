@@ -22,7 +22,6 @@ return {
         "moyiz/blink-emoji.nvim",
         {
             "xzbdmw/colorful-menu.nvim",
-            dependencies = { "nvim-treesitter/nvim-treesitter" },
             config = function()
                 require("colorful-menu").setup {}
             end,

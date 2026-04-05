@@ -1,13 +1,15 @@
 return {
+    { "fladson/vim-kitty", ft = "kitty" },
+
     {
-        "fladson/vim-kitty",
-        ft = "kitty",
+        "mattn/emmet-vim",
+        ft = { "html", "css", "javascript", "typescript", "typescriptreact", "*.tsx", "*.jsx" },
     },
+
     {
         "MeanderingProgrammer/render-markdown.nvim",
         ft = { "markdown", "Avante" },
         dependencies = {
-            "nvim-treesitter/nvim-treesitter",
             "nvim-tree/nvim-web-devicons"
         },
         config = function()
@@ -20,9 +22,5 @@ return {
                 file_types = { "markdown", "Avante" },
             }
         end,
-    },
-    {
-        "mattn/emmet-vim",
-        ft = { "html", "css", "javascript", "typescript", "typescriptreact", "*.tsx", "*.jsx" },
     },
 }
