@@ -1,7 +1,5 @@
 local M = {}
 
-M.group = vim.api.nvim_create_augroup("Utils_highlight", { clear = true })
-
 M.registry = {
     set = {},
     ref = {},
@@ -214,6 +212,8 @@ end
 function M.use(group_name)
     return "%#" .. group_name .. "#"
 end
+
+M.group = vim.api.nvim_create_augroup("Utils_highlight", { clear = true })
 
 vim.api.nvim_create_autocmd({ "VimEnter", "ColorScheme" }, {
     group = M.group,
