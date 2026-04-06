@@ -206,13 +206,6 @@ function M.refresh()
     end
 end
 
---- Returns a statusline/winbar highlight group string for use in format strings (e.g. `%#Name#`).
---- @param group_name string
---- @return string Highlight group escape sequence
-function M.use(group_name)
-    return "%#" .. group_name .. "#"
-end
-
 M.group = vim.api.nvim_create_augroup("Utils_highlight", { clear = true })
 
 vim.api.nvim_create_autocmd({ "VimEnter", "ColorScheme" }, {
