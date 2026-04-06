@@ -7,7 +7,7 @@
   programs.ags = {
     enable = true;
     extraPackages = let
-      agsPkgs = inputs.ags.packages.${pkgs.system};
+        agsPkgs = inputs.ags.packages.${pkgs.stdenv.hostPlatform.system};
     in with pkgs; [
       nodejs
       agsPkgs.apps
