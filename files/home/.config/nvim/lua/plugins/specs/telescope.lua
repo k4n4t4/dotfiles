@@ -4,6 +4,7 @@ return {
         "nvim-lua/plenary.nvim",
         "nvim-telescope/telescope-project.nvim",
         "nvim-telescope/telescope-ui-select.nvim",
+        "stevearc/aerial.nvim",
         {
             "nvim-telescope/telescope-fzf-native.nvim",
             build = "make",
@@ -51,6 +52,7 @@ return {
         { mode = 'n', "<LEADER>tlr", "<CMD>Telescope lsp_references<CR>",            desc = "Telescope LSP Reference" },
         { mode = 'n', "<LEADER>tli", "<CMD>Telescope lsp_implementations<CR>",       desc = "Telescope LSP Implementations" },
 
+        { mode = 'n', "<LEADER>to", "<CMD>Telescope aerial<CR>",       desc = "Telescope Aerial" },
     },
     config = function()
         local telescope = require "telescope"
@@ -118,11 +120,13 @@ return {
                         },
                     }
                 },
+                ["aerial"] = {},
             },
         }
 
         telescope.load_extension "ui-select"
         telescope.load_extension "fzf"
         telescope.load_extension "project"
+        telescope.load_extension "aerial"
     end,
 }
