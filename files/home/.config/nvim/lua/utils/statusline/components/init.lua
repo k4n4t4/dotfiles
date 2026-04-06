@@ -1,6 +1,5 @@
 local M = {}
 
-local hi = require("utils.highlight")
 local info = require("utils.info")
 local mapping = require("utils.mapping")
 
@@ -27,7 +26,7 @@ end
 function M.macro_recording()
     local macro = info.state.macro()
     if macro ~= "" then
-        return hi.use("StlMacro") .. "@" .. macro .. "%*"
+        return "%#StlMacro#" .. "@" .. macro .. "%*"
     end
     return ""
 end

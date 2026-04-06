@@ -1,5 +1,3 @@
-local hi = require "utils.highlight"
-
 function HandleTabClick(tabnr, _, button, _)
     if button == "l" then
         vim.cmd(tabnr .. "tabnext")
@@ -16,7 +14,7 @@ return function(opts)
     local tabpage = tabpages[tabnr]
     if not tabpage then return "" end
 
-    local tab_hi = hi.use(is_active_tab and "TabLineSel" or "TabLine")
+    local tab_hi = "%#"..(is_active_tab and "TabLineSel" or "TabLine").."#"
 
     return table.concat({
         "%", tabnr, "@v:lua.HandleTabClick@",

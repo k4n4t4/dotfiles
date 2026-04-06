@@ -1,4 +1,3 @@
-local hi             = require("utils.highlight")
 local utils_diagnostic = require("utils.diagnostic")
 local mapping        = require("utils.mapping")
 
@@ -17,7 +16,7 @@ return function()
             local name = vim.diagnostic.severity[k]
             local sev  = mapping.severity.get(name)
             local hl   = severity_hi[name] or severity_hi.ERROR
-            table.insert(format, hi.use(hl) .. sev.icon .. #v .. "%*")
+            table.insert(format, "%#"..hl.."#" .. sev.icon .. #v .. "%*")
         end
     end
     return table.concat(format, "")

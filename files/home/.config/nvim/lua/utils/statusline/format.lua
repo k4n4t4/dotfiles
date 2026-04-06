@@ -1,8 +1,7 @@
 return function()
     local status = require("utils.statusline.components")
-    local hi = require("utils.highlight")
 
-    local sep = hi.use("StlSep") .. "│" .. "%*"
+    local sep = "%#StlSep#" .. "│" .. "%*"
 
     local current_winid = vim.api.nvim_get_current_win()
     local statusline_winid = vim.g.statusline_winid

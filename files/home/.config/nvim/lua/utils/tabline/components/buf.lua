@@ -41,7 +41,7 @@ return function(bufnr)
         icon = ""
     end
 
-    local buf_hi = hi.use(is_active_buf and "TabLineSel" or "TabLine")
+    local buf_hi = "%#"..(is_active_buf and "TabLineSel" or "TabLine").."#"
     local mod = info.buf.modified(bufnr) and " +" or ""
     local ro = info.buf.is_readonly(bufnr) and " R" or ""
 
