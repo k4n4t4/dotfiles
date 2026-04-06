@@ -9,7 +9,7 @@
     systemPackages = with pkgs; [
       uwsm
       hyprlock hyprutils hypridle hyprwayland-scanner hyprshot
-      feh st wofi swww wl-clipboard cliphist wlogout
+      feh st wofi awww wl-clipboard cliphist wlogout
       alsa-utils brightnessctl
       adwaita-icon-theme
 
