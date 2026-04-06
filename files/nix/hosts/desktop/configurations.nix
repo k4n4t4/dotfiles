@@ -7,6 +7,7 @@
     ../../modules/hosts/podman
     ../../modules/hosts/ollama
     ../../modules/hosts/nix-ld
+    ../../modules/hosts/nvidia
   ];
 
   nix = {

@@ -3,11 +3,20 @@
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
+    withUWSM = true;
+  };
+
+  programs.uwsm = {
+    enable = true;
+    waylandCompositors.hyprland = {
+      binPath = "/run/current-system/sw/bin/Hyprland";
+      prettyName = "Hyprland";
+      comment = "Hyprland compositor managed by UWSM";
+    };
   };
 
   environment = {
     systemPackages = with pkgs; [
-      uwsm
       hyprlock hyprutils hypridle hyprwayland-scanner hyprshot
       feh st wofi awww wl-clipboard cliphist wlogout
       alsa-utils brightnessctl
