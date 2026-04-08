@@ -21,8 +21,13 @@
       discord
       gimp
 
+      noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-color-emoji
       nerd-fonts.comic-shanns-mono
       nerd-fonts.hurmit
     ];
   };
+
+  fonts.fontconfig.enable = true;
 }
