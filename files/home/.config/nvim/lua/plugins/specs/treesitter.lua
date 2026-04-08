@@ -1,16 +1,6 @@
 return {
     {
-        "nvim-treesitter/nvim-treesitter",
-        branch = "main",
-        build = ":TSUpdate",
-        event = "User Ready",
-        config = true,
-    },
-    {
         "nvim-treesitter/nvim-treesitter-textobjects",
-        dependencies = {
-            "nvim-treesitter/nvim-treesitter",
-        },
         branch = "main",
         event = 'User Ready',
         init = function()
@@ -49,9 +39,6 @@ return {
     },
     {
         "nvim-treesitter/nvim-treesitter-context",
-        dependencies = {
-            "nvim-treesitter/nvim-treesitter",
-        },
         event = 'User Ready',
         config = function()
             require("treesitter-context").setup { enable = true }
