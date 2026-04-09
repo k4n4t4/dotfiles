@@ -4,7 +4,6 @@ return {
         "nvim-lua/plenary.nvim",
         "nvim-telescope/telescope-project.nvim",
         "nvim-telescope/telescope-ui-select.nvim",
-        "stevearc/aerial.nvim",
         {
             "nvim-telescope/telescope-fzf-native.nvim",
             build = "make",
@@ -46,13 +45,13 @@ return {
         { mode = 'n', "<LEADER>t/",  "<CMD>Telescope current_buffer_fuzzy_find<CR>", desc = "Telescope Current Buffer Fuzzy Finder" },
         { mode = 'n', "<LEADER>tz",  "<CMD>Telescope fzf<CR>",                       desc = "Telescope fzf" },
         { mode = 'n', "<LEADER>tp",  "<CMD>Telescope project<CR>",                   desc = "Telescope Project" },
+        { mode = 'n', "<LEADER>tq",  "<CMD>Telescope quickfix<CR>",                  desc = "Telescope" },
 
         { mode = 'n', "<LEADER>tld", "<CMD>Telescope lsp_definitions<CR>",           desc = "Telescope LSP Definitions" },
         { mode = 'n', "<LEADER>tlt", "<CMD>Telescope lsp_type_definitions<CR>",      desc = "Telescope LSP Type Definitions" },
         { mode = 'n', "<LEADER>tlr", "<CMD>Telescope lsp_references<CR>",            desc = "Telescope LSP Reference" },
         { mode = 'n', "<LEADER>tli", "<CMD>Telescope lsp_implementations<CR>",       desc = "Telescope LSP Implementations" },
-
-        { mode = 'n', "<LEADER>to", "<CMD>Telescope aerial<CR>",       desc = "Telescope Aerial" },
+        { mode = 'n', "<LEADER>to",  "<CMD>Telescope lsp_document_symbols<CR>",      desc = "Telescope LSP DocumentSymbols" },
     },
     config = function()
         local telescope = require "telescope"
@@ -64,6 +63,7 @@ return {
                 borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
                 mappings = {
                     i = {
+                        ['<C-f>'] = actions.to_fuzzy_refine,
                         ['<ESC>'] = actions.close,
                     },
                 },
@@ -120,13 +120,11 @@ return {
                         },
                     }
                 },
-                ["aerial"] = {},
             },
         }
 
         telescope.load_extension "ui-select"
         telescope.load_extension "fzf"
         telescope.load_extension "project"
-        telescope.load_extension "aerial"
     end,
 }

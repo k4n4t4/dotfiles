@@ -1,11 +1,15 @@
 return {
     'stevearc/aerial.nvim',
     dependencies = { "nvim-tree/nvim-web-devicons" },
+    keys = {
+        { "<leader>ot", "<cmd>AerialToggle<CR>",    desc = "Toggle Aerial" },
+        { "<leader>on", "<cmd>AerialNavToggle<CR>", desc = "Toggle AerialNav" },
+    },
     config = function()
+
         require("aerial").setup {
             backends = { "lsp", "treesitter", "markdown", "asciidoc" },
             filter_kind = false,
-
             layout = {
                 max_width = { 80, 0.5 },
                 width = 0.3,
@@ -29,8 +33,4 @@ return {
             },
         }
     end,
-    keys = {
-        { "<leader>ot", "<cmd>AerialToggle<CR>",    desc = "Toggle Aerial" },
-        { "<leader>on", "<cmd>AerialNavToggle<CR>", desc = "Toggle AerialNav" },
-    },
 }
