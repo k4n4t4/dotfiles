@@ -64,7 +64,10 @@ return {
                 mappings = {
                     i = {
                         ['<C-f>'] = actions.to_fuzzy_refine,
+                    },
+                    n = {
                         ['<ESC>'] = actions.close,
+                        ['q'] = actions.close,
                     },
                 },
                 layout_config = {
