@@ -64,24 +64,10 @@ vim.api.nvim_create_autocmd("User", {
         local info = require "utils.info"
         if info.env.is_wsl() then
             vim.g.clipboard = {
-                name = "OSC52 + WSL Interop",
+                name = 'OSC 52',
                 copy = {
-                    ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
-                    ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
-                },
-                paste = {
-                    ["+"] = function()
-                        return {
-                            vim.fn.systemlist('powershell.exe -NoProfile -Command "Get-Clipboard"'),
-                            'v',
-                        }
-                    end,
-                    ["*"] = function()
-                        return {
-                            vim.fn.systemlist('powershell.exe -NoProfile -Command "Get-Clipboard"'),
-                            'v',
-                        }
-                    end,
+                    ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+                    ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
                 },
             }
         end
