@@ -3,7 +3,7 @@ local lsp = require "utils.lsp"
 
 local cmd = { "lua-language-server" }
 
-if not lsp.is_cmd_available(cmd) then return nil end
+if not lsp.is_cmd_available(cmd) then return {} end
 
 return {
     cmd = cmd,
