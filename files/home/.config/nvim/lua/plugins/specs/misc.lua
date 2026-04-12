@@ -5,7 +5,16 @@ return {
 
     { "norcalli/nvim-colorizer.lua", event = 'User Ready' },
 
-    { "windwp/nvim-autopairs", event = "InsertEnter" },
+    {
+        "windwp/nvim-autopairs",
+        event = "InsertEnter",
+        config = function()
+            require("nvim-autopairs").setup {
+                check_ts = true,
+                ts_config = { },
+            }
+        end,
+    },
 
     {
         "folke/flash.nvim",
