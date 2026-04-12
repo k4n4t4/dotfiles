@@ -60,6 +60,32 @@ vim.api.nvim_create_autocmd("User", {
         vim.opt.splitright = true
 
         vim.opt.clipboard = "unnamedplus"
+
+        local info = require "utils.info"
+        if info.env.is_wsl() then
+            vim.g.clipboard = {
+                name = "OSC52 + WSL Interop",
+                copy = {
+                    ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+                    ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+                },
+                paste = {
+                    ["+"] = function()
+                        return {
+                            vim.fn.systemlist('powershell.exe -NoProfile -Command "Get-Clipboard"'),
+                            'v',
+                        }
+                    end,
+                    ["*"] = function()
+                        return {
+                            vim.fn.systemlist('powershell.exe -NoProfile -Command "Get-Clipboard"'),
+                            'v',
+                        }
+                    end,
+                },
+            }
+        end
+
         vim.opt.virtualedit = "block"
         vim.opt.ignorecase = true
         vim.opt.smartcase = true
