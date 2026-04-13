@@ -28,6 +28,7 @@ return {
         },
         'Kaiser-Yang/blink-cmp-git',
         'Kaiser-Yang/blink-cmp-avante',
+        "epwalsh/obsidian.nvim",
 
         {
             "saghen/blink.compat",
@@ -154,6 +155,9 @@ return {
                     "path",
                     "lsp",
                     "snippets",
+                    "obsidian",
+                    "obsidian_new",
+                    "obsidian_tags",
                     "buffer",
                     "calc",
                     "emoji",
@@ -190,6 +194,21 @@ return {
                         name = "Snip",
                         score_offset = 509,
                         async = true,
+                    },
+                    obsidian = {
+                        name = "obsidian",
+                        module = "blink.compat.source",
+                        opts = { name = "obsidian" },
+                    },
+                    obsidian_new = {
+                        name = "obsidian_new",
+                        module = "blink.compat.source",
+                        opts = { name = "obsidian_new" },
+                    },
+                    obsidian_tags = {
+                        name = "obsidian_tags",
+                        module = "blink.compat.source",
+                        opts = { name = "obsidian_tags" },
                     },
                     buffer = {
                         module = "blink.cmp.sources.buffer",
