@@ -46,6 +46,7 @@ return {
         { mode = 'n', "<LEADER>tz",  "<CMD>Telescope fzf<CR>",                       desc = "Telescope fzf" },
         { mode = 'n', "<LEADER>tp",  "<CMD>Telescope project<CR>",                   desc = "Telescope Project" },
         { mode = 'n', "<LEADER>tq",  "<CMD>Telescope quickfix<CR>",                  desc = "Telescope" },
+        { mode = 'n', "<LEADER>td",  "<CMD>Telescope diagnostics<CR>",               desc = "Telescope" },
 
         { mode = 'n', "<LEADER>tld", "<CMD>Telescope lsp_definitions<CR>",           desc = "Telescope LSP Definitions" },
         { mode = 'n', "<LEADER>tlt", "<CMD>Telescope lsp_type_definitions<CR>",      desc = "Telescope LSP Type Definitions" },
