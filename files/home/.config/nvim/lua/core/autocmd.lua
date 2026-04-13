@@ -69,13 +69,46 @@ autocmd("User", {
     once = true,
     callback = vim.schedule_wrap(function()
         if vim.fn.executable("fcitx5") == 1 then
-            autocmd("InsertLeave", {
+            autocmd({ "InsertLeave", "CmdlineLeave" }, {
                 group = augroup("fcitx5", { clear = true }),
                 callback = function()
                     local out = vim.fn.system { "fcitx5-remote" }
                     if out == "2\n" then
                         vim.fn.system { "fcitx5-remote", "-c" }
                     end
+                end,
+            })
+        end
+    end),
+})
+
+-- Windows IME
+autocmd("User", {
+    pattern = "Ready",
+    once = true,
+    callback = vim.schedule_wrap(function()
+        local info = require "utils.info"
+        if info.env.is_wsl() then
+            autocmd({ "InsertLeave", "CmdlineLeave" }, {
+                group = augroup("Windows IME", { clear = true }),
+                callback = function()
+                    vim.fn.jobstart({
+                        'powershell.exe', '-NoProfile', '-NonInteractive', '-Command',
+                        [[
+                            Add-Type -TypeDefinition ]]..[[@"
+                                using System;
+                                using System.Runtime.InteropServices;
+                                public class IME {
+                                    [DllImport("user32.dll")] public static extern IntPtr GetForegroundWindow();
+                                    [DllImport("imm32.dll")]  public static extern IntPtr ImmGetDefaultIMEWnd(IntPtr hWnd);
+                                    [DllImport("user32.dll")] public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+                                }
+                            ]].."\n"..[["@
+                            $hwnd   = [IME]::GetForegroundWindow()
+                            $imeWnd = [IME]::ImmGetDefaultIMEWnd($hwnd)
+                            [IME]::SendMessage($imeWnd, 0x283, [IntPtr]0x6, [IntPtr]0)
+                        ]],
+                    })
                 end,
             })
         end
