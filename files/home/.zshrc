@@ -66,6 +66,10 @@ if [ -e ~/.brew/bin/brew ]; then
   eval $(~/.brew/bin/brew shellenv)
 fi
 
+if type micromamba > /dev/null 2>&1 ; then
+    export MAMBA_ROOT_PREFIX="$HOME/.micromamba"
+fi
+
 if type sheldon > /dev/null 2>&1 ; then
   eval "$(sheldon source)"
 fi

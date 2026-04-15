@@ -32,6 +32,10 @@ if type tmux > /dev/null 2>&1; then
   export TMUX_SHELL="$(which bash)"
 fi
 
+if type micromamba > /dev/null 2>&1; then
+    export MAMBA_ROOT_PREFIX="$HOME/.micromamba"
+fi
+
 if type zoxide > /dev/null 2>&1; then
   eval "$(zoxide init bash)"
 fi

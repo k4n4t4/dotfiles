@@ -74,6 +74,10 @@ if type -q fzf
   fzf --fish | source
 end
 
+if type -q micromamba
+  export MAMBA_ROOT_PREFIX=$HOME/.micromamba
+end
+
 if type -q zoxide
   zoxide init fish --cmd z | source
 end
