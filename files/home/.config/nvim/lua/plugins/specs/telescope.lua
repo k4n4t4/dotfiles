@@ -95,7 +95,6 @@ return {
                 },
                 ["project"] = {
                     base_dirs = {
-                        '~/.dotfiles',
                     },
                     hidden_files = true,
                     theme = "dropdown",
