@@ -68,6 +68,7 @@ fi
 
 if type micromamba > /dev/null 2>&1 ; then
     export MAMBA_ROOT_PREFIX="$HOME/.micromamba"
+    eval "$(micromamba shell hook --shell zsh)"
 fi
 
 if type sheldon > /dev/null 2>&1 ; then

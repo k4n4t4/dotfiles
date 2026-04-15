@@ -76,6 +76,7 @@ end
 
 if type -q micromamba
   export MAMBA_ROOT_PREFIX=$HOME/.micromamba
+  micromamba shell hook --shell fish | source
 end
 
 if type -q zoxide
