@@ -14,3 +14,8 @@ fi
 if [ -d "$HOME/.cargo/bin" ] ; then
   PATH="$HOME/.cargo/bin:$PATH"
 fi
+
+if [ -d "$HOME/.nvm" ] ; then
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+fi
