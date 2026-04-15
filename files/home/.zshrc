@@ -62,6 +62,9 @@ PATH="/sbin:$PATH"
 if [ -e /home/linuxbrew/.linuxbrew/bin/brew ]; then
   eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 fi
+if [ -e ~/.brew/bin/brew ]; then
+  eval $(~/.brew/bin/brew shellenv)
+fi
 
 if type sheldon > /dev/null 2>&1 ; then
   eval "$(sheldon source)"

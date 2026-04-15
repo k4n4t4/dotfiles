@@ -66,8 +66,8 @@ if type -q tmux
   export TMUX_SHELL=$FISH_BIN
 end
 
-if test -f /home/linuxbrew/.linuxbrew/bin/brew
-  eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+if test -f ~/.brew/bin/brew
+  eval (~/.brew/bin/brew shellenv)
 end
 
 if type -q fzf

@@ -24,8 +24,8 @@ if type dm > /dev/null 2>&1; then
   eval "$(dm shellenv)"
 fi
 
-if [ -f /home/linuxbrew/.linuxbrew/bin/brew ]; then
-  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+if [ -f ~/.brew/bin/brew ]; then
+  eval "$(~/.brew/bin/brew shellenv)"
 fi
 
 if type tmux > /dev/null 2>&1; then
