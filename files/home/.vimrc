@@ -56,26 +56,42 @@ set wrapscan
 set ignorecase
 set smartcase
 
+let s:use_swap = 0
+let s:use_backup = 0
+let s:use_undo = 1
 
-if empty(glob("~/.local/state/vim/swap"))
-  silent !mkdir -p ~/.local/state/vim/swap
+if s:use_swap
+    if empty(glob("~/.local/state/vim/swap"))
+      silent !mkdir -p ~/.local/state/vim/swap
+    endif
+    set swapfile
+    set directory=~/.local/state/vim/swap//
+else
+    set noswapfile
 endif
-set swapfile
-set directory=~/.local/state/vim/swap//
 
-if empty(glob("~/.local/state/vim/backup"))
-  silent !mkdir -p ~/.local/state/vim/backup
+if s:use_backup
+    if empty(glob("~/.local/state/vim/backup"))
+      silent !mkdir -p ~/.local/state/vim/backup
+    endif
+    set backup
+    set backupext=.bak
+    set backupdir=~/.local/state/vim/backup//
+    set writebackup
+else
+    set nobackup
+    set nowritebackup
 endif
-set backup
-set backupext=.bak
-set backupdir=~/.local/state/vim/backup//
-set writebackup
 
-if empty(glob("~/.local/state/vim/undo"))
-  silent !mkdir -p ~/.local/state/vim/undo
+if s:use_undo
+    if empty(glob("~/.local/state/vim/undo"))
+        silent !mkdir -p ~/.local/state/vim/undo
+    endif
+    set undofile
+    set undodir=~/.local/state/vim/undo//
+else
+    set noundofile
 endif
-set undofile
-set undodir=~/.local/state/vim/undo//
 
 set viminfo+=n~/.local/state/vim/.viminfo
 
@@ -113,6 +129,11 @@ set notermguicolors
 set background=dark
 
 set ttimeoutlen=10
+
+" netrw
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_winsize = 25
 
 
 let mapleader = " "
