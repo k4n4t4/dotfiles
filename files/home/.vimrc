@@ -62,7 +62,7 @@ let s:use_undo = 1
 
 if s:use_swap
     if empty(glob("~/.local/state/vim/swap"))
-      silent !mkdir -p ~/.local/state/vim/swap
+        silent !mkdir -p ~/.local/state/vim/swap
     endif
     set swapfile
     set directory=~/.local/state/vim/swap//
@@ -72,7 +72,7 @@ endif
 
 if s:use_backup
     if empty(glob("~/.local/state/vim/backup"))
-      silent !mkdir -p ~/.local/state/vim/backup
+        silent !mkdir -p ~/.local/state/vim/backup
     endif
     set backup
     set backupext=.bak
@@ -130,6 +130,8 @@ set background=dark
 
 set ttimeoutlen=10
 
+set laststatus=2
+
 " netrw
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
@@ -146,14 +148,14 @@ cnoremap <Char-127> <BS>
 onoremap <Char-127> <BS>
 
 if has('vim_starting')
-  let &t_SI .= "\e[6 q"
-  let &t_EI .= "\e[2 q"
-  let &t_SR .= "\e[4 q"
+    let &t_SI .= "\e[6 q"
+    let &t_EI .= "\e[2 q"
+    let &t_SR .= "\e[4 q"
 endif
 
 syntax enable
 if exists("syntax_on")
-  syntax reset
+    syntax reset
 endif
 hi clear
 
@@ -171,10 +173,19 @@ hi String ctermfg=120
 hi Number ctermfg=63
 hi Function ctermfg=208
 
+hi StatusLine ctermfg=245 ctermbg=235 cterm=none
+hi StatusLineNC ctermfg=239 ctermbg=233 cterm=none
+
+hi VertSplit ctermfg=235 ctermbg=NONE cterm=none
+
 nnoremap <TAB> 5j
 nnoremap <S-TAB> 5k
 vnoremap <TAB> 5j
 vnoremap <S-TAB> 5k
+
+" terminal
+tnoremap <Esc> <C-\><C-n>
+nnoremap <LEADER>k <CMD>botright terminal ++rows=10<CR>
 
 nnoremap <LEADER>e <CMD>Lex<CR>
 nnoremap <LEADER>w <C-W><C-W>
