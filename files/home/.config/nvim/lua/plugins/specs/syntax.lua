@@ -19,6 +19,9 @@ return {
                         enabled = true,
                     },
                 },
+                latex = {
+                    enabled = false,
+                },
                 file_types = { "markdown", "Avante" },
             }
         end,
