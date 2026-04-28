@@ -79,6 +79,10 @@ if cmd_exists eza; then
   dotconf "eza" -r
 fi
 
+if cmd_exists waybar; then
+  dotconf "waybar" -r
+fi
+
 if cmd_exists wlogout; then
   dotconf "wlogout" -r
 fi
