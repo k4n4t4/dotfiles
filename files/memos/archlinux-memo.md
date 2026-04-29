@@ -5,7 +5,7 @@
 # System
 sudo pacman -S linux-firmware sof-firmware efibootmgr os-prober grub base-devel
 # GUI
-sudo pacman -S hyprland waybar wofi uwsm xdg-utils
+sudo pacman -S hyprland waybar wofi uwsm xdg-utils mako libnotify
 # Network
 sudo pacman -S networkmanager network-manager-applet
 # Bluetooth
