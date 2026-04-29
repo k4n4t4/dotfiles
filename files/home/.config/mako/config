@@ -1,0 +1,33 @@
+# Layout
+anchor=top-right
+width=340
+margin=10
+padding=12
+border-size=1
+border-radius=6
+
+# Colors
+background-color=#1e1e2e
+text-color=#cdd6f4
+border-color=#313244
+
+# Typography
+font=JetBrainsMono Nerd Font 11
+
+# Behavior
+default-timeout=4000
+max-visible=3
+sort=-time
+
+# Urgency
+[urgency=low]
+border-color=#313244
+default-timeout=3000
+
+[urgency=normal]
+border-color=#313244
+
+[urgency=critical]
+border-color=#f38ba8
+background-color=#1e1e2e
+default-timeout=0
