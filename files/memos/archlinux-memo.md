@@ -23,7 +23,7 @@ sudo pacman -S pipewire pipewire-alsa pipewire-jack pipewire-pulse wireplumber p
 sudo pacman -S power-profiles-daemon
 
 # Applications
-sudo pacman -S kitty firefox obsidian
+sudo pacman -S kitty firefox obsidian discord
 
 # Fonts
 sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-dejavu ttf-font-awesome ttf-jetbrains-mono-nerd
@@ -41,4 +41,8 @@ sudo git clone https://github.com/MarianArlt/sddm-sugar-dark.git /usr/share/sddm
 sudo pacman -S qt5-graphicaleffects qt5-quickcontrols2
 sudo mkdir -p /etc/sddm.conf.d
 echo -e "[Theme]\nCurrent=sddm-sugar-dark" | sudo tee /etc/sddm.conf.d/10-theme.conf
+
+# AUR
+git clone https://aur.archlinux.org/yay.git /tmp/yay
+makepkg -D /tmp/yay -si
 ```

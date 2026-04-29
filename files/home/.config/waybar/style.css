@@ -4,9 +4,9 @@
 }
 
 window#waybar {
-    background-color: rgba(50, 50, 50, 0.8);
-    border-bottom: 1px solid rgba(80, 80, 80, 0.6);
-    color: #e0e0e0;
+    background-color: rgba(25, 25, 25, 0.95);
+    border-bottom: 1px solid rgba(40, 40, 40, 0.8);
+    color: #b0b0b0;
     transition-property: background-color;
     transition-duration: .5s;
 }
@@ -16,7 +16,7 @@ window#waybar.hidden {
 }
 
 window#waybar.termite {
-    background-color: #3F3F3F;
+    background-color: #1a1a1a;
 }
 
 window#waybar.chromium {
@@ -32,17 +32,17 @@ button {
 
 button:hover {
     background: inherit;
-    box-shadow: inset 0 -3px #b0b0b0;
+    box-shadow: inset 0 -3px #606060;
 }
 
 #pulseaudio:hover {
-    background-color: #707070;
+    background-color: #404040;
 }
 
 #workspaces button {
     padding: 0 5px;
     background-color: transparent;
-    color: #c0c0c0;
+    color: #808080;
 }
 
 #workspaces button:hover {
@@ -50,8 +50,8 @@ button:hover {
 }
 
 #workspaces button.focused, #workspaces button.active {
-    background-color: #707070;
-    box-shadow: inset 0 -3px #a0a0a0;
+    background-color: #404040;
+    box-shadow: inset 0 -3px #606060;
 }
 
 #workspaces button.urgent {
@@ -59,15 +59,15 @@ button:hover {
 }
 
 #mode {
-    background-color: #707070;
-    box-shadow: inset 0 -3px #a0a0a0;
+    background-color: #404040;
+    box-shadow: inset 0 -3px #606060;
 }
 
 #submap {
-    background-color: #8b4513;
-    color: #e0e0e0;
+    background-color: #603a0f;
+    color: #b0b0b0;
     padding: 0 10px;
-    box-shadow: inset 0 -3px #d2691e;
+    box-shadow: inset 0 -3px #8b5a1a;
 }
 
 #clock,
@@ -89,7 +89,7 @@ button:hover {
 #custom-power,
 #mpd {
     padding: 0 10px;
-    color: #e0e0e0;
+    color: #b0b0b0;
 }
 
 #window,
@@ -106,30 +106,30 @@ button:hover {
 }
 
 #clock {
-    background-color: #606060;
+    background-color: #303030;
 }
 
 #battery {
-    background-color: #a0a0a0;
-    color: #1a1a1a;
+    background-color: #505050;
+    color: #c0c0c0;
 }
 
 #battery.charging, #battery.plugged {
-    color: #e0e0e0;
-    background-color: #5a7d5a;
+    color: #b0b0b0;
+    background-color: #3a5a3a;
 }
 
 @keyframes blink {
     to {
-        background-color: #a0a0a0;
-        color: #1a1a1a;
+        background-color: #505050;
+        color: #c0c0c0;
     }
 }
 
 /* Using steps() instead of linear as a timing function to limit cpu usage */
 #battery.critical:not(.charging) {
-    background-color: #8b3a3a;
-    color: #e0e0e0;
+    background-color: #5a2a2a;
+    color: #b0b0b0;
     animation-name: blink;
     animation-duration: 0.5s;
     animation-timing-function: steps(12);
@@ -142,18 +142,18 @@ button:hover {
 }
 
 #power-profiles-daemon.performance {
-    background-color: #7a4a4a;
-    color: #e0e0e0;
+    background-color: #503030;
+    color: #b0b0b0;
 }
 
 #power-profiles-daemon.balanced {
-    background-color: #5a7090;
-    color: #e0e0e0;
+    background-color: #3a5070;
+    color: #b0b0b0;
 }
 
 #power-profiles-daemon.power-saver {
-    background-color: #606060;
-    color: #e0e0e0;
+    background-color: #303030;
+    color: #b0b0b0;
 }
 
 label:focus {
@@ -161,73 +161,73 @@ label:focus {
 }
 
 #cpu {
-    background-color: #707070;
-    color: #e0e0e0;
+    background-color: #404040;
+    color: #b0b0b0;
 }
 
 #memory {
-    background-color: #707070;
+    background-color: #404040;
 }
 
 #disk {
-    background-color: #707070;
+    background-color: #404040;
 }
 
 #backlight {
-    background-color: #707070;
+    background-color: #404040;
 }
 
 #network {
-    background-color: #707070;
+    background-color: #404040;
 }
 
 #network.disconnected {
-    background-color: #8b3a3a;
+    background-color: #5a2a2a;
 }
 
 #pulseaudio {
-    background-color: #707070;
-    color: #e0e0e0;
+    background-color: #404040;
+    color: #b0b0b0;
 }
 
 #pulseaudio.muted {
-    background-color: #606060;
-    color: #a0a0a0;
+    background-color: #303030;
+    color: #707070;
 }
 
 #wireplumber {
-    background-color: #a0a0a0;
-    color: #1a1a1a;
+    background-color: #505050;
+    color: #c0c0c0;
 }
 
 #wireplumber.muted {
-    background-color: #8b3a3a;
+    background-color: #5a2a2a;
 }
 
 #custom-media {
-    background-color: #707070;
-    color: #e0e0e0;
+    background-color: #404040;
+    color: #b0b0b0;
     min-width: 100px;
 }
 
 #custom-media.custom-spotify {
-    background-color: #707070;
+    background-color: #404040;
 }
 
 #custom-media.custom-vlc {
-    background-color: #707070;
+    background-color: #404040;
 }
 
 #temperature {
-    background-color: #707070;
+    background-color: #404040;
 }
 
 #temperature.critical {
-    background-color: #8b3a3a;
+    background-color: #5a2a2a;
 }
 
 #tray {
-    background-color: #707070;
+    background-color: #404040;
 }
 
 #tray > .passive {
@@ -236,7 +236,7 @@ label:focus {
 
 #tray > .needs-attention {
     -gtk-icon-effect: highlight;
-    background-color: #8b3a3a;
+    background-color: #5a2a2a;
 }
 
 #custom-power {
@@ -244,42 +244,42 @@ label:focus {
 }
 
 #idle_inhibitor {
-    background-color: #606060;
+    background-color: #303030;
 }
 
 #idle_inhibitor.activated {
-    background-color: #909090;
-    color: #1a1a1a;
+    background-color: #505050;
+    color: #c0c0c0;
 }
 
 #mpd {
-    background-color: #707070;
-    color: #e0e0e0;
+    background-color: #404040;
+    color: #b0b0b0;
 }
 
 #mpd.disconnected {
-    background-color: #8b3a3a;
+    background-color: #5a2a2a;
 }
 
 #mpd.stopped {
-    background-color: #606060;
+    background-color: #303030;
 }
 
 #mpd.paused {
-    background-color: #707070;
+    background-color: #404040;
 }
 
 #language {
-    background: #707070;
-    color: #e0e0e0;
+    background: #404040;
+    color: #b0b0b0;
     padding: 0 5px;
     margin: 0 5px;
     min-width: 16px;
 }
 
 #keyboard-state {
-    background: #707070;
-    color: #e0e0e0;
+    background: #404040;
+    color: #b0b0b0;
     padding: 0 0px;
     margin: 0 5px;
     min-width: 16px;
@@ -307,17 +307,17 @@ label:focus {
 
 #privacy-item {
     padding: 0 5px;
-    color: white;
+    color: #b0b0b0;
 }
 
 #privacy-item.screenshare {
-    background-color: #8b3a3a;
+    background-color: #5a2a2a;
 }
 
 #privacy-item.audio-in {
-    background-color: #5a7d5a;
+    background-color: #3a5a3a;
 }
 
 #privacy-item.audio-out {
-    background-color: #5a7090;
+    background-color: #3a5070;
 }
