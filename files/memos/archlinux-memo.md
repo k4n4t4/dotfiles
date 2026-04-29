@@ -34,8 +34,11 @@ sudo pacman -S fcitx5-im fcitx5-mozc
 # CLI Tools
 sudo pacman -S git git-delta github-cli fzf fd ripgrep zoxide eza bat btop htop trash-cli wget curl unzip zip less man-db wl-clipboard tree-sitter-cli fish starship neovim nodejs npm
 
-
 # Display Manager
 sudo pacman -S sddm qt6-svg qt6-virtualkeyboard
 sudo systemctl enable sddm
+sudo git clone https://github.com/MarianArlt/sddm-sugar-dark.git /usr/share/sddm/themes/sddm-sugar-dark
+sudo pacman -S qt5-graphicaleffects qt5-quickcontrols2
+sudo mkdir -p /etc/sddm.conf.d
+echo -e "[Theme]\nCurrent=sddm-sugar-dark" | sudo tee /etc/sddm.conf.d/10-theme.conf
 ```
