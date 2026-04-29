@@ -68,6 +68,13 @@ button:hover {
     box-shadow: inset 0 -3px #a0a0a0;
 }
 
+#submap {
+    background-color: #8b4513;
+    color: #e0e0e0;
+    padding: 0 10px;
+    box-shadow: inset 0 -3px #d2691e;
+}
+
 #clock,
 #battery,
 #cpu,
