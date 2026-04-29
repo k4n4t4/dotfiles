@@ -23,7 +23,7 @@ sudo pacman -S pipewire pipewire-alsa pipewire-jack pipewire-pulse wireplumber p
 sudo pacman -S power-profiles-daemon
 
 # Applications
-sudo pacman -S kitty firefox
+sudo pacman -S kitty firefox obsidian
 
 # Fonts
 sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-dejavu ttf-font-awesome ttf-jetbrains-mono-nerd
