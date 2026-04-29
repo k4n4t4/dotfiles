@@ -31,10 +31,10 @@
     "spacing": 4, // Gaps between modules (4px)
     // Choose the order of the modules
     "modules-left": [
-        "hyprland/workspaces"
+        "hyprland/workspaces",
+        "hyprland/submap"
     ],
     "modules-center": [
-        "hyprland/submap",
         "hyprland/window"
     ],
     "modules-right": [
