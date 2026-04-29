@@ -1,12 +1,11 @@
 * {
-    /* `otf-font-awesome` is required to be installed for icons */
     font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif;
     font-size: 13px;
 }
 
 window#waybar {
     background-color: rgba(50, 50, 50, 0.8);
-    border-bottom: 3px solid rgba(80, 80, 80, 0.6);
+    border-bottom: 1px solid rgba(80, 80, 80, 0.6);
     color: #e0e0e0;
     transition-property: background-color;
     transition-duration: .5s;
@@ -26,20 +25,16 @@ window#waybar.chromium {
 }
 
 button {
-    /* Use box-shadow instead of border so the text isn't offset */
     box-shadow: inset 0 -3px transparent;
-    /* Avoid rounded borders under each button name */
     border: none;
     border-radius: 0;
 }
 
-/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
 button:hover {
     background: inherit;
     box-shadow: inset 0 -3px #b0b0b0;
 }
 
-/* you can set a style on hover for any module like this */
 #pulseaudio:hover {
     background-color: #707070;
 }
@@ -91,6 +86,7 @@ button:hover {
 #idle_inhibitor,
 #scratchpad,
 #power-profiles-daemon,
+#custom-power,
 #mpd {
     padding: 0 10px;
     color: #e0e0e0;
@@ -101,12 +97,10 @@ button:hover {
     margin: 0 4px;
 }
 
-/* If workspaces is the leftmost module, omit left margin */
 .modules-left > widget:first-child > #workspaces {
     margin-left: 0;
 }
 
-/* If workspaces is the rightmost module, omit right margin */
 .modules-right > widget:last-child > #workspaces {
     margin-right: 0;
 }
@@ -243,6 +237,10 @@ label:focus {
 #tray > .needs-attention {
     -gtk-icon-effect: highlight;
     background-color: #8b3a3a;
+}
+
+#custom-power {
+    background-color: #303030;
 }
 
 #idle_inhibitor {

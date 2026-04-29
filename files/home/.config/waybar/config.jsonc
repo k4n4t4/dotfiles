@@ -203,7 +203,7 @@
             "shutdown": "systemctl poweroff",
             "reboot": "systemctl reboot",
             "suspend": "systemctl suspend",
-            "logout": "uwsm stop" 
+            "logout": "uwsm stop"
         }
     }
 }
