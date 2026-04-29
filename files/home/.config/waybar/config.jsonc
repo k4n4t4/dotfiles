@@ -7,6 +7,7 @@
         "format": "{name}",
         "on-click": "activate",
         "all-outputs": true,
+        "show-special": true,
         "format-icons": {
             "active": "",
             "default": ""
@@ -32,22 +33,20 @@
     // Choose the order of the modules
     "modules-left": [
         "hyprland/workspaces",
-        "hyprland/submap"
+        "hyprland/submap",
+        "idle_inhibitor"
     ],
     "modules-center": [
-        "hyprland/window"
+        "hyprland/window",
+        "mpd"
     ],
     "modules-right": [
-        "mpd",
-        "idle_inhibitor",
         "pulseaudio",
+        "keyboard-state",
         "network",
-        "power-profiles-daemon",
         "cpu",
         "memory",
         "temperature",
-        "backlight",
-        "keyboard-state",
         "battery",
         "clock",
         "tray",
