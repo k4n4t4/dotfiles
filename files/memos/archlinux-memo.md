@@ -5,7 +5,7 @@
 # System
 sudo pacman -S linux-firmware sof-firmware efibootmgr os-prober grub base-devel
 # GUI
-sudo pacman -S hyprland waybar wofi uwsm xdg-utils mako libnotify
+sudo pacman -S hyprland hyprlock hypridle waybar wofi uwsm xdg-utils mako libnotify
 # Network
 sudo pacman -S networkmanager network-manager-applet
 # Bluetooth
@@ -22,4 +22,8 @@ sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-dejavu ttf-font-aw
 sudo pacman -S fcitx5-im fcitx5-mozc
 # CLI Tools
 sudo pacman -S git git-delta github-cli fzf fd ripgrep zoxide eza bat btop htop trash-cli wget curl unzip zip less man-db wl-clipboard tree-sitter-cli fish starship neovim nodejs npm
+
+# Display Manager
+sudo pacman -S sddm qt6-svg qt6-virtualkeyboard
+sudo systemctl enable sddm
 ```
