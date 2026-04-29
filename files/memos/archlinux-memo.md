@@ -42,7 +42,14 @@ sudo pacman -S qt5-graphicaleffects qt5-quickcontrols2
 sudo mkdir -p /etc/sddm.conf.d
 echo -e "[Theme]\nCurrent=sddm-sugar-dark" | sudo tee /etc/sddm.conf.d/10-theme.conf
 
+# Virus Scanner
+sudo pacman -S clamav
+sudo freshclam
+
 # AUR
 git clone https://aur.archlinux.org/yay.git /tmp/yay
 makepkg -D /tmp/yay -si
+
+# GUI
+yay -S wlogout
 ```
