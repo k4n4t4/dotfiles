@@ -87,6 +87,10 @@ if cmd_exists wlogout; then
   dotconf "wlogout" -r
 fi
 
+if cmd_exists mako; then
+  dotconf "mako" -r
+fi
+
 if cmd_exists firefox; then
   for folder in ~/.mozilla/firefox/*.default-release; do
     if [ -d "$folder" ]; then
