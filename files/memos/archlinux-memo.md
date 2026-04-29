@@ -46,6 +46,14 @@ echo -e "[Theme]\nCurrent=sddm-sugar-dark" | sudo tee /etc/sddm.conf.d/10-theme.
 sudo pacman -S clamav
 sudo freshclam
 
+# Local LLM
+sudo pacman -S ollama
+sudo systemctl enable --now ollama
+
+# intel
+sudo pacman -S intel-media-driver mesa vulkan-intel
+sudo pacman -S mesa-utils
+
 # AUR
 git clone https://aur.archlinux.org/yay.git /tmp/yay
 makepkg -D /tmp/yay -si
