@@ -4,5 +4,3 @@ script_source() {
     # shellcheck disable=SC1090
     . "$SCRIPTS_PATH/${1}.sh"
 }
-
-dot "$REPO_PATH/dm" ".local/bin/dm"
