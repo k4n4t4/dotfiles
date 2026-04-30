@@ -2,7 +2,7 @@ local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 
 -- User DirEnter
-autocmd("BufEnter", {
+autocmd("SafeState", {
     group = augroup("DirEnter", { clear = true }),
     callback = function(args)
         local bufname = vim.api.nvim_buf_get_name(args.buf)
