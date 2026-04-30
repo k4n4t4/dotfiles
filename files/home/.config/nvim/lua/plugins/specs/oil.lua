@@ -7,7 +7,7 @@ return {
         }
     end,
     keys = {
-        { mode = 'n', '<Leader>-', '<CMD>Oil<CR>', desc = 'Open parent directory' },
-        { mode = 'n', '<Leader>=', '<CMD>Oil --float<CR>', desc = 'Open parent directory' },
+        { mode = 'n', '<Leader>-', '<CMD>Oil<CR>', desc = 'Oil' },
+        { mode = 'n', '<Leader>=', '<CMD>Oil --float<CR>', desc = 'Oil float ' },
     },
 }
