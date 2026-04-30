@@ -5,10 +5,21 @@
 # System
 sudo pacman -S linux-firmware sof-firmware efibootmgr os-prober grub base-devel
 
+# CLI Tools
+sudo pacman -S git git-delta github-cli fzf fd ripgrep zoxide eza bat btop htop trash-cli wget curl unzip zip less man-db wl-clipboard tree-sitter-cli fish starship neovim nodejs npm
+
+# yay
+git clone https://aur.archlinux.org/yay.git /tmp/yay
+makepkg -D /tmp/yay -si
+
 # GUI
 sudo pacman -S hyprland hyprlock hypridle hyprshot waybar wofi uwsm xdg-utils mako libnotify gnome-themes-extra awww
 gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
 gsettings set org.gnome.desktop.interface color-scheme prefer-dark
+
+# GUI (AUR)
+yay -S hyprland-git
+yay -S wlogout
 
 # Network
 sudo pacman -S networkmanager network-manager-applet
@@ -25,14 +36,14 @@ sudo pacman -S power-profiles-daemon
 # Applications
 sudo pacman -S kitty firefox obsidian discord gimp
 
+# Applications (AUR)
+yay -S st
+
 # Fonts
 sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-dejavu ttf-font-awesome ttf-jetbrains-mono-nerd
 
 # Japanese Input Method
 sudo pacman -S fcitx5-im fcitx5-mozc
-
-# CLI Tools
-sudo pacman -S git git-delta github-cli fzf fd ripgrep zoxide eza bat btop htop trash-cli wget curl unzip zip less man-db wl-clipboard tree-sitter-cli fish starship neovim nodejs npm
 
 # Display Manager
 sudo pacman -S sddm qt6-svg qt6-virtualkeyboard
@@ -53,19 +64,4 @@ sudo systemctl enable --now ollama
 # intel
 sudo pacman -S intel-media-driver mesa vulkan-intel
 sudo pacman -S mesa-utils
-
-
-#
-# AUR
-#
-
-# yay
-git clone https://aur.archlinux.org/yay.git /tmp/yay
-makepkg -D /tmp/yay -si
-
-# GUI
-yay -S wlogout
-
-# Applications
-yay -S st
 ```
