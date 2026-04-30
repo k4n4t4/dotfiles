@@ -6,7 +6,7 @@
 sudo pacman -S linux-firmware sof-firmware efibootmgr os-prober grub base-devel
 
 # GUI
-sudo pacman -S hyprland hyprlock hypridle hyprshot waybar wofi uwsm xdg-utils mako libnotify gnome-themes-extra
+sudo pacman -S hyprland hyprlock hypridle hyprshot waybar wofi uwsm xdg-utils mako libnotify gnome-themes-extra awww
 gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
 gsettings set org.gnome.desktop.interface color-scheme prefer-dark
 
