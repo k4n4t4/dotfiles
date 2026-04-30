@@ -23,7 +23,7 @@ sudo pacman -S pipewire pipewire-alsa pipewire-jack pipewire-pulse wireplumber p
 sudo pacman -S power-profiles-daemon
 
 # Applications
-sudo pacman -S kitty firefox obsidian discord
+sudo pacman -S kitty firefox obsidian discord gimp
 
 # Fonts
 sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-dejavu ttf-font-awesome ttf-jetbrains-mono-nerd
@@ -54,10 +54,18 @@ sudo systemctl enable --now ollama
 sudo pacman -S intel-media-driver mesa vulkan-intel
 sudo pacman -S mesa-utils
 
+
+#
 # AUR
+#
+
+# yay
 git clone https://aur.archlinux.org/yay.git /tmp/yay
 makepkg -D /tmp/yay -si
 
 # GUI
 yay -S wlogout
+
+# Applications
+yay -S st
 ```
