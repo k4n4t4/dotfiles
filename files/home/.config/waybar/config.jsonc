@@ -226,7 +226,9 @@
         "format-source": "{volume}% ",
         "format-source-muted": "",
         "tooltip": false,
-        "on-click": "pavucontrol"
+        "on-click": "pavucontrol",
+        "on-scroll-up": "pactl set-source-volume @DEFAULT_SOURCE@ +5%",
+        "on-scroll-down": "pactl set-source-volume @DEFAULT_SOURCE@ -5%"
     },
     "custom/media": {
         "format": "{icon} {text}",
