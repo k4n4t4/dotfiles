@@ -34,6 +34,7 @@
     ],
     "modules-right": [
         "pulseaudio",
+        "backlight",
         "keyboard-state",
         "network",
         "cpu",
