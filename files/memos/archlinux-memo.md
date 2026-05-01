@@ -30,6 +30,9 @@ sudo pacman -S bluez bluez-utils blueman
 # Audio
 sudo pacman -S pipewire pipewire-alsa pipewire-jack pipewire-pulse wireplumber pavucontrol
 
+# Backlight
+sudo pacman -S brightnessctl
+
 # Power Management
 sudo pacman -S power-profiles-daemon
 
