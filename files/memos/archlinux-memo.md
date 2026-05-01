@@ -63,6 +63,7 @@ sudo freshclam
 # Local LLM
 sudo pacman -S ollama
 sudo systemctl enable --now ollama
+sudo pacman -S opencode
 
 # intel
 sudo pacman -S intel-media-driver mesa vulkan-intel
