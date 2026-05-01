@@ -33,12 +33,12 @@
         "mpd"
     ],
     "modules-right": [
+        "tray",
         "group/audio-controls",
-        "network",
         "group/system-stats",
         "battery",
+        "network",
         "clock",
-        "tray",
         "custom/power"
     ],
     "keyboard-state": {
