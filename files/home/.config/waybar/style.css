@@ -80,6 +80,8 @@ button:hover {
 #network,
 #pulseaudio,
 #wireplumber,
+#group-audio-controls,
+#custom-audio-controls,
 #group-system-stats,
 #custom-system-stats,
 #custom-media,
@@ -180,6 +182,11 @@ label:focus {
 }
 
 #network {
+    background-color: #404040;
+}
+
+#group-audio-controls,
+#custom-audio-controls {
     background-color: #404040;
 }
 

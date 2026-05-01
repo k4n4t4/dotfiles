@@ -33,8 +33,7 @@
         "mpd"
     ],
     "modules-right": [
-        "pulseaudio",
-        "backlight",
+        "group/audio-controls",
         "network",
         "group/system-stats",
         "battery",
@@ -90,6 +89,24 @@
     "clock": {
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%Y-%m-%d}"
+    },
+    "group/audio-controls": {
+        "orientation": "inherit",
+        "drawer": {
+            "click-to-reveal": true,
+            "transition-duration": 250,
+            "transition-left-to-right": false
+        },
+        "modules": [
+            "custom/audio-controls",
+            "pulseaudio",
+            "pulseaudio#microphone",
+            "backlight"
+        ]
+    },
+    "custom/audio-controls": {
+        "format": "󰕾",
+        "tooltip": false
     },
     "group/system-stats": {
         "orientation": "inherit",
@@ -178,10 +195,10 @@
         "format-alt": "{ifname}: {ipaddr}/{cidr}"
     },
     "pulseaudio": {
-        "format": "{volume}% {icon} {format_source}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
+        "format": "{volume}% {icon}",
+        "format-bluetooth": "{volume}% {icon}",
+        "format-bluetooth-muted": " ",
+        "format-muted": "",
         "format-source": "{volume}% ",
         "format-source-muted": "",
         "format-icons": {
@@ -197,6 +214,16 @@
                 ""
             ]
         },
+        "on-click": "pavucontrol"
+    },
+    "pulseaudio#microphone": {
+        "format": "{format_source}",
+        "format-bluetooth": "{format_source}",
+        "format-bluetooth-muted": "{format_source}",
+        "format-muted": "{format_source}",
+        "format-source": "{volume}% ",
+        "format-source-muted": "",
+        "tooltip": false,
         "on-click": "pavucontrol"
     },
     "custom/media": {
