@@ -60,10 +60,16 @@ echo -e "[Theme]\nCurrent=sddm-sugar-dark" | sudo tee /etc/sddm.conf.d/10-theme.
 sudo pacman -S clamav
 sudo freshclam
 
+# GPU
+sudo pacman -S vulkan-tools vulkan-intel intel-compute-runtime
+
 # Local LLM
-sudo pacman -S ollama
+curl -fsSL https://ollama.com/install.sh | sh
 sudo systemctl enable --now ollama
 sudo pacman -S opencode
+
+# enable Vulkan support for Ollama
+echo -e "[Service]\nEnvironment=\"OLLAMA_VULKAN=1\"" | sudo tee /etc/systemd/system/ollama.service.d/override.conf
 
 # intel
 sudo pacman -S intel-media-driver mesa vulkan-intel
