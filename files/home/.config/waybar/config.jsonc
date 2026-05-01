@@ -35,11 +35,8 @@
     "modules-right": [
         "pulseaudio",
         "backlight",
-        "keyboard-state",
         "network",
-        "cpu",
-        "memory",
-        "temperature",
+        "group/system-stats",
         "battery",
         "clock",
         "tray",
@@ -93,6 +90,24 @@
     "clock": {
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%Y-%m-%d}"
+    },
+    "group/system-stats": {
+        "orientation": "inherit",
+        "drawer": {
+            "click-to-reveal": true,
+            "transition-duration": 250,
+            "transition-left-to-right": false
+        },
+        "modules": [
+            "custom/system-stats",
+            "cpu",
+            "memory",
+            "temperature"
+        ]
+    },
+    "custom/system-stats": {
+        "format": "",
+        "tooltip": false
     },
     "cpu": {
         "format": "{usage}% ",
@@ -154,9 +169,10 @@
         }
     },
     "network": {
-        "format-wifi": "{essid} ({signalStrength}%) ",
+        "format-wifi": "{signalStrength}% ",
         "format-ethernet": "{ipaddr}/{cidr} ",
         "tooltip-format": "{ifname} via {gwaddr} ",
+        "tooltip-format-wifi": "{essid}\n{signalStrength}% ({signaldBm} dBm)\n{ifname} via {gwaddr}",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "Disconnected ⚠",
         "format-alt": "{ifname}: {ipaddr}/{cidr}"

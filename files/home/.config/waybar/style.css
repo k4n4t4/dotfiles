@@ -80,6 +80,8 @@ button:hover {
 #network,
 #pulseaudio,
 #wireplumber,
+#group-system-stats,
+#custom-system-stats,
 #custom-media,
 #tray,
 #mode,
@@ -178,6 +180,11 @@ label:focus {
 }
 
 #network {
+    background-color: #404040;
+}
+
+#group-system-stats,
+#custom-system-stats {
     background-color: #404040;
 }
 
