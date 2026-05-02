@@ -4,6 +4,10 @@
 ```bash
 # System
 sudo pacman -S linux-firmware sof-firmware efibootmgr os-prober grub base-devel
+sudo sed -i 's/.*GRUB_DISABLE_OS_PROBER.*/GRUB_DISABLE_OS_PROBER=false/' /etc/default/grub
+grep -q 'GRUB_DISABLE_OS_PROBER' /etc/default/grub \
+  || echo 'GRUB_DISABLE_OS_PROBER=false' | sudo tee -a /etc/default/grub
+sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 # CLI Tools
 sudo pacman -S git git-delta github-cli fzf fd ripgrep zoxide eza bat btop htop trash-cli wget curl unzip zip less man-db wl-clipboard tree-sitter-cli fish starship neovim nodejs npm
