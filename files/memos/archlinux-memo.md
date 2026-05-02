@@ -12,14 +12,14 @@ sudo pacman -S git git-delta github-cli fzf fd ripgrep zoxide eza bat btop htop 
 git clone https://aur.archlinux.org/yay.git /tmp/yay
 makepkg -D /tmp/yay -si
 
+# GUI AUR
+yay -S hyprland-git
+yay -S wlogout
+
 # GUI
 sudo pacman -S hyprlock hypridle hyprshot waybar wofi uwsm xdg-utils mako libnotify gnome-themes-extra awww
 gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
 gsettings set org.gnome.desktop.interface color-scheme prefer-dark
-
-# GUI (AUR)
-yay -S hyprland-git
-yay -S wlogout
 
 # Network
 sudo pacman -S networkmanager network-manager-applet
@@ -39,7 +39,7 @@ sudo pacman -S power-profiles-daemon
 # Applications
 sudo pacman -S kitty firefox obsidian discord gimp
 
-# Applications (AUR)
+# Applications AUR
 yay -S st
 
 # Fonts
