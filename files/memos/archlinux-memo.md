@@ -13,7 +13,7 @@ git clone https://aur.archlinux.org/yay.git /tmp/yay
 makepkg -D /tmp/yay -si
 
 # GUI
-sudo pacman -S hyprland hyprlock hypridle hyprshot waybar wofi uwsm xdg-utils mako libnotify gnome-themes-extra awww
+sudo pacman -S hyprlock hypridle hyprshot waybar wofi uwsm xdg-utils mako libnotify gnome-themes-extra awww
 gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
 gsettings set org.gnome.desktop.interface color-scheme prefer-dark
 
@@ -59,7 +59,6 @@ echo -e "[Theme]\nCurrent=sddm-sugar-dark" | sudo tee /etc/sddm.conf.d/10-theme.
 # Virus Scanner
 sudo pacman -S clamav
 sudo freshclam
-
 
 # intel
 sudo pacman -S intel-media-driver mesa
