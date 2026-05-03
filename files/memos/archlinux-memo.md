@@ -27,7 +27,7 @@ sudo pacman -S uwsm xdg-utils xdg-desktop-portal-hyprland hyprlock hypridle hypr
 sudo pacman -S mako libnotify
 
 # Authentication Agent
-sudo pacman -S lxqt-policykit
+sudo pacman -S mate-polkit
 
 # GTK Theme
 sudo pacman -S gnome-themes-extra

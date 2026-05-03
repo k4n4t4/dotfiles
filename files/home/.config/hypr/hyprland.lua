@@ -289,8 +289,8 @@ hl.on("hyprland.start", function()
     -- mako
     hl.exec_cmd("uwsm app -- mako")
 
-    -- lxqt-policykit-agent
-    hl.exec_cmd("uwsm app -- lxqt-policykit-agent")
+    -- polkit
+    hl.exec_cmd("uwsm app -- /usr/lib/mate-polkit/polkit-mate-authentication-agent-1")
 
     -- wl-clipboard
     hl.exec_cmd("uwsm app -- wl-paste -w cliphist store")
