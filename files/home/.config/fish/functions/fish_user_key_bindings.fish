@@ -5,6 +5,9 @@ function fish_user_key_bindings
   # Default mode keybinds
   bind --mode default p 'keybind:paste'
 
+  # Visual mode keybinds
+  bind --mode visual p 'keybind:paste'
+
   # Insert mode keybinds
   bind --mode insert \cl 'keybind:clear-screen'
   bind --mode insert \t 'keybind:complete'
