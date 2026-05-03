@@ -21,11 +21,19 @@ yay -S hyprland-git
 yay -S wlogout
 
 # GUI
-sudo pacman -S xdg-desktop-portal-hyprland hyprlock hypridle hyprshot waybar wofi uwsm xdg-utils mako libnotify gnome-themes-extra awww
-gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
-gsettings set org.gnome.desktop.interface color-scheme prefer-dark
+sudo pacman -S uwsm xdg-utils xdg-desktop-portal-hyprland hyprlock hypridle hyprshot waybar wofi awww
+
+# Notification Daemon
+sudo pacman -S mako libnotify
+
+# Authentication Agent
 sudo pacman -S hyprpolkitagent
 systemctl --user enable --now hyprpolkitagent.service
+
+# GTK Theme
+sudo pacman -S gnome-themes-extra
+gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
+gsettings set org.gnome.desktop.interface color-scheme prefer-dark
 
 # Network
 sudo pacman -S networkmanager network-manager-applet
