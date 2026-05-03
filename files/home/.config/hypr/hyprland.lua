@@ -276,12 +276,23 @@ hl.env("XMODIFIERS", "@im=fcitx")
 hl.env("QT_IM_MODULE", "fcitx")
 
 hl.on("hyprland.start", function()
+    -- fcitx5
     hl.exec_cmd("uwsm app -- fcitx5 -d")
+
+    -- waybar
     hl.exec_cmd("uwsm app -- waybar")
+
+    -- awww
     hl.exec_cmd("uwsm app -- awww-daemon")
     hl.exec_cmd("uwsm app -- awww img ~/pers/imgs/wallpaper.png --transition-type center --transition-duration 1")
+
+    -- mako
     hl.exec_cmd("uwsm app -- mako")
+
+    -- wl-clipboard
     hl.exec_cmd("uwsm app -- wl-paste -w cliphist store")
+
+    -- hypridle
     hl.exec_cmd("pidof hypridle || uwsm app -- hypridle")
 end)
 
