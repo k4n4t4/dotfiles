@@ -27,13 +27,20 @@ sudo pacman -S uwsm xdg-utils xdg-desktop-portal-hyprland hyprlock hypridle hypr
 sudo pacman -S mako libnotify
 
 # Authentication Agent
-sudo pacman -S hyprpolkitagent
-systemctl --user enable --now hyprpolkitagent.service
+sudo pacman -S lxqt-policykit
 
 # GTK Theme
 sudo pacman -S gnome-themes-extra
 gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
 gsettings set org.gnome.desktop.interface color-scheme prefer-dark
+
+# Qt Theme
+sudo pacman -S kvantum qt6ct
+mkdir -p ~/.config/qt6ct
+echo -e "[Appearance]\nstyle=kvantum-dark" | tee ~/.config/qt6ct/qt6ct.conf
+mkdir -p ~/.config/environment.d
+echo "QT_QPA_PLATFORMTHEME=qt6ct" | tee ~/.config/environment.d/qt.conf
+kvantummanager --set KvAmbiance
 
 # Network
 sudo pacman -S networkmanager network-manager-applet
