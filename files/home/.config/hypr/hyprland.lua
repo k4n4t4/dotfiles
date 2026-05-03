@@ -289,6 +289,9 @@ hl.on("hyprland.start", function()
     -- mako
     hl.exec_cmd("uwsm app -- mako")
 
+    -- lxqt-policykit-agent
+    hl.exec_cmd("uwsm app -- lxqt-policykit-agent")
+
     -- wl-clipboard
     hl.exec_cmd("uwsm app -- wl-paste -w cliphist store")
 
