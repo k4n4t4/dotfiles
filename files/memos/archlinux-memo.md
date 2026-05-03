@@ -38,8 +38,6 @@ gsettings set org.gnome.desktop.interface color-scheme prefer-dark
 sudo pacman -S kvantum qt6ct
 mkdir -p ~/.config/qt6ct
 echo -e "[Appearance]\nstyle=kvantum-dark" | tee ~/.config/qt6ct/qt6ct.conf
-mkdir -p ~/.config/environment.d
-echo "QT_QPA_PLATFORMTHEME=qt6ct" | tee ~/.config/environment.d/qt.conf
 kvantummanager --set KvAmbiance
 
 # Network
