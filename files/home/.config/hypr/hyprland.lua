@@ -232,7 +232,7 @@ hl.config({
         window_direction_monitor_fallback = true,
     },
     animations = {
-        enabled = false,
+        enabled = true,
     },
 })
 
