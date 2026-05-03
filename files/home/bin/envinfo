@@ -1,0 +1,92 @@
+#!/usr/bin/env bash
+
+BOLD='\033[1m'; DIM='\033[2m'; RESET='\033[0m'
+GREEN='\033[0;32m'; CYAN='\033[0;36m'; YELLOW='\033[0;33m'
+RED='\033[0;31m'; MAGENTA='\033[0;35m'; BLUE='\033[0;34m'
+
+has_cmd()    { command -v "$1" &>/dev/null; }
+is_running() { pgrep -x "$1" &>/dev/null; }
+
+detect() {
+    local label="$1"; shift
+    local result="" state=""
+    for c in "$@"; do
+        if is_running "$c"; then result="$c"; state="${DIM}(run)${RESET}"; break; fi
+    done
+    if [[ -z "$result" ]]; then
+        for c in "$@"; do
+            if has_cmd "$c"; then result="$c"; state="${DIM}(inst)${RESET}"; break; fi
+        done
+    fi
+    if [[ -n "$result" ]]; then
+        printf "  ${CYAN}%-20s${RESET} ${GREEN}%-18s${RESET} %b\n" "$label" "$result" "$state"
+    else
+        printf "  ${CYAN}%-20s${RESET} ${DIM}—${RESET}\n" "$label"
+    fi
+}
+
+detect_val() {
+    local label="$1" value="$2"
+    if [[ -n "$value" ]]; then
+        printf "  ${CYAN}%-20s${RESET} ${GREEN}%s${RESET}\n" "$label" "$value"
+    else
+        printf "  ${CYAN}%-20s${RESET} ${DIM}—${RESET}\n" "$label"
+    fi
+}
+
+hdr() { printf "\n${BOLD}${BLUE} %s${RESET}\n" "$1"; printf "${DIM} %s${RESET}\n" "$(printf '─%.0s' {1..48})"; }
+
+# ── Header ────────────────────────────────────────────────────
+printf "${BOLD}${MAGENTA} Arch Linux Environment${RESET}  ${DIM}%s  %s@%s${RESET}\n" \
+    "$(date '+%Y-%m-%d %H:%M')" "$USER" "${HOSTNAME:-$(cat /etc/hostname 2>/dev/null)}"
+
+# ── Session ───────────────────────────────────────────────────
+hdr "Session"
+detect_val "Session Type"   "${XDG_SESSION_TYPE}"
+detect_val "Desktop"        "${XDG_CURRENT_DESKTOP:-${DESKTOP_SESSION}}"
+WM=$(for w in hyprland sway i3 openbox bspwm dwm xmonad river qtile awesome; do
+         pgrep -x "$w" &>/dev/null && echo "$w" && break; done)
+detect_val "WM Process"     "$WM"
+
+# ── Core Tools ────────────────────────────────────────────────
+hdr "Core Tools"
+detect "Bar"          waybar polybar i3bar swaybar tint2 lemonbar
+detect "Launcher"     rofi wofi fuzzel tofi dmenu bemenu
+detect "Terminal"     alacritty kitty foot wezterm ghostty rio st urxvt
+detect "Notification" mako dunst swaync fnott notify-osd
+
+# ── Files & Clipboard ─────────────────────────────────────────
+hdr "Files & Clipboard"
+detect "File Mgr (GUI)"  thunar nautilus dolphin nemo pcmanfm
+detect "File Mgr (TUI)"  yazi ranger lf vifm nnn broot
+detect "Clipboard"       cliphist copyq clipman greenclip wl-paste xclip xsel
+
+# ── Apps ──────────────────────────────────────────────────────
+hdr "Apps"
+detect "Browser"      firefox brave-browser chromium librewolf zen-browser qutebrowser
+detect "Editor (GUI)" code code-oss neovide zed lapce
+detect "Editor (TUI)" nvim vim helix emacs nano
+detect "Media"        mpv vlc celluloid haruna
+detect "Image Viewer" imv swayimg feh eog gwenview
+
+# ── System ────────────────────────────────────────────────────
+hdr "System"
+detect "Screen Lock"  swaylock hyprlock waylock gtklock i3lock
+detect "Screenshot"   grimblast grim flameshot scrot maim spectacle
+detect "Audio"        pipewire pulseaudio jackd
+detect "IME"          fcitx5 fcitx ibus uim
+detect "AUR Helper"   yay paru trizen
+
+# ── Shell & Theme ─────────────────────────────────────────────
+hdr "Shell & Theme"
+detect_val "Shell"    "$(basename "$SHELL")"
+if has_cmd gsettings; then
+    detect_val "GTK Theme"  "$(gsettings get org.gnome.desktop.interface gtk-theme 2>/dev/null | tr -d "'")"
+    detect_val "Icon Theme" "$(gsettings get org.gnome.desktop.interface icon-theme 2>/dev/null | tr -d "'")"
+fi
+if has_cmd fc-list; then
+    NF=$(fc-list | grep -i "NerdFont\|Nerd Font" | head -1 | cut -d: -f1 | xargs basename 2>/dev/null)
+    detect_val "Nerd Font" "$NF"
+fi
+
+echo ""
