@@ -301,19 +301,6 @@ hl.bind(MOD .. " + Q", hl.dsp.window.kill())
 hl.bind(MOD .. " + X", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(MOD .. " + ESCAPE", hl.dsp.exec_cmd("wlogout"))
 
--- FIXME: not working
-hl.bind(MOD .. " + Z", hl.dsp.submap("Zoom"))
-hl.define_submap("Zoom", function()
-    hl.bind("escape", hl.dsp.submap("reset"))
-    hl.bind("shift_l", noop)
-    hl.bind("control_l", noop)
-    hl.bind("alt_l", noop)
-
-    hl.bind("Z", hl.dsp.exec_cmd("hyprctl keyword cursor:zoom_factor 1.0"))
-    hl.bind("J", hl.dsp.exec_cmd([[hyprctl keyword cursor:zoom_factor "$(hyprctl getoption cursor:zoom_factor | awk 'NR==1{v=$2;if(v<1)v=1;print v*1.25}')"]]), { repeating = true })
-    hl.bind("K", hl.dsp.exec_cmd([[hyprctl keyword cursor:zoom_factor "$(hyprctl getoption cursor:zoom_factor | awk 'NR==1{v=$2;if(v<1)v=1;print v*0.8}')"]]), { repeating = true })
-    hl.bind("catchall", hl.dsp.submap("reset"))
-end)
 
 hl.bind(MOD .. " + F", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(MOD .. " + D", hl.dsp.window.pseudo())
