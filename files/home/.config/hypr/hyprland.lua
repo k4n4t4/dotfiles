@@ -231,9 +231,6 @@ hl.config({
         disable_keybind_grabbing = false,
         window_direction_monitor_fallback = true,
     },
-})
-
-hl.config({
     animations = {
         enabled = false,
     },
