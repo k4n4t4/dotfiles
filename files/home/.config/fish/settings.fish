@@ -31,15 +31,15 @@ set fish_pager_color_progress            brwhite
 
 
 fish_add_path \
-  ~/bin \
-  ~/.local/bin \
-  ~/go/bin \
-  ~/.cargo/bin \
-  /snap/bin \
-  /usr/local/bin \
-  /usr/local/sbin \
-  /usr/sbin \
-  /sbin
+    ~/bin \
+    ~/.local/bin \
+    ~/go/bin \
+    ~/.cargo/bin \
+    /snap/bin \
+    /usr/local/bin \
+    /usr/local/sbin \
+    /usr/sbin \
+    /sbin
 
 
 export PAGER="less"
@@ -59,41 +59,41 @@ export LANG=C.UTF-8
 
 
 if type -q dm
-  eval (dm shellenv)
+    eval (dm shellenv)
 end
 
 if type -q tmux
-  export TMUX_SHELL=$FISH_BIN
+    export TMUX_SHELL=$FISH_BIN
 end
 
 if test -f ~/.brew/bin/brew
-  eval (~/.brew/bin/brew shellenv)
+    eval (~/.brew/bin/brew shellenv)
 end
 
 if type -q fzf
-  fzf --fish | source
+    fzf --fish | source
 end
 
 if type -q micromamba
-  export MAMBA_ROOT_PREFIX=$HOME/.micromamba
-  micromamba shell hook --shell fish | source
+    export MAMBA_ROOT_PREFIX=$HOME/.micromamba
+    micromamba shell hook --shell fish | source
 end
 
 if type -q zoxide
-  zoxide init fish --cmd z | source
+    zoxide init fish --cmd z | source
 end
 
 
 # starship setup
 if type -q starship
-  starship init fish | source
+    starship init fish | source
 
-  function starship_transient_prompt_func
-    starship prompt --profile transient_prompt
-  end
-  function starship_transient_rprompt_func
-    starship prompt --profile transient_rprompt
-  end
+    function starship_transient_prompt_func
+        starship prompt --profile transient_prompt
+    end
+    function starship_transient_rprompt_func
+        starship prompt --profile transient_rprompt
+    end
 
-  enable_transience
+    enable_transience
 end
