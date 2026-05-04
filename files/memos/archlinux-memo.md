@@ -21,10 +21,7 @@ yay -S hyprland-git
 yay -S wlogout
 
 # GUI
-sudo pacman -S uwsm xdg-utils xdg-desktop-portal-hyprland hyprlock hypridle hyprshot waybar wofi awww
-
-# Widget
-sudo pacman -S gjs gtk4
+sudo pacman -S uwsm xdg-utils xdg-desktop-portal-hyprland hyprlock hypridle hyprshot swayosd waybar wofi awww
 
 # Notification Daemon
 sudo pacman -S mako libnotify
