@@ -10,7 +10,7 @@ grep -q 'GRUB_DISABLE_OS_PROBER' /etc/default/grub \
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 # CLI Tools
-sudo pacman -S git git-delta github-cli fzf fd ripgrep zoxide eza bat btop htop trash-cli wget curl unzip zip less man-db wl-clipboard tree-sitter-cli fish starship neovim nodejs npm
+sudo pacman -S git git-delta github-cli fzf fd ripgrep zoxide eza bat btop htop trash-cli wget curl unzip zip less man-db wl-clipboard tree-sitter-cli fish starship neovim nodejs npm yazi
 
 # yay
 git clone https://aur.archlinux.org/yay.git /tmp/yay
