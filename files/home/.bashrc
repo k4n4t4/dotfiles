@@ -21,15 +21,15 @@ PATH="$HOME/go/bin:$PATH"
 # source
 
 if type dm > /dev/null 2>&1; then
-  eval "$(dm shellenv)"
+    eval "$(dm shellenv)"
 fi
 
 if [ -f ~/.brew/bin/brew ]; then
-  eval "$(~/.brew/bin/brew shellenv)"
+    eval "$(~/.brew/bin/brew shellenv)"
 fi
 
 if type tmux > /dev/null 2>&1; then
-  export TMUX_SHELL="$(which bash)"
+    export TMUX_SHELL="$(which bash)"
 fi
 
 if type micromamba > /dev/null 2>&1; then
@@ -38,25 +38,25 @@ if type micromamba > /dev/null 2>&1; then
 fi
 
 if type zoxide > /dev/null 2>&1; then
-  eval "$(zoxide init bash)"
+    eval "$(zoxide init bash)"
 fi
 
 if [ -f ~/.fzf.bash ]; then
-  . ~/.fzf.bash
+    . ~/.fzf.bash
 fi
 
 if [ -f ~/.local/share/blesh/ble.sh ]; then
-  . ~/.local/share/blesh/ble.sh
+    . ~/.local/share/blesh/ble.sh
 fi
 
 if type starship > /dev/null 2>&1; then
-  eval "$(starship init bash)"
+    eval "$(starship init bash)"
 fi
 
 if type broot > /dev/null 2>&1; then
-  if [ -f ~/.config/broot/launcher/bash/br ]; then
-    . ~/.config/broot/launcher/bash/br
-  fi
+    if [ -f ~/.config/broot/launcher/bash/br ]; then
+        . ~/.config/broot/launcher/bash/br
+    fi
 fi
 
 
@@ -73,7 +73,7 @@ alias mv="mv -iv"
 alias cp="cp -iv"
 
 if type trash > /dev/null 2>&1; then
-  alias rm="trash"
+    alias rm="trash"
 fi
 
 if [ -d "$HOME/.nvm" ]; then
@@ -90,31 +90,41 @@ alias ll="ls -Fl"
 alias lla="ls -Fla"
 
 if type git > /dev/null 2>&1; then
-  alias g="git"
-  alias ga="git add"
-  alias gp="git push"
-  alias gpl="git pull"
-  alias gs="git status"
-  alias gss="git status -s"
-  alias gd="git diff"
-  alias gco="git checkout"
-  alias gc="git commit"
-  alias gcm="git commit -m"
-  alias gb="git branch"
+    alias g="git"
+    alias ga="git add"
+    alias gp="git push"
+    alias gpl="git pull"
+    alias gs="git status"
+    alias gss="git status -s"
+    alias gd="git diff"
+    alias gco="git checkout"
+    alias gc="git commit"
+    alias gcm="git commit -m"
+    alias gb="git branch"
 fi
 
 if type nvim > /dev/null 2>&1; then
-  _nvim() {
-    if [ "${NVIM:-}" = "" ]; then
-      command nvim "$@"
-    else
-      while [ $# -gt 0 ]; do
-        command nvim --server "$NVIM" --remote-tab "$(realpath "$1")"
-        shift
-      done
-    fi
-  }
-  alias nvim="_nvim"
+    nvim() {
+        if [ "${NVIM:-}" = "" ]; then
+            command nvim "$@"
+        else
+            while [ $# -gt 0 ]; do
+                command nvim --server "$NVIM" --remote-tab "$(realpath "$1")"
+                shift
+            done
+        fi
+    }
+fi
+
+if type yazi > /dev/null 2>&1; then
+    yazi() {
+        local tmp=$(mktemp -t "yazi-cwd.XXXXXX")
+        command yazi "$@" --cwd-file="$tmp"
+        if cwd=$(cat -- "$tmp") && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+            cd -- "$cwd"
+        fi
+        rm -f -- "$tmp"
+    }
 fi
 
 alias c='printf "\033[0;0H\033[2J"'

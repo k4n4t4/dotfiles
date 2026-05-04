@@ -60,10 +60,10 @@ PATH="/sbin:$PATH"
 # source
 
 if [ -e /home/linuxbrew/.linuxbrew/bin/brew ]; then
-  eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+    eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 fi
 if [ -e ~/.brew/bin/brew ]; then
-  eval $(~/.brew/bin/brew shellenv)
+    eval $(~/.brew/bin/brew shellenv)
 fi
 
 if type micromamba > /dev/null 2>&1 ; then
@@ -72,19 +72,19 @@ if type micromamba > /dev/null 2>&1 ; then
 fi
 
 if type sheldon > /dev/null 2>&1 ; then
-  eval "$(sheldon source)"
+    eval "$(sheldon source)"
 fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 if type starship > /dev/null 2>&1 ; then
-  eval "$(starship init zsh)"
+    eval "$(starship init zsh)"
 fi
 
 # aliases
 
 if type dm > /dev/null 2>&1; then
-  eval "$(dm shellenv)"
+    eval "$(dm shellenv)"
 fi
 
 alias reboot   "systemctl reboot"
@@ -102,65 +102,76 @@ alias mv="mv -iv"
 alias cp="cp -iv"
 
 if type trash > /dev/null 2>&1; then
-  alias rm="trash"
+    alias rm="trash"
 fi
 
 alias ".."="cd .."
 
 if type eza > /dev/null 2>&1; then
-  alias eza="eza --icons --git -H --sort=type --time-style=long-iso"
-  alias ls="eza"
-  alias ll="eza -F -l"
-  alias la="eza -F -a"
-  alias lla="eza -F -la"
-  alias l="eza -F"
-  alias lt="eza -F -T"
-  alias lta="eza -F -Ta"
-  alias llt="eza -F -Tl"
-  alias llta="eza -F -Tla"
-  export EXA_COLORS="$(get_ls_colors exa)"
+    alias eza="eza --icons --git -H --sort=type --time-style=long-iso"
+    alias ls="eza"
+    alias ll="eza -F -l"
+    alias la="eza -F -a"
+    alias lla="eza -F -la"
+    alias l="eza -F"
+    alias lt="eza -F -T"
+    alias lta="eza -F -Ta"
+    alias llt="eza -F -Tl"
+    alias llta="eza -F -Tla"
+    export EXA_COLORS="$(get_ls_colors exa)"
 elif type exa > /dev/null 2>&1; then
-  alias exa="exa --icons --git -H -s type --time-style=long-iso"
-  alias ls="exa"
-  alias ll="exa -Fl"
-  alias la="exa -Fa"
-  alias lla="exa -Fla"
-  alias l="exa -F"
-  alias lt="exa -FT"
-  alias lta="exa -FTa"
-  alias llt="exa -FTl"
-  alias llta="exa -FTla"
-  export EXA_COLORS="$(get_ls_colors exa)"
+    alias exa="exa --icons --git -H -s type --time-style=long-iso"
+    alias ls="exa"
+    alias ll="exa -Fl"
+    alias la="exa -Fa"
+    alias lla="exa -Fla"
+    alias l="exa -F"
+    alias lt="exa -FT"
+    alias lta="exa -FTa"
+    alias llt="exa -FTl"
+    alias llta="exa -FTla"
+    export EXA_COLORS="$(get_ls_colors exa)"
 elif type lsd > /dev/null 2>&1; then
-  alias ls="lsd"
-  alias ll="lsd -Fl"
-  alias la="lsd -Fa"
-  alias lA="lsd -FA"
-  alias lla="lsd -Fla"
-  alias llA="lsd -FlA"
-  alias l="lsd -F"
-  alias lt="lsd -F --tree"
-  alias lta="lsd -Fa --tree"
-  alias llt="lsd -Fl --tree"
-  alias llta="lsd -Fla --tree"
+    alias ls="lsd"
+    alias ll="lsd -Fl"
+    alias la="lsd -Fa"
+    alias lA="lsd -FA"
+    alias lla="lsd -Fla"
+    alias llA="lsd -FlA"
+    alias l="lsd -F"
+    alias lt="lsd -F --tree"
+    alias lta="lsd -Fa --tree"
+    alias llt="lsd -Fl --tree"
+    alias llta="lsd -Fla --tree"
 else
-  alias l="ls -F"
-  alias ll="ls -Fl"
-  alias la="ls -Fa"
-  alias lla="ls -Fla"
+    alias l="ls -F"
+    alias ll="ls -Fl"
+    alias la="ls -Fa"
+    alias lla="ls -Fla"
 
-  export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
-  export LS_COLORS="$(get_ls_colors)"
+    export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
+    export LS_COLORS="$(get_ls_colors)"
 fi
 
 alias c='printf "\033[0;0H\033[2J"'
 alias q="exit"
 
 if type tmux > /dev/null 2>&1; then
-  export TMUX_SHELL="$(which zsh)"
-  alias tmux "tmux -u"
+    export TMUX_SHELL="$(which zsh)"
+    alias tmux "tmux -u"
 fi
 
 if type zoxide > /dev/null 2>&1; then
-  eval "$(zoxide init zsh)"
+    eval "$(zoxide init zsh)"
+fi
+
+if type yazi > /dev/null 2>&1; then
+    function yazi() {
+        local tmp=$(mktemp -t "yazi-cwd.XXXXXX")
+        command yazi "$@" --cwd-file="$tmp"
+        if cwd=$(cat -- "$tmp") && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+            cd -- "$cwd"
+        fi
+        rm -f -- "$tmp"
+    }
 fi
