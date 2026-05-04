@@ -56,7 +56,7 @@ sudo pacman -S brightnessctl
 sudo pacman -S power-profiles-daemon
 
 # Applications
-sudo pacman -S kitty firefox obsidian discord gimp
+sudo pacman -S kitty firefox obsidian discord gimp vlc
 
 # Applications AUR
 yay -S st
