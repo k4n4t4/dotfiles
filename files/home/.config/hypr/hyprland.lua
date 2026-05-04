@@ -311,6 +311,14 @@ local function noop() end
 hl.bind(MOD .. " + SHIFT + Q", hl.dsp.exit())
 hl.bind(MOD .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"))
 
+hl.bind(MOD .. " + O", hl.dsp.exec_cmd("hyprshot -m output -o ~/tmp/"))
+hl.bind(MOD .. " + CTRL + O", hl.dsp.exec_cmd("hyprshot -m region -o ~/tmp/"))
+hl.bind("Print", hl.dsp.exec_cmd("hyprshot -m region -o ~/tmp/"))
+hl.bind(MOD .. " + SHIFT + O", hl.dsp.exec_cmd("hyprshot -m window -o ~/tmp/"))
+hl.bind(MOD .. " + ALT + O", hl.dsp.exec_cmd("hyprshot -m output --clipboard-only"))
+hl.bind(MOD .. " + ALT + CTRL + O", hl.dsp.exec_cmd("hyprshot -m region --clipboard-only"))
+hl.bind(MOD .. " + ALT + SHIFT + O", hl.dsp.exec_cmd("hyprshot -m window --clipboard-only"))
+
 hl.bind(MOD .. " + Q", hl.dsp.window.kill())
 
 hl.bind(MOD .. " + F", hl.dsp.window.float({ action = "toggle" }))
@@ -447,14 +455,6 @@ hl.bind(MOD .. " + V", hl.dsp.exec_cmd(clipboard_manager))
 hl.bind(MOD .. " + B", hl.dsp.exec_cmd(browser))
 hl.bind(MOD .. " + P", hl.dsp.exec_cmd(private_browser))
 hl.bind(MOD .. " + M", hl.dsp.exec_cmd(task_manager))
-
-hl.bind(MOD .. " + O", hl.dsp.exec_cmd("hyprshot -m output -o ~/tmp/"))
-hl.bind(MOD .. " + CTRL + O", hl.dsp.exec_cmd("hyprshot -m region -o ~/tmp/"))
-hl.bind("Print", hl.dsp.exec_cmd("hyprshot -m region -o ~/tmp/"))
-hl.bind(MOD .. " + SHIFT + O", hl.dsp.exec_cmd("hyprshot -m window -o ~/tmp/"))
-hl.bind(MOD .. " + ALT + O", hl.dsp.exec_cmd("hyprshot -m output --clipboard-only"))
-hl.bind(MOD .. " + ALT + CTRL + O", hl.dsp.exec_cmd("hyprshot -m region --clipboard-only"))
-hl.bind(MOD .. " + ALT + SHIFT + O", hl.dsp.exec_cmd("hyprshot -m window --clipboard-only"))
 
 for i = 1, 10 do
     local key = tostring(i % 10)
