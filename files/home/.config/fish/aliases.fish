@@ -165,5 +165,9 @@ if type -q xsel
 end
 
 if type -q podman
-    alias docker "podman"
+  alias docker "podman"
+end
+
+if type -q yazi
+  abbr --add y "yazi"
 end
