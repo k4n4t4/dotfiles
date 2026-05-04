@@ -309,9 +309,6 @@ hl.bind(MOD .. " + SHIFT + Q", hl.dsp.exit())
 hl.bind(MOD .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"))
 
 hl.bind(MOD .. " + Q", hl.dsp.window.kill())
-hl.bind(MOD .. " + X", hl.dsp.exec_cmd("hyprlock"))
-hl.bind(MOD .. " + ESCAPE", hl.dsp.exec_cmd("wlogout"))
-
 
 hl.bind(MOD .. " + F", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(MOD .. " + D", hl.dsp.window.pseudo())
@@ -409,12 +406,23 @@ hl.define_submap("Media", function()
     hl.bind("catchall", hl.dsp.submap("reset"))
 end)
 
-hl.bind(MOD .. " + T", hl.dsp.exec_cmd("uwsm app -- kitty"))
-hl.bind(MOD .. " + R", hl.dsp.exec_cmd([[uwsm app -- wofi --show drun --run-command "uwsm app -- %s"]]))
-hl.bind(MOD .. " + V", hl.dsp.exec_cmd("cliphist list | wofi --dmenu | cliphist decode | wl-copy"))
-hl.bind(MOD .. " + B", hl.dsp.exec_cmd("uwsm app -- firefox"))
-hl.bind(MOD .. " + P", hl.dsp.exec_cmd("uwsm app -- firefox --private-window"))
-hl.bind(MOD .. " + M", hl.dsp.exec_cmd('uwsm app -- st -f "ComicShannsMono Nerd Font Mono-14" -c float btop'))
+local terminal = "uwsm app -- kitty"
+local browser = "uwsm app -- firefox"
+local private_browser = "uwsm app -- firefox --private-window"
+local launcher = "uwsm app -- wofi --show drun --run-command 'uwsm app -- %s'"
+local clipboard_manager = "cliphist list | uwsm app -- wofi --dmenu | cliphist decode | wl-copy"
+local system_menu = "uwsm app -- wlogout"
+local task_manager = "uwsm app -- st -f 'ComicShannsMono Nerd Font Mono-14' -c float btop"
+local lock_screen = "uwsm app -- hyprlock"
+
+hl.bind(MOD .. " + ESCAPE", hl.dsp.exec_cmd(system_menu))
+hl.bind(MOD .. " + X", hl.dsp.exec_cmd(lock_screen))
+hl.bind(MOD .. " + T", hl.dsp.exec_cmd(terminal))
+hl.bind(MOD .. " + R", hl.dsp.exec_cmd(launcher))
+hl.bind(MOD .. " + V", hl.dsp.exec_cmd(clipboard_manager))
+hl.bind(MOD .. " + B", hl.dsp.exec_cmd(browser))
+hl.bind(MOD .. " + P", hl.dsp.exec_cmd(private_browser))
+hl.bind(MOD .. " + M", hl.dsp.exec_cmd(task_manager))
 
 hl.bind(MOD .. " + O", hl.dsp.exec_cmd("hyprshot -m output -o ~/tmp/"))
 hl.bind(MOD .. " + CTRL + O", hl.dsp.exec_cmd("hyprshot -m region -o ~/tmp/"))
@@ -423,8 +431,6 @@ hl.bind(MOD .. " + SHIFT + O", hl.dsp.exec_cmd("hyprshot -m window -o ~/tmp/"))
 hl.bind(MOD .. " + ALT + O", hl.dsp.exec_cmd("hyprshot -m output --clipboard-only"))
 hl.bind(MOD .. " + ALT + CTRL + O", hl.dsp.exec_cmd("hyprshot -m region --clipboard-only"))
 hl.bind(MOD .. " + ALT + SHIFT + O", hl.dsp.exec_cmd("hyprshot -m window --clipboard-only"))
-hl.bind(MOD .. " + I", hl.dsp.exec_cmd("feh --sort mtime -Z ~/tmp"))
-hl.bind(MOD .. " + U", hl.dsp.exec_cmd("dragon-drop -x ~/tmp/*"))
 
 for i = 1, 10 do
     local key = tostring(i % 10)
