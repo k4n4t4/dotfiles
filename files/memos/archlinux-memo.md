@@ -23,6 +23,9 @@ yay -S wlogout
 # GUI
 sudo pacman -S uwsm xdg-utils xdg-desktop-portal-hyprland hyprlock hypridle hyprshot waybar wofi awww
 
+# Widget
+sudo pacman -S gjs gtk4
+
 # Notification Daemon
 sudo pacman -S mako libnotify
 
