@@ -52,7 +52,7 @@ tab.tabbrowser-tab[selected="true"] {
 
 
 /* remove private browsing indicator */
-/**/
+/*-/
 hbox.private-browsing-indicator-with-label {
     display: none !important;
 }
@@ -113,8 +113,8 @@ toolbar#nav-bar {
 /* transparent */
 /**/
 :root {
-    --custom-browser-opacity: 0.2;
-    --custom-background-opacity: 0.2;
+    --custom-browser-opacity: 0.5;
+    --custom-background-opacity: 0.5;
     --custom-selected-tab-opacity: 0.4;
     --custom-tab-opacity: 0.2;
     --custom-nav-bar-opacity: 0.7;
