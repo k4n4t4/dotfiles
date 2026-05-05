@@ -7,5 +7,7 @@ if cmd_exists firefox; then
         dothome ".config/firefox/user.js" "$firefox_profile/user.js"
         dothome ".config/firefox/userChrome.css" "$firefox_profile/chrome/userChrome.css"
         dothome ".config/firefox/userContent.css" "$firefox_profile/chrome/userContent.css"
+    else
+        echo "Firefox profile not found at $firefox_profile"
     fi
 fi
