@@ -113,12 +113,29 @@ toolbar#nav-bar {
 /* transparent */
 /**/
 :root {
+    --custom-browser-opacity: 0.2;
     --custom-background-opacity: 0.2;
     --custom-selected-tab-opacity: 0.4;
     --custom-tab-opacity: 0.2;
     --custom-nav-bar-opacity: 0.7;
     --custom-personal-tool-bar-opacity: 0.7;
 }
+
+hbox#browser {
+    background-color: transparent !important;
+    background-image: none !important;
+}
+
+vbox.browserContainer {
+    background-color: transparent !important;
+    background-image: none !important;
+}
+
+browser {
+    background-color: transparent !important;
+    background-image: none !important;
+}
+
 
 body {
     background-color: transparent !important;

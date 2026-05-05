@@ -1,10 +1,24 @@
-html.private p#info-body {
-   visibility: hidden;
+@-moz-document url("about:home"), url("about:newtab") {
+    html, body {
+        background: transparent !important;
+    }
 }
-html.private p#info-body::before {
-    content: "Hello, World!" !important;
-    visibility: visible !important;
-}
-html.private {
-  --in-content-page-background: transparent !important;
+
+@-moz-document url("about:privatebrowsing") {
+    html, body {
+        background: transparent !important;
+    }
+
+    html.private p#info-body {
+        visibility: hidden;
+    }
+
+    html.private p#info-body::before {
+        content: "Hello, World!" !important;
+        visibility: visible !important;
+    }
+
+    html.private {
+        --in-content-page-background: transparent !important;
+    }
 }
