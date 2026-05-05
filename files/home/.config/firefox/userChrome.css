@@ -1,21 +1,13 @@
-:root {
-    --tab-border-radius: 0px !important;
-    --tab-outline: none !important;
-    --tab-block-margin: 0px !important;
-    --tab-inline-padding: 4px !important;
-    --tab-overflow-clip-margin: 0px !important;
-}
-
 /* one-line */
 /**/
 :root {
-    --custom-one-line-width: 30vw;
+    --custom-one-line-width: 60vw;
 
     --nav-bar-height: 40px;
     --navigator-toolbox-height: 40px;
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 1200px) {
     #TabsToolbar {
         margin-left: var(--custom-one-line-width) !important;
     }
@@ -78,6 +70,13 @@ hbox.titlebar-spacer {
 
 /* ui */
 /**/
+:root {
+    --tab-border-radius: 0px !important;
+    --tab-outline: none !important;
+    --tab-block-margin: 0px !important;
+    --tab-overflow-clip-margin: 0px !important;
+}
+
 hbox.private-browsing-indicator-with-label > label.private-browsing-indicator-label,
 hbox.titlebar-spacer {
     display: none !important;
@@ -93,16 +92,16 @@ toolbox#navigator-toolbox {
 }
 
 tab.tabbrowser-tab {
-    border-radius: 0.5rem !important;
+    border-radius: 0.3rem !important;
 }
 
 image.tab-close-button {
-    border-radius: 0.5rem !important;
+    border-radius: 0.3rem !important;
 }
 
 stack.toolbarbutton-badge-stack,
 image.toolbarbutton-icon {
-    border-radius: 0.5rem !important;
+    border-radius: 0.3rem !important;
 }
 /**/
 
