@@ -2,11 +2,20 @@
     html, body {
         background: transparent !important;
     }
+
+    button.search-handoff-button {
+        background-color: rgba(0, 0, 0, 0.7) !important;
+        color: white !important;
+    }
 }
 
 @-moz-document url("about:privatebrowsing") {
     html, body {
         background: transparent !important;
+    }
+
+    html.private {
+        --in-content-page-background: transparent !important;
     }
 
     html.private p#info-body {
@@ -18,7 +27,8 @@
         visibility: visible !important;
     }
 
-    html.private {
-        --in-content-page-background: transparent !important;
+    button.search-handoff-button {
+        background-color: rgba(0, 0, 0, 0.7) !important;
+        color: white !important;
     }
 }
