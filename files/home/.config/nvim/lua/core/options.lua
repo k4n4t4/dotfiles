@@ -103,4 +103,5 @@ local lsp = require "utils.lsp"
 lsp.add_mason_bin_path()
 lsp.set("jsp", { "html", "emmet_language_server" })
 lsp.set("cs", { "omnisharp" })
+lsp.set("java", { "jdtls" })
 lsp.auto_set()

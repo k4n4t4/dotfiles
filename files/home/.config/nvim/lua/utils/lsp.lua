@@ -262,9 +262,9 @@ function M.auto_set()
             local servers = M.ft_to_servers(ft)
 
             for _, name in ipairs(servers) do
-                if vim.lsp.config[name] and
+                if (vim.lsp.config[name] and
                     vim.lsp.config[name].cmd and
-                    M.is_cmd_available(vim.lsp.config[name].cmd) then
+                    M.is_cmd_available(vim.lsp.config[name].cmd)) then
                     vim.lsp.enable(name)
                 end
             end
