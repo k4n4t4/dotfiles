@@ -461,6 +461,9 @@ for i = 1, 10 do
     hl.bind(MOD .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
 end
 
+hl.bind(MOD .. " + grave", hl.dsp.focus({ workspace = 11 }))
+hl.bind(MOD .. " + SHIFT + grave", hl.dsp.window.move({ workspace = 11 }))
+
 hl.bind(MOD .. " + S", hl.dsp.workspace.toggle_special("A"))
 hl.bind(MOD .. " + CTRL + S", hl.dsp.workspace.toggle_special("B"))
 hl.bind(MOD .. " + ALT + S", hl.dsp.workspace.toggle_special("C"))
