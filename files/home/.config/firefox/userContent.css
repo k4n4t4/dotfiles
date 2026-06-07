@@ -32,3 +32,28 @@
         color: white !important;
     }
 }
+
+.katex .mord.mathnormal {
+    color: #309cec;
+}
+
+.katex .mord {
+    color: #3ec8ec;
+}
+
+.katex .mbin {
+    color: #98c379;
+}
+
+.katex .mop {
+    color: #c8e359;
+}
+
+.katex .mrel {
+    color: #e05c5c;
+}
+
+.katex .mopen,
+.katex .mclose {
+    color: #c678dd;
+}
