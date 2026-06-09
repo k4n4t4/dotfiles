@@ -81,6 +81,11 @@ if type starship > /dev/null 2>&1 ; then
     eval "$(starship init zsh)"
 fi
 
+if [ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]; then
+    export SDKMAN_DIR="$HOME/.sdkman"
+    source "$HOME/.sdkman/bin/sdkman-init.sh"
+fi
+
 # aliases
 
 if type dm > /dev/null 2>&1; then

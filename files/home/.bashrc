@@ -127,6 +127,11 @@ if type yazi > /dev/null 2>&1; then
     }
 fi
 
+if [ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]; then
+    export SDKMAN_DIR="$HOME/.sdkman"
+    source "$HOME/.sdkman/bin/sdkman-init.sh"
+fi
+
 alias c='printf "\033[0;0H\033[2J"'
 alias q="exit"
 
