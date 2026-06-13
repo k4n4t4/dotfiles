@@ -121,6 +121,8 @@ toolbar#nav-bar {
     --custom-personal-tool-bar-opacity: 0.7;
 }
 
+/* TODO: text-color */
+
 hbox#browser {
     background-color: transparent !important;
     background-image: none !important;
