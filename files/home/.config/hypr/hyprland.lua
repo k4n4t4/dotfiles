@@ -288,11 +288,11 @@ hl.on("hyprland.start", function()
     -- -- mako
     -- hl.exec_cmd("uwsm app -- mako")
 
-    -- -- swayosd
-    -- hl.exec_cmd("uwsm app -- swayosd-server")
-
     -- -- wl-clipboard
     -- hl.exec_cmd("uwsm app -- wl-paste -w cliphist store")
+
+    -- swayosd
+    hl.exec_cmd("uwsm app -- swayosd-server")
 
     -- noctalia shell
     hl.exec_cmd("uwsm app -- qs -c noctalia-shell")
