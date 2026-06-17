@@ -305,8 +305,6 @@ local MOD = "SUPER"
 local LMB = "mouse:272"
 local RMB = "mouse:273"
 
-local function noop() end
-
 hl.bind(MOD .. " + SHIFT + Q", hl.dsp.exit())
 hl.bind(MOD .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"))
 
@@ -380,7 +378,6 @@ hl.define_submap("Window", function()
     hl.bind("ALT + J", hl.dsp.window.resize({ x = 0, y = 10, relative = true }), { repeating = true })
     hl.bind("TAB", hl.dsp.window.cycle_next({ next = true }), { repeating = true })
     hl.bind("SHIFT + TAB", hl.dsp.window.cycle_next({ next = false }), { repeating = true })
-    hl.bind("catchall", hl.dsp.submap("reset"))
 end)
 
 
