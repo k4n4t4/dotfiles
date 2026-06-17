@@ -6,6 +6,6 @@ hl.monitor({
     transform = 0,
 })
 
-for i = 1, 10 do
+for i = 1, 11 do
     hl.workspace_rule({ workspace = tostring(i), persistent = false })
 end

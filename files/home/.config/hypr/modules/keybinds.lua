@@ -171,4 +171,3 @@ hl.bind(MOD .. " + SHIFT + period", hl.dsp.layout("movewindowto r"))
 hl.bind(MOD .. " + SHIFT + comma", hl.dsp.layout("movewindowto l"))
 hl.bind(MOD .. " + SHIFT + up", hl.dsp.layout("movewindowto u"))
 hl.bind(MOD .. " + SHIFT + down", hl.dsp.layout("movewindowto d"))
-
