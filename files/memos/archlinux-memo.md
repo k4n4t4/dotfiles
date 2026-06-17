@@ -23,6 +23,9 @@ yay -S wlogout
 # widgets
 sudo pacman -S quickshell
 
+# noctalia shell
+yay -S noctalia-shell
+
 # Notification Daemon
 sudo pacman -S mako libnotify
 
