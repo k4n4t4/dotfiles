@@ -113,15 +113,13 @@ toolbar#nav-bar {
 /* transparent */
 /**/
 :root {
-    --custom-browser-opacity: 0.5;
+    --custom-browser-opacity: 0.7;
     --custom-background-opacity: 0.5;
     --custom-selected-tab-opacity: 0.4;
     --custom-tab-opacity: 0.2;
     --custom-nav-bar-opacity: 0.7;
     --custom-personal-tool-bar-opacity: 0.7;
 }
-
-/* TODO: text-color */
 
 hbox#browser {
     background-color: transparent !important;
@@ -139,11 +137,6 @@ browser {
 }
 
 
-body {
-    background-color: transparent !important;
-    background-image: none !important;
-}
-
 body::before {
     content: "";
     position: fixed;
@@ -155,6 +148,11 @@ body::before {
     opacity: var(--custom-background-opacity) !important;
     z-index: -1;
     pointer-events: none;
+}
+
+body {
+    background-color: rgba(220, 220, 220, var(--custom-browser-opacity)) !important;
+    background-image: none !important;
 }
 
 tab.tabbrowser-tab vbox.tab-background {
