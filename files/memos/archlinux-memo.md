@@ -32,6 +32,12 @@ sudo pacman -S mako libnotify
 # Authentication Agent
 sudo pacman -S mate-polkit
 
+# Secure Storage
+sudo pacman -S libsecret gnome-keyring
+
+# Github Copilot CLI
+sudo npm install -g @github/copilot
+
 # GTK Theme
 sudo pacman -S gnome-themes-extra
 gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
