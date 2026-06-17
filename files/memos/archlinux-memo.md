@@ -20,11 +20,11 @@ makepkg -D /tmp/yay -si
 sudo pacman -S hyprland uwsm xdg-utils xdg-desktop-portal-hyprland hyprlock hypridle hyprshot swayosd waybar wofi awww
 yay -S wlogout
 
-# widgets
-sudo pacman -S quickshell
-
 # noctalia shell
 yay -S noctalia-shell
+
+# widgets
+sudo pacman -S quickshell
 
 # Notification Daemon
 sudo pacman -S mako libnotify
