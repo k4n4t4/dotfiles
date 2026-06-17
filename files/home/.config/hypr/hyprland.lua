@@ -356,9 +356,6 @@ hl.bind(MOD .. " + SHIFT + TAB", hl.dsp.window.alter_zorder({ mode = "top" }), {
 hl.bind(MOD .. " + W", hl.dsp.submap("Window"))
 hl.define_submap("Window", function()
     hl.bind("escape", hl.dsp.submap("reset"))
-    hl.bind("shift_l", noop)
-    hl.bind("control_l", noop)
-    hl.bind("alt_l", noop)
 
     hl.bind("F", hl.dsp.window.float({ action = "toggle" }))
     hl.bind("D", hl.dsp.window.pseudo())
@@ -416,8 +413,6 @@ hl.bind("XF86MonBrightnessDown", brightness_down, { repeating = true })
 hl.bind(MOD .. " + A", hl.dsp.submap("Media"))
 hl.define_submap("Media", function()
     hl.bind("escape", hl.dsp.submap("reset"))
-    hl.bind("shift_l", noop)
-    hl.bind("control_l", noop)
 
     hl.bind("up", raise_volume, { repeating = true })
     hl.bind("k", raise_volume, { repeating = true })
@@ -433,8 +428,6 @@ hl.define_submap("Media", function()
     hl.bind("CTRL + k", brightness_up, { repeating = true })
     hl.bind("CTRL + down", brightness_down, { repeating = true })
     hl.bind("CTRL + j", brightness_down, { repeating = true })
-
-    hl.bind("catchall", hl.dsp.submap("reset"))
 end)
 
 local terminal = "uwsm app -- kitty"
