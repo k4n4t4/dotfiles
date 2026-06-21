@@ -91,6 +91,9 @@ sudo freshclam
 # latex
 sudo pacman -S texlive-basic texlive-latex texlive-latexrecommended texlive-latexextra texlive-fontsrecommended texlive-fontsextra texlive-luatex texlive-langcjk texlive-langjapanese
 
+# 7zip
+sudo pacman -S 7zip
+
 # intel
 sudo pacman -S intel-media-driver mesa
 sudo pacman -S mesa-utils
