@@ -5,10 +5,13 @@ local RMB = "mouse:273"
 hl.bind(MOD .. " + SHIFT + Q", hl.dsp.exit())
 hl.bind(MOD .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"))
 
-hl.bind(MOD .. " + O", hl.dsp.exec_cmd("hyprshot -m output -o ~/tmp/"))
-hl.bind(MOD .. " + CTRL + O", hl.dsp.exec_cmd("hyprshot -m region -o ~/tmp/"))
-hl.bind("Print", hl.dsp.exec_cmd("hyprshot -m region -o ~/tmp/"))
-hl.bind(MOD .. " + SHIFT + O", hl.dsp.exec_cmd("hyprshot -m window -o ~/tmp/"))
+
+local screenshots_dir = "~/pers/imgs/screenshots/"
+
+hl.bind(MOD .. " + O", hl.dsp.exec_cmd("hyprshot -m output -o " .. screenshots_dir))
+hl.bind(MOD .. " + CTRL + O", hl.dsp.exec_cmd("hyprshot -m region -o " .. screenshots_dir))
+hl.bind("Print", hl.dsp.exec_cmd("hyprshot -m region -o " .. screenshots_dir))
+hl.bind(MOD .. " + SHIFT + O", hl.dsp.exec_cmd("hyprshot -m window -o " .. screenshots_dir))
 hl.bind(MOD .. " + ALT + O", hl.dsp.exec_cmd("hyprshot -m output --clipboard-only"))
 hl.bind(MOD .. " + ALT + CTRL + O", hl.dsp.exec_cmd("hyprshot -m region --clipboard-only"))
 hl.bind(MOD .. " + ALT + SHIFT + O", hl.dsp.exec_cmd("hyprshot -m window --clipboard-only"))
