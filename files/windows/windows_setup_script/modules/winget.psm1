@@ -15,10 +15,6 @@ function InstallPackages {
     }
   }
 
-  if (Read-YesNo -Prompt "Add Neovim to PATH?" -Default $true) {
-    Add-Path "C:\Program Files\Neovim\bin"
-  }
-
   if (Read-YesNo -Prompt "Add Git to PATH?" -Default $true) {
     Add-Path "C:\Program Files\Git\cmd"
   }
