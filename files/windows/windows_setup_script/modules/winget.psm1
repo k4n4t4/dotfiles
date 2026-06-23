@@ -9,14 +9,25 @@ function InstallPackages {
         @{ Id = "Git.Git"; Name = "Git" }
     )
 
+    $choices = @()
+    foreach ($p in $packages) {
+        $choices += $p.Name
+    }
+    
+    $defaults = @($true) * $packages.Length
+    $answers = Invoke-CliMenu -Options $choices -DefaultSelections $defaults
+    Write-Host "`nSelected apps to install: $($answers -join ', ')"
+
     foreach ($package in $packages) {
-        if (Read-YesNo -Prompt "Install $($package.Name)?" -Default $true) {
+        if ($answers -contains $package.Name) {
             winget install --exact --id $package.Id
         }
     }
 
-    if (Read-YesNo -Prompt "Add Git to PATH?" -Default $true) {
-        Add-Path "C:\Program Files\Git\cmd"
+    if ($answers -contains "Git") {
+        if (Read-YesNo -Prompt "Add Git to PATH?" -Default $true) {
+            Add-Path "C:\Program Files\Git\cmd"
+        }
     }
 }
 
