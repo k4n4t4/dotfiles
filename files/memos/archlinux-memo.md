@@ -3,7 +3,7 @@
 > packages
 ```bash
 # System
-sudo pacman -S linux-firmware sof-firmware efibootmgr os-prober ntfs-3g grub base-devel
+sudo pacman -S linux-firmware sof-firmware efibootmgr os-prober dosfstools ntfs-3g grub base-devel
 sudo sed -i 's/.*GRUB_DISABLE_OS_PROBER.*/GRUB_DISABLE_OS_PROBER=false/' /etc/default/grub
 grep -q 'GRUB_DISABLE_OS_PROBER' /etc/default/grub \
   || echo 'GRUB_DISABLE_OS_PROBER=false' | sudo tee -a /etc/default/grub
