@@ -66,4 +66,42 @@ function Invoke-OptionalStep {
     Write-Host "Skipped: $Name" -ForegroundColor DarkGray
 }
 
-Export-ModuleMember -Function Add-Path, Read-YesNo, Invoke-OptionalStep
+function Invoke-CliMenu {
+    param(
+        [string[]]$Options,
+        [bool[]]$DefaultSelections
+    )
+
+    if ($DefaultSelections -and $DefaultSelections.Length -eq $Options.Length) {
+        $selected = $DefaultSelections.Clone()
+    } else {
+        $selected = @($false) * $Options.Length
+    }
+    $cursor = 0
+
+    while ($true) {
+        [Console]::Clear()
+        for ($i = 0; $i -lt $Options.Length; $i++) {
+            $mark = if ($selected[$i]) { "[X]" } else { "[ ]" }
+            $pointer = if ($i -eq $cursor) { ">" } else { " " }
+            Write-Host "$pointer $mark $($Options[$i])"
+        }
+        Write-Host "`n[Space]: Select / [Enter]: Confirm / [Up/Down, k/j]: Navigate"
+
+        $key = [Console]::ReadKey($true).Key
+        if ($key -eq 'UpArrow' -and $cursor -gt 0) { $cursor-- }
+        elseif ($key -eq 'DownArrow' -and $cursor -lt ($Options.Length - 1)) { $cursor++ }
+        elseif ($key -eq 'k' -and $cursor -gt 0) { $cursor-- }
+        elseif ($key -eq 'j' -and $cursor -lt ($Options.Length - 1)) { $cursor++ }
+        elseif ($key -eq 'Spacebar') { $selected[$cursor] = -not $selected[$cursor] }
+        elseif ($key -eq 'Enter') { break }
+    }
+
+    $result = @()
+    for ($i = 0; $i -lt $Options.Length; $i++) {
+        if ($selected[$i]) { $result += $Options[$i] }
+    }
+    return $result
+}
+
+Export-ModuleMember -Function Add-Path, Read-YesNo, Invoke-OptionalStep, Invoke-CliMenu
