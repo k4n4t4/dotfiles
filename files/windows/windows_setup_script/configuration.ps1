@@ -5,8 +5,7 @@ Import-Module "$PSScriptRoot\modules\utils.psm1"
 
 $modules = @(
     "winget.psm1",
-    "uninstall_onedrive.psm1",
-    "startup.psm1"
+    "uninstall_onedrive.psm1"
 )
 
 foreach ($module in $modules) {
@@ -20,7 +19,6 @@ if (-not (Read-YesNo -Prompt "Start Windows setup?" -Default $true)) {
 
 $steps = @(
     @{ Name = "Uninstall OneDrive"; Action = { UninstallOnedrive } },
-    @{ Name = "Disable startup entries"; Action = { DisableStartUp } },
     @{ Name = "Uninstall built-in apps"; Action = { UninstallPackages } },
     @{ Name = "Install apps (winget)"; Action = { InstallPackages } }
 )
