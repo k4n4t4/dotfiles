@@ -13,7 +13,7 @@ function InstallPackages {
     foreach ($p in $packages) {
         $choices += $p.Name
     }
-    
+
     $defaults = @($true) * $packages.Length
     $answers = Invoke-CliMenu -Options $choices -DefaultSelections $defaults
     Write-Host "`nSelected apps to install: $($answers -join ', ')"
@@ -33,32 +33,39 @@ function InstallPackages {
 
 function UninstallPackages {
     $packages = @(
-        @{ Name = "Microsoft.WindowsSoundRecorder"; Label = "Sound Recorder" },
-        @{ Name = "Microsoft.YourPhone"; Label = "Phone Link" },
-        @{ Name = "MicrosoftCorporationII.MicrosoftFamily"; Label = "Microsoft Family" },
-        @{ Name = "Microsoft.WindowsFeedbackHub"; Label = "Feedback Hub" },
-        @{ Name = "Microsoft.WindowsCamera"; Label = "Camera" },
-        @{ Name = "Microsoft.MicrosoftStickyNotes"; Label = "Sticky Notes" },
-        @{ Name = "Microsoft.MicrosoftSolitaireCollection"; Label = "Solitaire Collection" },
-        @{ Name = "Microsoft.GetHelp"; Label = "Get Help" },
-        @{ Name = "Microsoft.Teams"; Label = "Teams" },
-        @{ Name = "Microsoft.Todos"; Label = "To Do" },
-        @{ Name = "Clipchamp.Clipchamp"; Label = "Clipchamp" },
-        @{ Name = "B9ECED6F.ASUSPCAssistant"; Label = "ASUS PC Assistant" }
+        @{ Id = "Microsoft.WindowsSoundRecorder"; Name = "Sound Recorder" },
+        @{ Id = "Microsoft.YourPhone"; Name = "Phone Link" },
+        @{ Id = "MicrosoftCorporationII.MicrosoftFamily"; Name = "Microsoft Family" },
+        @{ Id = "Microsoft.WindowsFeedbackHub"; Name = "Feedback Hub" },
+        @{ Id = "Microsoft.WindowsCamera"; Name = "Camera" },
+        @{ Id = "Microsoft.MicrosoftStickyNotes"; Name = "Sticky Notes" },
+        @{ Id = "Microsoft.MicrosoftSolitaireCollection"; Name = "Solitaire Collection" },
+        @{ Id = "Microsoft.GetHelp"; Name = "Get Help" },
+        @{ Id = "Microsoft.Teams"; Name = "Teams" },
+        @{ Id = "Microsoft.Todos"; Name = "To Do" },
+        @{ Id = "Clipchamp.Clipchamp"; Name = "Clipchamp" },
+        @{ Id = "B9ECED6F.ASUSPCAssistant"; Name = "ASUS PC Assistant" }
     )
 
+    $choices = @()
+    foreach ($p in $packages) {
+        $choices += $p.Name
+    }
+    
+    $defaults = @($true) * $packages.Length
+    $answers = Invoke-CliMenu -Options $choices -DefaultSelections $defaults
+    Write-Host "`nSelected apps to uninstall: $($answers -join ', ')"
+
     foreach ($package in $packages) {
-        if (-not (Read-YesNo -Prompt "Uninstall $($package.Label)?" -Default $true)) {
-            continue
-        }
+        if ($answers -contains $package.Name) {
+            $installed = Get-AppxPackage $package.Id
+            if ($installed) {
+                $installed | Remove-AppxPackage
+                continue
+            }
 
-        $installed = Get-AppxPackage $package.Name
-        if ($installed) {
-            $installed | Remove-AppxPackage
-            continue
+            Write-Host "Not installed: $($package.Name)" -ForegroundColor DarkGray
         }
-
-        Write-Host "Not installed: $($package.Label)" -ForegroundColor DarkGray
     }
 }
 
