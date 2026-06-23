@@ -78,21 +78,24 @@ function Invoke-CliMenu {
         $selected = @($false) * $Options.Length
     }
     $cursor = 0
+    $startTop = [Console]::CursorTop
 
     while ($true) {
-        [Console]::Clear()
+        [Console]::SetCursorPosition(0, $startTop)
         for ($i = 0; $i -lt $Options.Length; $i++) {
             $mark = if ($selected[$i]) { "[X]" } else { "[ ]" }
             $pointer = if ($i -eq $cursor) { ">" } else { " " }
-            Write-Host "$pointer $mark $($Options[$i])"
+            $line = "$pointer $mark $($Options[$i])"
+            Write-Host $line.PadRight([Console]::WindowWidth - 1)
         }
-        Write-Host "`n[Space]: Select / [Enter]: Confirm / [Up/Down, k/j]: Navigate"
+        $footer = "[Space]: Select / [Enter]: Confirm / [Up/Down, k/j]: Navigate"
+        Write-Host $footer.PadRight([Console]::WindowWidth - 1)
 
         $key = [Console]::ReadKey($true).Key
         if ($key -eq 'UpArrow' -and $cursor -gt 0) { $cursor-- }
         elseif ($key -eq 'DownArrow' -and $cursor -lt ($Options.Length - 1)) { $cursor++ }
-        elseif ($key -eq 'k' -and $cursor -gt 0) { $cursor-- }
-        elseif ($key -eq 'j' -and $cursor -lt ($Options.Length - 1)) { $cursor++ }
+        elseif ($key -eq 'K' -and $cursor -gt 0) { $cursor-- }
+        elseif ($key -eq 'J' -and $cursor -lt ($Options.Length - 1)) { $cursor++ }
         elseif ($key -eq 'Spacebar') { $selected[$cursor] = -not $selected[$cursor] }
         elseif ($key -eq 'Enter') { break }
     }
@@ -101,6 +104,7 @@ function Invoke-CliMenu {
     for ($i = 0; $i -lt $Options.Length; $i++) {
         if ($selected[$i]) { $result += $Options[$i] }
     }
+    Write-Host ""
     return $result
 }
 
