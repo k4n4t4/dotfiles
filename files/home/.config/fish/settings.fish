@@ -35,6 +35,7 @@ fish_add_path \
     ~/.local/bin \
     ~/go/bin \
     ~/.cargo/bin \
+    ~/.dotnet/tools \
     /snap/bin \
     /usr/local/bin \
     /usr/local/sbin \

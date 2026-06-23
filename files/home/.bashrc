@@ -15,6 +15,7 @@ set -o vi
 PATH="$HOME/bin:$PATH"
 PATH="$HOME/.local/bin:$PATH"
 PATH="$HOME/.cargo/bin:$PATH"
+PATH="$HOME/.dotnet/tools:$PATH"
 PATH="$HOME/go/bin:$PATH"
 
 

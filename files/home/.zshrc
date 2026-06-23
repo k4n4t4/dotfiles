@@ -47,6 +47,7 @@ bindkey "^[v" edit-command-line
 PATH="$HOME/bin:$PATH"
 PATH="$HOME/go/bin:$PATH"
 PATH="$HOME/.cargo/bin:$PATH"
+PATH="$HOME/.dotnet/tools:$PATH"
 PATH="$HOME/.local/bin:$PATH"
 PATH="/snap/bin:$PATH"
 PATH="/usr/sandbox/:$PATH"
