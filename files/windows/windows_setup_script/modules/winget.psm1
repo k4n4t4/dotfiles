@@ -51,7 +51,7 @@ function UninstallPackages {
     foreach ($p in $packages) {
         $choices += $p.Name
     }
-    
+
     $defaults = @($true) * $packages.Length
     $answers = Invoke-CliMenu -Options $choices -DefaultSelections $defaults
     Write-Host "`nSelected apps to uninstall: $($answers -join ', ')"

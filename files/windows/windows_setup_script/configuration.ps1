@@ -5,7 +5,8 @@ Import-Module "$PSScriptRoot\modules\utils.psm1"
 
 $modules = @(
     "winget.psm1",
-    "uninstall_onedrive.psm1"
+    "uninstall_onedrive.psm1",
+    "settings.psm1"
 )
 
 foreach ($module in $modules) {
@@ -21,6 +22,7 @@ $steps = @(
     @{ Name = "Uninstall OneDrive"; Action = { UninstallOnedrive } },
     @{ Name = "Uninstall built-in apps"; Action = { UninstallPackages } },
     @{ Name = "Install apps (winget)"; Action = { InstallPackages } }
+    @{ Name = "Configure settings"; Action = { Settings } }
 )
 
 foreach ($step in $steps) {
