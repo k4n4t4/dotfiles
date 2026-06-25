@@ -4,10 +4,6 @@
 ```bash
 # System
 sudo pacman -S linux-firmware sof-firmware efibootmgr os-prober dosfstools ntfs-3g grub base-devel
-sudo sed -i 's/.*GRUB_DISABLE_OS_PROBER.*/GRUB_DISABLE_OS_PROBER=false/' /etc/default/grub
-grep -q 'GRUB_DISABLE_OS_PROBER' /etc/default/grub \
-  || echo 'GRUB_DISABLE_OS_PROBER=false' | sudo tee -a /etc/default/grub
-sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 # CLI Tools
 sudo pacman -S git git-delta github-cli fzf fd ripgrep zoxide eza bat btop htop trash-cli wget curl unzip zip less man-db wl-clipboard tree-sitter-cli fish starship neovim nodejs npm yazi
@@ -20,34 +16,11 @@ makepkg -D /tmp/yay -si
 sudo pacman -S hyprland uwsm xdg-utils xdg-desktop-portal-hyprland hyprlock hypridle hyprshot swayosd waybar wofi awww
 yay -S wlogout
 
-# noctalia shell
-yay -S noctalia-shell
-
-# widgets
-sudo pacman -S quickshell
-
 # Notification Daemon
 sudo pacman -S mako libnotify
 
 # Authentication Agent
 sudo pacman -S mate-polkit
-
-# Secure Storage
-sudo pacman -S libsecret gnome-keyring
-
-# Github Copilot CLI
-sudo npm install -g @github/copilot
-
-# GTK Theme
-sudo pacman -S gnome-themes-extra
-gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
-gsettings set org.gnome.desktop.interface color-scheme prefer-dark
-
-# Qt Theme
-sudo pacman -S kvantum qt6ct
-mkdir -p ~/.config/qt6ct
-echo -e "[Appearance]\nstyle=kvantum-dark" | tee ~/.config/qt6ct/qt6ct.conf
-kvantummanager --set KvAmbiance
 
 # Network
 sudo pacman -S networkmanager network-manager-applet
@@ -64,14 +37,27 @@ sudo pacman -S brightnessctl
 # Power Management
 sudo pacman -S power-profiles-daemon
 
+# Secure Storage
+sudo pacman -S libsecret gnome-keyring
+
 # Applications
 sudo pacman -S kitty firefox obsidian discord gimp vlc
 
-# Applications AUR
-yay -S st
+# Virus Scanner
+sudo pacman -S clamav
+sudo freshclam
+
+# latex
+sudo pacman -S texlive-basic texlive-latex texlive-latexrecommended texlive-latexextra texlive-fontsrecommended texlive-fontsextra texlive-luatex texlive-langcjk texlive-langjapanese
+
+# 7zip
+sudo pacman -S 7zip
 
 # Fonts
 sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-dejavu ttf-font-awesome ttf-jetbrains-mono-nerd
+
+# Github Copilot CLI
+sudo npm install -g @github/copilot
 
 # Japanese Input Method
 sudo pacman -S fcitx5-im fcitx5-mozc
@@ -84,15 +70,16 @@ sudo pacman -S qt5-graphicaleffects qt5-quickcontrols2
 sudo mkdir -p /etc/sddm.conf.d
 echo -e "[Theme]\nCurrent=sddm-sugar-dark" | sudo tee /etc/sddm.conf.d/10-theme.conf
 
-# Virus Scanner
-sudo pacman -S clamav
-sudo freshclam
+# GTK Theme
+sudo pacman -S gnome-themes-extra
+gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
+gsettings set org.gnome.desktop.interface color-scheme prefer-dark
 
-# latex
-sudo pacman -S texlive-basic texlive-latex texlive-latexrecommended texlive-latexextra texlive-fontsrecommended texlive-fontsextra texlive-luatex texlive-langcjk texlive-langjapanese
-
-# 7zip
-sudo pacman -S 7zip
+# Qt Theme
+sudo pacman -S kvantum qt6ct
+mkdir -p ~/.config/qt6ct
+echo -e "[Appearance]\nstyle=kvantum-dark" | tee ~/.config/qt6ct/qt6ct.conf
+kvantummanager --set KvAmbiance
 
 # intel
 sudo pacman -S intel-media-driver mesa
@@ -100,12 +87,4 @@ sudo pacman -S mesa-utils
 
 # intel GPU
 sudo pacman -S vulkan-tools vulkan-intel intel-compute-runtime
-
-# Local LLM
-curl -fsSL https://ollama.com/install.sh | sh
-sudo systemctl enable --now ollama
-sudo pacman -S opencode
-
-# enable Vulkan support for Ollama
-echo -e "[Service]\nEnvironment=\"OLLAMA_VULKAN=1\"" | sudo tee /etc/systemd/system/ollama.service.d/override.conf
 ```
