@@ -98,18 +98,3 @@ vim.filetype.add {
 }
 
 vim.treesitter.language.register("html", "jsp")
-
-local lsp = require "utils.lsp"
-lsp.add_mason_bin_path()
-lsp.set("jsp", { "html", "emmet_language_server" })
-lsp.set("cs", { "omnisharp" })
-lsp.set("java", { "jdtls" })
-
-vim.lsp.config.powershell_es = {
-  bundle_path = vim.fn.stdpath("data") .. "/mason/packages/powershell-editor-services",
-}
-lsp.set("ps1", { "powershell_es" })
-lsp.set("psm1", { "powershell_es" })
-lsp.set("psd1", { "powershell_es" })
-
-lsp.auto_set()
