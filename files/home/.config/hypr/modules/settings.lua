@@ -231,6 +231,6 @@ hl.config({
         window_direction_monitor_fallback = true,
     },
     animations = {
-        enabled = true,
+        enabled = false,
     },
 })
