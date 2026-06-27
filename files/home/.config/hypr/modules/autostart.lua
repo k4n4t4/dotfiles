@@ -1,4 +1,18 @@
+local use_noctalia_shell = false
+
 hl.on("hyprland.start", function()
+    if use_noctalia_shell then
+        -- noctalia shell
+        hl.exec_cmd("uwsm app -- qs -c noctalia-shell")
+
+        -- wl-clipboard
+        hl.exec_cmd("uwsm app -- wl-paste -w cliphist store")
+
+        -- polkit
+        hl.exec_cmd("uwsm app -- /usr/lib/mate-polkit/polkit-mate-authentication-agent-1")
+        return
+    end
+
     -- fcitx5
     hl.exec_cmd("uwsm app -- fcitx5 -d")
 
@@ -14,9 +28,6 @@ hl.on("hyprland.start", function()
 
     -- wl-clipboard
     hl.exec_cmd("uwsm app -- wl-paste -w cliphist store")
-
-    -- -- noctalia shell
-    -- hl.exec_cmd("uwsm app -- qs -c noctalia-shell")
 
     -- swayosd
     hl.exec_cmd("uwsm app -- swayosd-server")
