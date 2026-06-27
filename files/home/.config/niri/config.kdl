@@ -1,9 +1,9 @@
 spawn-at-startup "uwsm" "app" "--" "fcitx5" "-d"
+spawn-at-startup "uwsm" "app" "--" "/usr/lib/mate-polkit/polkit-mate-authentication-agent-1"
 
 // spawn-at-startup "uwsm" "app" "--" "waybar"
 // spawn-at-startup "uwsm" "app" "--" "hypridle"
 // spawn-at-startup "uwsm" "app" "--" "swayosd-server"
-// spawn-at-startup "uwsm" "app" "--" "/usr/lib/mate-polkit/polkit-mate-authentication-agent-1"
 // spawn-sh-at-startup "uwsm app -- awww-daemon & sleep 1 && uwsm app -- awww img ~/pers/imgs/wallpaper.png --transition-type center --transition-duration 1"
 // spawn-at-startup "uwsm" "app" "--" "wl-paste" "-w" "cliphist" "store"
 
