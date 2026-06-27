@@ -12,25 +12,22 @@ sudo pacman -S git git-delta github-cli fzf fd ripgrep zoxide eza bat btop htop 
 git clone https://aur.archlinux.org/yay.git /tmp/yay
 makepkg -D /tmp/yay -si
 
+
 # GUI hyprland
 sudo pacman -S hyprland uwsm xdg-utils xdg-desktop-portal-hyprland hyprlock hypridle hyprshot swayosd waybar wofi awww
 yay -S wlogout
 
-# GUI niri
-sudo pacman -Syu niri xwayland-satellite xdg-desktop-portal-gnome xdg-desktop-portal-gtk alacritty dms-shell-niri matugen cava qt6-multimedia-ffmpeg
-systemctl --user add-wants niri.service dms
-
 # Notification Daemon
 sudo pacman -S mako libnotify
-
-# Authentication Agent
-sudo pacman -S mate-polkit
 
 # Network
 sudo pacman -S networkmanager network-manager-applet
 
 # Bluetooth
 sudo pacman -S bluez bluez-utils blueman
+
+# Authentication Agent
+sudo pacman -S mate-polkit
 
 # Audio
 sudo pacman -S pipewire pipewire-alsa pipewire-jack pipewire-pulse wireplumber pavucontrol
@@ -43,6 +40,20 @@ sudo pacman -S power-profiles-daemon
 
 # Secure Storage
 sudo pacman -S libsecret gnome-keyring
+
+
+# GUI niri
+sudo pacman -Syu niri xwayland-satellite xdg-desktop-portal-gnome xdg-desktop-portal-gtk alacritty dms-shell-niri matugen cava qt6-multimedia-ffmpeg
+yay -Syuu noctalia-git
+sudo pacman -S libnotify
+sudo pacman -S networkmanager network-manager-applet
+sudo pacman -S bluez bluez-utils blueman
+sudo pacman -S mate-polkit
+sudo pacman -S brightnessctl
+sudo pacman -S pipewire pipewire-alsa pipewire-jack pipewire-pulse wireplumber pavucontrol
+sudo pacman -S power-profiles-daemon
+sudo pacman -S libsecret gnome-keyring
+
 
 # Applications
 sudo pacman -S kitty firefox obsidian discord gimp vlc
