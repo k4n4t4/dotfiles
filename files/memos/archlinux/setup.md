@@ -17,7 +17,8 @@ sudo pacman -S hyprland uwsm xdg-utils xdg-desktop-portal-hyprland hyprlock hypr
 yay -S wlogout
 
 # GUI niri
-sudo pacman -S niri
+sudo pacman -Syu niri xwayland-satellite xdg-desktop-portal-gnome xdg-desktop-portal-gtk alacritty dms-shell-niri matugen cava qt6-multimedia-ffmpeg
+systemctl --user add-wants niri.service dms
 
 # Notification Daemon
 sudo pacman -S mako libnotify
