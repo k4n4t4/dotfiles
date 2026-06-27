@@ -48,10 +48,10 @@ yay -Syuu noctalia-git
 sudo pacman -S libnotify
 sudo pacman -S networkmanager network-manager-applet
 sudo pacman -S bluez bluez-utils blueman
-sudo pacman -S mate-polkit
 sudo pacman -S brightnessctl
 sudo pacman -S pipewire pipewire-alsa pipewire-jack pipewire-pulse wireplumber pavucontrol
 sudo pacman -S power-profiles-daemon
+sudo pacman -S mate-polkit
 sudo pacman -S libsecret gnome-keyring
 
 
