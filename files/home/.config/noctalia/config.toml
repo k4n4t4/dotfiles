@@ -1,0 +1,118 @@
+[backdrop]
+blur_intensity = 0.50999998860061169
+
+[bar.default]
+background_opacity = 0.4999999888241291
+border_width = 1.0
+capsule_thickness = 0.6699999887496233
+center = [ "active_window" ]
+end = [ "tray", "privacy", "group:g1", "clock", "notifications" ]
+margin_edge = 0
+margin_ends = 0
+radius = 0
+shadow = false
+start = [ "session", "control-center", "launcher", "wallpaper", "workspaces", "taskbar" ]
+thickness = 31
+widget_spacing = 12
+
+    [[bar.default.capsule_group]]
+    border = ""
+    fill = "on_secondary"
+    id = "g1"
+    members = [ "media", "clipboard", "network", "bluetooth", "volume", "brightness", "battery" ]
+    opacity = 0.64999997615814209
+    padding = 13.0
+
+[calendar]
+enabled = true
+
+[desktop_widgets]
+schema_version = 2
+widget_order = []
+
+    [desktop_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [desktop_widgets.widget]
+
+[lockscreen_widgets]
+enabled = false
+schema_version = 2
+widget_order = [ "lockscreen-login-box@eDP-1" ]
+
+    [lockscreen_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
+    box_height = 70.0
+    box_width = 400.0
+    cx = 768.0
+    cy = 841.0
+    output = "eDP-1"
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@eDP-1".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        input_opacity = 1.0
+        input_radius = 6.0
+        show_login_button = true
+
+[shell]
+corner_radius_scale = 0.95000001415610313
+settings_show_advanced = true
+
+    [shell.panel]
+    transparency_mode = "glass"
+
+    [shell.shadow]
+    direction = "center"
+
+[theme]
+builtin = "Gruvbox"
+community_palette = "Noctalia legacy"
+mode = "dark"
+source = "builtin"
+wallpaper_scheme = "m3-fruit-salad"
+
+    [theme.templates]
+    enable_builtin_templates = false
+    enable_community_templates = false
+
+[widget.battery]
+show_label = false
+
+[widget.brightness]
+capsule_fill = "on_secondary"
+show_label = false
+
+[widget.custom_button_2]
+capsule = true
+type = "custom_button"
+
+[widget.custom_button_3]
+type = "custom_button"
+
+[widget.media]
+album_art_only = true
+
+[widget.network]
+show_label = false
+
+[widget.spacer_2]
+length = 25
+type = "spacer"
+
+[widget.taskbar_2]
+type = "taskbar"
+
+[widget.volume]
+capsule_fill = "on_secondary"
+capsule_padding = 16.0
+show_label = false

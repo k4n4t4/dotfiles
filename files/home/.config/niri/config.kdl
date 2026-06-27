@@ -1,0 +1,169 @@
+spawn-at-startup "uwsm" "app" "--" "fcitx5" "-d"
+
+// spawn-at-startup "uwsm" "app" "--" "waybar"
+// spawn-at-startup "uwsm" "app" "--" "hypridle"
+// spawn-at-startup "uwsm" "app" "--" "swayosd-server"
+// spawn-at-startup "uwsm" "app" "--" "/usr/lib/mate-polkit/polkit-mate-authentication-agent-1"
+// spawn-sh-at-startup "uwsm app -- awww-daemon & sleep 1 && uwsm app -- awww img ~/pers/imgs/wallpaper.png --transition-type center --transition-duration 1"
+// spawn-at-startup "uwsm" "app" "--" "wl-paste" "-w" "cliphist" "store"
+
+// spawn-at-startup "uwsm" "app" "--" "dms" "run"
+
+spawn-at-startup "uwsm" "app" "--" "noctalia"
+
+
+
+input {
+    keyboard {
+        xkb {
+            layout "us"
+        }
+        repeat-delay 250
+        repeat-rate 50
+    }
+    touchpad {
+        dwt
+        tap
+        accel-speed -0.6
+    }
+    mouse {
+        accel-speed -0.6
+    }
+}
+
+layout {
+    gaps 0
+
+    always-center-single-column
+
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+    }
+
+    default-column-width {
+        proportion 0.7
+    }
+
+    border {
+        width 1
+        active-color "#907020ee"
+        inactive-color "#292999a0"
+    }
+    focus-ring {
+        off
+    }
+    shadow {
+        off
+    }
+
+    default-column-display "tabbed"
+    tab-indicator {
+        hide-when-single-tab
+    }
+
+    insert-hint {
+        off
+    }
+
+    background-color "#002233"
+}
+
+prefer-no-csd
+
+window-rule {
+    clip-to-geometry true
+    draw-border-with-background false
+    geometry-corner-radius 0
+}
+
+window-rule {
+    match is-floating=true
+
+    background-effect {
+        xray false
+    }
+}
+
+binds {
+    Mod+Shift+Q { quit; }
+    Mod+Shift+R { spawn "niri" "msg" "action" "reload-config"; }
+
+    Mod+O { screenshot-screen; }
+    Mod+Ctrl+O { screenshot; }
+    Print { screenshot; }
+    Mod+Shift+O { screenshot-window; }
+
+    Mod+Q { close-window; }
+    Mod+F { toggle-window-floating; }
+    F11 { fullscreen-window; }
+    Mod+C { center-column; }
+
+    Mod+H { focus-column-left; }
+    Mod+L { focus-column-right; }
+    Mod+K { focus-window-up; }
+    Mod+J { focus-window-down; }
+
+    Mod+Ctrl+H { move-column-left; }
+    Mod+Ctrl+L { move-column-right; }
+    Mod+Ctrl+K { move-window-up; }
+    Mod+Ctrl+J { move-window-down; }
+
+    Mod+Alt+H { set-column-width "-10"; }
+    Mod+Alt+L { set-column-width "+10"; }
+    Mod+Alt+K { set-window-height "-10"; }
+    Mod+Alt+J { set-window-height "+10"; }
+
+    Mod+Tab { focus-window-down; }
+    Mod+Shift+Tab { focus-window-up; }
+
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "swayosd-client" "--output-volume" "raise"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "swayosd-client" "--output-volume" "lower"; }
+    XF86AudioMute allow-when-locked=true { spawn "swayosd-client" "--output-volume" "mute-toggle"; }
+    XF86AudioMicMute allow-when-locked=true { spawn "swayosd-client" "--input-volume" "mute-toggle"; }
+    XF86MonBrightnessUp allow-when-locked=true { spawn "swayosd-client" "--brightness" "raise"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "swayosd-client" "--brightness" "lower"; }
+
+    Mod+Escape { spawn "uwsm" "app" "--" "wlogout"; }
+    Mod+X { spawn "uwsm" "app" "--" "hyprlock"; }
+    Mod+T { spawn "uwsm" "app" "--" "kitty"; }
+    Mod+R { spawn-sh "uwsm app -- wofi --show drun --run-command 'uwsm app -- %s'"; }
+    Mod+V { spawn-sh "cliphist list | uwsm app -- wofi --dmenu | cliphist decode | wl-copy"; }
+    Mod+B { spawn "uwsm" "app" "--" "firefox"; }
+    Mod+P { spawn "uwsm" "app" "--" "firefox" "--private-window"; }
+    Mod+M { spawn-sh "uwsm app -- st -f 'ComicShannsMono Nerd Font Mono-14' -c float btop"; }
+
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+    Mod+0 { focus-workspace 10; }
+    Mod+Grave { focus-workspace 11; }
+    Mod+S { focus-workspace 12; }
+
+    Mod+Shift+1 { move-window-to-workspace 1; }
+    Mod+Shift+2 { move-window-to-workspace 2; }
+    Mod+Shift+3 { move-window-to-workspace 3; }
+    Mod+Shift+4 { move-window-to-workspace 4; }
+    Mod+Shift+5 { move-window-to-workspace 5; }
+    Mod+Shift+6 { move-window-to-workspace 6; }
+    Mod+Shift+7 { move-window-to-workspace 7; }
+    Mod+Shift+8 { move-window-to-workspace 8; }
+    Mod+Shift+9 { move-window-to-workspace 9; }
+    Mod+Shift+0 { move-window-to-workspace 10; }
+    Mod+Shift+Grave { move-window-to-workspace 11; }
+    Mod+Shift+S { move-window-to-workspace 12; }
+
+    Mod+Left { focus-workspace-down; }
+    Mod+Right { focus-workspace-up; }
+    Mod+Shift+Left { move-window-to-workspace-down; }
+    Mod+Shift+Right { move-window-to-workspace-up; }
+}
+
+include "noctalia.kdl"
