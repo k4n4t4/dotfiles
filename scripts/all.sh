@@ -20,3 +20,5 @@ script_source waybar
 script_source wlogout
 script_source mako
 script_source firefox
+script_source niri
+script_source noctalia
