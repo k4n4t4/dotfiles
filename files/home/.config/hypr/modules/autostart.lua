@@ -1,40 +1,20 @@
-local use_noctalia_shell = false
+local use_noctalia_shell = true
 
 hl.on("hyprland.start", function()
+    hl.exec_cmd("uwsm app -- fcitx5 -d")
+    hl.exec_cmd("uwsm app -- /usr/lib/mate-polkit/polkit-mate-authentication-agent-1")
+
     if use_noctalia_shell then
-        -- noctalia shell
         hl.exec_cmd("uwsm app -- qs -c noctalia-shell")
-
-        -- wl-clipboard
-        hl.exec_cmd("uwsm app -- wl-paste -w cliphist store")
-
-        -- polkit
-        hl.exec_cmd("uwsm app -- /usr/lib/mate-polkit/polkit-mate-authentication-agent-1")
         return
     end
 
-    -- fcitx5
-    hl.exec_cmd("uwsm app -- fcitx5 -d")
-
-    -- awww
     hl.exec_cmd("uwsm app -- awww-daemon")
     hl.exec_cmd("uwsm app -- awww img ~/pers/imgs/wallpaper.png --transition-type center --transition-duration 1")
-
-    -- waybar
     hl.exec_cmd("uwsm app -- waybar")
-
-    -- mako
     hl.exec_cmd("uwsm app -- mako")
-
-    -- wl-clipboard
     hl.exec_cmd("uwsm app -- wl-paste -w cliphist store")
-
-    -- swayosd
     hl.exec_cmd("uwsm app -- swayosd-server")
-
-    -- polkit
     hl.exec_cmd("uwsm app -- /usr/lib/mate-polkit/polkit-mate-authentication-agent-1")
-
-    -- hypridle
     hl.exec_cmd("pidof hypridle || uwsm app -- hypridle")
 end)
