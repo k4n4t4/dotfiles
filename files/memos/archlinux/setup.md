@@ -12,9 +12,12 @@ sudo pacman -S git git-delta github-cli fzf fd ripgrep zoxide eza bat btop htop 
 git clone https://aur.archlinux.org/yay.git /tmp/yay
 makepkg -D /tmp/yay -si
 
-# GUI
+# GUI hyprland
 sudo pacman -S hyprland uwsm xdg-utils xdg-desktop-portal-hyprland hyprlock hypridle hyprshot swayosd waybar wofi awww
 yay -S wlogout
+
+# GUI niri
+sudo pacman -S niri
 
 # Notification Daemon
 sudo pacman -S mako libnotify
