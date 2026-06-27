@@ -112,17 +112,18 @@ binds {
     Mod+Tab { focus-window-down; }
     Mod+Shift+Tab { focus-window-up; }
 
-    XF86AudioRaiseVolume allow-when-locked=true { spawn "swayosd-client" "--output-volume" "raise"; }
-    XF86AudioLowerVolume allow-when-locked=true { spawn "swayosd-client" "--output-volume" "lower"; }
-    XF86AudioMute allow-when-locked=true { spawn "swayosd-client" "--output-volume" "mute-toggle"; }
-    XF86AudioMicMute allow-when-locked=true { spawn "swayosd-client" "--input-volume" "mute-toggle"; }
-    XF86MonBrightnessUp allow-when-locked=true { spawn "swayosd-client" "--brightness" "raise"; }
-    XF86MonBrightnessDown allow-when-locked=true { spawn "swayosd-client" "--brightness" "lower"; }
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "noctalia" "msg" "volume-up"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "noctalia" "msg" "volume-down"; }
+    XF86AudioMute allow-when-locked=true { spawn "noctalia" "msg" "volume-mute"; }
+    XF86AudioMicMute allow-when-locked=true { spawn "noctalia" "msg" "mic-mute"; }
+    XF86MonBrightnessUp allow-when-locked=true { spawn "noctalia" "msg" "brightness-up"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "noctalia" "msg" "brightness-down"; }
 
-    Mod+Escape { spawn "uwsm" "app" "--" "wlogout"; }
-    Mod+X { spawn "uwsm" "app" "--" "hyprlock"; }
+    Mod+Escape { spawn "noctalia" "msg" "session" "logout"; }
+    Mod+X { spawn "noctalia" "msg" "session" "lock"; }
+    Mod+R { spawn "noctalia" "msg" "panel-toggle" "launcher"; }
+
     Mod+T { spawn "uwsm" "app" "--" "kitty"; }
-    Mod+R { spawn-sh "uwsm app -- wofi --show drun --run-command 'uwsm app -- %s'"; }
     Mod+V { spawn-sh "cliphist list | uwsm app -- wofi --dmenu | cliphist decode | wl-copy"; }
     Mod+B { spawn "uwsm" "app" "--" "firefox"; }
     Mod+P { spawn "uwsm" "app" "--" "firefox" "--private-window"; }
