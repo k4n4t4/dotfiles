@@ -16,4 +16,7 @@ unix_sock_rw_perms = "0770"
 ~~~bash
 sudo usermod -a -G libvirt $(whoami)
 newgrp libvirt
+
+sudo virsh net-start default
+sudo virsh net-autostart default
 ~~~
