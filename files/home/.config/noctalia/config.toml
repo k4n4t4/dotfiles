@@ -9,10 +9,12 @@ center = [ "active_window" ]
 end = [ "tray", "privacy", "group:g1", "clock", "notifications" ]
 margin_edge = 0
 margin_ends = 0
+padding = 13
 radius = 0
+scale = 1.300000011920929
 shadow = false
 start = [ "session", "control-center", "launcher", "wallpaper", "workspaces", "taskbar" ]
-thickness = 31
+thickness = 43
 widget_spacing = 12
 
     [[bar.default.capsule_group]]
@@ -36,6 +38,24 @@ widget_order = []
     visible = true
 
     [desktop_widgets.widget]
+
+[idle]
+behavior_order = [ "lock", "screen-off", "lock-and-suspend" ]
+
+    [idle.behavior.lock]
+    action = "lock"
+    enabled = true
+    timeout = 600.0
+
+    [idle.behavior.lock-and-suspend]
+    action = "lock_and_suspend"
+    enabled = true
+    timeout = 900.0
+
+    [idle.behavior.screen-off]
+    action = "screen_off"
+    enabled = true
+    timeout = 660.0
 
 [lockscreen_widgets]
 enabled = false
@@ -64,13 +84,48 @@ widget_order = [ "lockscreen-login-box@eDP-1" ]
         input_radius = 6.0
         show_login_button = true
 
+[notification]
+background_opacity = 0.79999998211860657
+
 [shell]
 corner_radius_scale = 0.95000001415610313
 polkit_agent = true
 settings_show_advanced = true
 
-    [shell.panel]
-    transparency_mode = "glass"
+    [[shell.session.actions]]
+    action = "lock"
+    countdown_seconds = 0.0
+    enabled = true
+    shortcut = "x"
+    variant = "default"
+
+    [[shell.session.actions]]
+    action = "logout"
+    countdown_seconds = 0.0
+    enabled = true
+    shortcut = "l"
+    variant = "default"
+
+    [[shell.session.actions]]
+    action = "lock_and_suspend"
+    countdown_seconds = 0.0
+    enabled = true
+    shortcut = "s"
+    variant = "default"
+
+    [[shell.session.actions]]
+    action = "reboot"
+    countdown_seconds = 0.0
+    enabled = true
+    shortcut = "r"
+    variant = "default"
+
+    [[shell.session.actions]]
+    action = "shutdown"
+    countdown_seconds = 0.0
+    enabled = true
+    shortcut = "h"
+    variant = "destructive"
 
     [shell.shadow]
     direction = "center"
@@ -79,12 +134,16 @@ settings_show_advanced = true
 builtin = "Gruvbox"
 community_palette = "Noctalia legacy"
 mode = "dark"
-source = "builtin"
 wallpaper_scheme = "m3-fruit-salad"
 
     [theme.templates]
     enable_builtin_templates = false
     enable_community_templates = false
+
+[wallpaper]
+directory = "/home/kanata/pers/media/imgs/wallpapers"
+directory_dark = "/home/kanata/pers/media/imgs/wallpapers"
+directory_light = "/home/kanata/pers/media/imgs/wallpapers"
 
 [widget.battery]
 show_label = false
