@@ -54,9 +54,6 @@ sudo pacman -S power-profiles-daemon
 sudo pacman -S libsecret gnome-keyring
 
 
-# Greeter
-sudo pacman -S greetd greetd-tuigreet
-
 # Applications
 sudo pacman -S kitty firefox obsidian discord gimp vlc
 
