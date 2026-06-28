@@ -13,7 +13,7 @@ padding = 13
 radius = 0
 scale = 1.300000011920929
 shadow = false
-start = [ "session", "control-center", "launcher", "wallpaper", "workspaces", "taskbar" ]
+start = [ "session", "control-center", "launcher", "wallpaper", "taskbar" ]
 thickness = 43
 widget_spacing = 12
 
@@ -141,9 +141,10 @@ wallpaper_scheme = "m3-fruit-salad"
     enable_community_templates = false
 
 [wallpaper]
-directory = "/home/kanata/pers/media/imgs/wallpapers"
 directory_dark = "/home/kanata/pers/media/imgs/wallpapers"
-directory_light = "/home/kanata/pers/media/imgs/wallpapers"
+
+[widget.active_window]
+icon_size = 20
 
 [widget.battery]
 show_label = false
@@ -169,10 +170,21 @@ show_label = false
 length = 25
 type = "spacer"
 
+[widget.taskbar]
+group_by_workspace = true
+hide_empty_workspaces = true
+workspace_label_placement = "inside"
+
 [widget.taskbar_2]
+group_by_workspace = true
+hide_empty_workspaces = true
 type = "taskbar"
+workspace_label_placement = "inside"
 
 [widget.volume]
 capsule_fill = "on_secondary"
 capsule_padding = 16.0
 show_label = false
+
+[widget.workspaces]
+hide_when_empty = true
