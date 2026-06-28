@@ -2,10 +2,9 @@ local use_noctalia_shell = true
 
 hl.on("hyprland.start", function()
     hl.exec_cmd("uwsm app -- fcitx5 -d")
-    hl.exec_cmd("uwsm app -- /usr/lib/mate-polkit/polkit-mate-authentication-agent-1")
 
     if use_noctalia_shell then
-        hl.exec_cmd("uwsm app -- qs -c noctalia-shell")
+        hl.exec_cmd("uwsm app -- noctalia")
         return
     end
 

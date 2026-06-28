@@ -80,24 +80,14 @@ hl.define_submap("Window", function()
     hl.bind("SHIFT + TAB", hl.dsp.window.cycle_next({ next = false }), { repeating = true })
 end)
 
-
--- local raise_volume    = hl.dsp.exec_cmd("pactl set-sink-volume @DEFAULT_SINK@ +5%")
--- local lower_volume    = hl.dsp.exec_cmd("pactl set-sink-volume @DEFAULT_SINK@ -5%")
--- local mute_volume     = hl.dsp.exec_cmd("pactl set-sink-mute @DEFAULT_SINK@ toggle")
--- local raise_mic       = hl.dsp.exec_cmd("pactl set-source-volume @DEFAULT_SOURCE@ +5%")
--- local lower_mic       = hl.dsp.exec_cmd("pactl set-source-volume @DEFAULT_SOURCE@ -5%")
--- local mute_mic        = hl.dsp.exec_cmd("pactl set-source-mute @DEFAULT_SOURCE@ toggle")
--- local brightness_up   = hl.dsp.exec_cmd("brightnessctl s +5%")
--- local brightness_down = hl.dsp.exec_cmd("brightnessctl s 5%-")
-
-local raise_volume    = hl.dsp.exec_cmd("swayosd-client --output-volume raise")
-local lower_volume    = hl.dsp.exec_cmd("swayosd-client --output-volume lower")
-local mute_volume     = hl.dsp.exec_cmd("swayosd-client --output-volume mute-toggle")
-local raise_mic       = hl.dsp.exec_cmd("swayosd-client --input-volume raise")
-local lower_mic       = hl.dsp.exec_cmd("swayosd-client --input-volume lower")
-local mute_mic        = hl.dsp.exec_cmd("swayosd-client --input-volume mute-toggle")
-local brightness_up   = hl.dsp.exec_cmd("swayosd-client --brightness raise")
-local brightness_down = hl.dsp.exec_cmd("swayosd-client --brightness lower")
+local raise_volume    = hl.dsp.exec_cmd("noctalia msg volume-up")
+local lower_volume    = hl.dsp.exec_cmd("noctalia msg volume-down")
+local mute_volume     = hl.dsp.exec_cmd("noctalia msg volume-mute")
+local raise_mic       = hl.dsp.exec_cmd("noctalia msg mic-volume-up")
+local lower_mic       = hl.dsp.exec_cmd("noctalia msg mic-volume-down")
+local mute_mic        = hl.dsp.exec_cmd("noctalia msg mic-mute")
+local brightness_up   = hl.dsp.exec_cmd("noctalia msg brightness-up")
+local brightness_down = hl.dsp.exec_cmd("noctalia msg brightness-down")
 
 
 hl.bind("XF86AudioRaiseVolume", raise_volume, { repeating = true })
@@ -130,11 +120,11 @@ end)
 local terminal = "uwsm app -- kitty"
 local browser = "uwsm app -- firefox"
 local private_browser = "uwsm app -- firefox --private-window"
-local launcher = "uwsm app -- wofi --show drun --run-command 'uwsm app -- %s'"
+local launcher = "noctalia msg panel-toggle launcher"
 local clipboard_manager = "cliphist list | uwsm app -- wofi --dmenu | cliphist decode | wl-copy"
-local system_menu = "uwsm app -- wlogout"
-local task_manager = "uwsm app -- st -f 'ComicShannsMono Nerd Font Mono-14' -c float btop"
-local lock_screen = "uwsm app -- hyprlock"
+local system_menu = "noctalia msg session logout"
+local task_manager = "noctalia msg panel-toggle control-center system"
+local lock_screen = "noctalia msg session lock"
 
 hl.bind(MOD .. " + ESCAPE", hl.dsp.exec_cmd(system_menu))
 hl.bind(MOD .. " + X", hl.dsp.exec_cmd(lock_screen))
