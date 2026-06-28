@@ -122,7 +122,7 @@ local browser = "uwsm app -- firefox"
 local private_browser = "uwsm app -- firefox --private-window"
 local launcher = "noctalia msg panel-toggle launcher"
 local clipboard_manager = "cliphist list | uwsm app -- wofi --dmenu | cliphist decode | wl-copy"
-local system_menu = "noctalia msg session logout"
+local system_menu = "noctalia msg panel-toggle session"
 local task_manager = "noctalia msg panel-toggle control-center system"
 local lock_screen = "noctalia msg session lock"
 
