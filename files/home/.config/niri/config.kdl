@@ -103,20 +103,24 @@ binds {
 
 
     F11 { fullscreen-window; }
+    Shift+F11 { maximize-window-to-edges; }
 
     Mod+Q { close-window; }
     Mod+F { toggle-window-floating; }
     Mod+O { toggle-overview; }
     Mod+M { fullscreen-window; }
+    Mod+Shift+M { maximize-window-to-edges; }
     Mod+C { center-column; }
-    Mod+BracketLeft  { consume-or-expel-window-left; }
+
+    Mod+BracketLeft { consume-or-expel-window-left; }
     Mod+BracketRight { consume-or-expel-window-right; }
-    Mod+Comma  { consume-window-into-column; }
-    Mod+Period { expel-window-from-column; }
-    Mod+G { switch-preset-column-width; }
-    Mod+Shift+G { switch-preset-column-width-back; }
-    Mod+Ctrl+Shift+G { switch-preset-window-height; }
-    Mod+Ctrl+G { reset-window-height; }
+    Mod+Shift+BracketLeft { expel-window-from-column; }
+    Mod+Shift+BracketRight { consume-window-into-column; }
+    Mod+BackSlash { toggle-column-tabbed-display; }
+
+    Mod+W { maximize-column; }
+    Mod+Shift+W { switch-preset-column-width; }
+    Mod+Ctrl+Shift+W { switch-preset-window-height; }
 
 
     XF86AudioRaiseVolume allow-when-locked=true { spawn "noctalia" "msg" "volume-up"; }
