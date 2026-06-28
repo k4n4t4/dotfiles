@@ -43,7 +43,7 @@ sudo pacman -S libsecret gnome-keyring
 
 
 # GUI niri
-sudo pacman -Syu niri xwayland-satellite xdg-desktop-portal-gnome xdg-desktop-portal-gtk dms-shell-niri matugen cava qt6-multimedia-ffmpeg polkit
+sudo pacman -Syu uwsm niri xwayland-satellite xdg-desktop-portal-gnome xdg-desktop-portal-gtk dms-shell-niri matugen cava qt6-multimedia-ffmpeg polkit
 yay -Syuu noctalia-git
 sudo pacman -S libnotify
 sudo pacman -S networkmanager network-manager-applet
