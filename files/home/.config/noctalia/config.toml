@@ -6,14 +6,14 @@ background_opacity = 0.4999999888241291
 border_width = 1.0
 capsule_thickness = 0.6699999887496233
 center = [ "active_window" ]
-end = [ "tray", "privacy", "group:g1", "clock", "notifications" ]
+end = [ "tray", "group:g1", "clock", "notifications" ]
 margin_edge = 0
 margin_ends = 0
 padding = 13
 radius = 0
 scale = 1.300000011920929
 shadow = false
-start = [ "session", "control-center", "launcher", "wallpaper", "taskbar" ]
+start = [ "session", "control-center", "launcher", "wallpaper", "privacy", "taskbar" ]
 thickness = 43
 widget_spacing = 12
 
