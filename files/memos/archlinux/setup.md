@@ -6,7 +6,7 @@
 sudo pacman -S linux-firmware sof-firmware efibootmgr os-prober dosfstools ntfs-3g grub base-devel
 
 # CLI Tools
-sudo pacman -S git git-delta github-cli fzf fd ripgrep zoxide eza bat btop htop trash-cli wget curl unzip zip less man-db wl-clipboard tree-sitter-cli fish starship neovim nodejs npm yazi
+sudo pacman -S git git-delta github-cli fzf fd ripgrep zoxide eza bat btop htop trash-cli wget curl unzip zip less man-db wl-clipboard tree-sitter-cli fish starship neovim nodejs npm yazi fastfetch
 
 # yay
 git clone https://aur.archlinux.org/yay.git /tmp/yay
