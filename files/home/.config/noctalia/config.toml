@@ -66,6 +66,7 @@ widget_order = [ "lockscreen-login-box@eDP-1" ]
 
 [shell]
 corner_radius_scale = 0.95000001415610313
+polkit_agent = true
 settings_show_advanced = true
 
     [shell.panel]
