@@ -87,6 +87,30 @@ window-rule {
 
 screenshot-path "~/pers/media/imgs/screenshots/%Y-%m-%d_%H-%M-%S.png"
 
+recent-windows {
+    debounce-ms 750
+    open-delay-ms 150
+
+    highlight {
+        active-color "#10109080"
+        urgent-color "#5050a0ff"
+        padding 3
+        corner-radius 0
+    }
+
+    previews {
+        max-height 480
+        max-scale 0.5
+    }
+
+    binds {
+        Mod+Tab         { next-window; }
+        Mod+Shift+Tab   { previous-window; }
+        Mod+grave       { next-window     filter="app-id"; }
+        Mod+Shift+grave { previous-window filter="app-id"; }
+    }
+}
+
 binds {
     Mod+Shift+Q { quit; }
     Mod+Shift+R { spawn "niri" "msg" "action" "reload-config"; }
@@ -171,21 +195,20 @@ binds {
 
     Mod+H { focus-column-left; }
     Mod+L { focus-column-right; }
-    // Mod+K { focus-window-up; }
-    // Mod+J { focus-window-down; }
-    Mod+K { focus-workspace-up; }
-    Mod+J { focus-workspace-down; }
-
-    Alt+Tab { focus-window-down-or-column-right; }
-    Alt+Shift+Tab { focus-window-up-or-column-left; }
-
+    Mod+K { focus-window-up; }
+    Mod+J { focus-window-down; }
+    // Mod+K { focus-workspace-up; }
+    // Mod+J { focus-workspace-down; }
 
     Mod+Shift+H { move-column-left; }
     Mod+Shift+L { move-column-right; }
-    // Mod+Shift+K { move-window-up; }
-    // Mod+Shift+J { move-window-down; }
-    Mod+Shift+K { move-window-to-workspace-up; }
-    Mod+Shift+J { move-window-to-workspace-down; }
+    Mod+Shift+K { move-window-up; }
+    Mod+Shift+J { move-window-down; }
+    // Mod+Shift+K { move-window-to-workspace-up; }
+    // Mod+Shift+J { move-window-to-workspace-down; }
+
+    Alt+Tab { focus-window-down-or-column-right; }
+    Alt+Shift+Tab { focus-window-up-or-column-left; }
 
     Mod+Alt+H { set-column-width "-10"; }
     Mod+Alt+L { set-column-width "+10"; }
