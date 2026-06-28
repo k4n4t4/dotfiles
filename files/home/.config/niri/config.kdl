@@ -123,7 +123,8 @@ binds {
     XF86AudioNext allow-when-locked=true { spawn "noctalia" "msg" "media" "next"; }
     XF86AudioPrev allow-when-locked=true { spawn "noctalia" "msg" "media" "previous"; }
 
-    Mod+Escape { spawn "noctalia" "msg" "session" "logout"; }
+
+    Mod+Escape { spawn "noctalia" "msg" "panel-toggle" "session"; }
     Mod+X { spawn "noctalia" "msg" "session" "lock"; }
     Mod+R { spawn "noctalia" "msg" "panel-toggle" "launcher"; }
     Mod+M { spawn "noctalia" "msg" "panel-toggle" "control-center" "system"; }
