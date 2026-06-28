@@ -79,7 +79,7 @@ window-rule {
     }
 }
 
-screenshot-path "~/pers/media/imgs/screenshots from %Y-%m-%d %H-%M-%S.png"
+screenshot-path "~/pers/media/imgs/screenshots/ from %Y-%m-%d %H-%M-%S.png"
 
 binds {
     Mod+Shift+Q { quit; }
