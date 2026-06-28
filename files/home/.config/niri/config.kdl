@@ -156,7 +156,6 @@ binds {
     Mod+8 { focus-workspace 8; }
     Mod+9 { focus-workspace 9; }
     Mod+0 { focus-workspace 10; }
-    Mod+Grave { focus-workspace 11; }
 
     Mod+Shift+1 { move-window-to-workspace 1; }
     Mod+Shift+2 { move-window-to-workspace 2; }
@@ -168,7 +167,6 @@ binds {
     Mod+Shift+8 { move-window-to-workspace 8; }
     Mod+Shift+9 { move-window-to-workspace 9; }
     Mod+Shift+0 { move-window-to-workspace 10; }
-    Mod+Shift+Grave { move-window-to-workspace 11; }
 
 
     Mod+H { focus-column-left; }
@@ -177,6 +175,9 @@ binds {
     // Mod+J { focus-window-down; }
     Mod+K { focus-workspace-up; }
     Mod+J { focus-workspace-down; }
+
+    Alt+Tab { focus-window-down-or-column-right; }
+    Alt+Shift+Tab { focus-window-up-or-column-left; }
 
 
     Mod+Shift+H { move-column-left; }
