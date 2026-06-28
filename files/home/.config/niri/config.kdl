@@ -1,5 +1,4 @@
 spawn-at-startup "uwsm" "app" "--" "fcitx5" "-d"
-spawn-at-startup "uwsm" "app" "--" "/usr/lib/mate-polkit/polkit-mate-authentication-agent-1"
 
 spawn-at-startup "uwsm" "app" "--" "noctalia"
 
