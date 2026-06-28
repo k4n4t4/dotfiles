@@ -39,7 +39,7 @@ sudo pacman -S brightnessctl
 sudo pacman -S power-profiles-daemon
 
 # Secure Storage
-sudo pacman -S libsecret gnome-keyring
+sudo pacman -S libsecret gnome-keyring seahorse
 
 
 # GUI niri
@@ -51,7 +51,7 @@ sudo pacman -S bluez bluez-utils blueman
 sudo pacman -S brightnessctl
 sudo pacman -S pipewire pipewire-alsa pipewire-jack pipewire-pulse wireplumber pavucontrol
 sudo pacman -S power-profiles-daemon
-sudo pacman -S libsecret gnome-keyring
+sudo pacman -S libsecret gnome-keyring seahorse
 
 
 # Applications
