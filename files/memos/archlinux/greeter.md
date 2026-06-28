@@ -5,7 +5,7 @@ sudo pacman -S greetd greetd-tuigreet
 
 ~~~/etc/greetd/config.toml
 [default_session]
-command = "tuigreet --time --remember --cmd uwsm start niri.desktop"
+command = "tuigreet --time --remember --remember-session --cmd uwsm start niri.desktop"
 user = "greeter"
 ~~~
 
