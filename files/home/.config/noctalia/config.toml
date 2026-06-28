@@ -2,27 +2,28 @@
 blur_intensity = 0.50999998860061169
 
 [bar.default]
-background_opacity = 0.4999999888241291
+background_opacity = 0.57999998703598976
+border = "on_primary"
 border_width = 1.0
 capsule_thickness = 0.6699999887496233
 center = [ "active_window" ]
-end = [ "tray", "group:g1", "clock", "notifications" ]
+end = [ "tray", "privacy", "group:g1", "clock", "notifications" ]
 margin_edge = 0
 margin_ends = 0
 padding = 13
 radius = 0
-scale = 1.300000011920929
+scale = 1.350000012665987
 shadow = false
-start = [ "session", "control-center", "launcher", "wallpaper", "privacy", "taskbar" ]
-thickness = 43
+start = [ "session", "control-center", "launcher", "clipboard", "wallpaper", "media", "taskbar" ]
+thickness = 41
 widget_spacing = 12
 
     [[bar.default.capsule_group]]
     border = ""
     fill = "on_secondary"
     id = "g1"
-    members = [ "media", "clipboard", "network", "bluetooth", "volume", "brightness", "battery" ]
-    opacity = 0.64999997615814209
+    members = [ "network", "bluetooth", "volume", "brightness", "battery" ]
+    opacity = 0.60000002384185791
     padding = 13.0
 
 [calendar]
