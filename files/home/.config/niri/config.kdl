@@ -2,7 +2,9 @@ spawn-at-startup "uwsm" "app" "--" "fcitx5" "-d"
 
 spawn-at-startup "uwsm" "app" "--" "noctalia"
 
-
+hotkey-overlay {
+    skip-at-startup
+}
 
 input {
     keyboard {
