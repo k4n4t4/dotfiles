@@ -1,3 +1,5 @@
+# Greeter
+
 ~~~bash
 # Greeter
 sudo pacman -S greetd greetd-tuigreet
