@@ -95,6 +95,11 @@ mkdir -p ~/.config/qt6ct
 echo -e "[Appearance]\nstyle=kvantum-dark" | tee ~/.config/qt6ct/qt6ct.conf
 kvantummanager --set KvAmbiance
 
+# nvidia
+# add option: nvidia_drm.modeset=1
+# if using limine, then add option to /boot/limine/limine.conf
+sudo pacman -S nvidia-open
+
 # intel
 sudo pacman -S intel-media-driver mesa
 sudo pacman -S mesa-utils
