@@ -51,7 +51,7 @@ if $use_niri; then
     sudo pacman --noconfirm -S fcitx5-im fcitx5-mozc
     sudo pacman --noconfirm -S noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-dejavu ttf-font-awesome ttf-jetbrains-mono-nerd
     yay -Syuu noctalia-git
-end
+fi
 
 
 # Applications
