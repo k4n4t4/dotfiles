@@ -1,9 +1,8 @@
-spawn-at-startup "uwsm" "app" "--" "fcitx5" "-d"
 spawn-at-startup "uwsm" "app" "--" "noctalia"
+spawn-at-startup "uwsm" "app" "--" "fcitx5" "-d"
 
 xwayland-satellite {
     off
-    // path "xwayland-satellite"
 }
 
 hotkey-overlay {
