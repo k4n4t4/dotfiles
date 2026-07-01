@@ -142,7 +142,7 @@ wallpaper_scheme = "m3-fruit-salad"
     enable_community_templates = false
 
 [wallpaper]
-directory_dark = "/home/kanata/pers/media/imgs/wallpapers"
+directory_dark = "~/pers/media/imgs/wallpapers"
 
 [widget.active_window]
 icon_size = 20
