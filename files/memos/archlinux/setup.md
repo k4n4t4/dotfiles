@@ -44,10 +44,11 @@ if $use_niri; then
     sudo pacman --noconfirm -S libnotify
     sudo pacman --noconfirm -S networkmanager network-manager-applet
     sudo pacman --noconfirm -S bluez bluez-utils blueman
+    sudo systemctl enable bluetooth
     sudo pacman --noconfirm -S brightnessctl
     sudo pacman --noconfirm -S pipewire pipewire-alsa pipewire-jack pipewire-pulse wireplumber pavucontrol
     sudo pacman --noconfirm -S power-profiles-daemon
-    sudo pacman --noconfirm -S libsecret gnome-keyring polkit-gnome seahorse
+    sudo pacman --noconfirm -S libsecret gnome-keyring seahorse
     sudo pacman --noconfirm -S fcitx5-im fcitx5-mozc
     sudo pacman --noconfirm -S noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-dejavu ttf-font-awesome ttf-jetbrains-mono-nerd
     yay -Syuu noctalia-git
