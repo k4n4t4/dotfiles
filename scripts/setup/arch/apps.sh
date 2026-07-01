@@ -1,1 +1,1 @@
-sudo pacman --noconfirm -S kitty firefox obsidian discord gimp vlc
+sudo pacman --needed --noconfirm -S kitty firefox obsidian discord gimp vlc

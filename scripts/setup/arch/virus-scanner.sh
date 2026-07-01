@@ -1,2 +1,2 @@
-sudo pacman --noconfirm -S clamav
+sudo pacman --needed --noconfirm -S clamav
 sudo freshclam

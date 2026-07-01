@@ -1,4 +1,4 @@
-sudo pacman -S sddm qt6-svg qt6-virtualkeyboard
+sudo pacman --needed -S sddm qt6-svg qt6-virtualkeyboard
 sudo systemctl enable sddm
 sudo git clone https://github.com/MarianArlt/sddm-sugar-dark.git /usr/share/sddm/themes/sddm-sugar-dark
 sudo pacman -S qt5-graphicaleffects qt5-quickcontrols2
