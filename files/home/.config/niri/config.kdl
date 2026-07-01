@@ -250,3 +250,5 @@ binds {
     Mod+Alt+K { set-window-height "-10"; }
     Mod+Alt+J { set-window-height "+10"; }
 }
+
+include "noctalia.kdl"
