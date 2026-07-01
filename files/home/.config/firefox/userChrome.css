@@ -150,8 +150,12 @@ body::before {
     pointer-events: none;
 }
 
+#urlbar .urlbar-background {
+    background-color: rgba(20, 20, 20, var(--custom-browser-opacity)) !important;
+}
+
 body {
-    background-color: rgba(140, 140, 140, var(--custom-browser-opacity)) !important;
+    background-color: rgba(100, 100, 100, var(--custom-browser-opacity)) !important;
     background-image: none !important;
 }
 
