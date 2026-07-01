@@ -59,9 +59,14 @@ behavior_order = [ "lock", "screen-off", "lock-and-suspend" ]
     timeout = 660.0
 
 [lockscreen_widgets]
-enabled = false
+enabled = true
 schema_version = 2
-widget_order = [ "lockscreen-login-box@DP-1", "lockscreen-login-box@eDP-1" ]
+widget_order = [
+    "lockscreen-login-box@DP-1",
+    "lockscreen-login-box@eDP-1",
+    "lockscreen-widget-0000000000000001",
+    "lockscreen-widget-0000000000000002"
+]
 
     [lockscreen_widgets.grid]
     cell_size = 16
@@ -72,18 +77,18 @@ widget_order = [ "lockscreen-login-box@DP-1", "lockscreen-login-box@eDP-1" ]
     box_height = 70.0
     box_width = 400.0
     cx = 960.0
-    cy = 961.0
+    cy = 832.0
     output = "DP-1"
     rotation = 0.0
     type = "login_box"
 
         [lockscreen_widgets.widget."lockscreen-login-box@DP-1".settings]
         background_color = "surface_variant"
-        background_opacity = 0.88
-        background_radius = 12.0
-        input_opacity = 1.0
-        input_radius = 6.0
-        show_login_button = true
+        background_opacity = 0.44
+        background_radius = 32.0
+        input_opacity = 0.90000000000000002
+        input_radius = 32.0
+        show_login_button = false
 
     [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
     box_height = 70.0
@@ -101,6 +106,38 @@ widget_order = [ "lockscreen-login-box@DP-1", "lockscreen-login-box@eDP-1" ]
         input_opacity = 1.0
         input_radius = 6.0
         show_login_button = true
+
+    [lockscreen_widgets.widget.lockscreen-widget-0000000000000001]
+    box_height = 256.0
+    box_width = 304.0
+    cx = 960.0
+    cy = 268.0
+    output = "DP-1"
+    rotation = 0.0
+    type = "clock"
+
+        [lockscreen_widgets.widget.lockscreen-widget-0000000000000001.settings]
+        background = false
+        circle = true
+        clock_style = "analog"
+        color = "secondary"
+
+    [lockscreen_widgets.widget.lockscreen-widget-0000000000000002]
+    box_height = 64.0
+    box_width = 224.0
+    cx = 960.0
+    cy = 428.0
+    output = "DP-1"
+    rotation = 0.0
+    type = "clock"
+
+        [lockscreen_widgets.widget.lockscreen-widget-0000000000000002.settings]
+        background = false
+        center_text = false
+        clock_style = "digital"
+        color = "secondary"
+        format = "{:%H:%M:%S}"
+        shadow = false
 
 [notification]
 background_opacity = 0.79999998211860657
@@ -149,14 +186,14 @@ settings_show_advanced = true
     direction = "center"
 
 [theme]
-builtin = "Gruvbox"
-community_palette = "Noctalia legacy"
+builtin = "Kanagawa"
+community_palette = "ADW"
 mode = "dark"
-source = "wallpaper"
+source = "builtin"
 wallpaper_scheme = "m3-fruit-salad"
 
     [theme.templates]
-    builtin_ids = [ "btop", "gtk3", "gtk4", "kitty", "niri", "qt", "starship" ]
+    builtin_ids = [ "btop", "gtk3", "gtk4", "kcolorscheme", "kitty", "niri", "qt", "starship" ]
     enable_builtin_templates = true
     enable_community_templates = false
 
