@@ -107,12 +107,14 @@ recent-windows {
     }
 
     binds {
-        Mod+Tab { next-window; }
-        Mod+Shift+Tab { previous-window; }
-        Mod+grave { next-window filter="app-id"; }
-        Mod+Shift+grave { previous-window filter="app-id"; }
+        Mod+Tab { next-window scope="all"; }
+        Mod+Shift+Tab { previous-window scope="all"; }
+        Mod+grave { next-window scope="all" filter="app-id"; }
+        Mod+Shift+grave { previous-window scope="all" filter="app-id"; }
         Alt+Tab { next-window scope="workspace"; }
         Alt+Shift+Tab { previous-window scope="workspace"; }
+        Alt+grave { next-window scope="workspace" filter="app-id"; }
+        Alt+Shift+grave { previous-window scope="workspace" filter="app-id"; }
     }
 }
 
@@ -193,9 +195,9 @@ binds {
     Mod+X { spawn "noctalia" "msg" "session" "lock"; }
     Mod+R { spawn "noctalia" "msg" "panel-toggle" "launcher"; }
     Mod+S { spawn "noctalia" "msg" "panel-toggle" "control-center" "system"; }
+    Mod+V { spawn "noctalia" "msg" "panel-toggle" "clipboard"; }
 
     Mod+T repeat=false { spawn "uwsm" "app" "--" "kitty"; }
-    Mod+V repeat=false { spawn-sh "cliphist list | uwsm app -- wofi --dmenu | cliphist decode | wl-copy"; }
     Mod+B repeat=false { spawn "uwsm" "app" "--" "firefox"; }
     Mod+Shift+B repeat=false { spawn "uwsm" "app" "--" "firefox" "--private-window"; }
 
