@@ -61,12 +61,29 @@ behavior_order = [ "lock", "screen-off", "lock-and-suspend" ]
 [lockscreen_widgets]
 enabled = false
 schema_version = 2
-widget_order = [ "lockscreen-login-box@eDP-1" ]
+widget_order = [ "lockscreen-login-box@DP-1", "lockscreen-login-box@eDP-1" ]
 
     [lockscreen_widgets.grid]
     cell_size = 16
     major_interval = 4
     visible = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@DP-1"]
+    box_height = 70.0
+    box_width = 400.0
+    cx = 960.0
+    cy = 961.0
+    output = "DP-1"
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@DP-1".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        input_opacity = 1.0
+        input_radius = 6.0
+        show_login_button = true
 
     [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
     box_height = 70.0
@@ -135,14 +152,25 @@ settings_show_advanced = true
 builtin = "Gruvbox"
 community_palette = "Noctalia legacy"
 mode = "dark"
+source = "wallpaper"
 wallpaper_scheme = "m3-fruit-salad"
 
     [theme.templates]
-    enable_builtin_templates = false
+    builtin_ids = [ "btop", "gtk3", "gtk4", "kitty", "niri", "qt", "starship" ]
+    enable_builtin_templates = true
     enable_community_templates = false
 
 [wallpaper]
 directory_dark = "~/pers/media/imgs/wallpapers"
+
+    [wallpaper.default]
+    path = "/home/kana/pers/media/imgs/wallpapers/wallpapaer1.png"
+
+    [wallpaper.last]
+    path = "/home/kana/pers/media/imgs/wallpapers/wallpapaer1.png"
+
+    [wallpaper.monitors.DP-1]
+    path = "/home/kana/pers/media/imgs/wallpapers/wallpapaer1.png"
 
 [widget.active_window]
 icon_size = 20
