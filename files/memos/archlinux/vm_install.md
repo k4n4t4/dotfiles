@@ -6,7 +6,7 @@ sudo systemctl enable libvirtd.service
 
 ~~~
 
-`sudo vim /etc/libvirt/libvirtd.conf` and comment out this
+`sudo vim /etc/libvirt/libvirtd.conf` and uncomment this
 
 ~~~
 unix_sock_group = "libvirt"
