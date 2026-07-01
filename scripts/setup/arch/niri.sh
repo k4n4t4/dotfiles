@@ -4,6 +4,7 @@ sudo pacman --noconfirm -S networkmanager
 sudo pacman --noconfirm -S bluez bluez-utils
 sudo systemctl enable bluetooth
 sudo pacman --noconfirm -S brightnessctl
+sudo pacman --noconfirm -Rs jack2
 sudo pacman --noconfirm -S pipewire pipewire-alsa pipewire-jack pipewire-pulse wireplumber
 sudo pacman --noconfirm -S power-profiles-daemon
 sudo pacman --noconfirm -S libsecret gnome-keyring seahorse
