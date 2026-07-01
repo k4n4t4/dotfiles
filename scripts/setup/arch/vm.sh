@@ -5,7 +5,7 @@ sudo sed -i -e 's/^#unix_sock_group = "libvirt"/unix_sock_group = "libvirt"/' -e
 sudo systemctl enable libvirtd.service
 
 sudo usermod -a -G libvirt $(whoami)
-newgrp libvirt
-
-sudo virsh net-start default
-sudo virsh net-autostart default
+sg libvirt -c '
+    virsh net-start default
+    virsh net-autostart default
+'
