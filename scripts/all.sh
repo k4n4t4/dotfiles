@@ -11,6 +11,7 @@ script_source starship
 script_source wezterm
 script_source hyprland
 script_source wofi
+script_source fcitx5
 script_source ags
 script_source fastfetch
 script_source kitty
