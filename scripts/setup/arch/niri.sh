@@ -4,7 +4,9 @@ sudo pacman --needed --noconfirm -S networkmanager
 sudo pacman --needed --noconfirm -S bluez bluez-utils
 sudo systemctl enable bluetooth
 sudo pacman --needed --noconfirm -S brightnessctl
-sudo pacman --noconfirm -Rdd jack2
+if pacman -Qq jack2 &> /dev/null; then
+    sudo pacman --noconfirm -Rdd jack2
+fi
 sudo pacman --needed --noconfirm -S pipewire-jack
 sudo pacman --needed --noconfirm -S pipewire pipewire-alsa pipewire-pulse wireplumber
 sudo pacman --needed --noconfirm -S power-profiles-daemon
