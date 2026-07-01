@@ -107,10 +107,12 @@ recent-windows {
     }
 
     binds {
-        Mod+Tab         { next-window; }
-        Mod+Shift+Tab   { previous-window; }
-        Mod+grave       { next-window     filter="app-id"; }
+        Mod+Tab { next-window; }
+        Mod+Shift+Tab { previous-window; }
+        Mod+grave { next-window filter="app-id"; }
         Mod+Shift+grave { previous-window filter="app-id"; }
+        Alt+Tab { next-window scope="workspace"; }
+        Alt+Shift+Tab { previous-window scope="workspace"; }
     }
 }
 
@@ -240,9 +242,6 @@ binds {
     Mod+Ctrl+Shift+L { move-column-right; }
     Mod+Ctrl+Shift+K { move-window-up; }
     Mod+Ctrl+Shift+J { move-window-down; }
-
-    Alt+Tab { focus-window-down-or-column-right; }
-    Alt+Shift+Tab { focus-window-up-or-column-left; }
 
     Mod+Alt+H { set-column-width "-10"; }
     Mod+Alt+L { set-column-width "+10"; }
