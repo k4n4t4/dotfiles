@@ -13,4 +13,5 @@ vim.lsp.enable {
     "ts_ls",
     "powershell_es",
     "lua_ls",
+    "bashls",
 }
