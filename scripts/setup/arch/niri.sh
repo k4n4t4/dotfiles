@@ -2,7 +2,7 @@ sudo pacman --needed --noconfirm -Syu uwsm niri xwayland-satellite xdg-desktop-p
 sudo pacman --needed --noconfirm -S libnotify
 sudo pacman --needed --noconfirm -S networkmanager
 sudo pacman --needed --noconfirm -S bluez bluez-utils
-sudo systemc--needed tl enable bluetooth
+sudo systemctl enable bluetooth
 sudo pacman --needed --noconfirm -S brightnessctl
 sudo pacman --noconfirm -Rdd jack2
 sudo pacman --needed --noconfirm -S pipewire-jack
