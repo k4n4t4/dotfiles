@@ -1,4 +1,13 @@
 sudo pacman --needed --noconfirm -Syu uwsm niri xwayland-satellite xdg-desktop-portal-gnome xdg-desktop-portal-gtk dms-shell-niri matugen cava qt6-multimedia-ffmpeg polkit
+
+if [ -f /usr/share/wayland-sessions/niri.desktop ]; then
+    if ! [ -f /usr/share/wayland-sessions/niri-uwsm.desktop ]; then
+        sudo cp /usr/share/wayland-sessions/niri.desktop /usr/share/wayland-sessions/niri-uwsm.desktop
+        sudo sed -i 's/^Name=Niri$/Name=Niri (uwsm)/' "/usr/share/wayland-sessions/niri-uwsm.desktop"
+        sudo sed -i 's/^Exec=niri-session$/Exec=uwsm start niri-session/' "/usr/share/wayland-sessions/niri-uwsm.desktop"
+    fi
+fi
+
 sudo pacman --needed --noconfirm -S libnotify
 sudo pacman --needed --noconfirm -S networkmanager
 sudo pacman --needed --noconfirm -S bluez bluez-utils
