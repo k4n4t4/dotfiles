@@ -31,9 +31,13 @@ input {
 
 prefer-no-csd
 
+layer-rule {
+    place-within-backdrop true
+}
+
 layout {
     gaps 0
-    background-color "#002233"
+    background-color "transparent"
     always-center-single-column
     center-focused-column "never"
     default-column-display "tabbed"
@@ -83,7 +87,6 @@ overview {
     backdrop-color "#001122"
 
     workspace-shadow {
-        off
         softness 40
         spread 10
         offset x=0 y=0
