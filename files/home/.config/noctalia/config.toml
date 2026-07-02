@@ -1,30 +1,33 @@
 [backdrop]
 blur_intensity = 0.50999998860061169
 
-[bar.default]
-background_opacity = 0.57999998703598976
-border = "on_primary"
-border_width = 1.0
-capsule_thickness = 0.6699999887496233
-center = [ "active_window" ]
-end = [ "tray", "privacy", "group:g1", "clock", "notifications" ]
-margin_edge = 0
-margin_ends = 0
-padding = 13
-radius = 0
-scale = 1.350000012665987
-shadow = false
-start = [ "session", "control-center", "launcher", "clipboard", "wallpaper", "media", "taskbar" ]
-thickness = 41
-widget_spacing = 12
+[bar]
+order = [ "default" ]
 
-    [[bar.default.capsule_group]]
-    border = ""
-    fill = "on_secondary"
-    id = "g1"
-    members = [ "network", "bluetooth", "volume", "brightness", "battery" ]
-    opacity = 0.60000002384185791
-    padding = 13.0
+    [bar.default]
+    background_opacity = 0.57999998703598976
+    border = "on_primary"
+    border_width = 1.0
+    capsule_thickness = 0.6699999887496233
+    center = [ "active_window" ]
+    end = [ "tray", "privacy", "group:g1", "clock", "notifications" ]
+    margin_edge = 0
+    margin_ends = 0
+    padding = 13
+    radius = 0
+    scale = 1.350000012665987
+    shadow = false
+    start = [ "session", "control-center", "launcher", "clipboard", "wallpaper", "media", "taskbar" ]
+    thickness = 41
+    widget_spacing = 12
+
+        [[bar.default.capsule_group]]
+        border = ""
+        fill = "on_secondary"
+        id = "g1"
+        members = [ "network", "bluetooth", "volume", "brightness", "battery" ]
+        opacity = 0.60000002384185791
+        padding = 13.0
 
 [calendar]
 enabled = true
@@ -57,6 +60,9 @@ behavior_order = [ "lock", "screen-off", "lock-and-suspend" ]
     action = "screen_off"
     enabled = true
     timeout = 660.0
+
+[location]
+auto_locate = true
 
 [lockscreen_widgets]
 enabled = true
@@ -142,6 +148,22 @@ widget_order = [
 [notification]
 background_opacity = 0.79999998211860657
 
+[plugin_settings."noctalia/mpvpaper"]
+video_directory = "~/pers/media/videos"
+
+[plugins]
+enabled = []
+
+    [[plugins.source]]
+    kind = "git"
+    location = "https://github.com/noctalia-dev/official-plugins"
+    name = "official"
+
+    [[plugins.source]]
+    kind = "git"
+    location = "https://github.com/noctalia-dev/community-plugins"
+    name = "community"
+
 [shell]
 corner_radius_scale = 0.95000001415610313
 polkit_agent = true
@@ -189,8 +211,8 @@ settings_show_advanced = true
 builtin = "Kanagawa"
 community_palette = "ADW"
 mode = "dark"
-source = "builtin"
-wallpaper_scheme = "m3-fruit-salad"
+source = "wallpaper"
+wallpaper_scheme = "m3-rainbow"
 
     [theme.templates]
     builtin_ids = [ "btop", "gtk3", "gtk4", "kcolorscheme", "kitty", "niri", "qt", "starship" ]
@@ -201,13 +223,13 @@ wallpaper_scheme = "m3-fruit-salad"
 directory_dark = "~/pers/media/imgs/wallpapers"
 
     [wallpaper.default]
-    path = "/home/kana/pers/media/imgs/wallpapers/wallpapaer1.png"
+    path = "~/pers/media/imgs/wallpapers/wallpaper.png"
 
     [wallpaper.last]
-    path = "/home/kana/pers/media/imgs/wallpapers/wallpapaer1.png"
+    path = "~/pers/media/imgs/wallpapers/wallpaper.png"
 
     [wallpaper.monitors.DP-1]
-    path = "/home/kana/pers/media/imgs/wallpapers/wallpapaer1.png"
+    path = "~/pers/media/imgs/wallpapers/wallpaper.png"
 
 [widget.active_window]
 icon_size = 20
