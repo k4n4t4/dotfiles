@@ -20,9 +20,6 @@ environment {
     // LIBVA_DRIVER_NAME "iHD"
 }
 
-xwayland-satellite {
-}
-
 hotkey-overlay {
     skip-at-startup
     hide-not-bound
