@@ -27,7 +27,7 @@ function M.setup()
     vim.g.loaded_netrwFileHandlers  = 1
     vim.g.loaded_getscript          = 1
     vim.g.loaded_getscriptPlugin    = 1
-    vim.g.loaded_man                = 1
+    vim.g.loaded_man                = nil
     vim.g.loaded_matchit            = 1
     vim.g.loaded_matchparen         = 1
     vim.g.loaded_remote_plugins     = 1

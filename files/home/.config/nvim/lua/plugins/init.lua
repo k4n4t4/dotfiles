@@ -33,7 +33,7 @@ require("lazy").setup({
                 "tohtml",
                 -- "editorconfig",
                 "gzip",
-                "man",
+                -- "man",
                 "matchit",
                 "matchparen",
                 "netrwPlugin",

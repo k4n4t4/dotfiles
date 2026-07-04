@@ -54,10 +54,14 @@ export LESS_TERMCAP_se=\033"[m"
 export LESS_TERMCAP_us=\033"[36m"
 export LESS_TERMCAP_ue=\033"[m"
 
-export EDITOR="nvim"
+export EDITOR="vim"
 
 export LANG=C.UTF-8
 
+if type -q nvim
+    export EDITOR="nvim"
+    export MANPAGER="nvim +Man!"
+end
 
 if type -q dm
     eval (dm shellenv)
