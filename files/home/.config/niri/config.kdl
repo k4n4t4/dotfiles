@@ -96,10 +96,17 @@ layout {
 }
 
 blur {
-    passes 3
-    offset 3.0
+    on
+    passes 2
+    offset 1.0
     noise 0.02
     saturation 1.5
+}
+
+window-rule {
+    background-effect {
+        blur true
+    }
 }
 
 overview {
