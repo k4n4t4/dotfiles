@@ -51,7 +51,7 @@ layer-rule {
 }
 
 layout {
-    gaps 0
+    gaps 10
     background-color "transparent"
     always-center-single-column
     center-focused-column "never"
@@ -73,13 +73,19 @@ layout {
     border {
         width 1
         active-color "#e07020ee"
-        inactive-color "#292999a0"
+        inactive-color "#292999e0"
     }
     focus-ring {
-        off
+        width 2
+        active-color "#e07020ee"
+        inactive-color "#292999e0"
     }
     shadow {
+        // on
         color "#3399ffff"
+        softness 10
+        spread 3
+        offset x=0 y=5
     }
     tab-indicator {
         hide-when-single-tab
@@ -90,7 +96,6 @@ layout {
 }
 
 blur {
-    off
     passes 3
     offset 3.0
     noise 0.02
@@ -107,6 +112,25 @@ overview {
         offset x=0 y=0
         color "#00000050"
     }
+}
+
+window-rule {
+    clip-to-geometry true
+    draw-border-with-background false
+    geometry-corner-radius 10
+}
+
+window-rule {
+    match is-floating=true
+
+    background-effect {
+        xray false
+    }
+}
+
+window-rule {
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    open-floating true
 }
 
 recent-windows {
@@ -134,26 +158,6 @@ recent-windows {
         Alt+grave { next-window scope="workspace" filter="app-id"; }
         Alt+Shift+grave { previous-window scope="workspace" filter="app-id"; }
     }
-}
-
-
-window-rule {
-    clip-to-geometry true
-    draw-border-with-background false
-    geometry-corner-radius 0
-}
-
-window-rule {
-    match is-floating=true
-
-    background-effect {
-        xray false
-    }
-}
-
-window-rule {
-    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
-    open-floating true
 }
 
 
