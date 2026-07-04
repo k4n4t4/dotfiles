@@ -155,7 +155,7 @@ body::before {
 }
 
 body {
-    background-color: rgba(100, 100, 100, var(--custom-browser-opacity)) !important;
+    background-color: rgba(20, 20, 20, var(--custom-browser-opacity)) !important;
     background-image: none !important;
 }
 
