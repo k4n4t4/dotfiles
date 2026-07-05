@@ -88,6 +88,9 @@ if type -q zoxide
     zoxide init fish --cmd z | source
 end
 
+if type -q navi
+    navi widget fish | source
+end
 
 # starship setup
 if type -q starship
