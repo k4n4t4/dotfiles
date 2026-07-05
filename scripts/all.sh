@@ -17,6 +17,7 @@ script_source fastfetch
 script_source kitty
 script_source sheldon
 script_source eza
+script_source navi
 script_source waybar
 script_source wlogout
 script_source mako
