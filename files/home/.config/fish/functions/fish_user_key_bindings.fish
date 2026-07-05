@@ -16,6 +16,6 @@ function fish_user_key_bindings
     bind --mode insert \cd 'keybind:dir-browser'
     bind --mode insert \cp 'keybind:paste-path'
     bind --mode insert \ch 'keybind:history-search'
-    bind --mode insert \cg 'keybind:git-status'
+    bind --mode insert \cs 'keybind:git-status'
     bind --mode insert \eC 'keybind:cd-recent'
 end
