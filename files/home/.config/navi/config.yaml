@@ -1,0 +1,11 @@
+style:
+  tag:
+    color: blue
+  comment:
+    color: white
+  snippet:
+    color: green
+
+cheats:
+  paths:
+    - ~/.config/navi/cheats
