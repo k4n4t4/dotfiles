@@ -171,6 +171,10 @@ if type zoxide > /dev/null 2>&1; then
     eval "$(zoxide init zsh)"
 fi
 
+if type navi > /dev/null 2>&1; then
+    eval "$(navi widget zsh)"
+fi
+
 if type yazi > /dev/null 2>&1; then
     function yazi() {
         local tmp=$(mktemp -t "yazi-cwd.XXXXXX")

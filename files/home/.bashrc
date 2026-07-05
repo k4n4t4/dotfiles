@@ -42,6 +42,10 @@ if type zoxide > /dev/null 2>&1; then
     eval "$(zoxide init bash)"
 fi
 
+if type navi > /dev/null 2>&1; then
+    eval "$(navi widget bash)"
+fi
+
 if [ -f ~/.fzf.bash ]; then
     . ~/.fzf.bash
 fi
