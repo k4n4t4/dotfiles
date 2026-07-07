@@ -9,7 +9,7 @@ $ file: ls -1
 # with symbols
 chmod <who><op><perm> <file>
 
-$ who: echo "u g o a" | tr ' ' '\n'
+$ who: printf "user\ngroups\nother\nall\n" --- --map "sed 's/user/u/; s/groups/g/; s/other/o/; s/all/a/'"
 $ op: echo "+ - =" | tr ' ' '\n'
-$ perm: echo "r w x" | tr ' ' '\n'
+$ perm: printf "read\nwrite\nexecute\n" --- --map "sed 's/read/r/; s/write/w/; s/execute/x/'"
 $ file: ls -1
