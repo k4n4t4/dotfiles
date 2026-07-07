@@ -1,19 +1,15 @@
-% pacman cheat
+% chmod cheat
 
-# pacman enable pacman of pacman
-sudo sed -i -e '/^\[options\]/,/^\[/ { /ILoveCandy/d }' -e '/^\[options\]/a ILoveCandy' /etc/pacman.conf
+# with number
+chmod <mode> <file>
 
-# pacman disable pacman of pacman
-sudo sed -i -e '/^\[options\]/,/^\[/ { /^ILoveCandy/d; /^#ILoveCandy/d }' -e '/^\[options\]/a #ILoveCandy' /etc/pacman.conf
+$ mode: echo "755 644 700 600" | tr ' ' '\n'
+$ file: ls -1
 
-# pacman remove orphan packages
-sudo pacman -Rns $(pacman -Qdtq)
+# with symbols
+chmod <who><op><perm> <file>
 
-# pacman remove cache packages
-sudo pacman -Sc
-
-# pacman remove cache packages all
-sudo pacman -Scc
-
-# pacman update
-sudo pacman -Syu
+$ who: echo "u g o a" | tr ' ' '\n'
+$ op: echo "+ - =" | tr ' ' '\n'
+$ perm: echo "r w x" | tr ' ' '\n'
+$ file: ls -1
