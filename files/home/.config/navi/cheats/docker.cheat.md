@@ -63,7 +63,7 @@ docker rmi -f <image_name>
 docker image prune
 
 
-$ host_path: ls -1a
+$ host_path: find "$PWD" -maxdepth 1
 $ command: bash
 $ engine: command -v docker >/dev/null 2>&1 && echo docker || echo podman
 $ image_name: <engine> images --- --header-lines 1 --map "awk '{print \$3}'"
