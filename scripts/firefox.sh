@@ -1,5 +1,13 @@
+firefox_folder=""
+
+if cmd_exists flatpak && flatpak info org.mozilla.firefox &>/dev/null; then
+    firefox_folder=~/.var/app/org.mozilla.firefox/config/mozilla/firefox
+fi
 if cmd_exists firefox; then
     firefox_folder=~/.config/mozilla/firefox
+fi
+
+if [ -n "$firefox_folder" ]; then
     firefox_profile_name="$(grep -m 1 '^Default=' $firefox_folder/profiles.ini | cut -d= -f2)"
     firefox_profile="$firefox_folder/$firefox_profile_name"
 
