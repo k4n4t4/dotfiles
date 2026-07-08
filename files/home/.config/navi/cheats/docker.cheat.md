@@ -1,7 +1,7 @@
 % docker
 
 # build image
-docker build -t <image_name> .
+docker build -t <new_image_name> .
 
 
 # run container
