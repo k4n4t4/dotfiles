@@ -12,4 +12,5 @@ cheats:
 
 finder:
   command: fzf
-  overrides: --height 15
+  overrides: --height 20
+  overrides_var: --height 20
