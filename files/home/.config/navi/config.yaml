@@ -12,5 +12,5 @@ cheats:
 
 finder:
   command: fzf
-  overrides: --height 20
-  overrides_var: --height 20
+  overrides: --layout=reverse --height 20
+  overrides_var: --layout=reverse --height 20
