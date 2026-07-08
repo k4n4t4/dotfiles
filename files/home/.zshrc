@@ -175,6 +175,10 @@ if type navi > /dev/null 2>&1; then
     eval "$(navi widget zsh)"
 fi
 
+if type podman > /dev/null 2>&1; then
+    alias docker=podman
+fi
+
 if type yazi > /dev/null 2>&1; then
     function yazi() {
         local tmp=$(mktemp -t "yazi-cwd.XXXXXX")

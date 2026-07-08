@@ -46,6 +46,10 @@ if type navi > /dev/null 2>&1; then
     eval "$(navi widget bash)"
 fi
 
+if type podman > /dev/null 2>&1; then
+    alias docker=podman
+fi
+
 if [ -f ~/.fzf.bash ]; then
     . ~/.fzf.bash
 fi
