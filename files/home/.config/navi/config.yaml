@@ -12,4 +12,4 @@ cheats:
 
 finder:
   command: fzf
-  overrides: --height 10
+  overrides: --height 15
