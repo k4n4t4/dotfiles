@@ -8,7 +8,7 @@ if cmd_exists firefox; then
 fi
 
 if [ -n "$firefox_folder" ]; then
-    firefox_profile_name="$(grep -m 1 '^Default=' $firefox_folder/profiles.ini | cut -d= -f2)"
+    firefox_profile_name="$(awk -F= '/^\[Install/ {f=1} f && /^Default=/ {print $2; exit}' "$firefox_folder/profiles.ini")"
     firefox_profile="$firefox_folder/$firefox_profile_name"
 
     if [ -d "$firefox_profile" ]; then
