@@ -2,7 +2,9 @@ firefox_folder=""
 
 if cmd_exists flatpak && flatpak info org.mozilla.firefox &>/dev/null; then
     firefox_folder=~/.var/app/org.mozilla.firefox/config/mozilla/firefox
+    flatpak override --user --filesystem="$DOT_ORIGIN_PATH/home/.config/firefox":ro org.mozilla.firefox
 fi
+
 if cmd_exists firefox; then
     firefox_folder=~/.config/mozilla/firefox
 fi
