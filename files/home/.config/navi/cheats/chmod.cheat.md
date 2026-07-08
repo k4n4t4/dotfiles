@@ -1,4 +1,4 @@
-% chmod cheat
+% chmod
 
 # with number
 chmod <mode> <file>

@@ -1,4 +1,4 @@
-% pacman cheat
+% pacman
 
 # enable pacman of pacman
 sudo sed -i -e '/^\[options\]/,/^\[/ { /ILoveCandy/d }' -e '/^\[options\]/a ILoveCandy' /etc/pacman.conf
