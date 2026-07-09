@@ -19,7 +19,6 @@ git stash list
 git stash show '<stash>'
 
 
-
 $ branch: git for-each-ref --format='%(objectname:short) %(refname:short)' --- --map 'awk "{print \$2}"'
 $ commit: git log --oneline --- --map 'awk "{print \$1}"'
 $ stash: git stash list --- --map "cut -d: -f1"
