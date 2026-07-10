@@ -1,7 +1,6 @@
 vim.loader.enable()
 
 require "utils.startup_time".setup { show = true }
-require "utils.disable_plugins".setup()
 
 local info = require "utils.info"
 
@@ -11,5 +10,7 @@ else
     require "core"
     require "plugins"
 end
+
+require "utils.disable_plugins".setup()
 
 pcall(require, "config")
