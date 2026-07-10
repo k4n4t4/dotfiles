@@ -12,4 +12,12 @@ else
     require "plugins"
 end
 
-pcall(require, "config")
+vim.opt.shell = "fish"
+pcall(vim.cmd.colorscheme, "solarized-osaka")
+require("utils.transparent").enable()
+vim.opt.number = true
+vim.opt.relativenumber = false
+require("utils.toggle_relnumber").enable()
+vim.opt.mouse = "a"
+vim.opt.scrolloff = 5
+vim.opt.sidescrolloff = 5
