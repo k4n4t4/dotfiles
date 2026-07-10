@@ -1,7 +1,7 @@
 vim.loader.enable()
 
 -- require "utils.startup_time".setup { show = true }
-require "utils.disable_plugins".setup()
+-- require "utils.disable_plugins".setup()
 
 local info = require "utils.info"
 
@@ -9,7 +9,7 @@ if info.env.is_vscode() then
     require "vscode-nvim"
 else
     require "core"
-    require "plugins"
+    -- require "plugins"
 end
 
 vim.opt.shell = "fish"
