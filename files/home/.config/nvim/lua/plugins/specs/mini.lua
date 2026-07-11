@@ -9,7 +9,9 @@ return {
                 pattern = 'MiniFilesBufferCreate',
                 callback = function(args)
                     local b = args.data.buf_id
-                    vim.keymap.set('n', '<CR>', files.go_in, { buffer = b, desc = 'Go in' })
+                    vim.keymap.set('n', '<CR>', function()
+                        files.go_in { close_on_file = true }
+                    end, { buffer = b, desc = 'Go in' })
                     vim.keymap.set('n', '<S-CR>', files.go_out, { buffer = b, desc = 'Go out' })
                     vim.keymap.set('n', '<Leader>e', files.close, { buffer = b, desc = 'Close' })
                     vim.keymap.set('n', '<ESC>', files.close, { buffer = b, desc = 'Close' })
