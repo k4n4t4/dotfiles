@@ -16,7 +16,6 @@ vim.opt.clipboard:append("unnamedplus")
 vim.opt.isfname:append("@-@")
 
 -- encoding
-vim.opt.fileencoding = "utf-8"
 vim.opt.fileencodings = {
     "utf-8",
     "utf-16",
