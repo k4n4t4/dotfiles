@@ -3,14 +3,24 @@ return {
         "nvim-mini/mini.files",
         event = "VeryLazy",
         config = function()
-            require("mini.files").setup()
+            local files = require("mini.files")
+            files.setup()
+            vim.api.nvim_create_autocmd('User', {
+                pattern = 'MiniFilesBufferCreate',
+                callback = function(args)
+                    local b = args.data.buf_id
+                    vim.keymap.set('n', '<CR>', files.go_in, { buffer = b, desc = 'Go in' })
+                    vim.keymap.set('n', '<S-CR>', files.go_out, { buffer = b, desc = 'Go out' })
+                    vim.keymap.set('n', '<Leader>e', files.close, { buffer = b, desc = 'Close' })
+                end,
+            })
         end,
         keys = {
             {
                 mode = 'n',
-                '<Leader>-',
+                '<Leader>e',
                 '<CMD>lua MiniFiles.open()<CR>',
-                desc = 'Oil'
+                desc = 'MiniFiles toggle'
             },
         },
     },
@@ -94,6 +104,18 @@ return {
         event = "User Ready",
         config = function()
             require("mini.git").setup()
+        end,
+    },
+    {
+        "nvim-mini/mini.pick",
+        event = "User Ready",
+        config = function()
+            local pick = require("mini.pick")
+            pick.setup()
+            vim.ui.select = pick.ui_select
+            vim.keymap.set('n', '<space>ff', function()
+                pick.builtin.files({ tool = 'git' })
+            end, { desc = 'mini.pick.files' })
         end,
     },
 }
