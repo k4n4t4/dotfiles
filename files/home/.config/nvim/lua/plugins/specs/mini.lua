@@ -16,6 +16,7 @@ return {
     },
     {
         "nvim-mini/mini.surround",
+        event = "VeryLazy",
         config = function()
             local surround = require("mini.surround")
 
@@ -59,32 +60,31 @@ return {
             local spec_treesitter = ai.gen_spec.treesitter
             ai.setup {
                 custom_textobjects = {
-                    f = spec_treesitter {
-                        a = "@function.outer",
-                        i = "@function.inner",
-                    },
-                    c = spec_treesitter {
-                        a = "@class.outer",
-                        i = "@class.inner",
-                    },
-                    b = spec_treesitter {
-                        a = "@block.outer",
-                        i = "@block.inner",
-                    },
-                    a = spec_treesitter {
-                        a = "@parameter.outer",
-                        i = "@parameter.inner",
-                    },
+                    f = spec_treesitter { a = "@function.outer", i = "@function.inner" },
+                    c = spec_treesitter { a = "@class.outer", i = "@class.inner" },
+                    b = spec_treesitter { a = "@block.outer", i = "@block.inner" },
+                    a = spec_treesitter { a = "@parameter.outer", i = "@parameter.inner" },
                     o = spec_treesitter {
-                        a = {
-                            "@conditional.outer",
-                            "@loop.outer",
-                        },
-                        i = {
-                            "@conditional.inner",
-                            "@loop.inner",
-                        },
+                        a = { "@conditional.outer", "@loop.outer" },
+                        i = { "@conditional.inner", "@loop.inner" },
                     },
+                },
+            }
+        end,
+    },
+    {
+        "nvim-mini/mini.diff",
+        event = "User Ready",
+        config = function()
+            require("mini.diff").setup {
+                view = {
+                    style = "sign",
+                    signs = {
+                        add = "┃",
+                        change = "┃",
+                        delete = "_",
+                    },
+                    priority = 6,
                 },
             }
         end,
