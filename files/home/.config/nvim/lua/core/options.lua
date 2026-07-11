@@ -61,10 +61,11 @@ vim.opt.inccommand = "split"
 
 -- transparent
 require("utils.transparent").enable()
+vim.keymap.set('n', '<leader>T', require "utils.transparent".toggle, { desc = "Toggle Transparency" })
 
 -- line number
 vim.opt.number = true
-vim.opt.relativenumber = false
+vim.opt.relativenumber = true
 require("utils.toggle_relnumber").enable()
 
 -- shortmess
@@ -126,8 +127,7 @@ vim.diagnostic.config {
         },
     },
 }
-local hi = require "utils.highlight"
-hi.set("DiagnosticUnnecessary", { link = "NONE", default = false })
+vim.api.nvim_set_hl(0, "DiagnosticUnnecessary", { link = "NONE", default = false })
 
 
 --[[ BUILTIN PLUGINS ]]--
