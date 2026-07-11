@@ -59,6 +59,9 @@ vim.opt.wildmode = "list:full"
 -- incremental command
 vim.opt.inccommand = "split"
 
+-- autocomplete
+vim.opt.autocomplete = true
+
 
 --[[ UI SETTINGS ]]--
 
