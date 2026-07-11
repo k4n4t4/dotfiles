@@ -1,6 +1,9 @@
+local enable_mini = true
+
 return {
     {
         "nvim-mini/mini.files",
+        enabled = enable_mini,
         event = "VeryLazy",
         config = function()
             local files = require("mini.files")
@@ -29,6 +32,7 @@ return {
     },
     {
         "nvim-mini/mini.surround",
+        enabled = enable_mini,
         event = "VeryLazy",
         config = function()
             local surround = require("mini.surround")
@@ -54,6 +58,7 @@ return {
     },
     {
         "nvim-mini/mini.pairs",
+        enabled = enable_mini,
         event = "InsertEnter",
         config = function()
             require("mini.pairs").setup()
@@ -61,6 +66,7 @@ return {
     },
     {
         "nvim-mini/mini.ai",
+        enabled = enable_mini,
         dependencies = {
             {
                 "nvim-treesitter/nvim-treesitter-textobjects",
@@ -87,6 +93,7 @@ return {
     },
     {
         "nvim-mini/mini.diff",
+        enabled = enable_mini,
         event = "User Ready",
         config = function()
             require("mini.diff").setup {
@@ -104,6 +111,7 @@ return {
     },
     {
         "nvim-mini/mini-git",
+        enabled = enable_mini,
         event = "User Ready",
         config = function()
             require("mini.git").setup()
@@ -111,6 +119,7 @@ return {
     },
     {
         "nvim-mini/mini.pick",
+        enabled = enable_mini,
         dependencies = {
             "nvim-mini/mini.extra"
         },
@@ -206,6 +215,7 @@ return {
     },
     {
         "nvim-mini/mini.notify",
+        enabled = enable_mini,
         event = "User Ready",
         config = function()
             local notify = require("mini.notify")
@@ -221,12 +231,14 @@ return {
     },
     {
         "nvim-mini/mini.icons",
+        enabled = enable_mini,
         config = function()
             require('mini.icons').setup()
         end,
     },
     {
         "nvim-mini/mini.statusline",
+        enabled = enable_mini,
         event = "VeryLazy",
         config = function()
             local statusline = require("mini.statusline")
@@ -292,6 +304,7 @@ return {
     },
     {
         "nvim-mini/mini.tabline",
+        enabled = enable_mini,
         event = "VeryLazy",
         config = function()
             require('mini.tabline').setup()
@@ -310,12 +323,14 @@ return {
     },
     {
         "nvim-mini/mini.sessions",
+        enabled = enable_mini,
         config = function()
             require('mini.sessions').setup()
         end,
     },
     {
         "nvim-mini/mini.base16",
+        enabled = enable_mini,
         event = "User Ready",
         config = function()
             require('mini.base16').setup {
@@ -344,6 +359,7 @@ return {
     },
     {
         "nvim-mini/mini.hipatterns",
+        enabled = enable_mini,
         dependencies = {
             "nvim-mini/mini.extra"
         },

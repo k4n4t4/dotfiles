@@ -2,6 +2,25 @@ return {
     { "nvim-tree/nvim-web-devicons" },
 
     {
+        "zbirenbaum/copilot.lua",
+        cmd = "Copilot",
+        event = 'InsertEnter',
+        opts = {
+            filetypes = {
+                ["*"] = true,
+            },
+            suggestion = {
+                enabled = false,
+                auto_trigger = true,
+                keymap = {
+                    accept = "<M-l>",
+                },
+            },
+            panel = { enabled = false },
+        },
+    },
+
+    {
         "folke/flash.nvim",
         keys = {
             { mode = "n",               "f" },
@@ -18,37 +37,6 @@ return {
     },
 
     {
-        "shellRaining/hlchunk.nvim",
-        event = 'User Ready',
-        config = function()
-            require("hlchunk").setup {
-                chunk = {
-                    enable = true,
-                    style = {
-                        { fg = "#303030" },
-                        { fg = "#903020" },
-                    },
-                    use_treesitter = true,
-                    chars = {
-                        horizontal_line = "─",
-                        vertical_line = "│",
-                        left_top = "┌",
-                        left_bottom = "└",
-                        right_arrow = ">",
-                    },
-                    textobject = "",
-                    max_file_size = 1024 * 1024,
-                    error_sign = true,
-                    delay = 0,
-                },
-                indent = {
-                    enable = false,
-                },
-            }
-        end,
-    },
-
-    {
         'Bekaboo/dropbar.nvim',
         dependencies = {
             'nvim-telescope/telescope-fzf-native.nvim',
@@ -61,44 +49,6 @@ return {
             vim.keymap.set('n', '[;', dropbar_api.goto_context_start, { desc = 'Go to start of current context' })
             vim.keymap.set('n', '];', dropbar_api.select_next_context, { desc = 'Select next context' })
         end
-    },
-
-    {
-        "folke/trouble.nvim",
-        cmd = "Trouble",
-        keys = {
-            {
-                "<LEADER>xx",
-                "<CMD>Trouble diagnostics toggle<cr>",
-                desc = "Diagnostics (Trouble)",
-            },
-            {
-                "<LEADER>xX",
-                "<CMD>Trouble diagnostics toggle filter.buf=0<cr>",
-                desc = "Buffer Diagnostics (Trouble)",
-            },
-            {
-                "<LEADER>xs",
-                "<CMD>Trouble symbols toggle focus=false<cr>",
-                desc = "Symbols (Trouble)",
-            },
-            {
-                "<LEADER>xl",
-                "<CMD>Trouble lsp toggle focus=false win.position=right<cr>",
-                desc = "LSP Definitions / references / ... (Trouble)",
-            },
-            {
-                "<LEADER>xL",
-                "<CMD>Trouble loclist toggle<cr>",
-                desc = "Location List (Trouble)",
-            },
-            {
-                "<LEADER>xQ",
-                "<CMD>Trouble qflist toggle<cr>",
-                desc = "Quickfix List (Trouble)",
-            },
-        },
-        opts = {},
     },
 
     {
@@ -141,6 +91,46 @@ return {
                 pattern = "*",
                 callback = setup_obsidian,
             })
+        end,
+    },
+
+    {
+        "mfussenegger/nvim-dap",
+        dependencies = {
+            "rcarriga/nvim-dap-ui",
+            "nvim-neotest/nvim-nio",
+        },
+        keys = {
+            { '<F5>',      function() require('dap').continue() end,         desc = 'DAP Continue' },
+            { '<F10>',     function() require('dap').step_over() end,        desc = 'DAP Step Over' },
+            { '<F11>',     function() require('dap').step_into() end,        desc = 'DAP Step Into' },
+            { '<F12>',     function() require('dap').step_out() end,         desc = 'DAP Step Out' },
+            { '<Leader>b', function() require('dap').toggle_breakpoint() end, desc = 'DAP Toggle Breakpoint' },
+        },
+        config = function()
+            local dap, dapui = require("dap"), require("dapui")
+
+            dapui.setup()
+
+            dap.listeners.before.attach.dapui_config = function() dapui.open() end
+            dap.listeners.before.launch.dapui_config = function() dapui.open() end
+            dap.listeners.before.event_terminated.dapui_config = function() dapui.close() end
+            dap.listeners.before.event_exited.dapui_config = function() dapui.close() end
+
+            vim.keymap.set('n', '<F5>', function() dap.continue() end)
+            vim.keymap.set('n', '<F10>', function() dap.step_over() end)
+            vim.keymap.set('n', '<F11>', function() dap.step_into() end)
+            vim.keymap.set('n', '<F12>', function() dap.step_out() end)
+            vim.keymap.set('n', '<Leader>b', function() dap.toggle_breakpoint() end)
+
+            local fs = require "utils.fs"
+            fs.scandir_dot("plugins.dap", function(fname, name, t)
+                local ex = fs.get_extension(fname)
+                if t == "file" and ex == "lua" then
+                    local lang = fs.get_basename(name)
+                    require("plugins.dap." .. lang)
+                end
+            end)
         end,
     },
 }
