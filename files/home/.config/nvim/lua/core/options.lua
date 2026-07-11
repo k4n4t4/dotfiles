@@ -10,7 +10,10 @@ vim.env.EDITOR = "nvim --server \"$NVIM\" --remote-tab"
 vim.opt.mouse = "a"
 
 -- clipboard
-vim.opt.clipboard = "unnamedplus"
+vim.opt.clipboard:append("unnamedplus")
+
+-- filename characters
+vim.opt.isfname:append("@-@")
 
 -- encoding
 vim.opt.fileencoding = "utf-8"
