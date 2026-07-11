@@ -10,5 +10,3 @@ else
     require "plugins"
     require "core"
 end
-
-require "utils.disable_plugins".setup()
