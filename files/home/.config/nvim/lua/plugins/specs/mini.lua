@@ -118,4 +118,46 @@ return {
             end, { desc = 'mini.pick.files' })
         end,
     },
+    {
+        "nvim-mini/mini.notify",
+        event = "User Ready",
+        config = function()
+            local notify = require("mini.notify")
+
+            notify.setup {
+                lsp_progress = {
+                    enable = true,
+                },
+            }
+
+            vim.notify = notify.make_notify()
+        end,
+    },
+    -- {
+    --     "nvim-mini/mini.sessions",
+    --     version = false,
+    --     config = function()
+    --         require('mini.sessions').setup()
+    --     end,
+    --     keys = {
+    --         { "<leader>sd", function() require('mini.sessions').delete() end, desc = "Delete Sessions" },
+    --         { "<leader>sl", function() require('mini.sessions').select() end, desc = "List Sessions" },
+    --         { "<leader>ss", function() require('mini.sessions').write() end, desc = "Save Session" },
+    --     },
+    --     init = function()
+    --         vim.api.nvim_create_autocmd("VimLeave", {
+    --             callback = function()
+    --                 require('mini.sessions').write(vim.fn.getcwd())
+    --             end,
+    --         })
+    --
+    --         vim.api.nvim_create_autocmd("VimEnter", {
+    --             callback = function()
+    --                 if vim.fn.argc() == 0 then
+    --                     require('mini.sessions').read(vim.fn.getcwd())
+    --                 end
+    --             end,
+    --         })
+    --     end,
+    -- }
 }
