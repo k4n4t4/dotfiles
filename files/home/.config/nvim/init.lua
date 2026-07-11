@@ -9,8 +9,8 @@ if info.env.is_vscode() then
 else
     require "core.autocmd"
     require "core.keymaps"
-    require "plugins"
-    -- require "core.ui"
+    require "core.ui"
     require "core.lsp"
+    require "plugins"
     require "core.options"
 end

@@ -10,16 +10,14 @@ return function()
             status.sign(winid) ..
             "%=" ..
             (vim.wo[winid].number and status.number() or "") ..
-            status.fold() ..
-            (vim.wo[winid].number and status.separator() or "")
+            status.fold()
         )
     else
         return (
             "%s" ..
             "%=" ..
             (vim.wo[winid].number and "%l" or "") ..
-            status.fold() ..
-            (vim.wo[winid].number and "│" or "")
+            status.fold()
         )
     end
 end
