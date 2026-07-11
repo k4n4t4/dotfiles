@@ -15,3 +15,13 @@ vim.lsp.enable {
     "lua_ls",
     "bashls",
 }
+
+-- filetype
+vim.filetype.add {
+    extension = {
+        jsp = "jsp",
+    },
+}
+
+-- treesitter
+vim.treesitter.language.register("html", "jsp")
