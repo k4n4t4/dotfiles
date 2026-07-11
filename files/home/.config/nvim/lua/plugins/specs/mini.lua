@@ -1,6 +1,9 @@
 local enable_mini = true
 
 return {
+    --[[ EDITING PLUGINS ]]--
+
+    -- explorer
     {
         "nvim-mini/mini.files",
         enabled = enable_mini,
@@ -30,6 +33,7 @@ return {
             },
         },
     },
+    -- surround
     {
         "nvim-mini/mini.surround",
         enabled = enable_mini,
@@ -56,6 +60,7 @@ return {
             vim.keymap.set('x', 'S', [[:<C-u>lua MiniSurround.add('visual')<CR>]], { silent = true })
         end,
     },
+    -- autopairs
     {
         "nvim-mini/mini.pairs",
         enabled = enable_mini,
@@ -64,6 +69,7 @@ return {
             require("mini.pairs").setup()
         end,
     },
+    -- textobjects
     {
         "nvim-mini/mini.ai",
         enabled = enable_mini,
@@ -91,6 +97,7 @@ return {
             }
         end,
     },
+    -- git
     {
         "nvim-mini/mini.diff",
         enabled = enable_mini,
@@ -117,6 +124,7 @@ return {
             require("mini.git").setup()
         end,
     },
+    -- pickers
     {
         "nvim-mini/mini.pick",
         enabled = enable_mini,
@@ -136,18 +144,14 @@ return {
             -- all pickers
             set('n', '<leader>fp', function()
                 local available_pickers = {}
-
                 for name, func in pairs(pick.builtin) do
                     available_pickers[name] = func
                 end
-
                 for name, func in pairs(extra.pickers) do
                     available_pickers[name] = func
                 end
-
                 local picker_names = vim.tbl_keys(available_pickers)
                 table.sort(picker_names)
-
                 pick.start({
                     source = {
                         name = 'All Pickers',
@@ -213,6 +217,35 @@ return {
             end, { desc = "Pick LSP Document Symbols" })
         end,
     },
+    -- sessions
+    {
+        "nvim-mini/mini.sessions",
+        enabled = enable_mini,
+        config = function()
+            require('mini.sessions').setup()
+        end,
+    },
+    -- jump
+    {
+        "nvim-mini/mini.jump",
+        enabled = enable_mini,
+        event = "User Ready",
+        config = function()
+            require("mini.jump").setup()
+        end,
+    },
+    {
+        "nvim-mini/mini.jump2d",
+        enabled = enable_mini,
+        event = "User Ready",
+        config = function()
+            require("mini.jump2d").setup()
+        end,
+    },
+
+    --[[ UI PLUGINS ]]--
+
+    -- notifications
     {
         "nvim-mini/mini.notify",
         enabled = enable_mini,
@@ -229,6 +262,7 @@ return {
             vim.notify = notify.make_notify()
         end,
     },
+    -- icons
     {
         "nvim-mini/mini.icons",
         enabled = enable_mini,
@@ -236,13 +270,7 @@ return {
             require('mini.icons').setup()
         end,
     },
-    {
-        "nvim-mini/mini.sessions",
-        enabled = enable_mini,
-        config = function()
-            require('mini.sessions').setup()
-        end,
-    },
+    -- themes
     {
         "nvim-mini/mini.base16",
         enabled = enable_mini,
@@ -272,6 +300,7 @@ return {
             require("utils.transparent").enable()
         end,
     },
+    -- highlight patterns
     {
         "nvim-mini/mini.hipatterns",
         enabled = enable_mini,
