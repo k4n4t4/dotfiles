@@ -6,17 +6,6 @@ return {
     { "norcalli/nvim-colorizer.lua", event = 'User Ready' },
 
     {
-        "windwp/nvim-autopairs",
-        event = "InsertEnter",
-        config = function()
-            require("nvim-autopairs").setup {
-                check_ts = true,
-                ts_config = { },
-            }
-        end,
-    },
-
-    {
         "folke/flash.nvim",
         keys = {
             { mode = "n",               "f" },
@@ -150,23 +139,6 @@ return {
                 autoload_mode = config.AutoloadMode.CurrentDir,
             })
         end,
-    },
-
-    {
-        "kylechui/nvim-surround",
-        version = "^3.0.0",
-        event = "User Ready",
-        opts = {
-            keymaps = {
-                normal      = "ys",
-                normal_cur  = "yss",
-                normal_line = "yS",
-                visual      = "S",
-                visual_line = "S",
-                delete      = "ds",
-                change      = "cs",
-            },
-        },
     },
 
     {
