@@ -325,23 +325,40 @@ function M.buf.search_count(bufnr)
     return search
 end
 
---- Returns gitsigns status for the buffer (head, added, changed, removed), or nil if unavailable.
---- @param bufnr integer
---- @return table|nil Table with keys `head`, `added`, `changed`, `removed`
-function M.buf.gitsigns(bufnr)
+--- Returns git status for the buffer (head, added, changed, removed), or nil if unavailable.
+--- Supports both gitsigns.nvim and mini.git + mini.diff.
+--- @param bufnr? integer
+--- @return table|nil
+function M.buf.git(bufnr)
     local b = (bufnr == 0 or bufnr == nil) and vim.api.nvim_get_current_buf() or bufnr
-    if not vim.api.nvim_buf_is_valid(b) then return nil end
+    if not vim.api.nvim_buf_is_valid(b or 0) then
+        return nil
+    end
 
-    local status = vim.b[b].gitsigns_status_dict
+    -- gitsigns.nvim
+    local gs = vim.b[b].gitsigns_status_dict
+    if gs then
+        return {
+            head = gs.head,
+            added = gs.added,
+            changed = gs.changed,
+            removed = gs.removed,
+        }
+    end
 
-    if not status then return nil end
+    -- mini.git + mini.diff
+    local git = vim.b[b].minigit_summary
+    local diff = vim.b[b].minidiff_summary
+    if git or diff then
+        return {
+            head = git and git.head_name or nil,
+            added = diff and diff.add or 0,
+            changed = diff and diff.change or 0,
+            removed = diff and diff.delete or 0,
+        }
+    end
 
-    return {
-        head    = status.head,
-        added   = status.added,
-        changed = status.changed,
-        removed = status.removed,
-    }
+    return nil
 end
 
 M.tab = {}

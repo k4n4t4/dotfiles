@@ -10,7 +10,7 @@ local git_props = {
 return function()
     local bufnr = vim.api.nvim_win_get_buf(vim.g.statusline_winid)
     local format = {}
-    local status = info.buf.gitsigns(bufnr)
+    local status = info.buf.git(bufnr)
     if status then
         table.insert(format, "%#" .. git_props.branch.hi .. "#" .. (status.head or "") .. "%*")
         if status.added and status.added > 0 then table.insert(format,
