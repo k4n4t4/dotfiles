@@ -89,4 +89,11 @@ return {
             }
         end,
     },
+    {
+        "nvim-mini/mini-git",
+        event = "User Ready",
+        config = function()
+            require("mini.git").setup()
+        end,
+    },
 }
