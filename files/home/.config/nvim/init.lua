@@ -9,9 +9,6 @@ require "core"
 -- default shell
 vim.opt.shell = "fish"
 
--- colorscheme
-pcall(vim.cmd.colorscheme, "solarized-osaka")
-
 -- transparent
 require("utils.transparent").enable()
 
