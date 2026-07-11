@@ -111,14 +111,97 @@ return {
     },
     {
         "nvim-mini/mini.pick",
+        dependencies = {
+            "nvim-mini/mini.extra"
+        },
         event = "User Ready",
         config = function()
             local pick = require("mini.pick")
+            local extra = require("mini.extra")
+
             pick.setup()
             vim.ui.select = pick.ui_select
-            vim.keymap.set('n', '<space>ff', function()
-                pick.builtin.files({ tool = 'git' })
-            end, { desc = 'mini.pick.files' })
+
+            local set = vim.keymap.set
+
+            -- all pickers
+            set('n', '<leader>fp', function()
+                local available_pickers = {}
+
+                for name, func in pairs(pick.builtin) do
+                    available_pickers[name] = func
+                end
+
+                for name, func in pairs(extra.pickers) do
+                    available_pickers[name] = func
+                end
+
+                local picker_names = vim.tbl_keys(available_pickers)
+                table.sort(picker_names)
+
+                pick.start({
+                    source = {
+                        name = 'All Pickers',
+                        items = picker_names,
+                        choose = function(item)
+                            vim.schedule(function()
+                                available_pickers[item]()
+                            end)
+                        end,
+                    },
+                })
+            end, { desc = "Select a Picker" })
+
+            -- search pickers
+            set('n', '<leader>ff', function()
+                pick.builtin.files { tool = 'git' }
+            end, { desc = 'Pick Files' })
+            set('n', '<leader>fe', function()
+                extra.pickers.explorer()
+            end, { desc = 'Pick Files' })
+            set('n', '<leader>fg', function()
+                pick.builtin.grep_live { tool = 'git' }
+            end, { desc = "Pick Live Grep" })
+            set('n', '<leader>fr', function()
+                extra.pickers.oldfiles()
+            end, { desc = "Pick Oldfiles" })
+            set('n', '<leader>fb', function()
+                pick.builtin.buffers()
+            end, { desc = "Pick Buffers" })
+            set('n', '<leader>fh', function()
+                pick.builtin.help()
+            end, { desc = "Pick Help Tags" })
+            set('n', '<leader>fk', function()
+                extra.pickers.keymaps()
+            end, { desc = "Pick Keymaps" })
+
+            -- diagnostic and quickfix pickers
+            set('n', '<leader>fq', function()
+                extra.pickers.list { scope = 'quickfix' }
+            end, { desc = "Pick Quickfix" })
+            set('n', '<leader>fd', function()
+                extra.pickers.diagnostic { scope = 'current' }
+            end, { desc = "Pick Diagnostics (current)" })
+            set('n', '<leader>fD', function()
+                extra.pickers.diagnostic { scope = 'all' }
+            end, { desc = "Pick Diagnostics (all)" })
+
+            -- lsp pickers
+            set('n', '<leader>fld', function()
+                extra.pickers.lsp { scope = 'definition' }
+            end, { desc = "Pick LSP Definition" })
+            set('n', '<leader>flt', function()
+                extra.pickers.lsp { scope = 'type_definition' }
+            end, { desc = "Pick LSP Type Definition" })
+            set('n', '<leader>flr', function()
+                extra.pickers.lsp { scope = 'references' }
+            end, { desc = "Pick LSP References" })
+            set('n', '<leader>fli', function()
+                extra.pickers.lsp { scope = 'implementation' }
+            end, { desc = "Pick LSP Implementation" })
+            set('n', '<leader>fo',  function()
+                extra.pickers.lsp { scope = 'document_symbol' }
+            end, { desc = "Pick LSP Document Symbols" })
         end,
     },
     {
@@ -275,69 +358,6 @@ return {
                     todo = hi_words({ 'TODO', 'Todo', 'todo' }, 'MiniHipatternsTodo'),
                     note = hi_words({ 'NOTE', 'Note', 'note' }, 'MiniHipatternsNote'),
                     hex_color = hipatterns.gen_highlighter.hex_color(),
-                },
-            })
-        end,
-    },
-    {
-        "nvim-mini/mini.clue",
-        event = "User Ready",
-        config = function()
-            local function mode_nx(keys)
-                return { mode = 'n', keys = keys }, { mode = 'x', keys = keys }
-            end
-            local clue = require('mini.clue')
-            clue.setup({
-                triggers = {
-                    -- Leader triggers
-                    mode_nx('<leader>'),
-
-                    -- Built-in completion
-                    { mode = 'i', keys = '<c-x>' },
-
-                    -- `g` key
-                    mode_nx('g'),
-
-                    -- Marks
-                    mode_nx("'"),
-                    mode_nx('`'),
-
-                    -- Registers
-                    mode_nx('"'),
-                    { mode = 'i', keys = '<c-r>' },
-                    { mode = 'c', keys = '<c-r>' },
-
-                    -- Window commands
-                    { mode = 'n', keys = '<c-w>' },
-
-                    -- bracketed commands
-                    { mode = 'n', keys = '[' },
-                    { mode = 'n', keys = ']' },
-
-                    -- `z` key
-                    mode_nx('z'),
-
-                    -- surround
-                    mode_nx('s'),
-
-                    -- text object
-                    { mode = 'x', keys = 'i' },
-                    { mode = 'x', keys = 'a' },
-                    { mode = 'o', keys = 'i' },
-                    { mode = 'o', keys = 'a' },
-
-                    -- option toggle (mini.basics)
-                    { mode = 'n', keys = 'm' },
-                },
-
-                clues = {
-                    -- Enhance this by adding descriptions for <Leader> mapping groups
-                    clue.gen_clues.builtin_completion(),
-                    clue.gen_clues.g(),
-                    clue.gen_clues.marks(),
-                    clue.gen_clues.registers({ show_contents = true }),
-                    clue.gen_clues.windows({ submode_resize = true, submode_move = true }),
-                    clue.gen_clues.z(),
                 },
             })
         end,
