@@ -20,6 +20,7 @@ stl.setup {
         local mode = stl.mode { align = "center" }
         local lsp = stl.lsp { show = false }
         local git = stl.git()
+        local diagnostic = stl.diagnostic()
         local encoding = stl.encoding()
         local fileformat = stl.fileformat()
         local macro = stl.macro_recording()
@@ -54,8 +55,16 @@ stl.setup {
                 content = {
                     "[",
                     {
-                        hl = "String",
                         content = git
+                    },
+                    "]",
+                },
+            } or {},
+            diagnostic and {
+                content = {
+                    "[",
+                    {
+                        content = diagnostic,
                     },
                     "]",
                 },
