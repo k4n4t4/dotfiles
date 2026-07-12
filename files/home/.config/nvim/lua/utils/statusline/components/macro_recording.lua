@@ -1,7 +1,7 @@
 return function(opts)
     local default_props = {
         prefix = "@",
-        hi = "StlMacro",
+        hi = "Operator",
     }
     local props = opts and vim.tbl_deep_extend("force", default_props, opts) or default_props
 

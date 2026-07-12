@@ -1,9 +1,9 @@
 return function(opts)
     local default_props = {
-        ERROR = { icon = "!", hi = "StlDiagnosticERROR" },
-        WARN  = { icon = "*", hi = "StlDiagnosticWARN" },
-        INFO  = { icon = "i", hi = "StlDiagnosticINFO" },
-        HINT  = { icon = "?", hi = "StlDiagnosticHINT" },
+        ERROR = { icon = "!", hi = "DiagnosticError" },
+        WARN  = { icon = "*", hi = "DiagnosticWarn" },
+        INFO  = { icon = "i", hi = "DiagnosticInfo" },
+        HINT  = { icon = "?", hi = "DiagnosticHint" },
     }
     local props = opts and vim.tbl_deep_extend("force", default_props, opts) or default_props
 

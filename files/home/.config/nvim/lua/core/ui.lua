@@ -17,7 +17,7 @@ stl.setup {
         local flags = stl.flags()
         local filetype = stl.filetype { icon_provider = "nvim-web-devicons" }
 
-        local sep = "%#StlSep#│%*"
+        local sep = "%#Comment#│%*"
 
         if ctx.active then
             return stl.make_str {

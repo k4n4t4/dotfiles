@@ -16,7 +16,7 @@ end
 
 return function(opts)
     local default_props = {
-        hi = "StlFileFlag",
+        hi = "WarningMsg",
         preview = "p",
         readonly = "r",
         modified = "+",
