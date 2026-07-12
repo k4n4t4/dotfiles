@@ -1,25 +1,35 @@
-local plugin  = require "utils.plugin"
-local info    = require "utils.info"
+return function(opts)
+    local default_props = {
+        aliases = {
+            ["javascript"] = "js",
+            ["typescript"] = "ts",
+            ["python"]     = "py",
+        },
+    }
+    local props = opts and vim.tbl_deep_extend("force", default_props, opts) or default_props
 
-local filetype_alias = {
-    ["javascript"] = "js",
-    ["typescript"] = "ts",
-    ["python"]     = "py",
-}
+    local ft = require("utils.info").buf.filetype(vim.api.nvim_win_get_buf(vim.g.statusline_winid))
+    if not ft or ft == "" then
+        return nil
+    end
 
-return function()
-    local bufnr = vim.api.nvim_win_get_buf(vim.g.statusline_winid)
-    local ft = info.buf.filetype(bufnr)
-
-    local devicons = plugin.get("nvim-web-devicons")
+    local devicons = require("utils.plugin").get("nvim-web-devicons")
     if devicons then
         local icon, icon_color = devicons.get_icon_color_by_filetype(ft)
         if icon then
             local icon_hl = "StlIcon@" .. ft
             vim.api.nvim_set_hl(0, icon_hl, { fg = icon_color, bg = "none" })
-            return "%#" .. icon_hl .. "#" .. icon .. "%*"
+            return {
+                hl = icon_hl,
+                content = icon .. " ",
+            }
         end
     end
 
-    return (not ft or ft == "") and "" or (filetype_alias[ft] or "")
+    local fallback = props.aliases[ft]
+    if not fallback or fallback == "" then
+        return nil
+    end
+
+    return fallback
 end

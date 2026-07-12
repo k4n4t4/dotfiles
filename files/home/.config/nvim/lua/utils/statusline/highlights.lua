@@ -1,5 +1,9 @@
 local hi = require("utils.highlight")
 
+hi.link("MacroRecord", "Operator")
+hi.link("FileModified", "WarningMsg")
+hi.link("GitBranch", "Constant")
+
 hi.set("StlModeNormal", { fg = "#99EE99" })
 hi.set("StlModeInsert", { fg = "#EE9999" })
 hi.set("StlModeReplace", { fg = "#EEEE99" })

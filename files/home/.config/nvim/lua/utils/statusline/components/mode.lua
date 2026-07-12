@@ -1,63 +1,91 @@
-local mode_hi    = {
-    ["n"] = "StlModeNormal",
-    ["i"] = "StlModeInsert",
-    ["R"] = "StlModeReplace",
-    ["v"] = "StlModeVisual",
-    ["V"] = "StlModeVisual",
-    [""] = "StlModeVisual",
-    ["t"] = "StlModeTerminal",
-    ["!"] = "StlModeTerminal",
-    ["r?"] = "StlModeConfirm",
-}
+return function(opts)
+    opts = opts or {}
+    opts.hl = opts.hl or function(mode)
+        local mode_hi = {
+            ["n"] = "StlModeNormal",
+            ["i"] = "StlModeInsert",
+            ["R"] = "StlModeReplace",
+            ["v"] = "StlModeVisual",
+            ["V"] = "StlModeVisual",
+            [""] = "StlModeVisual",
+            ["t"] = "StlModeTerminal",
+            ["!"] = "StlModeTerminal",
+            ["r?"] = "StlModeConfirm",
+        }
+        return mode_hi[mode.mode] or
+            mode_hi[mode.mode:sub(1, 1)] or
+            "StlModeOther"
+    end
+    opts.label = opts.label or function(mode)
+        local mode_label = {
+            ["n"]   =  "NORMAL",
+            ["no"]  =  "O-PENDING",
+            ["nov"] =  "O-PENDING-C",
+            ["noV"] =  "O-PENDING-L",
+            ["no"] =  "O-PENDING-B",
+            ["niI"] =  "N-INSERT",
+            ["niR"] =  "N-REPLACE",
+            ["niV"] =  "N-VISUAL",
+            ["nt"]  =  "N-TERMINAL",
+            ["ntT"] =  "N-TERM-T",
+            ["v"]   =  "VISUAL",
+            ["vs"]  =  "VISUAL-S",
+            ["V"]   =  "V-LINE",
+            ["Vs"]  =  "V-LINE-S",
+            [""]   =  "V-BLOCK",
+            ["s"]  =  "V-BLOCK-S",
+            ["s"]   =  "SELECT",
+            ["S"]   =  "S-LINE",
+            [""]   =  "S-BLOCK",
+            ["i"]   =  "INSERT",
+            ["ic"]  =  "INSERT-C",
+            ["ix"]  =  "INSERT-X",
+            ["R"]   =  "REPLACE",
+            ["Rc"]  =  "REPLACE-C",
+            ["Rx"]  =  "REPLACE-X",
+            ["Rv"]  =  "V-REPLACE",
+            ["Rvc"] =  "V-REPLACE-C",
+            ["Rvx"] =  "V-REPLACE-X",
+            ["c"]   =  "COMMAND",
+            ["cr"]  =  "COMMAND-R",
+            ["cv"]  =  "EX",
+            ["cvr"] =  "EX-R",
+            ["r"]   =  "ENTER",
+            ["rm"]  =  "MORE",
+            ["r?"]  =  "CONFIRM",
+            ["!"]   =  "SHELL",
+            ["t"]   =  "TERMINAL",
+        }
+        return mode_label[mode.mode] or mode.mode:upper()
+    end
 
-local mode_label = {
-    ["n"]   = { name = "N", label = "NORMAL" },
-    ["no"]  = { name = "NO", label = "O-PENDING" },
-    ["nov"] = { name = "NOC", label = "O-PENDING-C" },
-    ["noV"] = { name = "NOL", label = "O-PENDING-L" },
-    ["no"] = { name = "NOB", label = "O-PENDING-B" },
-    ["niI"] = { name = "NI", label = "N-INSERT" },
-    ["niR"] = { name = "NR", label = "N-REPLACE" },
-    ["niV"] = { name = "NV", label = "N-VISUAL" },
-    ["nt"]  = { name = "NT", label = "N-TERMINAL" },
-    ["ntT"] = { name = "NTT", label = "N-TERM-T" },
-    ["v"]   = { name = "V", label = "VISUAL" },
-    ["vs"]  = { name = "VS", label = "VISUAL-S" },
-    ["V"]   = { name = "VL", label = "V-LINE" },
-    ["Vs"]  = { name = "VLS", label = "V-LINE-S" },
-    [""]   = { name = "VB", label = "V-BLOCK" },
-    ["s"]  = { name = "VBS", label = "V-BLOCK-S" },
-    ["s"]   = { name = "S", label = "SELECT" },
-    ["S"]   = { name = "SL", label = "S-LINE" },
-    [""]   = { name = "SB", label = "S-BLOCK" },
-    ["i"]   = { name = "I", label = "INSERT" },
-    ["ic"]  = { name = "IC", label = "INSERT-C" },
-    ["ix"]  = { name = "IX", label = "INSERT-X" },
-    ["R"]   = { name = "R", label = "REPLACE" },
-    ["Rc"]  = { name = "RC", label = "REPLACE-C" },
-    ["Rx"]  = { name = "RX", label = "REPLACE-X" },
-    ["Rv"]  = { name = "RV", label = "V-REPLACE" },
-    ["Rvc"] = { name = "RVC", label = "V-REPLACE-C" },
-    ["Rvx"] = { name = "RVX", label = "V-REPLACE-X" },
-    ["c"]   = { name = "C", label = "COMMAND" },
-    ["cr"]  = { name = "CR", label = "COMMAND-R" },
-    ["cv"]  = { name = "EX", label = "EX" },
-    ["cvr"] = { name = "EXR", label = "EX-R" },
-    ["r"]   = { name = "P", label = "ENTER" },
-    ["rm"]  = { name = "M", label = "MORE" },
-    ["r?"]  = { name = "CF", label = "CONFIRM" },
-    ["!"]   = { name = "SH", label = "SHELL" },
-    ["t"]   = { name = "T", label = "TERMINAL" },
-}
-
-local MODE_WIDTH = 10
-
-return function()
     local mode  = vim.api.nvim_get_mode()
-    local mode_raw   = mode.mode
-    local mode_blocking   = mode.blocking
-    local prop  = mode_label[mode_raw] or { name = mode_raw:upper(), label = mode_raw:upper() }
-    local hl    = mode_hi[mode_raw] or mode_hi[mode_raw:sub(1, 1)] or "StlModeOther"
-    local label = require("utils.str").center(prop.label, MODE_WIDTH)
-    return "%#"..hl.."#" .. label .. (mode_blocking and "=" or "") .. "%*"
+    local hl = opts.hl(mode)
+    local label = opts.label(mode)
+
+    opts.align = opts.align or "left"
+    if opts.align == "center" then
+        local LABEL_WIDTH = opts.width or 10
+
+        local space_width = LABEL_WIDTH - #label
+        local left_space_width = math.floor(space_width / 2)
+        local right_space_width = space_width - left_space_width
+        label = string.rep(" ", left_space_width) .. label .. string.rep(" ", right_space_width)
+    elseif opts.align == "right" then
+        local LABEL_WIDTH = opts.width or 10
+
+        local space_width = LABEL_WIDTH - #label
+        label = string.rep(" ", space_width) .. label
+    elseif opts.align == "left" then
+        local LABEL_WIDTH = opts.width or 10
+
+        local space_width = LABEL_WIDTH - #label
+        label = label .. string.rep(" ", space_width)
+    end
+
+    return {
+        hl = hl,
+        content = label,
+        mode = mode,
+    }
 end

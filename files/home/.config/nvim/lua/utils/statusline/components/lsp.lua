@@ -1,28 +1,34 @@
-local utils_lsp = require "utils.lsp"
 local lsp_show = false
 
-function StlToggleLspShow()
-    lsp_show = not lsp_show
-    vim.cmd.redrawstatus()
-end
+return function(opts)
+    opts = opts or {}
+    lsp_show = opts.show or lsp_show
 
-return function()
-    local s = ""
+    local clients = {}
+    local others = {}
 
-    local clients, others = utils_lsp.get(0)
+    for _, client in pairs(vim.lsp.get_clients { bufnr = 0 }) do
+        if client.name == "null-ls" then
+            others["null-ls"] = require("utils.lsp").get_null_ls_sources()
+        else
+            table.insert(clients, client.name)
+        end
+    end
+
     if others["null-ls"] and #others["null-ls"] > 0 then
         table.insert(clients, "null-ls:[" .. table.concat(others["null-ls"], ", ") .. "]")
     end
 
-    if #clients == 0 then
-        return ""
-    end
+    if #clients == 0 then return end
 
-    if not lsp_show then
-        s = "LSP(" .. #clients .. ")"
-    else
-        s = table.concat(clients, ", ")
-    end
-
-    return "%@v:lua.StlToggleLspShow@" .. s .. "%X"
+    return {
+        content = lsp_show and table.concat(clients, ", ") or "LSP(" .. #clients .. ")",
+        click = {
+            name = "stl_toggle_lsp",
+            callback = function()
+                lsp_show = not lsp_show
+                vim.cmd.redrawstatus()
+            end,
+        },
+    }
 end
