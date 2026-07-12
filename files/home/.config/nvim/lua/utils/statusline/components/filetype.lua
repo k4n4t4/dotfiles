@@ -1,5 +1,6 @@
 return function(opts)
     local default_props = {
+        icon_provider = nil,
         aliases = {
             ["javascript"] = "js",
             ["typescript"] = "ts",
@@ -13,16 +14,18 @@ return function(opts)
         return nil
     end
 
-    local devicons = require("utils.plugin").get("nvim-web-devicons")
-    if devicons then
-        local icon, icon_color = devicons.get_icon_color_by_filetype(ft)
-        if icon then
-            local icon_hl = "StlIcon@" .. ft
-            vim.api.nvim_set_hl(0, icon_hl, { fg = icon_color, bg = "none" })
-            return {
-                hl = icon_hl,
-                content = icon .. " ",
-            }
+    if props.icon_provider == "nvim-web-devicons" then
+        local devicons = require("nvim-web-devicons")
+        if devicons then
+            local icon, icon_color = devicons.get_icon_color_by_filetype(ft)
+            if icon then
+                local icon_hl = "StlIcon@" .. ft
+                vim.api.nvim_set_hl(0, icon_hl, { fg = icon_color, bg = "none" })
+                return {
+                    hl = icon_hl,
+                    content = icon .. " ",
+                }
+            end
         end
     end
 
