@@ -1,6 +1,7 @@
 return {
     { "nvim-tree/nvim-web-devicons" },
 
+    --[[ LSP PLUGINS ]]--
     {
         "neovim/nvim-lspconfig",
         event = "VeryLazy",
@@ -28,6 +29,7 @@ return {
         },
     },
 
+    --[[ COPILOT ]]--
     {
         "zbirenbaum/copilot.lua",
         cmd = "Copilot",
@@ -47,6 +49,10 @@ return {
         },
     },
 
+
+    --[[ EDITOR PLUGINS ]]--
+
+    -- breadcrumbs
     {
         'Bekaboo/dropbar.nvim',
         dependencies = {
@@ -56,12 +62,12 @@ return {
         event = 'User Ready',
         config = function()
             local dropbar_api = require('dropbar.api')
-            vim.keymap.set('n', '<Leader>;', dropbar_api.pick, { desc = 'Pick symbols in winbar' })
-            vim.keymap.set('n', '[;', dropbar_api.goto_context_start, { desc = 'Go to start of current context' })
-            vim.keymap.set('n', '];', dropbar_api.select_next_context, { desc = 'Select next context' })
+            local set = vim.keymap.set
+            set('n', '<Leader>;', dropbar_api.pick, { desc = 'Pick symbols in winbar' })
+            set('n', '[;', dropbar_api.goto_context_start, { desc = 'Go to start of current context' })
+            set('n', '];', dropbar_api.select_next_context, { desc = 'Select next context' })
         end
     },
-
     -- debugging
     {
         "mfussenegger/nvim-dap",
@@ -108,6 +114,17 @@ return {
                     end
                 end
             end
+        end,
+    },
+    -- context
+    {
+        "nvim-treesitter/nvim-treesitter-context",
+        dependencies = { "nvim-treesitter/nvim-treesitter" },
+        event = 'User Ready',
+        config = function()
+            require("treesitter-context").setup { enable = true }
+            local hi = require "utils.highlight"
+            hi.set("TreesitterContext", { bg = hi.ref("WinSeparator", "fg") })
         end,
     },
 }
