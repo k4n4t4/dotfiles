@@ -16,6 +16,7 @@ M.file            = require "utils.stl.components.file"
 M.flags           = require "utils.stl.components.flags"
 M.filetype        = require "utils.stl.components.filetype"
 
+require "utils.stl.highlights"
 
 ---@class StatuslineClick
 ---@field name string
@@ -91,7 +92,7 @@ end
 
 ---@class StatuslineOpts
 ---@field global_name? string global variable name to store the statusline module
----@field statusline? fun():string function to generate the statusline string
+---@field statusline? fun(ctx?: table):string function to generate the statusline string
 ---@field redraw? table
 ---@field redraw.event? string[]|string event name to trigger statusline redraw
 ---@field redraw.ignore_ft? string[] list of filetypes to ignore for redraw
@@ -103,9 +104,6 @@ function M.setup(opts)
 
     M.global_name = opts.global_name or M.global_name
     _G[M.global_name] = M
-
-    opts.statusline = opts.statusline or function() return "" end
-    M.statusline = opts.statusline
 
     opts.redraw = opts.redraw or {}
     opts.redraw.event = opts.redraw.event or "ModeChanged"
@@ -121,6 +119,21 @@ function M.setup(opts)
         "nofile",
         "prompt",
     }
+
+    opts.statusline = opts.statusline or function() return "" end
+    M.statusline = function()
+        local current_winid = vim.api.nvim_get_current_win()
+        local statusline_winid = vim.g.statusline_winid
+        local statusline_bufnr = vim.api.nvim_win_get_buf(statusline_winid)
+        local active = current_winid == statusline_winid
+
+        return opts.statusline {
+            current_winid = current_winid,
+            statusline_winid = statusline_winid,
+            bufnr = statusline_bufnr,
+            active = active,
+        }
+    end
 
     vim.opt.statusline = "%!v:lua."..M.global_name..".statusline()"
 

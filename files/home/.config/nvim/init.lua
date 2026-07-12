@@ -15,8 +15,9 @@ end
 vim.opt.cmdheight = 0
 vim.opt.laststatus = 3
 local stl = require "utils.stl"
+
 stl.setup {
-    statusline = function()
+    statusline = function(ctx)
         local mode = stl.mode { align = "center" }
         local lsp = stl.lsp { show = false }
         local git = stl.git()
@@ -29,96 +30,73 @@ stl.setup {
         local flags = stl.flags()
         local filetype = stl.filetype()
 
-        return stl.make_str {
-            "[",
-            {
-                hl = mode.hl,
-                content = {
-                    mode.content,
-                }
-            },
-            "]",
-            lsp and {
-                content = {
-                    "[",
-                    {
-                        hl = "Number",
-                        click = lsp.click,
-                        content = {
-                            lsp.content,
-                        },
-                    },
-                    "]",
+        local sep = "%#StlSep#│%*"
+
+        if ctx.active then
+            return stl.make_str {
+                {
+                    hl = mode.hl,
+                    content = mode.content,
                 },
-            } or {},
-            git and {
-                content = {
-                    "[",
-                    {
-                        content = git
-                    },
-                    "]",
+                " ", sep, " ",
+                macro and {
+                    hl = macro.hl,
+                    content = macro.content,
+                } or "",
+                " ",
+                file or "",
+                flags and {
+                    hl = flags.hl,
+                    content = flags.content,
+                } or "",
+                " ",
+                git and {
+                    content = git,
+                } or "",
+                " ",
+                diagnostic and {
+                    content = diagnostic,
+                } or "",
+                "%=%<",
+                "%S ",
+                search_count or "",
+                lsp and {
+                    hl = "Number",
+                    click = lsp.click,
+                    content = lsp.content,
+                } or "",
+                " ",
+                filetype and {
+                    hl = filetype.hl,
+                    content = filetype.content,
+                } or "",
+                " ", sep, " ",
+                encoding or "",
+                " ",
+                fileformat and ((fileformat.icon or "") .. (fileformat.label or "")) or "",
+                " ", sep, " ",
+                "%l:%c|%P",
+            }
+        else
+            return stl.make_str {
+                {
+                    hl = mode.hl,
+                    content = mode.content,
                 },
-            } or {},
-            diagnostic and {
-                content = {
-                    "[",
-                    {
-                        content = diagnostic,
-                    },
-                    "]",
-                },
-            } or {},
-            (encoding and encoding ~= "") and {
-                content = {
-                    "[",
-                    {
-                        content = encoding,
-                    },
-                    "]",
-                },
-            } or {},
-            fileformat and {
-                content = {
-                    "[",
-                    {
-                        content = (fileformat.icon or "") .. (fileformat.label or ""),
-                    },
-                    "]",
-                },
-            } or {},
-            macro and {
-                content = {
-                    "[",
-                    {
-                        hl = macro.hl,
-                        content = macro.content,
-                    },
-                    "]",
-                },
-            } or {},
-            search_count and {
-                content = {
-                    "[",
-                    search_count,
-                    "]",
-                },
-            } or "",
-            file and {
-                content = {
-                    "[",
-                    filetype and {
-                        hl = filetype.hl,
-                        content = filetype.content,
-                    } or {},
-                    file,
-                    flags and {
-                        hl = flags.hl,
-                        content = flags.content,
-                    } or {},
-                    "]",
-                },
-            } or "",
-        }
+                " ",
+                file or "",
+                flags and {
+                    hl = flags.hl,
+                    content = flags.content,
+                } or "",
+                "%=%<",
+                filetype and {
+                    hl = filetype.hl,
+                    content = filetype.content,
+                } or "",
+                " ", sep, " ",
+                "%l:%c  %P",
+            }
+        end
     end,
 }
