@@ -1,3 +1,19 @@
+local function get_opt(bufnr, name)
+    return vim.api.nvim_get_option_value(name, { buf = bufnr })
+end
+
+local function is_readonly(b)
+    return vim.api.nvim_buf_is_valid(b) and get_opt(b, "readonly") or false
+end
+
+local function is_modifiable(b)
+    return vim.api.nvim_buf_is_valid(b) and get_opt(b, "modifiable") or false
+end
+
+local function modified(b)
+    return vim.api.nvim_buf_is_valid(b) and get_opt(b, "modified") or false
+end
+
 return function(opts)
     local default_props = {
         hi = "StlFileFlag",
@@ -9,18 +25,15 @@ return function(opts)
     local props = opts and vim.tbl_deep_extend("force", default_props, opts) or default_props
 
     local bufnr = vim.api.nvim_win_get_buf(vim.g.statusline_winid)
-    local info = require("utils.info").buf
 
     local flags = ""
 
-    if vim.o.previewwindow then
-        flags = flags .. props.preview
-    end
+    if vim.o.previewwindow then flags = flags .. props.preview end
 
-    if info.is_readonly(bufnr) then
+    if is_readonly(bufnr) then
         flags = flags .. props.readonly
-    elseif info.is_modifiable(bufnr) then
-        if info.modified(bufnr) then
+    elseif is_modifiable(bufnr) then
+        if modified(bufnr) then
             flags = flags .. props.modified
         end
     else
