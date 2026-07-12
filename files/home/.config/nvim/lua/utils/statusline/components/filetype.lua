@@ -9,7 +9,10 @@ return function(opts)
     }
     local props = opts and vim.tbl_deep_extend("force", default_props, opts) or default_props
 
-    local ft = require("utils.info").buf.filetype(vim.api.nvim_win_get_buf(vim.g.statusline_winid))
+    local ft = vim.api.nvim_get_option_value("filetype", {
+        buf = vim.api.nvim_win_get_buf(vim.g.statusline_winid)
+    })
+
     if not ft or ft == "" then return nil end
 
     if props.icon_provider == "nvim-web-devicons" then
