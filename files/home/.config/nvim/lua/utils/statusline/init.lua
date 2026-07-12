@@ -6,7 +6,6 @@ M.group = vim.api.nvim_create_augroup("StatusLine", { clear = true })
 function M.setup()
     require "utils.statusline.highlights"
 
-    vim.opt.showcmdloc = 'statusline'
     vim.opt.cmdheight = 0
     vim.opt.laststatus = 3
     vim.opt.statusline = "%!v:lua.require('utils.statusline.format')()"
