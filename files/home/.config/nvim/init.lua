@@ -26,6 +26,7 @@ stl.setup {
         local search_count = stl.search_count()
         local file = stl.file()
         local flags = stl.flags()
+        local filetype = stl.filetype()
 
         return stl.make_str {
             "[",
@@ -97,6 +98,10 @@ stl.setup {
             file and {
                 content = {
                     "[",
+                    filetype and {
+                        hl = filetype.hl,
+                        content = filetype.content,
+                    } or {},
                     file,
                     flags and {
                         hl = flags.hl,
