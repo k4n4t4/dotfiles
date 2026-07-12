@@ -52,6 +52,23 @@ return {
 
     --[[ EDITOR PLUGINS ]]--
 
+    -- explorer
+    {
+        "nvim-neo-tree/neo-tree.nvim",
+        branch = "v3.x",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-tree/nvim-web-devicons",
+            "MunifTanjim/nui.nvim",
+        },
+        event = 'User Ready',
+        keys = {
+            { mode = 'n', "<leader>E", "<CMD>Neotree toggle<CR>", desc = "Neotree Toggle" },
+        },
+        opts = {
+            filesystem = { window = { width = 30 } },
+        },
+    },
     -- breadcrumbs
     {
         'Bekaboo/dropbar.nvim',
