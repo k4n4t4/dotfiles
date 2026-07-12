@@ -53,10 +53,7 @@ stl.setup {
                     content = lsp.content,
                 } or "",
                 " ",
-                filetype and {
-                    hl = filetype.hl,
-                    content = filetype.content,
-                } or "",
+                filetype or "",
                 " ", sep, " ",
                 encoding or "",
                 " ",

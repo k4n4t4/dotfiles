@@ -10,9 +10,7 @@ return function(opts)
     local props = opts and vim.tbl_deep_extend("force", default_props, opts) or default_props
 
     local ft = require("utils.info").buf.filetype(vim.api.nvim_win_get_buf(vim.g.statusline_winid))
-    if not ft or ft == "" then
-        return nil
-    end
+    if not ft or ft == "" then return nil end
 
     if props.icon_provider == "nvim-web-devicons" then
         local devicons = require("nvim-web-devicons")
@@ -29,10 +27,5 @@ return function(opts)
         end
     end
 
-    local fallback = props.aliases[ft]
-    if not fallback or fallback == "" then
-        return nil
-    end
-
-    return fallback
+    return props.aliases[ft] or ft
 end
