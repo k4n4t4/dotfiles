@@ -2,6 +2,22 @@ local M = {}
 
 M.group = vim.api.nvim_create_augroup("StatusLine", { clear = true })
 
+
+function M.mode()
+    --TODO:
+end
+
+
+---@class StatuslineNode
+---@field hl? string highlight group name
+---@field content? string|(string|StatuslineNode)[] output string or child nodes
+
+---@class StatuslineState
+---@field hl? string current highlight group name
+
+---@param tbls (string|StatuslineNode)[] list of strings or statusline nodes
+---@param stat? StatuslineState status object to keep track of current highlight group
+---@return string generated statusline format string
 function M.make_str(tbls, stat)
     stat = stat or {}
     stat.hl = stat.hl or ""
@@ -34,6 +50,16 @@ function M.make_str(tbls, stat)
     return str
 end
 
+
+---@class StatuslineOpts
+---@field global_name? string global variable name to store the statusline module
+---@field statusline? fun():string function to generate the statusline string
+---@field redraw? table
+---@field redraw.event? string event name to trigger statusline redraw
+---@field redraw.ignore_ft? string[] list of filetypes to ignore for redraw
+---@field redraw.ignore_bt? string[] list of buftypes to ignore for redraw
+
+---@param opts StatuslineOpts
 function M.setup(opts)
     opts = opts or {}
 

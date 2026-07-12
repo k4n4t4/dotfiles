@@ -18,12 +18,6 @@ local stl = require "utils.stl"
 stl.setup {
     statusline = function()
         return stl.make_str {
-            "A",
-            {
-                hl = "Number",
-                content = "B",
-            },
-            "C",
         }
     end,
 }
