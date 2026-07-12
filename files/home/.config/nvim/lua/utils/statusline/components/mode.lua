@@ -1,4 +1,3 @@
--- Maps the first character of the raw mode string to a highlight group.
 local mode_hi    = {
     ["n"] = "StlModeNormal",
     ["i"] = "StlModeInsert",
@@ -51,15 +50,13 @@ local mode_label = {
     ["t"]   = { name = "T", label = "TERMINAL" },
 }
 
--- Fixed display width to prevent statusline layout shifts when switching modes.
--- Covers all common labels (TERMINAL=8, V-REPLACE=9, N-TERMINAL=10).
 local MODE_WIDTH = 10
 
 return function()
     local mode  = vim.api.nvim_get_mode()
     local mode_raw   = mode.mode
     local mode_blocking   = mode.blocking
-    local prop  = mode_label[mode_raw]
+    local prop  = mode_label[mode_raw] or { name = mode_raw:upper(), label = mode_raw:upper() }
     local hl    = mode_hi[mode_raw] or mode_hi[mode_raw:sub(1, 1)] or "StlModeOther"
     local label = require("utils.str").center(prop.label, MODE_WIDTH)
     return "%#"..hl.."#" .. label .. (mode_blocking and "=" or "") .. "%*"

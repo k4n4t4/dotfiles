@@ -18,18 +18,19 @@ function M.encoding()
 end
 
 local fileformat = {
-    ["unix"] = { label = "LF", symbol = "↲" },
-    ["dos"]  = { label = "CRLF", symbol = "↵" },
-    ["mac"]  = { label = "CR", symbol = "←" },
+    ["unix"] = { icon = " ", label = "LF" },
+    ["dos"]  = { icon = " ", label = "CRLF" },
+    ["mac"]  = { icon = " ", label = "CR" },
 }
 
 function M.fileformat()
     local fmt = info.buf.fileformat(stl_buf()) or ""
-    return fileformat[fmt].label or fmt
+    return fileformat[fmt].icon or fmt
 end
 
 function M.macro_recording()
-    local macro = info.state.macro()
+    local macro = vim.fn.reg_recording()
+
     if macro ~= "" then
         return "%#StlMacro#" .. "@" .. macro .. "%*"
     end

@@ -33,7 +33,7 @@ return function()
     for k, v in pairs(diagnoses) do
         if #v ~= 0 then
             local name = vim.diagnostic.severity[k]
-            local sev  = severity_label[name]
+            local sev  = severity_label[name] or { icon = "·", label = "" }
             local hl   = severity_hi[name] or severity_hi.ERROR
             table.insert(format, "%#"..hl.."#" .. sev.icon .. #v .. "%*")
         end
