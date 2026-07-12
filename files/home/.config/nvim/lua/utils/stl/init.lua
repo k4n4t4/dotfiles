@@ -3,8 +3,74 @@ local M = {}
 M.group = vim.api.nvim_create_augroup("StatusLine", { clear = true })
 
 
-function M.mode()
-    --TODO:
+function M.mode(opts)
+    opts = opts or {}
+    opts.hl = opts.hl or function(mode)
+        local mode_hi = {
+            ["n"] = "StlModeNormal",
+            ["i"] = "StlModeInsert",
+            ["R"] = "StlModeReplace",
+            ["v"] = "StlModeVisual",
+            ["V"] = "StlModeVisual",
+            [""] = "StlModeVisual",
+            ["t"] = "StlModeTerminal",
+            ["!"] = "StlModeTerminal",
+            ["r?"] = "StlModeConfirm",
+        }
+        return mode_hi[mode.mode] or
+            mode_hi[mode.mode:sub(1, 1)] or
+            "StlModeOther"
+    end
+    opts.label = opts.label or function(mode)
+        local mode_label = {
+            ["n"]   =  "NORMAL",
+            ["no"]  =  "O-PENDING",
+            ["nov"] =  "O-PENDING-C",
+            ["noV"] =  "O-PENDING-L",
+            ["no"] =  "O-PENDING-B",
+            ["niI"] =  "N-INSERT",
+            ["niR"] =  "N-REPLACE",
+            ["niV"] =  "N-VISUAL",
+            ["nt"]  =  "N-TERMINAL",
+            ["ntT"] =  "N-TERM-T",
+            ["v"]   =  "VISUAL",
+            ["vs"]  =  "VISUAL-S",
+            ["V"]   =  "V-LINE",
+            ["Vs"]  =  "V-LINE-S",
+            [""]   =  "V-BLOCK",
+            ["s"]  =  "V-BLOCK-S",
+            ["s"]   =  "SELECT",
+            ["S"]   =  "S-LINE",
+            [""]   =  "S-BLOCK",
+            ["i"]   =  "INSERT",
+            ["ic"]  =  "INSERT-C",
+            ["ix"]  =  "INSERT-X",
+            ["R"]   =  "REPLACE",
+            ["Rc"]  =  "REPLACE-C",
+            ["Rx"]  =  "REPLACE-X",
+            ["Rv"]  =  "V-REPLACE",
+            ["Rvc"] =  "V-REPLACE-C",
+            ["Rvx"] =  "V-REPLACE-X",
+            ["c"]   =  "COMMAND",
+            ["cr"]  =  "COMMAND-R",
+            ["cv"]  =  "EX",
+            ["cvr"] =  "EX-R",
+            ["r"]   =  "ENTER",
+            ["rm"]  =  "MORE",
+            ["r?"]  =  "CONFIRM",
+            ["!"]   =  "SHELL",
+            ["t"]   =  "TERMINAL",
+        }
+        return mode_label[mode.mode] or mode.mode:upper()
+    end
+
+    local mode  = vim.api.nvim_get_mode()
+
+    return {
+        hl = opts.hl(mode),
+        label = opts.label(mode),
+        mode = mode,
+    }
 end
 
 
@@ -28,13 +94,13 @@ function M.make_str(tbls, stat)
             str = str .. tbl
         elseif type(tbl) == "table" then
             local hl = tbl.hl or stat.hl
+            local node_content = tbl.content
             local content = ""
-            if type(tbl.content) == "string" then
-                content = tbl.content
-            elseif type(tbl.content) == "table" then
-                content = M.make_str(tbl.content, { hl = hl })
+            if type(node_content) == "string" then
+                content = node_content
+            elseif type(node_content) == "table" then
+                content = M.make_str(node_content, { hl = hl })
             end
-
             if tbl.hl then
                 local restore_hl = (stat.hl == "") and (
                     "%*"
@@ -55,7 +121,7 @@ end
 ---@field global_name? string global variable name to store the statusline module
 ---@field statusline? fun():string function to generate the statusline string
 ---@field redraw? table
----@field redraw.event? string event name to trigger statusline redraw
+---@field redraw.event? string[]|string event name to trigger statusline redraw
 ---@field redraw.ignore_ft? string[] list of filetypes to ignore for redraw
 ---@field redraw.ignore_bt? string[] list of buftypes to ignore for redraw
 

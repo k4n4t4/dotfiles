@@ -17,7 +17,12 @@ vim.opt.laststatus = 3
 local stl = require "utils.stl"
 stl.setup {
     statusline = function()
+        local mode = stl.mode()
         return stl.make_str {
+            {
+                hl = mode.hl,
+                content = mode.label,
+            }
         }
     end,
 }
