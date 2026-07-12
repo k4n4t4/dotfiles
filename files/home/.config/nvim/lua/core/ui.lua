@@ -15,7 +15,7 @@ stl.setup {
         local search_count = stl.search_count()
         local file = stl.file()
         local flags = stl.flags()
-        local filetype = stl.filetype()
+        local filetype = stl.filetype { icon_provider = "nvim-web-devicons" }
 
         local sep = "%#StlSep#│%*"
 

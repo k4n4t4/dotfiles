@@ -4,7 +4,6 @@ M.global_name = "Statusline"
 M.group = vim.api.nvim_create_augroup("StatusLine", { clear = true })
 M.callbacks = {}
 
-require("utils.plugin").load("nvim-web-devicons", "User", "Ready")
 require "utils.statusline.highlights"
 
 M.diagnostic      = require "utils.statusline.components.diagnostic"
