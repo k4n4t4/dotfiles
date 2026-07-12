@@ -1,7 +1,36 @@
 local M = {}
 
+M.global_name = "Statusline"
 M.group = vim.api.nvim_create_augroup("StatusLine", { clear = true })
 
+function M.lsp()
+    local utils_lsp = require "utils.lsp"
+    local lsp_show = false
+
+    M.stl_toggle_lsp = function()
+        lsp_show = not lsp_show
+        vim.cmd.redrawstatus()
+    end
+
+    local s = ""
+
+    local clients, others = utils_lsp.get(0)
+    if others["null-ls"] and #others["null-ls"] > 0 then
+        table.insert(clients, "null-ls:[" .. table.concat(others["null-ls"], ", ") .. "]")
+    end
+
+    if #clients == 0 then
+        return ""
+    end
+
+    if not lsp_show then
+        s = "LSP(" .. #clients .. ")"
+    else
+        s = table.concat(clients, ", ")
+    end
+
+    return "%@v:lua."..M.global_name..".stl_toggle_lsp@" .. s .. "%X"
+end
 
 function M.mode(opts)
     opts = opts or {}
@@ -65,10 +94,32 @@ function M.mode(opts)
     end
 
     local mode  = vim.api.nvim_get_mode()
+    local hl = opts.hl(mode)
+    local label = opts.label(mode)
+
+    opts.align = opts.align or "left"
+    if opts.align == "center" then
+        local LABEL_WIDTH = opts.width or 10
+
+        local space_width = LABEL_WIDTH - #label
+        local left_space_width = math.floor(space_width / 2)
+        local right_space_width = space_width - left_space_width
+        label = string.rep(" ", left_space_width) .. label .. string.rep(" ", right_space_width)
+    elseif opts.align == "right" then
+        local LABEL_WIDTH = opts.width or 10
+
+        local space_width = LABEL_WIDTH - #label
+        label = string.rep(" ", space_width) .. label
+    elseif opts.align == "left" then
+        local LABEL_WIDTH = opts.width or 10
+
+        local space_width = LABEL_WIDTH - #label
+        label = label .. string.rep(" ", space_width)
+    end
 
     return {
-        hl = opts.hl(mode),
-        label = opts.label(mode),
+        hl = hl,
+        label = label,
         mode = mode,
     }
 end
@@ -116,7 +167,6 @@ function M.make_str(tbls, stat)
     return str
 end
 
-
 ---@class StatuslineOpts
 ---@field global_name? string global variable name to store the statusline module
 ---@field statusline? fun():string function to generate the statusline string
@@ -129,8 +179,8 @@ end
 function M.setup(opts)
     opts = opts or {}
 
-    opts.global_name = opts.global_name or "Statusline"
-    _G[opts.global_name] = M
+    M.global_name = opts.global_name or M.global_name
+    _G[M.global_name] = M
 
     opts.statusline = opts.statusline or function() return "" end
     M.statusline = opts.statusline
@@ -150,7 +200,7 @@ function M.setup(opts)
         "prompt",
     }
 
-    vim.opt.statusline = "%!v:lua."..opts.global_name..".statusline()"
+    vim.opt.statusline = "%!v:lua."..M.global_name..".statusline()"
 
     -- Redraw statusline when mode changed. (e.g. 'ix' mode)
     if opts.redraw.event ~= "" then

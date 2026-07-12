@@ -17,12 +17,26 @@ vim.opt.laststatus = 3
 local stl = require "utils.stl"
 stl.setup {
     statusline = function()
-        local mode = stl.mode()
+        local mode = stl.mode { align = "center" }
+        local lsp = stl.lsp()
+
         return stl.make_str {
+            "[",
             {
                 hl = mode.hl,
-                content = mode.label,
-            }
+                content = {
+                    mode.label,
+                }
+            },
+            "]",
+            "[",
+            {
+                hl = "Number",
+                content = {
+                    lsp
+                }
+            },
+            "]",
         }
     end,
 }
