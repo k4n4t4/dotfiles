@@ -14,9 +14,9 @@ return function()
         )
     else
         return (
-            "%s" ..
+            status.sign(winid) ..
             "%=" ..
-            (vim.wo[winid].number and "%l" or "") ..
+            (vim.wo[winid].number and status.number() or "") ..
             status.fold()
         )
     end
