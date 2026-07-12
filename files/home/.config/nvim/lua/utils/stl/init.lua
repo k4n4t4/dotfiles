@@ -4,33 +4,70 @@ M.global_name = "Statusline"
 M.group = vim.api.nvim_create_augroup("StatusLine", { clear = true })
 M.callbacks = {}
 
-function M.lsp()
-    local utils_lsp = require "utils.lsp"
+function M.git(opts)
+    local default_git_props = {
+        add    = { icon = "+", hi = "StlGitAdd" },
+        remove = { icon = "-", hi = "StlGitRemove" },
+        change = { icon = "~", hi = "StlGitChange" },
+        branch = { hi = "StlGitBranch" },
+    }
+    local git_props = opts and vim.tbl_deep_extend("force", default_git_props, opts) or default_git_props
+
+    local bufnr = vim.api.nvim_win_get_buf(vim.g.statusline_winid)
+    local status = require("utils.info").buf.git(bufnr)
+
+    if not status then return end
+
+    local components = {}
+    table.insert(components, { hl = git_props.branch.hi, content = status.head or "" })
+
+    if status.added and status.added > 0 then
+        table.insert(components, { hl = git_props.add.hi, content = git_props.add.icon .. status.added })
+    end
+    if status.removed and status.removed > 0 then
+        table.insert(components, { hl = git_props.remove.hi, content = git_props.remove.icon .. status.removed })
+    end
+    if status.changed and status.changed > 0 then
+        table.insert(components, { hl = git_props.change.hi, content = git_props.change.icon .. status.changed })
+    end
+
+    return components
+end
+
+do
     local lsp_show = false
+    function M.lsp(opts)
+        opts = opts or {}
+        lsp_show = opts.show or lsp_show
 
-    M.stl_toggle_lsp = function()
-        lsp_show = not lsp_show
-        vim.cmd.redrawstatus()
+        local clients = {}
+        local others = {}
+
+        for _, client in pairs(vim.lsp.get_clients { bufnr = 0 }) do
+            if client.name == "null-ls" then
+                others["null-ls"] = require("utils.lsp").get_null_ls_sources()
+            else
+                table.insert(clients, client.name)
+            end
+        end
+
+        if others["null-ls"] and #others["null-ls"] > 0 then
+            table.insert(clients, "null-ls:[" .. table.concat(others["null-ls"], ", ") .. "]")
+        end
+
+        if #clients == 0 then return end
+
+        return {
+            content = lsp_show and table.concat(clients, ", ") or "LSP(" .. #clients .. ")",
+            click = {
+                name = "stl_toggle_lsp",
+                callback = function()
+                    lsp_show = not lsp_show
+                    vim.cmd.redrawstatus()
+                end,
+            },
+        }
     end
-
-    local s = ""
-
-    local clients, others = utils_lsp.get(0)
-    if others["null-ls"] and #others["null-ls"] > 0 then
-        table.insert(clients, "null-ls:[" .. table.concat(others["null-ls"], ", ") .. "]")
-    end
-
-    if #clients == 0 then
-        return ""
-    end
-
-    if not lsp_show then
-        s = "LSP(" .. #clients .. ")"
-    else
-        s = table.concat(clients, ", ")
-    end
-
-    return "%@v:lua."..M.global_name..".stl_toggle_lsp@" .. s .. "%X"
 end
 
 function M.mode(opts)
@@ -120,11 +157,105 @@ function M.mode(opts)
 
     return {
         hl = hl,
-        label = label,
+        content = label,
         mode = mode,
     }
 end
 
+function M.bufnr()
+    return vim.api.nvim_win_get_buf(vim.g.statusline_winid)
+end
+
+function M.encoding()
+    return require("utils.info").buf.encoding(M.bufnr())
+end
+
+function M.fileformat(opts)
+    local default_formats = {
+        ["unix"] = { icon = " ", label = "LF" },
+        ["dos"]  = { icon = " ", label = "CRLF" },
+        ["mac"]  = { icon = " ", label = "CR" },
+    }
+    local formats = opts and vim.tbl_deep_extend("force", default_formats, opts) or default_formats
+
+    local fmt = require("utils.info").buf.fileformat(M.bufnr())
+    if not fmt or fmt == "" then
+        return nil
+    end
+
+    return formats[fmt] or { icon = "", label = fmt }
+end
+
+function M.macro_recording(opts)
+    local default_props = {
+        prefix = "@",
+        hi = "StlMacro",
+    }
+    local props = opts and vim.tbl_deep_extend("force", default_props, opts) or default_props
+
+    local macro = vim.fn.reg_recording()
+    if macro == "" then
+        return nil
+    end
+
+    return {
+        hl = props.hi,
+        content = props.prefix .. macro,
+    }
+end
+
+function M.search_count()
+    local search = require("utils.info").buf.search_count(M.bufnr())
+    if not search then return nil end
+
+    return search.current .. "/" .. search.total
+end
+
+function M.file()
+    local name = require("utils.info").buf.name(M.bufnr())
+    if not name or name == "" then return nil end
+
+    return name
+end
+
+function M.flags(opts)
+    local default_props = {
+        hi = "StlFileFlag",
+        preview = "p",
+        readonly = "r",
+        modified = "+",
+        unmodifiable = "-",
+    }
+    local props = opts and vim.tbl_deep_extend("force", default_props, opts) or default_props
+
+    local bufnr = M.bufnr()
+    local info = require("utils.info").buf
+
+    local flags = ""
+
+    if vim.o.previewwindow then
+        flags = flags .. props.preview
+    end
+
+    if info.is_readonly(bufnr) then
+        flags = flags .. props.readonly
+    elseif info.is_modifiable(bufnr) then
+        if info.modified(bufnr) then
+            flags = flags .. props.modified
+        end
+    else
+        flags = flags .. props.unmodifiable
+    end
+
+    if flags == "" then
+        return nil
+    end
+
+    return {
+        hl = props.hi,
+        content = flags,
+    }
+end
 
 ---@class StatuslineClick
 ---@field name string

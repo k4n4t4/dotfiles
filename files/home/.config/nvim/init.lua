@@ -18,25 +18,93 @@ local stl = require "utils.stl"
 stl.setup {
     statusline = function()
         local mode = stl.mode { align = "center" }
-        local lsp = stl.lsp()
+        local lsp = stl.lsp { show = false }
+        local git = stl.git()
+        local encoding = stl.encoding()
+        local fileformat = stl.fileformat()
+        local macro = stl.macro_recording()
+        local search_count = stl.search_count()
+        local file = stl.file()
+        local flags = stl.flags()
 
         return stl.make_str {
             "[",
             {
                 hl = mode.hl,
                 content = {
-                    mode.label,
+                    mode.content,
                 }
             },
             "]",
-            "[",
-            {
-                hl = "Number",
+            lsp and {
                 content = {
-                    lsp
-                }
-            },
-            "]",
+                    "[",
+                    {
+                        hl = "Number",
+                        click = lsp.click,
+                        content = {
+                            lsp.content,
+                        },
+                    },
+                    "]",
+                },
+            } or {},
+            git and {
+                content = {
+                    "[",
+                    {
+                        hl = "String",
+                        content = git
+                    },
+                    "]",
+                },
+            } or {},
+            (encoding and encoding ~= "") and {
+                content = {
+                    "[",
+                    {
+                        content = encoding,
+                    },
+                    "]",
+                },
+            } or {},
+            fileformat and {
+                content = {
+                    "[",
+                    {
+                        content = (fileformat.icon or "") .. (fileformat.label or ""),
+                    },
+                    "]",
+                },
+            } or {},
+            macro and {
+                content = {
+                    "[",
+                    {
+                        hl = macro.hl,
+                        content = macro.content,
+                    },
+                    "]",
+                },
+            } or {},
+            search_count and {
+                content = {
+                    "[",
+                    search_count,
+                    "]",
+                },
+            } or "",
+            file and {
+                content = {
+                    "[",
+                    file,
+                    flags and {
+                        hl = flags.hl,
+                        content = flags.content,
+                    } or {},
+                    "]",
+                },
+            } or "",
         }
     end,
 }
