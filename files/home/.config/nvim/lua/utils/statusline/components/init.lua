@@ -1,7 +1,6 @@
 local M = {}
 
 local info = require("utils.info")
-local mapping = require("utils.mapping")
 
 M.mode = require("utils.statusline.components.mode")
 M.filetype = require("utils.statusline.components.filetype")
@@ -18,9 +17,15 @@ function M.encoding()
     return info.buf.encoding(stl_buf())
 end
 
+local fileformat = {
+    ["unix"] = { label = "LF", symbol = "↲" },
+    ["dos"]  = { label = "CRLF", symbol = "↵" },
+    ["mac"]  = { label = "CR", symbol = "←" },
+}
+
 function M.fileformat()
     local fmt = info.buf.fileformat(stl_buf()) or ""
-    return mapping.fileformat.get(fmt).label
+    return fileformat[fmt].label or fmt
 end
 
 function M.macro_recording()

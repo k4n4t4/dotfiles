@@ -38,6 +38,7 @@ return {
     },
     event = { "InsertEnter", "CmdLineEnter" },
     config = function()
+        vim.opt.autocomplete = false
         require("blink.cmp").setup {
             fuzzy = { implementation = "prefer_rust_with_warning" },
             signature = {

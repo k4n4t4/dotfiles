@@ -1,6 +1,11 @@
 local plugin  = require "utils.plugin"
 local info    = require "utils.info"
-local mapping = require "utils.mapping"
+
+local filetype_alias = {
+    ["javascript"] = "js",
+    ["typescript"] = "ts",
+    ["python"]     = "py",
+}
 
 return function()
     local bufnr = vim.api.nvim_win_get_buf(vim.g.statusline_winid)
@@ -16,5 +21,5 @@ return function()
         end
     end
 
-    return (not ft or ft == "") and "" or (mapping.filetype_alias.get(ft or ""))
+    return (not ft or ft == "") and "" or (filetype_alias[ft] or "")
 end
