@@ -3,7 +3,7 @@ local M = {}
 M.project_cache_dir = vim.fn.stdpath("cache") .. "/utils/project_configs"
 
 function M.get_path(cwd)
-    local cwd_str = require("utils.fs").path_to_percent(cwd)
+    local cwd_str = (cwd:gsub("[/\\:]", "%%"))
     return M.project_cache_dir .. "/" .. cwd_str .. ".lua"
 end
 

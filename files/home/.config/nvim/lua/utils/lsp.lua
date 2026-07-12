@@ -1,11 +1,5 @@
 local M = {}
 
-local info = require("utils.info")
-local fs = require("utils.fs")
-
-local group = vim.api.nvim_create_augroup("Utils_lsp", { clear = true })
-
-
 function M.hover(opts)
     local params = vim.lsp.util.make_position_params(0, 'utf-8')
     vim.lsp.buf_request(0, "textDocument/hover", params, function(_, result)
