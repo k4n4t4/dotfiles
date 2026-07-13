@@ -1,3 +1,7 @@
+-- vim.pack.add {
+--     "https://github.com/k4n4t4/statusline.nvim",
+-- }
+
 --[[ STATUSLINE ]]--
 vim.opt.cmdheight = 0
 vim.opt.laststatus = 3
