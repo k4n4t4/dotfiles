@@ -57,37 +57,15 @@ return {
         "folke/noice.nvim",
         dependencies = {
             "MunifTanjim/nui.nvim",
-            {
-                "rcarriga/nvim-notify",
-                opts = {
-                    merge_duplicates = true,
-                    background_colour = "#000000",
-                    render = "wrapped-compact",
-                    stages = "slide",
-                    timeout = 4000,
-                    top_down = true,
-                },
-            },
+            "rcarriga/nvim-notify",
         },
         event = "VeryLazy",
         config = function()
             require('noice').setup {
                 views = {
-                    mini = {
-                        win_options = {
-                            winblend = 10,
-                        },
-                    },
-                    popup = {
-                        win_options = {
-                            winblend = 10,
-                        },
-                    },
-                    notify = {
-                        win_options = {
-                            winblend = 10,
-                        },
-                    },
+                    mini = { win_options = { winblend = 10 } },
+                    popup = { win_options = { winblend = 10 } },
+                    notify = { win_options = { winblend = 10 } },
                 },
                 cmdline = {
                     enabled = true,
@@ -110,56 +88,9 @@ return {
                     view_history = 'messages',
                     view_search = 'virtualtext',
                 },
-                popupmenu = {
-                    enabled = true,
-                    backend = "nui",
-                },
-                redirect = {
-                    view = 'popup',
-                },
-                commands = {
-                    history = {
-                        view = 'split',
-                    },
-                    last = {
-                        view = 'popup',
-                    },
-                    errors = {
-                        view = 'popup',
-                    },
-                    all = {
-                        view = 'split',
-                    },
-                },
-                notify = {
-                    enabled = true,
-                    view = 'notify',
-                },
                 lsp = {
-                    progress = {
-                        enabled = true,
-                        format_done = "lsp_progress_done",
-                        throttle = 1000 / 30,
-                        view = 'mini',
-                    },
-                    override = {
-                        ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-                        ["vim.lsp.util.stylize_markdown"] = true,
-                        ["cmp.entry.get_documentation"] = true,
-                    },
-                    message = {
-                        enabled = true,
-                        view = 'mini',
-                    },
                     hover = { enabled = false },
                     signature = { enabled = false },
-                },
-                presets = {
-                    bottom_search = true,
-                    command_palette = true,
-                    long_message_to_split = true,
-                    inc_rename = true,
-                    lsp_doc_border = true,
                 },
                 throttle = 1000 / 30,
             }
