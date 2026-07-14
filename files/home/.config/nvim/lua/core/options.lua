@@ -106,6 +106,7 @@ vim.opt.fillchars = {
     fold = "·",
     foldopen = "v",
     foldsep = "¦",
+    foldinner = "¦",
     foldclose = ">",
     horiz = "━",
     horizup = "┻",
