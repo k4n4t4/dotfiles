@@ -69,6 +69,10 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.foldcolumn = "auto"
 
+--statusline
+vim.opt.cmdheight = 0
+vim.opt.laststatus = 3
+
 -- shortmess
 vim.opt.shortmess:append 'I'
 
