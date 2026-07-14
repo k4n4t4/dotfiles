@@ -1,12 +1,9 @@
-local enable_mini = true
-
 return {
     --[[ EDITING PLUGINS ]]--
 
     -- explorer
     {
         "nvim-mini/mini.files",
-        enabled = enable_mini,
         event = "VeryLazy",
         config = function()
             local files = require("mini.files")
@@ -36,7 +33,6 @@ return {
     -- surround
     {
         "nvim-mini/mini.surround",
-        enabled = enable_mini,
         event = "VeryLazy",
         config = function()
             local surround = require("mini.surround")
@@ -63,7 +59,6 @@ return {
     -- autopairs
     {
         "nvim-mini/mini.pairs",
-        enabled = enable_mini,
         event = "InsertEnter",
         config = function()
             require("mini.pairs").setup()
@@ -72,7 +67,6 @@ return {
     -- textobjects
     {
         "nvim-mini/mini.ai",
-        enabled = enable_mini,
         dependencies = {
             {
                 "nvim-treesitter/nvim-treesitter-textobjects",
@@ -100,7 +94,6 @@ return {
     -- git
     {
         "nvim-mini/mini.diff",
-        enabled = enable_mini,
         event = "VeryLazy",
         config = function()
             require("mini.diff").setup {
@@ -118,7 +111,6 @@ return {
     },
     {
         "nvim-mini/mini-git",
-        enabled = enable_mini,
         event = "VeryLazy",
         config = function()
             require("mini.git").setup()
@@ -127,7 +119,6 @@ return {
     -- pickers
     {
         "nvim-mini/mini.pick",
-        enabled = enable_mini,
         dependencies = {
             "nvim-mini/mini.extra"
         },
@@ -220,7 +211,6 @@ return {
     -- sessions
     {
         "nvim-mini/mini.sessions",
-        enabled = enable_mini,
         config = function()
             require('mini.sessions').setup()
         end,
@@ -228,7 +218,6 @@ return {
     -- jump
     {
         "nvim-mini/mini.jump",
-        enabled = enable_mini,
         event = "VeryLazy",
         config = function()
             require("mini.jump").setup()
@@ -236,7 +225,6 @@ return {
     },
     {
         "nvim-mini/mini.jump2d",
-        enabled = enable_mini,
         event = "VeryLazy",
         config = function()
             require("mini.jump2d").setup()
@@ -248,7 +236,6 @@ return {
     -- notifications
     {
         "nvim-mini/mini.notify",
-        enabled = enable_mini,
         event = "VeryLazy",
         config = function()
             local notify = require("mini.notify")
@@ -265,7 +252,6 @@ return {
     -- icons
     {
         "nvim-mini/mini.icons",
-        enabled = enable_mini,
         config = function()
             require('mini.icons').setup()
         end,
@@ -273,7 +259,6 @@ return {
     -- themes
     {
         "nvim-mini/mini.base16",
-        enabled = enable_mini,
         event = "VeryLazy",
         config = function()
             require('mini.base16').setup {
@@ -302,7 +287,6 @@ return {
     -- highlight patterns
     {
         "nvim-mini/mini.hipatterns",
-        enabled = enable_mini,
         dependencies = {
             "nvim-mini/mini.extra"
         },
