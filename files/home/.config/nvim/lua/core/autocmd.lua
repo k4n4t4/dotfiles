@@ -1,59 +1,6 @@
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 
--- User DirEnter
-autocmd("SafeState", {
-    group = augroup("DirEnter", { clear = true }),
-    callback = function(args)
-        local bufname = vim.api.nvim_buf_get_name(args.buf)
-        local stat = vim.uv.fs_stat(bufname)
-        if stat and stat.type == "directory" then
-            vim.api.nvim_exec_autocmds("User", { pattern = "DirEnter", modeline = false })
-        end
-    end,
-})
-
--- User BufFirstRead
-autocmd("BufReadPost", {
-    once = true,
-    callback = vim.schedule_wrap(function()
-        vim.api.nvim_exec_autocmds("User", { pattern = "BufFirstRead", modeline = false })
-    end),
-})
-
--- User Safe
-autocmd("SafeState", {
-    once = true,
-    callback = vim.schedule_wrap(function()
-        vim.api.nvim_exec_autocmds("User", { pattern = "Safe", modeline = false })
-    end),
-})
-
--- User Ready
-autocmd("UIEnter", {
-    once = true,
-    callback = vim.schedule_wrap(vim.schedule_wrap(function()
-        vim.api.nvim_exec_autocmds("User", { pattern = "Ready", modeline = false })
-    end)),
-})
-
--- User FileTypeAfter
-autocmd("FileType", {
-    group = augroup("FileTypeAfter", { clear = true }),
-    callback = function(args)
-        autocmd("SafeState", {
-            once = true,
-            callback = function()
-                if vim.api.nvim_buf_is_valid(args.buf) then
-                    vim.api.nvim_exec_autocmds("User", {
-                        pattern = "FileTypeAfter",
-                        data = args,
-                    })
-                end
-            end
-        })
-    end,
-})
 
 -- highlight yank area
 autocmd("TextYankPost", {

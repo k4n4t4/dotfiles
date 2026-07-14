@@ -67,6 +67,7 @@ vim.opt.autocomplete = true
 -- line number
 vim.opt.number = true
 vim.opt.relativenumber = true
+vim.opt.foldcolumn = "auto"
 
 -- shortmess
 vim.opt.shortmess:append 'I'

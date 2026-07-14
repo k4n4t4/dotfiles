@@ -101,7 +101,7 @@ return {
     {
         "nvim-mini/mini.diff",
         enabled = enable_mini,
-        event = "User Ready",
+        event = "VeryLazy",
         config = function()
             require("mini.diff").setup {
                 view = {
@@ -119,7 +119,7 @@ return {
     {
         "nvim-mini/mini-git",
         enabled = enable_mini,
-        event = "User Ready",
+        event = "VeryLazy",
         config = function()
             require("mini.git").setup()
         end,
@@ -131,7 +131,7 @@ return {
         dependencies = {
             "nvim-mini/mini.extra"
         },
-        event = "User Ready",
+        event = "VeryLazy",
         config = function()
             local pick = require("mini.pick")
             local extra = require("mini.extra")
@@ -229,7 +229,7 @@ return {
     {
         "nvim-mini/mini.jump",
         enabled = enable_mini,
-        event = "User Ready",
+        event = "VeryLazy",
         config = function()
             require("mini.jump").setup()
         end,
@@ -237,7 +237,7 @@ return {
     {
         "nvim-mini/mini.jump2d",
         enabled = enable_mini,
-        event = "User Ready",
+        event = "VeryLazy",
         config = function()
             require("mini.jump2d").setup()
         end,
@@ -249,7 +249,7 @@ return {
     {
         "nvim-mini/mini.notify",
         enabled = enable_mini,
-        event = "User Ready",
+        event = "VeryLazy",
         config = function()
             local notify = require("mini.notify")
 
@@ -274,7 +274,7 @@ return {
     {
         "nvim-mini/mini.base16",
         enabled = enable_mini,
-        event = "User Ready",
+        event = "VeryLazy",
         config = function()
             require('mini.base16').setup {
                 palette = {
@@ -306,7 +306,7 @@ return {
         dependencies = {
             "nvim-mini/mini.extra"
         },
-        event = "User Ready",
+        event = "VeryLazy",
         config = function()
             local hipatterns = require('mini.hipatterns')
             local hi_words = require('mini.extra').gen_highlighter.words

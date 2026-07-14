@@ -9,7 +9,7 @@ vim.api.nvim_create_autocmd("SafeState", {
         local finish = vim.uv.hrtime()
         startup_time = finish - start
         local time = startup_time / 1e6
-        vim.notify("Startup Time: " .. time .. "ms")
+        print("Startup Time: " .. time .. "ms")
     end),
 })
 

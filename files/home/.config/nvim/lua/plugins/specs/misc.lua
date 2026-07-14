@@ -61,7 +61,7 @@ return {
             "nvim-tree/nvim-web-devicons",
             "MunifTanjim/nui.nvim",
         },
-        event = 'User Ready',
+        event = 'VeryLazy',
         keys = {
             { mode = 'n', "<leader>E", "<CMD>Neotree toggle<CR>", desc = "Neotree Toggle" },
         },
@@ -72,7 +72,7 @@ return {
     -- breadcrumbs
     {
         'Bekaboo/dropbar.nvim',
-        event = 'User Ready',
+        event = 'VeryLazy',
         config = function()
             local dropbar_api = require('dropbar.api')
             local set = vim.keymap.set
@@ -133,7 +133,7 @@ return {
     {
         "nvim-treesitter/nvim-treesitter-context",
         dependencies = { "nvim-treesitter/nvim-treesitter" },
-        event = 'User Ready',
+        event = 'VeryLazy',
         config = function()
             require("treesitter-context").setup { enable = true }
             vim.api.nvim_set_hl(0, "TreesitterContext", { link = "WinSeparator" })
