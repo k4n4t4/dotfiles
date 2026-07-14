@@ -33,7 +33,7 @@ return {
     {
         "zbirenbaum/copilot.lua",
         cmd = "Copilot",
-        event = 'InsertEnter',
+        event = "InsertEnter",
         opts = {
             filetypes = {
                 ["*"] = true,
@@ -52,7 +52,69 @@ return {
 
     --[[ EDITOR PLUGINS ]]--
 
-    -- noti
+
+    {
+        "nvim-lualine/lualine.nvim",
+        event = "VeryLazy",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        config = function()
+            vim.api.nvim_create_autocmd({"RecordingEnter", "RecordingLeave"}, {
+                group = vim.api.nvim_create_augroup("LualineMacroRefresh", { clear = true }),
+                callback = function() require("lualine").refresh() end,
+            })
+            require("lualine").setup {
+                options = {
+                    icons_enabled = true,
+                    theme = "auto",
+                    component_separators = { left = "", right = "" },
+                    section_separators = { left = "", right = "" },
+                    globalstatus = true,
+                },
+                sections = {
+                    lualine_a = {
+                        {
+                            "mode",
+                            fmt = function(mode)
+                                local reg = vim.fn.reg_recording()
+                                if reg ~= "" then
+                                    return "rec @" .. reg
+                                end
+                                return mode
+                            end,
+                        },
+                    },
+                    lualine_b = { "branch", "diff", "diagnostics" },
+                    lualine_c = {
+                        {
+                            "filename",
+                            path = 1,
+                            file_status = true,
+                            shorting_target = 40,
+                            symbols = {
+                                modified = " [+]",
+                                readonly = " [RO]",
+                                unnamed = "Untitled",
+                            },
+                        },
+                    },
+                    lualine_x = { "encoding", "fileformat", "filetype" },
+                    lualine_y = { "progress", "searchcount" },
+                    lualine_z = { "location" },
+                },
+                inactive_sections = {
+                    lualine_a = {},
+                    lualine_b = {},
+                    lualine_c = { "filename" },
+                    lualine_x = { "location" },
+                    lualine_y = {},
+                    lualine_z = {},
+                },
+                tabline = {},
+                extensions = {},
+            }
+        end,
+    },
+    -- notify
     {
         "folke/noice.nvim",
         dependencies = {

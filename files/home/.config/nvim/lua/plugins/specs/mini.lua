@@ -134,13 +134,6 @@ return {
 
     --[[ UI PLUGINS ]]--
 
-    -- icons
-    {
-        "nvim-mini/mini.icons",
-        config = function()
-            require('mini.icons').setup()
-        end,
-    },
     -- themes
     {
         "nvim-mini/mini.base16",
