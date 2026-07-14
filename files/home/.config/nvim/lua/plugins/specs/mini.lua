@@ -134,22 +134,6 @@ return {
 
     --[[ UI PLUGINS ]]--
 
-    -- notifications
-    {
-        "nvim-mini/mini.notify",
-        event = "VeryLazy",
-        config = function()
-            local notify = require("mini.notify")
-
-            notify.setup {
-                lsp_progress = {
-                    enable = true,
-                },
-            }
-
-            vim.notify = notify.make_notify()
-        end,
-    },
     -- icons
     {
         "nvim-mini/mini.icons",
