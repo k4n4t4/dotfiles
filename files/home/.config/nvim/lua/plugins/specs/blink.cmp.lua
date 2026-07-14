@@ -5,13 +5,15 @@ return {
         "L3MON4D3/LuaSnip",
         "rafamadriz/friendly-snippets",
 
-        "Kaiser-Yang/blink-cmp-dictionary",
         "giuxtaposition/blink-cmp-copilot",
         'brenoprata10/nvim-highlight-colors',
         "moyiz/blink-emoji.nvim",
-        { "xzbdmw/colorful-menu.nvim", config = function() require("colorful-menu").setup {} end },
+        "xzbdmw/colorful-menu.nvim",
+
+        "Kaiser-Yang/blink-cmp-dictionary",
         'Kaiser-Yang/blink-cmp-git',
         'Kaiser-Yang/blink-cmp-avante',
+
         "epwalsh/obsidian.nvim",
         { "saghen/blink.compat", version = false },
         "hrsh7th/cmp-calc",
@@ -30,104 +32,33 @@ return {
                 enabled = true,
                 window = { winblend = 10, show_documentation = true }
             },
-            appearance = {
-                use_nvim_cmp_as_default = true,
-                nerd_font_variant = 'mono',
-            },
             completion = {
-                list = { selection = { preselect = false } },
-                ghost_text = { enabled = true },
-                documentation = {
-                    auto_show = true,
-                    window = { winblend = 10 },
-                },
+                documentation = { auto_show = true, window = { winblend = 10 } },
                 menu = {
-                    max_height = 10,
                     winblend = 10,
                     draw = {
                         columns = { { "kind_icon" }, { "label", gap = 1 } },
                         components = {
                             label = {
-                                width = { fill = true, max = 60 },
                                 text = function(ctx)
-                                    local highlights_info = require("colorful-menu").blink_highlights(ctx)
-                                    if highlights_info ~= nil then
-                                        return highlights_info.label
-                                    else
-                                        return ctx.label
-                                    end
+                                    return require("colorful-menu").blink_components_text(ctx)
                                 end,
                                 highlight = function(ctx)
-                                    local highlights = {}
-                                    local highlights_info = require("colorful-menu").blink_highlights(ctx)
-                                    if highlights_info ~= nil then
-                                        highlights = highlights_info.highlights
-                                    end
-                                    for _, idx in ipairs(ctx.label_matched_indices) do
-                                        table.insert(highlights, { idx, idx + 1, group = "BlinkCmpLabelMatch" })
-                                    end
-                                    return highlights
-                                end,
-                            },
-                            kind_icon = {
-                                text = function(ctx)
-                                    local icon = ctx.kind_icon
-                                    if ctx.item.source_name == "LSP" then
-                                        local color_item = require("nvim-highlight-colors").format(
-                                            ctx.item.documentation,
-                                            { kind = ctx.kind })
-                                        if color_item and color_item.abbr ~= "" then
-                                            icon = color_item.abbr
-                                        end
-                                    end
-                                    return icon .. ctx.icon_gap
-                                end,
-                                highlight = function(ctx)
-                                    local highlight = "BlinkCmpKind" .. ctx.kind
-                                    if ctx.item.source_name == "LSP" then
-                                        local color_item = require("nvim-highlight-colors").format(
-                                            ctx.item.documentation,
-                                            { kind = ctx.kind })
-                                        if color_item and color_item.abbr_hl_group then
-                                            highlight = color_item.abbr_hl_group
-                                        end
-                                    end
-                                    return highlight
+                                    return require("colorful-menu").blink_components_highlight(ctx)
                                 end,
                             },
                         },
                     },
                 },
             },
-            snippets = {
-                preset = "luasnip",
-            },
             cmdline = {
                 enabled = true,
                 sources = function()
                     local type = vim.fn.getcmdtype()
-                    if type == "/" or type == "?" then
-                        return { "buffer" }
-                    end
-                    if type == ":" then
-                        return { "cmdline" }
-                    end
+                    if type == "/" or type == "?" then return { "buffer" } end
+                    if type == ":" then return { "cmdline" } end
                     return {}
                 end,
-                keymap = {
-                    preset = "cmdline",
-                    ["<Right>"] = false,
-                    ["<Left>"] = false,
-                },
-                completion = {
-                    list = { selection = { preselect = false } },
-                    menu = {
-                        auto_show = function(_)
-                            return vim.fn.getcmdtype() == ":"
-                        end,
-                    },
-                    ghost_text = { enabled = true },
-                },
             },
             sources = {
                 default = { "copilot", "avante", "path", "lsp", "snippets", "obsidian", "obsidian_new", "obsidian_tags", "buffer", "calc", "emoji", "git", "dictionary" },
@@ -256,7 +187,6 @@ return {
             },
         }
 
-        local hl = vim.api.nvim_set_hl
-        hl(0, "BlinkCmpGhostText", { link = "Comment" })
+        vim.api.nvim_set_hl(0, "BlinkCmpGhostText", { link = "Comment" })
     end,
 }
