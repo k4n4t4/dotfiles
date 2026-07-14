@@ -23,10 +23,7 @@ return {
             notifier = {
                 enabled = true,
                 timeout = 3000,
-                width = { min = 40, max = 0.4 },
-                height = { min = 1, max = 0.6 },
                 style = "fancy",
-                top_down = true,
             },
             quickfile = { enabled = true },
             scope = { enabled = true },
