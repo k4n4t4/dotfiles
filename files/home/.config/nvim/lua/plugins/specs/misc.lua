@@ -62,6 +62,24 @@ return {
                 group = vim.api.nvim_create_augroup("LualineMacroRefresh", { clear = true }),
                 callback = function() require("lualine").refresh() end,
             })
+            local function macro_status()
+                local reg = vim.fn.reg_recording()
+                if reg ~= "" then
+                    return "rec @" .. reg
+                end
+                return ""
+            end
+            local function lsp_status()
+                local clients = vim.lsp.get_clients({ bufnr = 0 })
+                if #clients == 0 then
+                    return ""
+                end
+                local names = {}
+                for _, client in ipairs(clients) do
+                    table.insert(names, client.name)
+                end
+                return " " .. table.concat(names, ", ")
+            end
             require("lualine").setup {
                 options = {
                     icons_enabled = true,
@@ -72,16 +90,8 @@ return {
                 },
                 sections = {
                     lualine_a = {
-                        {
-                            "mode",
-                            fmt = function(mode)
-                                local reg = vim.fn.reg_recording()
-                                if reg ~= "" then
-                                    return "rec @" .. reg
-                                end
-                                return mode
-                            end,
-                        },
+                        "mode",
+                        macro_status,
                     },
                     lualine_b = { "branch", "diff", "diagnostics" },
                     lualine_c = {
@@ -97,7 +107,7 @@ return {
                             },
                         },
                     },
-                    lualine_x = { "encoding", "fileformat", "filetype" },
+                    lualine_x = { lsp_status, "encoding", "fileformat", "filetype" },
                     lualine_y = { "progress", "searchcount" },
                     lualine_z = { "location" },
                 },
