@@ -1,6 +1,4 @@
-local info = require "utils.info"
-
-local mason_bin = info.path.stdpath("data") .. "/mason/bin"
+local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
 if not vim.env.PATH:find(mason_bin, 1, true) then
     vim.env.PATH = mason_bin .. ":" .. vim.env.PATH
 end
@@ -44,38 +42,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
         set('n', '<Leader>lr', vim.lsp.buf.references, { buffer = buf, desc = "References" })
         set('n', '<Leader>li', vim.lsp.buf.implementation, { buffer = buf, desc = "Implementation" })
         set('n', '<Leader>lD', vim.lsp.buf.declaration, { buffer = buf, desc = "Declaration" })
-
-        local lsp = require "utils.lsp"
-
-        set('n', '<Leader>lh', function()
-            lsp.hover {
-                border = "none",
-                focusable = true,
-                winblend = 10,
-            }
-        end, { buffer = buf, desc = "Hover" })
-        set('n', '<Leader>ls', function()
-            lsp.signature_help {
-                border = "none",
-                focusable = true,
-                winblend = 10,
-            }
-        end, { buffer = buf, desc = "Signature Help" })
-        set('n', 'K', function()
-            lsp.hover {
-                border = "none",
-                focusable = true,
-                winblend = 10,
-            }
-        end, { buffer = buf, desc = "Hover" })
-        set('n', '<C-k>', function()
-            lsp.signature_help {
-                border = "none",
-                focusable = true,
-                winblend = 10,
-            }
-        end, { buffer = buf, desc = "Signature Help" })
-
+        set('n', '<Leader>lh', vim.lsp.buf.hover, { buffer = buf, desc = "Hover" })
+        set('n', '<Leader>ls', vim.lsp.buf.signature_help, { buffer = buf, desc = "Signature Help" })
+        set('n', 'K', vim.lsp.buf.hover, { buffer = buf, desc = "Hover" })
+        set('n', '<C-K>', vim.lsp.buf.signature_help, { buffer = buf, desc = "Signature Help" })
         set('n', 'gd', function() vim.lsp.buf.definition() end, { buffer = buf, desc = "Definition" })
         set('n', 'gi', function() vim.lsp.buf.implementation() end, { buffer = buf, desc = "Implementation" })
     end),

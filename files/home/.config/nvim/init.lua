@@ -10,13 +10,3 @@ else
     require "plugins"
     require "core"
 end
-
---[[ STATUSCOLUMN ]]--
-local stc = require "utils.stc"
-
-stc.setup {
-    statuscolumn = function(ctx)
-        return "AAA"
-    end,
-
-}
