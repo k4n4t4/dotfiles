@@ -52,6 +52,44 @@ return {
 
     --[[ EDITOR PLUGINS ]]--
 
+    -- tabuf
+    {
+        'akinsho/bufferline.nvim',
+        event = "VeryLazy",
+        version = "*",
+        dependencies = 'nvim-tree/nvim-web-devicons',
+        config = function()
+            require("bufferline").setup({
+                options = {
+                    diagnostics = "nvim_lsp",
+                    diagnostics_indicator = function(count, level, diagnostics_dict, context)
+                        local icon = level:match("error") and " " or " "
+                        return " " .. icon .. count
+                    end,
+                    always_show_bufferline = true,
+                },
+                highlights = {
+                    buffer_selected = {
+                        bold = true,
+                        italic = false,
+                    },
+                },
+            })
+
+            vim.keymap.set("n", "<A-j>", "<Cmd>BufferLineCycleNext<CR>", { desc = "Next buffer" })
+            vim.keymap.set("n", "<A-k>", "<Cmd>BufferLineCyclePrev<CR>", { desc = "Prev buffer" })
+
+            vim.keymap.set("n", "<A-S-j>", "<Cmd>BufferLineMoveNext<CR>", { desc = "Move buffer right" })
+            vim.keymap.set("n", "<A-S-k>", "<Cmd>BufferLineMovePrev<CR>", { desc = "Move buffer left" })
+
+            vim.keymap.set("n", "<A-x>", "<Cmd>BufferLinePickClose<CR>", { desc = "Pick and close buffer" })
+
+            vim.keymap.set("n", "<A-s>", "<Cmd>BufferLinePick<CR>", { desc = "Pick buffer" })
+
+            vim.keymap.set("n", "<A-C-j>", "<Cmd>tabnext<CR>", { desc = "Next tab" })
+            vim.keymap.set("n", "<A-C-k>", "<Cmd>tabprevious<CR>", { desc = "Prev tab" })
+        end,
+    },
     -- breadcrumbs
     {
         'Bekaboo/dropbar.nvim',

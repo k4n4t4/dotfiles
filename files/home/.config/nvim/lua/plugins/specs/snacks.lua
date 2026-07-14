@@ -23,7 +23,7 @@ return {
             notifier = {
                 enabled = true,
                 timeout = 3000,
-                style = "fancy",
+                style = "compact",
             },
             quickfile = { enabled = true },
             scope = { enabled = true },
