@@ -65,6 +65,7 @@ local group = augroup("toggle_relative_number", { clear = true })
 autocmd("InsertEnter", {
     group = group,
     callback = function()
+        ---@diagnostic disable-next-line: undefined-field
         if vim.opt_local.number:get() then
             vim.opt_local.relativenumber = false
         end
@@ -74,6 +75,7 @@ autocmd("InsertEnter", {
 autocmd("InsertLeave", {
     group = group,
     callback = function()
+        ---@diagnostic disable-next-line: undefined-field
         if vim.opt_local.number:get() then
             vim.opt_local.relativenumber = true
         end

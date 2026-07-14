@@ -2,51 +2,33 @@ return {
     "saghen/blink.cmp",
     version = '*',
     dependencies = {
-        {
-            "L3MON4D3/LuaSnip",
-            dependencies = { "rafamadriz/friendly-snippets" },
-            config = function()
-                local loader = require("luasnip.loaders.from_vscode")
-                loader.lazy_load()
-                loader.lazy_load {
-                    paths = { vim.fn.stdpath("config") .. "/snippets" }
-                }
-            end,
-        },
-        {
-            "Kaiser-Yang/blink-cmp-dictionary",
-            dependencies = { "nvim-lua/plenary.nvim" },
-        },
+        "L3MON4D3/LuaSnip",
+        "rafamadriz/friendly-snippets",
+
+        "Kaiser-Yang/blink-cmp-dictionary",
         "giuxtaposition/blink-cmp-copilot",
         'brenoprata10/nvim-highlight-colors',
         "moyiz/blink-emoji.nvim",
-        {
-            "xzbdmw/colorful-menu.nvim",
-            config = function()
-                require("colorful-menu").setup {}
-            end,
-        },
+        { "xzbdmw/colorful-menu.nvim", config = function() require("colorful-menu").setup {} end },
         'Kaiser-Yang/blink-cmp-git',
         'Kaiser-Yang/blink-cmp-avante',
         "epwalsh/obsidian.nvim",
-
-        {
-            "saghen/blink.compat",
-            version = false,
-        },
+        { "saghen/blink.compat", version = false },
         "hrsh7th/cmp-calc",
     },
     event = { "InsertEnter", "CmdLineEnter" },
     config = function()
         vim.opt.autocomplete = false
+
+        local loader = require("luasnip.loaders.from_vscode")
+        loader.lazy_load()
+        loader.lazy_load { paths = { vim.fn.stdpath("config") .. "/snippets" } }
+
         require("blink.cmp").setup {
             fuzzy = { implementation = "prefer_rust_with_warning" },
             signature = {
                 enabled = true,
-                window = {
-                    winblend = 10,
-                    show_documentation = true,
-                }
+                window = { winblend = 10, show_documentation = true }
             },
             appearance = {
                 use_nvim_cmp_as_default = true,
@@ -57,9 +39,7 @@ return {
                 ghost_text = { enabled = true },
                 documentation = {
                     auto_show = true,
-                    window = {
-                        winblend = 10,
-                    },
+                    window = { winblend = 10 },
                 },
                 menu = {
                     max_height = 10,
@@ -150,21 +130,7 @@ return {
                 },
             },
             sources = {
-                default = {
-                    "copilot",
-                    "avante",
-                    "path",
-                    "lsp",
-                    "snippets",
-                    "obsidian",
-                    "obsidian_new",
-                    "obsidian_tags",
-                    "buffer",
-                    "calc",
-                    "emoji",
-                    "git",
-                    "dictionary",
-                },
+                default = { "copilot", "avante", "path", "lsp", "snippets", "obsidian", "obsidian_new", "obsidian_tags", "buffer", "calc", "emoji", "git", "dictionary" },
                 providers = {
                     copilot = {
                         name = "Copilot",
