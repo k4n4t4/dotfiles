@@ -130,6 +130,28 @@ vim.diagnostic.config {
 }
 vim.api.nvim_set_hl(0, "DiagnosticUnnecessary", { link = "NONE", default = false })
 
+-- filetype
+vim.filetype.add {
+    extension = {
+        jsp = "jsp",
+    },
+}
+
+-- treesitter
+vim.treesitter.language.register("html", "jsp")
+vim.api.nvim_create_autocmd("FileType", {
+    group = vim.api.nvim_create_augroup("TreesitterStart", { clear = true }),
+    callback = function(_)
+        local ok, _ = pcall(vim.treesitter.start)
+        if ok then
+            vim.opt.foldmethod = "expr"
+            vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+            vim.opt.foldtext = ""
+            vim.opt.foldlevel = 99
+            vim.opt.foldlevelstart = 99
+        end
+    end,
+})
 
 --[[ BUILTIN PLUGINS ]]--
 

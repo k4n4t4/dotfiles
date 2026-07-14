@@ -29,38 +29,6 @@ autocmd("User", {
     end),
 })
 
--- Windows IME
-autocmd("User", {
-    pattern = "Ready",
-    once = true,
-    callback = vim.schedule_wrap(function()
-        if vim.env.WSL_DISTRO_NAME ~= nil then
-            autocmd({ "InsertLeave", "CmdlineLeave" }, {
-                group = augroup("Windows IME", { clear = true }),
-                callback = function()
-                    vim.fn.jobstart({
-                        'powershell.exe', '-NoProfile', '-NonInteractive', '-Command',
-                        [[
-                            Add-Type -TypeDefinition ]]..[[@"
-                                using System;
-                                using System.Runtime.InteropServices;
-                                public class IME {
-                                    [DllImport("user32.dll")] public static extern IntPtr GetForegroundWindow();
-                                    [DllImport("imm32.dll")]  public static extern IntPtr ImmGetDefaultIMEWnd(IntPtr hWnd);
-                                    [DllImport("user32.dll")] public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
-                                }
-                            ]].."\n"..[["@
-                            $hwnd   = [IME]::GetForegroundWindow()
-                            $imeWnd = [IME]::ImmGetDefaultIMEWnd($hwnd)
-                            [IME]::SendMessage($imeWnd, 0x283, [IntPtr]0x6, [IntPtr]0)
-                        ]],
-                    })
-                end,
-            })
-        end
-    end),
-})
-
 -- restore cursor position
 autocmd("BufReadPost", {
     group = augroup("RestoreCursorPosition", { clear = true }),
