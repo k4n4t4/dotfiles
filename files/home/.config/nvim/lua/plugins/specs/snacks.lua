@@ -6,7 +6,7 @@ return {
         opts = {
             bigfile = { enabled = true },
             dashboard = { enabled = false },
-            explorer = { enabled = false },
+            explorer = { enabled = true },
             indent = { enabled = true },
             input = { enabled = true },
             animation = { enabled = true },
@@ -16,15 +16,8 @@ return {
                 hidden = true,
                 ignored = false,
                 sources = {
-                    matcher = {
-                        frecency = true,
-                        cwd_bonus = true,
-                        sort_empty = true,
-                    },
-                    grep = {
-                        hidden = true,
-                        regex = true,
-                    },
+                    matcher = { frecency = true, cwd_bonus = true, sort_empty = true },
+                    grep = { hidden = true, regex = true },
                 },
             },
             notifier = {
@@ -38,11 +31,10 @@ return {
             quickfile = { enabled = true },
             scope = { enabled = true },
             scroll = { enabled = true },
-            statuscolumn = { enabled = true },
             words = { enabled = true },
             terminal = { enabled = true },
         },
-        config = function()
+        init = function()
             vim.api.nvim_create_autocmd("LspProgress", {
                 ---@param ev {data: {client_id: integer, params: lsp.ProgressParams}}
                 callback = function(ev)
