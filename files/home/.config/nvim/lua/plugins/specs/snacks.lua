@@ -40,9 +40,7 @@ return {
             scroll = { enabled = true },
             statuscolumn = { enabled = true },
             words = { enabled = true },
-            terminal = {
-                enabled = true,
-            },
+            terminal = { enabled = true },
         },
         config = function()
             vim.api.nvim_create_autocmd("LspProgress", {
@@ -54,7 +52,7 @@ return {
                         title = "LSP Progress",
                         opts = function(notif)
                             notif.icon = ev.data.params.value.kind == "end" and " "
-                            or spinner[math.floor(vim.uv.hrtime() / (1e6 * 80)) % #spinner + 1]
+                                or spinner[math.floor(vim.uv.hrtime() / (1e6 * 80)) % #spinner + 1]
                         end,
                     })
                 end,
@@ -62,101 +60,36 @@ return {
         end,
         keys = {
             -- explorer
-            {
-                "<Leader>e",
-                function() Snacks.picker.explorer() end,
-                desc = "explorer",
-            },
+            { "<Leader>e",       function() Snacks.picker.explorer() end,              desc = "explorer" },
             -- picker
-            {
-                "<Leader>p",
-                function() Snacks.picker.pick() end,
-                desc = "Picker",
-            },
-            {
-                "<Leader>f",
-                function() Snacks.picker.files() end,
-                desc = "find files",
-            },
-            {
-                "<leader><space>",
-                function() Snacks.picker.smart() end,
-                desc = "Smart Find Files"
-            },
-            {
-                "<Leader>/",
-                function() Snacks.picker.grep() end,
-                desc = "grep",
-            },
-            {
-                "<Leader>r",
-                function() Snacks.picker.recent() end,
-                desc = "Recent Files",
-            },
-            {
-                "<Leader>b",
-                function() Snacks.picker.buffers() end,
-                desc = "Buffers",
-            },
-            {
-                "<Leader>d",
-                function() Snacks.picker.diagnostics() end,
-                desc = "Diagnostics",
-            },
-            {
-                "<Leader>q",
-                function() Snacks.picker.qflist() end,
-                desc = "Quickfix List",
-            },
-            {
-                "<Leader>?",
-                function() Snacks.picker.help() end,
-                desc = "Help Tags",
-            },
-            {
-                "<Leader>s",
-                function() Snacks.picker.lsp_symbols() end,
-                desc = "LSP Symbols",
-            },
-            {
-                "<Leader>S",
-                function() Snacks.picker.lsp_workspace_symbols() end,
-                desc = "LSP Workspace Symbols",
-            },
-            {
-                "gd",
-                function() Snacks.picker.lsp_definitions() end,
-                nowait = true,
-                desc = "Definitions",
-            },
-            {
-                "gr",
-                function() Snacks.picker.lsp_references() end,
-                nowait = true,
-                desc = "References",
-            },
-            {
-                "gi",
-                function() Snacks.picker.lsp_implementations() end,
-                nowait = true,
-                desc = "Implementations",
-            },
-            {
-                "gt",
-                function() Snacks.picker.lsp_type_definitions() end,
-                nowait = true,
-                desc = "Type Definitions",
-            },
+            { "<Leader>P",       function() Snacks.picker.pick() end,                  desc = "Picker" },
+            { "<Leader>f",       function() Snacks.picker.files() end,                 desc = "find files" },
+            { "<leader>p",       function() Snacks.picker.projects() end,              desc = "Projects" },
+            { "<leader><space>", function() Snacks.picker.smart() end,                 desc = "Smart Find Files" },
+            { "<Leader>/",       function() Snacks.picker.grep() end,                  desc = "grep" },
+            { "<Leader>r",       function() Snacks.picker.recent() end,                desc = "Recent Files" },
+            { "<Leader>b",       function() Snacks.picker.buffers() end,               desc = "Buffers" },
+            { "<Leader>d",       function() Snacks.picker.diagnostics() end,           desc = "Diagnostics" },
+            { "<Leader>q",       function() Snacks.picker.qflist() end,                desc = "Quickfix List" },
+            { "<Leader>?",       function() Snacks.picker.help() end,                  desc = "Help Tags" },
+            { "<Leader>s",       function() Snacks.picker.lsp_symbols() end,           desc = "LSP Symbols" },
+            { "<Leader>S",       function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
+            { "gd",              function() Snacks.picker.lsp_definitions() end,       nowait = true,                 desc = "Definitions" },
+            { "gr",              function() Snacks.picker.lsp_references() end,        nowait = true,                 desc = "References" },
+            { "gi",              function() Snacks.picker.lsp_implementations() end,   nowait = true,                 desc = "Implementations" },
+            { "gt",              function() Snacks.picker.lsp_type_definitions() end,  nowait = true,                 desc = "Type Definitions" },
             --words
+            { "]]",              function() Snacks.words.jump(1) end,                  desc = "Next reference" },
+            { "[[",              function() Snacks.words.jump(-1) end,                 desc = "Next reference" },
+            -- temrinal
+            { "<leader>kk",      function() Snacks.terminal() end,                     desc = "Toggle Terminal" },
             {
-                "]]",
-                function() Snacks.words.jump(1) end,
-                desc = "Next reference",
-            },
-            {
-                "[[",
-                function() Snacks.words.jump(-1) end,
-                desc = "Next reference",
+                "<leader>kf",
+                function()
+                    Snacks.terminal(nil,
+                        { win = { position = "float", wo = { winblend = 30, }, } })
+                end,
+                desc = "Float Terminal"
             },
         },
     },

@@ -50,7 +50,5 @@ vim.api.nvim_create_autocmd("LspAttach", {
         set('n', '<Leader>ls', vim.lsp.buf.signature_help, { buffer = buf, desc = "Signature Help" })
         set('n', 'K', vim.lsp.buf.hover, { buffer = buf, desc = "Hover" })
         set('n', '<C-K>', vim.lsp.buf.signature_help, { buffer = buf, desc = "Signature Help" })
-        set('n', 'gd', function() vim.lsp.buf.definition() end, { buffer = buf, desc = "Definition" })
-        set('n', 'gi', function() vim.lsp.buf.implementation() end, { buffer = buf, desc = "Implementation" })
     end,
 })
