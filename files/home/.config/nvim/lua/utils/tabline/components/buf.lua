@@ -1,10 +1,9 @@
 local info = require "utils.info"
 local hi = require "utils.highlight"
-local plugin = require "utils.plugin"
 local transparent = require "utils.transparent"
 
 local function get_icon_for_filetype(filetype)
-    local devicons = plugin.get("nvim-web-devicons")
+    local devicons = require("nvim-web-devicons")
     if devicons then
         return devicons.get_icon_color_by_filetype(filetype)
     end
