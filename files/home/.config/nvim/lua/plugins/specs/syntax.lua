@@ -3,6 +3,22 @@ return {
     {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
+        init = function()
+            -- fold with treesitter
+            vim.api.nvim_create_autocmd("FileType", {
+                group = vim.api.nvim_create_augroup("TreesitterStart", { clear = true }),
+                callback = function(_)
+                    local ok, _ = pcall(vim.treesitter.start)
+                    if ok then
+                        vim.opt.foldmethod = "expr"
+                        vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+                        vim.opt.foldtext = ""
+                        vim.opt.foldlevel = 99
+                        vim.opt.foldlevelstart = 99
+                    end
+                end,
+            })
+        end,
     },
 
     --[[ MARKDOWN PLUGINS ]]--
