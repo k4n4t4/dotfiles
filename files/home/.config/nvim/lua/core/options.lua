@@ -169,12 +169,3 @@ vim.lsp.enable {
     "lua_ls",
     "bashls",
 }
-
-
---[[ BUILTIN PLUGINS ]]--
-
--- disable builtin plugins
-vim.opt.loadplugins = false
-
--- enable man plugin
-vim.cmd.runtime("plugin/man.lua")
