@@ -125,6 +125,18 @@ return {
                 desc = "Definitions",
             },
             {
+                "gi",
+                function() Snacks.picker.lsp_implementations() end,
+                nowait = true,
+                desc = "Implementations",
+            },
+            {
+                "gt",
+                function() Snacks.picker.lsp_type_definitions() end,
+                nowait = true,
+                desc = "Implementations",
+            },
+            {
                 "gr",
                 function() Snacks.picker.lsp_references() end,
                 nowait = true,
