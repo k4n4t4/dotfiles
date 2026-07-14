@@ -69,6 +69,11 @@ return {
             },
             -- picker
             {
+                "<Leader>p",
+                function() Snacks.picker.pick() end,
+                desc = "Picker",
+            },
+            {
                 "<Leader>f",
                 function() Snacks.picker.files() end,
                 desc = "find files",
@@ -77,11 +82,6 @@ return {
                 "<Leader>/",
                 function() Snacks.picker.grep() end,
                 desc = "grep",
-            },
-            {
-                "<Leader>u",
-                function() Snacks.picker.undo() end,
-                desc = "Undo History",
             },
             {
                 "<Leader>r",
@@ -99,6 +99,16 @@ return {
                 desc = "Diagnostics",
             },
             {
+                "<Leader>q",
+                function() Snacks.picker.qflist() end,
+                desc = "Quickfix List",
+            },
+            {
+                "<Leader>?",
+                function() Snacks.picker.help() end,
+                desc = "Help Tags",
+            },
+            {
                 "<Leader>s",
                 function() Snacks.picker.lsp_symbols() end,
                 desc = "LSP Symbols",
@@ -107,6 +117,12 @@ return {
                 "<Leader>S",
                 function() Snacks.picker.lsp_workspace_symbols() end,
                 desc = "LSP Workspace Symbols",
+            },
+            {
+                "gd",
+                function() Snacks.picker.lsp_definitions() end,
+                nowait = true,
+                desc = "Definitions",
             },
             {
                 "gr",
