@@ -89,11 +89,11 @@ return {
             "nvim-neotest/nvim-nio",
         },
         keys = {
-            { '<F5>',      function() require('dap').continue() end,         desc = 'DAP Continue' },
-            { '<F10>',     function() require('dap').step_over() end,        desc = 'DAP Step Over' },
-            { '<F11>',     function() require('dap').step_into() end,        desc = 'DAP Step Into' },
-            { '<F12>',     function() require('dap').step_out() end,         desc = 'DAP Step Out' },
-            { '<Leader>b', function() require('dap').toggle_breakpoint() end, desc = 'DAP Toggle Breakpoint' },
+            { '<F5>',  function() require('dap').continue() end,          desc = 'DAP Continue' },
+            { '<F10>', function() require('dap').step_over() end,         desc = 'DAP Step Over' },
+            { '<F11>', function() require('dap').step_into() end,         desc = 'DAP Step Into' },
+            { '<F12>', function() require('dap').step_out() end,          desc = 'DAP Step Out' },
+            { '<F9>',  function() require('dap').toggle_breakpoint() end, desc = 'DAP Toggle Breakpoint' },
         },
         config = function()
             local dap, dapui = require("dap"), require("dapui")
@@ -137,99 +137,6 @@ return {
         config = function()
             require("treesitter-context").setup { enable = true }
             vim.api.nvim_set_hl(0, "TreesitterContext", { link = "WinSeparator" })
-        end,
-    },
-    -- statusline
-    {
-        "https://github.com/k4n4t4/statusline.nvim",
-        lazy = false,
-        config = function()
-            vim.opt.cmdheight = 0
-            vim.opt.laststatus = 3
-
-            local stl = require "statusline"
-
-            stl.setup {
-                statusline = function(ctx)
-                    local mode = stl.mode { align = "center" }
-                    local lsp = stl.lsp { show = false }
-                    local git = stl.git()
-                    local diagnostic = stl.diagnostic()
-                    local encoding = stl.encoding()
-                    local fileformat = stl.fileformat()
-                    local macro = stl.macro_recording()
-                    local search_count = stl.search_count()
-                    local file = stl.file()
-                    local flags = stl.flags()
-                    local filetype = stl.filetype { icon_provider = "nvim-web-devicons" }
-
-                    local sep = "%#Comment#│%*"
-
-                    if ctx.active then
-                        return stl.make_str {
-                            {
-                                hl = mode.hl,
-                                content = mode.content,
-                            },
-                            " ", sep, " ",
-                            macro and {
-                                hl = macro.hl,
-                                content = macro.content,
-                            } or "",
-                            " ",
-                            file or "",
-                            flags and {
-                                hl = flags.hl,
-                                content = flags.content,
-                            } or "",
-                            " ",
-                            git and {
-                                content = git,
-                            } or "",
-                            " ",
-                            diagnostic and {
-                                content = diagnostic,
-                            } or "",
-                            "%=%<",
-                            "%S ",
-                            search_count or "",
-                            lsp and {
-                                hl = "Number",
-                                click = lsp.click,
-                                content = lsp.content,
-                            } or "",
-                            " ",
-                            filetype or "",
-                            " ", sep, " ",
-                            encoding or "",
-                            " ",
-                            fileformat and ((fileformat.icon or "") .. (fileformat.label or "")) or "",
-                            " ", sep, " ",
-                            "%l:%c|%P",
-                        }
-                    else
-                        return stl.make_str {
-                            {
-                                hl = mode.hl,
-                                content = mode.content,
-                            },
-                            " ",
-                            file or "",
-                            flags and {
-                                hl = flags.hl,
-                                content = flags.content,
-                            } or "",
-                            "%=%<",
-                            filetype and {
-                                hl = filetype.hl,
-                                content = filetype.content,
-                            } or "",
-                            " ", sep, " ",
-                            "%l:%c  %P",
-                        }
-                    end
-                end,
-            }
         end,
     },
 }
