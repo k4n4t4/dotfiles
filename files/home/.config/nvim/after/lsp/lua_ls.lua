@@ -1,4 +1,22 @@
-local info = require "utils.info"
+local uv = vim.uv or vim.loop
+
+local function path_contains(path, target)
+    if not path or not target then return false end
+    return string.find(path, target, 1, true) ~= nil
+end
+
+local function in_config_dir(path)
+    return path_contains(path, vim.fn.stdpath("config"))
+end
+
+local function in_nvim_repo(path)
+    return path_contains(path, "/nvim")
+end
+
+local function is_nvim_related()
+    local path = uv.cwd()
+    return in_config_dir(path) or in_nvim_repo(path)
+end
 
 return {
     filetypes = { "lua", "neovim-lua" },
@@ -10,7 +28,7 @@ return {
                 path = { "?.lua", "?/init.lua" },
             },
             workspace = {
-                library = info.path.is_nvim_related() and (
+                library = is_nvim_related() and (
                     vim.list_extend(
                         vim.api.nvim_get_runtime_file("lua", true),
                         {
@@ -24,10 +42,10 @@ return {
                 checkThirdParty = false,
             },
             diagnostics = {
-                globals = info.path.is_nvim_related() and {
+                globals = is_nvim_related() and {
                     "vim"
                 } or {},
-                disable = info.path.is_nvim_related() and {
+                disable = is_nvim_related() and {
                     "duplicate-doc-field",
                     "duplicate-doc-alias",
                     "missing-fields",

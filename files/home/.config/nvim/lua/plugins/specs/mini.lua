@@ -297,7 +297,6 @@ return {
                 },
                 use_cterm = true,
             }
-            require("utils.transparent").enable()
         end,
     },
     -- highlight patterns

@@ -64,14 +64,9 @@ vim.opt.autocomplete = true
 
 --[[ UI SETTINGS ]]--
 
--- transparent
-require("utils.transparent").enable()
-vim.keymap.set('n', '<leader>T', require "utils.transparent".toggle, { desc = "Toggle Transparency" })
-
 -- line number
 vim.opt.number = true
 vim.opt.relativenumber = true
-require("utils.toggle_relnumber").enable()
 
 -- shortmess
 vim.opt.shortmess:append 'I'

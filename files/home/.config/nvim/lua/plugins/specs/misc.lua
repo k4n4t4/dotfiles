@@ -136,8 +136,7 @@ return {
         event = 'User Ready',
         config = function()
             require("treesitter-context").setup { enable = true }
-            local hi = require "utils.highlight"
-            hi.set("TreesitterContext", { bg = hi.ref("WinSeparator", "fg") })
+            vim.api.nvim_set_hl(0, "TreesitterContext", { link = "WinSeparator" })
         end,
     },
     -- statusline

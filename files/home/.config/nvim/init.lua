@@ -1,10 +1,19 @@
 vim.loader.enable()
 
-require "utils.startup_time".setup { show = true }
+--[[ STARTUP TIME ]]--
+local startup_time = 0
+local start = vim.uv.hrtime()
+vim.api.nvim_create_autocmd("SafeState", {
+    once = true,
+    callback = vim.schedule_wrap(function()
+        local finish = vim.uv.hrtime()
+        startup_time = finish - start
+        local time = startup_time / 1e6
+        vim.notify("Startup Time: " .. time .. "ms")
+    end),
+})
 
-local info = require "utils.info"
-
-if info.env.is_vscode() then
+if vim.g.vscode == 1 then
     require "vscode-nvim"
 else
     require "plugins"

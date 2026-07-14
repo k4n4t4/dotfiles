@@ -87,8 +87,7 @@ autocmd("User", {
     pattern = "Ready",
     once = true,
     callback = vim.schedule_wrap(function()
-        local info = require "utils.info"
-        if info.env.is_wsl() then
+        if vim.env.WSL_DISTRO_NAME ~= nil then
             autocmd({ "InsertLeave", "CmdlineLeave" }, {
                 group = augroup("Windows IME", { clear = true }),
                 callback = function()
@@ -145,15 +144,6 @@ autocmd("FileType", {
     end,
 })
 
--- project config
-autocmd("User", {
-    once = true,
-    pattern = "Ready",
-    callback = function()
-        require("utils.project_config").setup()
-    end,
-})
-
 autocmd("FileType", {
     group = augroup("TreesitterStart", { clear = true }),
     callback = function(_)
@@ -163,6 +153,27 @@ autocmd("FileType", {
             vim.opt_local.foldmethod = 'expr'
             vim.opt_local.foldlevel = 99
             vim.opt_local.foldlevelstart = 99
+        end
+    end,
+})
+
+
+local group = augroup("toggle_relative_number", { clear = true })
+
+autocmd("InsertEnter", {
+    group = group,
+    callback = function()
+        if vim.opt_local.number:get() then
+            vim.opt_local.relativenumber = false
+        end
+    end,
+})
+
+autocmd("InsertLeave", {
+    group = group,
+    callback = function()
+        if vim.opt_local.number:get() then
+            vim.opt_local.relativenumber = true
         end
     end,
 })
