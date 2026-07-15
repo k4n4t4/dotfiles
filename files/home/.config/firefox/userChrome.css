@@ -7,7 +7,7 @@
     --navigator-toolbox-height: 40px;
 }
 
-@media (not (-moz-bool-pref: "sidebar.verticalTabs")) and (min-width: 1200px) {
+@media (min-width: 1200px) {
     #TabsToolbar {
         margin-left: var(--custom-one-line-width) !important;
     }
