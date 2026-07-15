@@ -1,4 +1,4 @@
-sudo pacman --needed --noconfirm -S kitty vlc firefox thunderbird gimp discord obsidian
+sudo pacman --needed --noconfirm -S kitty mpv firefox thunderbird gimp discord obsidian
 
 # sudo pacman --needed --noconfirm -S flatpak
 #
