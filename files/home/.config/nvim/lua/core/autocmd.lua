@@ -41,37 +41,6 @@ autocmd("BufReadPost", {
     end,
 })
 
--- unlist some filetypes and map q to close
-autocmd("FileType", {
-    group = augroup("UnlistSomeFileType", { clear = true }),
-    pattern = {
-        "help",
-        "man",
-        "lspinfo",
-        "checkhealth",
-        "qf",
-        "query",
-        "scratch",
-        "lazy",
-        "mason",
-        "netrw",
-        "NvimTree",
-        "neo-tree",
-        "TelescopePrompt",
-        "Trouble",
-        "notify",
-        "toggleterm",
-        "snacks_picker_input",
-        "snacks_picker_list",
-        "snacks_dashboard",
-        "snacks_notif",
-    },
-    callback = function(event)
-        vim.bo[event.buf].buflisted = false
-        vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
-    end,
-})
-
 -- toggle relative number
 local group = augroup("toggle_relative_number", { clear = true })
 
