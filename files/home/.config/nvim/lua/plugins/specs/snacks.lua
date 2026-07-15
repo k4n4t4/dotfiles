@@ -32,7 +32,7 @@ return {
 
                                 input.border = "none"
                                 list.border = "none"
-                                preview.border = "single"
+                                preview.border = { "", " ", "", "", "", "", "", "" }
                             end,
                         },
                     },
@@ -54,17 +54,17 @@ return {
                             input_and_list.border = { "", " ", "", "", "", "", "", "" }
                             input.border = "none"
                             list.border = "none"
-                            preview.border = "none"
+                            preview.border = { "", " ", "", "", "", "", "", "" }
                         else
                             local main_box = layout.layout
                             local input = layout.layout[1]
                             local list = layout.layout[2]
                             local preview = layout.layout[3]
 
-                            main_box.border = "none"
+                            main_box.border = { "", " ", "", "", "", "", "", "" }
                             input.border = "none"
-                            list.border = "bottom"
-                            preview.border = "none"
+                            list.border = "none"
+                            preview.border = { "", " ", "", "", "", "", "", "" }
                         end
                     end,
                 },
