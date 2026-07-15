@@ -37,7 +37,7 @@ return {
         config = function()
             local surround = require("mini.surround")
 
-            surround.setup({
+            surround.setup {
                 mappings = {
                     add = 'ys',
                     delete = 'ds',
@@ -49,7 +49,7 @@ return {
                     suffix_next = '',
                 },
                 search_method = 'cover_or_next',
-            })
+            }
             vim.keymap.del('x', 'ys')
             vim.keymap.set('x', 'S', [[:<C-u>lua MiniSurround.add('visual')<CR>]], { silent = true })
             vim.keymap.set('n', 'yss', 'ys_', { remap = true })
