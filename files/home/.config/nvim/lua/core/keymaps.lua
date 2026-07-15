@@ -38,8 +38,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
         if vim.b[buf].lsp_keymap_mapped then return end
         vim.b[buf].lsp_keymap_mapped = true
 
-        set('n', '<Leader>lf', vim.lsp.buf.format, { buffer = buf, desc = "Format" })
-        set('x', '<Leader>lf', vim.lsp.buf.format, { buffer = buf, desc = "Format" })
+        set({'n', 'x'}, '<Leader>lf', vim.lsp.buf.format, { buffer = buf, desc = "Format" })
         set('n', '<Leader>ln', vim.lsp.buf.rename, { buffer = buf, desc = "Rename" })
         set('n', '<Leader>ld', vim.lsp.buf.definition, { buffer = buf, desc = "Definition" })
         set('n', '<Leader>lt', vim.lsp.buf.type_definition, { buffer = buf, desc = "Type Definition" })
