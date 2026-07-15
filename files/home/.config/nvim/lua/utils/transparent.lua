@@ -74,10 +74,18 @@ function M.setup(opts)
 
     if opts.groups then
         M.groups = opts.groups
-    elseif opts.extend then
-        M.groups = vim.list_extend(vim.deepcopy(M.default_groups), opts.extend)
+    elseif opts.groups_extend then
+        M.groups = vim.list_extend(vim.deepcopy(M.default_groups), opts.groups_extend)
     else
         M.groups = vim.deepcopy(M.default_groups)
+    end
+
+    if opts.events then
+        M.events = opts.events
+    elseif opts.events_extend then
+        M.events = vim.list_extend(vim.deepcopy(M.default_events), opts.events_extend)
+    else
+        M.events = vim.deepcopy(M.default_events)
     end
 
     M.events = opts.events or vim.deepcopy(M.default_events)
@@ -86,10 +94,9 @@ function M.setup(opts)
     vim.api.nvim_create_autocmd(M.events, {
         group = augroup,
         callback = function()
-            if M.enabled then
-                M.save_hl()
-                M.apply_transparent()
-            end
+            if not M.enabled then return end
+            M.save_hl()
+            M.apply_transparent()
         end,
     })
 
