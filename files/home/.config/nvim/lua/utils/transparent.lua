@@ -69,11 +69,12 @@ function M.setup(opts)
 
     vim.api.nvim_create_autocmd(M.events, {
         group = vim.api.nvim_create_augroup("Transparent", { clear = true }),
-        callback = vim.schedule_wrap(function()
+        callback = function()
             if M.enabled then
+                M.enabled = false
                 M.enable()
             end
-        end),
+        end,
     })
 
     vim.api.nvim_create_user_command("TransparentEnable", M.enable, { desc = "Enable transparent background" })
