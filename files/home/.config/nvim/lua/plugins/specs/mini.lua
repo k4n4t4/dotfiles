@@ -133,6 +133,15 @@ return {
 
     --[[ UI PLUGINS ]]--
 
+    {
+        "k4n4t4/transparent.nvim",
+        lazy = false,
+        config = function()
+            local transparent = require("transparent.init")
+            transparent.setup()
+            transparent.enable()
+        end,
+    },
     -- themes
     {
         "nvim-mini/mini.base16",
