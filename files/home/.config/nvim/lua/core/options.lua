@@ -69,6 +69,7 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.foldcolumn = "auto"
 vim.opt.cursorline = true
+vim.opt.cursorlineopt = "number"
 
 --statusline
 vim.opt.cmdheight = 0
