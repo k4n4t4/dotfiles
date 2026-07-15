@@ -21,6 +21,28 @@ return {
                 sources = {
                     matcher = { frecency = true, cwd_bonus = true, sort_empty = true },
                     grep = { hidden = true, regex = true },
+                    explorer = {
+                        layout = {
+                            auto_hide = { "input" },
+                            layout = {
+                                width = 40,
+                                min_width = 40,
+                                height = 0,
+                                position = "left",
+                                border = "none",
+                                box = "vertical",
+                                { win = "input", height = 1, border = "none" },
+                                { win = "list", border = "none" },
+                                { win = "preview", title = "{preview}", height = 0.4, border = "none" },
+                            },
+                        },
+                    },
+                },
+                layout = {
+                    cycle = true,
+                    preset = function()
+                        return vim.o.columns >= 100 and "default" or "vertical"
+                    end,
                 },
             },
             quickfile = { enabled = true },
@@ -58,7 +80,7 @@ return {
                 "<leader>kf",
                 function()
                     Snacks.terminal(nil,
-                        { win = { position = "float", wo = { winblend = 30, }, } })
+                    { win = { position = "float", wo = { winblend = 30, }, } })
                 end,
                 desc = "Float Terminal"
             },
