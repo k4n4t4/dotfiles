@@ -197,16 +197,15 @@ return {
 
             vim.keymap.set("n", "<M-j>", "<Cmd>BufferLineCycleNext<CR>", { desc = "Next buffer" })
             vim.keymap.set("n", "<M-k>", "<Cmd>BufferLineCyclePrev<CR>", { desc = "Prev buffer" })
-
             vim.keymap.set("n", "<M-S-j>", "<Cmd>BufferLineMoveNext<CR>", { desc = "Move buffer right" })
             vim.keymap.set("n", "<M-S-k>", "<Cmd>BufferLineMovePrev<CR>", { desc = "Move buffer left" })
-
-            vim.keymap.set("n", "<M-x>", "<Cmd>BufferLinePickClose<CR>", { desc = "Pick and close buffer" })
-
             vim.keymap.set("n", "<M-s>", "<Cmd>BufferLinePick<CR>", { desc = "Pick buffer" })
-
-            vim.keymap.set("n", "<M-C-j>", "<Cmd>tabnext<CR>", { desc = "Next tab" })
-            vim.keymap.set("n", "<M-C-k>", "<Cmd>tabprevious<CR>", { desc = "Prev tab" })
+            vim.keymap.set("n", "<M-]>", "<Cmd>tabnext<CR>", { desc = "Next tab" })
+            vim.keymap.set("n", "<M-[>", "<Cmd>tabprevious<CR>", { desc = "Prev tab" })
+            vim.keymap.set("n", "<M-n>", "<Cmd>enew<CR>", { desc = "New buffer" })
+            vim.keymap.set("n", "<M-S-n>", "<Cmd>tabnew<CR>", { desc = "New tab" })
+            vim.keymap.set("n", "<M-x>", "<Cmd>bdelete<CR>", { desc = "Close buffer" })
+            vim.keymap.set("n", "<M-S-x>", "<Cmd>tabclose<CR>", { desc = "Close tab" })
         end,
     },
     -- breadcrumbs
