@@ -33,6 +33,7 @@ return {
                 window = { winblend = 10, show_documentation = true }
             },
             completion = {
+                list = { selection = { preselect = false } },
                 documentation = { auto_show = true, window = { winblend = 10 } },
                 menu = {
                     winblend = 10,
@@ -59,6 +60,10 @@ return {
                     if type == ":" then return { "cmdline" } end
                     return {}
                 end,
+                completion = {
+                    list = { selection = { preselect = false } },
+                    menu = { auto_show = true },
+                },
             },
             sources = {
                 default = { "copilot", "avante", "path", "lsp", "snippets", "obsidian", "obsidian_new", "obsidian_tags", "buffer", "calc", "emoji", "git", "dictionary" },
