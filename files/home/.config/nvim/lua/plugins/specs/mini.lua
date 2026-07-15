@@ -37,23 +37,22 @@ return {
         config = function()
             local surround = require("mini.surround")
 
-            local prefix = 'y'
-            surround.setup {
+            surround.setup({
                 mappings = {
-                    add = prefix .. 's',
-                    delete = prefix .. 'd',
-                    find = prefix .. 'f',
-                    find_left = prefix .. 'F',
-                    highlight = prefix .. 'h',
-                    replace = prefix .. 'r',
+                    add = 'ys',
+                    delete = 'ds',
+                    find = '',
+                    find_left = '',
+                    highlight = '',
+                    replace = 'cs',
                     suffix_last = '',
                     suffix_next = '',
                 },
-            }
+                search_method = 'cover_or_next',
+            })
             vim.keymap.del('x', 'ys')
-            vim.keymap.del('x', 'yf')
-            vim.keymap.del('x', 'yF')
             vim.keymap.set('x', 'S', [[:<C-u>lua MiniSurround.add('visual')<CR>]], { silent = true })
+            vim.keymap.set('n', 'yss', 'ys_', { remap = true })
         end,
     },
     -- autopairs
