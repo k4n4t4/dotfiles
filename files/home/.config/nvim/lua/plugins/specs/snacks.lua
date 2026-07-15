@@ -112,8 +112,8 @@ return {
             { "gt",              function() Snacks.picker.lsp_type_definitions() end,  nowait = true,                 desc = "Type Definitions" },
             --words
             { "]]",              function() Snacks.words.jump(1) end,                  desc = "Next reference" },
-            { "[[",              function() Snacks.words.jump(-1) end,                 desc = "Next reference" },
-            -- temrinal
+            { "[[",              function() Snacks.words.jump(-1) end,                 desc = "Previous reference" },
+            -- terminal
             { "<leader>kk",      function() Snacks.terminal() end,                     desc = "Toggle Terminal" },
             {
                 "<leader>kf",
