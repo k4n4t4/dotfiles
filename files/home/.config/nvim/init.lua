@@ -8,7 +8,9 @@ else
 end
 
 local transparent = require "utils.transparent"
+
 transparent.setup()
+
 vim.keymap.set("n", "<leader>T", function()
     transparent.toggle()
 end, { desc = "Toggle Transparent" })

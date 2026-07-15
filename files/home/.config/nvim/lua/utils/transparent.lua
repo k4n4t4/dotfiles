@@ -1,17 +1,12 @@
 local M = {}
 
-local function patch_hl(name, val)
-    local current = vim.api.nvim_get_hl(0, { name = name })
-    local merged = vim.tbl_extend("force", current, val)
-    vim.api.nvim_set_hl(0, name, merged)
-end
-
 M.enabled = false
 M.groups = {}
 M.events = {}
 M.default_groups = {
     "Normal",
     "NormalNC",
+    "NormalFloat",
     "Folded",
     "FoldColumn",
     "NonText",
@@ -22,49 +17,36 @@ M.default_groups = {
     "SignColumn",
     "CursorLineSign",
     "EndOfBuffer",
-
-    "StatusLine",
-    "StatusLineNC",
-    "StatusLineTerm",
-    "StatusLineTermNC",
-    "TabLine",
-    "TabLineSel",
-    "TabLineFill",
-
-    "NeoTreeNormal",
-    "NeoTreeNormalNC",
-    "NeoTreeEndOfBuffer",
-    "NeoTreeIndentMarker",
-
-    "NvimTreeNormal",
-    "NvimTreeNormalNC",
-    "NvimTreeEndOfBuffer",
-
-    "RenderMarkdownTableFill",
-
-    "TinyInlineDiagnosticVirtualTextArrow",
-
-    "AvanteSideBarNormal",
-    "AvanteSideBarWinSeparator",
-    "AvanteSideBarWinHorizontalSeparator",
 }
 M.default_events = {
     "VimEnter",
     "ColorScheme",
 }
 
+M.saved_hl = nil
+
 function M.enable()
+    if M.enabled then return end
     M.enabled = true
+
+    M.saved_hl = {}
     for _, name in ipairs(M.groups) do
-        patch_hl(name, { bg = "none" })
+        local current = vim.api.nvim_get_hl(0, { name = name })
+        M.saved_hl[name] = current
+        vim.api.nvim_set_hl(0, name, vim.tbl_extend("force", current, {bg = "none"}))
     end
 end
 
 function M.disable()
+    if not M.enabled then return end
     M.enabled = false
-    if vim.g.colors_name then
-        pcall(vim.cmd.colorscheme, vim.g.colors_name)
+
+    for _, name in ipairs(M.groups) do
+        if M.saved_hl[name] then
+            vim.api.nvim_set_hl(0, name, M.saved_hl[name])
+        end
     end
+    M.saved_hl = nil
 end
 
 function M.toggle()
@@ -87,11 +69,11 @@ function M.setup(opts)
 
     vim.api.nvim_create_autocmd(M.events, {
         group = vim.api.nvim_create_augroup("Transparent", { clear = true }),
-        callback = function()
+        callback = vim.schedule_wrap(function()
             if M.enabled then
                 M.enable()
             end
-        end,
+        end),
     })
 
     vim.api.nvim_create_user_command("TransparentEnable", M.enable, { desc = "Enable transparent background" })
