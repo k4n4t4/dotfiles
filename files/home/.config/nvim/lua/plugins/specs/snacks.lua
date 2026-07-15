@@ -44,12 +44,14 @@ return {
                     end,
                     config = function(layout)
                         if vim.o.columns >= 100 then
-                            local main_box = layout.layout[1]
+                            local main_box = layout.layout
+                            local input_and_list = layout.layout[1]
                             local input = layout.layout[1][1]
                             local list = layout.layout[1][2]
                             local preview = layout.layout[2]
 
-                            main_box.border = "right"
+                            main_box.border = "none"
+                            input_and_list.border = { "", " ", "", "", "", "", "", "" }
                             input.border = "none"
                             list.border = "none"
                             preview.border = "none"
