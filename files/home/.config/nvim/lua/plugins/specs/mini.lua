@@ -158,6 +158,7 @@ return {
                     base0F = "#900000",
                 },
                 use_cterm = true,
+                plugins = { default = false },
             }
         end,
     },
