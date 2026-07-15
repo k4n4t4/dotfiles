@@ -51,8 +51,8 @@ return {
                             local list = layout.layout[1][2]
                             local preview = layout.layout[2]
 
-                            main_box.border = "none"
-                            input_and_list.border = { "", " ", "", "", "", "", "", "" }
+                            main_box.border = "single"
+                            input_and_list.border = { " ", " ", " ", "|", " ", " ", " ", " " }
                             input.border = "none"
                             list.border = "none"
                             preview.border = { "", " ", "", "", "", "", "", "" }
