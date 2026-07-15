@@ -133,19 +133,20 @@ return {
 
     --[[ UI PLUGINS ]]--
 
-    {
-        "k4n4t4/transparent.nvim",
-        lazy = false,
-        config = function()
-            local transparent = require("transparent.init")
-            transparent.setup()
-            transparent.enable()
-        end,
-    },
     -- themes
     {
         "nvim-mini/mini.base16",
-        event = "VeryLazy",
+        lazy = false,
+        dependencies = {
+            {
+                "k4n4t4/transparent.nvim",
+                config = function()
+                    local transparent = require("transparent")
+                    transparent.setup()
+                    vim.keymap.set('n', '<Leader>T', transparent.toggle, { desc = 'Toggle transparency' })
+                end,
+            },
+        },
         config = function()
             require('mini.base16').setup {
                 palette = {
@@ -172,6 +173,7 @@ return {
                     ["saghen/blink.cmp"] = true,
                 },
             }
+            require("transparent").enable()
         end,
     },
     -- highlight patterns
