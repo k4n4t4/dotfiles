@@ -6,7 +6,10 @@ return {
         opts = {
             bigfile = { enabled = true },
             dashboard = { enabled = false },
-            explorer = { enabled = true },
+            explorer = {
+                enabled = true,
+                layout = { auto_hide = { "input" } },
+            },
             indent = { enabled = true },
             input = { enabled = true },
             animation = { enabled = true },
