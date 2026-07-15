@@ -23,6 +23,7 @@ return {
                     explorer = {
                         layout = {
                             preset = "sidebar",
+                            backdrop = false,
                             auto_hide = { "input" },
                             config = function(layout)
                                 local input = layout.layout[1]
@@ -41,6 +42,7 @@ return {
                     preset = function()
                         return vim.o.columns >= 120 and "default" or "vertical"
                     end,
+                    layout = { backdrop = false },
                     config = function(layout)
                         if vim.o.columns >= 120 then
                             local main_box = layout.layout
