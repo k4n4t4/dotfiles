@@ -51,21 +51,23 @@ return {
                             local list = layout.layout[1][2]
                             local preview = layout.layout[2]
 
-                            main_box.border = "single"
-                            input_and_list.border = { " ", " ", " ", "|", " ", " ", " ", " " }
+                            main_box.border = "none"
+                            input_and_list.border = { "┌", "─", "─", "│", "─", "─", "└", "│" }
+                            input_and_list.width = 0.4
                             input.border = "none"
                             list.border = "none"
-                            preview.border = { "", " ", "", "", "", "", "", "" }
+                            preview.border = { "", "─", "┐", "│", "┘", "─", "", "" }
+                            preview.width = 1 - input_and_list.width
                         else
                             local main_box = layout.layout
                             local input = layout.layout[1]
                             local list = layout.layout[2]
                             local preview = layout.layout[3]
 
-                            main_box.border = { "", " ", "", "", "", "", "", "" }
+                            main_box.border = "single"
                             input.border = "none"
                             list.border = "none"
-                            preview.border = { "", " ", "", "", "", "", "", "" }
+                            preview.border = { "", "─", "", "", "", "", "", "" }
                         end
                     end,
                 },
