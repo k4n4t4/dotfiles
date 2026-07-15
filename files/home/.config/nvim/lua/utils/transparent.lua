@@ -26,27 +26,38 @@ M.default_events = {
 
 M.saved_hl = nil
 
+function M.save_hl()
+    M.saved_hl = {}
+    for _, name in ipairs(M.groups) do
+        M.saved_hl[name] = vim.api.nvim_get_hl(0, { name = name })
+    end
+end
+
+function M.apply_transparent()
+    for _, name in ipairs(M.groups) do
+        local current = vim.api.nvim_get_hl(0, { name = name })
+        vim.api.nvim_set_hl(0, name, vim.tbl_extend("force", current, { bg = "none" }))
+    end
+end
+
+function M.restore_hl()
+    if not M.saved_hl then return end
+    for name, hl_val in pairs(M.saved_hl) do
+        vim.api.nvim_set_hl(0, name, hl_val)
+    end
+end
+
 function M.enable()
     if M.enabled then return end
     M.enabled = true
-
-    M.saved_hl = {}
-    for _, name in ipairs(M.groups) do
-        local current = vim.api.nvim_get_hl(0, { name = name })
-        M.saved_hl[name] = current
-        vim.api.nvim_set_hl(0, name, vim.tbl_extend("force", current, {bg = "none"}))
-    end
+    M.save_hl()
+    M.apply_transparent()
 end
 
 function M.disable()
     if not M.enabled then return end
     M.enabled = false
-
-    for _, name in ipairs(M.groups) do
-        if M.saved_hl[name] then
-            vim.api.nvim_set_hl(0, name, M.saved_hl[name])
-        end
-    end
+    M.restore_hl()
     M.saved_hl = nil
 end
 
@@ -60,20 +71,24 @@ end
 
 function M.setup(opts)
     opts = opts or {}
-    M.groups = vim.deepcopy(M.default_groups)
-    M.events = vim.deepcopy(M.default_events)
-    if opts.groups then M.groups = opts.groups end
-    if opts.events then M.events = opts.events end
-    if opts.extend then
+
+    if opts.groups then
+        M.groups = opts.groups
+    elseif opts.extend then
         M.groups = vim.list_extend(vim.deepcopy(M.default_groups), opts.extend)
+    else
+        M.groups = vim.deepcopy(M.default_groups)
     end
 
+    M.events = opts.events or vim.deepcopy(M.default_events)
+
+    local augroup = vim.api.nvim_create_augroup("Transparent", { clear = true })
     vim.api.nvim_create_autocmd(M.events, {
-        group = vim.api.nvim_create_augroup("Transparent", { clear = true }),
+        group = augroup,
         callback = function()
             if M.enabled then
-                M.enabled = false
-                M.enable()
+                M.save_hl()
+                M.apply_transparent()
             end
         end,
     })
