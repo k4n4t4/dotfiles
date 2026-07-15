@@ -40,10 +40,10 @@ return {
                 layout = {
                     cycle = true,
                     preset = function()
-                        return vim.o.columns >= 100 and "default" or "vertical"
+                        return vim.o.columns >= 120 and "default" or "vertical"
                     end,
                     config = function(layout)
-                        if vim.o.columns >= 100 then
+                        if vim.o.columns >= 120 then
                             local main_box = layout.layout
                             local input_and_list = layout.layout[1]
                             local input = layout.layout[1][1]
@@ -67,6 +67,11 @@ return {
                             preview.border = { "", " ", "", "", "", "", "", "" }
                         end
                     end,
+                },
+                win = {
+                    input = { wo = { winblend = 30 } },
+                    list = { wo = { winblend = 30 } },
+                    preview = { wo = { winblend = 30 } },
                 },
             },
             quickfile = { enabled = true },
