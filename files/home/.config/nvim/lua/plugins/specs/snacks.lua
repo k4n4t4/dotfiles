@@ -5,14 +5,13 @@ return {
         lazy = false,
         opts = {
             bigfile = { enabled = true },
-            dashboard = { enabled = false },
+            dashboard = { enabled = true },
             explorer = {
                 enabled = true,
                 layout = { auto_hide = { "input" } },
             },
             indent = { enabled = true },
             input = { enabled = true },
-            animation = { enabled = true },
             picker = {
                 enabled = true,
                 ui_select = true,
@@ -74,10 +73,12 @@ return {
                     preview = { wo = { winblend = 30 } },
                 },
             },
+            notifier = { enabled = false },
             quickfile = { enabled = true },
             scope = { enabled = true },
             scroll = { enabled = true },
             words = { enabled = true },
+            statuscolumn = { enabled = true },
             terminal = { enabled = true },
         },
         keys = {
