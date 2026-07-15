@@ -10,6 +10,7 @@ M.default_groups = {
     "Folded",
     "FoldColumn",
     "NonText",
+    "Terminal",
     "LineNr",
     "LineNrAbove",
     "LineNrBelow",
