@@ -23,18 +23,17 @@ return {
                     grep = { hidden = true, regex = true },
                     explorer = {
                         layout = {
+                            preset = "sidebar",
                             auto_hide = { "input" },
-                            layout = {
-                                width = 40,
-                                min_width = 40,
-                                height = 0,
-                                position = "left",
-                                border = "none",
-                                box = "vertical",
-                                { win = "input", height = 1, border = "none" },
-                                { win = "list", border = "none" },
-                                { win = "preview", title = "{preview}", height = 0.4, border = "none" },
-                            },
+                            config = function(layout)
+                                local input = layout.layout[1]
+                                local list = layout.layout[2]
+                                local preview = layout.layout[3]
+
+                                input.border = "none"
+                                list.border = "none"
+                                preview.border = "single"
+                            end,
                         },
                     },
                 },
@@ -42,6 +41,29 @@ return {
                     cycle = true,
                     preset = function()
                         return vim.o.columns >= 100 and "default" or "vertical"
+                    end,
+                    config = function(layout)
+                        if vim.o.columns >= 100 then
+                            local main_box = layout.layout[1]
+                            local input = layout.layout[1][1]
+                            local list = layout.layout[1][2]
+                            local preview = layout.layout[2]
+
+                            main_box.border = "right"
+                            input.border = "none"
+                            list.border = "none"
+                            preview.border = "none"
+                        else
+                            local main_box = layout.layout
+                            local input = layout.layout[1]
+                            local list = layout.layout[2]
+                            local preview = layout.layout[3]
+
+                            main_box.border = "none"
+                            input.border = "none"
+                            list.border = "bottom"
+                            preview.border = "none"
+                        end
                     end,
                 },
             },
