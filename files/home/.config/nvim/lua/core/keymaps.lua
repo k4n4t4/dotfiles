@@ -1,4 +1,6 @@
 local set = vim.keymap.set
+local autocmd = vim.api.nvim_create_autocmd
+local augroup = vim.api.nvim_create_augroup
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
@@ -31,8 +33,8 @@ set("x", "I", function()
 end, { expr = true, desc = "Insert at beginning of line in visual mode" })
 
 -- lsp keymaps
-vim.api.nvim_create_autocmd("LspAttach", {
-    group = vim.api.nvim_create_augroup("Lsp Keymaps", { clear = true }),
+autocmd("LspAttach", {
+    group = augroup("Lsp Keymaps", { clear = true }),
     callback = function(event)
         local buf = event.buf
         if vim.b[buf].lsp_keymap_mapped then return end
@@ -54,8 +56,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 -- set keymaps for unlisted filetypes
-vim.api.nvim_create_autocmd("FileType", {
-    group = vim.api.nvim_create_augroup("UnlistFileType Keymaps", { clear = true }),
+autocmd("FileType", {
+    group = augroup("UnlistFileType Keymaps", { clear = true }),
     pattern = {
         "help",
         "man",
@@ -71,8 +73,8 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 -- set keymaps for cmdwin
-vim.api.nvim_create_autocmd("CmdwinEnter", {
-    group = vim.api.nvim_create_augroup("Cmdwin Keymaps", { clear = true }),
+autocmd("CmdwinEnter", {
+    group = augroup("Cmdwin Keymaps", { clear = true }),
     callback = function(args)
         vim.keymap.set("n", "q", "<Cmd>quit<CR>", { buffer = args.buf })
     end,
