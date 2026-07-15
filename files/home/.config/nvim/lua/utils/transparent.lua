@@ -6,8 +6,9 @@ local function patch_hl(name, val)
     vim.api.nvim_set_hl(0, name, merged)
 end
 
-M.groups = {}
 M.enabled = false
+M.groups = {}
+M.events = {}
 M.default_groups = {
     "Normal",
     "NormalNC",
@@ -47,6 +48,10 @@ M.default_groups = {
     "AvanteSideBarWinSeparator",
     "AvanteSideBarWinHorizontalSeparator",
 }
+M.default_events = {
+    "VimEnter",
+    "ColorScheme",
+}
 
 function M.enable()
     M.enabled = true
@@ -73,12 +78,25 @@ end
 function M.setup(opts)
     opts = opts or {}
     M.groups = vim.deepcopy(M.default_groups)
-    if opts.groups then
-        M.groups = opts.groups
-    end
+    M.events = vim.deepcopy(M.default_events)
+    if opts.groups then M.groups = opts.groups end
+    if opts.events then M.events = opts.events end
     if opts.extend then
         M.groups = vim.list_extend(vim.deepcopy(M.default_groups), opts.extend)
     end
+
+    vim.api.nvim_create_autocmd(M.events, {
+        group = vim.api.nvim_create_augroup("Transparent", { clear = true }),
+        callback = function()
+            if M.enabled then
+                M.enable()
+            end
+        end,
+    })
+
+    vim.api.nvim_create_user_command("TransparentEnable", M.enable, { desc = "Enable transparent background" })
+    vim.api.nvim_create_user_command("TransparentDisable", M.disable, { desc = "Disable transparent background" })
+    vim.api.nvim_create_user_command("TransparentToggle", M.toggle, { desc = "Toggle transparent background" })
 end
 
 return M
