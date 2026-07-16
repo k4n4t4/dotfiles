@@ -174,4 +174,5 @@ end
 
 if type -q mpv
     alias mpv "mpv --keep-open=yes"
+    alias mpv-img "mpv --no-osc"
 end
