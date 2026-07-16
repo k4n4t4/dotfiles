@@ -1,5 +1,3 @@
-# @fish-lsp-disable
-
 if status is-interactive
     export FISH_DIR=(dirname (status --current-filename))
     export FISH_BIN=(which fish)
@@ -8,6 +6,7 @@ if status is-interactive
     source $FISH_DIR/aliases.fish
 
     if test -f ~/.rc.fish
+        # @fish-lsp-disable-next-line
         source ~/.rc.fish
     end
 end
