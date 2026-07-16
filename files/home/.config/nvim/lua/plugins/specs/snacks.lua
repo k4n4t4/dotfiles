@@ -107,6 +107,45 @@ return {
             { "<Leader>?",       function() Snacks.picker.help() end,                  desc = "Help Tags" },
             { "<Leader>s",       function() Snacks.picker.lsp_symbols() end,           desc = "LSP Symbols" },
             { "<Leader>S",       function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
+            { "<Leader>L",       function()
+                local mason_registry = require("mason-registry")
+                local mason_lspconfig = require("mason-lspconfig")
+
+                if not mason_registry then return end
+                if not mason_lspconfig then return end
+
+                require("snacks").picker.pick {
+                    finder = function()
+                        local items = {}
+
+                        for _, package in ipairs(mason_registry.get_installed_packages()) do
+                            local item = {
+                                text = package.name,
+                                file = package:get_install_path(),
+                            }
+                            table.insert(items, item)
+                        end
+
+                        return items
+                    end,
+                    format = "text",
+                    preview = "file",
+                    confirm = function(picker, item)
+                        picker:close()
+                        if item then
+                            local package = mason_registry.get_package(item.text)
+                            local mlsp_mappings = mason_lspconfig.get_mappings()
+                            local name = mlsp_mappings.package_to_lspconfig[package.name]
+                            if not name then
+                                vim.notify("No LSP mapping found for package: " .. package.name, vim.log.levels.WARN, { title = "Mason" })
+                                return
+                            end
+                            vim.notify("Enabling LSP: " .. name, vim.log.levels.INFO, { title = "Mason" })
+                            vim.lsp.enable(name)
+                        end
+                    end,
+                }
+            end, desc = "LSP list" },
             { "gd",              function() Snacks.picker.lsp_definitions() end,       nowait = true,                 desc = "Definitions" },
             { "gr",              function() Snacks.picker.lsp_references() end,        nowait = true,                 desc = "References" },
             { "gi",              function() Snacks.picker.lsp_implementations() end,   nowait = true,                 desc = "Implementations" },

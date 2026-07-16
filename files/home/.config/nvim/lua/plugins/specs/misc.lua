@@ -32,7 +32,7 @@ return {
         event = "VeryLazy",
         config = function()
             local mason_lspconfig = require("mason-lspconfig")
-            mason_lspconfig.setup {}
+            mason_lspconfig.setup { }
         end,
     },
 
