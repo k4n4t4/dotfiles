@@ -171,3 +171,7 @@ end
 if type -q yazi
     abbr --add y "yazi"
 end
+
+if type -q mpv
+    alias mpv "mpv --keep-open=yes"
+end
