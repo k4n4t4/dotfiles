@@ -5,18 +5,41 @@ return {
     {
         "neovim/nvim-lspconfig",
         event = "VeryLazy",
-        lazy = false,
     },
     {
         "mason-org/mason.nvim",
         dependencies = {
             "neovim/nvim-lspconfig",
+            "mason-org/mason-lspconfig.nvim",
         },
         config = function()
             require("mason").setup {
                 ui = {
-                    border = 'double',
+                    border = 'single',
+                    icons = {
+                        package_installed = "✓",
+                        package_pending = "➜",
+                        package_uninstalled = "✗"
+                    },
                 },
+            }
+            require("mason-lspconfig").setup {
+                ensure_installed = {
+                    "vim-language-server",
+                    "lua-language-server",
+
+                    "bash-language-server",
+                    "shellcheck",
+                    "fish-lsp",
+
+                    "html-lsp",
+                    "emmet-language-server",
+                }
+            }
+            require("mason-lspconfig").setup_handlers {
+                function(server_name)
+                    require("lspconfig")[server_name].setup({})
+                end,
             }
         end,
         cmd = {
