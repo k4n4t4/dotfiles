@@ -37,7 +37,7 @@ return {
             },
             completion = {
                 list = { selection = { preselect = false } },
-                documentation = { auto_show = true, window = { winblend = 10 } },
+                documentation = { auto_show = true, window = { winblend = winblend } },
                 menu = {
                     winblend = winblend,
                     draw = {
