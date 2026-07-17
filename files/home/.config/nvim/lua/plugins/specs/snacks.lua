@@ -88,7 +88,7 @@ return {
         keys = {
             -- explorer
             { "<Leader>e",       function() Snacks.picker.explorer() end,              desc = "explorer" },
-            -- session
+            -- scratch
             { "<leader>s",       function() Snacks.scratch() end,                      desc = "Toggle Scratch Buffer" },
             { "<leader>S",       function() Snacks.scratch.select() end,               desc = "Select Scratch Buffer" },
             -- picker
