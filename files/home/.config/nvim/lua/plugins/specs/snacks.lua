@@ -84,8 +84,6 @@ return {
                 folds = { open = true },
             },
             words = { enabled = true },
-            terminal = { enabled = true },
-            scratch = { enabled = true },
         },
         keys = {
             -- explorer
@@ -153,7 +151,7 @@ return {
             { "]]",         function() Snacks.words.jump(1) end,                                   desc = "Next reference" },
             { "[[",         function() Snacks.words.jump(-1) end,                                  desc = "Previous reference" },
             -- terminal
-            { "<Leader>kk", function() Snacks.terminal() end,                                      desc = "Toggle Terminal" },
+            { "<Leader>kk", function() Snacks.terminal(nil, { win = { position = "bottom" } }) end, desc = "Toggle Terminal" },
             { "<Leader>kf", function() Snacks.terminal(nil, { win = { position = "float" } }) end, desc = "Float Terminal" },
         },
     },
