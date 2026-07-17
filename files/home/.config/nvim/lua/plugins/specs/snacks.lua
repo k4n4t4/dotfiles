@@ -109,37 +109,98 @@ return {
                 if not mason_registry then return end
                 if not mason_lspconfig then return end
 
-                require("snacks").picker.pick {
-                    finder = function()
-                        local items = {}
+                local mlsp_mappings = mason_lspconfig.get_mappings()
 
-                        for _, package in ipairs(mason_registry.get_installed_packages()) do
-                            local item = {
-                                text = package.name,
-                                file = package:get_install_path(),
+                local snacks = require "snacks"
+
+                local items = {}
+
+                for _, package in ipairs(mason_registry.get_installed_packages()) do
+                    local plsp_name = mlsp_mappings.package_to_lspconfig[package.name]
+                    if plsp_name then
+                        local enabled = vim.lsp.is_enabled(plsp_name)
+                        local config = vim.lsp.config[plsp_name]
+                        local item = {
+                            name = package.name,
+                            file = package:get_install_path(),
+                            enabled = enabled,
+                            config = config,
+                        }
+                        table.insert(items, item)
+                    end
+                end
+
+                snacks.picker.select(
+                    items,
+                    {
+                        format_item = function(item)
+                            if not item then return "" end
+                            local status = item.enabled and "[Enabled]" or "[Disabled]"
+                            local file_types = item.config and item.config.filetypes and table.concat(item.config.filetypes, ", ") or "N/A"
+                            return string.format("%s %s : %s", item.name, status, file_types)
+                        end,
+                    },
+                    function(item, _)
+                        if not item then return end
+
+                        local package = mason_registry.get_package(item.name)
+                        local plsp_name = mlsp_mappings.package_to_lspconfig[package.name]
+                        if not plsp_name then
+                            vim.notify("No LSP mapping found for package: " .. package.name, vim.log.levels.WARN, { title = "Mason" })
+                            return
+                        end
+
+                        local enabled = vim.lsp.is_enabled(plsp_name)
+
+                        local sub_items = {}
+
+                        if enabled then
+                            sub_items = {
+                                { text = "Restart LSP" },
+                                { text = "Disable LSP" },
+                                { text = "LSP Log" },
                             }
-                            table.insert(items, item)
+                        else
+                            sub_items = {
+                                { text = "Enable LSP" },
+                                { text = "LSP Log" },
+                            }
                         end
 
-                        return items
-                    end,
-                    format = "text",
-                    preview = "file",
-                    confirm = function(picker, item)
-                        picker:close()
-                        if item then
-                            local package = mason_registry.get_package(item.text)
-                            local mlsp_mappings = mason_lspconfig.get_mappings()
-                            local name = mlsp_mappings.package_to_lspconfig[package.name]
-                            if not name then
-                                vim.notify("No LSP mapping found for package: " .. package.name, vim.log.levels.WARN, { title = "Mason" })
-                                return
+                        snacks.picker.select(
+                            sub_items,
+                            {
+                                format_item = function(sub_item)
+                                    if not sub_item then return "" end
+                                    return sub_item.text
+                                end,
+                            },
+                            function(sub_item, _)
+                                if not sub_item then return end
+                                if sub_item.text == "Enable LSP" then
+                                    vim.notify("Enabling LSP: " .. plsp_name, vim.log.levels.INFO, { title = "Mason" })
+                                    vim.lsp.enable(plsp_name)
+                                elseif sub_item.text == "Disable LSP" then
+                                    vim.notify("Disabling LSP: " .. plsp_name, vim.log.levels.INFO, { title = "Mason" })
+                                    vim.lsp.get_clients({ name = plsp_name })[1]:stop()
+                                    vim.lsp.enable(plsp_name, false)
+                                elseif sub_item.text == "Restart LSP" then
+                                    vim.notify("Restarting LSP: " .. plsp_name, vim.log.levels.INFO, { title = "Mason" })
+                                    vim.lsp.get_clients({ name = plsp_name })[1]:stop()
+                                    vim.lsp.enable(plsp_name)
+                                elseif sub_item.text == "LSP Log" then
+                                    vim.notify("LSP Log: " .. plsp_name, vim.log.levels.INFO, { title = "Mason" })
+                                    local log_file = vim.lsp.log.get_filename()
+                                    if log_file then
+                                        vim.cmd("edit " .. log_file)
+                                    else
+                                        vim.notify("No LSP log file found.", vim.log.levels.WARN, { title = "Mason" })
+                                    end
+                                end
                             end
-                            vim.notify("Enabling LSP: " .. name, vim.log.levels.INFO, { title = "Mason" })
-                            vim.lsp.enable(name)
-                        end
-                    end,
-                }
+                        )
+                    end
+                )
             end, desc = "LSP list" },
             { "<leader>ls",         function() Snacks.picker.lsp_symbols() end,                            desc = "LSP Symbols" },
             { "<leader>lS",         function() Snacks.picker.lsp_workspace_symbols() end,                  desc = "LSP Workspace Symbols" },
