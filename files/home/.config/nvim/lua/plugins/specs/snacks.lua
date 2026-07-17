@@ -85,6 +85,7 @@ return {
             },
             words = { enabled = true },
             terminal = { enabled = true },
+            scratch = { enabled = true },
         },
         keys = {
             -- explorer
