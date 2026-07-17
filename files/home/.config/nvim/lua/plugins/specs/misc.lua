@@ -279,7 +279,7 @@ return {
         "k4n4t4/transparent.nvim",
         config = function()
             local transparent = require("transparent")
-            transparent.setup { events = {} }
+            transparent.setup { }
         end,
         keys = {
             { mode = "n", "<Leader>T",  function() require('transparent').toggle() end, desc = 'Toggle transparency' },
