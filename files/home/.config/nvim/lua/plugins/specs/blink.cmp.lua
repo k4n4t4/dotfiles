@@ -26,17 +26,20 @@ return {
         loader.lazy_load()
         loader.lazy_load { paths = { vim.fn.stdpath("config") .. "/snippets" } }
 
+        ---@diagnostic disable-next-line: undefined-field
+        local winblend = vim.opt.winblend:get() or 0
+
         require("blink.cmp").setup {
             fuzzy = { implementation = "prefer_rust_with_warning" },
             signature = {
                 enabled = true,
-                window = { winblend = 10, show_documentation = true }
+                window = { winblend = winblend, show_documentation = true }
             },
             completion = {
                 list = { selection = { preselect = false } },
                 documentation = { auto_show = true, window = { winblend = 10 } },
                 menu = {
-                    winblend = 10,
+                    winblend = winblend,
                     draw = {
                         columns = { { "kind_icon" }, { "label", gap = 1 } },
                         components = {
