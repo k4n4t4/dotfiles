@@ -158,12 +158,10 @@ return {
                             sub_items = {
                                 { text = "Restart LSP" },
                                 { text = "Disable LSP" },
-                                { text = "LSP Log" },
                             }
                         else
                             sub_items = {
                                 { text = "Enable LSP" },
-                                { text = "LSP Log" },
                             }
                         end
 
@@ -182,19 +180,17 @@ return {
                                     vim.lsp.enable(plsp_name)
                                 elseif sub_item.text == "Disable LSP" then
                                     vim.notify("Disabling LSP: " .. plsp_name, vim.log.levels.INFO, { title = "Mason" })
-                                    vim.lsp.get_clients({ name = plsp_name })[1]:stop()
-                                    vim.lsp.enable(plsp_name, false)
+                                    local client = vim.lsp.get_clients({ name = plsp_name })[1]
+                                    if client then
+                                        client:stop()
+                                        vim.lsp.enable(plsp_name, false)
+                                    end
                                 elseif sub_item.text == "Restart LSP" then
                                     vim.notify("Restarting LSP: " .. plsp_name, vim.log.levels.INFO, { title = "Mason" })
-                                    vim.lsp.get_clients({ name = plsp_name })[1]:stop()
-                                    vim.lsp.enable(plsp_name)
-                                elseif sub_item.text == "LSP Log" then
-                                    vim.notify("LSP Log: " .. plsp_name, vim.log.levels.INFO, { title = "Mason" })
-                                    local log_file = vim.lsp.log.get_filename()
-                                    if log_file then
-                                        vim.cmd("edit " .. log_file)
-                                    else
-                                        vim.notify("No LSP log file found.", vim.log.levels.WARN, { title = "Mason" })
+                                    local client = vim.lsp.get_clients({ name = plsp_name })[1]
+                                    if client then
+                                        client:stop()
+                                        vim.lsp.enable(plsp_name)
                                     end
                                 end
                             end
