@@ -63,3 +63,15 @@ autocmd("InsertLeave", {
         end
     end,
 })
+
+-- hide line number
+autocmd("FileType", {
+    group = augroup("hide_line_number", { clear = true }),
+    pattern = { "help", "startify", "dashboard", "packer", "neogitstatus", "man" },
+    callback = function()
+        vim.opt_local.number = false
+        vim.opt_local.relativenumber = false
+        vim.opt_local.signcolumn = "no"
+        vim.opt_local.foldcolumn = "0"
+    end,
+})
