@@ -1,0 +1,52 @@
+{
+    "theme": {
+        "mode": "system",
+        "light": "Gruvbox Light",
+        "dark": "Ayu Dark",
+    },
+    "experimental.theme_overrides": {
+        "background.appearance": "transparent",
+       	"background": "#10102070",
+        "editor.background": "#10102070",
+    },
+    "ui_font_size": 18,
+    "ui_font_family": "Terminess Nerd Font Mono",
+    "buffer_font_family": "Terminess Nerd Font Mono",
+    "buffer_font_size": 18,
+    "vim_mode": true,
+    "scrollbar": {
+        "show": "never",
+    },
+    "buffer_line_height": {
+        "custom": 1.5
+    },
+    "inlay_hints": {
+        "enabled": true,
+        "show_type_hints": true,
+        "show_parameter_hints": true,
+        "show_other_hints": true,
+        "edit_debounce_ms": 700,
+        "scroll_debounce_ms": 50
+    },
+    "telemetry": {
+        "diagnostics": false,
+        "metrics": false,
+        "anthropic_retention": false
+    },
+    "lsp": {
+    },
+    "terminal": {
+        "alternate_scroll": "off",
+        "blinking": "terminal_controlled",
+        "copy_on_select": true,
+        "font_family": "Terminess Nerd Font Mono",
+        "shell": {
+            "program": "fish",
+        },
+        "line_height": {
+            "custom": 1.5
+        },
+        "working_directory": "current_project_directory"
+    },
+    "tab_size": 4,
+}
