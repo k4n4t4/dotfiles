@@ -5,7 +5,10 @@ return {
         lazy = false,
         opts = {
             bigfile = { enabled = true },
-            dashboard = { enabled = true },
+            dashboard = {
+                enabled = true,
+                preset = require("plugins.config.snacks.dashboard").preset,
+            },
             explorer = {
                 enabled = true,
                 layout = { auto_hide = { "input" } },
