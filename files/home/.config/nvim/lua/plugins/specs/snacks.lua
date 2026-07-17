@@ -142,8 +142,8 @@ return {
                     end,
                 }
             end, desc = "LSP list" },
-            { "gs",         function() Snacks.picker.lsp_symbols() end,                            desc = "LSP Symbols" },
-            { "gS",         function() Snacks.picker.lsp_workspace_symbols() end,                  desc = "LSP Workspace Symbols" },
+            { "<leader>ls",         function() Snacks.picker.lsp_symbols() end,                            desc = "LSP Symbols" },
+            { "<leader>lS",         function() Snacks.picker.lsp_workspace_symbols() end,                  desc = "LSP Workspace Symbols" },
             { "gd",         function() Snacks.picker.lsp_definitions() end,                        nowait = true,                 desc = "Definitions" },
             { "gr",         function() Snacks.picker.lsp_references() end,                         nowait = true,                 desc = "References" },
             { "gi",         function() Snacks.picker.lsp_implementations() end,                    nowait = true,                 desc = "Implementations" },

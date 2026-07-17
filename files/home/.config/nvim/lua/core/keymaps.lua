@@ -48,8 +48,6 @@ autocmd("LspAttach", {
         set('n', '<Leader>lr', vim.lsp.buf.references, { buffer = buf, desc = "References" })
         set('n', '<Leader>li', vim.lsp.buf.implementation, { buffer = buf, desc = "Implementation" })
         set('n', '<Leader>lD', vim.lsp.buf.declaration, { buffer = buf, desc = "Declaration" })
-        set('n', '<Leader>lh', vim.lsp.buf.hover, { buffer = buf, desc = "Hover" })
-        set('n', '<Leader>ls', vim.lsp.buf.signature_help, { buffer = buf, desc = "Signature Help" })
         set('n', 'K', vim.lsp.buf.hover, { buffer = buf, desc = "Hover" })
         set('n', '<C-K>', vim.lsp.buf.signature_help, { buffer = buf, desc = "Signature Help" })
     end,
