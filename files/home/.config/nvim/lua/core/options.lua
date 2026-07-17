@@ -75,6 +75,9 @@ vim.opt.cursorlineopt = "number"
 vim.opt.cmdheight = 0
 vim.opt.laststatus = 3
 
+-- tabline
+vim.opt.showtabline = 2
+
 -- shortmess
 vim.opt.shortmess:append 'I'
 
