@@ -91,6 +91,9 @@ vim.opt.pumblend = 10
 vim.opt.winborder = "none"
 vim.opt.pumborder = "none"
 
+-- winblend
+vim.opt.winblend = 20
+
 -- listchars
 vim.opt.list = true
 vim.opt.listchars = {
