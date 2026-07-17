@@ -92,8 +92,8 @@ return {
             -- picker
             { "<Leader>P",       function() Snacks.picker.pick() end,                  desc = "Picker" },
             { "<Leader>f",       function() Snacks.picker.files() end,                 desc = "find files" },
-            { "<leader>p",       function() Snacks.picker.projects() end,              desc = "Projects" },
-            { "<leader><space>", function() Snacks.picker.smart() end,                 desc = "Smart Find Files" },
+            { "<Leader>p",       function() Snacks.picker.projects() end,              desc = "Projects" },
+            { "<Leader><space>", function() Snacks.picker.smart() end,                 desc = "Smart Find Files" },
             { "<Leader>/",       function() Snacks.picker.grep() end,                  desc = "grep" },
             { "<Leader>r",       function() Snacks.picker.recent() end,                desc = "Recent Files" },
             { "<Leader>b",       function() Snacks.picker.buffers() end,               desc = "Buffers" },
@@ -149,9 +149,9 @@ return {
             { "]]",              function() Snacks.words.jump(1) end,                  desc = "Next reference" },
             { "[[",              function() Snacks.words.jump(-1) end,                 desc = "Previous reference" },
             -- terminal
-            { "<leader>kk",      function() Snacks.terminal() end,                     desc = "Toggle Terminal" },
+            { "<Leader>kk",      function() Snacks.terminal() end,                     desc = "Toggle Terminal" },
             {
-                "<leader>kf",
+                "<Leader>kf",
                 function()
                     Snacks.terminal(nil, { win = { position = "float" } })
                 end,
