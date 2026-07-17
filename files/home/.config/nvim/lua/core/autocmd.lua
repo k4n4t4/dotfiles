@@ -67,7 +67,7 @@ autocmd("InsertLeave", {
 -- hide line number
 autocmd("FileType", {
     group = augroup("hide_line_number", { clear = true }),
-    pattern = { "help", "startify", "dashboard", "packer", "neogitstatus", "man" },
+    pattern = { "help", "startify", "dashboard", "snacks_dashboard", "packer", "neogitstatus", "man" },
     callback = function()
         vim.opt_local.number = false
         vim.opt_local.relativenumber = false
