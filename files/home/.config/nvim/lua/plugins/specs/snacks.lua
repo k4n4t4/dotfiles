@@ -89,6 +89,9 @@ return {
         keys = {
             -- explorer
             { "<Leader>e",       function() Snacks.picker.explorer() end,              desc = "explorer" },
+            -- session
+            { "<leader>s",       function() Snacks.scratch() end,                      desc = "Toggle Scratch Buffer" },
+            { "<leader>S",       function() Snacks.scratch.select() end,               desc = "Select Scratch Buffer" },
             -- picker
             { "<Leader>P",       function() Snacks.picker.pick() end,                  desc = "Picker" },
             { "<Leader>f",       function() Snacks.picker.files() end,                 desc = "find files" },
@@ -100,8 +103,6 @@ return {
             { "<Leader>d",       function() Snacks.picker.diagnostics() end,           desc = "Diagnostics" },
             { "<Leader>q",       function() Snacks.picker.qflist() end,                desc = "Quickfix List" },
             { "<Leader>?",       function() Snacks.picker.help() end,                  desc = "Help Tags" },
-            { "<Leader>s",       function() Snacks.picker.lsp_symbols() end,           desc = "LSP Symbols" },
-            { "<Leader>S",       function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
             { "<Leader>L",       function()
                 local mason_registry = require("mason-registry")
                 local mason_lspconfig = require("mason-lspconfig")
@@ -141,22 +142,18 @@ return {
                     end,
                 }
             end, desc = "LSP list" },
-            { "gd",              function() Snacks.picker.lsp_definitions() end,       nowait = true,                 desc = "Definitions" },
-            { "gr",              function() Snacks.picker.lsp_references() end,        nowait = true,                 desc = "References" },
-            { "gi",              function() Snacks.picker.lsp_implementations() end,   nowait = true,                 desc = "Implementations" },
-            { "gt",              function() Snacks.picker.lsp_type_definitions() end,  nowait = true,                 desc = "Type Definitions" },
+            { "gs",         function() Snacks.picker.lsp_symbols() end,                            desc = "LSP Symbols" },
+            { "gS",         function() Snacks.picker.lsp_workspace_symbols() end,                  desc = "LSP Workspace Symbols" },
+            { "gd",         function() Snacks.picker.lsp_definitions() end,                        nowait = true,                 desc = "Definitions" },
+            { "gr",         function() Snacks.picker.lsp_references() end,                         nowait = true,                 desc = "References" },
+            { "gi",         function() Snacks.picker.lsp_implementations() end,                    nowait = true,                 desc = "Implementations" },
+            { "gt",         function() Snacks.picker.lsp_type_definitions() end,                   nowait = true,                 desc = "Type Definitions" },
             --words
-            { "]]",              function() Snacks.words.jump(1) end,                  desc = "Next reference" },
-            { "[[",              function() Snacks.words.jump(-1) end,                 desc = "Previous reference" },
+            { "]]",         function() Snacks.words.jump(1) end,                                   desc = "Next reference" },
+            { "[[",         function() Snacks.words.jump(-1) end,                                  desc = "Previous reference" },
             -- terminal
-            { "<Leader>kk",      function() Snacks.terminal() end,                     desc = "Toggle Terminal" },
-            {
-                "<Leader>kf",
-                function()
-                    Snacks.terminal(nil, { win = { position = "float" } })
-                end,
-                desc = "Float Terminal"
-            },
+            { "<Leader>kk", function() Snacks.terminal() end,                                      desc = "Toggle Terminal" },
+            { "<Leader>kf", function() Snacks.terminal(nil, { win = { position = "float" } }) end, desc = "Float Terminal" },
         },
     },
 }
