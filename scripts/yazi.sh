@@ -1,3 +1,3 @@
 if cmd_exists yazi; then
-  dotconf "yazi" -r
+    dotconf "yazi" -r
 fi

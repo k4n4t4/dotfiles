@@ -1,3 +1,3 @@
 if cmd_exists sheldon; then
-  dotconf "sheldon" -r
+    dotconf "sheldon" -r
 fi

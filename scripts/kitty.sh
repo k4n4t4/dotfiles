@@ -1,3 +1,3 @@
 if cmd_exists kitty; then
-  dotconf "kitty" -r
+    dotconf "kitty" -r
 fi

@@ -1,3 +1,3 @@
 if cmd_exists hyprland; then
-  dotconf "hypr" -r
+    dotconf "hypr" -r
 fi

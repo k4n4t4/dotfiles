@@ -1,3 +1,3 @@
 if cmd_exists wofi; then
-  dotconf "wofi" -r
+    dotconf "wofi" -r
 fi

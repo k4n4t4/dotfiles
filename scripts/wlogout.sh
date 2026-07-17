@@ -1,3 +1,3 @@
 if cmd_exists wlogout; then
-  dotconf "wlogout" -r
+    dotconf "wlogout" -r
 fi

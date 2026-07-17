@@ -1,3 +1,3 @@
 if cmd_exists nu; then
-  dotconf "nushell" -r
+    dotconf "nushell" -r
 fi

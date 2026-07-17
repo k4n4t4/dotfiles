@@ -1,3 +1,3 @@
 if cmd_exists fastfetch; then
-  dotconf "fastfetch" -r
+    dotconf "fastfetch" -r
 fi

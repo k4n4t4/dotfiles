@@ -1,3 +1,3 @@
 if cmd_exists fish; then
-  dotconf "fish" -r
+    dotconf "fish" -r
 fi

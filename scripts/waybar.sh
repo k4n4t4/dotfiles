@@ -1,3 +1,3 @@
 if cmd_exists waybar; then
-  dotconf "waybar" -r
+    dotconf "waybar" -r
 fi

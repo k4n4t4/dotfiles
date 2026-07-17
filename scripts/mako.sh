@@ -1,3 +1,3 @@
 if cmd_exists mako; then
-  dotconf "mako" -r
+    dotconf "mako" -r
 fi

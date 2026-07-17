@@ -1,3 +1,3 @@
 if cmd_exists wezterm; then
-  dotconf "wezterm" -r
+    dotconf "wezterm" -r
 fi
