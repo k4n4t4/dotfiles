@@ -143,11 +143,6 @@ return {
         event = "VeryLazy",
         config = function()
             require('noice').setup {
-                views = {
-                    mini = { win_options = { winblend = 10 } },
-                    popup = { win_options = { winblend = 10 } },
-                    notify = { win_options = { winblend = 10 } },
-                },
                 cmdline = {
                     enabled = true,
                     view = 'cmdline',

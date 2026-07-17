@@ -153,8 +153,7 @@ return {
             {
                 "<leader>kf",
                 function()
-                    Snacks.terminal(nil,
-                    { win = { position = "float", wo = { winblend = 30, }, } })
+                    Snacks.terminal(nil, { win = { position = "float" } })
                 end,
                 desc = "Float Terminal"
             },
