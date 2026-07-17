@@ -25,6 +25,13 @@ require("lazy").setup({
     checker = {
         enabled = false,
     },
+    change_detection = {
+        enabled = false,
+        notify = false,
+    },
+    ui = {
+        border = "single",
+    },
     performance = {
         cache = {
             enabled = true,
@@ -67,9 +74,5 @@ require("lazy").setup({
                 "ftplugin",
             },
         },
-    },
-    change_detection = {
-        enabled = false,
-        notify = false,
     },
 })
