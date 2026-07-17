@@ -253,7 +253,7 @@ return {
             dap.listeners.before.event_exited.dapui_config = function() dapui.close() end
 
             -- Load all DAP configurations from the lua/plugins/dap directory
-            local path = vim.fn.stdpath("config") .. "/lua/plugins/dap"
+            local path = vim.fn.stdpath("config") .. "/lua/plugins/config/dap"
             local handle = vim.uv.fs_scandir(path)
 
             if handle then
@@ -263,7 +263,7 @@ return {
                     local file_type = t or vim.uv.fs_stat(path .. "/" .. name).type
                     if file_type == "file" and name:match("%.lua$") then
                         local lang = name:gsub("%.lua$", "")
-                        require("plugins.dap." .. lang)
+                        require("plugins.config.dap." .. lang)
                     end
                 end
             end
@@ -290,5 +290,30 @@ return {
         keys = {
             { mode = "n", "<Leader>T",  function() require('transparent').toggle() end, desc = 'Toggle transparency' },
         },
+    },
+
+    -- completion
+    {
+        "saghen/blink.cmp",
+        version = '*',
+        dependencies = {
+            "L3MON4D3/LuaSnip",
+            "rafamadriz/friendly-snippets",
+
+            "giuxtaposition/blink-cmp-copilot",
+            'brenoprata10/nvim-highlight-colors',
+            "moyiz/blink-emoji.nvim",
+            "xzbdmw/colorful-menu.nvim",
+
+            "Kaiser-Yang/blink-cmp-dictionary",
+            'Kaiser-Yang/blink-cmp-git',
+            'Kaiser-Yang/blink-cmp-avante',
+
+            "epwalsh/obsidian.nvim",
+            { "saghen/blink.compat", version = false },
+            "hrsh7th/cmp-calc",
+        },
+        event = { "InsertEnter", "CmdLineEnter" },
+        config = require("plugins.config.blink_cmp").config,
     },
 }
