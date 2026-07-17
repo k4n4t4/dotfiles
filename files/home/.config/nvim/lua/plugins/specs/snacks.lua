@@ -72,11 +72,6 @@ return {
                         end
                     end,
                 },
-                win = {
-                    input = { wo = { winblend = 30 } },
-                    list = { wo = { winblend = 30 } },
-                    preview = { wo = { winblend = 30 } },
-                },
             },
             notifier = { enabled = false },
             quickfile = { enabled = true },

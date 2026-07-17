@@ -92,7 +92,7 @@ vim.opt.winborder = "none"
 vim.opt.pumborder = "none"
 
 -- winblend
-vim.opt.winblend = 20
+vim.opt.winblend = 25
 
 -- listchars
 vim.opt.list = true
