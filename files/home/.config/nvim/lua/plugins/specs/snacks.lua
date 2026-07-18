@@ -44,10 +44,8 @@ return {
             vim.api.nvim_create_autocmd("User", {
                 pattern = "SnacksDashboardOpened",
                 callback = function()
-                    vim.schedule(function()
-                        vim.opt_local.laststatus = 0
-                        vim.opt_local.showtabline = 0
-                    end)
+                    vim.opt_local.laststatus = 0
+                    vim.opt_local.showtabline = 0
                 end,
             })
         end,
