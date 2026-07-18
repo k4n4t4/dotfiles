@@ -141,6 +141,44 @@ return {
             }
         end,
     },
+    -- tabuf
+    {
+        'akinsho/bufferline.nvim',
+        event = "VeryLazy",
+        version = "*",
+        dependencies = 'nvim-tree/nvim-web-devicons',
+        config = function()
+            require("bufferline").setup({
+                options = {
+                    diagnostics = "nvim_lsp",
+                    ---@diagnostic disable-next-line: unused-local
+                    diagnostics_indicator = function(count, level, diagnostics_dict, context)
+                        local icon = level:match("error") and " " or " "
+                        return " " .. icon .. count
+                    end,
+                    always_show_bufferline = true,
+                },
+                highlights = {
+                    buffer_selected = {
+                        bold = true,
+                        italic = false,
+                    },
+                },
+            })
+
+            vim.keymap.set("n", "<M-j>", "<Cmd>BufferLineCycleNext<CR>", { desc = "Next buffer" })
+            vim.keymap.set("n", "<M-k>", "<Cmd>BufferLineCyclePrev<CR>", { desc = "Prev buffer" })
+            vim.keymap.set("n", "<M-S-j>", "<Cmd>BufferLineMoveNext<CR>", { desc = "Move buffer right" })
+            vim.keymap.set("n", "<M-S-k>", "<Cmd>BufferLineMovePrev<CR>", { desc = "Move buffer left" })
+            vim.keymap.set("n", "<M-s>", "<Cmd>BufferLinePick<CR>", { desc = "Pick buffer" })
+            vim.keymap.set("n", "<M-]>", "<Cmd>tabnext<CR>", { desc = "Next tab" })
+            vim.keymap.set("n", "<M-[>", "<Cmd>tabprevious<CR>", { desc = "Prev tab" })
+            vim.keymap.set("n", "<M-n>", "<Cmd>enew<CR>", { desc = "New buffer" })
+            vim.keymap.set("n", "<M-S-n>", "<Cmd>tabnew<CR>", { desc = "New tab" })
+            vim.keymap.set("n", "<M-x>", "<Cmd>bdelete<CR>", { desc = "Close buffer" })
+            vim.keymap.set("n", "<M-S-x>", "<Cmd>tabclose<CR>", { desc = "Close tab" })
+        end,
+    },
     -- notify
     {
         "folke/noice.nvim",
@@ -178,44 +216,6 @@ return {
                 },
                 throttle = 1000 / 30,
             }
-        end,
-    },
-    -- tabuf
-    {
-        'akinsho/bufferline.nvim',
-        event = "VeryLazy",
-        version = "*",
-        dependencies = 'nvim-tree/nvim-web-devicons',
-        config = function()
-            require("bufferline").setup({
-                options = {
-                    diagnostics = "nvim_lsp",
-                    ---@diagnostic disable-next-line: unused-local
-                    diagnostics_indicator = function(count, level, diagnostics_dict, context)
-                        local icon = level:match("error") and " " or " "
-                        return " " .. icon .. count
-                    end,
-                    always_show_bufferline = true,
-                },
-                highlights = {
-                    buffer_selected = {
-                        bold = true,
-                        italic = false,
-                    },
-                },
-            })
-
-            vim.keymap.set("n", "<M-j>", "<Cmd>BufferLineCycleNext<CR>", { desc = "Next buffer" })
-            vim.keymap.set("n", "<M-k>", "<Cmd>BufferLineCyclePrev<CR>", { desc = "Prev buffer" })
-            vim.keymap.set("n", "<M-S-j>", "<Cmd>BufferLineMoveNext<CR>", { desc = "Move buffer right" })
-            vim.keymap.set("n", "<M-S-k>", "<Cmd>BufferLineMovePrev<CR>", { desc = "Move buffer left" })
-            vim.keymap.set("n", "<M-s>", "<Cmd>BufferLinePick<CR>", { desc = "Pick buffer" })
-            vim.keymap.set("n", "<M-]>", "<Cmd>tabnext<CR>", { desc = "Next tab" })
-            vim.keymap.set("n", "<M-[>", "<Cmd>tabprevious<CR>", { desc = "Prev tab" })
-            vim.keymap.set("n", "<M-n>", "<Cmd>enew<CR>", { desc = "New buffer" })
-            vim.keymap.set("n", "<M-S-n>", "<Cmd>tabnew<CR>", { desc = "New tab" })
-            vim.keymap.set("n", "<M-x>", "<Cmd>bdelete<CR>", { desc = "Close buffer" })
-            vim.keymap.set("n", "<M-S-x>", "<Cmd>tabclose<CR>", { desc = "Close tab" })
         end,
     },
     -- breadcrumbs
