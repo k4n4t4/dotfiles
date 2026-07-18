@@ -1,12 +1,12 @@
 local M = {}
 
 local header = {
-    { "     ██████ ▄▄▄▄▄ ▄▄ ▄▄ ▄▄▄▄▄▄    \n", hl = "Number" },
-    { "       ██   ██▄▄  ▀█▄█▀   ██      \n", hl = "Number" },
-    { "       ██   ██▄▄▄ ██ ██   ██      \n", hl = "Number" },
-    { "██████ ▄▄▄▄  ▄▄ ▄▄▄▄▄▄  ▄▄▄  ▄▄▄▄ \n", hl = "Number" },
-    { "██▄▄   ██▀██ ██   ██   ██▀██ ██▄█▄\n", hl = "Number" },
-    { "██▄▄▄▄ ████▀ ██   ██   ▀███▀ ██ ██\n", hl = "Number" },
+    { "     ██████ ▄▄▄▄▄ ▄▄ ▄▄ ▄▄▄▄▄▄    \n", hl = "Number",  align = "center" },
+    { "       ██   ██▄▄  ▀█▄█▀   ██      \n", hl = "String",  align = "center" },
+    { "       ██   ██▄▄▄ ██ ██   ██      \n", hl = "Boolean", align = "center" },
+    { "██████ ▄▄▄▄  ▄▄ ▄▄▄▄▄▄  ▄▄▄  ▄▄▄▄ \n", hl = "Number",  align = "center" },
+    { "██▄▄   ██▀██ ██   ██   ██▀██ ██▄█▄\n", hl = "String",  align = "center" },
+    { "██▄▄▄▄ ████▀ ██   ██   ▀███▀ ██ ██\n", hl = "Boolean", align = "center" },
 }
 
 M.preset =  {

@@ -338,7 +338,6 @@ return {
                 opts = {
                     log_level = "DEBUG",
                     language = "Japanese",
-                    send_code = false,
                 },
                 interactions = {
                     chat = {
