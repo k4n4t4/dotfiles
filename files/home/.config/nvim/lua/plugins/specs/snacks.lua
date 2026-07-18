@@ -41,7 +41,7 @@ return {
             words = { enabled = true },
         },
         init = function()
-            require("plugins.config.snacks.dashboard").hide_line_setup()
+            -- require("plugins.config.snacks.dashboard").hide_line_setup()
         end,
         keys = {
             -- explorer
