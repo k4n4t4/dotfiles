@@ -195,7 +195,7 @@ return {
                         local icon = level:match("error") and " " or " "
                         return " " .. icon .. count
                     end,
-                    always_show_bufferline = false,
+                    always_show_bufferline = true,
                 },
                 highlights = {
                     buffer_selected = {

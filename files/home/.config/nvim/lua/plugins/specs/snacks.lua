@@ -40,6 +40,16 @@ return {
             },
             words = { enabled = true },
         },
+        init = function()
+            vim.api.nvim_create_autocmd("User", {
+                pattern = "SnacksDashboardOpened",
+                callback = function()
+                    vim.schedule(function()
+                        vim.opt_local.laststatus = 0
+                    end)
+                end,
+            })
+        end,
         keys = {
             -- explorer
             { "<Leader>e",       function() Snacks.picker.explorer() end,              desc = "explorer" },
@@ -70,7 +80,7 @@ return {
             { "[[",         function() Snacks.words.jump(-1) end,                                  desc = "Previous reference" },
             -- terminal
             { "<Leader>kk", function() Snacks.terminal(nil, { win = { position = "bottom" } }) end, desc = "Toggle Terminal" },
-            { "<Leader>kf", function() Snacks.terminal(nil, { win = { position = "float" } }) end, desc = "Float Terminal" },
+            { "<Leader>kf", function() Snacks.terminal(nil, { win = { border = "single", position = "float" } }) end, desc = "Float Terminal" },
         },
     },
 }
