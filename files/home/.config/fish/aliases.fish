@@ -111,7 +111,7 @@ else if type -q exa
     alias lta  "exa -FTa"
     alias llt  "exa -FTl"
     alias llta "exa -FTla"
-    export EXA_COLORS=(get_ls_colors exa)
+    set -gx EXA_COLORS (get_ls_colors exa)
 else if type -q lsd
     alias ls   "lsd"
     alias ll   "lsd -Fl"
@@ -129,7 +129,7 @@ else
     alias ll  "ls -Fl"
     alias la  "ls -Fa"
     alias lla "ls -Fla"
-    export LS_COLORS=(get_ls_colors)
+    set -gx LS_COLORS (get_ls_colors)
 end
 
 if type -q trash

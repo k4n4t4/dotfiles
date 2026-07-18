@@ -42,25 +42,29 @@ fish_add_path \
     /usr/sbin \
     /sbin
 
+if type -q archlinux-java
+    set -gx JAVA_HOME /usr/lib/jvm/(archlinux-java get)
+    fish_add_path $JAVA_HOME/bin/
+end
 
-export PAGER="less"
+set -gx PAGER "less"
 
-export LESS='-i -M -R -S -W -z-4 -x4'
-export LESS_TERMCAP_mb=\033"[1;31m"
-export LESS_TERMCAP_md=\033"[1;32m"
-export LESS_TERMCAP_me=\033"[m"
-export LESS_TERMCAP_so=\033"[1;40;35m"
-export LESS_TERMCAP_se=\033"[m"
-export LESS_TERMCAP_us=\033"[36m"
-export LESS_TERMCAP_ue=\033"[m"
+set -gx LESS '-i -M -R -S -W -z-4 -x4'
+set -gx LESS_TERMCAP_mb \033"[1;31m"
+set -gx LESS_TERMCAP_md \033"[1;32m"
+set -gx LESS_TERMCAP_me \033"[m"
+set -gx LESS_TERMCAP_so \033"[1;40;35m"
+set -gx LESS_TERMCAP_se \033"[m"
+set -gx LESS_TERMCAP_us \033"[36m"
+set -gx LESS_TERMCAP_ue \033"[m"
 
-export EDITOR="vim"
+set -gx EDITOR "vim"
 
-export LANG=C.UTF-8
+set -gx LANG C.UTF-8
 
 if type -q nvim
-    export EDITOR="nvim"
-    export MANPAGER="nvim +Man!"
+    set -gx EDITOR "nvim"
+    set -gx MANPAGER "nvim +Man!"
 end
 
 if type -q dm
@@ -68,7 +72,7 @@ if type -q dm
 end
 
 if type -q tmux
-    export TMUX_SHELL=$FISH_BIN
+    set -gx TMUX_SHELL $FISH_BIN
 end
 
 if test -f ~/.brew/bin/brew
@@ -80,7 +84,7 @@ if type -q fzf
 end
 
 if type -q micromamba
-    export MAMBA_ROOT_PREFIX=$HOME/.micromamba
+    set -gx MAMBA_ROOT_PREFIX $HOME/.micromamba
     micromamba shell hook --shell fish | source
 end
 
