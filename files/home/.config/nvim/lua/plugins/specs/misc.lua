@@ -337,6 +337,8 @@ return {
             require("codecompanion").setup {
                 opts = {
                     log_level = "DEBUG",
+                    language = "Japanese",
+                    send_code = false,
                 },
                 interactions = {
                     chat = {
