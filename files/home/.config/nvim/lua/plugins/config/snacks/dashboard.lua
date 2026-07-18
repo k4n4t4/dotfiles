@@ -1,16 +1,16 @@
 local M = {}
 
-local header = {
-    { "     ██████ ▄▄▄▄▄ ▄▄ ▄▄ ▄▄▄▄▄▄    \n", hl = "Number",  align = "center" },
-    { "       ██   ██▄▄  ▀█▄█▀   ██      \n", hl = "String",  align = "center" },
-    { "       ██   ██▄▄▄ ██ ██   ██      \n", hl = "Boolean", align = "center" },
-    { "██████ ▄▄▄▄  ▄▄ ▄▄▄▄▄▄  ▄▄▄  ▄▄▄▄ \n", hl = "Number",  align = "center" },
-    { "██▄▄   ██▀██ ██   ██   ██▀██ ██▄█▄\n", hl = "String",  align = "center" },
-    { "██▄▄▄▄ ████▀ ██   ██   ▀███▀ ██ ██\n", hl = "Boolean", align = "center" },
-}
+local header_text = [[
+     ██████ ▄▄▄▄▄ ▄▄ ▄▄ ▄▄▄▄▄▄    
+       ██   ██▄▄  ▀█▄█▀   ██      
+       ██   ██▄▄▄ ██ ██   ██      
+██████ ▄▄▄▄  ▄▄ ▄▄▄▄▄▄  ▄▄▄  ▄▄▄▄ 
+██▄▄   ██▀██ ██   ██   ██▀██ ██▄█▄
+██▄▄▄▄ ████▀ ██   ██   ▀███▀ ██ ██
+]]
 
 M.preset =  {
-    header = header,
+    header = { header_text, hl = "Comment", align = "center" },
 }
 
 function M.hide_line_setup()
