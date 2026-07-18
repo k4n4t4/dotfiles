@@ -88,6 +88,12 @@ function M.config()
                     score_offset = 600,
                     async = true,
                 },
+                codecompanion = {
+                    name = "CodeCompanion",
+                    module = "codecompanion.providers.completion.blink",
+                    score_offset = 600,
+                    async = true,
+                },
                 path = {
                     module = "blink.cmp.sources.path",
                     name = "Path",
