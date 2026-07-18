@@ -1,5 +1,29 @@
 local M = {}
 
+local function filter_duplicates(items)
+    local seen = {}
+    local filtered = {}
+
+    for _, item in ipairs(items) do
+        if item.kind == 2 or item.kind == 3 then
+            local method_name = item.label:match("^([^%(]+)")
+            if method_name then
+                if not seen[method_name] then
+                    seen[method_name] = true
+                    table.insert(filtered, item)
+                end
+            else
+                table.insert(filtered, item)
+            end
+        else
+            table.insert(filtered, item)
+        end
+    end
+
+    return filtered
+end
+
+
 function M.config()
     vim.opt.autocomplete = false
 
@@ -75,6 +99,13 @@ function M.config()
                     name = "LSP",
                     score_offset = 510,
                     async = true,
+                    transform_items = function(_, items)
+                        if vim.bo.filetype == "java" then
+                            return filter_duplicates(items)
+                        end
+
+                        return items
+                    end,
                 },
                 snippets = {
                     module = "blink.cmp.sources.snippets",
