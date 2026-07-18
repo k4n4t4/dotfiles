@@ -1,3 +1,3 @@
 return {
-  filetypes = { 'html', 'jsp' },
+    filetypes = { 'html', 'jsp' },
 }
