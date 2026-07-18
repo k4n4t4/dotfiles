@@ -318,4 +318,43 @@ return {
         event = { "InsertEnter", "CmdLineEnter" },
         config = require("plugins.config.blink_cmp").config,
     },
+
+    -- code companion
+    {
+        "olimorris/codecompanion.nvim",
+        cmd = {
+            "CodeCompanion",
+            "CodeCompanionActions",
+            "CodeCompanionChat",
+            "CodeCompanionCLI",
+            "CodeCompanionCmd",
+        },
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-treesitter/nvim-treesitter",
+            "saghen/blink.cmp",
+        },
+        config = function()
+            require("codecompanion").setup {
+                opts = {
+                    log_level = "DEBUG",
+                    completion_provider = "blink",
+                },
+                interactions = {
+                    chat = {
+                        adapter = {
+                            name = "copilot",
+                            model = "gpt-4o",
+                        },
+                    },
+                    inline = {
+                        adapter = {
+                            name = "copilot",
+                            model = "gpt-4o",
+                        },
+                    },
+                },
+            }
+        end,
+    },
 }

@@ -74,7 +74,7 @@ function M.config()
             },
         },
         sources = {
-            default = { "copilot", "avante", "path", "lsp", "snippets", "obsidian", "obsidian_new", "obsidian_tags", "buffer", "calc", "emoji", "git", "dictionary" },
+            default = { "copilot", "avante", "codecompanion", "path", "lsp", "snippets", "obsidian", "obsidian_new", "obsidian_tags", "buffer", "calc", "emoji", "git", "dictionary" },
             providers = {
                 copilot = {
                     name = "Copilot",
