@@ -36,32 +36,6 @@ return {
         end,
     },
 
-    --[[ COPILOT ]]--
-    {
-        "zbirenbaum/copilot.lua",
-        cmd = "Copilot",
-        event = "InsertEnter",
-        opts = {
-            filetypes = {
-                ['*'] = function()
-                    local fname = vim.fs.basename(vim.api.nvim_buf_get_name(0))
-                    local disable_patterns = { 'env', 'conf', 'local', 'private' }
-                    return vim.iter(disable_patterns):all(function(pattern)
-                        return not string.match(fname, pattern)
-                    end)
-                end,
-            },
-            suggestion = {
-                enabled = false,
-                auto_trigger = true,
-                keymap = {
-                    accept = "<M-l>",
-                },
-            },
-            panel = { enabled = false },
-        },
-    },
-
 
     --[[ EDITOR PLUGINS ]]--
 
@@ -338,6 +312,32 @@ return {
         end,
     },
 
+
+    -- copilot
+    {
+        "zbirenbaum/copilot.lua",
+        cmd = "Copilot",
+        event = "InsertEnter",
+        opts = {
+            filetypes = {
+                ['*'] = function()
+                    local fname = vim.fs.basename(vim.api.nvim_buf_get_name(0))
+                    local disable_patterns = { 'env', 'conf', 'local', 'private' }
+                    return vim.iter(disable_patterns):all(function(pattern)
+                        return not string.match(fname, pattern)
+                    end)
+                end,
+            },
+            suggestion = {
+                enabled = false,
+                auto_trigger = true,
+                keymap = {
+                    accept = "<M-l>",
+                },
+            },
+            panel = { enabled = false },
+        },
+    },
     -- completion
     {
         "saghen/blink.cmp",
