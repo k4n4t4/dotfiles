@@ -13,7 +13,7 @@ M.preset =  {
     header = { header_text, hl = "Comment", align = "center" },
 }
 
--- FIXME: it doesn't work
+-- FIX: it doesn't work
 function M.hide_line_setup()
     ---@diagnostic disable-next-line: undefined-field
     local saved_laststatus = vim.opt.laststatus:get()
