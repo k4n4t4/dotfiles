@@ -297,10 +297,9 @@ return {
     -- todo comments
     {
         "folke/todo-comments.nvim",
-        event = "VeryLazy",
         dependencies = { "nvim-lua/plenary.nvim" },
-        opts = {
-        },
+        event = "VeryLazy",
+        opts = {},
     },
 
     -- dial
