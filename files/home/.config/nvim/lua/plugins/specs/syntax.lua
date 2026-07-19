@@ -27,12 +27,6 @@ return {
         end,
     },
     {
-        "iamcco/markdown-preview.nvim",
-        cmd = { "MarkdownPreview", "MarkdownPreviewToggle", "MarkdownPreviewStop" },
-        build = "cd app && npm install",
-        ft = { "markdown" },
-    },
-    {
         "epwalsh/obsidian.nvim",
         version = "*",
         event = "VeryLazy",
