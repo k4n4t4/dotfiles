@@ -32,7 +32,7 @@ return {
         event = "VeryLazy",
         config = function()
             local mason_lspconfig = require("mason-lspconfig")
-            mason_lspconfig.setup { }
+            mason_lspconfig.setup {}
         end,
     },
 
@@ -71,7 +71,7 @@ return {
         event = "VeryLazy",
         dependencies = { "nvim-tree/nvim-web-devicons" },
         config = function()
-            vim.api.nvim_create_autocmd({"RecordingEnter", "RecordingLeave"}, {
+            vim.api.nvim_create_autocmd({ "RecordingEnter", "RecordingLeave" }, {
                 group = vim.api.nvim_create_augroup("LualineMacroRefresh", { clear = true }),
                 callback = function() require("lualine").refresh() end,
             })
@@ -287,10 +287,10 @@ return {
         "k4n4t4/transparent.nvim",
         config = function()
             local transparent = require("transparent")
-            transparent.setup { }
+            transparent.setup {}
         end,
         keys = {
-            { mode = "n", "<Leader>T",  function() require('transparent').toggle() end, desc = 'Toggle transparency' },
+            { mode = "n", "<Leader>T", function() require('transparent').toggle() end, desc = 'Toggle transparency' },
         },
     },
 
@@ -300,6 +300,10 @@ return {
         dependencies = { "nvim-lua/plenary.nvim" },
         event = "VeryLazy",
         opts = {},
+        keys = {
+            ---@diagnostic disable-next-line: undefined-field
+            { "<Leader>t", function() Snacks.picker.todo_comments() end, desc = "Todo List" },
+        },
     },
 
     -- dial
