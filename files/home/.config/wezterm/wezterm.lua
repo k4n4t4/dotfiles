@@ -53,6 +53,9 @@ config.disable_default_mouse_bindings = false
 config.keys = require("bindings").key
 config.mouse_bindings = require("bindings").mouse
 
+-- Misc
+config.enable_kitty_graphics = true
+
 if is_windows then
     config.audible_bell = "Disabled"
     config.wsl_domains = {
@@ -68,6 +71,5 @@ elseif is_linux or is_macos then
 
     config.enable_wayland = false
 end
-
 
 return config
