@@ -17,7 +17,7 @@ config.color_scheme = 'Tokyo Night'
 
 -- Font
 config.font = wezterm.font(
-    "ComicShannsMono Nerd Font",
+    "Terminess Nerd Font Mono",
     { weight = "Medium", stretch = "Normal", style = "Normal" }
 )
 config.font_size = 18
