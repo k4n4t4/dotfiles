@@ -53,7 +53,6 @@ config.disable_default_mouse_bindings = false
 config.keys = require("bindings").key
 config.mouse_bindings = require("bindings").mouse
 
-
 if is_windows then
     config.audible_bell = "Disabled"
     config.wsl_domains = {
