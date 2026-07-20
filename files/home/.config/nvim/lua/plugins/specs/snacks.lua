@@ -68,8 +68,8 @@ return {
             { "gi",         function() Snacks.picker.lsp_implementations() end,                    nowait = true,                 desc = "Implementations" },
             { "gt",         function() Snacks.picker.lsp_type_definitions() end,                   nowait = true,                 desc = "Type Definitions" },
             --words
-            { "]]",         function() Snacks.words.jump(1) end,                                   desc = "Next reference" },
-            { "[[",         function() Snacks.words.jump(-1) end,                                  desc = "Previous reference" },
+            { "]]",         function() Snacks.words.jump(vim.v.count1) end,                                   desc = "Next reference" },
+            { "[[",         function() Snacks.words.jump(-vim.v.count1) end,                                  desc = "Previous reference" },
             -- terminal
             { "<Leader>kk", function() Snacks.terminal(nil, { win = { position = "bottom" } }) end, desc = "Toggle Terminal" },
             { "<Leader>kf", function() Snacks.terminal(nil, { win = { border = "single", position = "float" } }) end, desc = "Float Terminal" },
