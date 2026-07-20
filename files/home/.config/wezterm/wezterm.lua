@@ -1,10 +1,8 @@
 local wezterm = require 'wezterm'
-local act = wezterm.action
 
 local is_windows = wezterm.target_triple:find("windows") ~= nil
 local is_linux = wezterm.target_triple:find("linux") ~= nil
 local is_macos = wezterm.target_triple:find("darwin") ~= nil
-
 
 local config = {}
 if wezterm.config_builder then
@@ -12,7 +10,7 @@ if wezterm.config_builder then
 end
 config.automatically_reload_config = true
 
-
+-- Color Scheme
 config.color_scheme = 'Tokyo Night'
 
 -- Font
@@ -36,7 +34,6 @@ config.window_padding = {
 config.window_decorations = 'RESIZE'
 config.window_background_opacity = 0.30
 config.text_background_opacity = 0.80
-
 config.window_frame = {
     inactive_titlebar_bg = "none",
     active_titlebar_bg = "none",
@@ -59,7 +56,6 @@ config.mouse_bindings = require("bindings").mouse
 
 if is_windows then
     config.audible_bell = "Disabled"
-
     config.wsl_domains = {
         {
             name = 'WSL:NixOS',
@@ -67,11 +63,8 @@ if is_windows then
             default_cwd = "~",
         },
     }
-
     config.default_domain = 'WSL:NixOS'
-end
-
-if is_linux or is_macos then
+elseif is_linux or is_macos then
     config.default_prog = { "fish", "--login" }
 
     config.enable_wayland = false
