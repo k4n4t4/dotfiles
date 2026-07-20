@@ -48,6 +48,10 @@ return {
         "nvim-lualine/lualine.nvim",
         event = "VeryLazy",
         dependencies = { "nvim-tree/nvim-web-devicons" },
+        init = function()
+            vim.opt.cmdheight = 0
+            vim.opt.laststatus = 0
+        end,
         config = function()
             vim.api.nvim_create_autocmd({ "RecordingEnter", "RecordingLeave" }, {
                 group = vim.api.nvim_create_augroup("LualineMacroRefresh", { clear = true }),
@@ -122,6 +126,9 @@ return {
         event = "VeryLazy",
         version = "*",
         dependencies = 'nvim-tree/nvim-web-devicons',
+        init = function()
+            vim.opt.showtabline = 0
+        end,
         config = function()
             require("bufferline").setup({
                 options = {
