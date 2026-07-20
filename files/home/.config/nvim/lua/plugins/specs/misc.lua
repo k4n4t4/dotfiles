@@ -73,10 +73,6 @@ return {
                     theme = "auto",
                     component_separators = { left = '|', right = '|' },
                     section_separators = { left = '', right = '' },
-                    disabled_filetypes = {
-                        statusline = { "dashboard", "snacks_dashboard" },
-                        winbar = { "dashboard", "snacks_dashboard" },
-                    },
                     globalstatus = true,
                 },
                 sections = {

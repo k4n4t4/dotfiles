@@ -1,3 +1,4 @@
+vim.api.nvim_set_hl(0, "DashboardStatusLine", { bg = "None" })
 return {
     {
         "folke/snacks.nvim",
@@ -41,7 +42,6 @@ return {
             words = { enabled = true },
         },
         init = function()
-            -- require("plugins.config.snacks.dashboard").hide_line_setup()
         end,
         keys = {
             -- explorer
