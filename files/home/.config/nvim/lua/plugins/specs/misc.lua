@@ -38,8 +38,6 @@ return {
 
 
     --[[ EDITOR PLUGINS ]]--
-
-
     {
         "nvim-lualine/lualine.nvim",
         event = "VeryLazy",
