@@ -227,7 +227,7 @@ binds {
     Mod+V { spawn "noctalia" "msg" "panel-toggle" "clipboard"; }
 
     Mod+E repeat=false { spawn "uwsm" "app" "--" "nautilus"; }
-    Mod+T repeat=false { spawn "uwsm" "app" "--" "kitty"; }
+    Mod+T repeat=false { spawn "uwsm" "app" "--" "wezterm"; }
     Mod+B repeat=false { spawn "uwsm" "app" "--" "firefox"; }
     Mod+Shift+B repeat=false { spawn "uwsm" "app" "--" "firefox" "--private-window"; }
     // Mod+B repeat=false { spawn "uwsm" "app" "--" "org.mozilla.firefox"; }
