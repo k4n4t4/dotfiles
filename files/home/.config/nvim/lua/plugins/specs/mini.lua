@@ -136,7 +136,7 @@ return {
     -- themes
     {
         "nvim-mini/mini.base16",
-        event = "VeryLazy",
+        lazy = false,
         config = function()
             require('mini.base16').setup {
                 palette = {
