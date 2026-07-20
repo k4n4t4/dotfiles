@@ -192,6 +192,10 @@ return {
                 throttle = 1000 / 30,
             }
         end,
+        keys = {
+            ---@diagnostic disable-next-line: undefined-field
+            { "<Leader>n", function() Snacks.picker.noice() end, desc = "Noice" },
+        },
     },
     -- breadcrumbs
     {
