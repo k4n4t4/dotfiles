@@ -1,4 +1,3 @@
-vim.api.nvim_set_hl(0, "DashboardStatusLine", { bg = "None" })
 return {
     {
         "folke/snacks.nvim",
