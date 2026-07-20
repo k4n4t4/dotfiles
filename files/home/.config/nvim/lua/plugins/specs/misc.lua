@@ -74,6 +74,10 @@ return {
                     component_separators = { left = '|', right = '|' },
                     section_separators = { left = '', right = '' },
                     globalstatus = true,
+                    disabled_filetypes = {
+                        "snacks_dashboard",
+                        "dashboard",
+                    },
                 },
                 sections = {
                     lualine_a = {
