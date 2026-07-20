@@ -57,12 +57,12 @@ if is_windows then
     config.audible_bell = "Disabled"
     config.wsl_domains = {
         {
-            name = 'WSL:NixOS',
-            distribution = 'NixOS',
+            name = 'WSL:archlinux',
+            distribution = 'ArchLinux',
             default_cwd = "~",
         },
     }
-    config.default_domain = 'WSL:NixOS'
+    config.default_domain = 'WSL:archlinux'
 elseif is_linux or is_macos then
     config.default_prog = { "fish", "--login" }
 

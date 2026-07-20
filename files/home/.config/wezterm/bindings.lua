@@ -168,6 +168,11 @@ M.mouse = {
         mods = 'CTRL',
         action = act.PasteFrom 'Clipboard',
     },
+    {
+        event = { Drag = { streak = 1, button = 'Left' } },
+        mods = 'CTRL|ALT',
+        action = wezterm.action.StartWindowDrag,
+    },
 }
 
 return M
