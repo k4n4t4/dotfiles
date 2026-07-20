@@ -34,7 +34,9 @@ config.window_padding = {
     bottom = 0,
 }
 config.window_decorations = 'RESIZE'
-config.window_background_opacity = 0.60
+config.window_background_opacity = 0.85
+config.text_background_opacity = 0.85
+
 config.window_frame = {
     inactive_titlebar_bg = "none",
     active_titlebar_bg = "none",
