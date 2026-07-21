@@ -1,5 +1,5 @@
 # --- Font ---
-font-family = "Hurmit Nerd Font"
+font-family = "JetBrainsMono Nerd Font"
 font-size = 15
 
 # --- Cursor ---
@@ -28,6 +28,8 @@ scrollback-limit = 100000
 # key configurations
 #
 
+keybind = clear
+
 keybind = ctrl+alt+shift+r=reload_config
 
 keybind = ctrl+alt+up=increase_font_size:1
@@ -52,5 +54,7 @@ keybind = ctrl+alt+shift+right_bracket=move_tab:1
 keybind = ctrl+alt+shift+left_bracket=move_tab:-1
 
 keybind = ctrl+alt+shift+v=paste_from_clipboard
+keybind = ctrl+alt+w=write_scrollback_file:open
 
 theme = noctalia
+custom-shader = shaders/cursor_sweep.glsl
