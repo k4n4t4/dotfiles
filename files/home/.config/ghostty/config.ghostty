@@ -2,9 +2,6 @@
 font-family = "Hurmit Nerd Font"
 font-size = 15
 
-font-feature = -liga
-font-feature = -calt
-
 # --- Cursor ---
 cursor-style = block
 cursor-style-blink = false
@@ -12,6 +9,7 @@ cursor-style-blink = false
 # --- Window / background ---
 background-opacity = 0.6
 unfocused-split-opacity = 0.2
+window-padding-balance = true
 
 # --- Bell ---
 
