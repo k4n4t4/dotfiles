@@ -95,20 +95,6 @@ layout {
     }
 }
 
-blur {
-    on
-    passes 2
-    offset 1.0
-    noise 0.02
-    saturation 1.5
-}
-
-window-rule {
-    background-effect {
-        blur true
-    }
-}
-
 overview {
     zoom 0.5
     backdrop-color "#001122"
@@ -119,25 +105,6 @@ overview {
         offset x=0 y=0
         color "#00000050"
     }
-}
-
-window-rule {
-    clip-to-geometry true
-    draw-border-with-background false
-    geometry-corner-radius 10
-}
-
-window-rule {
-    match is-floating=true
-
-    background-effect {
-        xray false
-    }
-}
-
-window-rule {
-    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
-    open-floating true
 }
 
 recent-windows {
@@ -165,6 +132,41 @@ recent-windows {
         Alt+grave { next-window scope="workspace" filter="app-id"; }
         Alt+Shift+grave { previous-window scope="workspace" filter="app-id"; }
     }
+}
+
+
+blur {
+    on
+    passes 2
+    offset 1.0
+    noise 0.02
+    saturation 1.5
+}
+
+window-rule {
+    clip-to-geometry true
+    draw-border-with-background false
+    geometry-corner-radius 10
+}
+
+window-rule {
+    opacity 0.85
+    background-effect {
+        blur true
+        xray false
+    }
+}
+
+window-rule {
+    match is-floating=true
+    background-effect {
+        xray false
+    }
+}
+
+window-rule {
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    open-floating true
 }
 
 
