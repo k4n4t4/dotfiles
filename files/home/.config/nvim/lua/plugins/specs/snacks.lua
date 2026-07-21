@@ -36,7 +36,10 @@ return {
                 enabled = true,
                 left = { "mark", "sign" },
                 right = { "fold", "git" },
-                folds = { open = true },
+                folds = {
+                    open = true,
+                    git_hl = true,
+                },
             },
             words = { enabled = true },
         },
