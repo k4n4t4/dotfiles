@@ -27,6 +27,9 @@ return {
                     explorer = { layout = require("plugins.config.snacks.picker_layout").explorer_layout },
                 },
                 layout = require("plugins.config.snacks.picker_layout").layout,
+                win = {
+                    preview = { wo = { winblend = 0 } },
+                },
             },
             notifier = { enabled = false },
             quickfile = { enabled = true },
