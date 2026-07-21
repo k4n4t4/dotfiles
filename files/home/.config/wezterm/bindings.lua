@@ -160,6 +160,12 @@ M.key = {
         mods = 'CTRL|ALT',
         action = act.RotatePanes 'Clockwise',
     },
+
+    -- Show Debug Overlay
+    {
+        key = 'F12',
+        action = wezterm.action.ShowDebugOverlay,
+    },
 }
 
 M.mouse = {
