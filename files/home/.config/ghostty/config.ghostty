@@ -1,0 +1,57 @@
+# --- Font ---
+font-family = "Hurmit Nerd Font"
+font-size = 15
+
+font-feature = -liga
+font-feature = -calt
+
+# --- Cursor ---
+cursor-style = block
+cursor-style-blink = false
+
+# --- Window / background ---
+background-opacity = 0.6
+unfocused-split-opacity = 0.2
+
+# --- Bell ---
+
+# --- Shell integration ---
+shell-integration-features = no-cursor
+
+# --- Shell / working directory ---
+command = fish
+window-inherit-working-directory = true
+
+# --- Scrollback ---
+scrollback-limit = 100000
+
+#
+# key configurations
+#
+
+keybind = ctrl+alt+shift+r=reload_config
+
+keybind = ctrl+alt+up=increase_font_size:1
+keybind = ctrl+alt+down=decrease_font_size:1
+keybind = ctrl+alt+equal=reset_font_size
+
+keybind = ctrl+alt+r=resize_split:right,10
+
+keybind = ctrl+alt+p=scroll_page_up
+
+keybind = ctrl+alt+v=new_split:right
+keybind = ctrl+alt+s=new_split:down
+keybind = ctrl+alt+q=close_surface
+keybind = ctrl+alt+j=goto_split:next
+keybind = ctrl+alt+k=goto_split:previous
+
+keybind = ctrl+alt+n=new_tab
+keybind = ctrl+alt+shift+q=close_tab
+keybind = ctrl+alt+right_bracket=next_tab
+keybind = ctrl+alt+left_bracket=previous_tab
+keybind = ctrl+alt+shift+right_bracket=move_tab:1
+keybind = ctrl+alt+shift+left_bracket=move_tab:-1
+
+keybind = ctrl+alt+shift+v=paste_from_clipboard
+
+theme = noctalia
