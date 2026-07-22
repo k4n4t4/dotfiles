@@ -22,6 +22,11 @@ return {
                         font_size = "normalsize",
                     },
                 },
+                doc = {
+                    enabled = true,
+                    inline = true,
+                    float = true,
+                },
             },
             picker = {
                 enabled = true,

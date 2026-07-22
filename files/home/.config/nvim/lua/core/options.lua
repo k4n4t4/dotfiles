@@ -71,6 +71,9 @@ vim.opt.foldcolumn = "auto"
 vim.opt.cursorline = true
 vim.opt.cursorlineopt = "number"
 
+-- help
+vim.opt.helpheight = 15
+
 --statusline
 vim.opt.cmdheight = 0
 vim.opt.laststatus = 3
