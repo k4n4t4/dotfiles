@@ -10,14 +10,6 @@ environment {
     MOZ_ENABLE_WAYLAND "1"
     SDL_VIDEODRIVER "wayland"
     CLUTTER_BACKEND "wayland"
-
-    // NVIDIA
-    // LIBVA_DRIVER_NAME "nvidia"
-    // __GLX_VENDOR_LIBRARY_NAME "nvidia"
-    // NVD_BACKEND "direct"
-
-    // INTEL
-    // LIBVA_DRIVER_NAME "iHD"
 }
 
 hotkey-overlay {
