@@ -25,7 +25,7 @@ return {
                 doc = {
                     enabled = true,
                     inline = true,
-                    float = true,
+                    float = false,
                 },
             },
             picker = {
