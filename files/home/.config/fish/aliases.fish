@@ -152,6 +152,10 @@ else if type -q vim
     abbr --add v  "vim"
 end
 
+if type -q neovide
+    abbr --add e "neovide"
+end
+
 alias lazyvim   'NVIM_APPNAME=lazyvim nvim'
 alias nvchad    'NVIM_APPNAME=nvchad nvim'
 alias astronvim 'NVIM_APPNAME=astronvim nvim'
