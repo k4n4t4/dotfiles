@@ -177,6 +177,7 @@ if type -q yazi
 end
 
 if type -q mpv
-    alias mpv "mpv --keep-open=yes"
+    alias mpv "mpv"
     alias mpv-img "mpv --no-osc"
+    alias tmpv --vo=kitty
 end
