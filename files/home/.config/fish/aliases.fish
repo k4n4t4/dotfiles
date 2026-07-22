@@ -179,5 +179,5 @@ end
 if type -q mpv
     alias mpv "mpv"
     alias mpv-img "mpv --no-osc"
-    alias tmpv --vo=kitty
+    alias tmpv "mpv --vo=kitty"
 end
