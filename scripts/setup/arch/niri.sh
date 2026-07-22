@@ -1,4 +1,4 @@
-sudo pacman --needed --noconfirm -Syu uwsm niri xwayland-satellite xdg-desktop-portal-gnome xdg-desktop-portal-gtk dms-shell-niri matugen cava qt6-multimedia-ffmpeg polkit
+sudo pacman --needed --noconfirm -Syu uwsm niri xwayland-satellite xdg-desktop-portal-gnome xdg-desktop-portal-gtk matugen cava qt6-multimedia-ffmpeg polkit
 
 if [ -f /usr/share/wayland-sessions/niri.desktop ]; then
     if ! [ -f /usr/share/wayland-sessions/niri-uwsm.desktop ]; then
