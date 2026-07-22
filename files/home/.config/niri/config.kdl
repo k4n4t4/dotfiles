@@ -225,8 +225,6 @@ binds {
     Mod+T repeat=false { spawn "uwsm" "app" "--" "kitty"; }
     Mod+B repeat=false { spawn "uwsm" "app" "--" "firefox"; }
     Mod+Shift+B repeat=false { spawn "uwsm" "app" "--" "firefox" "--private-window"; }
-    // Mod+B repeat=false { spawn "uwsm" "app" "--" "org.mozilla.firefox"; }
-    // Mod+Shift+B repeat=false { spawn "uwsm" "app" "--" "org.mozilla.firefox" "--private-window"; }
 
     Mod+1 { focus-workspace 1; }
     Mod+2 { focus-workspace 2; }
@@ -249,7 +247,6 @@ binds {
     Mod+Shift+8 { move-window-to-workspace 8; }
     Mod+Shift+9 { move-window-to-workspace 9; }
     Mod+Shift+0 { move-window-to-workspace 10; }
-
 
 
     Mod+H { focus-column-left; }
