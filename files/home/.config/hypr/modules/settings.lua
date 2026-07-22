@@ -4,11 +4,10 @@ hl.config {
         gaps_in = 4,
         gaps_out = 10,
         gaps_workspaces = 0,
-        layout = "dwindle",
-        resize_corner = 0,
+        layout = "scrolling",
     },
-    dwindle = {
-        force_split = 2,
+    scrolling = {
+        column_width = 0.75,
     },
     decoration = {
         rounding = 10,
@@ -18,7 +17,6 @@ hl.config {
         dim_inactive = false,
         blur = { enabled = true },
     },
-    xwayland = { enabled = true },
     misc = {
         disable_hyprland_logo = true,
         disable_splash_rendering = true,
