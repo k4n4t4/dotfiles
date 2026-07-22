@@ -15,7 +15,14 @@ return {
             },
             indent = { enabled = true },
             input = { enabled = true },
-            image = { enabled = true },
+            image = {
+                enabled = true,
+                math = {
+                    latex = {
+                        font_size = "normalsize",
+                    },
+                },
+            },
             picker = {
                 enabled = true,
                 ui_select = true,
@@ -45,9 +52,8 @@ return {
                 },
             },
             words = { enabled = true },
+            scratch = { enabled = true },
         },
-        init = function()
-        end,
         keys = {
             -- explorer
             { "<Leader>e",       function() Snacks.picker.explorer() end,              desc = "explorer" },

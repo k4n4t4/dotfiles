@@ -5,6 +5,36 @@ return {
     {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
+        config = function()
+            local ts = require("nvim-treesitter")
+            ts.install {
+                "bash",
+                "bibtex",
+                "css",
+                "dockerfile",
+                "ecma",
+                "fish",
+                "html",
+                "html_tags",
+                "java",
+                "javadoc",
+                "javascript",
+                "json",
+                "jsx",
+                "latex",
+                "lua",
+                "luadoc",
+                "markdown",
+                "markdown_inline",
+                "scss",
+                "svelte",
+                "tsx",
+                "typescript",
+                "typst",
+                "vue",
+                "yaml",
+            }
+        end
     },
 
     --[[ LSP PLUGINS ]]--
