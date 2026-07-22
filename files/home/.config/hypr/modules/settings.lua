@@ -51,3 +51,11 @@ hl.animation({ leaf = "windowsOut", enabled = true, speed = 2, bezier = "linear"
 hl.animation({ leaf = "windowsMove", enabled = true, speed = 2, bezier = "ease-in-out-circ" })
 hl.animation({ leaf = "workspaces", enabled = true, speed = 2, bezier = "ease-in-out-cubic" })
 hl.animation({ leaf = "fade", enabled = true, speed = 5, bezier = "default" })
+
+hl.window_rule {
+    name = "diable-blur-special",
+    match = {
+        workspace = "special:*"
+    },
+    no_blur = true,
+}
