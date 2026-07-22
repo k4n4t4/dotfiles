@@ -1,0 +1,51 @@
+#!/bin/sh
+set -eu
+
+printf "\033[1mText Styles\033[0m\n"
+printf "  Normal:     Sample Text\n"
+printf "  Bold:       \033[1mSample Text\033[0m\n"
+printf "  Dim:        \033[2mSample Text\033[0m\n"
+printf "  Italic:     \033[3mSample Text\033[0m\n"
+printf "  Underline:  \033[4mSample Text\033[0m\n"
+printf "  Blink:      \033[5mSample Text\033[0m\n"
+printf "  Reverse:    \033[7mSample Text\033[0m\n"
+printf "  Strike:     \033[9mSample Text\033[0m\n"
+printf "\n"
+
+printf "\033[1mForeground Colors (Standard / High Intensity)\033[0m\n"
+printf "  Black:      \033[30mSample\033[0m  \033[90mSample (Bright)\033[0m\n"
+printf "  Red:        \033[31mSample\033[0m  \033[91mSample (Bright)\033[0m\n"
+printf "  Green:      \033[32mSample\033[0m  \033[92mSample (Bright)\033[0m\n"
+printf "  Yellow:     \033[33mSample\033[0m  \033[93mSample (Bright)\033[0m\n"
+printf "  Blue:       \033[34mSample\033[0m  \033[94mSample (Bright)\033[0m\n"
+printf "  Magenta:    \033[35mSample\033[0m  \033[95mSample (Bright)\033[0m\n"
+printf "  Cyan:       \033[36mSample\033[0m  \033[96mSample (Bright)\033[0m\n"
+printf "  White:      \033[37mSample\033[0m  \033[97mSample (Bright)\033[0m\n"
+printf "\n"
+
+printf "\033[1mBackground Colors\033[0m\n"
+printf "  Black:      \033[40m Sample \033[0m  \033[100m Sample (Bright) \033[0m\n"
+printf "  Red:        \033[41m Sample \033[0m  \033[101m Sample (Bright) \033[0m\n"
+printf "  Green:      \033[42m Sample \033[0m  \033[102m Sample (Bright) \033[0m\n"
+printf "  Yellow:     \033[43m Sample \033[0m  \033[103m Sample (Bright) \033[0m\n"
+printf "  Blue:       \033[44m Sample \033[0m  \033[104m Sample (Bright) \033[0m\n"
+printf "  Magenta:    \033[45m Sample \033[0m  \033[105m Sample (Bright) \033[0m\n"
+printf "  Cyan:       \033[46m Sample \033[0m  \033[106m Sample (Bright) \033[0m\n"
+printf "  White:      \033[47m Sample \033[0m  \033[107m Sample (Bright) \033[0m\n"
+printf "\n"
+
+printf "\033[1m256-Color Spectrum Test (Subset)\033[0m\n"
+for i in {0..15}; do
+    printf "\033[48;5;%dm  \033[0m" "$i"
+done
+printf "\n"
+for i in {16..231}; do
+    printf "\033[48;5;%dm \033[0m" "$i"
+    if [ $(( (i - 15) % 36 )) -eq 0 ]; then
+        printf "\n"
+    fi
+done
+for i in {232..255}; do
+    printf "\033[48;5;%dm  \033[0m" "$i"
+done
+printf "\n"
