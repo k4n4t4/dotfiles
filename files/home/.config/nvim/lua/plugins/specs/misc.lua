@@ -492,14 +492,8 @@ return {
         },
         config = function()
             require('render-markdown').setup {
-                completions = {
-                    lsp = {
-                        enabled = true,
-                    },
-                },
-                latex = {
-                    enabled = false,
-                },
+                completions = { lsp = { enabled = true } },
+                latex = { enabled = false },
                 file_types = { "markdown", "Avante" },
             }
         end,
