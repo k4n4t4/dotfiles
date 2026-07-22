@@ -1,4 +1,5 @@
 sudo pacman --needed --noconfirm -S zed kitty neovide mpv firefox thunderbird gimp discord obsidian
+xdg-mime default neovide.desktop text/plain
 
 # sudo pacman --needed --noconfirm -S wezterm
 
