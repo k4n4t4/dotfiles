@@ -9,18 +9,6 @@ hl.config {
     scrolling = {
         column_width = 0.75,
     },
-    decoration = {
-        rounding = 10,
-        active_opacity = 0.9,
-        fullscreen_opacity = 1.0,
-        inactive_opacity = 0.8,
-        dim_inactive = false,
-        blur = { enabled = true },
-    },
-    misc = {
-        disable_hyprland_logo = true,
-        disable_splash_rendering = true,
-    },
     input = {
         kb_layout = "us",
         repeat_rate = 50,
@@ -31,8 +19,25 @@ hl.config {
             scroll_factor = 1.0,
         },
     },
+    decoration = {
+        rounding = 10,
+        active_opacity = 0.9,
+        fullscreen_opacity = 1.0,
+        inactive_opacity = 0.8,
+        dim_inactive = false,
+        blur = {
+            enabled = true,
+            size = 2,
+            passes = 2,
+        },
+        shadow = { enabled = false },
+    },
     animations = {
         enabled = true,
+    },
+    misc = {
+        disable_hyprland_logo = true,
+        disable_splash_rendering = true,
     },
 }
 
