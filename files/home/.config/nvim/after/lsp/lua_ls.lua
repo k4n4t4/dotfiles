@@ -19,7 +19,7 @@ local function is_nvim_related()
 end
 
 return {
-    filetypes = { "lua", "luau", "neovim-lua" },
+    filetypes = { "lua", "neovim-lua" },
     settings = {
         Lua = {
             runtime = {
