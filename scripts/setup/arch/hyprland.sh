@@ -1,7 +1,8 @@
 sudo pacman --needed --noconfirm -S hyprland uwsm xdg-utils xdg-desktop-portal-hyprland hyprshot
 sudo pacman --needed --noconfirm -S socat
 sudo pacman --needed --noconfirm -S libnotify
-sudo pacman --needed --noconfirm -S networkmanager
+sudo pacman --needed --noconfirm -S iwd
+sudo systemctl enable --now iwd.service
 sudo pacman --needed --noconfirm -S bluez bluez-utils
 sudo systemctl enable bluetooth
 sudo pacman --needed --noconfirm -S mate-polkit

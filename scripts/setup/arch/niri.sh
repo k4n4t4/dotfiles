@@ -9,7 +9,8 @@ if [ -f /usr/share/wayland-sessions/niri.desktop ]; then
 fi
 
 sudo pacman --needed --noconfirm -S libnotify
-sudo pacman --needed --noconfirm -S networkmanager
+sudo pacman --needed --noconfirm -S iwd
+sudo systemctl enable --now iwd.service
 sudo pacman --needed --noconfirm -S bluez bluez-utils
 sudo systemctl enable bluetooth
 sudo pacman --needed --noconfirm -S brightnessctl
