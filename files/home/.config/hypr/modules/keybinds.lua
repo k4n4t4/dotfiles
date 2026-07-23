@@ -114,14 +114,11 @@ hl.bind(MOD .. " + S", hl.dsp.exec_cmd(task_manager))
 
 
 -- Screenshot bindings
-local screenshots_dir = "~/pers/media/imgs/screenshots/"
-local screenshot_all = hl.dsp.exec_cmd("hyprshot -m output -o " .. screenshots_dir)
-local screenshot_region = hl.dsp.exec_cmd("hyprshot -m region -o " .. screenshots_dir)
-local screenshot_window = hl.dsp.exec_cmd("hyprshot -m window -o " .. screenshots_dir)
+local screenshot_all = hl.dsp.exec_cmd("noctalia msg screenshot-fullscreen all")
+local screenshot_region = hl.dsp.exec_cmd("noctalia msg screenshot-region")
 
 hl.bind(MOD .. " + P", screenshot_all)
-hl.bind(MOD .. " + CTRL + P", screenshot_region)
-hl.bind(MOD .. " + SHIFT + P", screenshot_window)
+hl.bind(MOD .. " + SHIFT + P", screenshot_region)
 hl.bind("Print", screenshot_region)
 
 
