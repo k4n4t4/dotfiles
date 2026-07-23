@@ -1,4 +1,5 @@
 sudo pacman --needed --noconfirm -S hyprland uwsm xdg-utils xdg-desktop-portal-hyprland hyprshot
+sudo pacman --needed --noconfirm -S socat
 sudo pacman --needed --noconfirm -S libnotify
 sudo pacman --needed --noconfirm -S networkmanager
 sudo pacman --needed --noconfirm -S bluez bluez-utils

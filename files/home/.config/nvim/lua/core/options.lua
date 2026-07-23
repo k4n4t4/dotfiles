@@ -1,5 +1,8 @@
 --[[ GENERAL SETTINGS ]]--
 
+-- exrc
+vim.opt.exrc = true
+
 -- default shell
 vim.opt.shell = "fish"
 
