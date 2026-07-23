@@ -9,6 +9,10 @@ if cmd_exists firefox; then
     firefox_folder=~/.config/mozilla/firefox
 fi
 
+if ! [ -f "$firefox_folder/profiles.ini" ]; then
+    firefox_folder=""
+fi
+
 if [ -n "$firefox_folder" ]; then
     firefox_profile_name="$(awk -F= '/^\[Install/ {f=1} f && /^Default=/ {print $2; exit}' "$firefox_folder/profiles.ini")"
     firefox_profile="$firefox_folder/$firefox_profile_name"
