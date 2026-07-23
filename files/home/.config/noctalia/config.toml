@@ -11,10 +11,11 @@ order = [ "default" ]
     capsule_thickness = 0.6699999887496233
     center = [ "active_window" ]
     end = [ "submap", "tray", "privacy", "group:g1", "clock", "notifications" ]
-    margin_edge = 0
-    margin_ends = 0
+    font_family = "Adwaita Mono"
+    margin_edge = 4
+    margin_ends = 12
     padding = 13
-    radius = 0
+    radius = 26
     scale = 1.350000012665987
     shadow = false
     start = [ "session", "control-center", "launcher", "clipboard", "wallpaper", "media", "taskbar" ]
@@ -68,6 +69,7 @@ auto_locate = true
 enabled = true
 schema_version = 2
 widget_order = [
+    "lockscreen-login-box@WAYLAND-1",
     "lockscreen-login-box@DP-1",
     "lockscreen-login-box@eDP-1",
     "lockscreen-widget-0000000000000001",
@@ -92,9 +94,34 @@ widget_order = [
         background_color = "surface_variant"
         background_opacity = 0.44
         background_radius = 32.0
+        center_password_text = false
         input_opacity = 0.90000000000000002
         input_radius = 32.0
+        show_caps_lock = true
+        show_keyboard_layout = true
         show_login_button = false
+        show_password_hint = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@WAYLAND-1"]
+    box_height = 70.0
+    box_width = 400.0
+    cx = 355.0
+    cy = 389.0
+    output = "WAYLAND-1"
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@WAYLAND-1".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_password_hint = true
 
     [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
     box_height = 70.0
@@ -109,9 +136,13 @@ widget_order = [
         background_color = "surface_variant"
         background_opacity = 0.88
         background_radius = 12.0
+        center_password_text = false
         input_opacity = 1.0
         input_radius = 6.0
+        show_caps_lock = true
+        show_keyboard_layout = true
         show_login_button = true
+        show_password_hint = true
 
     [lockscreen_widgets.widget.lockscreen-widget-0000000000000001]
     box_height = 256.0
@@ -170,9 +201,25 @@ enabled = [ "k4n4t4/hypr-submap" ]
     name = "k4n4t4"
 
 [shell]
-corner_radius_scale = 0.95000001415610313
+app_icon_color = "secondary"
+button_borders = false
+corner_radius_scale = 2.0
+font_family = "Noto Sans"
+input_borders = false
 polkit_agent = true
+popup_borders = false
+popup_shadows = false
 settings_show_advanced = true
+
+    [shell.animation]
+    speed = 0.7500000111758709
+
+    [shell.panel]
+    borders = false
+    shadow = false
+
+    [shell.screenshot]
+    directory = "~/pers/media/imgs/screenshots"
 
     [[shell.session.actions]]
     action = "lock"
@@ -225,7 +272,13 @@ wallpaper_scheme = "vibrant"
     enable_community_templates = false
 
 [wallpaper]
+directory = "~/pers/media/imgs/wallpapers"
 directory_dark = "~/pers/media/imgs/wallpapers"
+directory_light = "~/pers/media/imgs/wallpapers"
+transition_on_startup = true
+
+    [wallpaper.automation]
+    interval_seconds = 1
 
     [wallpaper.default]
     path = "~/pers/media/imgs/wallpapers/wallpaper.png"
