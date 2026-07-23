@@ -10,7 +10,7 @@ order = [ "default" ]
     border_width = 1.0
     capsule_thickness = 0.6699999887496233
     center = [ "active_window" ]
-    end = [ "tray", "privacy", "group:g1", "clock", "notifications" ]
+    end = [ "submap", "tray", "privacy", "group:g1", "clock", "notifications" ]
     margin_edge = 0
     margin_ends = 0
     padding = 13
@@ -152,7 +152,7 @@ background_opacity = 0.79999998211860657
 video_directory = "~/pers/media/videos"
 
 [plugins]
-enabled = []
+enabled = [ "k4n4t4/hypr-submap" ]
 
     [[plugins.source]]
     kind = "git"
@@ -163,6 +163,11 @@ enabled = []
     kind = "git"
     location = "https://github.com/noctalia-dev/community-plugins"
     name = "community"
+
+    [[plugins.source]]
+    kind = "git"
+    location = "https://github.com/k4n4t4/noctalia-plugins"
+    name = "k4n4t4"
 
 [shell]
 corner_radius_scale = 0.95000001415610313
@@ -208,10 +213,10 @@ settings_show_advanced = true
     direction = "center"
 
 [theme]
-builtin = "Kanagawa"
+builtin = "Gruvbox"
 community_palette = "ADW"
 mode = "dark"
-source = "wallpaper"
+source = "builtin"
 wallpaper_scheme = "vibrant"
 
     [theme.templates]
@@ -257,6 +262,12 @@ show_label = false
 [widget.spacer_2]
 length = 25
 type = "spacer"
+
+[widget.submap]
+glyph = "keyboard"
+hide_when_default = true
+prefix = "Submap:"
+type = "k4n4t4/hypr-submap:submap"
 
 [widget.taskbar]
 group_by_workspace = true
