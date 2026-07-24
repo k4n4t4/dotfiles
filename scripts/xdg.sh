@@ -1,4 +1,4 @@
-dothome ".config/xdg/user-dirs.dirs" ".config/user-dirs.dirs"
+dothome "config/xdg/user-dirs.dirs" ".config/user-dirs.dirs"
 . "$TARGET_PATH/.config/user-dirs.dirs"
 msg_run mkdir -p -- "$XDG_DESKTOP_DIR"
 msg_run mkdir -p -- "$XDG_DOWNLOAD_DIR"
