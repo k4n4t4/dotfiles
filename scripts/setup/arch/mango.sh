@@ -1,4 +1,13 @@
 yay --needed --noconfirm -S mangowm-git
+
+if [ -f /usr/share/wayland-sessions/mango.desktop ]; then
+    if ! [ -f /usr/share/wayland-sessions/mango-uwsm.desktop ]; then
+        sudo cp /usr/share/wayland-sessions/mango.desktop /usr/share/wayland-sessions/mango-uwsm.desktop
+        sudo sed -i 's/^Name=Mango$/Name=Mango (uwsm)/' "/usr/share/wayland-sessions/mango-uwsm.desktop"
+        sudo sed -i 's/^Exec=mango$/Exec=uwsm start mango/' "/usr/share/wayland-sessions/mango-uwsm.desktop"
+    fi
+fi
+
 yay --needed --noconfirm -S noctalia-git
 sudo pacman --needed --noconfirm -S uwsm
 sudo pacman --needed --noconfirm -S xdg-utils
