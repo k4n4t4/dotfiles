@@ -103,6 +103,27 @@ widget_order = [
         show_login_button = false
         show_password_hint = true
 
+    [lockscreen_widgets.widget."lockscreen-login-box@Unknown-1"]
+    box_height = 70.0
+    box_width = 400.0
+    cx = 960.0
+    cy = 961.0
+    output = "Unknown-1"
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@Unknown-1".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_password_hint = true
+
     [lockscreen_widgets.widget."lockscreen-login-box@WAYLAND-1"]
     box_height = 70.0
     box_width = 400.0
@@ -282,13 +303,16 @@ transition_on_startup = true
     interval_seconds = 1
 
     [wallpaper.default]
-    path = "~/pers/media/imgs/wallpapers/wallpaper.png"
+    path = "/home/kana/pers/media/imgs/wallpapers/wallpaper.png"
 
     [wallpaper.last]
-    path = "~/pers/media/imgs/wallpapers/wallpaper.png"
+    path = "/home/kana/pers/media/imgs/wallpapers/wallpaper.png"
 
     [wallpaper.monitors.DP-1]
     path = "~/pers/media/imgs/wallpapers/wallpaper.png"
+
+    [wallpaper.monitors.Unknown-1]
+    path = "/home/kana/pers/media/imgs/wallpapers/wallpaper.png"
 
 [widget.active_window]
 icon_size = 20
