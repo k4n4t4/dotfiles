@@ -1,47 +1,38 @@
 window {
-  background-color: rgba(30, 30, 46, 0.75);
-  color: #cdd6f4;
-  font-family: sans-serif;
+    background-color: rgba(0, 0, 0, 0.75);
+    color: #D0D0D0;
+    font-family: sans-serif;
 }
 
-box {
-  background-color: rgba(24, 24, 37, 0.55);
-  border: 1px solid rgba(147, 153, 178, 0.15);
-  border-radius: 12px;
-  backdrop-filter: blur(10px);
-  padding: 24px;
+frame {
+    background: #101020;
 }
 
 entry {
-  background-color: rgba(49, 50, 68, 0.6);
-  color: #cdd6f4;
-  border: 1px solid rgba(69, 71, 90, 0.6);
-  border-radius: 6px;
-  padding: 8px 12px;
-  transition: border-color 0.2s ease, background-color 0.2s ease;
+    background-color: rgba(0, 0, 0, 0.75);
 }
 entry:focus {
-  background-color: rgba(49, 50, 68, 0.8);
-  border-color: rgba(137, 180, 250, 0.6);
+    background-color: rgba(49, 50, 68, 0.8);
 }
 
 button {
-  background-color: rgba(137, 180, 250, 0.85);
-  color: #11111b;
-  border: none;
-  border-radius: 6px;
-  padding: 8px 16px;
-  font-weight: 600;
-  transition: background-color 0.2s ease;
+    background-color: rgba(0, 0, 0, 0.75);
+    color: #E0E0E0;
+    border: none;
+    border-radius: 3px;
 }
 button:hover {
-  background-color: rgba(180, 190, 254, 0.9);
+    background-color: rgba(180, 190, 254, 0.9);
 }
 button:active {
-  background-color: rgba(116, 199, 236, 0.9);
+    background-color: rgba(116, 199, 236, 0.9);
+}
+
+button.toggle {
+    background: #202040;
 }
 
 label {
-  font-size: 14px;
-  color: rgba(205, 214, 244, 0.85);
+    font-size: 14px;
+    color: rgba(205, 214, 244, 0.85);
 }
