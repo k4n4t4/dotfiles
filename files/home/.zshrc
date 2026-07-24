@@ -1,3 +1,4 @@
+export HISTFILE=${HOME}/.local/state/zsh_history
 export LANG=en_US.UTF-8
 export CLICOLOR=1
 
