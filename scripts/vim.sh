@@ -1,3 +1,3 @@
 if cmd_exists vim; then
-    dothome ".vimrc"
+    dotconf "vim" -r
 fi
