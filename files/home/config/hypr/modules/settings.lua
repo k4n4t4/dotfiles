@@ -1,3 +1,11 @@
+hl.monitor({
+    output = "",
+    mode = "preferred",
+    position = "auto",
+    scale = "1.0",
+    transform = 0,
+})
+
 hl.config {
     general = {
         border_size = 2,
