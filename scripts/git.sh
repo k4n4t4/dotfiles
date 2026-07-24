@@ -5,6 +5,7 @@ if cmd_exists git; then
         case "$RET" in
             ( [nN] ) : ;;
             ( * )
+                msg_run mkdir -p "$HOME/.config/git"
                 msg_run touch "$HOME/.config/git/config"
 
                 msg_info "  git config user"
