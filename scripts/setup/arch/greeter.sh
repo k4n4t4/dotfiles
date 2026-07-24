@@ -1,7 +1,6 @@
 sudo pacman --needed --noconfirm -S greetd greetd-regreet cage
 sudo systemctl enable greetd
 
-sudo sed -i '/^\[default_session\]/,/^\[/ s|^command = .*|command = "dbus-run-session cage -s -mlast -d -- regreet"|' /etc/greetd/config.toml
-sudo sed -i '/^\[default_session\]/,/^\[/ s|^user = .*|user = "greeter"|' /etc/greetd/config.toml
+sudo cp -v "$SCRIPTS_PATH/setup/arch/greetd/"* /etc/greetd/
 
 grep -qF 'pam_gnome_keyring' /etc/pam.d/greetd || printf '\nauth       optional     pam_gnome_keyring.so\nsession    optional     pam_gnome_keyring.so auto_start\n' | sudo tee -a /etc/pam.d/greetd > /dev/null
