@@ -150,6 +150,7 @@ return {
             }
         end,
     },
+
     -- tabuf
     {
         'akinsho/bufferline.nvim',
@@ -191,6 +192,7 @@ return {
             vim.keymap.set("n", "<M-S-x>", "<Cmd>tabclose<CR>", { desc = "Close tab" })
         end,
     },
+
     -- notify
     {
         "folke/noice.nvim",
@@ -234,6 +236,7 @@ return {
             { "<Leader>n", function() Snacks.picker.noice() end, desc = "Noice" },
         },
     },
+
     -- breadcrumbs
     {
         'Bekaboo/dropbar.nvim',
@@ -246,6 +249,7 @@ return {
             set('n', '];', dropbar_api.select_next_context, { desc = 'Select next context' })
         end
     },
+
     -- debugging
     {
         "mfussenegger/nvim-dap",
@@ -287,6 +291,14 @@ return {
             end
         end,
     },
+
+    -- task runner
+    {
+        'stevearc/overseer.nvim',
+        event = 'VeryLazy',
+        opts = {},
+    },
+
     -- context
     {
         "nvim-treesitter/nvim-treesitter-context",
@@ -383,6 +395,7 @@ return {
             panel = { enabled = false },
         },
     },
+
     -- completion
     {
         "saghen/blink.cmp",
