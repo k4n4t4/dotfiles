@@ -10,6 +10,8 @@ script_source tmux
 script_source starship
 script_source wezterm
 script_source hyprland
+script_source niri
+script_source mango
 script_source wofi
 script_source fcitx5
 script_source mpv
@@ -23,5 +25,4 @@ script_source waybar
 script_source wlogout
 script_source mako
 script_source firefox
-script_source niri
 script_source noctalia
