@@ -295,8 +295,17 @@ return {
     -- task runner
     {
         'stevearc/overseer.nvim',
-        event = 'VeryLazy',
-        opts = {},
+        cmd = {
+            "OverseerOpen",
+            "OverseerToggle",
+            "OverseerClose",
+            "OverseerRun",
+            "OverseerShell",
+            "OverseerTaskAction",
+        },
+        config = function()
+            require("overseer").setup {}
+        end,
     },
 
     -- context
