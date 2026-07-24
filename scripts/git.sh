@@ -1,10 +1,12 @@
 if cmd_exists git; then
-    if [ "$DOT_SCRIPT_MODE" = install ] && ! file_exist "$HOME/.gitconfig"; then
+    if [ "$DOT_SCRIPT_MODE" = install ] && ! file_exist "$HOME/.config/git/config"; then
         msg_info "git config"
         msg_ask "  Continue? [Y/n]: "
         case "$RET" in
             ( [nN] ) : ;;
             ( * )
+                msg_run touch "$HOME/.config/git/config"
+
                 msg_info "  git config user"
                 msg_ask "  Continue? [Y/n]: "
                 case "$RET" in
