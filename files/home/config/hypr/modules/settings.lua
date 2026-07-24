@@ -10,6 +10,7 @@ hl.config {
         column_width = 0.75,
     },
     input = {
+        follow_mouse = 2,
         kb_layout = "us",
         repeat_rate = 50,
         repeat_delay = 250,
