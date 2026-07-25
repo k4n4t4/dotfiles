@@ -76,42 +76,86 @@ hl.bind(
     { description = "Focus window down" }
 )
 hl.bind(
-    MOD .. " + CTRL + H",
-    hl.dsp.window.swap({ direction = "l" }),
-    { description = "Swap window left" }
-)
-hl.bind(
-    MOD .. " + CTRL + L",
-    hl.dsp.window.swap({ direction = "r" }),
-    { description = "Swap window right" }
-)
-hl.bind(
-    MOD .. " + CTRL + K",
-    hl.dsp.window.swap({ direction = "u" }),
-    { description = "Swap window up" }
-)
-hl.bind(
-    MOD .. " + CTRL + J",
-    hl.dsp.window.swap({ direction = "d" }),
-    { description = "Swap window down" }
+    MOD .. " + TAB",
+    function()
+        hl.dispatch(hl.dsp.window.cycle_next({ next = true }))
+        hl.dispatch(hl.dsp.window.bring_to_top())
+    end,
+    { repeating = true, description = "Cycle window next" }
 )
 hl.bind(
     MOD .. " + SHIFT + H",
+    function()
+        local window = hl.get_active_window()
+        if not window then return end
+
+        if window.floating then
+            hl.dispatch(hl.dsp.window.move({ x = -20, y = 0, relative = true }))
+        else
+            hl.dispatch(hl.dsp.window.swap({ direction = "l" }))
+        end
+    end,
+    { repeating = true, description = "Swap window left" }
+)
+hl.bind(
+    MOD .. " + SHIFT + L",
+    function()
+        local window = hl.get_active_window()
+        if not window then return end
+
+        if window.floating then
+            hl.dispatch(hl.dsp.window.move({ x = 20, y = 0, relative = true }))
+        else
+            hl.dispatch(hl.dsp.window.swap({ direction = "r" }))
+        end
+    end,
+    { repeating = true, description = "Swap window right" }
+)
+hl.bind(
+    MOD .. " + SHIFT + K",
+    function()
+        local window = hl.get_active_window()
+        if not window then return end
+
+        if window.floating then
+            hl.dispatch(hl.dsp.window.move({ x = 0, y = -20, relative = true }))
+        else
+            hl.dispatch(hl.dsp.window.swap({ direction = "u" }))
+        end
+    end,
+    { repeating = true, description = "Swap window up" }
+)
+hl.bind(
+    MOD .. " + SHIFT + J",
+    function()
+        local window = hl.get_active_window()
+        if not window then return end
+
+        if window.floating then
+            hl.dispatch(hl.dsp.window.move({ x = 0, y = 20, relative = true }))
+        else
+            hl.dispatch(hl.dsp.window.swap({ direction = "d" }))
+        end
+    end,
+    { repeating = true, description = "Swap window down" }
+)
+hl.bind(
+    MOD .. " + CTRL + H",
     hl.dsp.window.move({ direction = "l" }),
     { description = "Move window left" }
 )
 hl.bind(
-    MOD .. " + SHIFT + L",
+    MOD .. " + CTRL + L",
     hl.dsp.window.move({ direction = "r" }),
     { description = "Move window right" }
 )
 hl.bind(
-    MOD .. " + SHIFT + K",
+    MOD .. " + CTRL + K",
     hl.dsp.window.move({ direction = "u" }),
     { description = "Move window up" }
 )
 hl.bind(
-    MOD .. " + SHIFT + J",
+    MOD .. " + CTRL + J",
     hl.dsp.window.move({ direction = "d" }),
     { description = "Move window down" }
 )
@@ -134,36 +178,6 @@ hl.bind(
     MOD .. " + ALT + J",
     hl.dsp.window.resize({ x = 0, y = 10, relative = true }),
     { repeating = true, description = "Resize window down" }
-)
-hl.bind(
-    MOD .. " + SHIFT + ALT + H",
-    hl.dsp.window.move({ x = -20, y = 0, relative = true }),
-    { repeating = true, description = "Move window left" }
-)
-hl.bind(
-    MOD .. " + SHIFT + ALT + L",
-    hl.dsp.window.move({ x = 20, y = 0, relative = true }),
-    { repeating = true, description = "Move window right" }
-)
-hl.bind(
-    MOD .. " + SHIFT + ALT + K",
-    hl.dsp.window.move({ x = 0, y = -20, relative = true }),
-    { repeating = true, description = "Move window up" }
-)
-hl.bind(
-    MOD .. " + SHIFT + ALT + J",
-    hl.dsp.window.move({ x = 0, y = 20, relative = true }),
-    { repeating = true, description = "Move window down" }
-)
-hl.bind(
-    MOD .. " + TAB",
-    hl.dsp.window.cycle_next({ next = true }),
-    { repeating = true, description = "Cycle window next" }
-)
-hl.bind(
-    MOD .. " + SHIFT + TAB",
-    hl.dsp.window.cycle_next({ next = false }),
-    { repeating = true, description = "Cycle window previous" }
 )
 
 
@@ -381,7 +395,7 @@ hl.bind(
     { description = "Open private browser" }
 )
 hl.bind(
-    MOD .. " + S",
+    MOD .. " + W",
     hl.dsp.exec_cmd(task_manager),
     { description = "Open task manager" }
 )
@@ -424,7 +438,7 @@ for i = 1, 10 do
 end
 
 hl.bind(
-    MOD .. " + W",
+    MOD .. " + S",
     hl.dsp.workspace.toggle_special("S"),
     { description = "Toggle special workspace" }
 )
@@ -440,7 +454,7 @@ hl.bind(
 )
 
 hl.bind(
-    MOD .. " + SHIFT + W",
+    MOD .. " + SHIFT + S",
     hl.dsp.window.move({ workspace = "special:S" }),
     { description = "Move window to special workspace" }
 )

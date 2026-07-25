@@ -19,6 +19,7 @@ hl.config {
     },
     input = {
         follow_mouse = 2,
+        float_switch_override_focus = 0,
         kb_layout = "us",
         repeat_rate = 50,
         repeat_delay = 250,
