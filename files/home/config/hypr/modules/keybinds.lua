@@ -424,7 +424,7 @@ for i = 1, 10 do
 end
 
 hl.bind(
-    MOD .. " + grave",
+    MOD .. " + W",
     hl.dsp.workspace.toggle_special("S"),
     { description = "Toggle special workspace" }
 )
@@ -440,7 +440,7 @@ hl.bind(
 )
 
 hl.bind(
-    MOD .. " + SHIFT + grave",
+    MOD .. " + SHIFT + W",
     hl.dsp.window.move({ workspace = "special:S" }),
     { description = "Move window to special workspace" }
 )
