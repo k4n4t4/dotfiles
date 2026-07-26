@@ -6,9 +6,14 @@ hl.env("MOZ_ENABLE_WAYLAND", "1")
 hl.env("SDL_VIDEODRIVER", "wayland,x11")
 hl.env("CLUTTER_BACKEND", "wayland")
 hl.env("XDG_SESSION_TYPE", "wayland")
-hl.env("XCURSOR_SIZE", "12")
 hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
 hl.env("XDG_SESSION_DESKTOP", "Hyprland")
+
+hl.env("XCURSOR_THEME", "Adwaita")
+hl.env("XCURSOR_SIZE", "12")
+hl.env("HYPRCURSOR_THEME", "Adwaita")
+hl.env("HYPRCURSOR_SIZE", "12")
+
 
 hl.on("hyprland.start", function()
     hl.exec_cmd("uwsm app -- fcitx5 -d")

@@ -66,9 +66,15 @@ hl.animation({ leaf = "workspaces", enabled = true, speed = 2, bezier = "ease-in
 hl.animation({ leaf = "fade", enabled = true, speed = 5, bezier = "default" })
 
 hl.window_rule {
-    name = "diable-blur-special",
     match = {
         workspace = "special:S"
     },
     no_blur = true,
+}
+hl.window_rule {
+    match = {
+        float = true
+    },
+    no_blur = true,
+    no_anim = true,
 }
