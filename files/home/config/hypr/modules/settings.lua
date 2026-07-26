@@ -26,6 +26,7 @@ hl.config {
         repeat_rate = 50,
         repeat_delay = 250,
         sensitivity = -0.6,
+        accel_profile = "flat",
         touchpad = {
             disable_while_typing = true,
             scroll_factor = 1.0,
