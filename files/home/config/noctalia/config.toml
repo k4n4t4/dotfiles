@@ -251,6 +251,8 @@ type = "k4n4t4/hypr-submap:submap"
 [widget.taskbar]
 group_by_workspace = true
 hide_empty_workspaces = true
+inactive_opacity = 0.59999999999999998
+show_active_indicator = false
 workspace_group_capsule = false
 workspace_label_placement = "inside"
 
