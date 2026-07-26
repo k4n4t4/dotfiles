@@ -15,7 +15,9 @@ hl.config {
         layout = "scrolling",
     },
     scrolling = {
-        column_width = 0.75,
+        column_width = 1.0,
+        focus_fit_method = 0,
+        direction = "down",
     },
     input = {
         follow_mouse = 2,

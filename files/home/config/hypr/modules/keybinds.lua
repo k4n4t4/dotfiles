@@ -31,7 +31,14 @@ hl.bind(
 )
 hl.bind(
     MOD .. " + C",
-    hl.dsp.window.center(),
+    function()
+        local window = hl.get_active_window()
+        if not window then return end
+
+        if window.floating then
+            hl.dispatch(hl.dsp.window.center())
+        end
+    end,
     { description = "Center window" }
 )
 hl.bind(
@@ -82,6 +89,16 @@ hl.bind(
         hl.dispatch(hl.dsp.window.bring_to_top())
     end,
     { repeating = true, description = "Cycle window next" }
+)
+hl.bind(
+    MOD .. " + mouse_down",
+    hl.dsp.focus({ workspace = "e+1" }),
+    { description = "Cycle workspace next" }
+)
+hl.bind(
+    MOD .. " + mouse_up",
+    hl.dsp.focus({ workspace = "e-1" }),
+    { description = "Cycle workspace previous" }
 )
 hl.bind(
     MOD .. " + SHIFT + H",
