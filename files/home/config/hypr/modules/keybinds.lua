@@ -307,19 +307,9 @@ hl.define_submap("Media", function()
         { description = "Mute volume" }
     )
     hl.bind(
-        "SHIFT + up",
-        raise_mic,
-        { repeating = true, description = "Raise microphone volume" }
-    )
-    hl.bind(
         "SHIFT + k",
         raise_mic,
         { repeating = true, description = "Raise microphone volume" }
-    )
-    hl.bind(
-        "SHIFT + down",
-        lower_mic,
-        { repeating = true, description = "Lower microphone volume" }
     )
     hl.bind(
         "SHIFT + j",
@@ -332,19 +322,9 @@ hl.define_submap("Media", function()
         { description = "Mute microphone" }
     )
     hl.bind(
-        "CTRL + up",
-        brightness_up,
-        { repeating = true, description = "Increase brightness" }
-    )
-    hl.bind(
         "CTRL + k",
         brightness_up,
         { repeating = true, description = "Increase brightness" }
-    )
-    hl.bind(
-        "CTRL + down",
-        brightness_down,
-        { repeating = true, description = "Decrease brightness" }
     )
     hl.bind(
         "CTRL + j",
