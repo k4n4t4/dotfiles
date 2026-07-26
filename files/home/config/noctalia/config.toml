@@ -18,7 +18,7 @@ order = [ "default" ]
     radius = 26
     scale = 1.350000012665987
     shadow = false
-    start = [ "session", "control-center", "launcher", "clipboard", "wallpaper", "media", "taskbar", "submap" ]
+    start = [ "session", "control-center", "launcher", "clipboard", "wallpaper", "media", "taskbar", "hypr-submap" ]
     thickness = 41
     widget_spacing = 12
 
@@ -66,7 +66,7 @@ behavior_order = [ "lock", "screen-off", "lock-and-suspend" ]
 auto_locate = true
 
 [lockscreen_widgets]
-enabled = false
+enabled = true
 schema_version = 2
 widget_order = [ "lockscreen-login-box@DP-1" ]
 
@@ -95,156 +95,6 @@ widget_order = [ "lockscreen-login-box@DP-1" ]
         show_keyboard_layout = true
         show_login_button = true
         show_password_hint = true
-
-    [lockscreen_widgets.widget."lockscreen-login-box@Unknown-1"]
-    box_height = 70.0
-    box_width = 400.0
-    cx = 960.0
-    cy = 961.0
-    output = "Unknown-1"
-    rotation = 0.0
-    type = "login_box"
-
-        [lockscreen_widgets.widget."lockscreen-login-box@Unknown-1".settings]
-        background_color = "surface_variant"
-        background_opacity = 0.0
-        background_radius = 32.0
-        center_password_text = false
-        input_opacity = 0.65000000000000002
-        input_radius = 32.0
-        show_caps_lock = true
-        show_keyboard_layout = true
-        show_login_button = true
-        show_password_hint = true
-
-    [lockscreen_widgets.widget."lockscreen-login-box@WAYLAND-1"]
-    box_height = 70.0
-    box_width = 400.0
-    cx = 355.0
-    cy = 389.0
-    output = "WAYLAND-1"
-    rotation = 0.0
-    type = "login_box"
-
-        [lockscreen_widgets.widget."lockscreen-login-box@WAYLAND-1".settings]
-        background_color = "surface_variant"
-        background_opacity = 0.88
-        background_radius = 12.0
-        center_password_text = false
-        input_opacity = 1.0
-        input_radius = 6.0
-        show_caps_lock = true
-        show_keyboard_layout = true
-        show_login_button = true
-        show_password_hint = true
-
-    [lockscreen_widgets.widget."lockscreen-login-box@WL-1"]
-    box_height = 70.0
-    box_width = 400.0
-    cx = 702.0
-    cy = 892.0
-    output = "WL-1"
-    rotation = 0.0
-    type = "login_box"
-
-        [lockscreen_widgets.widget."lockscreen-login-box@WL-1".settings]
-        background_color = "surface_variant"
-        background_opacity = 0.88
-        background_radius = 12.0
-        center_password_text = false
-        input_opacity = 1.0
-        input_radius = 6.0
-        show_caps_lock = true
-        show_keyboard_layout = true
-        show_login_button = true
-        show_password_hint = true
-
-    [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
-    box_height = 70.0
-    box_width = 400.0
-    cx = 768.0
-    cy = 841.0
-    output = "eDP-1"
-    rotation = 0.0
-    type = "login_box"
-
-        [lockscreen_widgets.widget."lockscreen-login-box@eDP-1".settings]
-        background_color = "surface_variant"
-        background_opacity = 0.88
-        background_radius = 12.0
-        center_password_text = false
-        input_opacity = 1.0
-        input_radius = 6.0
-        show_caps_lock = true
-        show_keyboard_layout = true
-        show_login_button = true
-        show_password_hint = true
-
-    [lockscreen_widgets.widget.lockscreen-widget-0000000000000001]
-    box_height = 256.0
-    box_width = 304.0
-    cx = 960.0
-    cy = 268.0
-    output = "DP-1"
-    rotation = 0.0
-    type = "clock"
-
-        [lockscreen_widgets.widget.lockscreen-widget-0000000000000001.settings]
-        background = false
-        circle = true
-        clock_style = "analog"
-        color = "secondary"
-
-    [lockscreen_widgets.widget.lockscreen-widget-0000000000000002]
-    box_height = 64.0
-    box_width = 224.0
-    cx = 960.0
-    cy = 428.0
-    output = "DP-1"
-    rotation = 0.0
-    type = "clock"
-
-        [lockscreen_widgets.widget.lockscreen-widget-0000000000000002.settings]
-        background = false
-        center_text = false
-        clock_style = "digital"
-        color = "secondary"
-        format = "{:%H:%M:%S}"
-        shadow = false
-
-    [lockscreen_widgets.widget.lockscreen-widget-0000000000000003]
-    box_height = 0.0
-    box_width = 0.0
-    cx = 960.0
-    cy = 518.5
-    output = "Unknown-1"
-    rotation = 0.0
-    type = "clock"
-
-        [lockscreen_widgets.widget.lockscreen-widget-0000000000000003.settings]
-        background = false
-        background_opacity = 0.0
-        background_radius = 0
-        center_text = false
-        clock_style = "digital"
-        color = "secondary"
-        format = "{:%H:%M:%S}"
-        shadow = false
-
-    [lockscreen_widgets.widget.lockscreen-widget-0000000000000004]
-    box_height = 320.0
-    box_width = 304.0
-    cx = 960.0
-    cy = 316.0
-    output = "Unknown-1"
-    rotation = 0.0
-    type = "clock"
-
-        [lockscreen_widgets.widget.lockscreen-widget-0000000000000004.settings]
-        background = false
-        circle = true
-        clock_style = "analog"
-        color = "secondary"
 
 [notification]
 background_opacity = 0.79999998211860657
@@ -372,9 +222,6 @@ transition_on_startup = true
     [wallpaper.monitors.DP-1]
     path = "~/pers/media/imgs/wallpapers/wallpaper.png"
 
-    [wallpaper.monitors.Unknown-1]
-    path = "~/pers/media/imgs/wallpapers/wallpaper.png"
-
 [widget.active_window]
 icon_size = 20
 
@@ -385,22 +232,15 @@ show_label = false
 capsule_fill = "on_secondary"
 show_label = false
 
-[widget.custom_button_2]
-capsule = true
-type = "custom_button"
-
-[widget.custom_button_3]
-type = "custom_button"
+[widget.hypr-submap]
+hide_when_default = true
+type = "k4n4t4/hypr-submap:hypr-submap"
 
 [widget.media]
 album_art_only = true
 
 [widget.network]
 show_label = false
-
-[widget.spacer_2]
-length = 25
-type = "spacer"
 
 [widget.submap]
 glyph = "keyboard"
@@ -411,12 +251,7 @@ type = "k4n4t4/hypr-submap:submap"
 [widget.taskbar]
 group_by_workspace = true
 hide_empty_workspaces = true
-workspace_label_placement = "inside"
-
-[widget.taskbar_2]
-group_by_workspace = true
-hide_empty_workspaces = true
-type = "taskbar"
+workspace_group_capsule = false
 workspace_label_placement = "inside"
 
 [widget.volume]
