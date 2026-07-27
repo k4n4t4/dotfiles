@@ -67,7 +67,7 @@ hl.animation({ leaf = "fade", enabled = true, speed = 5, bezier = "default" })
 
 hl.window_rule {
     match = {
-        workspace = "special:S"
+        workspace = "special:Special"
     },
     no_blur = true,
 }

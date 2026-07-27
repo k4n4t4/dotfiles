@@ -436,7 +436,7 @@ end
 
 hl.bind(
     MOD .. " + S",
-    hl.dsp.workspace.toggle_special("S"),
+    hl.dsp.workspace.toggle_special("Special"),
     { description = "Toggle special workspace" }
 )
 hl.bind(
@@ -452,7 +452,7 @@ hl.bind(
 
 hl.bind(
     MOD .. " + SHIFT + S",
-    hl.dsp.window.move({ workspace = "special:S" }),
+    hl.dsp.window.move({ workspace = "special:Special" }),
     { description = "Move window to special workspace" }
 )
 hl.bind(
