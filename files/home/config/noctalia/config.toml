@@ -273,7 +273,9 @@ hide_inactive = true
 
 [widget.special-workspaces]
 capsule_min_width = 20
-capsule_padding = 0
+capsule_padding = 8
+enable_scroll = false
+max_label_chars = 1
 type = "jamesfeeder/special-workspaces:special-workspaces"
 
 [widget.taskbar]
