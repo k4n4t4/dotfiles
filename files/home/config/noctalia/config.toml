@@ -10,7 +10,7 @@ order = [ "default" ]
     border_width = 1.0
     capsule_thickness = 0.6699999887496233
     center = [ "active_window" ]
-    end = [ "tray", "privacy", "group:g1", "clock", "notifications" ]
+    end = [ "tray", "group:g1", "clock", "notifications" ]
     font_family = "Adwaita Mono"
     margin_edge = 4
     margin_ends = 12
@@ -18,9 +18,12 @@ order = [ "default" ]
     radius = 26
     scale = 1.350000012665987
     shadow = false
-    start = [ "session", "control-center", "launcher", "clipboard", "wallpaper", "media", "taskbar", "hypr-submap" ]
+    start = [ "launcher", "privacy", "media", "taskbar", "hypr-submap" ]
     thickness = 41
     widget_spacing = 12
+
+        [bar.default.dead_zone.actions]
+        middle = "panel-toggle wallpaper"
 
         [[bar.default.capsule_group]]
         border = ""
@@ -32,6 +35,10 @@ order = [ "default" ]
 
 [calendar]
 enabled = true
+
+[control_center]
+sidebar = "full"
+sidebar_section = "full"
 
 [desktop_widgets]
 schema_version = 2
@@ -68,7 +75,7 @@ auto_locate = true
 [lockscreen_widgets]
 enabled = true
 schema_version = 2
-widget_order = [ "lockscreen-login-box@DP-1" ]
+widget_order = [ "lockscreen-login-box@eDP-1", "lockscreen-login-box@DP-1" ]
 
     [lockscreen_widgets.grid]
     cell_size = 16
@@ -76,8 +83,8 @@ widget_order = [ "lockscreen-login-box@DP-1" ]
     visible = true
 
     [lockscreen_widgets.widget."lockscreen-login-box@DP-1"]
-    box_height = 70.0
-    box_width = 400.0
+    box_height = 229.0
+    box_width = 720.0
     cx = 960.0
     cy = 961.0
     output = "DP-1"
@@ -91,10 +98,38 @@ widget_order = [ "lockscreen-login-box@DP-1" ]
         center_password_text = false
         input_opacity = 1.0
         input_radius = 6.0
+        layout = "regular"
         show_caps_lock = true
         show_keyboard_layout = true
         show_login_button = true
+        show_media = true
         show_password_hint = true
+        show_session_buttons = true
+        show_weather = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
+    box_height = 229.0
+    box_width = 810.0
+    cx = 960.0
+    cy = 1001.5
+    output = "eDP-1"
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@eDP-1".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_session_buttons = true
+        show_weather = true
 
 [notification]
 background_opacity = 0.79999998211860657
@@ -115,11 +150,6 @@ enabled = [ "k4n4t4/hypr-submap" ]
     location = "https://github.com/noctalia-dev/community-plugins"
     name = "community"
 
-    [[plugins.source]]
-    kind = "git"
-    location = "https://github.com/k4n4t4/noctalia-plugins"
-    name = "k4n4t4"
-
 [shell]
 app_icon_color = "secondary"
 button_borders = false
@@ -136,6 +166,7 @@ settings_show_advanced = true
 
     [shell.panel]
     borders = false
+    control_center_position = "center"
     shadow = false
 
     [shell.screenshot]
@@ -187,20 +218,7 @@ source = "builtin"
 wallpaper_scheme = "vibrant"
 
     [theme.templates]
-    builtin_ids = [
-        "btop",
-        "gtk3",
-        "gtk4",
-        "ghostty",
-        "hyprland",
-        "kcolorscheme",
-        "kitty",
-        "mango",
-        "niri",
-        "qt",
-        "starship",
-        "wezterm"
-    ]
+    builtin_ids = [ "btop", "gtk3", "gtk4", "ghostty", "hyprland", "kcolorscheme", "kitty", "mango", "niri", "qt", "wezterm" ]
     enable_builtin_templates = true
     enable_community_templates = false
 
@@ -222,8 +240,12 @@ transition_on_startup = true
     [wallpaper.monitors.DP-1]
     path = "~/pers/media/imgs/wallpapers/wallpaper.png"
 
+    [wallpaper.monitors.eDP-1]
+    path = "~/pers/media/imgs/wallpapers/wallpaper.png"
+
 [widget.active_window]
 icon_size = 20
+title_scroll = "on_hover"
 
 [widget.battery]
 show_label = false
@@ -236,17 +258,18 @@ show_label = false
 hide_when_default = true
 type = "k4n4t4/hypr-submap:hypr-submap"
 
+[widget.launcher]
+glyph = "menu-2"
+
 [widget.media]
 album_art_only = true
+hide_when_no_media = true
 
 [widget.network]
 show_label = false
 
-[widget.submap]
-glyph = "keyboard"
-hide_when_default = true
-prefix = ""
-type = "k4n4t4/hypr-submap:submap"
+[widget.privacy]
+hide_inactive = true
 
 [widget.taskbar]
 group_by_workspace = true
