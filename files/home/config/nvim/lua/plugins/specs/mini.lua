@@ -140,13 +140,13 @@ return {
         config = function()
             require('mini.base16').setup {
                 palette = {
-                    base00 = "#10101f",
-                    base01 = "#2a2a2f",
-                    base02 = "#40404f",
-                    base03 = "#5a5a5f",
-                    base04 = "#70707f",
-                    base05 = "#a0a0b0",
-                    base06 = "#b0b0c0",
+                    base00 = "#101010",
+                    base01 = "#2a2a2a",
+                    base02 = "#404040",
+                    base03 = "#5a5a5a",
+                    base04 = "#707070",
+                    base05 = "#909090",
+                    base06 = "#b0b0b0",
                     base07 = "#c0c0d0",
                     base08 = "#c05050",
                     base09 = "#c07050",
@@ -163,6 +163,7 @@ return {
                     ["saghen/blink.cmp"] = true,
                 },
             }
+            vim.api.nvim_exec_autocmds('ColorScheme', {})
         end,
     },
 }
