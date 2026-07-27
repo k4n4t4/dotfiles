@@ -18,7 +18,7 @@ order = [ "default" ]
     radius = 26
     scale = 1.350000012665987
     shadow = false
-    start = [ "launcher", "privacy", "media", "taskbar", "hypr-submap" ]
+    start = [ "launcher", "privacy", "media", "taskbar", "special-workspaces", "hypr-submap" ]
     thickness = 41
     widget_spacing = 12
 
@@ -138,7 +138,7 @@ background_opacity = 0.79999998211860657
 video_directory = "~/pers/media/videos"
 
 [plugins]
-enabled = [ "k4n4t4/hypr-submap" ]
+enabled = [ "k4n4t4/hypr-submap", "jamesfeeder/special-workspaces" ]
 
     [[plugins.source]]
     kind = "git"
@@ -270,6 +270,11 @@ show_label = false
 
 [widget.privacy]
 hide_inactive = true
+
+[widget.special-workspaces]
+capsule_min_width = 20
+capsule_padding = 0
+type = "jamesfeeder/special-workspaces:special-workspaces"
 
 [widget.taskbar]
 group_by_workspace = true
