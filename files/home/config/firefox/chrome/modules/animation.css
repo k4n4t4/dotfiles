@@ -1,0 +1,23 @@
+@keyframes anim-spawn {
+    0% { transform: scale(0.8); }
+    80% { transform: scale(1.05); }
+    100% { transform: scale(1.0); }
+}
+
+tab.tabbrowser-tab {
+    animation: anim-spawn 0.3s linear;
+}
+
+toolbarbutton.bookmark-item[open="true"] > menupopup {
+    animation: anim-spawn 0.1s linear;
+}
+
+panel#appMenu-popup[animating="true"],
+panel#appMenu-popup[panelopen="true"] {
+    animation: anim-spawn 0.2s linear;
+}
+
+panel#tab-preview-panel[animating="true"],
+panel#tab-preview-panel[panelopen="true"] {
+    animation: anim-spawn 0.2s linear;
+}

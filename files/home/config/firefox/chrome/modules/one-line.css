@@ -1,0 +1,40 @@
+:root {
+    --custom-one-line-width: 60vw;
+
+    --nav-bar-height: 40px;
+    --navigator-toolbox-height: 40px;
+}
+
+@media (min-width: 1200px) and (not -moz-pref("sidebar.verticalTabs")) {
+    #TabsToolbar {
+        margin-left: var(--custom-one-line-width) !important;
+    }
+    toolbar#nav-bar {
+        margin-right: calc(100vw - var(--custom-one-line-width)) !important;
+    }
+
+    toolbar#nav-bar {
+        background: transparent !important;
+        margin-top: calc(-1 * var(--nav-bar-height)) !important;
+    }
+
+    hbox#nav-bar-customization-target,
+    toobaritem#PanelUI-button,
+    toolbar#nav-bar>* {
+        margin-top: calc(var(--nav-bar-height) - var(--navigator-toolbox-height)) !important;
+    }
+
+    toolbaritem#urlbar-container {
+        width: auto !important;
+    }
+
+    toolbaritem#urlbar-container:has(div#urlbar[breakout-extend=true]) {
+        position: absolute !important;
+        top: 0px !important;
+        left: 10vw !important;
+        width: 80vw !important;
+        padding: 0px !important;
+        margin: 0px !important;
+        border: none !important;
+    }
+}

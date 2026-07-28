@@ -1,0 +1,3 @@
+tab.tabbrowser-tab[selected="true"] {
+    max-width: 100% !important;
+}
