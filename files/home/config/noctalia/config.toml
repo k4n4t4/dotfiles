@@ -149,6 +149,7 @@ enabled = [ "k4n4t4/hypr-submap", "jamesfeeder/special-workspaces" ]
 [shell]
 app_icon_color = "secondary"
 button_borders = false
+card_borders = false
 corner_radius_scale = 2.0
 font_family = "Noto Sans"
 input_borders = false
@@ -164,6 +165,7 @@ settings_show_advanced = true
     borders = false
     control_center_position = "center"
     shadow = false
+    transparency_mode = "glass"
 
     [shell.screenshot]
     directory = "~/pers/media/imgs/screenshots"
