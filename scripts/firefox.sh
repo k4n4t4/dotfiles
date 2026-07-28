@@ -19,8 +19,7 @@ if [ -n "$firefox_folder" ]; then
 
     if [ -d "$firefox_profile" ]; then
         dothome "config/firefox/user.js" "$firefox_profile/user.js"
-        dothome "config/firefox/userChrome.css" "$firefox_profile/chrome/userChrome.css"
-        dothome "config/firefox/userContent.css" "$firefox_profile/chrome/userContent.css"
+        dothome -r "config/firefox/chrome" "$firefox_profile/chrome"
     else
         echo "Firefox profile not found at $firefox_profile"
     fi
