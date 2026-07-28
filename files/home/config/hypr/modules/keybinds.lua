@@ -16,7 +16,30 @@ hl.bind(
 )
 hl.bind(
     MOD .. " + Q",
-    hl.dsp.window.close(),
+    function()
+        local window = hl.get_active_window()
+        if not window then return end
+
+        local browser_classes = {
+            "firefox", "chromium", "brave", "vivaldi",
+            "opera", "edge", "epiphany", "midori",
+            "dillo", "lynx", "links", "w3m"
+        }
+
+        local is_browser = false
+        for _, class in ipairs(browser_classes) do
+            if window.class:lower() == class then
+                is_browser = true
+                break
+            end
+        end
+
+        if is_browser then
+            hl.dispatch(hl.dsp.window.kill())
+        else
+            hl.dispatch(hl.dsp.window.close())
+        end
+    end,
     { description = "Close window" }
 )
 hl.bind(
