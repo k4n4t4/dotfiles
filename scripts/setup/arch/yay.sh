@@ -1,4 +1,4 @@
-if ! cmd_exist yay; then
+if ! cmd_exists yay; then
     git clone https://aur.archlinux.org/yay.git /tmp/yay
     makepkg --noconfirm -D /tmp/yay -si
 fi
