@@ -3,7 +3,7 @@
 list="'nvim' 'lazyvim' 'astronvim' 'nvchad'"
 name=""
 
-cmd_exist() {
+cmd_exists() {
   if command -v -- "$1" > /dev/null 2>&1; then
     return 0
   else
@@ -134,7 +134,7 @@ opt_parser() {
   fi
 }
 
-if ! cmd_exist nvim; then
+if ! cmd_exists nvim; then
   echo "nvim not found." >&2
   exit 1
 fi
@@ -159,7 +159,7 @@ while [ $# -gt 0 ]; do
 done
 
 case "$name" in ( "" )
-  if cmd_exist gum; then
+  if cmd_exists gum; then
     name="$(eval 'gum filter '"$list")"
   else
     read name
