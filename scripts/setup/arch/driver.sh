@@ -5,7 +5,7 @@ case "$GPU_INFO" in ( *"nvidia"* )
 esac
 
 case "$GPU_INFO" in ( *"intel"* )
-    sudo pacman --needed --noconfirm -S mesa vulkan-intel intel-media-driver
+    sudo pacman --needed --noconfirm -S mesa vulkan-intel intel-media-driver vpl-gpu-rt
 esac
 
 case "$GPU_INFO" in ( *"amd"* )
