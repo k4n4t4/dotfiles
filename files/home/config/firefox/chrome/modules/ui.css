@@ -1,0 +1,37 @@
+:root {
+    --tab-border-radius: 0px !important;
+    --tab-outline: none !important;
+    --tab-block-margin: 0px !important;
+    --tab-overflow-clip-margin: 0px !important;
+}
+
+hbox.private-browsing-indicator-with-label > label.private-browsing-indicator-label,
+hbox.titlebar-spacer {
+    display: none !important;
+}
+
+div#urlbar > hbox#urlbar-background {
+    border: none !important;
+}
+
+toolbox#navigator-toolbox {
+    border: none !important;
+    border-bottom: solid #202020 1px !important;
+}
+
+tab.tabbrowser-tab {
+    border-radius: 0.3rem !important;
+}
+
+image.tab-close-button {
+    border-radius: 0.3rem !important;
+}
+
+stack.toolbarbutton-badge-stack,
+image.toolbarbutton-icon {
+    border-radius: 0.3rem !important;
+}
+
+toolbar#nav-bar {
+    top: 2px;
+}
