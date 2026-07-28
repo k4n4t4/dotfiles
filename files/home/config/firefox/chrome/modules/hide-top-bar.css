@@ -1,0 +1,12 @@
+#navigator-toolbox {
+    position: fixed !important;
+    top: -100px !important;
+}
+
+#navigator-toolbox:has(toolbarbutton[open="true"]),
+#navigator-toolbox:focus,
+#navigator-toolbox:focus-within,
+#navigator-toolbox:active {
+    position: initial !important;
+    top: 0px !important;
+}

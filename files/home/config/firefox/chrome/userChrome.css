@@ -1,8 +1,10 @@
 @import url("modules/animation.css");
-@import url("modules/hover-bookmark-bar.css");
-@import url("modules/one-line.css");
+/* @import url("modules/hover-bookmark-bar.css"); */
+/* @import url("modules/one-line.css"); */
 /* @import url("modules/remove-private-browsing-indicater.css"); */
 @import url("modules/remove-private-browsing-text.css");
-@import url("modules/tab-style.css");
+/* @import url("modules/tab-style.css"); */
+@import url("modules/hide-tab.css");
+@import url("modules/hide-top-bar.css");
 @import url("modules/transparent.css");
 @import url("modules/ui.css");
