@@ -8,6 +8,7 @@ hl.env("CLUTTER_BACKEND", "wayland")
 hl.env("XDG_SESSION_TYPE", "wayland")
 hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
 hl.env("XDG_SESSION_DESKTOP", "Hyprland")
+hl.env("LIBVA_DRIVER_NAME", "iHD")
 
 hl.env("XCURSOR_THEME", "capitaine-cursors")
 hl.env("XCURSOR_SIZE", "36")
