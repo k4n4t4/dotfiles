@@ -10,7 +10,7 @@ order = [ "default" ]
     border_width = 1.0
     capsule_thickness = 0.6699999887496233
     center = [ "active_window" ]
-    end = [ "tray", "group:g1", "clock", "notifications" ]
+    end = [ "tray", "privacy", "group:g1", "clock", "notifications" ]
     font_family = "Adwaita Mono"
     margin_edge = 4
     margin_ends = 12
@@ -18,7 +18,7 @@ order = [ "default" ]
     radius = 26
     scale = 1.350000012665987
     shadow = false
-    start = [ "launcher", "privacy", "media", "taskbar", "special-workspaces", "hypr-submap" ]
+    start = [ "launcher", "media", "taskbar", "special-workspaces", "hypr-submap" ]
     thickness = 41
     widget_spacing = 12
 
@@ -75,7 +75,7 @@ auto_locate = true
 [lockscreen_widgets]
 enabled = true
 schema_version = 2
-widget_order = [ "lockscreen-login-box@eDP-1", "lockscreen-login-box@DP-1" ]
+widget_order = [ "lockscreen-login-box@DP-1" ]
 
     [lockscreen_widgets.grid]
     cell_size = 16
@@ -83,8 +83,8 @@ widget_order = [ "lockscreen-login-box@eDP-1", "lockscreen-login-box@DP-1" ]
     visible = true
 
     [lockscreen_widgets.widget."lockscreen-login-box@DP-1"]
-    box_height = 229.0
-    box_width = 720.0
+    box_height = 70.0
+    box_width = 400.0
     cx = 960.0
     cy = 961.0
     output = "DP-1"
@@ -271,8 +271,6 @@ hide_inactive = true
 
 [widget.special-workspaces]
 capsule_min_width = 20
-capsule_padding = 8
-enable_scroll = false
 max_label_chars = 1
 type = "jamesfeeder/special-workspaces:special-workspaces"
 
