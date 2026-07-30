@@ -9,7 +9,6 @@ if [ -f /usr/share/wayland-sessions/mango.desktop ]; then
 fi
 
 yay --needed --noconfirm -S noctalia-git
-sudo pacman --needed --noconfirm -S nwg-look adw-gtk-theme
 sudo pacman --needed --noconfirm -S uwsm
 sudo pacman --needed --noconfirm -S xdg-utils
 sudo pacman --needed --noconfirm -S socat

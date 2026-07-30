@@ -10,10 +10,6 @@ hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
 hl.env("XDG_SESSION_DESKTOP", "Hyprland")
 hl.env("LIBVA_DRIVER_NAME", "iHD")
 
-hl.env("XCURSOR_THEME", "capitaine-cursors")
-hl.env("XCURSOR_SIZE", "36")
-
-
 hl.on("hyprland.start", function()
     hl.exec_cmd("uwsm app -- fcitx5 -d")
     hl.exec_cmd("uwsm app -- noctalia")

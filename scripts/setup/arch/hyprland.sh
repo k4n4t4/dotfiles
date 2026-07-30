@@ -9,7 +9,6 @@ sudo pacman --needed --noconfirm -S mate-polkit
 if pacman -Qq jack2 &> /dev/null; then
     sudo pacman --noconfirm -Rdd jack2
 fi
-sudo pacman --needed --noconfirm -S nwg-look adw-gtk-theme
 sudo pacman --needed --noconfirm -S pipewire-jack
 sudo pacman --needed --noconfirm -S pipewire pipewire-alsa pipewire-pulse wireplumber
 sudo pacman --needed --noconfirm -S brightnessctl
