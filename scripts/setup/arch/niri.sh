@@ -8,6 +8,7 @@ if [ -f /usr/share/wayland-sessions/niri.desktop ]; then
     fi
 fi
 
+sudo pacman --needed --noconfirm -S nwg-look adw-gtk-theme
 sudo pacman --needed --noconfirm -S libnotify
 sudo pacman --needed --noconfirm -S iwd
 sudo systemctl enable --now iwd.service
