@@ -385,7 +385,7 @@ hl.bind(
     { description = "Lock screen" }
 )
 hl.bind(
-    MOD .. " + return",
+    MOD .. " + T",
     hl.dsp.exec_cmd(terminal),
     { description = "Open terminal" }
 )
@@ -532,7 +532,7 @@ hl.window_rule {
     no_blur = true,
 }
 hl.bind(
-    MOD .. " + T",
+    MOD .. " + return",
     makeScratchpadToggle(terminal, "Terminal"),
     { description = "Toggle terminal scratchpad" }
 )
