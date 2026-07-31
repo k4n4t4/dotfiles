@@ -463,12 +463,12 @@ hl.bind(
     { description = "Toggle special workspace" }
 )
 hl.bind(
-    MOD .. " + period",
+    MOD .. " + bracketright",
     hl.dsp.focus({ workspace = "+1" }),
     { repeating = true, description = "Focus next workspace" }
 )
 hl.bind(
-    MOD .. " + comma",
+    MOD .. " + bracketleft",
     hl.dsp.focus({ workspace = "-1" }),
     { repeating = true, description = "Focus previous workspace" }
 )
@@ -479,12 +479,12 @@ hl.bind(
     { description = "Move window to special workspace" }
 )
 hl.bind(
-    MOD .. " + SHIFT + period",
+    MOD .. " + SHIFT + bracketright",
     hl.dsp.window.move({ workspace = "+1" }),
     { repeating = true, description = "Move window to next workspace" }
 )
 hl.bind(
-    MOD .. " + SHIFT + comma",
+    MOD .. " + SHIFT + bracketleft",
     hl.dsp.window.move({ workspace = "-1" }),
     { repeating = true, description = "Move window to previous workspace" }
 )
