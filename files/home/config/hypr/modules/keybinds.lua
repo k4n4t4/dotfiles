@@ -3,7 +3,10 @@ local LMB = "mouse:272"
 local RMB = "mouse:273"
 
 
--- Hyprland control bindings
+--------------
+-- HYPRLAND --
+--------------
+
 hl.bind(
     MOD .. " + SHIFT + Q",
     hl.dsp.exec_cmd("uwsm stop"),
@@ -14,6 +17,12 @@ hl.bind(
     hl.dsp.exec_cmd("hyprctl reload"),
     { description = "Reload Hyprland" }
 )
+
+
+-------------
+-- WINDOWS --
+-------------
+
 hl.bind(
     MOD .. " + Q",
     function()
@@ -114,16 +123,6 @@ hl.bind(
     { repeating = true, description = "Cycle window next" }
 )
 hl.bind(
-    MOD .. " + mouse_down",
-    hl.dsp.focus({ workspace = "e+1" }),
-    { description = "Cycle workspace next" }
-)
-hl.bind(
-    MOD .. " + mouse_up",
-    hl.dsp.focus({ workspace = "e-1" }),
-    { description = "Cycle workspace previous" }
-)
-hl.bind(
     MOD .. " + SHIFT + H",
     function()
         local window = hl.get_active_window()
@@ -221,7 +220,10 @@ hl.bind(
 )
 
 
--- Media bindings
+-----------
+-- MEDIA --
+-----------
+
 local raise_volume    = hl.dsp.exec_cmd("noctalia msg volume-up")
 local lower_volume    = hl.dsp.exec_cmd("noctalia msg volume-down")
 local mute_volume     = hl.dsp.exec_cmd("noctalia msg volume-mute")
@@ -357,7 +359,10 @@ hl.define_submap("Media", function()
 end)
 
 
--- Application bindings
+------------------
+-- APPLICATIONS --
+------------------
+
 local terminal = "uwsm app -- kitty"
 local text_editor = "uwsm app -- neovide"
 local file_manager = "uwsm app -- nautilus"
@@ -380,7 +385,7 @@ hl.bind(
     { description = "Lock screen" }
 )
 hl.bind(
-    MOD .. " + T",
+    MOD .. " + return",
     hl.dsp.exec_cmd(terminal),
     { description = "Open terminal" }
 )
@@ -421,7 +426,10 @@ hl.bind(
 )
 
 
--- Screenshot bindings
+----------------
+-- SCREENSHOT --
+----------------
+
 local screenshot_all = hl.dsp.exec_cmd("noctalia msg screenshot-fullscreen all")
 local screenshot_region = hl.dsp.exec_cmd("noctalia msg screenshot-region")
 
@@ -442,6 +450,10 @@ hl.bind(
 )
 
 
+---------------
+-- WORKSPACE --
+---------------
+
 -- Workspace navigation bindings
 for i = 1, 10 do
     local key = tostring(i % 10)
@@ -458,9 +470,14 @@ for i = 1, 10 do
 end
 
 hl.bind(
-    MOD .. " + S",
-    hl.dsp.workspace.toggle_special("Special"),
-    { description = "Toggle special workspace" }
+    MOD .. " + mouse_down",
+    hl.dsp.focus({ workspace = "e+1" }),
+    { description = "Cycle workspace next" }
+)
+hl.bind(
+    MOD .. " + mouse_up",
+    hl.dsp.focus({ workspace = "e-1" }),
+    { description = "Cycle workspace previous" }
 )
 hl.bind(
     MOD .. " + bracketright",
@@ -468,23 +485,54 @@ hl.bind(
     { repeating = true, description = "Focus next workspace" }
 )
 hl.bind(
-    MOD .. " + bracketleft",
-    hl.dsp.focus({ workspace = "-1" }),
-    { repeating = true, description = "Focus previous workspace" }
-)
-
-hl.bind(
-    MOD .. " + SHIFT + S",
-    hl.dsp.window.move({ workspace = "special:Special" }),
-    { description = "Move window to special workspace" }
-)
-hl.bind(
     MOD .. " + SHIFT + bracketright",
     hl.dsp.window.move({ workspace = "+1" }),
     { repeating = true, description = "Move window to next workspace" }
 )
 hl.bind(
+    MOD .. " + bracketleft",
+    hl.dsp.focus({ workspace = "-1" }),
+    { repeating = true, description = "Focus previous workspace" }
+)
+hl.bind(
     MOD .. " + SHIFT + bracketleft",
     hl.dsp.window.move({ workspace = "-1" }),
     { repeating = true, description = "Move window to previous workspace" }
+)
+
+-- Special workspace
+hl.window_rule {
+    match = { workspace = "special:Special" },
+    no_blur = true,
+}
+hl.bind(
+    MOD .. " + S",
+    hl.dsp.workspace.toggle_special("Special"),
+    { description = "Toggle special workspace" }
+)
+hl.bind(
+    MOD .. " + SHIFT + S",
+    hl.dsp.window.move({ workspace = "special:Special" }),
+    { description = "Move window to special workspace" }
+)
+
+local function makeScratchpadToggle(cmd, wsName)
+    return function()
+        if #(hl.get_windows({ workspace = "special:" .. wsName })) > 0 then
+            hl.dispatch(hl.dsp.workspace.toggle_special(wsName))
+        else
+            hl.exec_cmd(cmd, { workspace = "special:" .. wsName })
+        end
+    end
+end
+
+-- Terminal scratchpad
+hl.window_rule {
+    match = { workspace = "special:Terminal" },
+    no_blur = true,
+}
+hl.bind(
+    MOD .. " + T",
+    makeScratchpadToggle(terminal, "Terminal"),
+    { description = "Toggle terminal scratchpad" }
 )

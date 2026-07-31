@@ -1,10 +1,10 @@
-hl.monitor({
+hl.monitor {
     output = "",
     mode = "preferred",
     position = "auto",
     scale = "1.0",
     transform = 0,
-})
+}
 
 hl.config {
     general = {
@@ -66,12 +66,6 @@ hl.animation({ leaf = "windowsMove", enabled = true, speed = 2, bezier = "ease-i
 hl.animation({ leaf = "workspaces", enabled = true, speed = 2, bezier = "ease-in-out-cubic" })
 hl.animation({ leaf = "fade", enabled = true, speed = 5, bezier = "default" })
 
-hl.window_rule {
-    match = {
-        workspace = "special:Special"
-    },
-    no_blur = true,
-}
 hl.window_rule {
     match = {
         float = true
