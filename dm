@@ -2,90 +2,263 @@
 set -eu
 
 
+# Constants
+
+ESC="$(printf "\033")"
+
+
 # Utils
 
-dir_name() {
-  RET="${1:-.}"
-  RET="${RET%"${RET##*[!/]}"}"
-  case "$RET" in
-    ( "" )
-      RET="/"
-      ;;
-    ( *"/"* )
-      RET="${RET%/*}"
-      RET="${RET%"${RET##*[!/]}"}"
-      if [ -z "$RET" ]; then
-        RET="/"
-      fi
-      ;;
-    ( * )
-      RET="."
-      ;;
-  esac
+_print_log() {
+  printf "%s\n" " ${ESC}[32m[ LOG ]${ESC}[90m: ${ESC}[m$*"
 }
 
-base_name() {
-  RET="${1:-.}"
-  RET="${RET%"${RET##*[!/]}"}"
-  RET="${RET##*/}"
-  if [ -z "$RET" ]; then
-    RET="/"
-  fi
+_print_success() {
+  printf "%s\n" " ${ESC}[92m[ SUC ]${ESC}[90m: ${ESC}[m$*"
 }
 
-abs_path() {
-  TMP="$PWD"
-  if [ -d "$1" ]; then
-    cd -- "$1" || return 1
-    RET="$PWD"
-  else
-    dir_name "$1"
-    cd -- "$RET" || return 1
-    base_name "$1"
-    case "$PWD" in
-      ( "/" | "//" )
-        RET="/$RET"
-        ;;
-      ( * )
-        RET="$PWD/$RET"
-        ;;
+_print_info() {
+  printf "%s\n" " ${ESC}[94m[ INF ]${ESC}[90m: ${ESC}[m$*"
+}
+
+_print_debug() {
+  printf "%s\n" " ${ESC}[97m${ESC}[43m[ DBG ]${ESC}[m${ESC}[90m: ${ESC}[m$*"
+}
+
+_print_warn() {
+  printf "%s\n" " ${ESC}[93m[ WRN ]${ESC}[90m: ${ESC}[m$*" >&2
+}
+
+_print_error() {
+  printf "%s\n" " ${ESC}[91m[ ERR ]${ESC}[90m: ${ESC}[m$*" >&2
+}
+
+_print_fatal() {
+  printf "%s\n" " ${ESC}[97m${ESC}[41m[ FTL ]${ESC}[m${ESC}[90m: ${ESC}[m$*" >&2
+}
+
+_print_ask() {
+  printf "%s" " ${ESC}[33m[ ASK ]${ESC}[90m: ${ESC}[m$*"
+  read -r _print_ask_RESULT
+}
+
+_print_run() {
+  printf "%s\n" " ${ESC}[35m[ RUN ]${ESC}[90m: ${ESC}[m$*"
+  "$@"
+  return $?
+}
+
+_dirname() {
+    if [ $# -eq 0 ]; then
+        _print_error "No arguments provided to _dirname."
+        return 1
+    fi
+
+    if [ -z "$1" ]; then
+        _dirname_RESULT="."
+        return 0
+    fi
+
+    set -- "${1%"${1##*[!/]}"}"
+
+    case "$1" in
+        ( "" )
+            set -- "/"
+            ;;
+        ( */* )
+            set -- "${1%/*}"
+            set -- "${1%"${1##*[!/]}"}"
+            if [ -z "$1" ]; then
+                set -- "/"
+            fi
+            ;;
+        ( * )
+            set -- "."
+            ;;
     esac
-  fi
-  cd -- "$TMP" || return 1
+
+    _dirname_RESULT="$1"
 }
 
-abs_path_prefix() {
-  set -- "$1" "${2:-.}" "$PWD"
-  if [ -d "$2" ]; then
-    cd -- "$2" || return 1
-    abs_path "$1"
-    cd -- "$3" || return 1
+_basename() {
+    if [ $# -eq 0 ]; then
+        _print_error "No arguments provided to _basename."
+        return 1
+    fi
+
+    if [ -z "$1" ]; then
+        _basename_RESULT=""
+        return 0
+    fi
+
+    set -- "${1%"${1##*[!/]}"}"
+
+    case "$1" in
+        ( "" )
+            set -- "/"
+            ;;
+        ( */* )
+            set -- "${1##*/}"
+            ;;
+    esac
+
+    _basename_RESULT="$1"
+}
+
+_quote() {
+    if [ $# -eq 0 ]; then
+        _print_error "No arguments provided to _quote."
+        return 1
+    fi
+
+    _quote_RESULT="$1"
+    set -- ""
+    while : ; do
+        case "$_quote_RESULT" in
+            ( *"'"* )
+                set -- "$1${_quote_RESULT%%"'"*}'\\''"
+                _quote_RESULT="${_quote_RESULT#*"'"}"
+                ;;
+            ( * )
+                _quote_RESULT="'$1$_quote_RESULT'"
+                break
+                ;;
+        esac
+    done
+}
+
+_optparser_argc() {
+    _optparser_argc_RESULT="$1"
+    eval "set -- $2"
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            ( "$_optparser_argc_RESULT:"?* )
+                _optparser_argc_RESULT="${1#"$_optparser_argc_RESULT:"}"
+                return 0
+                ;;
+        esac
+        shift
+    done
+    _optparser_argc_RESULT=0
     return 0
-  else
-    cd -- "$3" || return 1
-    return 1
-  fi
+}
+
+_optparser() {
+    _optparser__opts=""
+    _optparser__opt_args=""
+    _optparser__args=""
+
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            ( "--" )
+                shift
+                break
+                ;;
+            ( ?":"?* )
+                _quote "-$1"
+                ;;
+            ( ?*":"?* )
+                _quote "--$1"
+                ;;
+            ( ? )
+                _quote "-$1:1"
+                ;;
+            ( ?* )
+                _quote "--$1:1"
+                ;;
+            ( * )
+                shift
+                continue
+                ;;
+        esac
+        _optparser__opts="$_optparser__opts $_quote_RESULT"
+        shift
+    done
+
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            ( "--" )
+                shift
+                break
+                ;;
+            ( "--"?* | "-"? )
+                case "$1" in
+                    ( "--"?*"="* )
+                        _optparser_RESULT="$1"
+                        shift
+                        set -- "${_optparser_RESULT%%"="*}" "${_optparser_RESULT#*"="}" "$@"
+                        continue
+                        ;;
+                esac
+                _optparser_argc "$1" "$_optparser__opts"
+                if [ $# -gt "$_optparser_argc_RESULT" ]; then
+                    while [ "$_optparser_argc_RESULT" -ge 0 ]; do
+                        _quote "$1"
+                        _optparser__opt_args="$_optparser__opt_args $_quote_RESULT"
+                        shift
+                        _optparser_argc_RESULT=$((_optparser_argc_RESULT - 1))
+                    done
+                else
+                    shift
+                fi
+                ;;
+            ( '-'?* )
+                _optparser_argc "${1%"${1#??}"}" "$_optparser__opts"
+                if [ "$_optparser_argc_RESULT" -eq 1 ]; then
+                    _optparser_RESULT="$1"
+                    shift
+                    set -- "${_optparser_RESULT%"${_optparser_RESULT#??}"}" "${_optparser_RESULT#??}" "$@"
+                    continue
+                fi
+
+                _optparser__short_opts="${1#'-'}"
+                while [ -n "$_optparser__short_opts" ]; do
+                    _optparser_short_opt="-${_optparser__short_opts%"${_optparser__short_opts#?}"}"
+                    _optparser_argc "$_optparser_short_opt" "$_optparser__opts"
+                    if [ "$_optparser_argc_RESULT" -eq 0 ] && [ "$_optparser_short_opt" != '--' ]; then
+                        _quote "$_optparser_short_opt"
+                        _optparser__opt_args="$_optparser__opt_args $_quote_RESULT"
+                    fi
+                    _optparser__short_opts="${_optparser__short_opts#?}"
+                done
+                shift
+                ;;
+            ( * )
+                _quote "$1"
+                _optparser__args="$_optparser__args $_quote_RESULT"
+                shift
+                ;;
+        esac
+    done
+
+    while [ $# -gt 0 ]; do
+        _quote "$1"
+        _optparser__args="$_optparser__args $_quote_RESULT"
+        shift
+    done
+
+    _optparser_RESULT="${_optparser__opt_args#' '} -- ${_optparser__args#' '}"
 }
 
 cmd_exists() {
-  if command -v -- "$1" > /dev/null 2>&1; then
-    return 0
-  else
-    return 1
-  fi
+    if command -v -- "$1" > /dev/null 2>&1; then
+        return 0
+    else
+        return 1
+    fi
 }
 
 is_empty_dir() {
-  set -- "${1:-.}"
-  set -- "$1"/* "$1"/.*
-  while [ $# -gt 0 ]; do
-    base_name "$1"
-    case "$RET" in
-      ( "." | ".." | "*" | ".*" ) shift 1 ;;
-      ( * ) return 1 ;;
-    esac
-  done
-  return 0
+    set -- "${1:-.}"
+    set -- "$1"/* "$1"/.*
+    while [ $# -gt 0 ]; do
+        _basename "$1"
+        case "$_basename_RESULT" in
+            ( "." | ".." | "*" | ".*" ) shift 1 ;;
+            ( * ) return 1 ;;
+        esac
+    done
+    return 0
 }
 
 file_exists() {
@@ -113,8 +286,8 @@ is_broken_symlink() {
 }
 
 is_deletable() {
-  dir_name "$1"
-  if [ -w "$RET" ] && [ -x "$RET" ]; then
+  _dirname "$1"
+  if [ -w "$_dirname_RESULT" ] && [ -x "$_dirname_RESULT" ]; then
     return 0
   else
     return 1
@@ -122,8 +295,8 @@ is_deletable() {
 }
 
 is_creatable() {
-  dir_name "$1"
-  if ! file_exists "$1" && [ -d "$RET" ] && [ -w "$RET" ] && [ -x "$RET" ]; then
+  _dirname "$1"
+  if ! file_exists "$1" && [ -d "$_dirname_RESULT" ] && [ -w "$_dirname_RESULT" ] && [ -x "$_dirname_RESULT" ]; then
     return 0
   else
     return 1
@@ -151,131 +324,6 @@ is_number() {
 
 is_int() {
   is_number "${1#"-"}"
-}
-
-qesc() {
-  RET="$1"
-  set -- ""
-  while : ; do
-    case "$RET" in
-      ( *"'"* )
-        set -- "$1${RET%%"'"*}'\\''"
-        RET="${RET#*"'"}"
-        ;;
-      ( * )
-        RET="'$1$RET'"
-        break
-        ;;
-    esac
-  done
-}
-
-opt_parser_get_arg_count() {
-  RET="$1"
-  eval "set -- $2"
-  while [ $# -gt 0 ]; do
-    case "$1" in
-      ( "$RET:"?* )
-        RET="${1#"$RET:"}"
-        return 0
-        ;;
-    esac
-    shift
-  done
-  RET=0
-  return 0
-}
-
-opt_parser() {
-  _opt_parser_options=""
-  _opt_parser_normal_args=""
-  _opt_parser_option_args=""
-
-  while [ $# -gt 0 ]; do
-
-    case "$1" in
-      ( '--' )
-        shift
-        break
-        ;;
-      ( ?':'?* ) qesc "-$1" ;;
-      ( ?*':'?* ) qesc "--$1" ;;
-      ( ? ) qesc "-$1:1" ;;
-      ( ?* ) qesc "--$1:1" ;;
-      ( * )
-        shift
-        continue
-        ;;
-    esac
-
-    _opt_parser_options="$_opt_parser_options $RET"
-    shift
-  done
-
-  while [ $# -gt 0 ]; do
-    case "$1" in
-      ( '--' )
-        shift
-        break
-        ;;
-      ( '--'* | '-'? )
-        case "$1" in ( "--"?*"="* )
-          RET="$1"
-          shift
-          set -- "${RET%%"="*}" "${RET#*"="}" "$@"
-          continue
-        esac
-
-        opt_parser_get_arg_count "$1" "$_opt_parser_options"
-        _opt_parser_arg_count="$RET"
-
-        if [ $# -gt "$_opt_parser_arg_count" ]; then
-          while [ "$_opt_parser_arg_count" -ge 0 ]; do
-            qesc "$1"
-            _opt_parser_option_args="$_opt_parser_option_args $RET"
-            shift
-            _opt_parser_arg_count=$((_opt_parser_arg_count - 1))
-          done
-        else
-          shift
-        fi
-        ;;
-      ( '-'?* )
-        opt_parser_get_arg_count "${1%"${1#??}"}" "$_opt_parser_options"
-        if [ "$RET" -eq 1 ]; then
-          RET="$1"
-          shift
-          set -- "${RET%"${RET#??}"}" "${RET#??}" "$@"
-          continue
-        fi
-
-        _opt_parser_short_opts="${1#'-'}"
-        while [ -n "$_opt_parser_short_opts" ]; do
-          _opt_parser_short_opt="-${_opt_parser_short_opts%"${_opt_parser_short_opts#?}"}"
-          opt_parser_get_arg_count "$_opt_parser_short_opt" "$_opt_parser_options"
-          if [ "$RET" -eq 0 ] && [ "$_opt_parser_short_opt" != '--' ]; then
-            qesc "$_opt_parser_short_opt"
-            _opt_parser_option_args="$_opt_parser_option_args $RET"
-          fi
-          _opt_parser_short_opts="${_opt_parser_short_opts#?}"
-        done
-        shift
-        ;;
-      ( * )
-        qesc "$1"
-        _opt_parser_normal_args="$_opt_parser_normal_args $RET"
-        shift
-        ;;
-    esac
-  done
-
-  while [ $# -gt 0 ]; do
-    qesc "$1"
-    _opt_parser_normal_args="$_opt_parser_normal_args $RET"
-    shift
-  done
-
-  RET="${_opt_parser_option_args#' '} -- ${_opt_parser_normal_args#' '}"
 }
 
 match() {
@@ -306,19 +354,6 @@ false() {
   return 1
 }
 
-get_files() {
-  TMP=""
-  for i in "$1"/* "$1"/.*; do
-    base_name "$i"
-    case "$RET" in ( ".." | "." | "*" | ".*" )
-      continue
-    esac
-    qesc "$i"
-    TMP="$TMP $RET"
-  done
-  RET="$TMP"
-}
-
 get_files_recursive() {
   TMP=""
   _dir_max_depth="${2:-1000}"
@@ -331,21 +366,21 @@ get_files_recursive() {
     _dir_depth=$((_dir_depth + 1))
     while [ $# -gt 0 ]; do
       for i in "$1"/* "$1"/.*; do
-        base_name "$i"
-        case "$RET" in ( '.' | '..' | '*' | '.*' ) continue ;; esac
-        if alt_match "$RET" "$_ignore_list"; then
+        _basename "$i"
+        case "$_basename_RESULT" in ( '.' | '..' | '*' | '.*' ) continue ;; esac
+        if alt_match "$_basename_RESULT" "$_ignore_list"; then
           continue
         fi
 
         if [ -d "$i" ] && [ "$_dir_depth" -ne "$_dir_max_depth" ]; then
-          qesc "$i"
-          _dir_stack="$_dir_stack $RET"
+          _quote "$i"
+          _dir_stack="$_dir_stack $_quote_RESULT"
           if $_include_dir; then
-            TMP="$TMP $RET"
+            TMP="$TMP $_quote_RESULT"
           fi
         else
-          qesc "$i"
-          TMP="$TMP $RET"
+          _quote "$i"
+          TMP="$TMP $_quote_RESULT"
         fi
       done
       shift
@@ -354,54 +389,6 @@ get_files_recursive() {
   done
   RET="$TMP"
 }
-
-_stack_params=""
-push_params() {
-  TMP=""
-  while [ $# -gt 0 ]; do
-    qesc "$1"
-    TMP="$TMP $RET"
-    shift
-  done
-  qesc "$TMP"
-  _stack_params="$RET $_stack_params"
-}
-
-# shellcheck disable=SC2120
-pop_params() {
-  eval "set -- $_stack_params"
-  TMP="$1"
-  shift
-  _stack_params=""
-  while [ $# -gt 0 ]; do
-    qesc "$1"
-    _stack_params="$_stack_params $RET"
-    shift
-  done
-  RET="$TMP"
-}
-
-push_val() {
-  qesc "$2"
-  eval "$1"'="$'"$1"' $RET"'
-}
-
-pop_val() {
-  TMP="$1"
-  eval 'RET="$'"$1"'"'
-  eval "set -- $RET"
-  while [ $# -gt 1 ]; do
-    qesc "$1"
-    eval "$TMP"'="$'"$TMP"' $RET"'
-    shift
-  done
-  RET="$1"
-}
-
-
-# Constants
-
-ESC="$(printf "\033")"
 
 
 # Message
@@ -535,10 +522,10 @@ _dot_run_script() {
       ;;
   esac
 
-  opt_parser \
+  _optparser \
     t:1 target-path:1 \
     -- "$@"
-  eval "set -- $RET"
+  eval "set -- $_optparser_RESULT"
   while [ $# -gt 0 ]; do
     case "$1" in
       ( -- )
@@ -673,8 +660,8 @@ _dot_link() {
     fi
   fi
 
-  dir_name "$2"
-  TMP="$RET"
+  _dirname "$2"
+  TMP="$_dirname_RESULT"
   if ! [ -d "$TMP" ]; then
     if file_exists "$TMP"; then
       msg_error "Cannot make directory: $TMP"
@@ -751,7 +738,7 @@ dot() {
   dot__origin=""
   dot__target=""
 
-  opt_parser \
+  _optparser \
     d:1 depth:1 \
     i:1 ignore:1 \
     origin-root:1 \
@@ -759,7 +746,7 @@ dot() {
     origin-prefix:1 \
     target-prefix:1 \
     -- "$@"
-  eval "set -- $RET"
+  eval "set -- $_optparser_RESULT"
   while [ $# -gt 0 ]; do
     case "$1" in
       ( -- ) shift ; break ;;
@@ -769,8 +756,8 @@ dot() {
       ( --target-prefix ) shift ; dot__target_prefix="$1" ; shift 1 ;;
       ( -i | --ignore )
         shift
-        qesc "$1"
-        dot__ignore="$dot__ignore $RET"
+        _quote "$1"
+        dot__ignore="$dot__ignore $_quote_RESULT"
         shift 1
         ;;
       ( -r | --recursive )
@@ -818,7 +805,6 @@ dot() {
         get_files_recursive "$dot__origin" "$dot__depth" false "$dot__ignore"
         eval "set -- $RET"
         while [ $# -gt 0 ]; do
-          base_name "$1"
           _dot "$1" "$dot__target/${1#"$dot__origin/"}"
           shift
         done
@@ -837,37 +823,15 @@ dot() {
 # Initialization
 
 FILE_PATH="$(realpath "$0")"
-dir_name "$FILE_PATH"
-WORK_PATH="$RET"
+_dirname "$FILE_PATH"
+WORK_PATH="$_dirname_RESULT"
 KERNEL_NAME="$(uname -s)"
 PARENT_SHELL="${PARENT_SHELL:-"$(ps -o ppid= -p $$ | xargs -I{} ps -o comm= -p {})"}"
 
-CONFIG_PATH="${CONFIG_PATH:-"$WORK_PATH/config.sh"}"
 REPO_PATH="${REPO_PATH:-"$WORK_PATH"}"
 DOTFILES_PATH="${DOTFILES_PATH:-"$WORK_PATH/files"}"
 SCRIPTS_PATH="${SCRIPTS_PATH:-"$WORK_PATH/scripts"}"
 TARGET_PATH="${TARGET_PATH:-"$HOME"}"
-
-
-# Load Config
-
-SET_DIR_PATH() {
-  [ -z "${2:-}" ] && return 0
-
-  if [ -d "$2" ]; then
-    dir_name "$CONFIG_PATH"
-    abs_path_prefix "$2" "$RET"
-    eval "$1"'="$RET"'
-  else
-    msg_error "Invalid path: $2"
-    return 1
-  fi
-}
-
-if [ -f "$CONFIG_PATH" ]; then
-  # shellcheck disable=SC1090
-  . "$CONFIG_PATH"
-fi
 
 
 # Main
