@@ -1,38 +1,39 @@
 if cmd_exists git; then
     if [ "$DOT_SCRIPT_MODE" = install ] && ! file_exist "$HOME/.config/git/config"; then
-        msg_info "git config"
-        msg_ask "  Continue? [Y/n]: "
-        case "$RET" in
+        _print_info "git config"
+        _print_ask "  Continue? [Y/n]: "
+        # shellcheck disable=SC2154
+        case "$_print_ask_RESULT" in
             ( [nN] ) : ;;
             ( * )
-                msg_run mkdir -p "$HOME/.config/git"
-                msg_run touch "$HOME/.config/git/config"
+                _print_run mkdir -p "$HOME/.config/git"
+                _print_run touch "$HOME/.config/git/config"
 
-                msg_info "  git config user"
-                msg_ask "  Continue? [Y/n]: "
-                case "$RET" in
+                _print_info "  git config user"
+                _print_ask "  Continue? [Y/n]: "
+                case "$_print_ask_RESULT" in
                     ( [nN] ) : ;;
                     ( * )
-                        msg_ask "    email: "
-                        if [ "$RET" != "" ]; then
-                            msg_run git config --global user.email "$RET"
+                        _print_ask "    email: "
+                        if [ "$_print_ask_RESULT" != "" ]; then
+                            _print_run git config --global user.email "$_print_ask_RESULT"
                         fi
-                        msg_ask "    name: "
-                        if [ "$RET" != "" ]; then
-                            msg_run git config --global user.name "$RET"
+                        _print_ask "    name: "
+                        if [ "$_print_ask_RESULT" != "" ]; then
+                            _print_run git config --global user.name "$_print_ask_RESULT"
                         fi
                         ;;
                 esac
                 if cmd_exists delta; then
-                    msg_info "  git config delta"
-                    msg_ask "  Continue? [Y/n]: "
-                    case "$RET" in
+                    _print_info "  git config delta"
+                    _print_ask "  Continue? [Y/n]: "
+                    case "$_print_ask_RESULT" in
                         ( [nN] ) : ;;
                         ( * )
-                            msg_run git config --global core.pager "delta --line-numbers"
-                            msg_run git config --global interactive.diffFilter "delta --color-only"
-                            msg_run git config --global delta.navigate true
-                            msg_run git config --global delta.light false
+                            _print_run git config --global core.pager "delta --line-numbers"
+                            _print_run git config --global interactive.diffFilter "delta --color-only"
+                            _print_run git config --global delta.navigate true
+                            _print_run git config --global delta.light false
                             ;;
                     esac
                 fi
