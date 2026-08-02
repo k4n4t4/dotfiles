@@ -636,8 +636,8 @@ if ! cmd_exists realpath; then
     return 1
 fi
 
-FILE_PATH="$(realpath "$0")"
-_dirname "$FILE_PATH"
+WORK_PATH="$(realpath "$0")"
+_dirname "$WORK_PATH"
 WORK_DIR="$_dirname_RESULT"
 KERNEL_NAME="$(uname -s)"
 PARENT_SHELL="${PARENT_SHELL:-"$(ps -o ppid= -p $$ | xargs -I{} ps -o comm= -p {})"}"
