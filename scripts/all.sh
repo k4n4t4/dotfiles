@@ -1,5 +1,4 @@
 script_source default
-script_source git
 script_source bash
 script_source zsh
 script_source fish
