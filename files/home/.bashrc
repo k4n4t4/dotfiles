@@ -21,10 +21,6 @@ PATH="$HOME/go/bin:$PATH"
 
 # source
 
-if type dm > /dev/null 2>&1; then
-    eval "$(dm shellenv)"
-fi
-
 if [ -f ~/.brew/bin/brew ]; then
     eval "$(~/.brew/bin/brew shellenv)"
 fi

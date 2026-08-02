@@ -67,10 +67,6 @@ if type -q nvim
     set -gx MANPAGER "nvim +Man!"
 end
 
-if type -q dm
-    eval (dm shellenv)
-end
-
 if type -q tmux
     set -gx TMUX_SHELL $FISH_BIN
 end

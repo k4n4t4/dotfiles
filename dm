@@ -307,7 +307,7 @@ is_linked() {
 # Message
 
 msg_log() {
-    printf "%s\n" " ${ESC}[32m[ LOG ]${ESC}[90m: ${ESC}[m$*"
+  printf "%s\n" " ${ESC}[32m[ LOG ]${ESC}[90m: ${ESC}[m$*"
 }
 
 msg_success() {
@@ -352,7 +352,7 @@ msg_run() {
 
 # Sub Commands
 
-usage() {
+_usage() {
   echo "Usage"
   echo "    $0 <SUB_COMMANDS> [options...]"
   echo
@@ -361,49 +361,6 @@ usage() {
   echo "    install          install dotfiles"
   echo "    uninstall        uninstall dotfiles"
   echo "    check            check dotfiles"
-  echo "    cd               print dotfiles path"
-  echo "    shellenv         print shellenv"
-  echo "    git              run git"
-  echo "    pull             run git pull"
-}
-
-shell_cd() {
-  if [ "${1:-}" = "" ]; then
-    printf "%s\n" "$REPO_PATH"
-  else
-    printf "%s\n" "$REPO_PATH/$1"
-  fi
-}
-
-shellenv() {
-  case "$PARENT_SHELL" in
-    ( sh | bash | zsh )
-cat << EOL
-dm() {
-  case "\${1:-}" in
-    ( cd ) cd "\$(command dm "\$@")" ;;
-    ( * ) command dm "\$@" ;;
-  esac
-}
-EOL
-      ;;
-    ( fish )
-cat << EOL
-function dm;
-  switch \$argv[1];
-    case "cd";
-      cd (command dm \$argv);
-    case "*";
-      command dm \$argv;
-  end;
-end;
-EOL
-      ;;
-    ( * )
-      msg_error "Not supported shell: $PARENT_SHELL"
-      return 1
-      ;;
-  esac
 }
 
 _dot_run_script() {
@@ -725,6 +682,11 @@ dot() {
 
 # Initialization
 
+if ! cmd_exists realpath; then
+    _print_error "The 'realpath' command is required but not found."
+    return 1
+fi
+
 FILE_PATH="$(realpath "$0")"
 _dirname "$FILE_PATH"
 WORK_PATH="$_dirname_RESULT"
@@ -736,109 +698,39 @@ DOTFILES_PATH="${DOTFILES_PATH:-"$WORK_PATH/files"}"
 SCRIPTS_PATH="${SCRIPTS_PATH:-"$WORK_PATH/scripts"}"
 TARGET_PATH="${TARGET_PATH:-"$HOME"}"
 
+case "$KERNEL_NAME" in
+    ( Linux ) : ;;
+    ( * )
+        msg_error "\"$KERNEL_NAME\" is not supported."
+        return 1
+        ;;
+esac
+
 
 # Main
 
 main() {
-  main__sub_command="unknown"
-
-  case "$KERNEL_NAME" in
-    ( Linux ) : ;;
-    ( * )
-      msg_error "\"$KERNEL_NAME\" is not supported."
-      return 1
-      ;;
-  esac
-
-  [ $# -eq 0 ] && set -- help
-  case "$1" in
-    ( help | h | usage | '-?' | '-h' | '--help' )
-      main__sub_command="help"
-      ;;
-    ( install | i )
-      main__sub_command="install"
-      ;;
-    ( uninstall | u )
-      main__sub_command="uninstall"
-      ;;
-    ( check )
-      main__sub_command="check"
-      ;;
-    ( cd )
-      main__sub_command="cd"
-      ;;
-    ( shellenv )
-      main__sub_command="shellenv"
-      ;;
-    ( git | g )
-      main__sub_command="git"
-      ;;
-    ( pull | p )
-      main__sub_command="pull"
-      ;;
-    ( commit | c )
-      main__sub_command="commit"
-      ;;
-    ( local | l )
-      main__sub_command="local"
-      ;;
-    ( main | m )
-      main__sub_command="main"
-      ;;
-    ( debug )
-      main__sub_command="debug"
-      ;;
-    ( * )
-      msg_error "Invalid Sub Command: \"$1\""
-      ;;
-  esac
-  shift
-  case "$main__sub_command" in
-    ( help ) usage ;;
-    ( install | uninstall | check )
-      _dot_run_script "$main__sub_command" "$@"
-      ;;
-    ( cd )
-      shell_cd "$@"
-      ;;
-    ( shellenv )
-      shellenv "$@"
-      ;;
-    ( git )
-      cd -- "$REPO_PATH"
-      git "$@"
-      ;;
-    ( commit )
-      cd -- "$REPO_PATH"
-      git add .
-      git commit -m update
-      ;;
-    ( pull )
-      cd -- "$REPO_PATH"
-      git pull origin main
-      ;;
-    ( main )
-      cd -- "$REPO_PATH"
-      git checkout main
-      ;;
-    ( local )
-      cd -- "$REPO_PATH"
-      if git show-ref --verify --quiet refs/heads/local; then
-        git checkout local
-      else
-        git checkout -b local
-      fi
-      ;;
-    ( debug )
-      echo "WORK_PATH: $WORK_PATH"
-      echo "KERNEL_NAME: $KERNEL_NAME"
-      echo "FILE_PATH: $FILE_PATH"
-      ;;
-    ( * )
-      usage
-      return 1
-      ;;
-  esac
+    [ $# -eq 0 ] && set -- help
+    case "$1" in
+        ( "help" | "h" | "usage" | '-?' | '-h' | '--help' )
+            shift
+            _usage
+            ;;
+        ( "install" | "i" )
+            shift
+            _dot_run_script "install" "$@"
+            ;;
+        ( "uninstall" | "u" )
+            shift
+            _dot_run_script "uninstall" "$@"
+            ;;
+        ( * )
+            _print_error "Invalid Sub Command: \"$1\""
+            shift
+            _usage
+            return 1
+            ;;
+    esac
 }
 
 main "$@"

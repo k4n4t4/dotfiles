@@ -90,10 +90,6 @@ fi
 
 # aliases
 
-if type dm > /dev/null 2>&1; then
-    eval "$(dm shellenv)"
-fi
-
 alias reboot   "systemctl reboot"
 alias poweroff "systemctl poweroff"
 
