@@ -240,12 +240,16 @@ _optparser() {
     _optparser_RESULT="${_optparser__opt_args#' '} -- ${_optparser__args#' '}"
 }
 
+true() {
+  return 0
+}
+
+false() {
+  return 1
+}
+
 cmd_exists() {
-    if command -v -- "$1" > /dev/null 2>&1; then
-        return 0
-    else
-        return 1
-    fi
+    command -v -- "$1" > /dev/null 2>&1
 }
 
 is_empty_dir() {
@@ -326,68 +330,30 @@ is_int() {
   is_number "${1#"-"}"
 }
 
-match() {
-  RET="$1"
-  eval "set -- $2"
-  while [ $# -gt 0 ]; do
-    eval 'case "$1" in ( '"$RET"' ) return 0 ;; esac'
-    shift
-  done
-  return 1
-}
-
-alt_match() {
-  RET="$1"
-  eval "set -- $2"
-  while [ $# -gt 0 ]; do
-    eval 'case "$RET" in ( '"$1"' ) return 0 ;; esac'
-    shift
-  done
-  return 1
-}
-
-true() {
-  return 0
-}
-
-false() {
-  return 1
-}
-
-get_files_recursive() {
-  TMP=""
-  _dir_max_depth="${2:-1000}"
-  _include_dir="${3:-false}"
-  _ignore_list="${4:-" "}"
-  _dir_depth=0
-  set -- "$1"
-  while [ $# -gt 0 ]; do
-    _dir_stack=""
-    _dir_depth=$((_dir_depth + 1))
+_get_files_recursive() {
+    _get_files_recursive_RESULT=""
+    _get_files_recursive__DEPTH="${2:-1000}"
+    _get_files_recursive__current_depth=0
+    set -- "$1"
     while [ $# -gt 0 ]; do
-      for i in "$1"/* "$1"/.*; do
-        _basename "$i"
-        case "$_basename_RESULT" in ( '.' | '..' | '*' | '.*' ) continue ;; esac
-        if alt_match "$_basename_RESULT" "$_ignore_list"; then
-          continue
-        fi
-
-        if [ -d "$i" ] && [ "$_dir_depth" -ne "$_dir_max_depth" ]; then
-          _quote "$i"
-          _dir_stack="$_dir_stack $_quote_RESULT"
-          if $_include_dir; then
-            TMP="$TMP $_quote_RESULT"
-          fi
-        else
-          _quote "$i"
-          TMP="$TMP $_quote_RESULT"
-        fi
-      done
-      shift
+        _get_files_recursive__dir_stack=""
+        _get_files_recursive__current_depth=$((_get_files_recursive__current_depth + 1))
+        while [ $# -gt 0 ]; do
+            for i in "$1"/* "$1"/.*; do
+                _basename "$i"
+                case "$_basename_RESULT" in ( '.' | '..' | '*' | '.*' ) continue ;; esac
+                if [ -d "$i" ] && [ "$_get_files_recursive__current_depth" -ne "$_get_files_recursive__DEPTH" ]; then
+                    _quote "$i"
+                    _get_files_recursive__dir_stack="$_get_files_recursive__dir_stack $_quote_RESULT"
+                else
+                    _quote "$i"
+                    _get_files_recursive_RESULT="$_get_files_recursive_RESULT $_quote_RESULT"
+                fi
+            done
+            shift
+        done
+        eval 'set -- "$@" '"$_get_files_recursive__dir_stack"
     done
-    eval 'set -- "$@" '"$_dir_stack"
-  done
-  RET="$TMP"
 }
 
 
@@ -734,13 +700,11 @@ dot() {
   dot__is_force=false
   dot__is_copy=false
   dot__depth=-1
-  dot__ignore=""
   dot__origin=""
   dot__target=""
 
   _optparser \
     d:1 depth:1 \
-    i:1 ignore:1 \
     origin-root:1 \
     target-root:1 \
     origin-prefix:1 \
@@ -754,12 +718,6 @@ dot() {
       ( --target-root ) shift ; dot__target_root="$1" ; shift 1 ;;
       ( --origin-prefix ) shift ; dot__origin_prefix="$1" ; shift 1 ;;
       ( --target-prefix ) shift ; dot__target_prefix="$1" ; shift 1 ;;
-      ( -i | --ignore )
-        shift
-        _quote "$1"
-        dot__ignore="$dot__ignore $_quote_RESULT"
-        shift 1
-        ;;
       ( -r | --recursive )
         shift
         dot__is_recursive=true
@@ -770,9 +728,7 @@ dot() {
         ;;
       ( -d | --depth )
         shift
-        if is_int "$1"; then
-          dot__depth=$1
-        fi
+        dot__depth="$1"
         shift 1
         ;;
       ( -c | --copy )
@@ -802,8 +758,8 @@ dot() {
   if [ -e "$dot__origin" ]; then
     if [ -f "$dot__origin" ] || [ -d "$dot__origin" ]; then
       if $dot__is_recursive && [ -d "$dot__origin" ]; then
-        get_files_recursive "$dot__origin" "$dot__depth" false "$dot__ignore"
-        eval "set -- $RET"
+        _get_files_recursive "$dot__origin" "$dot__depth"
+        eval "set -- $_get_files_recursive_RESULT"
         while [ $# -gt 0 ]; do
           _dot "$1" "$dot__target/${1#"$dot__origin/"}"
           shift
