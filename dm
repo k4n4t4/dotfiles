@@ -317,7 +317,7 @@ _usage() {
     echo "    check            check dotfiles"
 }
 
-_dot_run_script() {
+_run_script() {
     DOT_IS_QUIET=false
     DOT_IS_FORCE_MODE=false
     DOT_ORIGIN_PATH="$DOTFILES_PATH"
@@ -427,8 +427,8 @@ _dot_msg() {
         ( "$DOTFILES_PATH/"* )
             set -- "$1" "\$DOTFILES_PATH${2#"$DOTFILES_PATH"}" "$3" "$4" "$5"
             ;;
-        ( "$WORK_PATH/"* )
-            set -- "$1" "\$WORK_PATH${2#"$WORK_PATH"}" "$3" "$4" "$5"
+        ( "$WORK_DIR/"* )
+            set -- "$1" "\$WORK_DIR${2#"$WORK_DIR"}" "$3" "$4" "$5"
             ;;
     esac
     case "$4" in
@@ -638,13 +638,12 @@ fi
 
 FILE_PATH="$(realpath "$0")"
 _dirname "$FILE_PATH"
-WORK_PATH="$_dirname_RESULT"
+WORK_DIR="$_dirname_RESULT"
 KERNEL_NAME="$(uname -s)"
 PARENT_SHELL="${PARENT_SHELL:-"$(ps -o ppid= -p $$ | xargs -I{} ps -o comm= -p {})"}"
 
-REPO_PATH="${REPO_PATH:-"$WORK_PATH"}"
-DOTFILES_PATH="${DOTFILES_PATH:-"$WORK_PATH/files"}"
-SCRIPTS_PATH="${SCRIPTS_PATH:-"$WORK_PATH/scripts"}"
+DOTFILES_PATH="${DOTFILES_PATH:-"$WORK_DIR/files"}"
+SCRIPTS_PATH="${SCRIPTS_PATH:-"$WORK_DIR/scripts"}"
 TARGET_PATH="${TARGET_PATH:-"$HOME"}"
 
 case "$KERNEL_NAME" in
@@ -667,11 +666,11 @@ main() {
             ;;
         ( "install" | "i" )
             shift
-            _dot_run_script "install" "$@"
+            _run_script "install" "$@"
             ;;
         ( "uninstall" | "u" )
             shift
-            _dot_run_script "uninstall" "$@"
+            _run_script "uninstall" "$@"
             ;;
         ( * )
             _print_error "Invalid Sub Command: \"$1\""

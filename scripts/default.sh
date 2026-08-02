@@ -1,4 +1,4 @@
-dot "$REPO_PATH/dm" ".local/bin/dm"
+dot "$WORK_DIR/dm" ".local/bin/dm"
 
 dothome "bin" ".local/bin" -r
 dothome ".profile"
