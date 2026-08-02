@@ -240,96 +240,6 @@ _optparser() {
     _optparser_RESULT="${_optparser__opt_args#' '} -- ${_optparser__args#' '}"
 }
 
-true() {
-  return 0
-}
-
-false() {
-  return 1
-}
-
-cmd_exists() {
-    command -v -- "$1" > /dev/null 2>&1
-}
-
-is_empty_dir() {
-    set -- "${1:-.}"
-    set -- "$1"/* "$1"/.*
-    while [ $# -gt 0 ]; do
-        _basename "$1"
-        case "$_basename_RESULT" in
-            ( "." | ".." | "*" | ".*" ) shift 1 ;;
-            ( * ) return 1 ;;
-        esac
-    done
-    return 0
-}
-
-file_exists() {
-  if [ -e "$1" ] || [ -L "$1" ]; then
-    return 0
-  else
-    return 1
-  fi
-}
-
-symlink_exists() {
-  if [ -e "$1" ] && [ -L "$1" ]; then
-    return 0
-  else
-    return 1
-  fi
-}
-
-is_broken_symlink() {
-  if [ ! -e "$1" ] && [ -L "$1" ]; then
-    return 0
-  else
-    return 1
-  fi
-}
-
-is_deletable() {
-  _dirname "$1"
-  if [ -w "$_dirname_RESULT" ] && [ -x "$_dirname_RESULT" ]; then
-    return 0
-  else
-    return 1
-  fi
-}
-
-is_creatable() {
-  _dirname "$1"
-  if ! file_exists "$1" && [ -d "$_dirname_RESULT" ] && [ -w "$_dirname_RESULT" ] && [ -x "$_dirname_RESULT" ]; then
-    return 0
-  else
-    return 1
-  fi
-}
-
-is_linked() {
-  if [ -L "$2" ] && [ "$1" = "$(realpath "$2")" ]; then
-    return 0
-  else
-    return 1
-  fi
-}
-
-is_number() {
-  case "$1" in
-    ( *[!0123456789]* )
-      return 1
-      ;;
-    ( * )
-      return 0
-      ;;
-  esac
-}
-
-is_int() {
-  is_number "${1#"-"}"
-}
-
 _get_files_recursive() {
     _get_files_recursive_RESULT=""
     _get_files_recursive__DEPTH="${2:-1000}"
@@ -356,11 +266,48 @@ _get_files_recursive() {
     done
 }
 
+true() {
+  return 0
+}
+
+false() {
+  return 1
+}
+
+cmd_exists() {
+    command -v -- "$1" > /dev/null 2>&1
+}
+
+file_exists() {
+    if [ -e "$1" ] || [ -L "$1" ]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+is_deletable() {
+    _dirname "$1"
+    if [ -w "$_dirname_RESULT" ] && [ -x "$_dirname_RESULT" ]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+is_linked() {
+    if [ -L "$2" ] && [ "$1" = "$(realpath "$2")" ]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
 
 # Message
 
 msg_log() {
-  printf "%s\n" " ${ESC}[32m[ LOG ]${ESC}[90m: ${ESC}[m$*"
+    printf "%s\n" " ${ESC}[32m[ LOG ]${ESC}[90m: ${ESC}[m$*"
 }
 
 msg_success() {
