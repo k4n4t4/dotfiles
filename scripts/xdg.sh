@@ -1,5 +1,5 @@
 dothome "config/xdg/user-dirs.dirs" ".config/user-dirs.dirs"
-. "$TARGET_PATH/.config/user-dirs.dirs"
+. "$TARGET_DIR/.config/user-dirs.dirs"
 _print_run mkdir -p -- "$XDG_DESKTOP_DIR"
 _print_run mkdir -p -- "$XDG_DOWNLOAD_DIR"
 _print_run mkdir -p -- "$XDG_TEMPLATES_DIR"

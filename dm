@@ -320,8 +320,8 @@ _usage() {
 _run_script() {
     DOT_IS_QUIET=false
     DOT_IS_FORCE_MODE=false
-    DOT_ORIGIN_PATH="$DOTFILES_PATH"
-    DOT_TARGET_PATH="$TARGET_PATH"
+    DOT_ORIGIN_PATH="$FILES_DIR"
+    DOT_TARGET_PATH="$TARGET_DIR"
     DOT_SCRIPT_NAME=""
     DOT_SCRIPT_MODE="${1:-unknown}"
 
@@ -380,14 +380,14 @@ _run_script() {
     while [ $# -gt 0 ]; do
         DOT_SCRIPT_NAME="$1"
 
-        if [ -f "$SCRIPTS_PATH/common.sh" ]; then
+        if [ -f "$SCRIPTS_DIR/common.sh" ]; then
             # shellcheck disable=SC1091
-            . "$SCRIPTS_PATH/common.sh"
+            . "$SCRIPTS_DIR/common.sh"
         fi
 
-        if [ -f "$SCRIPTS_PATH/$DOT_SCRIPT_NAME.sh" ]; then
+        if [ -f "$SCRIPTS_DIR/$DOT_SCRIPT_NAME.sh" ]; then
             # shellcheck disable=SC1090
-            . "$SCRIPTS_PATH/$DOT_SCRIPT_NAME.sh"
+            . "$SCRIPTS_DIR/$DOT_SCRIPT_NAME.sh"
         else
             _print_error "\"$DOT_SCRIPT_NAME\" is not found."
             return 1
@@ -424,8 +424,8 @@ _dot_msg() {
     fi
 
     case "$2" in
-        ( "$DOTFILES_PATH/"* )
-            set -- "$1" "\$DOTFILES_PATH${2#"$DOTFILES_PATH"}" "$3" "$4" "$5"
+        ( "$FILES_DIR/"* )
+            set -- "$1" "\$FILES_DIR${2#"$FILES_DIR"}" "$3" "$4" "$5"
             ;;
         ( "$WORK_DIR/"* )
             set -- "$1" "\$WORK_DIR${2#"$WORK_DIR"}" "$3" "$4" "$5"
@@ -642,9 +642,9 @@ WORK_DIR="$_dirname_RESULT"
 KERNEL_NAME="$(uname -s)"
 PARENT_SHELL="${PARENT_SHELL:-"$(ps -o ppid= -p $$ | xargs -I{} ps -o comm= -p {})"}"
 
-DOTFILES_PATH="${DOTFILES_PATH:-"$WORK_DIR/files"}"
-SCRIPTS_PATH="${SCRIPTS_PATH:-"$WORK_DIR/scripts"}"
-TARGET_PATH="${TARGET_PATH:-"$HOME"}"
+FILES_DIR="${FILES_DIR:-"$WORK_DIR/files"}"
+SCRIPTS_DIR="${SCRIPTS_DIR:-"$WORK_DIR/scripts"}"
+TARGET_DIR="${TARGET_DIR:-"$HOME"}"
 
 case "$KERNEL_NAME" in
     ( Linux ) : ;;
