@@ -672,6 +672,10 @@ main() {
             shift
             _run_script "uninstall" "$@"
             ;;
+        ( "check" | "c" )
+            shift
+            _run_script "check" "$@"
+            ;;
         ( * )
             _print_error "Invalid Sub Command: \"$1\""
             shift
