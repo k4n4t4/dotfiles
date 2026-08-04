@@ -107,21 +107,17 @@ return {
             end
             local function visual_info()
                 local mode = vim.fn.mode()
-                if mode ~= 'v' and mode ~= 'V' and mode ~= '\22' then
-                    return ''
-                end
+                if mode ~= 'v' and mode ~= 'V' and mode ~= '\22' then return '' end
 
                 local l1, l2 = vim.fn.line('v'), vim.fn.line('.')
                 local lines = math.abs(l2 - l1) + 1
 
                 if mode == 'V' then
                     return string.format('%d lines', lines)
-
                 elseif mode == '\22' then
                     local c1, c2 = vim.fn.virtcol('v'), vim.fn.virtcol('.')
                     local cols = math.abs(c2 - c1) + 1
                     return string.format('%dx%d', lines, cols)
-
                 else
                     local wc = vim.fn.wordcount()
                     local chars = wc.visual_chars or 0
