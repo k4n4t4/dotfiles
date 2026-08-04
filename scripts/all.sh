@@ -2,16 +2,11 @@ script_source default
 script_source bash
 script_source zsh
 script_source fish
-script_source nu
 script_source vim
 script_source neovim
 script_source tmux
 script_source starship
-script_source wezterm
 script_source hyprland
-script_source niri
-script_source mango
-script_source wofi
 script_source fcitx5
 script_source mpv
 script_source ags
@@ -20,7 +15,4 @@ script_source kitty
 script_source sheldon
 script_source eza
 script_source navi
-script_source waybar
-script_source wlogout
-script_source mako
 script_source noctalia
