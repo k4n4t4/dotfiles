@@ -4,32 +4,11 @@ xdg-settings set default-web-browser firefox.desktop
 xdg-mime default neovide.desktop text/plain
 xdg-mime default org.gnome.Nautilus.desktop inode/directory
 
-xdg-mime default mpv.desktop video/mp4
-xdg-mime default mpv.desktop video/x-matroska
-xdg-mime default mpv.desktop video/webm
-xdg-mime default mpv.desktop video/x-msvideo
-xdg-mime default mpv.desktop video/quicktime
-xdg-mime default mpv.desktop video/mpeg
-xdg-mime default mpv.desktop video/x-flv
-xdg-mime default mpv.desktop video/x-ms-wmv
-xdg-mime default mpv.desktop video/ogg
-xdg-mime default mpv.desktop video/3gpp
-xdg-mime default mpv.desktop video/3gpp2
+for mime in video/mp4 video/x-matroska video/webm video/x-msvideo video/quicktime video/mpeg video/x-flv video/x-ms-wmv video/ogg video/3gpp video/3gpp2 \
+  image/jpeg image/png image/gif image/webp \
+  audio/mpeg audio/flac audio/wav audio/x-wav audio/ogg audio/aac audio/mp4 audio/x-m4a audio/opus audio/x-matroska audio/weba
+do
+  xdg-mime default mpv.desktop "$mime"
+done
 
-xdg-mime default mpv.desktop image/jpeg
-xdg-mime default mpv.desktop image/png
-xdg-mime default mpv.desktop image/gif
-xdg-mime default mpv.desktop image/webp
 xdg-mime default gimp.desktop image/x-xcf
-
-xdg-mime default mpv.desktop audio/mpeg
-xdg-mime default mpv.desktop audio/flac
-xdg-mime default mpv.desktop audio/wav
-xdg-mime default mpv.desktop audio/x-wav
-xdg-mime default mpv.desktop audio/ogg
-xdg-mime default mpv.desktop audio/aac
-xdg-mime default mpv.desktop audio/mp4
-xdg-mime default mpv.desktop audio/x-m4a
-xdg-mime default mpv.desktop audio/opus
-xdg-mime default mpv.desktop audio/x-matroska
-xdg-mime default mpv.desktop audio/weba
