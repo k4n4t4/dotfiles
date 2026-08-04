@@ -1,6 +1,5 @@
 script_source default
 script_source bash
-script_source zsh
 script_source fish
 script_source vim
 script_source neovim
@@ -12,7 +11,6 @@ script_source mpv
 script_source ags
 script_source fastfetch
 script_source kitty
-script_source sheldon
 script_source eza
 script_source navi
 script_source noctalia
