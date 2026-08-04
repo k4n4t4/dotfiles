@@ -15,11 +15,12 @@ xdg-settings set default-web-browser firefox.desktop
 xdg-mime default kitty-nvim.desktop text/plain
 xdg-mime default org.gnome.Nautilus.desktop inode/directory
 
-for mime in video/mp4 video/x-matroska video/webm video/x-msvideo video/quicktime video/mpeg video/x-flv video/x-ms-wmv video/ogg video/3gpp video/3gpp2 \
-  image/jpeg image/png image/gif image/webp \
-  audio/mpeg audio/flac audio/wav audio/x-wav audio/ogg audio/aac audio/mp4 audio/x-m4a audio/opus audio/x-matroska audio/weba
-do
-  xdg-mime default mpv.desktop "$mime"
+for mime in $(grep ^MimeType= /usr/share/applications/mpv.desktop | cut -d= -f2 | tr ';' ' '); do
+    xdg-mime default mpv.desktop "$mime"
 done
-
-xdg-mime default gimp.desktop image/x-xcf
+for mime in $(grep ^MimeType= /usr/share/applications/gimp.desktop | cut -d= -f2 | tr ';' ' '); do
+    xdg-mime default gimp.desktop "$mime"
+done
+for mime in image/jpeg image/png image/gif image/webp; do
+    xdg-mime default mpv.desktop "$mime"
+done
