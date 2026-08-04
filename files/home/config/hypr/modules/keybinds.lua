@@ -364,7 +364,6 @@ end)
 ------------------
 
 local terminal = "uwsm app -- kitty"
-local text_editor = "uwsm app -- neovide"
 local file_manager = "uwsm app -- nautilus"
 local browser = "uwsm app -- firefox"
 local private_browser = "uwsm app -- firefox --private-window"
@@ -388,11 +387,6 @@ hl.bind(
     MOD .. " + T",
     hl.dsp.exec_cmd(terminal),
     { description = "Open terminal" }
-)
-hl.bind(
-    MOD .. " + N",
-    hl.dsp.exec_cmd(text_editor),
-    { description = "Open text editor" }
 )
 hl.bind(
     MOD .. " + E",

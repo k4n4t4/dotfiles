@@ -1,4 +1,4 @@
-sudo pacman --needed --noconfirm -S zed kitty neovide nautilus mpv firefox thunderbird gimp discord obsidian
+sudo pacman --needed --noconfirm -S zed kitty nautilus mpv firefox thunderbird gimp discord obsidian
 
 
 if ! [ -d /usr/share/applications ]; then
@@ -12,7 +12,7 @@ if [ -f /usr/share/applications/nvim.desktop ]; then
 fi
 
 xdg-settings set default-web-browser firefox.desktop
-xdg-mime default neovide.desktop text/plain
+xdg-mime default kitty-nvim.desktop text/plain
 xdg-mime default org.gnome.Nautilus.desktop inode/directory
 
 for mime in video/mp4 video/x-matroska video/webm video/x-msvideo video/quicktime video/mpeg video/x-flv video/x-ms-wmv video/ogg video/3gpp video/3gpp2 \
