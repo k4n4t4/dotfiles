@@ -13,3 +13,4 @@ script_source kitty
 script_source eza
 script_source navi
 script_source noctalia
+script_source xdg

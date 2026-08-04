@@ -4,5 +4,5 @@
 
 Install niri environment (arch)
 ~~~bash
-./dm i setup/arch/{all,latex} all xdg -f
+./dm i setup/arch/all all -f
 ~~~
