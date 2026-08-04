@@ -1,5 +1,16 @@
 sudo pacman --needed --noconfirm -S zed kitty neovide nautilus mpv firefox thunderbird gimp discord obsidian
 
+
+if ! [ -d /usr/share/applications ]; then
+    sudo mkdir -p /usr/share/applications
+fi
+if ! [ -e /usr/share/applications/kitty-nvim.desktop ]; then
+    sudo cp "$SCRIPTS_DIR/setup/arch/desktop-files/kitty-nvim.desktop" /usr/share/applications/
+fi
+if [ -f /usr/share/applications/nvim.desktop ]; then
+    sudo rm /usr/share/applications/nvim.desktop
+fi
+
 xdg-settings set default-web-browser firefox.desktop
 xdg-mime default neovide.desktop text/plain
 xdg-mime default org.gnome.Nautilus.desktop inode/directory
