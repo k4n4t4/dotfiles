@@ -442,7 +442,7 @@ _dot_link() {
             _dot_msg log "$1" "<->" "$2" "(Already Linked)"
             return 0
         fi
-        if ! $FORCE_MODE && ! $_dot__FORCE_MODE; then
+        if ! $_dot__FORCE_MODE; then
             _dot_msg error "$1" "--x" "$2" "(Already Exist)"
             _dot_ask_continue
             return "$RET"
@@ -453,7 +453,7 @@ _dot_link() {
             return "$RET"
         fi
         if ! _print_run rm -rf -- "$2"; then
-            _dot_msg fatal "$1" "-?-" "$2" "(Not Deletable)"
+            _dot_msg fatal "$1" "-?-" "$2" "(Faild)"
             return 1
         fi
     fi
