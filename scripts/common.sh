@@ -1,2 +1,2 @@
-alias dothome="dot --origin-prefix=home"
-alias dotconf="dot --origin-prefix=home/config --target-prefix=.config"
+alias dothome="dot --files-prefix=home"
+alias dotconf="dot --files-prefix=home/config --target-prefix=.config"
