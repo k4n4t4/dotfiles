@@ -59,25 +59,3 @@ fi
 if cmd_exists noctalia; then
     dotconf "noctalia" -r
 fi
-
-
-dothome "config/xdg/user-dirs.dirs" ".config/user-dirs.dirs"
-# shellcheck disable=SC1091
-. "$TARGET_DIR/.config/user-dirs.dirs"
-! [ -d "$XDG_DESKTOP_DIR" ]     && _print_run mkdir -p -- "$XDG_DESKTOP_DIR"
-! [ -d "$XDG_DOWNLOAD_DIR" ]    && _print_run mkdir -p -- "$XDG_DOWNLOAD_DIR"
-! [ -d "$XDG_TEMPLATES_DIR" ]   && _print_run mkdir -p -- "$XDG_TEMPLATES_DIR"
-! [ -d "$XDG_PUBLICSHARE_DIR" ] && _print_run mkdir -p -- "$XDG_PUBLICSHARE_DIR"
-! [ -d "$XDG_DOCUMENTS_DIR" ]   && _print_run mkdir -p -- "$XDG_DOCUMENTS_DIR"
-! [ -d "$XDG_MUSIC_DIR" ]       && _print_run mkdir -p -- "$XDG_MUSIC_DIR"
-! [ -d "$XDG_PICTURES_DIR" ]    && _print_run mkdir -p -- "$XDG_PICTURES_DIR"
-! [ -d "$XDG_VIDEOS_DIR" ]      && _print_run mkdir -p -- "$XDG_VIDEOS_DIR"
-! [ -d "$XDG_PROJECTS_DIR" ]    && _print_run mkdir -p -- "$XDG_PROJECTS_DIR"
-xdg-user-dirs-update
-
-if ! [ -d "$TARGET_DIR/pers/media/images/wallpapers" ]; then
-    _print_run mkdir -p "$TARGET_DIR/pers/media/images/wallpapers"
-fi
-if ! [ -f "$TARGET_DIR/pers/media/images/wallpapers/wallpaper.png" ]; then
-    _print_run cp "$FILES_DIR/assets/wallpaper.png" "$TARGET_DIR/pers/media/images/wallpapers"
-fi

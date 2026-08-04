@@ -436,7 +436,51 @@ _dot_msg() {
     fi
 }
 
+_dot_copy() {
+    if file_exists "$2"; then
+        if $_dot__FORCE_MODE; then
+            if ! is_deletable "$2"; then
+                _dot_msg log "$1" "-?-" "$2" "(Not Deletable)"
+                return 0
+            fi
+            if ! _print_run rm -rf -- "$2"; then
+                _dot_msg fatal "$1" "-?-" "$2" "(Faild)"
+                return 1
+            fi
+        else
+            _dot_msg log "$1" "=?=" "$2" "(Already Exist)"
+            return 0
+        fi
+    fi
+
+    _dirname "$2"
+    if ! [ -d "$_dirname_RESULT" ]; then
+        if file_exists "$_dirname_RESULT"; then
+            _print_error "Cannot make directory: $_dirname_RESULT"
+            _dot_ask_continue
+            return "$_dot_ask_continue_RESULT"
+        fi
+        if ! _print_run mkdir -p -- "$_dirname_RESULT"; then
+            _print_fatal "Cannot make directory: $_dirname_RESULT (Faild)"
+            return 1
+        fi
+    fi
+
+    if cp -r -- "$1" "$2"; then
+        _dot_msg success "$1" "==>" "$2"
+        return 0
+    else
+        _dot_msg fatal "$1" "==x" "$2" "(Faild)"
+        return 1
+    fi
+}
+
 _dot_link() {
+    if $_dot__COPY_MODE; then
+        _dot_copy "$@"
+        return 0
+    fi
+
     if is_linked "$1" "$2"; then
         _dot_msg log "$1" "<->" "$2" "(Already Linked)"
         return 0
@@ -483,6 +527,15 @@ _dot_link() {
 }
 
 _dot_unlink() {
+    if $_dot__COPY_MODE; then
+        if file_exists "$2"; then
+            _dot_msg log "$1" "=?=" "$2" "(Already Exist)"
+        else
+            _dot_msg log "$1" "=?=" "$2" "(Not Exist)"
+        fi
+        return 0
+    fi
+
     if ! is_linked "$1" "$2"; then
         _dot_msg log "$1" "x-x" "$2" "(Already Unlinked)"
         return 0
@@ -498,6 +551,15 @@ _dot_unlink() {
 }
 
 _dot_check() {
+    if $_dot__COPY_MODE; then
+        if file_exists "$2"; then
+            _dot_msg log "$1" "=?=" "$2" "(Already Exist)"
+        else
+            _dot_msg warn "$1" "=?=" "$2" "(Not Exist)"
+        fi
+        return 0
+    fi
+
     if is_linked "$1" "$2"; then
         _dot_msg success "$1" "<->" "$2"
     else
@@ -537,6 +599,7 @@ dot() {
     _dot__TARGET=""
     _dot__IS_RECURSIVE=false
     _dot__DEPTH=-1
+    _dot__COPY_MODE=false
 
     _optparser \
         d:1 depth:1 \
@@ -565,6 +628,10 @@ dot() {
                 shift
                 _dot__DEPTH="$1"
                 shift 1
+                ;;
+            ( -c | --copy )
+                shift
+                _dot__COPY_MODE=true
                 ;;
             ( * )
                 _print_error "Invalid Option: $1"

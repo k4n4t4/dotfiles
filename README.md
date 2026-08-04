@@ -2,7 +2,7 @@
 
 > My dotfiles
 
-Install niri environment (arch)
+Install `hyprland` environment (`arch linux`)
 ~~~bash
-./dm i setup/arch/all default -f
+./dm i setup/arch/all setup/git setup/xdg default -f
 ~~~
