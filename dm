@@ -242,7 +242,7 @@ _optparser() {
 
 _get_files_recursive() {
     _get_files_recursive_RESULT=""
-    _get_files_recursive__DEPTH="${2:-1000}"
+    _get_files_recursive__DEPTH="${2:-"-1"}"
     _get_files_recursive__current_depth=0
     set -- "$1"
     while [ $# -gt 0 ]; do
