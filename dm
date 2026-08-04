@@ -296,7 +296,7 @@ is_deletable() {
 }
 
 is_linked() {
-    if [ -L "$2" ] && [ "$1" = "$(realpath "$2")" ]; then
+    if [ -e "$2" ] && [ -L "$2" ] && [ "$1" = "$(realpath "$2")" ]; then
         return 0
     else
         return 1
@@ -405,10 +405,10 @@ _dot_ask_continue() {
     _print_ask "Continue? [Y/n]: "
     case "$_print_ask_RESULT" in
         ( [nN] )
-            RET=1
+            _dot_ask_continue_RESULT=1
             ;;
         ( * )
-            RET=0
+            _dot_ask_continue_RESULT=0
             ;;
     esac
 }
@@ -437,59 +437,63 @@ _dot_msg() {
 }
 
 _dot_link() {
+    if is_linked "$1" "$2"; then
+        _dot_msg log "$1" "<->" "$2" "(Already Linked)"
+        return 0
+    fi
+
     if file_exists "$2"; then
-        if is_linked "$1" "$2"; then
-            _dot_msg log "$1" "<->" "$2" "(Already Linked)"
-            return 0
-        fi
-        if ! $_dot__FORCE_MODE; then
+        if $_dot__FORCE_MODE; then
+            if ! is_deletable "$2"; then
+                _dot_msg error "$1" "-?-" "$2" "(Not Deletable)"
+                _dot_ask_continue
+                return "$_dot_ask_continue_RESULT"
+            fi
+            if ! _print_run rm -rf -- "$2"; then
+                _dot_msg fatal "$1" "-?-" "$2" "(Faild)"
+                return 1
+            fi
+        else
             _dot_msg error "$1" "--x" "$2" "(Already Exist)"
             _dot_ask_continue
-            return "$RET"
-        fi
-        if ! is_deletable "$2"; then
-            _dot_msg error "$1" "-?-" "$2" "(Not Deletable)"
-            _dot_ask_continue
-            return "$RET"
-        fi
-        if ! _print_run rm -rf -- "$2"; then
-            _dot_msg fatal "$1" "-?-" "$2" "(Faild)"
-            return 1
+            return "$_dot_ask_continue_RESULT"
         fi
     fi
 
     _dirname "$2"
-    TMP="$_dirname_RESULT"
-    if ! [ -d "$TMP" ]; then
-        if file_exists "$TMP"; then
-            _print_error "Cannot make directory: $TMP"
+    if ! [ -d "$_dirname_RESULT" ]; then
+        if file_exists "$_dirname_RESULT"; then
+            _print_error "Cannot make directory: $_dirname_RESULT"
             _dot_ask_continue
-            return "$RET"
+            return "$_dot_ask_continue_RESULT"
         fi
-        if ! _print_run mkdir -p -- "$TMP"; then
-            _print_fatal "Cannot make directory: $TMP (Faild)"
+        if ! _print_run mkdir -p -- "$_dirname_RESULT"; then
+            _print_fatal "Cannot make directory: $_dirname_RESULT (Faild)"
             return 1
         fi
     fi
 
-    if ! ln -s -- "$1" "$2"; then
+    if ln -s -- "$1" "$2"; then
+        _dot_msg success "$1" "-->" "$2"
+        return 0
+    else
         _dot_msg fatal "$1" "--x" "$2" "(Faild)"
         return 1
     fi
-
-    _dot_msg success "$1" "-->" "$2"
 }
 
 _dot_unlink() {
-    if is_linked "$1" "$2"; then
-        if unlink -- "$2"; then
-            _dot_msg success "$1" "x-x" "$2"
-        else
-            _dot_msg fatal "$1" "-?-" "$2" "(Faild)"
-            return 1
-        fi
-    else
+    if ! is_linked "$1" "$2"; then
         _dot_msg log "$1" "x-x" "$2" "(Already Unlinked)"
+        return 0
+    fi
+
+    if unlink -- "$2"; then
+        _dot_msg success "$1" "x-x" "$2"
+        return 0
+    else
+        _dot_msg fatal "$1" "-?-" "$2" "(Faild)"
+        return 1
     fi
 }
 
