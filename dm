@@ -540,18 +540,18 @@ dot() {
 
     _optparser \
         d:1 depth:1 \
-        origin-root:1 \
+        files-root:1 \
         target-root:1 \
-        origin-prefix:1 \
+        files-prefix:1 \
         target-prefix:1 \
         -- "$@"
     eval "set -- $_optparser_RESULT"
     while [ $# -gt 0 ]; do
         case "$1" in
             ( -- ) shift ; break ;;
-            ( --origin-root ) shift ; _dot__FILES_DIR="$1" ; shift 1 ;;
+            ( --files-root ) shift ; _dot__FILES_DIR="$1" ; shift 1 ;;
             ( --target-root ) shift ; _dot__TARGET_DIR="$1" ; shift 1 ;;
-            ( --origin-prefix ) shift ; _dot__FILES_PREFIX="$1" ; shift 1 ;;
+            ( --files-prefix ) shift ; _dot__FILES_PREFIX="$1" ; shift 1 ;;
             ( --target-prefix ) shift ; _dot__TARGET_PREFIX="$1" ; shift 1 ;;
             ( -r | --recursive )
                 shift
