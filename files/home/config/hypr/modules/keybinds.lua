@@ -536,3 +536,8 @@ hl.bind(
     makeScratchpadToggle(terminal, "Terminal"),
     { description = "Toggle terminal scratchpad" }
 )
+hl.bind(
+    MOD .. " + SHIFT + return",
+    hl.dsp.window.move({ workspace = "special:Terminal" }),
+    { description = "Move window to terminal scratchpad" }
+)
