@@ -16,5 +16,5 @@ sudo pacman --needed --noconfirm -S power-profiles-daemon
 sudo pacman --needed --noconfirm -S libsecret gnome-keyring seahorse
 sudo pacman --needed --noconfirm -S fcitx5-im fcitx5-mozc
 sudo pacman --needed --noconfirm -S noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-dejavu ttf-font-awesome
-sudo pacman --needed --noconfirm -S ttf-jetbrains-mono-nerd ttf-victor-mono-nerd ttf-zed-mono-nerd ttf-firacode-nerd
+sudo pacman --needed --noconfirm -S ttf-jetbrains-mono-nerd ttf-firacode-nerd
 yay --needed --noconfirm -S noctalia-git

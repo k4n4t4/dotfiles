@@ -33,8 +33,3 @@ xdg-mime default mpv.desktop audio/x-m4a
 xdg-mime default mpv.desktop audio/opus
 xdg-mime default mpv.desktop audio/x-matroska
 xdg-mime default mpv.desktop audio/weba
-
-# sudo pacman --needed --noconfirm -S wezterm
-
-# sudo pacman --needed --noconfirm -S ghostty
-# git clone https://github.com/sahaj-b/ghostty-cursor-shaders ~/.config/ghostty/shaders
