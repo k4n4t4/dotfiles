@@ -1,5 +1,5 @@
 if cmd_exists git; then
-    if [ "$DOT_SCRIPT_MODE" = install ] && ! file_exist "$HOME/.config/git/config"; then
+    if [ "$SCRIPT_MODE" = "install" ] && ! file_exist "$HOME/.config/git/config"; then
         _print_info "git config"
         printf "  Continue? [Y/n]: "
         read -r RET

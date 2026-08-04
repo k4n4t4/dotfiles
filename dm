@@ -303,6 +303,19 @@ is_linked() {
     fi
 }
 
+script_source() {
+    # shellcheck disable=SC1090
+    . "$SCRIPTS_DIR/$1.sh"
+}
+
+script_exists() {
+    if [ -f "$SCRIPTS_DIR/$1.sh" ]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
 
 # Sub Commands
 
@@ -318,27 +331,18 @@ _usage() {
 }
 
 _run_script() {
-    DOT_IS_QUIET=false
-    DOT_IS_FORCE_MODE=false
-    DOT_ORIGIN_PATH="$FILES_DIR"
-    DOT_TARGET_PATH="$TARGET_DIR"
-    DOT_SCRIPT_NAME=""
-    DOT_SCRIPT_MODE="${1:-unknown}"
-
-    shift
-
-    case "$DOT_SCRIPT_MODE" in
-        ( install )
+    case "$SCRIPT_MODE" in
+        ( "install" )
             _dot() {
                 _dot_link "$@"
             }
             ;;
-        ( uninstall )
+        ( "uninstall" )
             _dot() {
                 _dot_unlink "$@"
             }
             ;;
-        ( check )
+        ( "check" )
             _dot() {
                 _dot_check "$@"
             }
@@ -355,17 +359,18 @@ _run_script() {
                 shift
                 break
                 ;;
-            ( -q | --quiet )
-                shift
-                DOT_IS_QUIET=true
-                ;;
             ( -f | --force )
                 shift
-                DOT_IS_FORCE_MODE=true
+                FORCE_MODE=true
+                ;;
+            ( -s | --files-path )
+                shift
+                FILES_DIR="$1"
+                shift 1
                 ;;
             ( -t | --target-path )
                 shift
-                DOT_TARGET_PATH="$1"
+                TARGET_DIR="$1"
                 shift 1
                 ;;
             ( * )
@@ -377,19 +382,15 @@ _run_script() {
 
     [ $# -eq 0 ] && set -- "default"
 
+    if script_exists "common"; then
+        script_source "common"
+    fi
+
     while [ $# -gt 0 ]; do
-        DOT_SCRIPT_NAME="$1"
-
-        if [ -f "$SCRIPTS_DIR/common.sh" ]; then
-            # shellcheck disable=SC1091
-            . "$SCRIPTS_DIR/common.sh"
-        fi
-
-        if [ -f "$SCRIPTS_DIR/$DOT_SCRIPT_NAME.sh" ]; then
-            # shellcheck disable=SC1090
-            . "$SCRIPTS_DIR/$DOT_SCRIPT_NAME.sh"
+        if script_exists "$1"; then
+            script_source "$1"
         else
-            _print_error "\"$DOT_SCRIPT_NAME\" is not found."
+            _print_error "\"$1\" is not found."
             return 1
         fi
 
@@ -401,27 +402,19 @@ _run_script() {
 # dot
 
 _dot_ask_continue() {
-  _print_ask "Continue? [Y/n]: "
-  case "$_print_ask_RESULT" in
-    ( [nN] )
-      RET=1
-      ;;
-    ( * )
-      RET=0
-      ;;
-  esac
+    _print_ask "Continue? [Y/n]: "
+    case "$_print_ask_RESULT" in
+        ( [nN] )
+            RET=1
+            ;;
+        ( * )
+            RET=0
+            ;;
+    esac
 }
 
 _dot_msg() {
     set -- "$1" "$2" "$3" "$4" "${5:-}"
-
-    if $DOT_IS_QUIET; then
-        case "$1" in
-            ( log | info )
-                return 0
-                ;;
-        esac
-    fi
 
     case "$2" in
         ( "$FILES_DIR/"* )
@@ -444,26 +437,12 @@ _dot_msg() {
 }
 
 _dot_link() {
-    if $dot__is_copy; then
-        if file_exists "$2"; then
-            _dot_msg log "$1" "<->" "$2" "(Already Exist)"
-            return 0
-        fi
-
-        if ! cp -- "$1" "$2"; then
-            _dot_msg fatal "$1" "--x" "$2" "(Faild)"
-            return 1
-        fi
-
-        _dot_msg success "$1" "-->" "$2" "(Copy)"
-    fi
-
     if file_exists "$2"; then
         if is_linked "$1" "$2"; then
             _dot_msg log "$1" "<->" "$2" "(Already Linked)"
             return 0
         fi
-        if ! $DOT_IS_FORCE_MODE && ! $dot__is_force; then
+        if ! $FORCE_MODE && ! $_dot__FORCE_MODE; then
             _dot_msg error "$1" "--x" "$2" "(Already Exist)"
             _dot_ask_continue
             return "$RET"
@@ -523,7 +502,7 @@ _dot_check() {
 }
 
 _dot_decorate_path() {
-    RET="$1"
+    _dot_decorate_path_RESULT="$1"
     case "$1" in
         ( "/"* )
             :
@@ -532,7 +511,7 @@ _dot_decorate_path() {
             shift
             while [ $# -gt 0 ]; do
                 if [ -n "$1" ]; then
-                    RET="$1/$RET"
+                    _dot_decorate_path_RESULT="$1/$_dot_decorate_path_RESULT"
                 fi
                 shift
             done
@@ -545,16 +524,15 @@ _dot() {
 }
 
 dot() {
-    dot__origin_root="$DOT_ORIGIN_PATH"
-    dot__target_root="$DOT_TARGET_PATH"
-    dot__origin_prefix=""
-    dot__target_prefix=""
-    dot__is_recursive=false
-    dot__is_force=false
-    dot__is_copy=false
-    dot__depth=-1
-    dot__origin=""
-    dot__target=""
+    _dot__FILES_DIR="$FILES_DIR"
+    _dot__TARGET_DIR="$TARGET_DIR"
+    _dot__FORCE_MODE="$FORCE_MODE"
+    _dot__FILES_PREFIX=""
+    _dot__TARGET_PREFIX=""
+    _dot__FILE=""
+    _dot__TARGET=""
+    _dot__IS_RECURSIVE=false
+    _dot__DEPTH=-1
 
     _optparser \
         d:1 depth:1 \
@@ -567,26 +545,22 @@ dot() {
     while [ $# -gt 0 ]; do
         case "$1" in
             ( -- ) shift ; break ;;
-            ( --origin-root ) shift ; dot__origin_root="$1" ; shift 1 ;;
-            ( --target-root ) shift ; dot__target_root="$1" ; shift 1 ;;
-            ( --origin-prefix ) shift ; dot__origin_prefix="$1" ; shift 1 ;;
-            ( --target-prefix ) shift ; dot__target_prefix="$1" ; shift 1 ;;
+            ( --origin-root ) shift ; _dot__FILES_DIR="$1" ; shift 1 ;;
+            ( --target-root ) shift ; _dot__TARGET_DIR="$1" ; shift 1 ;;
+            ( --origin-prefix ) shift ; _dot__FILES_PREFIX="$1" ; shift 1 ;;
+            ( --target-prefix ) shift ; _dot__TARGET_PREFIX="$1" ; shift 1 ;;
             ( -r | --recursive )
                 shift
-                dot__is_recursive=true
+                _dot__IS_RECURSIVE=true
                 ;;
             ( -f | --force )
                 shift
-                dot__is_force=true
+                _dot__FORCE_MODE=true
                 ;;
             ( -d | --depth )
                 shift
-                dot__depth="$1"
+                _dot__DEPTH="$1"
                 shift 1
-                ;;
-            ( -c | --copy )
-                shift
-                dot__is_copy=true
                 ;;
             ( * )
                 _print_error "Invalid Option: $1"
@@ -600,31 +574,27 @@ dot() {
         return 1
     fi
 
-    dot__origin="$1"
-    dot__target="${2:-"$1"}"
-    _dot_decorate_path "$dot__origin" "$dot__origin_prefix" "$dot__origin_root"
-    dot__origin="$RET"
-    _dot_decorate_path "$dot__target" "$dot__target_prefix" "$dot__target_root"
-    dot__target="$RET"
+    _dot__FILE="$1"
+    _dot__TARGET="${2:-"$1"}"
+    _dot_decorate_path "$_dot__FILE" "$_dot__FILES_PREFIX" "$_dot__FILES_DIR"
+    _dot__FILE="$_dot_decorate_path_RESULT"
+    _dot_decorate_path "$_dot__TARGET" "$_dot__TARGET_PREFIX" "$_dot__TARGET_DIR"
+    _dot__TARGET="$_dot_decorate_path_RESULT"
 
 
-    if [ -e "$dot__origin" ]; then
-        if [ -f "$dot__origin" ] || [ -d "$dot__origin" ]; then
-            if $dot__is_recursive && [ -d "$dot__origin" ]; then
-                _get_files_recursive "$dot__origin" "$dot__depth"
-                eval "set -- $_get_files_recursive_RESULT"
-                while [ $# -gt 0 ]; do
-                    _dot "$1" "$dot__target/${1#"$dot__origin/"}"
-                    shift
-                done
-            else
-                _dot "$dot__origin" "$dot__target"
-            fi
+    if [ -e "$_dot__FILE" ]; then
+        if $_dot__IS_RECURSIVE && [ -d "$_dot__FILE" ]; then
+            _get_files_recursive "$_dot__FILE" "$_dot__DEPTH"
+            eval "set -- $_get_files_recursive_RESULT"
+            while [ $# -gt 0 ]; do
+                _dot "$1" "$_dot__TARGET/${1#"$_dot__FILE/"}"
+                shift
+            done
         else
-            _print_error "Not supported file type: $dot__origin"
+            _dot "$_dot__FILE" "$_dot__TARGET"
         fi
     else
-        _print_error "File not found: $dot__origin"
+        _print_error "File not found: $_dot__FILE"
     fi
 }
 
@@ -642,6 +612,7 @@ WORK_DIR="$_dirname_RESULT"
 KERNEL_NAME="$(uname -s)"
 PARENT_SHELL="${PARENT_SHELL:-"$(ps -o ppid= -p $$ | xargs -I{} ps -o comm= -p {})"}"
 
+FORCE_MODE=false
 FILES_DIR="${FILES_DIR:-"$WORK_DIR/files"}"
 SCRIPTS_DIR="${SCRIPTS_DIR:-"$WORK_DIR/scripts"}"
 TARGET_DIR="${TARGET_DIR:-"$HOME"}"
@@ -666,15 +637,18 @@ main() {
             ;;
         ( "install" | "i" )
             shift
-            _run_script "install" "$@"
+            SCRIPT_MODE="install"
+            _run_script "$@"
             ;;
         ( "uninstall" | "u" )
             shift
-            _run_script "uninstall" "$@"
+            SCRIPT_MODE="uninstall"
+            _run_script "$@"
             ;;
         ( "check" | "c" )
             shift
-            _run_script "check" "$@"
+            SCRIPT_MODE="check"
+            _run_script "$@"
             ;;
         ( * )
             _print_error "Invalid Sub Command: \"$1\""
