@@ -398,6 +398,61 @@ _run_script() {
     done
 }
 
+_envsubstcp() {
+    if [ -f "$_dot__FILES_DIR/home/config/xdg/user-dirs.dirs" ]; then
+        set -a
+        # shellcheck disable=SC1091
+        . "$_dot__FILES_DIR/home/config/xdg/user-dirs.dirs"
+        set +a
+    fi
+
+    awk '
+    {
+        result = ""
+        remaining = $0
+        while (length(remaining) > 0) {
+            esc_pos = 0
+            if (match(remaining, /\\%/)) {
+                esc_pos = RSTART
+                esc_len = RLENGTH
+            }
+            tok_pos = 0
+            if (match(remaining, /%!(\\%|[^%])+%|%\$[A-Za-z0-9_]+%/)) {
+                tok_pos = RSTART
+                tok_len = RLENGTH
+            }
+            if (esc_pos == 0 && tok_pos == 0) {
+                result = result remaining
+                remaining = ""
+                continue
+            }
+            if (esc_pos > 0 && (tok_pos == 0 || esc_pos <= tok_pos)) {
+                result = result substr(remaining, 1, esc_pos - 1) "%"
+                remaining = substr(remaining, esc_pos + esc_len)
+                continue
+            }
+            result = result substr(remaining, 1, tok_pos - 1)
+            token = substr(remaining, tok_pos, tok_len)
+            if (substr(token, 2, 1) == "!") {
+                cmd = substr(token, 3, length(token) - 3)
+                gsub(/\\%/, "%", cmd)
+                value = ""
+                while ((cmd | getline cmdline) > 0) {
+                    value = (value == "") ? cmdline : value "\n" cmdline
+                }
+                close(cmd)
+            } else {
+                varname = substr(token, 3, length(token) - 3)
+                value = ENVIRON[varname]
+            }
+            result = result value
+            remaining = substr(remaining, tok_pos + tok_len)
+        }
+        print result
+    }
+    ' "$1" > "$2"
+}
+
 
 # dot
 
@@ -466,6 +521,15 @@ _dot_copy() {
         fi
     fi
 
+    if $_dot__TEMPLATE_MODE; then
+        if _envsubstcp "$1" "$2"; then
+            _dot_msg success "$1" "==>" "$2"
+            return 0
+        else
+            _dot_msg fatal "$1" "==x" "$2" "(Faild)"
+            return 0
+        fi
+    fi
     if cp -r -- "$1" "$2"; then
         _dot_msg success "$1" "==>" "$2"
         return 0
@@ -600,6 +664,7 @@ dot() {
     _dot__IS_RECURSIVE=false
     _dot__DEPTH=-1
     _dot__COPY_MODE=false
+    _dot__TEMPLATE_MODE=false
 
     _optparser \
         d:1 depth:1 \
@@ -632,6 +697,10 @@ dot() {
             ( -c | --copy )
                 shift
                 _dot__COPY_MODE=true
+                ;;
+            ( -t | --template )
+                shift
+                _dot__TEMPLATE_MODE=true
                 ;;
             ( * )
                 _print_error "Invalid Option: $1"
