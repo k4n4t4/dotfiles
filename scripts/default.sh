@@ -57,5 +57,5 @@ if cmd_exists navi; then
 fi
 
 if cmd_exists noctalia; then
-    dotconf "noctalia/config.toml" -ct
+    dotconf "noctalia" -rct
 fi

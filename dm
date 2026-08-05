@@ -630,6 +630,10 @@ _dot_msg() {
 }
 
 _dot_copy() {
+    if [ -d "$1" ]; then
+        return 0
+    fi
+
     if file_exists "$2"; then
         if $_dot__FORCE_MODE; then
             if ! is_deletable "$2"; then
@@ -668,7 +672,7 @@ _dot_copy() {
             return 0
         fi
     fi
-    if cp -r -- "$1" "$2"; then
+    if cp -- "$1" "$2"; then
         _dot_msg success "$1" "==>" "$2"
         return 0
     else
