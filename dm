@@ -407,49 +407,187 @@ _envsubstcp() {
     fi
 
     awk '
-    {
-        result = ""
-        remaining = $0
-        while (length(remaining) > 0) {
-            esc_pos = 0
-            if (match(remaining, /\\%/)) {
-                esc_pos = RSTART
-                esc_len = RLENGTH
-            }
-            tok_pos = 0
-            if (match(remaining, /%!(\\%|[^%])+%|%\$[A-Za-z0-9_]+%/)) {
-                tok_pos = RSTART
-                tok_len = RLENGTH
-            }
-            if (esc_pos == 0 && tok_pos == 0) {
-                result = result remaining
-                remaining = ""
-                continue
-            }
-            if (esc_pos > 0 && (tok_pos == 0 || esc_pos <= tok_pos)) {
-                result = result substr(remaining, 1, esc_pos - 1) "%"
-                remaining = substr(remaining, esc_pos + esc_len)
-                continue
-            }
-            result = result substr(remaining, 1, tok_pos - 1)
-            token = substr(remaining, tok_pos, tok_len)
-            if (substr(token, 2, 1) == "!") {
-                cmd = substr(token, 3, length(token) - 3)
-                gsub(/\\%/, "%", cmd)
-                value = ""
-                while ((cmd | getline cmdline) > 0) {
-                    value = (value == "") ? cmdline : value "\n" cmdline
+        function expand(remaining,    result, esc_pos, esc_len, tok_pos, tok_len,
+                                       token, cmd, varname, value, cmdline) {
+            result = ""
+            while (length(remaining) > 0) {
+                esc_pos = 0
+                if (match(remaining, /\\%/)) { esc_pos = RSTART; esc_len = RLENGTH }
+
+                tok_pos = 0
+                if (match(remaining, /%!(\\%|[^%])+%|%\$[A-Za-z0-9_]+%/)) {
+                    tok_pos = RSTART; tok_len = RLENGTH
                 }
-                close(cmd)
-            } else {
-                varname = substr(token, 3, length(token) - 3)
-                value = ENVIRON[varname]
+
+                if (esc_pos == 0 && tok_pos == 0) {
+                    result = result remaining
+                    remaining = ""
+                    continue
+                }
+
+                if (esc_pos > 0 && (tok_pos == 0 || esc_pos <= tok_pos)) {
+                    result = result substr(remaining, 1, esc_pos - 1) "%"
+                    remaining = substr(remaining, esc_pos + esc_len)
+                    continue
+                }
+
+                result = result substr(remaining, 1, tok_pos - 1)
+                token = substr(remaining, tok_pos, tok_len)
+
+                if (substr(token, 2, 1) == "!") {
+                    cmd = substr(token, 3, length(token) - 3)
+                    gsub(/\\%/, "%", cmd)
+                    value = ""
+                    while ((cmd | getline cmdline) > 0)
+                        value = (value == "") ? cmdline : value "\n" cmdline
+                    close(cmd)
+                } else {
+                    varname = substr(token, 3, length(token) - 3)
+                    value = ENVIRON[varname]
+                }
+
+                result = result value
+                remaining = substr(remaining, tok_pos + tok_len)
             }
-            result = result value
-            remaining = substr(remaining, tok_pos + tok_len)
+            return result
         }
-        print result
-    }
+
+        function effectiveActive(   i, a) {
+            a = 1
+            for (i = 1; i <= depth; i++) a = a && activeArr[i]
+            return a
+        }
+
+        function parentActiveOfTop(   i, a) {
+            a = 1
+            for (i = 1; i < depth; i++) a = a && activeArr[i]
+            return a
+        }
+
+        function classifyLine(trimmed) {
+            DIRECTIVE = "text"
+            DCMD = ""
+
+            if (trimmed == "%:%") {
+                DIRECTIVE = "else"
+            } else if (trimmed == "%?%") {
+                DIRECTIVE = "endif"
+            } else if (trimmed ~ /^%\?(\\%|[^%])*%$/) {
+                DCMD = substr(trimmed, 3, length(trimmed) - 3)
+                gsub(/\\%/, "%", DCMD)
+                DIRECTIVE = "if"
+            } else if (trimmed ~ /^%;(\\%|[^%])*%$/) {
+                DCMD = substr(trimmed, 3, length(trimmed) - 3)
+                gsub(/\\%/, "%", DCMD)
+                DIRECTIVE = "elif"
+            } else if (trimmed ~ /^%\?/ || trimmed ~ /^%:/ || trimmed ~ /^%;/) {
+                DIRECTIVE = "malformed"
+            }
+        }
+
+        function handleIf(dcmd,    parentActive) {
+            parentActive = effectiveActive()
+            depth++
+            hasElseArr[depth] = 0
+            if (parentActive) {
+                activeArr[depth] = (system(dcmd) == 0)
+                matchedArr[depth] = activeArr[depth]
+            } else {
+                activeArr[depth] = 0
+                matchedArr[depth] = 1
+            }
+        }
+
+        function handleElif(dcmd,    line) {
+            if (depth == 0) {
+                warn("%;cmd% without open %?cmd% block, treating as plain text")
+                emitIfActive(line)
+                return
+            }
+            if (hasElseArr[depth]) {
+                warn("%;cmd% after %:% in same block, treating as plain text")
+                emitIfActive(line)
+                return
+            }
+            if (matchedArr[depth]) {
+                activeArr[depth] = 0
+            } else if (parentActiveOfTop()) {
+                activeArr[depth] = (system(dcmd) == 0)
+                if (activeArr[depth]) matchedArr[depth] = 1
+            } else {
+                activeArr[depth] = 0
+                matchedArr[depth] = 1
+            }
+        }
+
+        function handleElse(    line) {
+            if (depth == 0) {
+                warn("%:% without open %?cmd% block, treating as plain text")
+                emitIfActive(line)
+                return
+            }
+            if (hasElseArr[depth]) {
+                warn("duplicate %:% in same block, treating as plain text")
+                emitIfActive(line)
+                return
+            }
+            hasElseArr[depth] = 1
+            if (matchedArr[depth]) {
+                activeArr[depth] = 0
+            } else {
+                activeArr[depth] = 1
+                matchedArr[depth] = 1
+            }
+        }
+
+        function handleEndif(    line) {
+            if (depth == 0) {
+                warn("%?% without open %?cmd% block, treating as plain text")
+                emitIfActive(line)
+                return
+            }
+            delete activeArr[depth]
+            delete matchedArr[depth]
+            delete hasElseArr[depth]
+            depth--
+        }
+
+        function warn(msg) {
+            print "warning: " msg > "/dev/stderr"
+        }
+
+        function emitIfActive(line) {
+            if (effectiveActive()) print expand(line)
+        }
+
+        BEGIN { depth = 0 }
+
+        {
+            trimmed = $0
+            sub(/^[ \t]+/, "", trimmed)
+            sub(/[ \t]+$/, "", trimmed)
+
+            classifyLine(trimmed)
+
+            if (DIRECTIVE == "if") {
+                handleIf(DCMD)
+            } else if (DIRECTIVE == "elif") {
+                handleElif(DCMD, $0)
+            } else if (DIRECTIVE == "else") {
+                handleElse($0)
+            } else if (DIRECTIVE == "endif") {
+                handleEndif($0)
+            } else {
+                if (DIRECTIVE == "malformed")
+                    warn("malformed directive, treating as plain text: " trimmed)
+                emitIfActive($0)
+            }
+        }
+
+        END {
+            if (depth > 0)
+                warn(depth " unclosed %?cmd% block(s) at end of input (missing %?%)")
+        }
     ' "$1" > "$2"
 }
 
