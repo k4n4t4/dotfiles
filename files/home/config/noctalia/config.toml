@@ -168,7 +168,7 @@ settings_show_advanced = true
     transparency_mode = "glass"
 
     [shell.screenshot]
-    directory = "~/pers/media/images/screenshots"
+    directory = "%!echo ${XDG_PICTURES_DIR:-~/pers/media/images}%/screenshots"
 
     [[shell.session.actions]]
     action = "lock"
@@ -221,25 +221,25 @@ wallpaper_scheme = "vibrant"
     enable_community_templates = false
 
 [wallpaper]
-directory = "~/pers/media/images/wallpapers"
-directory_dark = "~/pers/media/images/wallpapers"
-directory_light = "~/pers/media/images/wallpapers"
+directory = "%!echo ${XDG_PICTURES_DIR:-~/pers/media/images}%/wallpapers"
+directory_dark = "%!echo ${XDG_PICTURES_DIR:-~/pers/media/images}%/wallpapers"
+directory_light = "%!echo ${XDG_PICTURES_DIR:-~/pers/media/images}%/wallpapers"
 transition_on_startup = true
 
     [wallpaper.automation]
     interval_seconds = 1
 
     [wallpaper.default]
-    path = "~/pers/media/images/wallpapers/wallpaper.png"
+    path = "%!echo ${XDG_PICTURES_DIR:-~/pers/media/images}%/wallpapers/wallpaper.png"
 
     [wallpaper.last]
-    path = "~/pers/media/images/wallpapers/wallpaper.png"
+    path = "%!echo ${XDG_PICTURES_DIR:-~/pers/media/images}%/wallpapers/wallpaper.png"
 
     [wallpaper.monitors.DP-1]
-    path = "~/pers/media/images/wallpapers/wallpaper.png"
+    path = "%!echo ${XDG_PICTURES_DIR:-~/pers/media/images}%/wallpapers/wallpaper.png"
 
     [wallpaper.monitors.eDP-1]
-    path = "~/pers/media/images/wallpapers/wallpaper.png"
+    path = "%!echo ${XDG_PICTURES_DIR:-~/pers/media/images}%/wallpapers/wallpaper.png"
 
 [widget.active_window]
 icon_size = 20
