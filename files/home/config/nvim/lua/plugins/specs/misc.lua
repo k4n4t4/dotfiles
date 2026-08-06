@@ -72,6 +72,11 @@ return {
             mason_lspconfig.setup {}
         end,
     },
+    {
+        "mrcjkb/rustaceanvim",
+        version = "^9",
+        lazy = false,
+    },
 
 
     --[[ EDITOR PLUGINS ]]--
