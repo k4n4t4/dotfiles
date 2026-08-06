@@ -53,6 +53,12 @@ autocmd("LspAttach", {
     end,
 })
 
+-- diagnostic keymaps
+set('n', '<C-S-k>', vim.diagnostic.open_float, { desc = "Open Diagnostic Float" })
+set('n', '<Leader>df', vim.diagnostic.open_float, { desc = "Open Diagnostic Float" })
+set('n', '<Leader>dl', vim.diagnostic.setloclist, { desc = "Set Loclist" })
+set('n', '<Leader>dq', vim.diagnostic.setqflist, { desc = "Set Qflist" })
+
 -- set keymaps for unlisted filetypes
 autocmd("FileType", {
     group = augroup("UnlistFileType Keymaps", { clear = true }),
