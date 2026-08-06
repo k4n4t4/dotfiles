@@ -44,7 +44,7 @@ autocmd("LspAttach", {
         set('n', '<Leader>ln', vim.lsp.buf.rename, { buffer = buf, desc = "Rename" })
         set('n', '<Leader>ld', vim.lsp.buf.definition, { buffer = buf, desc = "Definition" })
         set('n', '<Leader>lt', vim.lsp.buf.type_definition, { buffer = buf, desc = "Type Definition" })
-        set('n', '<Leader>lc', vim.lsp.buf.code_action, { buffer = buf, desc = "Code Action" })
+        set('n', '<Leader>la', vim.lsp.buf.code_action, { buffer = buf, desc = "Code Action" })
         set('n', '<Leader>lr', vim.lsp.buf.references, { buffer = buf, desc = "References" })
         set('n', '<Leader>li', vim.lsp.buf.implementation, { buffer = buf, desc = "Implementation" })
         set('n', '<Leader>lD', vim.lsp.buf.declaration, { buffer = buf, desc = "Declaration" })
