@@ -17,6 +17,25 @@ set('n', '<leader>H', "<cmd>noh<cr>", { desc = "No hlsearch" })
 
 set({ 'n', 'x' }, '<leader>a', "ggVoG", { desc = "Select All" })
 
+set('n', '<C-p>', "p`[v`]=", { desc = "Paste after cursor and auto-indent" })
+set('n', '<C-S-p>', "P`[v`]=", { desc = "Paste before cursor and auto-indent" })
+
+vim.keymap.set('n', 'dM', '<Cmd>delmarks! | redraw!<CR>', { desc = "Delete all local marks and redraw" })
+vim.keymap.set('n', 'dm', function()
+    local char = vim.fn.getcharstr()
+    if char:match("[a-zA-Z0-9]") then
+        vim.cmd("delmarks " .. char)
+        vim.cmd("redraw!")
+    end
+end, { desc = "Delete a specific mark and redraw" })
+vim.keymap.set('n', 'm', function()
+    local char = vim.fn.getcharstr()
+    if char:match("[a-zA-Z0-9]") then
+        vim.cmd("normal! m" .. char)
+        vim.cmd("redraw!")
+    end
+end, { desc = "Set a mark and redraw" })
+
 set("x", "A", function()
     if vim.fn.mode(0) == "V" then
         return "<C-v>0o$A"
@@ -31,6 +50,7 @@ set("x", "I", function()
         return "I"
     end
 end, { expr = true, desc = "Insert at beginning of line in visual mode" })
+
 
 -- lsp keymaps
 autocmd("LspAttach", {
@@ -53,11 +73,13 @@ autocmd("LspAttach", {
     end,
 })
 
+
 -- diagnostic keymaps
 set('n', '<C-S-k>', vim.diagnostic.open_float, { desc = "Open Diagnostic Float" })
 set('n', '<Leader>df', vim.diagnostic.open_float, { desc = "Open Diagnostic Float" })
 set('n', '<Leader>dl', vim.diagnostic.setloclist, { desc = "Set Loclist" })
 set('n', '<Leader>dq', vim.diagnostic.setqflist, { desc = "Set Qflist" })
+
 
 -- set keymaps for unlisted filetypes
 autocmd("FileType", {
