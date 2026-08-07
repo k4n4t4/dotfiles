@@ -17,8 +17,8 @@ set('n', '<leader>H', "<cmd>noh<cr>", { desc = "No hlsearch" })
 
 set({ 'n', 'x' }, '<leader>a', "ggVoG", { desc = "Select All" })
 
-set('n', '<C-p>', "p`[v`]=", { desc = "Paste after cursor and auto-indent" })
-set('n', '<C-S-p>', "P`[v`]=", { desc = "Paste before cursor and auto-indent" })
+set({ 'n', 'x' }, '<C-p>', "p`[v`]=", { desc = "Paste after cursor and auto-indent" })
+set({ 'n', 'x' }, '<C-S-p>', "P`[v`]=", { desc = "Paste before cursor and auto-indent" })
 
 vim.keymap.set('n', 'dM', '<Cmd>delmarks! | redraw!<CR>', { desc = "Delete all local marks and redraw" })
 vim.keymap.set('n', 'dm', function()
