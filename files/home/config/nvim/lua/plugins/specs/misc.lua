@@ -455,7 +455,6 @@ return {
     -- completion
     {
         "saghen/blink.cmp",
-        enabled = false,
         version = '*',
         dependencies = {
             "L3MON4D3/LuaSnip",
