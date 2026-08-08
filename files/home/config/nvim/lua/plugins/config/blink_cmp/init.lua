@@ -74,17 +74,11 @@ function M.config()
             },
         },
         sources = {
-            default = { "copilot", "avante", "codecompanion", "path", "lsp", "snippets", "obsidian", "obsidian_new", "obsidian_tags", "buffer", "calc", "emoji", "git", "dictionary" },
+            default = { "copilot", "codecompanion", "path", "lsp", "snippets", "obsidian", "obsidian_new", "obsidian_tags", "buffer", "calc", "emoji", "git", "dictionary" },
             providers = {
                 copilot = {
                     name = "Copilot",
                     module = "blink-cmp-copilot",
-                    score_offset = 600,
-                    async = true,
-                },
-                avante = {
-                    name = "Avante",
-                    module = "blink-cmp-avante",
                     score_offset = 600,
                     async = true,
                 },

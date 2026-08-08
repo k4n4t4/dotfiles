@@ -466,8 +466,7 @@ return {
             "xzbdmw/colorful-menu.nvim",
 
             "Kaiser-Yang/blink-cmp-dictionary",
-            'Kaiser-Yang/blink-cmp-git',
-            'Kaiser-Yang/blink-cmp-avante',
+            "Kaiser-Yang/blink-cmp-git",
 
             "epwalsh/obsidian.nvim",
             { "saghen/blink.compat", version = false },
