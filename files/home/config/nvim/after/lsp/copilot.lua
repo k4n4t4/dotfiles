@@ -91,7 +91,8 @@ return {
                             newText = item.insertText,
                             range = item.range,
                         } or nil,
-                        kind = vim.lsp.protocol.CompletionItemKind["Copilot"],
+                        kind_icon = "",
+                        kind_hl = "Normal",
                         score_offset = 600,
                         detail = item.detail or "Copilot",
                         documentation = {
