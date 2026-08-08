@@ -74,7 +74,19 @@ function M.config()
             },
         },
         sources = {
-            default = { "codecompanion", "path", "lsp", "snippets", "obsidian", "obsidian_new", "obsidian_tags", "buffer", "calc", "git", "dictionary" },
+            default = {
+                "codecompanion",
+                "path",
+                "lsp",
+                "snippets",
+                "obsidian",
+                "obsidian_new",
+                "obsidian_tags",
+                "buffer",
+                "calc",
+                "git",
+                "dictionary",
+            },
             providers = {
                 codecompanion = {
                     name = "CodeCompanion",
@@ -153,11 +165,13 @@ function M.config()
                     max_items = 5,
                     opts = {
                         dictionary_files = (function()
-                            local dict = "/usr/share/dict/words"
-                            if vim.uv.fs_stat(dict) then
-                                return { dict }
+                            local dicts = {}
+                            for _, dict in ipairs(vim.fn.glob("/usr/share/dict/*", true, true)) do
+                                if vim.uv.fs_stat(dict) then
+                                    table.insert(dicts, dict)
+                                end
                             end
-                            return {}
+                            return dicts
                         end)()
                     },
                 },

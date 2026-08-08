@@ -430,6 +430,7 @@ return {
         "saghen/blink.cmp",
         version = '*',
         dependencies = {
+            { "saghen/blink.compat", version = false },
             "L3MON4D3/LuaSnip",
             "rafamadriz/friendly-snippets",
 
@@ -440,7 +441,6 @@ return {
             "Kaiser-Yang/blink-cmp-git",
 
             "epwalsh/obsidian.nvim",
-            { "saghen/blink.compat", version = false },
             "hrsh7th/cmp-calc",
         },
         event = { "InsertEnter", "CmdLineEnter" },
