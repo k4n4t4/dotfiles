@@ -2,7 +2,7 @@ local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 
 
--- highlight yank area
+-- highlight on yank
 autocmd("TextYankPost", {
     group = augroup("TextYankPost", { clear = true }),
     callback = function()
@@ -10,9 +10,8 @@ autocmd("TextYankPost", {
     end,
 })
 
--- fcitx5
-autocmd("User", {
-    pattern = "Ready",
+-- disable fcitx5 when leaving insert mode
+autocmd("SafeState", {
     once = true,
     callback = vim.schedule_wrap(function()
         if vim.fn.executable("fcitx5") == 1 then
@@ -43,7 +42,6 @@ autocmd("BufReadPost", {
 
 -- toggle relative number
 local group = augroup("toggle_relative_number", { clear = true })
-
 autocmd("InsertEnter", {
     group = group,
     callback = function()
@@ -53,7 +51,6 @@ autocmd("InsertEnter", {
         end
     end,
 })
-
 autocmd("InsertLeave", {
     group = group,
     callback = function()
@@ -64,7 +61,7 @@ autocmd("InsertLeave", {
     end,
 })
 
--- hide line number
+-- hide line number for certain filetypes
 autocmd("FileType", {
     group = augroup("hide_line_number", { clear = true }),
     pattern = { "help", "startify", "dashboard", "snacks_dashboard", "packer", "neogitstatus", "man" },
@@ -73,5 +70,20 @@ autocmd("FileType", {
         vim.opt_local.relativenumber = false
         vim.opt_local.signcolumn = "no"
         vim.opt_local.foldcolumn = "0"
+    end,
+})
+
+-- treesitter
+vim.api.nvim_create_autocmd("FileType", {
+    group = vim.api.nvim_create_augroup("TreesitterStart", { clear = true }),
+    callback = function(_)
+        local ok, _ = pcall(vim.treesitter.start)
+        if ok then
+            vim.opt.foldmethod = "expr"
+            vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+            vim.opt.foldtext = ""
+            vim.opt.foldlevel = 99
+            vim.opt.foldlevelstart = 99
+        end
     end,
 })

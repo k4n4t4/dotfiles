@@ -82,6 +82,10 @@ set('n', '<Leader>dq', vim.diagnostic.setqflist, { desc = "Set Qflist" })
 
 
 -- set keymaps for unlisted filetypes
+local function unlist_filetype_keymaps(event)
+    vim.bo[event.buf].buflisted = false
+    vim.keymap.set("n", "q", "<Cmd>close<CR>", { buffer = event.buf, silent = true })
+end
 autocmd("FileType", {
     group = augroup("UnlistFileType Keymaps", { clear = true }),
     pattern = {
@@ -93,15 +97,10 @@ autocmd("FileType", {
         "query",
         "scratch",
     },
-    callback = function(event)
-        vim.bo[event.buf].buflisted = false
-        vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
-    end,
+    callback = unlist_filetype_keymaps,
 })
 -- set keymaps for cmdwin
 autocmd("CmdwinEnter", {
     group = augroup("Cmdwin Keymaps", { clear = true }),
-    callback = function(args)
-        vim.keymap.set("n", "q", "<Cmd>quit<CR>", { buffer = args.buf })
-    end,
+    callback = unlist_filetype_keymaps
 })
