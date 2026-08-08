@@ -1,20 +1,56 @@
+local function get_indent(text)
+    local match = text:match('^%s+')
+    return match or ''
+end
+
+local function normalize_indent(text)
+    local indent = get_indent(text)
+    if not indent or #indent == 0 then
+        return text
+    end
+
+    local lines = {}
+    for line in text:gmatch('[^\r\n]+') do
+        if line:find('^' .. indent) then
+            table.insert(lines, line:sub(#indent + 1))
+        else
+            table.insert(lines, line)
+        end
+    end
+    return table.concat(lines, '\n')
+end
+
 return {
     root_dir = function(bufnr, callback)
-        local fname = vim.fs.basename(vim.api.nvim_buf_get_name(bufnr))
-        local disable_patterns = { 'env', 'conf', 'local', 'private' }
-        local is_disabled = vim.iter(disable_patterns):any(function(pattern)
-            return string.match(fname, pattern)
-        end)
-        if is_disabled then
-            return
+        local fname = vim.api.nvim_buf_get_name(bufnr)
+        local basename = vim.fs.basename(fname)
+        local disable_patterns = {
+            '%f[%w]env%f[%W]',
+            '%f[%w]conf%f[%W]',
+            '%f[%w]local%f[%W]',
+            '%f[%w]private%f[%W]',
+        }
+        for _, pattern in ipairs(disable_patterns) do
+            if basename:lower():match(pattern) then
+                return
+            end
         end
-        local root_dir = vim.fs.root(bufnr, { '.git' })
-        if root_dir then
-            return callback(root_dir)
-        end
+
+        local root_markers = {
+            '.git',
+            'Makefile',
+            'package.json',
+            'Cargo.toml',
+            'go.mod',
+            'pyproject.toml',
+            'setup.py',
+            'requirements.txt',
+        }
+        local root_dir = vim.fs.root(bufnr, root_markers)
+        if root_dir then callback(root_dir) end
     end,
     on_init = function(client)
-        -- inline completion to completion
+        -- Convert inline completion to regular completion
 
         client.server_capabilities.completionProvider = { triggerCharacters = {} }
         local orig_request = client.request
@@ -44,12 +80,25 @@ return {
                 local items = {}
                 for _, item in ipairs(result.items) do
                     local label = item.insertText:gsub('^%s+', ''):gsub('%s+$', '')
+                    local normalized_text = normalize_indent(item.insertText)
+                    local language = vim.bo[target_bufnr].filetype or vim.bo[target_bufnr].ft or 'code'
+                    local documentation = string.format('```%s\n%s\n```', language, normalized_text)
+
                     table.insert(items, {
                         label = label,
                         insertText = item.insertText,
-                        textEdit = item.range and { newText = item.insertText, range = item.range } or nil,
-                        kind = item.kind or 1,
+                        textEdit = item.range and {
+                            newText = item.insertText,
+                            range = item.range,
+                        } or nil,
+                        kind = vim.lsp.protocol.CompletionItemKind["Copilot"],
                         score_offset = 600,
+                        detail = item.detail or "Copilot",
+                        documentation = {
+                            kind = 'markdown',
+                            value = documentation,
+                        },
+                        menu = "[Copilot]"
                     })
                 end
 
