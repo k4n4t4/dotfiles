@@ -39,10 +39,6 @@ return {
 
     --[[ LSP PLUGINS ]]--
     {
-        "neovim/nvim-lspconfig",
-        event = "VeryLazy",
-    },
-    {
         "mason-org/mason.nvim",
         opts = {
             PATH = "append",
@@ -66,6 +62,9 @@ return {
     },
     {
         "mason-org/mason-lspconfig.nvim",
+        dependencies = {
+            "neovim/nvim-lspconfig",
+        },
         event = "VeryLazy",
         config = function()
             local mason_lspconfig = require("mason-lspconfig")
