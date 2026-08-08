@@ -74,14 +74,8 @@ function M.config()
             },
         },
         sources = {
-            default = { "copilot", "codecompanion", "path", "lsp", "snippets", "obsidian", "obsidian_new", "obsidian_tags", "buffer", "calc", "emoji", "git", "dictionary" },
+            default = { "codecompanion", "path", "lsp", "snippets", "obsidian", "obsidian_new", "obsidian_tags", "buffer", "calc", "git", "dictionary" },
             providers = {
-                copilot = {
-                    name = "Copilot",
-                    module = "blink-cmp-copilot",
-                    score_offset = 600,
-                    async = true,
-                },
                 codecompanion = {
                     name = "CodeCompanion",
                     module = "codecompanion.providers.completion.blink",
@@ -138,18 +132,6 @@ function M.config()
                     name = "calc",
                     module = "blink.compat.source",
                     score_offset = 300,
-                    async = true,
-                },
-                emoji = {
-                    module = "blink-emoji",
-                    name = "Emoji",
-                    score_offset = 200,
-                    opts = {
-                        insert = true,
-                        trigger = function()
-                            return { ":" }
-                        end,
-                    },
                     async = true,
                 },
                 git = {
