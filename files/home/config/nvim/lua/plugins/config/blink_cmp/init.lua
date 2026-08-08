@@ -206,8 +206,6 @@ function M.config()
             ['<C-k>'] = { 'show_signature', 'hide_signature', 'fallback' },
         },
     }
-
-    vim.api.nvim_set_hl(0, "BlinkCmpGhostText", { link = "Comment" })
 end
 
 return M
