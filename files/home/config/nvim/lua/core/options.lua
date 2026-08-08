@@ -54,15 +54,112 @@ vim.opt.smartcase = true
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 
--- wildmenu
-vim.opt.wildignorecase = true
-vim.opt.wildmode = "list:full"
-
 -- incremental command
 vim.opt.inccommand = "split"
 
--- autocomplete
-vim.opt.autocomplete = true
+-- winblend
+vim.opt.winblend = 25
+
+-- popup menu
+vim.opt.pumheight = 10
+vim.opt.pumblend = 10
+vim.opt.winborder = "none"
+vim.opt.pumborder = "none"
+
+-- complete
+if true then
+    vim.opt.complete:append('o')
+    vim.opt.autocomplete = true
+    vim.opt.completeopt = { 'menu', 'menuone', 'noselect', 'fuzzy' }
+
+    vim.api.nvim_create_autocmd('LspAttach', {
+        callback = function(ev)
+            local client = vim.lsp.get_client_by_id(ev.data.client_id)
+            if not client then return end
+            if not client:supports_method('textDocument/completion') then return end
+            vim.lsp.completion.enable(true, ev.data.client_id, ev.buf, {
+                autotrigger = true,
+                convert = function(item)
+                    local abbr = item.label
+                    abbr = abbr:gsub('%b()', ''):gsub('%b{}', '')
+                    abbr = abbr:match('[%w_.]+.*') or abbr
+                    abbr = #abbr > 15 and abbr:sub(1, 14) .. '…' or abbr
+                    local menu = item.detail or ''
+                    menu = #menu > 15 and menu:sub(1, 14) .. '…' or menu
+                    return { abbr = abbr, menu = menu }
+                end,
+            })
+        end,
+    })
+
+    vim.keymap.set({ 'i', 's' }, '<Tab>', function()
+        if vim.fn.pumvisible() == 1 then
+            return '<C-n>'
+        elseif vim.snippet.active({ direction = 1 }) then
+            return '<Cmd>lua vim.snippet.jump(1)<CR>'
+        else
+            return '<Tab>'
+        end
+    end, { expr = true })
+
+    vim.keymap.set({ 'i', 's' }, '<S-Tab>', function()
+        if vim.fn.pumvisible() == 1 then
+            return '<C-p>'
+        elseif vim.snippet.active({ direction = -1 }) then
+            return '<Cmd>lua vim.snippet.jump(-1)<CR>'
+        else
+            return '<S-Tab>'
+        end
+    end, { expr = true })
+
+    vim.keymap.set('i', '<CR>', function()
+        if vim.fn.pumvisible() == 1 and vim.fn.complete_info({ 'selected' }).selected ~= -1 then
+            return '<C-y>'
+        end
+        return '<CR>'
+    end, { expr = true })
+
+    vim.keymap.set('i', '<C-e>', function()
+        return vim.fn.pumvisible() == 1 and '<C-e>' or '<C-e>'
+    end, { expr = true })
+
+    vim.opt.wildmode = 'noselect:lastused,full'
+    vim.opt.wildoptions = 'pum,fuzzy'
+    vim.opt.wildignorecase = true
+
+    vim.api.nvim_create_autocmd('CmdlineChanged', {
+        pattern = { ':', '/', '?' },
+        callback = function() vim.fn.wildtrigger() end,
+    })
+
+    local sig_timer = nil
+
+    vim.api.nvim_create_autocmd('LspAttach', {
+        callback = function(ev)
+            local client = vim.lsp.get_client_by_id(ev.data.client_id)
+            if not client or not client:supports_method('textDocument/signatureHelp') then return end
+
+            local trigger_chars = (client.server_capabilities.signatureHelpProvider or {}).triggerCharacters or {}
+            local retrigger_chars = (client.server_capabilities.signatureHelpProvider or {}).retriggerCharacters or {}
+            local chars = vim.list_extend(vim.deepcopy(trigger_chars), retrigger_chars)
+
+            vim.api.nvim_create_autocmd('InsertCharPre', {
+                buffer = ev.buf,
+                callback = function()
+                    if vim.fn.pumvisible() == 1 then return end
+                    local char = vim.v.char
+                    if not vim.tbl_contains(chars, char) then return end
+                    if sig_timer then sig_timer:stop() end
+                    sig_timer = vim.defer_fn(function()
+                        vim.lsp.buf.signature_help({ focusable = false })
+                    end, 50)
+                end,
+            })
+        end,
+    })
+
+    vim.keymap.set('i', '<C-k>', vim.lsp.buf.signature_help, { desc = 'signature help' })
+end
 
 
 --[[ UI SETTINGS ]]--
@@ -93,15 +190,6 @@ vim.opt.belloff = "all"
 -- scrolloff
 vim.opt.scrolloff = 5
 vim.opt.sidescrolloff = 5
-
--- popup menu
-vim.opt.pumheight = 10
-vim.opt.pumblend = 10
-vim.opt.winborder = "none"
-vim.opt.pumborder = "none"
-
--- winblend
-vim.opt.winblend = 25
 
 -- listchars
 vim.opt.list = true
