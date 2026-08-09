@@ -338,22 +338,6 @@ return {
         end,
     },
 
-    -- task runner
-    {
-        'stevearc/overseer.nvim',
-        cmd = {
-            "OverseerOpen",
-            "OverseerToggle",
-            "OverseerClose",
-            "OverseerRun",
-            "OverseerShell",
-            "OverseerTaskAction",
-        },
-        config = function()
-            require("overseer").setup {}
-        end,
-    },
-
     -- context
     {
         "nvim-treesitter/nvim-treesitter-context",
