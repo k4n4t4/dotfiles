@@ -115,7 +115,7 @@ return {
 
             -- terminal
             { "<leader>kk", function() Snacks.terminal(nil, { win = { position = "bottom" } }) end, desc = "Toggle Terminal" },
-            { "<leader>kf", function() Snacks.terminal(nil, { win = { border = "single", position = "float" } }) end, desc = "Float Terminal" },
+            { "<leader>kf", function() Snacks.terminal(nil, { win = { backdrop = false, border = "single", position = "float" } }) end, desc = "Float Terminal" },
 
             -- toggle
             { "<leader>z",  function() Snacks.zen() end, desc = "Toggle Zen Mode" },
