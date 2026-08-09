@@ -56,5 +56,39 @@
             "request.setAttribute(\"${1:name}\", ${2:value});$0"
         ],
         "description": "Set request attribute"
+    },
+    "Main class": {
+        "prefix": "class_main",
+        "body": [
+            "public class ${TM_FILENAME_BASE} {",
+            "    public static void main(String[] args) {",
+            "        $0",
+            "    }",
+            "}"
+        ],
+        "description": "Create a Java main class"
+    },
+    "Println": {
+        "prefix": "println",
+        "body": [
+            "System.out.println($1);$0"
+        ],
+        "description": "Print a line to the console"
+    },
+    "Input Scanner": {
+        "prefix": "input_scanner",
+        "body": [
+            "Scanner scanner = new Scanner(System.in);",
+            "$0"
+        ],
+        "description": "Import Scanner and create an instance for user input"
+    },
+    "BufferedReader Input": {
+        "prefix": "input_bufferedreader",
+        "body": [
+            "BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));",
+            "$0"
+        ],
+        "description": "Import BufferedReader and create an instance for user input"
     }
 }
