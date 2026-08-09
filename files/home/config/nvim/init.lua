@@ -1,12 +1,12 @@
 vim.loader.enable()
 
 if vim.g.vscode then
-    require "vscode-nvim"
+    require "hosts.vscode"
     return
 end
 
 if vim.g.neovide then
-    require "neovide"
+    require "hosts.neovide"
 end
 
 require "core"

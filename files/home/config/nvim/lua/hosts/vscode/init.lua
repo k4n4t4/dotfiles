@@ -1,4 +1,4 @@
-local vscode = require('vscode')
+local vscode = require "vscode"
 
 require "core.options"
 require "core.keymaps"
@@ -9,29 +9,29 @@ local keymap = vim.keymap
 local set = keymap.set
 
 -- fold
-set('n', 'zc', function()
+set("n", "zc", function()
     vscode.action("editor.fold")
 end)
-set('n', 'zC', function()
+set("n", "zC", function()
     vscode.action("editor.foldRecursively")
 end)
-set('n', 'zM', function()
+set("n", "zM", function()
     vscode.action("editor.foldAll")
 end)
-set('n', 'zo', function()
+set("n", "zo", function()
     vscode.action("editor.unfold")
 end)
-set('n', 'zO', function()
+set("n", "zO", function()
     vscode.action("editor.unfoldRecursively")
 end)
-set('n', 'zR', function()
+set("n", "zR", function()
     vscode.action("editor.unfoldAll")
 end)
-set('n', 'za', function()
+set("n", "za", function()
     vscode.action("editor.toggleFold")
 end)
 
 -- tree
-set('n', '<LEADER>e', function()
+set("n", "<LEADER>e", function()
     vscode.action("workbench.action.toggleSidebarVisibility")
 end)
