@@ -459,7 +459,7 @@ return {
         version = '*',
         dependencies = {
             { "saghen/blink.compat", version = false },
-            "L3MON4D3/LuaSnip",
+            "saghen/blink.lib",
             "rafamadriz/friendly-snippets",
 
             'brenoprata10/nvim-highlight-colors',
@@ -471,6 +471,10 @@ return {
             "epwalsh/obsidian.nvim",
             "hrsh7th/cmp-calc",
         },
+        build = function()
+            ---@diagnostic disable-next-line: undefined-field
+            require('blink.cmp').build():pwait()
+        end,
         event = { "InsertEnter", "CmdLineEnter" },
         config = require("plugins.config.blink_cmp").config,
     },

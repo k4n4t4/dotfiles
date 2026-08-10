@@ -1,4 +1,11 @@
 {
+    "Random number": {
+        "prefix": "rand",
+        "body": [
+            "$RANDOM"
+        ],
+        "description": "Insert a random number"
+    },
     "Todo with Date": {
         "prefix": "todo",
         "body": [

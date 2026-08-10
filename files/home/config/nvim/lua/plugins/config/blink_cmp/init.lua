@@ -27,18 +27,13 @@ end
 function M.config()
     vim.opt.autocomplete = false
 
-    local loader = require("luasnip.loaders.from_vscode")
-    loader.lazy_load()
-    loader.lazy_load { paths = { vim.fn.stdpath("config") .. "/snippets" } }
-
-    ---@diagnostic disable-next-line: undefined-field
-    local winblend = vim.opt.winblend:get() or 0
+    local winblend = vim.o.winblend
 
     require("blink.cmp").setup {
         fuzzy = { implementation = "prefer_rust_with_warning" },
         signature = {
             enabled = true,
-            window = { winblend = winblend, show_documentation = true }
+            window = { winblend = vim.o.winblend, show_documentation = true }
         },
         completion = {
             list = { selection = { preselect = false } },
