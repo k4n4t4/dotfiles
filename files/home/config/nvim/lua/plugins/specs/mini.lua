@@ -177,6 +177,38 @@ return {
                     ["saghen/blink.cmp"] = true,
                 },
             }
+            vim.api.nvim_create_autocmd("ColorScheme", {
+                group = vim.api.nvim_create_augroup("ColorSchemeFix", { clear = true }),
+                callback = function()
+                    local normal_hl = vim.api.nvim_get_hl(0, { name = "Normal", link = false })
+
+                    local targets = {
+                        "WinSeparator",
+                        "FloatBorder",
+                        "VertSplit",
+                        "LineNr",
+                        "LineNrAbove",
+                        "LineNrBelow",
+                        "CursorColumn",
+                        "CursorLineNr",
+                        "CursorLineSign",
+                        "SignColumn",
+                        "CursorLineSign",
+                        "EndOfBuffer",
+                        "NonText",
+                        "Folded",
+                        "FoldColumn",
+                        "NormalFloat",
+                        "Terminal",
+                    }
+
+                    for _, target in ipairs(targets) do
+                        local target_hl = vim.api.nvim_get_hl(0, { name = target, link = false })
+                        local new_hl = vim.tbl_extend("force", target_hl, { bg = normal_hl.bg })
+                        vim.api.nvim_set_hl(0, target, new_hl)
+                    end
+                end,
+            })
             vim.api.nvim_exec_autocmds('ColorScheme', {})
         end,
     },
