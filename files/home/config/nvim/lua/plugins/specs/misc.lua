@@ -74,6 +74,17 @@ return {
         version = "^9",
         lazy = false,
     },
+    {
+        "folke/lazydev.nvim",
+        ft = "lua",
+        opts = {
+            library = {
+                { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+                { path = "snacks.nvim", words = { "Snacks" } },
+                { path = "lazy.nvim", words = { "LazyVim" } },
+            },
+        },
+    },
 
 
     --[[ EDITOR PLUGINS ]]--
@@ -522,10 +533,6 @@ return {
                         },
                         preferred_link_style = "wiki",
                         ui = { enable = false, },
-                        completion = {
-                            blink = true,
-                            min_chars = 2,
-                        },
                     }
                 end
             end

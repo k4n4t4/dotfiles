@@ -90,6 +90,7 @@ do
         pending = nil
     end
 
+    ---@diagnostic disable-next-line: duplicate-set-field
     _G.visual_swap_opfunc = function(motion_type)
         local s = vim.api.nvim_buf_get_mark(0, '[')
         local e = vim.api.nvim_buf_get_mark(0, ']')
