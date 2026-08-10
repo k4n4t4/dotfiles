@@ -48,6 +48,10 @@ if cmd_exists kitty; then
     dotconf "kitty" -r
 fi
 
+if cmd_exists wezterm; then
+    dotconf "wezterm" -r
+fi
+
 if cmd_exists eza; then
     dotconf "eza" -r
 fi
