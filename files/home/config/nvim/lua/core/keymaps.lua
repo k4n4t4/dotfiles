@@ -62,68 +62,19 @@ set("x", "I", function()
     end
 end, { expr = true, desc = "Insert at beginning of line in visual mode" })
 
-do
-    local ns_id = vim.api.nvim_create_namespace("VisualSwap")
-    local swap_state = nil
-
-    vim.keymap.set('x', '<leader>s', function()
-        local saved_z = vim.fn.getreg('z')
-        local saved_z_type = vim.fn.getregtype('z')
-
-        vim.cmd.normal { vim.api.nvim_replace_termcodes('<Esc>gv"zy', true, false, true), bang = true }
-
-        local current_text = vim.fn.getreg('z')
-        local current_regtype = vim.fn.getregtype('z')
-        local current_mode = vim.fn.visualmode()
-        local bufnr = vim.api.nvim_get_current_buf()
-
-        if not swap_state then
-            local mark_start = vim.api.nvim_buf_get_mark(bufnr, '[')
-            local mark_end = vim.api.nvim_buf_get_mark(bufnr, ']')
-
-            local ext1 = vim.api.nvim_buf_set_extmark(bufnr, ns_id, mark_start[1] - 1, mark_start[2], { right_gravity = false })
-            local ext2 = vim.api.nvim_buf_set_extmark(bufnr, ns_id, mark_end[1] - 1, mark_end[2], { right_gravity = true })
-
-            swap_state = {
-                bufnr = bufnr,
-                ext1 = ext1,
-                ext2 = ext2,
-                text = current_text,
-                regtype = current_regtype,
-                mode = current_mode
-            }
-
-            vim.notify("Swap 1/2 marked", vim.log.levels.INFO)
-        else
-            vim.fn.setreg('z', swap_state.text, swap_state.regtype)
-            vim.cmd.normal { vim.api.nvim_replace_termcodes('gv"zp', true, false, true), bang = true }
-
-            local pos1 = vim.api.nvim_buf_get_extmark_by_id(swap_state.bufnr, ns_id, swap_state.ext1, {})
-            local pos2 = vim.api.nvim_buf_get_extmark_by_id(swap_state.bufnr, ns_id, swap_state.ext2, {})
-
-            if #pos1 > 0 and #pos2 > 0 then
-                vim.api.nvim_set_current_buf(swap_state.bufnr)
-
-                vim.api.nvim_win_set_cursor(0, { pos1[1] + 1, pos1[2] })
-                vim.cmd.normal { swap_state.mode, bang = true }
-                vim.api.nvim_win_set_cursor(0, { pos2[1] + 1, pos2[2] })
-
-                vim.fn.setreg('z', current_text, current_regtype)
-                vim.cmd.normal { vim.api.nvim_replace_termcodes('"zp', true, false, true), bang = true }
-
-                vim.notify("Swapped", vim.log.levels.INFO)
-            else
-                vim.notify("Swap failed: lost marks", vim.log.levels.ERROR)
-            end
-
-            vim.api.nvim_buf_del_extmark(swap_state.bufnr, ns_id, swap_state.ext1)
-            vim.api.nvim_buf_del_extmark(swap_state.bufnr, ns_id, swap_state.ext2)
-            swap_state = nil
-        end
-
-        vim.fn.setreg('z', saved_z, saved_z_type)
-    end, { desc = "Swap selected texts" })
-end
+-- swap selected texts
+local vs = require('utils.visual-swap')
+local pending = nil
+vim.keymap.set('x', '<leader>s', function()
+    local bufnr = vim.api.nvim_get_current_buf()
+    local range = vs.visual_range(bufnr)
+    if not pending then
+        pending = { bufnr = bufnr, range = range }
+        return
+    end
+    vs.swap(pending.bufnr, pending.range, bufnr, range)
+    pending = nil
+end, { desc = "Swap selected texts" })
 
 -- lsp keymaps
 autocmd("LspAttach", {
