@@ -63,18 +63,34 @@ set("x", "I", function()
 end, { expr = true, desc = "Insert at beginning of line in visual mode" })
 
 -- swap selected texts
-local vs = require('utils.visual-swap')
-local pending = nil
-vim.keymap.set('x', '<leader>s', function()
-    local bufnr = vim.api.nvim_get_current_buf()
-    local range = vs.visual_range(bufnr)
-    if not pending then
-        pending = { bufnr = bufnr, range = range }
-        return
-    end
-    vs.swap(pending.bufnr, pending.range, bufnr, range)
-    pending = nil
-end, { desc = "Swap selected texts" })
+do
+    local visual_swap = require('utils.visual-swap')
+    local pending = nil
+    local hl_ns = vim.api.nvim_create_namespace("VisualSwapPending")
+    vim.api.nvim_set_hl(0, "VisualSwapPendingHighlight", { link = "IncSearch" })
+    vim.keymap.set('x', '<leader>s', function()
+        local bufnr = vim.api.nvim_get_current_buf()
+        local range = visual_swap.visual_range(bufnr)
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'nx', false)
+
+        if not pending then
+            local extmark_id = vim.api.nvim_buf_set_extmark(bufnr, hl_ns, range[1], range[2], {
+                end_row = range[3],
+                end_col = range[4],
+                hl_group = "VisualSwapPendingHighlight",
+            })
+            pending = {
+                bufnr = bufnr,
+                range = range,
+                extmark_id = extmark_id
+            }
+            return
+        end
+        visual_swap.swap(pending.bufnr, pending.range, bufnr, range)
+        vim.api.nvim_buf_del_extmark(pending.bufnr, hl_ns, pending.extmark_id)
+        pending = nil
+    end, { desc = "Swap selected texts" })
+end
 
 -- lsp keymaps
 autocmd("LspAttach", {
