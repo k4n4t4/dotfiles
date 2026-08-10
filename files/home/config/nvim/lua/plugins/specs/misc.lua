@@ -1,6 +1,4 @@
 return {
-    { "nvim-tree/nvim-web-devicons" },
-
     --[[ TREESITTER ]]--
     {
         "nvim-treesitter/nvim-treesitter",
@@ -84,12 +82,11 @@ return {
     {
         "nvim-lualine/lualine.nvim",
         event = "VeryLazy",
-        dependencies = { "nvim-tree/nvim-web-devicons" },
         init = function()
             vim.opt.cmdheight = 0
             vim.opt.laststatus = 0
             vim.opt.showcmd = true
-            vim.opt.showcmdloc = "statusline"
+            vim.opt.showcmdloc = "last"
         end,
         config = function()
             vim.api.nvim_create_autocmd({ "RecordingEnter", "RecordingLeave" }, {
@@ -166,7 +163,20 @@ return {
                             },
                         },
                     },
-                    lualine_x = { lsp_status, "encoding", "fileformat", "filetype" },
+                    lualine_x = {
+                        {
+                            function()
+                                --- @diagnostic disable-next-line: undefined-field
+                                return require("noice").api.status.command.get()
+                            end,
+                            cond = function()
+                                return package.loaded["noice"] and
+                                --- @diagnostic disable-next-line: undefined-field
+                                require("noice").api.status.command.has()
+                            end,
+                        },
+                        lsp_status, "encoding", "fileformat", "filetype"
+                    },
                     lualine_y = { "progress", "searchcount" },
                     lualine_z = { visual_info, "location" },
                 },
@@ -189,7 +199,6 @@ return {
         'akinsho/bufferline.nvim',
         event = "VeryLazy",
         version = "*",
-        dependencies = 'nvim-tree/nvim-web-devicons',
         init = function()
             vim.opt.showtabline = 0
         end,
@@ -534,9 +543,6 @@ return {
     {
         "MeanderingProgrammer/render-markdown.nvim",
         ft = { "markdown", "Avante" },
-        dependencies = {
-            "nvim-tree/nvim-web-devicons"
-        },
         config = function()
             require('render-markdown').setup {
                 completions = { lsp = { enabled = true } },
