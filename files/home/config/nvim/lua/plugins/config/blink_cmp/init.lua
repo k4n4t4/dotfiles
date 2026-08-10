@@ -75,6 +75,7 @@ function M.config()
         },
         sources = {
             default = {
+                "lazydev",
                 "codecompanion",
                 "path",
                 "lsp",
@@ -88,6 +89,11 @@ function M.config()
                 "dictionary",
             },
             providers = {
+                lazydev = {
+                    name = "LazyDev",
+                    module = "lazydev.integrations.blink",
+                    score_offset = 700,
+                },
                 codecompanion = {
                     name = "CodeCompanion",
                     module = "codecompanion.providers.completion.blink",
