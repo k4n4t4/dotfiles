@@ -154,22 +154,22 @@ return {
         config = function()
             require('mini.base16').setup {
                 palette = {
-                    base00 = "#101010",
-                    base01 = "#2a2a2a",
-                    base02 = "#404040",
-                    base03 = "#5a5a5a",
-                    base04 = "#707070",
-                    base05 = "#909090",
-                    base06 = "#b0b0b0",
-                    base07 = "#c0c0c0",
-                    base08 = "#c05050",
-                    base09 = "#c07050",
-                    base0A = "#c09000",
-                    base0B = "#70c070",
-                    base0C = "#50c0c0",
-                    base0D = "#5090c0",
-                    base0E = "#c090c0",
-                    base0F = "#d0d0d0",
+                    base00 = "#202020",
+                    base01 = "#272727",
+                    base02 = "#2F2F2F",
+                    base03 = "#606060",
+                    base04 = "#676767",
+                    base05 = "#A0A0A0",
+                    base06 = "#B0B0B0",
+                    base07 = "#C0C0C0",
+                    base08 = "#C05050",
+                    base09 = "#C07050",
+                    base0A = "#C09000",
+                    base0B = "#70C070",
+                    base0C = "#50C0C0",
+                    base0D = "#5090C0",
+                    base0E = "#C090C0",
+                    base0F = "#D0D0D0",
                 },
                 use_cterm = true,
                 plugins = {
@@ -177,38 +177,6 @@ return {
                     ["saghen/blink.cmp"] = true,
                 },
             }
-            vim.api.nvim_create_autocmd("ColorScheme", {
-                group = vim.api.nvim_create_augroup("ColorSchemeFix", { clear = true }),
-                callback = function()
-                    local normal_hl = vim.api.nvim_get_hl(0, { name = "Normal", link = false })
-
-                    local targets = {
-                        "WinSeparator",
-                        "FloatBorder",
-                        "VertSplit",
-                        "LineNr",
-                        "LineNrAbove",
-                        "LineNrBelow",
-                        "CursorColumn",
-                        "CursorLineNr",
-                        "CursorLineSign",
-                        "SignColumn",
-                        "CursorLineSign",
-                        "EndOfBuffer",
-                        "NonText",
-                        "Folded",
-                        "FoldColumn",
-                        "NormalFloat",
-                        "Terminal",
-                    }
-
-                    for _, target in ipairs(targets) do
-                        local target_hl = vim.api.nvim_get_hl(0, { name = target, link = false })
-                        local new_hl = vim.tbl_extend("force", target_hl, { bg = normal_hl.bg })
-                        vim.api.nvim_set_hl(0, target, new_hl)
-                    end
-                end,
-            })
             vim.api.nvim_exec_autocmds('ColorScheme', {})
         end,
     },
