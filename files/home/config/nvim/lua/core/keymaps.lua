@@ -15,27 +15,38 @@ set({ 'n', 'x' }, '<leader>w', "<C-w><C-w>", { desc = "Switch Window" })
 
 set('n', '<leader>H', "<cmd>noh<cr>", { desc = "No hlsearch" })
 
-set({ 'n', 'x' }, '<leader>a', "ggVoG", { desc = "Select All" })
+set({ 'n', 'x' }, '<leader>a', function()
+    vim.cmd.normal { "ggVoG", bang = true }
+end, { desc = "Select All" })
 
-set({ 'n', 'x' }, '<C-p>', "p`[v`]=", { desc = "Paste after cursor and auto-indent" })
-set({ 'n', 'x' }, '<C-S-p>', "P`[v`]=", { desc = "Paste before cursor and auto-indent" })
+set({ 'n', 'x' }, '<C-p>', function()
+    vim.cmd.normal { "p`[v`]=", bang = true }
+end, { desc = "Paste after cursor and auto-indent" })
+set({ 'n', 'x' }, '<C-S-p>', function()
+    vim.cmd.normal { "P`[v`]=", bang = true }
+end, { desc = "Paste before cursor and auto-indent" })
 
-vim.keymap.set('n', 'dM', '<Cmd>delmarks! | redraw!<CR>', { desc = "Delete all local marks and redraw" })
+-- mark keymaps
+vim.keymap.set('n', 'dM', function()
+    vim.cmd.delmarks { bang = true }
+    vim.cmd.redraw { bang = true }
+end, { desc = "Delete all local marks and redraw" })
 vim.keymap.set('n', 'dm', function()
     local char = vim.fn.getcharstr()
     if char:match("[a-zA-Z0-9]") then
-        vim.cmd("delmarks " .. char)
-        vim.cmd("redraw!")
+        vim.cmd.delmarks(char)
+        vim.cmd.redraw { bang = true }
     end
 end, { desc = "Delete a specific mark and redraw" })
 vim.keymap.set('n', 'm', function()
     local char = vim.fn.getcharstr()
     if char:match("[a-zA-Z0-9]") then
-        vim.cmd("normal! m" .. char)
-        vim.cmd("redraw!")
+        vim.cmd.normal { "m" .. char, bang = true }
+        vim.cmd.redraw { bang = true }
     end
 end, { desc = "Set a mark and redraw" })
 
+-- visual mode keymaps
 set("x", "A", function()
     if vim.fn.mode(0) == "V" then
         return "<C-v>0o$A"
@@ -50,7 +61,6 @@ set("x", "I", function()
         return "I"
     end
 end, { expr = true, desc = "Insert at beginning of line in visual mode" })
-
 
 -- lsp keymaps
 autocmd("LspAttach", {

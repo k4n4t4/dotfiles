@@ -88,6 +88,8 @@ return {
         init = function()
             vim.opt.cmdheight = 0
             vim.opt.laststatus = 0
+            vim.opt.showcmd = true
+            vim.opt.showcmdloc = "statusline"
         end,
         config = function()
             vim.api.nvim_create_autocmd({ "RecordingEnter", "RecordingLeave" }, {
