@@ -57,7 +57,6 @@ return {
                 },
             },
             words = { enabled = true },
-            scratch = { enabled = true },
         },
         init = function()
             vim.api.nvim_create_autocmd("User", {
@@ -80,10 +79,6 @@ return {
         keys = {
             -- explorer
             { "<leader>e",       function() Snacks.picker.explorer() end,              desc = "explorer" },
-
-            -- scratch
-            { "<leader>s",       function() Snacks.scratch() end,                      desc = "Toggle Scratch Buffer" },
-            { "<leader>S",       function() Snacks.scratch.select() end,               desc = "Select Scratch Buffer" },
 
             -- picker
             { "<leader>P",       function() Snacks.picker.pick() end,                  desc = "Picker" },

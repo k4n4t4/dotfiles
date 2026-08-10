@@ -64,15 +64,13 @@ end, { expr = true, desc = "Insert at beginning of line in visual mode" })
 
 -- swap selected texts
 do
-    local visual_swap = require('utils.visual-swap')
+    local vs = require('utils.visual-swap')
     local pending = nil
     local hl_ns = vim.api.nvim_create_namespace("VisualSwapPending")
-    vim.api.nvim_set_hl(0, "VisualSwapPendingHighlight", { link = "IncSearch" })
-    vim.keymap.set('x', '<leader>s', function()
-        local bufnr = vim.api.nvim_get_current_buf()
-        local range = visual_swap.visual_range(bufnr)
-        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'nx', false)
 
+    vim.api.nvim_set_hl(0, "VisualSwapPendingHighlight", { link = "IncSearch" })
+
+    local function handle_selection(bufnr, range)
         if not pending then
             local extmark_id = vim.api.nvim_buf_set_extmark(bufnr, hl_ns, range[1], range[2], {
                 end_row = range[3],
@@ -86,9 +84,55 @@ do
             }
             return
         end
-        visual_swap.swap(pending.bufnr, pending.range, bufnr, range)
+
+        vs.swap(pending.bufnr, pending.range, bufnr, range)
         vim.api.nvim_buf_del_extmark(pending.bufnr, hl_ns, pending.extmark_id)
         pending = nil
+    end
+
+    _G.visual_swap_opfunc = function(motion_type)
+        local s = vim.api.nvim_buf_get_mark(0, '[')
+        local e = vim.api.nvim_buf_get_mark(0, ']')
+        local s_row, s_col = s[1] - 1, s[2]
+        local e_row, e_col = e[1] - 1, e[2]
+        local bufnr = vim.api.nvim_get_current_buf()
+
+        if motion_type == "line" then
+            s_col = 0
+            local line = vim.api.nvim_buf_get_lines(bufnr, e_row, e_row + 1, false)[1] or ""
+            e_col = #line
+        else
+            local line = vim.api.nvim_buf_get_lines(bufnr, e_row, e_row + 1, false)[1] or ""
+            local ok, char = pcall(vim.fn.strpart, line, e_col, 1, true)
+            if ok and char ~= "" then
+                e_col = e_col + #char
+            else
+                e_col = math.min(e_col + 1, #line)
+            end
+        end
+
+        if s_row > e_row or (s_row == e_row and s_col > e_col) then
+            s_row, s_col, e_row, e_col = e_row, e_col, s_row, s_col
+        end
+
+        handle_selection(bufnr, { s_row, s_col, e_row, e_col })
+    end
+
+    vim.keymap.set('n', '<leader>s', function()
+        vim.go.operatorfunc = 'v:lua.visual_swap_opfunc'
+        return 'g@'
+    end, { expr = true, desc = "Swap text object" })
+
+    vim.keymap.set('n', '<leader>ss', function()
+        vim.go.operatorfunc = 'v:lua.visual_swap_opfunc'
+        return 'g@_'
+    end, { expr = true, desc = "Swap line" })
+
+    vim.keymap.set('x', '<leader>s', function()
+        local bufnr = vim.api.nvim_get_current_buf()
+        local range = vs.visual_range(bufnr)
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'nx', false)
+        handle_selection(bufnr, range)
     end, { desc = "Swap selected texts" })
 end
 
