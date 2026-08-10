@@ -79,6 +79,8 @@ return {
 
 
     --[[ EDITOR PLUGINS ]]--
+
+    -- statusline
     {
         "nvim-lualine/lualine.nvim",
         event = "VeryLazy",
