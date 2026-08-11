@@ -1,27 +1,31 @@
-local schemes = {
-    { name = "tokyonight-moon", plugin = "tokyonight.nvim" },
-    { name = "kanagawa-wave",   plugin = "kanagawa.nvim" },
-    { name = "gruvbox",         plugin = "gruvbox.nvim" },
-    { name = "onedark",         plugin = "onedark.nvim" },
-    { name = "colorful",        plugin = "mini.base16" }
-}
+local use_random_colorscheme = false
 
-vim.api.nvim_create_autocmd("UIEnter", {
-    callback = function()
-        math.randomseed(os.time())
-        local selected = schemes[math.random(1, #schemes)]
+if use_random_colorscheme then
+    local schemes = {
+        { name = "tokyonight-moon", plugin = "tokyonight.nvim" },
+        { name = "kanagawa-wave",   plugin = "kanagawa.nvim" },
+        { name = "gruvbox",         plugin = "gruvbox.nvim" },
+        { name = "onedark",         plugin = "onedark.nvim" },
+        { name = "colorful",        plugin = "mini.base16" }
+    }
 
-        local ok_lazy, lazy = pcall(require, "lazy")
-        if ok_lazy then
-            lazy.load({ plugins = { selected.plugin } })
+    vim.api.nvim_create_autocmd("UIEnter", {
+        callback = function()
+            math.randomseed(os.time())
+            local selected = schemes[math.random(1, #schemes)]
+
+            local ok_lazy, lazy = pcall(require, "lazy")
+            if ok_lazy then
+                lazy.load({ plugins = { selected.plugin } })
+            end
+
+            local status_ok, _ = pcall(vim.cmd.colorscheme, selected.name)
+            if not status_ok then
+                vim.notify("Failed to load colorscheme: " .. selected.name, vim.log.levels.ERROR)
+            end
         end
-
-        local status_ok, _ = pcall(vim.cmd.colorscheme, selected.name)
-        if not status_ok then
-            vim.notify("Failed to load colorscheme: " .. selected.name, vim.log.levels.ERROR)
-        end
-    end
-})
+    })
+end
 
 return {
     { -- tokyonight
