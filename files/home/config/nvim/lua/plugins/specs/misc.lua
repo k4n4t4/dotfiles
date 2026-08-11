@@ -115,16 +115,12 @@ return {
                 end
                 return ""
             end
-            local function lsp_status()
+            local function lsp_counts()
                 local clients = vim.lsp.get_clients({ bufnr = 0 })
                 if #clients == 0 then
                     return ""
                 end
-                local names = {}
-                for _, client in ipairs(clients) do
-                    table.insert(names, client.name)
-                end
-                return " " .. table.concat(names, ", ")
+                return " " .. #clients
             end
             local function visual_info()
                 local mode = vim.fn.mode()
@@ -155,8 +151,8 @@ return {
                 options = {
                     icons_enabled = true,
                     theme = "auto",
-                    component_separators = { left = '|', right = '|' },
-                    section_separators = { left = '', right = '' },
+                    component_separators = { left = '', right = '' },
+                    section_separators = { left = '', right = '' },
                     globalstatus = true,
                     disabled_filetypes = { "dashboard", "snacks_dashboard" },
                 },
@@ -186,6 +182,7 @@ return {
                         },
                     },
                     lualine_c = {
+                        -- TODO: filetype icon only and simple file name with good space.
                         {
                             "filetype",
                             icon_only = true,
@@ -197,7 +194,7 @@ return {
                             path = 0,
                             file_status = true,
                             shorting_target = 40,
-                            padding = { left = 0 },
+                            padding = { left = 1 },
                             symbols = {
                                 modified = "󰏫",
                                 readonly = "󰌾",
@@ -228,15 +225,15 @@ return {
                         },
                     },
                     lualine_y = {
-                        lsp_status,
+                        lsp_counts,
                         {
                             "encoding",
                             separator = "",
-                            padding = { left = 1, right = 1 },
+                            padding = { left = 1, right = 0 },
                         },
                         {
                             "fileformat",
-                            padding = { left = 0, right = 1 },
+                            padding = { left = 1, right = 1 },
                         },
                     },
                     lualine_z = {

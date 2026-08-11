@@ -87,3 +87,14 @@ vim.api.nvim_create_autocmd("FileType", {
         end
     end,
 })
+
+-- LSP attach notification
+vim.api.nvim_create_autocmd("LspAttach", {
+    group = vim.api.nvim_create_augroup("LspAttachNotify", { clear = true }),
+    callback = function(event)
+        local client = vim.lsp.get_client_by_id(event.data.client_id)
+        if client then
+            vim.notify("LSP Attached: " .. client.name, vim.log.levels.INFO)
+        end
+    end,
+})
