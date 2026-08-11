@@ -33,7 +33,7 @@ function M.config()
         fuzzy = { implementation = "prefer_rust_with_warning" },
         signature = {
             enabled = true,
-            window = { winblend = vim.o.winblend, show_documentation = true }
+            window = { winblend = winblend, show_documentation = true }
         },
         completion = {
             list = { selection = { preselect = false } },
@@ -57,12 +57,9 @@ function M.config()
         },
         cmdline = {
             enabled = true,
-            sources = function()
-                local type = vim.fn.getcmdtype()
-                if type == "/" or type == "?" then return { "buffer" } end
-                if type == ":" then return { "cmdline" } end
-                return {}
-            end,
+            keymap = {
+                preset = "inherit",
+            },
             completion = {
                 list = { selection = { preselect = false } },
                 menu = { auto_show = true },
@@ -165,15 +162,11 @@ function M.config()
                     score_offset = 0,
                     max_items = 5,
                     opts = {
-                        dictionary_files = (function()
-                            local dicts = {}
-                            for _, dict in ipairs(vim.fn.glob("/usr/share/dict/*", true, true)) do
-                                if vim.uv.fs_stat(dict) then
-                                    table.insert(dicts, dict)
-                                end
-                            end
-                            return dicts
-                        end)()
+                        dictionary_files = vim.fn.glob(
+                            "/usr/share/dict/*",
+                            true,
+                            true
+                        ),
                     },
                 },
             },
