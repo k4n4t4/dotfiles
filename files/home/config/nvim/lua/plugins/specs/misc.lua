@@ -1,6 +1,6 @@
 return {
     -- TREESITTER
-    {
+    { -- nvim treesitter
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
         config = function()
@@ -36,7 +36,7 @@ return {
     },
 
     -- LSP PLUGINS
-    {
+    { -- mason
         "mason-org/mason.nvim",
         opts = {
             PATH = "append",
@@ -58,7 +58,7 @@ return {
             "MasonUpdate",
         },
     },
-    {
+    { -- mason-lspconfig
         "mason-org/mason-lspconfig.nvim",
         dependencies = {
             "neovim/nvim-lspconfig",
@@ -69,12 +69,12 @@ return {
             mason_lspconfig.setup {}
         end,
     },
-    {
+    { -- rust
         "mrcjkb/rustaceanvim",
         version = "^9",
         lazy = false,
     },
-    {
+    { -- lua
         "folke/lazydev.nvim",
         ft = "lua",
         opts = {
@@ -88,18 +88,12 @@ return {
 
 
     -- EDITOR PLUGINS
-
-    -- statusline
-    {
+    { -- statusline
         "nvim-lualine/lualine.nvim",
         event = "VeryLazy",
-        init = function()
-        end,
         config = require("plugins.config.lualine").config,
     },
-
-    -- tabuf
-    {
+    { -- tabuf
         'akinsho/bufferline.nvim',
         event = "VeryLazy",
         version = "*",
@@ -136,9 +130,7 @@ return {
             { "<M-S-x>", "<Cmd>tabclose<CR>",            desc = "Close tab" },
         }
     },
-
-    -- notify
-    {
+    { -- notify
         "folke/noice.nvim",
         dependencies = { "MunifTanjim/nui.nvim" },
         event = "VeryLazy",
@@ -155,9 +147,7 @@ return {
             }
         end,
     },
-
-    -- which key
-    {
+    { -- which key
         "folke/which-key.nvim",
         event = "VeryLazy",
         config = function()
@@ -180,9 +170,7 @@ return {
             },
         },
     },
-
-    -- breadcrumbs
-    {
+    { -- breadcrumbs
         'Bekaboo/dropbar.nvim',
         event = 'VeryLazy',
         config = function()
@@ -193,9 +181,7 @@ return {
             set('n', '];', dropbar_api.select_next_context, { desc = 'Select next context' })
         end
     },
-
-    -- debugging
-    {
+    { -- debugging
         "mfussenegger/nvim-dap",
         dependencies = {
             "rcarriga/nvim-dap-ui",
@@ -252,9 +238,7 @@ return {
             end
         end,
     },
-
-    -- context
-    {
+    { -- context
         "nvim-treesitter/nvim-treesitter-context",
         dependencies = { "nvim-treesitter/nvim-treesitter" },
         event = 'VeryLazy',
@@ -263,18 +247,14 @@ return {
             vim.api.nvim_set_hl(0, "TreesitterContext", { link = "WinSeparator" })
         end,
     },
-
-    -- transparent
-    {
+    { -- transparent
         "k4n4t4/transparent.nvim",
         config = function()
             local transparent = require("transparent")
             transparent.setup { groups_extend = {} }
         end,
     },
-
-    -- todo comments
-    {
+    { -- todo comments
         "folke/todo-comments.nvim",
         dependencies = { "nvim-lua/plenary.nvim" },
         event = "VeryLazy",
@@ -284,9 +264,7 @@ return {
             { "<Leader>t", function() Snacks.picker.todo_comments() end, desc = "Todo List" },
         },
     },
-
-    -- dial
-    {
+    { -- dial
         "monaqa/dial.nvim",
         dependencies = {
             "nvim-lua/plenary.nvim",
@@ -316,9 +294,7 @@ return {
             }
         end,
     },
-
-    -- completion
-    {
+    { -- completion
         "saghen/blink.cmp",
         version = '*',
         dependencies = {
@@ -342,9 +318,7 @@ return {
         event = { "InsertEnter", "CmdLineEnter" },
         config = require("plugins.config.blink_cmp").config,
     },
-
-    -- code companion
-    {
+    { -- code companion
         "olimorris/codecompanion.nvim",
         cmd = {
             "CodeCompanion",
@@ -380,9 +354,7 @@ return {
             }
         end,
     },
-
-    -- obsidian
-    {
+    { -- obsidian
         "epwalsh/obsidian.nvim",
         version = "*",
         event = "VeryLazy",
@@ -413,9 +385,7 @@ return {
             })
         end,
     },
-
-    -- markdown
-    {
+    { -- render markdown
         "MeanderingProgrammer/render-markdown.nvim",
         ft = { "markdown", "Avante" },
         config = function()
@@ -426,7 +396,7 @@ return {
             }
         end,
     },
-    {
+    { -- markdown preview
         "iamcco/markdown-preview.nvim",
         cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
         build = "cd app && npm install && git restore .",
@@ -437,7 +407,7 @@ return {
     },
 
     -- COLOR SCHEMES
-    {
+    { -- tokyonight
         "folke/tokyonight.nvim",
         enabled = true,
         lazy = false,
@@ -446,7 +416,7 @@ return {
             vim.cmd.colorscheme "tokyonight"
         end,
     },
-    {
+    { -- mini base16
         "nvim-mini/mini.base16",
         enabled = false,
         lazy = false,

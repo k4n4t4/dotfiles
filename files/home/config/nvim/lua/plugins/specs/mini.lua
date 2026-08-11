@@ -1,6 +1,5 @@
 return {
-    -- icons
-    {
+    { -- icons
         "nvim-mini/mini.icons",
         opts = {},
         init = function()
@@ -11,9 +10,7 @@ return {
             end
         end,
     },
-
-    -- explorer
-    {
+    { -- explorer
         "nvim-mini/mini.files",
         event = "VeryLazy",
         config = function()
@@ -41,9 +38,7 @@ return {
             },
         },
     },
-
-    -- surround
-    {
+    { -- surround
         "nvim-mini/mini.surround",
         event = "VeryLazy",
         config = function()
@@ -67,18 +62,14 @@ return {
             vim.keymap.set('n', 'yss', 'ys_', { remap = true })
         end,
     },
-
-    -- autopairs
-    {
+    { -- autopairs
         "nvim-mini/mini.pairs",
         event = "InsertEnter",
         config = function()
             require("mini.pairs").setup()
         end,
     },
-
-    -- textobjects
-    {
+    { -- textobjects
         "nvim-mini/mini.ai",
         dependencies = {
             {
@@ -118,9 +109,7 @@ return {
             }
         end,
     },
-
-    -- git
-    {
+    { -- diff
         "nvim-mini/mini.diff",
         event = "VeryLazy",
         config = function()
@@ -137,23 +126,21 @@ return {
             }
         end,
     },
-    {
+    { -- git
         "nvim-mini/mini-git",
         event = "VeryLazy",
         config = function()
             require("mini.git").setup()
         end,
     },
-
-    -- jump
-    {
+    { -- jump
         "nvim-mini/mini.jump",
         event = "VeryLazy",
         config = function()
             require("mini.jump").setup()
         end,
     },
-    {
+    { -- jump2d
         "nvim-mini/mini.jump2d",
         event = "VeryLazy",
         config = function()
