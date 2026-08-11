@@ -43,7 +43,7 @@ return {
                     preview = { wo = { winblend = 0 } },
                 },
             },
-            notifier = { enabled = false },
+            notifier = { enabled = true },
             quickfile = { enabled = true },
             scope = { enabled = true },
             scroll = { enabled = false },
@@ -57,6 +57,15 @@ return {
                 },
             },
             words = { enabled = true },
+            styles = {
+                notification = {
+                    border = "single",
+                },
+                float = {
+                    border = "single",
+                    backdrop = false,
+                },
+            },
         },
         init = function()
             vim.api.nvim_create_autocmd("User", {
@@ -124,7 +133,7 @@ return {
 
             -- terminal
             { "<leader>kk", function() Snacks.terminal(nil, { win = { position = "bottom" } }) end, desc = "Toggle Terminal" },
-            { "<leader>kf", function() Snacks.terminal(nil, { win = { backdrop = false, border = "single", position = "float" } }) end, desc = "Float Terminal" },
+            { "<leader>kf", function() Snacks.terminal(nil, { win = { position = "float" } }) end, desc = "Float Terminal" },
 
             -- toggle
             { "<leader>z",  function() Snacks.zen() end, desc = "Toggle Zen Mode" },

@@ -249,38 +249,12 @@ return {
     -- notify
     {
         "folke/noice.nvim",
-        dependencies = {
-            "MunifTanjim/nui.nvim",
-            {
-                "rcarriga/nvim-notify",
-                opts = {
-                    background_colour = "#000000",
-                },
-            },
-        },
+        dependencies = { "MunifTanjim/nui.nvim" },
         event = "VeryLazy",
         config = function()
-            require('noice').setup {
+            require("noice").setup {
                 cmdline = {
-                    enabled = true,
-                    view = 'cmdline',
-                    format = {
-                        cmdline = { pattern = "^:", icon = "", lang = "vim" },
-                        search_down = { kind = "search", pattern = "^/", icon = "", lang = "regex" },
-                        search_up = { kind = "search", pattern = "^%?", icon = "", lang = "regex" },
-                        filter = { pattern = "^:%s*!", icon = "$", lang = "bash" },
-                        lua = { pattern = { "^:%s*lua%s+", "^:%s*lua%s*=%s*", "^:%s*=%s*" }, icon = "", lang = "lua" },
-                        help = { pattern = "^:%s*he?l?p?%s+", icon = "󰋗" },
-                        input = { view = "cmdline_input", icon = "󰥻" },
-                    },
-                },
-                messages = {
-                    enabled = true,
-                    view = 'mini',
-                    view_warn = 'mini',
-                    view_error = 'mini',
-                    view_history = 'messages',
-                    view_search = 'virtualtext',
+                    view = "cmdline",
                 },
                 lsp = {
                     hover = { enabled = false },
