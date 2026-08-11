@@ -1,4 +1,4 @@
-local use_random_colorscheme = false
+local use_random_colorscheme = true
 
 if use_random_colorscheme then
     local schemes = {
