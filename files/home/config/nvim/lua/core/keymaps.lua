@@ -6,6 +6,35 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- general keymaps
+set({ 'n', 'x' }, 'j', "gj", { desc = "Move Down" })
+set({ 'n', 'x' }, 'k', "gk", { desc = "Move Up" })
+
+set("x", "J", function()
+    if vim.fn.mode(0) == "V" then
+        return ":m '>+1<CR>gv=gv"
+    else
+        return "J"
+    end
+end, { expr = true, desc = "Move selected lines down in visual mode" })
+set("x", "K", function()
+    if vim.fn.mode(0) == "V" then
+        return ":m '<-2<CR>gv=gv"
+    else
+        return "K"
+    end
+end, { expr = true, desc = "Move selected lines up in visual mode" })
+
+set("v", "<", "<gv", { desc = "Indent left and reselect in visual mode" })
+set("v", ">", ">gv", { desc = "Indent right and reselect in visual mode" })
+
+set("n", "yc", function()
+    vim.cmd.normal { "yygccp" }
+end, {desc = "Copy current line and comment it" })
+set("x", "Yc", function()
+    vim.cmd.normal { "y`[v`]gc`]p" }
+end, {desc = "Copy current line and comment it" })
+vim.keymap.set("n", "<C-c>", "ciw")
+
 set({ 'n', 'o', 'x' }, '<tab>', "5j", { desc = "Scroll Down" })
 set({ 'n', 'o', 'x' }, '<S-tab>', "5k", { desc = "Scroll Up" })
 
@@ -25,9 +54,6 @@ end, { desc = "Paste after cursor and auto-indent" })
 set({ 'n', 'x' }, '<C-S-p>', function()
     vim.cmd.normal { "P`[v`]=", bang = true }
 end, { desc = "Paste before cursor and auto-indent" })
-
-set({ 'n', 'x' }, 'j', "gj", { desc = "Move Down" })
-set({ 'n', 'x' }, 'k', "gk", { desc = "Move Up" })
 
 -- mark keymaps
 vim.keymap.set('n', 'dM', function()
