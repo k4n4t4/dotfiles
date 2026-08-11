@@ -94,171 +94,8 @@ return {
         "nvim-lualine/lualine.nvim",
         event = "VeryLazy",
         init = function()
-            vim.opt.cmdheight = 0
-            vim.opt.laststatus = 0
-            vim.opt.showcmd = true
-            vim.opt.showcmdloc = "last"
         end,
-        config = function()
-            vim.api.nvim_create_autocmd({ "RecordingEnter", "RecordingLeave" }, {
-                group = vim.api.nvim_create_augroup("LualineMacroRefresh", { clear = true }),
-                callback = function() require("lualine").refresh() end,
-            })
-            local function is_visual_mode()
-                local mode = vim.fn.mode()
-                return mode == 'v' or mode == 'V' or mode == '\22'
-            end
-            local function macro_status()
-                local reg = vim.fn.reg_recording()
-                if reg ~= "" then
-                    return "rec @" .. reg
-                end
-                return ""
-            end
-            local function lsp_counts()
-                local clients = vim.lsp.get_clients({ bufnr = 0 })
-                if #clients == 0 then
-                    return ""
-                end
-                return " " .. #clients
-            end
-            local function visual_info()
-                local mode = vim.fn.mode()
-
-                local l1, l2 = vim.fn.line('v'), vim.fn.line('.')
-                local lines = math.abs(l2 - l1) + 1
-
-                if mode == 'V' then
-                    return string.format('%d lines', lines)
-                elseif mode == '\22' then
-                    local c1, c2 = vim.fn.virtcol('v'), vim.fn.virtcol('.')
-                    local cols = math.abs(c2 - c1) + 1
-                    return string.format('%dx%d', lines, cols)
-                elseif mode == 'v' then
-                    local wc = vim.fn.wordcount()
-                    local chars = wc.visual_chars or 0
-                    if lines > 1 then
-                        return string.format('%d lines %d chars', lines, chars)
-                    else
-                        return string.format('%d chars', chars)
-                    end
-                else
-                    return ''
-                end
-            end
-
-            require("lualine").setup {
-                options = {
-                    icons_enabled = true,
-                    theme = "auto",
-                    component_separators = { left = '', right = '' },
-                    section_separators = { left = '', right = '' },
-                    globalstatus = true,
-                    disabled_filetypes = { "dashboard", "snacks_dashboard" },
-                },
-                sections = {
-                    lualine_a = {
-                        "mode",
-                        macro_status,
-                    },
-                    lualine_b = {
-                        "branch",
-                        {
-                            "diff",
-                            symbols = {
-                                added    = " ",
-                                modified = " ",
-                                removed  = " ",
-                            },
-                        },
-                        {
-                            "diagnostics",
-                            symbols = {
-                                error = '󰅚 ',
-                                warn =  '󰀪 ',
-                                info =  '󰋽 ',
-                                hint =  '󰌶 ',
-                            },
-                        },
-                    },
-                    lualine_c = {
-                        {
-                            "filetype",
-                            fmt = function(name)
-                                if name == "" then
-                                    return " "
-                                end
-                                return name
-                            end,
-                            icon_only = true,
-                            separator = "",
-                            padding = { left = 1, right = 0 },
-                        },
-                        {
-                            "filename",
-                            path = 0,
-                            file_status = true,
-                            newfile_status = true,
-                            shorting_target = 40,
-                            padding = { left = 0 },
-                            symbols = {
-                                modified = " ",
-                                readonly = " ",
-                                unnamed  = "",
-                                newfile  = " ",
-                            },
-                        },
-                    },
-                    lualine_x = {
-                        {
-                            function()
-                                ---@diagnostic disable-next-line: undefined-field
-                                return require("noice").api.status.command.get()
-                            end,
-                            cond = function()
-                                return not is_visual_mode() and
-                                package.loaded["noice"] and
-                                ---@diagnostic disable-next-line: undefined-field
-                                require("noice").api.status.command.has()
-                            end,
-                        },
-                        {
-                            visual_info,
-                            cond = is_visual_mode,
-                        },
-                        {
-                            "searchcount",
-                        },
-                    },
-                    lualine_y = {
-                        lsp_counts,
-                        {
-                            "encoding",
-                            separator = "",
-                            padding = { left = 1, right = 0 },
-                        },
-                        {
-                            "fileformat",
-                            padding = { left = 1, right = 1 },
-                        },
-                    },
-                    lualine_z = {
-                        "progress",
-                        "location",
-                    },
-                },
-                inactive_sections = {
-                    lualine_a = {},
-                    lualine_b = {},
-                    lualine_c = { "filename" },
-                    lualine_x = { "location" },
-                    lualine_y = {},
-                    lualine_z = {},
-                },
-                tabline = {},
-                extensions = {},
-            }
-        end,
+        config = require("plugins.config.lualine").config,
     },
 
     -- tabuf
@@ -266,9 +103,6 @@ return {
         'akinsho/bufferline.nvim',
         event = "VeryLazy",
         version = "*",
-        init = function()
-            vim.opt.showtabline = 0
-        end,
         config = function()
             require("bufferline").setup({
                 options = {
@@ -287,19 +121,20 @@ return {
                     },
                 },
             })
-
-            vim.keymap.set("n", "<M-j>", "<Cmd>BufferLineCycleNext<CR>", { desc = "Next buffer" })
-            vim.keymap.set("n", "<M-k>", "<Cmd>BufferLineCyclePrev<CR>", { desc = "Prev buffer" })
-            vim.keymap.set("n", "<M-S-j>", "<Cmd>BufferLineMoveNext<CR>", { desc = "Move buffer right" })
-            vim.keymap.set("n", "<M-S-k>", "<Cmd>BufferLineMovePrev<CR>", { desc = "Move buffer left" })
-            vim.keymap.set("n", "<M-s>", "<Cmd>BufferLinePick<CR>", { desc = "Pick buffer" })
-            vim.keymap.set("n", "<M-]>", "<Cmd>tabnext<CR>", { desc = "Next tab" })
-            vim.keymap.set("n", "<M-[>", "<Cmd>tabprevious<CR>", { desc = "Prev tab" })
-            vim.keymap.set("n", "<M-n>", "<Cmd>enew<CR>", { desc = "New buffer" })
-            vim.keymap.set("n", "<M-S-n>", "<Cmd>tabnew<CR>", { desc = "New tab" })
-            vim.keymap.set("n", "<M-x>", "<Cmd>bdelete<CR>", { desc = "Close buffer" })
-            vim.keymap.set("n", "<M-S-x>", "<Cmd>tabclose<CR>", { desc = "Close tab" })
         end,
+        keys = {
+            { "<M-j>",   "<Cmd>BufferLineCycleNext<CR>", desc = "Next buffer" },
+            { "<M-k>",   "<Cmd>BufferLineCyclePrev<CR>", desc = "Prev buffer" },
+            { "<M-S-j>", "<Cmd>BufferLineMoveNext<CR>",  desc = "Move buffer right" },
+            { "<M-S-k>", "<Cmd>BufferLineMovePrev<CR>",  desc = "Move buffer left" },
+            { "<M-s>",   "<Cmd>BufferLinePick<CR>",      desc = "Pick buffer" },
+            { "<M-]>",   "<Cmd>tabnext<CR>",             desc = "Next tab" },
+            { "<M-[>",   "<Cmd>tabprevious<CR>",         desc = "Prev tab" },
+            { "<M-n>",   "<Cmd>enew<CR>",                desc = "New buffer" },
+            { "<M-S-n>", "<Cmd>tabnew<CR>",              desc = "New tab" },
+            { "<M-x>",   "<Cmd>bdelete<CR>",             desc = "Close buffer" },
+            { "<M-S-x>", "<Cmd>tabclose<CR>",            desc = "Close tab" },
+        }
     },
 
     -- notify
@@ -319,10 +154,6 @@ return {
                 throttle = 1000 / 30,
             }
         end,
-        keys = {
-            ---@diagnostic disable-next-line: undefined-field
-            { "<Leader>n", function() Snacks.picker.noice() end, desc = "Noice" },
-        },
     },
 
     -- which key
