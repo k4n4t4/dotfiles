@@ -311,6 +311,7 @@ return {
             "hrsh7th/cmp-calc",
         },
         build = function()
+            ---@diagnostic disable-next-line: undefined-field
             require('blink.cmp').build():pwait()
         end,
         event = { "InsertEnter", "CmdLineEnter" },
