@@ -182,9 +182,14 @@ return {
                         },
                     },
                     lualine_c = {
-                        -- TODO: filetype icon only and simple file name with good space.
                         {
                             "filetype",
+                            fmt = function(name)
+                                if name == "" then
+                                    return " "
+                                end
+                                return name
+                            end,
                             icon_only = true,
                             separator = "",
                             padding = { left = 1, right = 0 },
@@ -193,13 +198,14 @@ return {
                             "filename",
                             path = 0,
                             file_status = true,
+                            newfile_status = true,
                             shorting_target = 40,
-                            padding = { left = 1 },
+                            padding = { left = 0 },
                             symbols = {
-                                modified = "󰏫",
-                                readonly = "󰌾",
-                                unnamed  = "󰈔",
-                                newfile  = "󰈔",
+                                modified = " ",
+                                readonly = " ",
+                                unnamed  = "",
+                                newfile  = " ",
                             },
                         },
                     },
