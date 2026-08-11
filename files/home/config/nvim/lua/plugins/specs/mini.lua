@@ -1,6 +1,4 @@
 return {
-    --[[ EDITING PLUGINS ]]--
-
     -- icons
     {
         "nvim-mini/mini.icons",
@@ -13,6 +11,7 @@ return {
             end
         end,
     },
+
     -- explorer
     {
         "nvim-mini/mini.files",
@@ -28,7 +27,7 @@ return {
                         files.go_in { close_on_file = true }
                     end, { buffer = b, desc = 'Go in' })
                     vim.keymap.set('n', '<S-CR>', files.go_out, { buffer = b, desc = 'Go out' })
-                    vim.keymap.set('n', '<Leader>e', files.close, { buffer = b, desc = 'Close' })
+                    vim.keymap.set('n', '<Leader>E', files.close, { buffer = b, desc = 'Close' })
                     vim.keymap.set('n', '<ESC>', files.close, { buffer = b, desc = 'Close' })
                 end,
             })
@@ -36,12 +35,13 @@ return {
         keys = {
             {
                 mode = 'n',
-                '<Leader>-',
+                '<Leader>E',
                 '<CMD>lua MiniFiles.open()<CR>',
-                desc = 'MiniFiles toggle'
+                desc = 'MiniFiles'
             },
         },
     },
+
     -- surround
     {
         "nvim-mini/mini.surround",
@@ -67,6 +67,7 @@ return {
             vim.keymap.set('n', 'yss', 'ys_', { remap = true })
         end,
     },
+
     -- autopairs
     {
         "nvim-mini/mini.pairs",
@@ -75,6 +76,7 @@ return {
             require("mini.pairs").setup()
         end,
     },
+
     -- textobjects
     {
         "nvim-mini/mini.ai",
@@ -116,6 +118,7 @@ return {
             }
         end,
     },
+
     -- git
     {
         "nvim-mini/mini.diff",
@@ -141,6 +144,7 @@ return {
             require("mini.git").setup()
         end,
     },
+
     -- jump
     {
         "nvim-mini/mini.jump",
@@ -154,42 +158,6 @@ return {
         event = "VeryLazy",
         config = function()
             require("mini.jump2d").setup()
-        end,
-    },
-
-    --[[ UI PLUGINS ]]--
-
-    -- themes
-    {
-        "nvim-mini/mini.base16",
-        lazy = false,
-        config = function()
-            require('mini.base16').setup {
-                palette = {
-                    base00 = "#202020",
-                    base01 = "#272727",
-                    base02 = "#2F2F2F",
-                    base03 = "#606060",
-                    base04 = "#676767",
-                    base05 = "#A0A0A0",
-                    base06 = "#B0B0B0",
-                    base07 = "#C0C0C0",
-                    base08 = "#C05050",
-                    base09 = "#C07050",
-                    base0A = "#C09000",
-                    base0B = "#70C070",
-                    base0C = "#50C0C0",
-                    base0D = "#5090C0",
-                    base0E = "#C090C0",
-                    base0F = "#D0D0D0",
-                },
-                use_cterm = true,
-                plugins = {
-                    default = false,
-                    ["saghen/blink.cmp"] = true,
-                },
-            }
-            vim.api.nvim_exec_autocmds('ColorScheme', {})
         end,
     },
 }

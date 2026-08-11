@@ -1,4 +1,4 @@
---[[ GENERAL SETTINGS ]]--
+-- GENERAL SETTINGS
 
 -- exrc
 vim.opt.exrc = true
@@ -36,7 +36,7 @@ vim.opt.fileencodings = {
 vim.opt.undofile = true
 
 
---[[ EDITING SETTINGS ]]--
+-- EDITING SETTINGS
 
 -- indentation
 vim.opt.expandtab = true
@@ -67,7 +67,7 @@ vim.opt.winborder = "none"
 vim.opt.pumborder = "none"
 
 
---[[ UI SETTINGS ]]--
+-- UI SETTINGS
 
 -- line number
 vim.opt.number = true
@@ -139,10 +139,15 @@ vim.diagnostic.config {
         },
     },
 }
-vim.api.nvim_set_hl(0, "DiagnosticUnnecessary", { link = "NONE", default = false })
+vim.api.nvim_create_autocmd({ "VimEnter", "ColorScheme" }, {
+    group = vim.api.nvim_create_augroup("DiagnosticUnnecessary", { clear = true }),
+    callback = function()
+        vim.api.nvim_set_hl(0, "DiagnosticUnnecessary", { link = "NONE", default = false })
+    end,
+})
 
 
---[[ BUILTIN PLUGINS ]]--
+-- BUILTIN PLUGINS
 
 -- disable builtin plugins
 vim.opt.loadplugins = false

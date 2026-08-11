@@ -1,5 +1,5 @@
 return {
-    --[[ TREESITTER ]]--
+    -- TREESITTER
     {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
@@ -35,7 +35,7 @@ return {
         end
     },
 
-    --[[ LSP PLUGINS ]]--
+    -- LSP PLUGINS
     {
         "mason-org/mason.nvim",
         opts = {
@@ -80,14 +80,14 @@ return {
         opts = {
             library = {
                 { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-                { path = "snacks.nvim", words = { "Snacks" } },
-                { path = "lazy.nvim", words = { "LazyVim" } },
+                { path = "snacks.nvim",        words = { "Snacks" } },
+                { path = "lazy.nvim",          words = { "LazyVim" } },
             },
         },
     },
 
 
-    --[[ EDITOR PLUGINS ]]--
+    -- EDITOR PLUGINS
 
     -- statusline
     {
@@ -182,8 +182,8 @@ return {
                             end,
                             cond = function()
                                 return package.loaded["noice"] and
-                                ---@diagnostic disable-next-line: undefined-field
-                                require("noice").api.status.command.has()
+                                    ---@diagnostic disable-next-line: undefined-field
+                                    require("noice").api.status.command.has()
                             end,
                         },
                         lsp_status, "encoding", "fileformat", "filetype",
@@ -382,7 +382,7 @@ return {
         "k4n4t4/transparent.nvim",
         config = function()
             local transparent = require("transparent")
-            transparent.setup { groups_extend = { } }
+            transparent.setup { groups_extend = {} }
         end,
     },
 
@@ -547,5 +547,49 @@ return {
             vim.g.mkdp_filetypes = { "markdown" }
         end,
         ft = { "markdown" },
+    },
+
+    -- COLOR SCHEMES
+    {
+        "folke/tokyonight.nvim",
+        enabled = true,
+        lazy = false,
+        priority = 1000,
+        config = function()
+            vim.cmd.colorscheme "tokyonight"
+        end,
+    },
+    {
+        "nvim-mini/mini.base16",
+        enabled = false,
+        lazy = false,
+        config = function()
+            require('mini.base16').setup {
+                palette = {
+                    base00 = "#202020",
+                    base01 = "#272727",
+                    base02 = "#2F2F2F",
+                    base03 = "#606060",
+                    base04 = "#676767",
+                    base05 = "#A0A0A0",
+                    base06 = "#B0B0B0",
+                    base07 = "#C0C0C0",
+                    base08 = "#C05050",
+                    base09 = "#C07050",
+                    base0A = "#C09000",
+                    base0B = "#70C070",
+                    base0C = "#50C0C0",
+                    base0D = "#5090C0",
+                    base0E = "#C090C0",
+                    base0F = "#D0D0D0",
+                },
+                use_cterm = true,
+                plugins = {
+                    default = false,
+                    ["saghen/blink.cmp"] = true,
+                },
+            }
+            vim.api.nvim_exec_autocmds('ColorScheme', {})
+        end,
     },
 }

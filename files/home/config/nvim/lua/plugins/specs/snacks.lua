@@ -46,7 +46,7 @@ return {
             notifier = { enabled = true },
             quickfile = { enabled = true },
             scope = { enabled = true },
-            scroll = { enabled = false },
+            scroll = { enabled = true },
             statuscolumn = {
                 enabled = true,
                 left = { "mark", "sign" },
@@ -101,14 +101,14 @@ return {
         end,
         keys = {
             -- explorer
-            { "<leader>e",       function() Snacks.picker.explorer() end,              desc = "explorer" },
+            { "<leader>e",       function() Snacks.picker.explorer() end,              desc = "Explorer" },
 
             -- picker
             { "<leader>P",       function() Snacks.picker.pick() end,                  desc = "Picker" },
-            { "<leader>f",       function() Snacks.picker.files() end,                 desc = "find files" },
+            { "<leader>f",       function() Snacks.picker.files() end,                 desc = "Find files" },
             { "<leader>p",       function() Snacks.picker.projects() end,              desc = "Projects" },
             { "<leader><space>", function() Snacks.picker.smart() end,                 desc = "Smart Find Files" },
-            { "<leader>/",       function() Snacks.picker.grep() end,                  desc = "grep" },
+            { "<leader>/",       function() Snacks.picker.grep() end,                  desc = "Grep" },
             { "<leader>r",       function() Snacks.picker.recent() end,                desc = "Recent Files" },
             { "<leader>b",       function() Snacks.picker.buffers() end,               desc = "Buffers" },
             { "<leader>q",       function() Snacks.picker.qflist() end,                desc = "Quickfix List" },
