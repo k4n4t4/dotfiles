@@ -104,6 +104,10 @@ return {
                 group = vim.api.nvim_create_augroup("LualineMacroRefresh", { clear = true }),
                 callback = function() require("lualine").refresh() end,
             })
+            local function is_visual_mode()
+                local mode = vim.fn.mode()
+                return mode == 'v' or mode == 'V' or mode == '\22'
+            end
             local function macro_status()
                 local reg = vim.fn.reg_recording()
                 if reg ~= "" then
@@ -124,7 +128,6 @@ return {
             end
             local function visual_info()
                 local mode = vim.fn.mode()
-                if mode ~= 'v' and mode ~= 'V' and mode ~= '\22' then return '' end
 
                 local l1, l2 = vim.fn.line('v'), vim.fn.line('.')
                 local lines = math.abs(l2 - l1) + 1
@@ -135,7 +138,7 @@ return {
                     local c1, c2 = vim.fn.virtcol('v'), vim.fn.virtcol('.')
                     local cols = math.abs(c2 - c1) + 1
                     return string.format('%dx%d', lines, cols)
-                else
+                elseif mode == 'v' then
                     local wc = vim.fn.wordcount()
                     local chars = wc.visual_chars or 0
                     if lines > 1 then
@@ -143,6 +146,8 @@ return {
                     else
                         return string.format('%d chars', chars)
                     end
+                else
+                    return ''
                 end
             end
 
@@ -160,17 +165,44 @@ return {
                         "mode",
                         macro_status,
                     },
-                    lualine_b = { "branch", "diff", "diagnostics" },
+                    lualine_b = {
+                        "branch",
+                        {
+                            "diff",
+                            symbols = {
+                                added    = " ",
+                                modified = " ",
+                                removed  = " ",
+                            },
+                        },
+                        {
+                            "diagnostics",
+                            symbols = {
+                                error = '󰅚 ',
+                                warn =  '󰀪 ',
+                                info =  '󰋽 ',
+                                hint =  '󰌶 ',
+                            },
+                        },
+                    },
                     lualine_c = {
                         {
+                            "filetype",
+                            icon_only = true,
+                            separator = "",
+                            padding = { left = 1, right = 0 },
+                        },
+                        {
                             "filename",
-                            path = 1,
+                            path = 0,
                             file_status = true,
                             shorting_target = 40,
+                            padding = { left = 0 },
                             symbols = {
-                                modified = "[+]",
-                                readonly = "[RO]",
-                                unnamed = "[Untitled]",
+                                modified = "󰏫",
+                                readonly = "󰌾",
+                                unnamed  = "󰈔",
+                                newfile  = "󰈔",
                             },
                         },
                     },
@@ -181,15 +213,36 @@ return {
                                 return require("noice").api.status.command.get()
                             end,
                             cond = function()
-                                return package.loaded["noice"] and
-                                    ---@diagnostic disable-next-line: undefined-field
-                                    require("noice").api.status.command.has()
+                                return not is_visual_mode() and
+                                package.loaded["noice"] and
+                                ---@diagnostic disable-next-line: undefined-field
+                                require("noice").api.status.command.has()
                             end,
                         },
-                        lsp_status, "encoding", "fileformat", "filetype",
+                        {
+                            visual_info,
+                            cond = is_visual_mode,
+                        },
+                        {
+                            "searchcount",
+                        },
                     },
-                    lualine_y = { "progress", "searchcount" },
-                    lualine_z = { visual_info, "location" },
+                    lualine_y = {
+                        lsp_status,
+                        {
+                            "encoding",
+                            separator = "",
+                            padding = { left = 1, right = 1 },
+                        },
+                        {
+                            "fileformat",
+                            padding = { left = 0, right = 1 },
+                        },
+                    },
+                    lualine_z = {
+                        "progress",
+                        "location",
+                    },
                 },
                 inactive_sections = {
                     lualine_a = {},
@@ -219,7 +272,7 @@ return {
                     diagnostics = "nvim_lsp",
                     ---@diagnostic disable-next-line: unused-local
                     diagnostics_indicator = function(count, level, diagnostics_dict, context)
-                        local icon = level:match("error") and " " or " "
+                        local icon = level:match("error") and " " or "󰀪 "
                         return " " .. icon .. count
                     end,
                     always_show_bufferline = false,
