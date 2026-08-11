@@ -168,9 +168,9 @@ return {
                             file_status = true,
                             shorting_target = 40,
                             symbols = {
-                                modified = " [+]",
-                                readonly = " [RO]",
-                                unnamed = "Untitled",
+                                modified = "[+]",
+                                readonly = "[RO]",
+                                unnamed = "[Untitled]",
                             },
                         },
                     },
@@ -186,7 +186,7 @@ return {
                                 require("noice").api.status.command.has()
                             end,
                         },
-                        lsp_status, "encoding", "fileformat", "filetype"
+                        lsp_status, "encoding", "fileformat", "filetype",
                     },
                     lualine_y = { "progress", "searchcount" },
                     lualine_z = { visual_info, "location" },
