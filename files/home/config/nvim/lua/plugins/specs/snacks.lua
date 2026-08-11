@@ -73,6 +73,20 @@ return {
                     Snacks.toggle.inlay_hints():map("<leader>uh")
                     Snacks.toggle.indent():map("<leader>ug")
                     Snacks.toggle.dim():map("<leader>uD")
+                    Snacks.toggle.new({
+                        id = "transparent",
+                        name = "Transparent Background",
+                        get = function()
+                            return require("transparent").enabled
+                        end,
+                        set = function()
+                            if require("transparent").enabled then
+                                require("transparent").disable()
+                            else
+                                require("transparent").enable()
+                            end
+                        end
+                    }):map("<leader>ut")
                 end,
             })
         end,

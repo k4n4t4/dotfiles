@@ -251,7 +251,12 @@ return {
         "folke/noice.nvim",
         dependencies = {
             "MunifTanjim/nui.nvim",
-            "rcarriga/nvim-notify",
+            {
+                "rcarriga/nvim-notify",
+                opts = {
+                    background_colour = "#000000",
+                },
+            },
         },
         event = "VeryLazy",
         config = function()
@@ -294,17 +299,21 @@ return {
     {
         "folke/which-key.nvim",
         event = "VeryLazy",
-        opts = {
-            preset = "helix",
-            win = {
-                border = "none",
-            },
-        },
+        config = function()
+            local wk = require "which-key"
+            wk.setup {
+                preset = "helix",
+                win = {
+                    border = "none",
+                },
+            }
+        end,
         keys = {
             {
                 "<leader>?",
                 function()
-                    require("which-key").show { global = false }
+                    local wk = require("which-key")
+                    wk.show { global = false }
                 end,
                 desc = "Buffer Local Keymaps (which-key)",
             },
@@ -399,14 +408,8 @@ return {
         "k4n4t4/transparent.nvim",
         config = function()
             local transparent = require("transparent")
-            transparent.setup {
-                groups_extend = {
-                }
-            }
+            transparent.setup { groups_extend = { } }
         end,
-        keys = {
-            { mode = "n", "<Leader>T", function() require('transparent').toggle() end, desc = 'Toggle transparency' },
-        },
     },
 
     -- todo comments
