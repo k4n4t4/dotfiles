@@ -110,11 +110,11 @@ vim.opt.listchars = {
 -- fillchars
 vim.opt.fillchars = {
     eob = " ",
-    fold = "·",
-    foldopen = "v",
+    fold = " ",
+    foldopen = "",
     foldsep = " ",
     foldinner = " ",
-    foldclose = ">",
+    foldclose = "",
     horiz = "━",
     horizup = "┻",
     horizdown = "┳",
