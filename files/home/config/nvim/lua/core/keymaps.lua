@@ -26,6 +26,9 @@ set({ 'n', 'x' }, '<C-S-p>', function()
     vim.cmd.normal { "P`[v`]=", bang = true }
 end, { desc = "Paste before cursor and auto-indent" })
 
+set({ 'n', 'x' }, 'j', "gj", { desc = "Move Down" })
+set({ 'n', 'x' }, 'k', "gk", { desc = "Move Up" })
+
 -- mark keymaps
 vim.keymap.set('n', 'dM', function()
     vim.cmd.delmarks { bang = true }
