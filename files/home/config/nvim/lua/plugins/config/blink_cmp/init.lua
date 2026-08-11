@@ -67,86 +67,59 @@ function M.config()
         },
         sources = {
             default = {
-                "lazydev",
-                "codecompanion",
-                "path",
                 "lsp",
                 "snippets",
-                "obsidian",
-                "obsidian_new",
-                "obsidian_tags",
+                "path",
                 "buffer",
+                "lazydev",
                 "calc",
                 "git",
                 "dictionary",
+                "codecompanion",
+                "obsidian",
+                "obsidian_new",
+                "obsidian_tags",
             },
             providers = {
-                lazydev = {
-                    name = "LazyDev",
-                    module = "lazydev.integrations.blink",
-                    score_offset = 700,
-                },
-                codecompanion = {
-                    name = "CodeCompanion",
-                    module = "codecompanion.providers.completion.blink",
-                    score_offset = 600,
-                    async = true,
-                },
-                path = {
-                    module = "blink.cmp.sources.path",
-                    name = "Path",
-                    score_offset = 513,
-                    async = true,
-                },
                 lsp = {
-                    module = "blink.cmp.sources.lsp",
                     name = "LSP",
-                    score_offset = 510,
+                    module = "blink.cmp.sources.lsp",
+                    score_offset = 50,
                     async = true,
                     transform_items = function(_, items)
                         if vim.bo.filetype == "java" then
                             return filter_duplicates(items)
                         end
-
                         return items
                     end,
                 },
                 snippets = {
-                    module = "blink.cmp.sources.snippets",
                     name = "Snip",
-                    score_offset = 509,
+                    module = "blink.cmp.sources.snippets",
+                    score_offset = 30,
                     async = true,
                 },
-                obsidian = {
-                    name = "obsidian",
-                    module = "blink.compat.source",
-                    opts = { name = "obsidian" },
-                },
-                obsidian_new = {
-                    name = "obsidian_new",
-                    module = "blink.compat.source",
-                    opts = { name = "obsidian_new" },
-                },
-                obsidian_tags = {
-                    name = "obsidian_tags",
-                    module = "blink.compat.source",
-                    opts = { name = "obsidian_tags" },
+                path = {
+                    name = "Path",
+                    module = "blink.cmp.sources.path",
+                    score_offset = 20,
+                    async = true,
                 },
                 buffer = {
-                    module = "blink.cmp.sources.buffer",
                     name = "Buffer",
-                    score_offset = 507,
+                    module = "blink.cmp.sources.buffer",
+                    score_offset = 10,
                     async = true,
                 },
                 calc = {
-                    name = "calc",
+                    name = "Calc",
                     module = "blink.compat.source",
-                    score_offset = 300,
+                    score_offset = 0,
                     async = true,
                 },
                 git = {
-                    module = 'blink-cmp-git',
                     name = 'Git',
+                    module = 'blink-cmp-git',
                     enabled = function()
                         return vim.tbl_contains({ 'octo', 'gitcommit', 'markdown' }, vim.bo.filetype)
                     end,
@@ -155,11 +128,11 @@ function M.config()
                     opts = {},
                 },
                 dictionary = {
-                    module = "blink-cmp-dictionary",
                     name = "Dict",
+                    module = "blink-cmp-dictionary",
                     min_keyword_length = 3,
                     async = true,
-                    score_offset = 0,
+                    score_offset = -10,
                     max_items = 5,
                     opts = {
                         dictionary_files = vim.fn.glob(
@@ -168,6 +141,36 @@ function M.config()
                             true
                         ),
                     },
+                },
+
+                lazydev = {
+                    name = "LazyDev",
+                    module = "lazydev.integrations.blink",
+                    score_offset = 100,
+                },
+                codecompanion = {
+                    name = "CodeCompanion",
+                    module = "codecompanion.providers.completion.blink",
+                    score_offset = 100,
+                    async = true,
+                },
+                obsidian = {
+                    name = "Obsidian",
+                    module = "blink.compat.source",
+                    score_offset = 100,
+                    opts = { name = "obsidian" },
+                },
+                obsidian_new = {
+                    name = "ObsidianNew",
+                    module = "blink.compat.source",
+                    score_offset = 100,
+                    opts = { name = "obsidian_new" },
+                },
+                obsidian_tags = {
+                    name = "ObsidianTags",
+                    module = "blink.compat.source",
+                    score_offset = 100,
+                    opts = { name = "obsidian_tags" },
                 },
             },
         },
