@@ -16,9 +16,11 @@ if use_random_colorscheme then
             math.randomseed(os.time())
             local selected = schemes[math.random(1, #schemes)]
 
-            local ok_lazy, lazy = pcall(require, "lazy")
-            if ok_lazy then
-                lazy.load({ plugins = { selected.plugin } })
+            if selected.plugin then
+                local ok_lazy, lazy = pcall(require, "lazy")
+                if ok_lazy then
+                    lazy.load({ plugins = { selected.plugin } })
+                end
             end
 
             local status_ok, _ = pcall(vim.cmd.colorscheme, selected.name)
@@ -30,6 +32,7 @@ if use_random_colorscheme then
         end
     })
 end
+
 
 return {
     { -- tokyonight

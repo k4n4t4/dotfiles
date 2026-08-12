@@ -141,9 +141,9 @@ vim.diagnostic.config {
 }
 vim.api.nvim_create_autocmd({ "VimEnter", "ColorScheme" }, {
     group = vim.api.nvim_create_augroup("DiagnosticUnnecessary", { clear = true }),
-    callback = function()
+    callback = vim.schedule_wrap(function()
         vim.api.nvim_set_hl(0, "DiagnosticUnnecessary", { link = "NONE", default = false })
-    end,
+    end),
 })
 
 
