@@ -93,6 +93,8 @@ return {
                         } or nil,
                         kind_icon = "",
                         kind_hl = "Normal",
+                        kind_name = "Copilot",
+                        kind = 15,
                         score_offset = 55,
                         detail = item.detail or "Copilot",
                         documentation = {
