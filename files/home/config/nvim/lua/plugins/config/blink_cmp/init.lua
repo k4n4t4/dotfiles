@@ -23,7 +23,6 @@ local function filter_duplicates(items)
     return filtered
 end
 
-
 function M.config()
     vim.opt.autocomplete = false
 
@@ -41,14 +40,9 @@ function M.config()
             menu = {
                 winblend = winblend,
                 draw = {
-                    columns = {
-                        { "kind_icon" },
-                        { "label", "label_description", gap = 1 },
-                        { "kind" },
-                    },
+                    columns = { { "kind_icon" }, { "label", gap = 1 } },
                     components = {
                         label = {
-                            -- FIXME: not working (2026-08-12)
                             text = function(ctx)
                                 return require("colorful-menu").blink_components_text(ctx)
                             end,
