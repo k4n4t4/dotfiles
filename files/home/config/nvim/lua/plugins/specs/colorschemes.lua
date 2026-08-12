@@ -6,6 +6,8 @@ if use_random_colorscheme then
         { name = "kanagawa-wave",   plugin = "kanagawa.nvim" },
         { name = "gruvbox",         plugin = "gruvbox.nvim" },
         { name = "onedark",         plugin = "onedark.nvim" },
+        { name = "nightfox",        plugin = "nightfox.nvim" },
+        { name = "solarized-osaka", plugin = "solarized-osaka.nvim" },
         { name = "colorful",        plugin = "mini.base16" }
     }
 
@@ -22,6 +24,8 @@ if use_random_colorscheme then
             local status_ok, _ = pcall(vim.cmd.colorscheme, selected.name)
             if not status_ok then
                 vim.notify("Failed to load colorscheme: " .. selected.name, vim.log.levels.ERROR)
+            else
+                vim.notify("Loaded colorscheme: " .. selected.name, vim.log.levels.INFO)
             end
         end
     })
@@ -42,6 +46,10 @@ return {
     },
     { -- solarized osaka
         "craftzdog/solarized-osaka.nvim",
+        opts = { transparent = false },
+    },
+    { -- nightfox
+        "EdenEast/nightfox.nvim",
     },
     { -- mini base16
         "nvim-mini/mini.base16",
