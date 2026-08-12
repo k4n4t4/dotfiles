@@ -37,6 +37,7 @@ return {
                     matcher = { frecency = true, cwd_bonus = true, sort_empty = true },
                     grep = { hidden = true, regex = true },
                     explorer = { layout = require("plugins.config.snacks.picker_layout").explorer_layout },
+                    select = { layout = require("plugins.config.snacks.picker_layout").select_layout },
                 },
                 layout = require("plugins.config.snacks.picker_layout").layout,
                 win = {

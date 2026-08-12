@@ -38,7 +38,7 @@ M.layout = {
 M.explorer_layout = {
     preset = "sidebar",
     backdrop = false,
-    auto_hide = { "input" },
+    hidden = { "input" },
     config = function(layout)
         local input = layout.layout[1]
         local list = layout.layout[2]
@@ -48,6 +48,13 @@ M.explorer_layout = {
         list.border = "none"
         preview.border = { "", " ", "", "", "", "", "", "" }
     end,
+}
+
+M.select_layout = {
+    hidden = { "preview", "input" },
+    layout = {
+        border = "single",
+    },
 }
 
 return M
