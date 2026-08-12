@@ -53,6 +53,10 @@ function M.config()
     vim.opt.showcmd = true
     vim.opt.showcmdloc = "last"
 
+    vim.api.nvim_create_autocmd({ "ModeChanged" }, {
+        group = vim.api.nvim_create_augroup("LualineVisualRefresh", { clear = true }),
+        callback = function() require("lualine").refresh() end,
+    })
     vim.api.nvim_create_autocmd({ "RecordingEnter", "RecordingLeave" }, {
         group = vim.api.nvim_create_augroup("LualineMacroRefresh", { clear = true }),
         callback = function() require("lualine").refresh() end,
