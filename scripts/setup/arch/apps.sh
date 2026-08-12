@@ -1,5 +1,8 @@
 sudo pacman --needed --noconfirm -S zed kitty nautilus mpv firefox thunderbird gimp discord obsidian
 
+if ! [ -d "$XDG_CONFIG_HOME" ]; then
+    mkdir -p "$XDG_CONFIG_HOME"
+fi
 
 if ! [ -d /usr/share/applications ]; then
     sudo mkdir -p /usr/share/applications
