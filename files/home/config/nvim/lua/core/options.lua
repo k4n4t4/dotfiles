@@ -99,12 +99,12 @@ vim.opt.sidescrolloff = 5
 -- listchars
 vim.opt.list = true
 vim.opt.listchars = {
-    tab      = ">-",
-    extends  = ">",
-    precedes = "<",
-    trail    = "-",
-    nbsp     = "+",
-    conceal  = "@",
+    tab      = " ",
+    extends  = "»",
+    precedes = "«",
+    trail    = "·",
+    nbsp     = "␣",
+    conceal  = "±",
 }
 
 -- fillchars
