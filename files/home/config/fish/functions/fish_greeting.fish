@@ -1,6 +1,6 @@
 function fish_greeting
     if type -q fastfetch
-        if test $COLUMNS -le 80
+        if test $COLUMNS -le 100
             fastfetch -c mini
         else
             fastfetch -c full
