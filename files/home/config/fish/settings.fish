@@ -1,34 +1,42 @@
 # @fish-lsp-disable
 
-set fish_handle_reflow 0
 
-set fish_color_normal         brwhite
-set fish_color_autosuggestion brblack
-set fish_color_command        green
-set fish_color_error          red
-set fish_color_comment        white
-set fish_color_cancel         red
-set fish_color_escape         cyan
-set fish_color_operator       purple
-set fish_color_param          blue
-set fish_color_quote          yellow
-set fish_color_redirection    cyan
-set fish_color_end            brwhite
-set fish_color_match          brcyan --underline
-set fish_color_search_match   --background=brblack
-set fish_color_selection      --background=brblack
-set fish_color_user           brblue
-set fish_color_host           brgreen
-set fish_color_host_remote    bryellow
-set fish_color_cwd            blue
-set fish_color_cwd_root       red
+# fish settings
 
-set fish_pager_color_selected_background -r
-set fish_pager_color_completion          brblack
-set fish_pager_color_prefix              white
-set fish_pager_color_description         cyan
-set fish_pager_color_progress            brwhite
+set -g fish_handle_reflow 0
 
+
+# fish colors
+
+set -g fish_color_normal         brwhite
+set -g fish_color_autosuggestion brblack
+set -g fish_color_command        green
+set -g fish_color_error          red
+set -g fish_color_comment        white
+set -g fish_color_cancel         red
+set -g fish_color_escape         cyan
+set -g fish_color_operator       purple
+set -g fish_color_param          blue
+set -g fish_color_quote          yellow
+set -g fish_color_redirection    cyan
+set -g fish_color_end            brwhite
+set -g fish_color_match          brcyan --underline
+set -g fish_color_search_match   --background=brblack
+set -g fish_color_selection      --background=brblack
+set -g fish_color_user           brblue
+set -g fish_color_host           brgreen
+set -g fish_color_host_remote    bryellow
+set -g fish_color_cwd            blue
+set -g fish_color_cwd_root       red
+
+set -g fish_pager_color_selected_background -r
+set -g fish_pager_color_completion          brblack
+set -g fish_pager_color_prefix              white
+set -g fish_pager_color_description         cyan
+set -g fish_pager_color_progress            brwhite
+
+
+# path
 
 fish_add_path \
     ~/bin \
@@ -47,6 +55,9 @@ if type -q archlinux-java
     fish_add_path $JAVA_HOME/bin/
 end
 
+
+# pager
+
 set -gx PAGER "less"
 
 set -gx LESS '-i -M -R -S -W -z-4 -x4'
@@ -58,14 +69,25 @@ set -gx LESS_TERMCAP_se \033"[m"
 set -gx LESS_TERMCAP_us \033"[36m"
 set -gx LESS_TERMCAP_ue \033"[m"
 
-set -gx EDITOR "vim"
+if type -q nvim
+    set -gx MANPAGER "nvim +Man!"
+end
 
+
+# locale
 set -gx LANG C.UTF-8
+
+
+# editor
 
 if type -q nvim
     set -gx EDITOR "nvim"
-    set -gx MANPAGER "nvim +Man!"
+else if type -q vim
+    set -gx EDITOR "vim"
 end
+
+
+# initialization
 
 if type -q tmux
     set -gx TMUX_SHELL $FISH_BIN
@@ -92,7 +114,9 @@ if type -q navi
     navi widget fish | source
 end
 
+
 # starship setup
+
 if type -q starship
     starship init fish | source
 
