@@ -95,7 +95,7 @@ function M.config()
                 snippets = {
                     name = "Snip",
                     module = "blink.cmp.sources.snippets",
-                    score_offset = 30,
+                    score_offset = 45,
                     async = true,
                 },
                 path = {
