@@ -177,7 +177,7 @@ function M.get_command(args)
 end
 
 function M.run(run_command, args)
-    if run_command == nil then
+    if not run_command then
         run_command = M.get_command(args or "")
     elseif args and args ~= "" then
         run_command = run_command .. " " .. args
