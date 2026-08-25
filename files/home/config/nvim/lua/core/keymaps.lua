@@ -33,7 +33,7 @@ end, {desc = "Copy current line and comment it" })
 set("x", "Yc", function()
     vim.cmd.normal { "y`[v`]gc`]p" }
 end, {desc = "Copy current line and comment it" })
-vim.keymap.set("n", "<C-c>", "ciw")
+set("n", "<C-c>", "ciw")
 
 set({ 'n', 'o', 'x' }, '<tab>', "5j", { desc = "Scroll Down" })
 set({ 'n', 'o', 'x' }, '<S-tab>', "5k", { desc = "Scroll Up" })
@@ -56,18 +56,18 @@ set({ 'n', 'x' }, '<C-S-p>', function()
 end, { desc = "Paste before cursor and auto-indent" })
 
 -- mark keymaps
-vim.keymap.set('n', 'dM', function()
+set('n', 'dM', function()
     vim.cmd.delmarks { bang = true }
     vim.cmd.redraw { bang = true }
 end, { desc = "Delete all local marks and redraw" })
-vim.keymap.set('n', 'dm', function()
+set('n', 'dm', function()
     local char = vim.fn.getcharstr()
     if char:match("[a-zA-Z0-9]") then
         vim.cmd.delmarks(char)
         vim.cmd.redraw { bang = true }
     end
 end, { desc = "Delete a specific mark and redraw" })
-vim.keymap.set('n', 'm', function()
+set('n', 'm', function()
     local char = vim.fn.getcharstr()
     if char:match("[a-zA-Z0-9]") then
         vim.cmd.normal { "m" .. char, bang = true }
@@ -148,23 +148,38 @@ do
         handle_selection(bufnr, { s_row, s_col, e_row, e_col })
     end
 
-    vim.keymap.set('n', '<leader>s', function()
+    set('n', '<leader>s', function()
         vim.go.operatorfunc = 'v:lua.visual_swap_opfunc'
         return 'g@'
     end, { expr = true, desc = "Swap text object" })
 
-    vim.keymap.set('n', '<leader>ss', function()
+    set('n', '<leader>ss', function()
         vim.go.operatorfunc = 'v:lua.visual_swap_opfunc'
         return 'g@_'
     end, { expr = true, desc = "Swap line" })
 
-    vim.keymap.set('x', '<leader>s', function()
+    set('x', '<leader>s', function()
         local bufnr = vim.api.nvim_get_current_buf()
         local range = vs.visual_range(bufnr)
         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'nx', false)
         handle_selection(bufnr, range)
     end, { desc = "Swap selected texts" })
 end
+
+-- run code
+set("n", "<A-r>", function()
+    if vim.bo.modified then
+        vim.cmd("write")
+    end
+    require("utils.run-code").run()
+end, { desc = "Run" })
+
+set("n", "<A-S-r>", function()
+    if vim.bo.modified then
+        vim.cmd("write")
+    end
+    require("utils.run-code").run_with_args()
+end, { desc = "Run with args" })
 
 -- lsp keymaps
 autocmd("LspAttach", {
@@ -198,7 +213,7 @@ set('n', '<Leader>dq', vim.diagnostic.setqflist, { desc = "Set Qflist" })
 -- set keymaps for unlisted filetypes
 local function unlist_filetype_keymaps(event)
     vim.bo[event.buf].buflisted = false
-    vim.keymap.set("n", "q", "<Cmd>close<CR>", { buffer = event.buf, silent = true })
+    set("n", "q", "<Cmd>close<CR>", { buffer = event.buf, silent = true })
 end
 autocmd("FileType", {
     group = augroup("UnlistFileType Keymaps", { clear = true }),
