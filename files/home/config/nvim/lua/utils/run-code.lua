@@ -1,39 +1,35 @@
 local M = {}
 
-local function with_args(cmd, args, sep)
-    return cmd .. (args ~= "" and (sep or " ") .. args or "")
-end
-
 M.default_commands = {
     ["python"] = function(file, args)
-        return with_args("python " .. file, args)
+        return "python " .. file .. (args ~= "" and " " .. args or "")
     end,
     ["lua"] = function(file, args)
-        return with_args("lua " .. file, args)
+        return "lua " .. file .. (args ~= "" and " " .. args or "")
     end,
     ["sh"] = function(file, args)
-        return with_args("bash " .. file, args)
+        return "bash " .. file .. (args ~= "" and " " .. args or "")
     end,
     ["zsh"] = function(file, args)
-        return with_args("zsh " .. file, args)
+        return "zsh " .. file .. (args ~= "" and " " .. args or "")
     end,
     ["ruby"] = function(file, args)
-        return with_args("ruby " .. file, args)
+        return "ruby " .. file .. (args ~= "" and " " .. args or "")
     end,
     ["php"] = function(file, args)
-        return with_args("php " .. file, args)
+        return "php " .. file .. (args ~= "" and " " .. args or "")
     end,
     ["javascript"] = function(file, args)
-        return with_args("node " .. file, args)
+        return "node " .. file .. (args ~= "" and " " .. args or "")
     end,
     ["typescript"] = function(file, args)
-        return with_args("tsx " .. file, args)
+        return "tsx " .. file .. (args ~= "" and " " .. args or "")
     end,
     ["r"] = function(file, args)
-        return with_args("Rscript " .. file, args)
+        return "Rscript " .. file .. (args ~= "" and " " .. args or "")
     end,
     ["perl"] = function(file, args)
-        return with_args("perl " .. file, args)
+        return "perl " .. file .. (args ~= "" and " " .. args or "")
     end,
 }
 
@@ -63,13 +59,20 @@ M.project_markers = {
             local target = name
             and vim.fn.shellescape(name)
             or ("python " .. vim.fn.shellescape(vim.api.nvim_buf_get_name(0)))
-            return with_args("cd " .. vim.fn.shellescape(root) .. " && uv run " .. target, args)
+            return "cd "
+            .. vim.fn.shellescape(root)
+            .. " && uv run "
+            .. target
+            .. (args ~= "" and " " .. args or "")
         end,
     },
     {
         files = { "Cargo.toml" },
         cmd = function(root, args)
-            return with_args("cd " .. vim.fn.shellescape(root) .. " && cargo run", args, " -- ")
+            return "cd "
+            .. vim.fn.shellescape(root)
+            .. " && cargo run"
+            .. (args ~= "" and " -- " .. args or "")
         end,
     },
     {
@@ -79,13 +82,21 @@ M.project_markers = {
             local exe = vim.fn.executable(gradlew) == 1
             and vim.fn.shellescape(gradlew)
             or "gradle"
-            return with_args("cd " .. vim.fn.shellescape(root) .. " && " .. exe .. " run", args)
+            return "cd "
+            .. vim.fn.shellescape(root)
+            .. " && "
+            .. exe
+            .. " run"
+            .. (args ~= "" and " " .. args or "")
         end,
     },
     {
         files = { "go.mod" },
         cmd = function(root, args)
-            return with_args("cd " .. vim.fn.shellescape(root) .. " && go run .", args)
+            return "cd "
+            .. vim.fn.shellescape(root)
+            .. " && go run ."
+            .. (args ~= "" and " " .. args or "")
         end,
     },
     {
@@ -100,13 +111,20 @@ M.project_markers = {
                     script = "start"
                 end
             end
-            return with_args("cd " .. vim.fn.shellescape(root) .. " && npm run " .. script, args, " -- ")
+            return "cd "
+            .. vim.fn.shellescape(root)
+            .. " && npm run "
+            .. script
+            .. (args ~= "" and " -- " .. args or "")
         end,
     },
     {
         files = { "Makefile" },
         cmd = function(root, args)
-            return with_args("cd " .. vim.fn.shellescape(root) .. " && make", args)
+            return "cd "
+            .. vim.fn.shellescape(root)
+            .. " && make"
+            .. (args ~= "" and " " .. args or "")
         end,
     },
 }
@@ -158,9 +176,11 @@ function M.get_command(args)
     return command(vim.fn.shellescape(bufname), args)
 end
 
-function M.run(run_command)
+function M.run(run_command, args)
     if run_command == nil then
-        run_command = M.get_command("")
+        run_command = M.get_command(args or "")
+    elseif args and args ~= "" then
+        run_command = run_command .. " " .. args
     end
     if not run_command then
         return
@@ -177,21 +197,9 @@ function M.run(run_command)
     end
 end
 
-function M.run_with_args()
+function M.run_with_args(run_command)
     local args = vim.fn.input("Arguments: ")
-    if args ~= "" then
-        local parts = {}
-        for word in args:gmatch("%S+") do
-            table.insert(parts, vim.fn.shellescape(word))
-        end
-        args = table.concat(parts, " ")
-    end
-
-    local cmd = M.get_command(args)
-    if not cmd then
-        return
-    end
-    M.run(cmd)
+    M.run(run_command, args)
 end
 
 return M
