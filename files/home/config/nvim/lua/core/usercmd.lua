@@ -12,3 +12,6 @@ usercmd("LspList", function()
         print(string.format("  - %s (id: %d)", client.name, client.id))
     end
 end, { desc = "List active LSP clients" })
+
+-- dir config
+require("utils.dir-config").setup()
