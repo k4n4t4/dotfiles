@@ -1,6 +1,6 @@
 local M = {}
 
-M.default_commands = {
+M.commands = {
     ["python"] = function(file, args)
         return "python " .. file .. (args ~= "" and " " .. args or "")
     end,
@@ -169,7 +169,7 @@ function M.get_command(args)
         return nil
     end
 
-    local command = M.default_commands[vim.bo.filetype]
+    local command = M.commands[vim.bo.filetype]
     if not command then
         return nil
     end
