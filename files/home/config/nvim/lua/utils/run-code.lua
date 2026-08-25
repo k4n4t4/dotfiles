@@ -57,22 +57,22 @@ M.project_markers = {
                 end
             end
             local target = name
-            and vim.fn.shellescape(name)
-            or ("python " .. vim.fn.shellescape(vim.api.nvim_buf_get_name(0)))
+                and vim.fn.shellescape(name)
+                or ("python " .. vim.fn.shellescape(vim.api.nvim_buf_get_name(0)))
             return "cd "
-            .. vim.fn.shellescape(root)
-            .. " && uv run "
-            .. target
-            .. (args ~= "" and " " .. args or "")
+                .. vim.fn.shellescape(root)
+                .. " && uv run "
+                .. target
+                .. (args ~= "" and " " .. args or "")
         end,
     },
     {
         files = { "Cargo.toml" },
         cmd = function(root, args)
             return "cd "
-            .. vim.fn.shellescape(root)
-            .. " && cargo run"
-            .. (args ~= "" and " -- " .. args or "")
+                .. vim.fn.shellescape(root)
+                .. " && cargo run"
+                .. (args ~= "" and " -- " .. args or "")
         end,
     },
     {
@@ -80,23 +80,23 @@ M.project_markers = {
         cmd = function(root, args)
             local gradlew = root .. "/gradlew"
             local exe = vim.fn.executable(gradlew) == 1
-            and vim.fn.shellescape(gradlew)
-            or "gradle"
+                and vim.fn.shellescape(gradlew)
+                or "gradle"
             return "cd "
-            .. vim.fn.shellescape(root)
-            .. " && "
-            .. exe
-            .. " run"
-            .. (args ~= "" and " " .. args or "")
+                .. vim.fn.shellescape(root)
+                .. " && "
+                .. exe
+                .. " run"
+                .. (args ~= "" and " " .. args or "")
         end,
     },
     {
         files = { "go.mod" },
         cmd = function(root, args)
             return "cd "
-            .. vim.fn.shellescape(root)
-            .. " && go run ."
-            .. (args ~= "" and " " .. args or "")
+                .. vim.fn.shellescape(root)
+                .. " && go run ."
+                .. (args ~= "" and " " .. args or "")
         end,
     },
     {
@@ -112,19 +112,19 @@ M.project_markers = {
                 end
             end
             return "cd "
-            .. vim.fn.shellescape(root)
-            .. " && npm run "
-            .. script
-            .. (args ~= "" and " -- " .. args or "")
+                .. vim.fn.shellescape(root)
+                .. " && npm run "
+                .. script
+                .. (args ~= "" and " -- " .. args or "")
         end,
     },
     {
         files = { "Makefile" },
         cmd = function(root, args)
             return "cd "
-            .. vim.fn.shellescape(root)
-            .. " && make"
-            .. (args ~= "" and " " .. args or "")
+                .. vim.fn.shellescape(root)
+                .. " && make"
+                .. (args ~= "" and " " .. args or "")
         end,
     },
 }
