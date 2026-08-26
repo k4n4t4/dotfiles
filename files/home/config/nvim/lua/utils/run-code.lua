@@ -31,6 +31,17 @@ M.commands = {
     ["perl"] = function(file, args)
         return "perl " .. file .. (args ~= "" and " " .. args or "")
     end,
+    ["java"] = function(file, args)
+        return "java " .. file .. (args ~= "" and " " .. args or "")
+    end,
+    ["c"] = function(file, args)
+        local out = vim.fn.tempname()
+        return "gcc " .. file .. " -o " .. out .. " && " .. out .. (args ~= "" and " " .. args or "")
+    end,
+    ["cpp"] = function(file, args)
+        local out = vim.fn.tempname()
+        return "g++ " .. file .. " -o " .. out .. " && " .. out .. (args ~= "" and " " .. args or "")
+    end,
 }
 
 M.project_markers = {
