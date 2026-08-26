@@ -42,6 +42,28 @@ M.commands = {
         local out = vim.fn.tempname()
         return "g++ " .. file .. " -o " .. out .. " && " .. out .. (args ~= "" and " " .. args or "")
     end,
+    ["go"] = function(file, args)
+        return "go run " .. file .. (args ~= "" and " " .. args or "")
+    end,
+    ["rust"] = function(file, args)
+        local out = vim.fn.tempname()
+        return "rustc " .. file .. " -o " .. out .. " && " .. out .. (args ~= "" and " " .. args or "")
+    end,
+    ["haskell"] = function(file, args)
+        return "runghc " .. file .. (args ~= "" and " " .. args or "")
+    end,
+    ["elixir"] = function(file, args)
+        return "elixir " .. file .. (args ~= "" and " " .. args or "")
+    end,
+    ["zig"] = function(file, args)
+        return "zig run " .. file .. (args ~= "" and " -- " .. args or "")
+    end,
+    ["dart"] = function(file, args)
+        return "dart run " .. file .. (args ~= "" and " " .. args or "")
+    end,
+    ["kotlin"] = function(file, args)
+        return "kotlinc -script " .. file .. (args ~= "" and " " .. args or "")
+    end,
 }
 
 M.project_markers = {
@@ -99,6 +121,15 @@ M.project_markers = {
                 .. exe
                 .. " run"
                 .. (args ~= "" and " " .. args or "")
+        end,
+    },
+    {
+        files = { "pom.xml" },
+        cmd = function(root, args)
+            return "cd "
+                .. vim.fn.shellescape(root)
+                .. " && mvn compile exec:java"
+                .. (args ~= "" and " -Dexec.args=" .. vim.fn.shellescape(args) or "")
         end,
     },
     {
