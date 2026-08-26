@@ -4,5 +4,5 @@
 
 Install `hyprland` environment (`arch linux`)
 ~~~bash
-./dm i setup/arch/all setup/git setup/xdg default -f
+./dm i setup/arch/{all,virus-scanner,theme} setup/{git,xdg} default -f
 ~~~
