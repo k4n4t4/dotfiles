@@ -104,6 +104,8 @@ vim.cmd.highlight { "EndOfBuffer",    "guibg=none", "ctermbg=none" }
 vim.keymap.set('n', "<ESC>", "<CMD>qa!<CR>")
 vim.keymap.set('t', "<ESC>", "<C-\\><C-N>")
 
+vim.cmd.colorscheme "vim"
+
 
 local input_line_number = tonumber(os.getenv("INPUT_LINE_NUMBER"))
 local line = input_line_number + tonumber(os.getenv("CURSOR_LINE"))
