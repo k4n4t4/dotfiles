@@ -94,7 +94,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(event)
         local client = vim.lsp.get_client_by_id(event.data.client_id)
         if client then
-            vim.notify("LSP Attached: " .. client.name, vim.log.levels.INFO)
+            Snacks.notify("LSP Attached: " .. client.name, {
+                once = true,
+                level = "info",
+                style = "minimal",
+            })
         end
     end,
 })

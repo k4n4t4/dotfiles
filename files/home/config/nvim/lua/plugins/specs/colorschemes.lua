@@ -23,12 +23,7 @@ if use_random_colorscheme then
                 end
             end
 
-            local status_ok, _ = pcall(vim.cmd.colorscheme, selected.name)
-            if not status_ok then
-                vim.notify("Failed to load colorscheme: " .. selected.name, vim.log.levels.ERROR)
-            else
-                vim.notify("Loaded colorscheme: " .. selected.name, vim.log.levels.INFO)
-            end
+            pcall(vim.cmd.colorscheme, selected.name)
         end
     })
 end
