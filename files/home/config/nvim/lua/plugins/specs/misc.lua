@@ -85,6 +85,10 @@ return {
             },
         },
     },
+    { -- java
+        "mfussenegger/nvim-jdtls",
+        ft = "java",
+    },
 
 
     -- EDITOR PLUGINS
