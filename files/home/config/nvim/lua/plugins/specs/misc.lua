@@ -6,6 +6,7 @@ return {
         config = function()
             local ts = require("nvim-treesitter")
             ts.install {
+                "awk",
                 "bash",
                 "bibtex",
                 "css",
@@ -19,6 +20,7 @@ return {
                 "javascript",
                 "json",
                 "jsx",
+                "kotlin",
                 "latex",
                 "lua",
                 "luadoc",
