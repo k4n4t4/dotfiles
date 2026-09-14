@@ -52,7 +52,6 @@ fish_add_path \
 
 if type -q archlinux-java
     set -gx JAVA_HOME /usr/lib/jvm/(archlinux-java get)
-    fish_add_path $JAVA_HOME/bin/
 end
 
 
