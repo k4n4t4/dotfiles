@@ -86,7 +86,12 @@ function M.config()
                     score_offset = 50,
                     async = true,
                     transform_items = function(_, items)
-                        if vim.bo.filetype == "java" then
+                        local ft = vim.bo.filetype
+                        local duplicate_filtered_items = {
+                            ["java"] = true,
+                            ["kotlin"] = true,
+                        }
+                        if duplicate_filtered_items[ft] then
                             return filter_duplicates(items)
                         end
                         return items
