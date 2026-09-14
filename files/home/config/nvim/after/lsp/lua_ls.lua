@@ -1,5 +1,5 @@
 return {
-    filetypes = { "lua", "neovim-lua" },
+    filetypes = { "lua" },
     settings = {
         Lua = {
             runtime = {
