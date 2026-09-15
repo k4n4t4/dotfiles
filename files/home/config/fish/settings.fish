@@ -43,6 +43,7 @@ fish_add_path \
     ~/.local/bin \
     ~/go/bin \
     ~/.cargo/bin \
+    ~/.luarocks/bin \
     ~/.dotnet/tools \
     /snap/bin \
     /usr/local/bin \
