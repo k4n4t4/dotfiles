@@ -1,6 +1,6 @@
 local M = {}
 
-M.project_cache_dir = vim.fn.stdpath("cache") .. "/utils/dir-configs"
+M.project_cache_dir = vim.fn.stdpath "cache" .. "/utils/dir-configs"
 
 local function path_to_percent(path)
     return (path:gsub("[/\\:]", "%%"))
@@ -32,7 +32,7 @@ function M.setup()
         vim.fn.mkdir(M.project_cache_dir, "p")
     end
 
-    local global_config_path = M.get_path("global")
+    local global_config_path = M.get_path "global"
     local config_path = M.get_path(vim.fn.getcwd())
 
     M.load(global_config_path)

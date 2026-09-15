@@ -6,7 +6,7 @@ local function filter_duplicates(items)
 
     for _, item in ipairs(items) do
         if item.kind == 2 or item.kind == 3 then
-            local method_name = item.label:match("^([^%(]+)")
+            local method_name = item.label:match "^([^%(]+)"
             if method_name then
                 if not seen[method_name] then
                     seen[method_name] = true
@@ -32,7 +32,7 @@ function M.config()
         fuzzy = { implementation = "prefer_rust_with_warning" },
         signature = {
             enabled = true,
-            window = { winblend = winblend, show_documentation = true }
+            window = { winblend = winblend, show_documentation = true },
         },
         completion = {
             list = { selection = { preselect = false } },
@@ -122,10 +122,10 @@ function M.config()
                     async = true,
                 },
                 git = {
-                    name = 'Git',
-                    module = 'blink-cmp-git',
+                    name = "Git",
+                    module = "blink-cmp-git",
                     enabled = function()
-                        return vim.tbl_contains({ 'octo', 'gitcommit', 'markdown' }, vim.bo.filetype)
+                        return vim.tbl_contains({ "octo", "gitcommit", "markdown" }, vim.bo.filetype)
                     end,
                     score_offset = 0,
                     async = true,
@@ -139,11 +139,7 @@ function M.config()
                     score_offset = -10,
                     max_items = 5,
                     opts = {
-                        dictionary_files = vim.fn.glob(
-                            "/usr/share/dict/*",
-                            true,
-                            true
-                        ),
+                        dictionary_files = vim.fn.glob("/usr/share/dict/*", true, true),
                     },
                 },
 
@@ -179,28 +175,28 @@ function M.config()
             },
         },
         keymap = {
-            ['<C-c>'] = { 'show', 'show_documentation', 'hide_documentation' },
-            ['<C-h>'] = { 'hide', 'fallback' },
-            ['<C-e>'] = { 'cancel', 'fallback' },
-            ['<C-y>'] = { 'accept', 'fallback' },
+            ["<C-c>"] = { "show", "show_documentation", "hide_documentation" },
+            ["<C-h>"] = { "hide", "fallback" },
+            ["<C-e>"] = { "cancel", "fallback" },
+            ["<C-y>"] = { "accept", "fallback" },
 
-            ['<CR>'] = { 'accept', 'fallback' },
-            ['<Tab>'] = { 'select_next', 'fallback' },
-            ['<S-Tab>'] = { 'select_prev', 'fallback' },
+            ["<CR>"] = { "accept", "fallback" },
+            ["<Tab>"] = { "select_next", "fallback" },
+            ["<S-Tab>"] = { "select_prev", "fallback" },
 
-            ['<Right>'] = { 'snippet_forward', 'fallback' },
-            ['<Left>'] = { 'snippet_backward', 'fallback' },
+            ["<Right>"] = { "snippet_forward", "fallback" },
+            ["<Left>"] = { "snippet_backward", "fallback" },
 
-            ['<Down>'] = { 'select_next', 'fallback' },
-            ['<Up>'] = { 'select_prev', 'fallback' },
+            ["<Down>"] = { "select_next", "fallback" },
+            ["<Up>"] = { "select_prev", "fallback" },
 
-            ['<C-n>'] = { 'snippet_forward', 'show', 'select_next', 'fallback_to_mappings' },
-            ['<C-p>'] = { 'snippet_backward', 'show', 'select_prev', 'fallback_to_mappings' },
+            ["<C-n>"] = { "snippet_forward", "show", "select_next", "fallback_to_mappings" },
+            ["<C-p>"] = { "snippet_backward", "show", "select_prev", "fallback_to_mappings" },
 
-            ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
-            ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
+            ["<C-f>"] = { "scroll_documentation_down", "fallback" },
+            ["<C-b>"] = { "scroll_documentation_up", "fallback" },
 
-            ['<C-k>'] = { 'show_signature', 'hide_signature', 'fallback' },
+            ["<C-k>"] = { "show_signature", "hide_signature", "fallback" },
         },
     }
 end

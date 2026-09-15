@@ -1,7 +1,6 @@
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 
-
 -- highlight on yank
 autocmd("TextYankPost", {
     group = augroup("TextYankPost", { clear = true }),
@@ -14,7 +13,7 @@ autocmd("TextYankPost", {
 autocmd("SafeState", {
     once = true,
     callback = vim.schedule_wrap(function()
-        if vim.fn.executable("fcitx5") == 1 then
+        if vim.fn.executable "fcitx5" == 1 then
             autocmd({ "InsertLeave", "CmdlineLeave" }, {
                 group = augroup("fcitx5", { clear = true }),
                 callback = function()

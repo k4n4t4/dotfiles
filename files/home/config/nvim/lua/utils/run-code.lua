@@ -76,11 +76,11 @@ M.project_markers = {
                 if f then
                     local in_project = false
                     for line in f:lines() do
-                        local section = line:match("^%s*%[([%w%.%-_]+)%]%s*$")
+                        local section = line:match "^%s*%[([%w%.%-_]+)%]%s*$"
                         if section then
                             in_project = (section == "project")
                         elseif in_project then
-                            name = line:match('^%s*name%s*=%s*"([^"]+)"%s*$')
+                            name = line:match '^%s*name%s*=%s*"([^"]+)"%s*$'
                             if name then
                                 break
                             end
@@ -89,38 +89,23 @@ M.project_markers = {
                     f:close()
                 end
             end
-            local target = name
-                and vim.fn.shellescape(name)
+            local target = name and vim.fn.shellescape(name)
                 or ("python " .. vim.fn.shellescape(vim.api.nvim_buf_get_name(0)))
-            return "cd "
-                .. vim.fn.shellescape(root)
-                .. " && uv run "
-                .. target
-                .. (args ~= "" and " " .. args or "")
+            return "cd " .. vim.fn.shellescape(root) .. " && uv run " .. target .. (args ~= "" and " " .. args or "")
         end,
     },
     {
         files = { "Cargo.toml" },
         cmd = function(root, args)
-            return "cd "
-                .. vim.fn.shellescape(root)
-                .. " && cargo run"
-                .. (args ~= "" and " -- " .. args or "")
+            return "cd " .. vim.fn.shellescape(root) .. " && cargo run" .. (args ~= "" and " -- " .. args or "")
         end,
     },
     {
         files = { "build.gradle.kts", "build.gradle" },
         cmd = function(root, args)
             local gradlew = root .. "/gradlew"
-            local exe = vim.fn.executable(gradlew) == 1
-                and vim.fn.shellescape(gradlew)
-                or "gradle"
-            return "cd "
-                .. vim.fn.shellescape(root)
-                .. " && "
-                .. exe
-                .. " run"
-                .. (args ~= "" and " " .. args or "")
+            local exe = vim.fn.executable(gradlew) == 1 and vim.fn.shellescape(gradlew) or "gradle"
+            return "cd " .. vim.fn.shellescape(root) .. " && " .. exe .. " run" .. (args ~= "" and " " .. args or "")
         end,
     },
     {
@@ -135,10 +120,7 @@ M.project_markers = {
     {
         files = { "go.mod" },
         cmd = function(root, args)
-            return "cd "
-                .. vim.fn.shellescape(root)
-                .. " && go run ."
-                .. (args ~= "" and " " .. args or "")
+            return "cd " .. vim.fn.shellescape(root) .. " && go run ." .. (args ~= "" and " " .. args or "")
         end,
     },
     {
@@ -147,7 +129,7 @@ M.project_markers = {
             local script = "dev"
             local f = io.open(root .. "/package.json")
             if f then
-                local ok, decoded = pcall(vim.json.decode, f:read("*a"))
+                local ok, decoded = pcall(vim.json.decode, f:read "*a")
                 f:close()
                 if ok and decoded.scripts and not decoded.scripts.dev and decoded.scripts.start then
                     script = "start"
@@ -163,16 +145,13 @@ M.project_markers = {
     {
         files = { "Makefile" },
         cmd = function(root, args)
-            return "cd "
-                .. vim.fn.shellescape(root)
-                .. " && make"
-                .. (args ~= "" and " " .. args or "")
+            return "cd " .. vim.fn.shellescape(root) .. " && make" .. (args ~= "" and " " .. args or "")
         end,
     },
 }
 
 function M.detect_project()
-    local start = vim.fn.expand("%:p:h")
+    local start = vim.fn.expand "%:p:h"
     local best_entry, best_dir, best_depth
 
     for _, entry in ipairs(M.project_markers) do
@@ -240,7 +219,7 @@ function M.run(run_command, args)
 end
 
 function M.run_with_args(run_command)
-    local args = vim.fn.input("Arguments: ")
+    local args = vim.fn.input "Arguments: "
     M.run(run_command, args)
 end
 

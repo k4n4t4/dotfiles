@@ -6,8 +6,8 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- general keymaps
-set({ 'n', 'x' }, 'j', "gj", { desc = "Move Down" })
-set({ 'n', 'x' }, 'k', "gk", { desc = "Move Up" })
+set({ "n", "x" }, "j", "gj", { desc = "Move Down" })
+set({ "n", "x" }, "k", "gk", { desc = "Move Up" })
 
 set("x", "J", function()
     if vim.fn.mode(0) == "V" then
@@ -29,47 +29,47 @@ set("v", ">", ">gv", { desc = "Indent right and reselect in visual mode" })
 
 set("n", "yc", function()
     vim.cmd.normal { "yygccp" }
-end, {desc = "Copy current line and comment it" })
+end, { desc = "Copy current line and comment it" })
 set("x", "Yc", function()
     vim.cmd.normal { "y`[v`]gc`]p" }
-end, {desc = "Copy current line and comment it" })
+end, { desc = "Copy current line and comment it" })
 set("n", "<C-c>", "ciw")
 
-set({ 'n', 'o', 'x' }, '<tab>', "5j", { desc = "Scroll Down" })
-set({ 'n', 'o', 'x' }, '<S-tab>', "5k", { desc = "Scroll Up" })
+set({ "n", "o", "x" }, "<tab>", "5j", { desc = "Scroll Down" })
+set({ "n", "o", "x" }, "<S-tab>", "5k", { desc = "Scroll Up" })
 
-set('n', '<C-S-o>', '<C-i>')
+set("n", "<C-S-o>", "<C-i>")
 
-set({ 'n', 'x' }, '<leader>w', "<C-w><C-w>", { desc = "Switch Window" })
+set({ "n", "x" }, "<leader>w", "<C-w><C-w>", { desc = "Switch Window" })
 
-set('n', '<leader>H', "<cmd>noh<cr>", { desc = "No hlsearch" })
+set("n", "<leader>H", "<cmd>noh<cr>", { desc = "No hlsearch" })
 
-set({ 'n', 'x' }, '<leader>a', function()
+set({ "n", "x" }, "<leader>a", function()
     vim.cmd.normal { "ggVoG", bang = true }
 end, { desc = "Select All" })
 
-set({ 'n', 'x' }, '<C-p>', function()
+set({ "n", "x" }, "<C-p>", function()
     vim.cmd.normal { "p`[v`]=", bang = true }
 end, { desc = "Paste after cursor and auto-indent" })
-set({ 'n', 'x' }, '<C-S-p>', function()
+set({ "n", "x" }, "<C-S-p>", function()
     vim.cmd.normal { "P`[v`]=", bang = true }
 end, { desc = "Paste before cursor and auto-indent" })
 
 -- mark keymaps
-set('n', 'dM', function()
+set("n", "dM", function()
     vim.cmd.delmarks { bang = true }
     vim.cmd.redraw { bang = true }
 end, { desc = "Delete all local marks and redraw" })
-set('n', 'dm', function()
+set("n", "dm", function()
     local char = vim.fn.getcharstr()
-    if char:match("[a-zA-Z0-9]") then
+    if char:match "[a-zA-Z0-9]" then
         vim.cmd.delmarks(char)
         vim.cmd.redraw { bang = true }
     end
 end, { desc = "Delete a specific mark and redraw" })
-set('n', 'm', function()
+set("n", "m", function()
     local char = vim.fn.getcharstr()
-    if char:match("[a-zA-Z0-9]") then
+    if char:match "[a-zA-Z0-9]" then
         vim.cmd.normal { "m" .. char, bang = true }
         vim.cmd.redraw { bang = true }
     end
@@ -93,9 +93,9 @@ end, { expr = true, desc = "Insert at beginning of line in visual mode" })
 
 -- swap selected texts
 do
-    local vs = require('utils.visual-swap')
+    local vs = require "utils.visual-swap"
     local pending = nil
-    local hl_ns = vim.api.nvim_create_namespace("VisualSwapPending")
+    local hl_ns = vim.api.nvim_create_namespace "VisualSwapPending"
 
     vim.api.nvim_set_hl(0, "VisualSwapPendingHighlight", { link = "IncSearch" })
 
@@ -109,7 +109,7 @@ do
             pending = {
                 bufnr = bufnr,
                 range = range,
-                extmark_id = extmark_id
+                extmark_id = extmark_id,
             }
             return
         end
@@ -121,8 +121,8 @@ do
 
     ---@diagnostic disable-next-line: duplicate-set-field
     _G.visual_swap_opfunc = function(motion_type)
-        local s = vim.api.nvim_buf_get_mark(0, '[')
-        local e = vim.api.nvim_buf_get_mark(0, ']')
+        local s = vim.api.nvim_buf_get_mark(0, "[")
+        local e = vim.api.nvim_buf_get_mark(0, "]")
         local s_row, s_col = s[1] - 1, s[2]
         local e_row, e_col = e[1] - 1, e[2]
         local bufnr = vim.api.nvim_get_current_buf()
@@ -148,20 +148,20 @@ do
         handle_selection(bufnr, { s_row, s_col, e_row, e_col })
     end
 
-    set('n', '<leader>s', function()
-        vim.go.operatorfunc = 'v:lua.visual_swap_opfunc'
-        return 'g@'
+    set("n", "<leader>s", function()
+        vim.go.operatorfunc = "v:lua.visual_swap_opfunc"
+        return "g@"
     end, { expr = true, desc = "Swap text object" })
 
-    set('n', '<leader>ss', function()
-        vim.go.operatorfunc = 'v:lua.visual_swap_opfunc'
-        return 'g@_'
+    set("n", "<leader>ss", function()
+        vim.go.operatorfunc = "v:lua.visual_swap_opfunc"
+        return "g@_"
     end, { expr = true, desc = "Swap line" })
 
-    set('x', '<leader>s', function()
+    set("x", "<leader>s", function()
         local bufnr = vim.api.nvim_get_current_buf()
         local range = vs.visual_range(bufnr)
-        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'nx', false)
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "nx", false)
         handle_selection(bufnr, range)
     end, { desc = "Swap selected texts" })
 end
@@ -169,14 +169,14 @@ end
 -- run code
 set("n", "<A-r>", function()
     if vim.bo.modified then
-        vim.cmd("write")
+        vim.cmd "write"
     end
     require("utils.run-code").run()
 end, { desc = "Run" })
 
 set("n", "<A-S-r>", function()
     if vim.bo.modified then
-        vim.cmd("write")
+        vim.cmd "write"
     end
     require("utils.run-code").run_with_args()
 end, { desc = "Run with args" })
@@ -186,29 +186,29 @@ autocmd("LspAttach", {
     group = augroup("Lsp Keymaps", { clear = true }),
     callback = function(event)
         local buf = event.buf
-        if vim.b[buf].lsp_keymap_mapped then return end
+        if vim.b[buf].lsp_keymap_mapped then
+            return
+        end
         vim.b[buf].lsp_keymap_mapped = true
 
-        set({'n', 'x'}, '<Leader>lf', vim.lsp.buf.format, { buffer = buf, desc = "Format" })
-        set('n', '<Leader>ln', vim.lsp.buf.rename, { buffer = buf, desc = "Rename" })
-        set('n', '<Leader>ld', vim.lsp.buf.definition, { buffer = buf, desc = "Definition" })
-        set('n', '<Leader>lt', vim.lsp.buf.type_definition, { buffer = buf, desc = "Type Definition" })
-        set('n', '<Leader>la', vim.lsp.buf.code_action, { buffer = buf, desc = "Code Action" })
-        set('n', '<Leader>lr', vim.lsp.buf.references, { buffer = buf, desc = "References" })
-        set('n', '<Leader>li', vim.lsp.buf.implementation, { buffer = buf, desc = "Implementation" })
-        set('n', '<Leader>lD', vim.lsp.buf.declaration, { buffer = buf, desc = "Declaration" })
-        set('n', 'K', vim.lsp.buf.hover, { buffer = buf, desc = "Hover" })
-        set('n', '<C-K>', vim.lsp.buf.signature_help, { buffer = buf, desc = "Signature Help" })
+        set({ "n", "x" }, "<Leader>lf", vim.lsp.buf.format, { buffer = buf, desc = "Format" })
+        set("n", "<Leader>ln", vim.lsp.buf.rename, { buffer = buf, desc = "Rename" })
+        set("n", "<Leader>ld", vim.lsp.buf.definition, { buffer = buf, desc = "Definition" })
+        set("n", "<Leader>lt", vim.lsp.buf.type_definition, { buffer = buf, desc = "Type Definition" })
+        set("n", "<Leader>la", vim.lsp.buf.code_action, { buffer = buf, desc = "Code Action" })
+        set("n", "<Leader>lr", vim.lsp.buf.references, { buffer = buf, desc = "References" })
+        set("n", "<Leader>li", vim.lsp.buf.implementation, { buffer = buf, desc = "Implementation" })
+        set("n", "<Leader>lD", vim.lsp.buf.declaration, { buffer = buf, desc = "Declaration" })
+        set("n", "K", vim.lsp.buf.hover, { buffer = buf, desc = "Hover" })
+        set("n", "<C-K>", vim.lsp.buf.signature_help, { buffer = buf, desc = "Signature Help" })
     end,
 })
 
-
 -- diagnostic keymaps
-set('n', '<C-S-k>', vim.diagnostic.open_float, { desc = "Open Diagnostic Float" })
-set('n', '<Leader>df', vim.diagnostic.open_float, { desc = "Open Diagnostic Float" })
-set('n', '<Leader>dl', vim.diagnostic.setloclist, { desc = "Set Loclist" })
-set('n', '<Leader>dq', vim.diagnostic.setqflist, { desc = "Set Qflist" })
-
+set("n", "<C-S-k>", vim.diagnostic.open_float, { desc = "Open Diagnostic Float" })
+set("n", "<Leader>df", vim.diagnostic.open_float, { desc = "Open Diagnostic Float" })
+set("n", "<Leader>dl", vim.diagnostic.setloclist, { desc = "Set Loclist" })
+set("n", "<Leader>dq", vim.diagnostic.setqflist, { desc = "Set Qflist" })
 
 -- set keymaps for unlisted filetypes
 local function unlist_filetype_keymaps(event)
@@ -231,5 +231,5 @@ autocmd("FileType", {
 -- set keymaps for cmdwin
 autocmd("CmdwinEnter", {
     group = augroup("Cmdwin Keymaps", { clear = true }),
-    callback = unlist_filetype_keymaps
+    callback = unlist_filetype_keymaps,
 })

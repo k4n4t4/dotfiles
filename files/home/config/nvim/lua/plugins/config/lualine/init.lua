@@ -2,7 +2,7 @@ local M = {}
 
 local function is_visual_mode()
     local mode = vim.fn.mode()
-    return mode == 'v' or mode == 'V' or mode == '\22'
+    return mode == "v" or mode == "V" or mode == "\22"
 end
 
 local function macro_status()
@@ -14,7 +14,7 @@ local function macro_status()
 end
 
 local function lsp_counts()
-    local clients = vim.lsp.get_clients({ bufnr = 0 })
+    local clients = vim.lsp.get_clients { bufnr = 0 }
     if #clients == 0 then
         return ""
     end
@@ -24,28 +24,27 @@ end
 local function visual_info()
     local mode = vim.fn.mode()
 
-    local l1, l2 = vim.fn.line('v'), vim.fn.line('.')
+    local l1, l2 = vim.fn.line "v", vim.fn.line "."
     local lines = math.abs(l2 - l1) + 1
 
-    if mode == 'V' then
-        return string.format('%d lines', lines)
-    elseif mode == '\22' then
-        local c1, c2 = vim.fn.virtcol('v'), vim.fn.virtcol('.')
+    if mode == "V" then
+        return string.format("%d lines", lines)
+    elseif mode == "\22" then
+        local c1, c2 = vim.fn.virtcol "v", vim.fn.virtcol "."
         local cols = math.abs(c2 - c1) + 1
-        return string.format('%dx%d', lines, cols)
-    elseif mode == 'v' then
+        return string.format("%dx%d", lines, cols)
+    elseif mode == "v" then
         local wc = vim.fn.wordcount()
         local chars = wc.visual_chars or 0
         if lines > 1 then
-            return string.format('%d lines %d chars', lines, chars)
+            return string.format("%d lines %d chars", lines, chars)
         else
-            return string.format('%d chars', chars)
+            return string.format("%d chars", chars)
         end
     else
-        return ''
+        return ""
     end
 end
-
 
 function M.config()
     vim.opt.cmdheight = 0
@@ -55,19 +54,23 @@ function M.config()
 
     vim.api.nvim_create_autocmd({ "ModeChanged" }, {
         group = vim.api.nvim_create_augroup("LualineVisualRefresh", { clear = true }),
-        callback = function() require("lualine").refresh() end,
+        callback = function()
+            require("lualine").refresh()
+        end,
     })
     vim.api.nvim_create_autocmd({ "RecordingEnter", "RecordingLeave" }, {
         group = vim.api.nvim_create_augroup("LualineMacroRefresh", { clear = true }),
-        callback = function() require("lualine").refresh() end,
+        callback = function()
+            require("lualine").refresh()
+        end,
     })
 
     require("lualine").setup {
         options = {
             icons_enabled = true,
             theme = "auto",
-            component_separators = { left = '', right = '' },
-            section_separators = { left = '', right = '' },
+            component_separators = { left = "", right = "" },
+            section_separators = { left = "", right = "" },
             globalstatus = true,
             disabled_filetypes = { "dashboard", "snacks_dashboard" },
         },
@@ -81,18 +84,18 @@ function M.config()
                 {
                     "diff",
                     symbols = {
-                        added    = " ",
+                        added = " ",
                         modified = " ",
-                        removed  = " ",
+                        removed = " ",
                     },
                 },
                 {
                     "diagnostics",
                     symbols = {
-                        error = '󰅚 ',
-                        warn =  '󰀪 ',
-                        info =  '󰋽 ',
-                        hint =  '󰌶 ',
+                        error = "󰅚 ",
+                        warn = "󰀪 ",
+                        info = "󰋽 ",
+                        hint = "󰌶 ",
                     },
                 },
             },
@@ -119,8 +122,8 @@ function M.config()
                     symbols = {
                         modified = " ",
                         readonly = " ",
-                        unnamed  = "",
-                        newfile  = " ",
+                        unnamed = "",
+                        newfile = " ",
                     },
                 },
             },
@@ -131,10 +134,10 @@ function M.config()
                         return require("noice").api.status.command.get()
                     end,
                     cond = function()
-                        return not is_visual_mode() and
-                        package.loaded["noice"] and
-                        ---@diagnostic disable-next-line: undefined-field
-                        require("noice").api.status.command.has()
+                        return not is_visual_mode()
+                            and package.loaded["noice"]
+                            ---@diagnostic disable-next-line: undefined-field
+                            and require("noice").api.status.command.has()
                     end,
                 },
                 {

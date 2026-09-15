@@ -1,7 +1,6 @@
 local M = {}
 
-local ns_id = vim.api.nvim_create_namespace("VisualSwap")
-
+local ns_id = vim.api.nvim_create_namespace "VisualSwap"
 
 local function get_text(bufnr, r)
     return vim.api.nvim_buf_get_text(bufnr, r[1], r[2], r[3], r[4], {})
@@ -41,8 +40,8 @@ end
 
 function M.visual_range(bufnr)
     bufnr = bufnr or vim.api.nvim_get_current_buf()
-    local s = vim.fn.getpos('v')
-    local e = vim.fn.getpos('.')
+    local s = vim.fn.getpos "v"
+    local e = vim.fn.getpos "."
     local s_row, s_col = s[2] - 1, s[3] - 1
     local e_row, e_col = e[2] - 1, e[3] - 1
     if s_row > e_row or (s_row == e_row and s_col > e_col) then

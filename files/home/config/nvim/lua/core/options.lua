@@ -7,16 +7,16 @@ vim.opt.exrc = true
 vim.opt.shell = "fish"
 
 -- nvim server
-vim.env.EDITOR = "nvim --server \"$NVIM\" --remote-tab"
+vim.env.EDITOR = 'nvim --server "$NVIM" --remote-tab'
 
 -- mouse
 vim.opt.mouse = "a"
 
 -- clipboard
-vim.opt.clipboard:append("unnamedplus")
+vim.opt.clipboard:append "unnamedplus"
 
 -- filename characters
-vim.opt.isfname:append("@-@")
+vim.opt.isfname:append "@-@"
 
 -- encoding
 vim.opt.fileencodings = {
@@ -34,7 +34,6 @@ vim.opt.fileencodings = {
 
 -- undo
 vim.opt.undofile = true
-
 
 -- EDITING SETTINGS
 
@@ -66,7 +65,6 @@ vim.opt.pumblend = 10
 vim.opt.winborder = "none"
 vim.opt.pumborder = "none"
 
-
 -- UI SETTINGS
 
 -- line number
@@ -87,7 +85,7 @@ vim.opt.laststatus = 3
 vim.opt.showtabline = 2
 
 -- shortmess
-vim.opt.shortmess:append 'I'
+vim.opt.shortmess:append "I"
 
 -- bell
 vim.opt.belloff = "all"
@@ -99,12 +97,12 @@ vim.opt.sidescrolloff = 5
 -- listchars
 vim.opt.list = true
 vim.opt.listchars = {
-    tab      = " ",
-    extends  = "»",
+    tab = " ",
+    extends = "»",
     precedes = "«",
-    trail    = "·",
-    nbsp     = "␣",
-    conceal  = "±",
+    trail = "·",
+    nbsp = "␣",
+    conceal = "±",
 }
 
 -- fillchars
@@ -133,9 +131,9 @@ vim.diagnostic.config {
     signs = {
         text = {
             [vim.diagnostic.severity.ERROR] = "󰅚",
-            [vim.diagnostic.severity.WARN]  = "󰀪",
-            [vim.diagnostic.severity.INFO]  = "󰋽",
-            [vim.diagnostic.severity.HINT]  = "󰌶",
+            [vim.diagnostic.severity.WARN] = "󰀪",
+            [vim.diagnostic.severity.INFO] = "󰋽",
+            [vim.diagnostic.severity.HINT] = "󰌶",
         },
     },
 }
@@ -146,11 +144,10 @@ vim.api.nvim_create_autocmd({ "VimEnter", "ColorScheme" }, {
     end),
 })
 
-
 -- BUILTIN PLUGINS
 
 -- disable builtin plugins
 vim.opt.loadplugins = false
 
 -- enable man plugin
-vim.cmd.runtime("plugin/man.lua")
+vim.cmd.runtime "plugin/man.lua"

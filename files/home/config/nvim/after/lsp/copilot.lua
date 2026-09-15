@@ -1,6 +1,6 @@
 local function get_indent(text)
-    local match = text:match('^%s+')
-    return match or ''
+    local match = text:match "^%s+"
+    return match or ""
 end
 
 local function normalize_indent(text)
@@ -10,14 +10,14 @@ local function normalize_indent(text)
     end
 
     local lines = {}
-    for line in text:gmatch('[^\r\n]+') do
-        if line:find('^' .. indent) then
+    for line in text:gmatch "[^\r\n]+" do
+        if line:find("^" .. indent) then
             table.insert(lines, line:sub(#indent + 1))
         else
             table.insert(lines, line)
         end
     end
-    return table.concat(lines, '\n')
+    return table.concat(lines, "\n")
 end
 
 return {
@@ -25,10 +25,10 @@ return {
         local fname = vim.api.nvim_buf_get_name(bufnr)
         local basename = vim.fs.basename(fname)
         local disable_patterns = {
-            '%f[%w]env%f[%W]',
-            '%f[%w]conf%f[%W]',
-            '%f[%w]local%f[%W]',
-            '%f[%w]private%f[%W]',
+            "%f[%w]env%f[%W]",
+            "%f[%w]conf%f[%W]",
+            "%f[%w]local%f[%W]",
+            "%f[%w]private%f[%W]",
         }
         for _, pattern in ipairs(disable_patterns) do
             if basename:lower():match(pattern) then
@@ -37,17 +37,19 @@ return {
         end
 
         local root_markers = {
-            '.git',
-            'Makefile',
-            'package.json',
-            'Cargo.toml',
-            'go.mod',
-            'pyproject.toml',
-            'setup.py',
-            'requirements.txt',
+            ".git",
+            "Makefile",
+            "package.json",
+            "Cargo.toml",
+            "go.mod",
+            "pyproject.toml",
+            "setup.py",
+            "requirements.txt",
         }
         local root_dir = vim.fs.root(bufnr, root_markers)
-        if root_dir then callback(root_dir) end
+        if root_dir then
+            callback(root_dir)
+        end
     end,
     on_init = function(client)
         -- Convert inline completion to regular completion
@@ -55,7 +57,7 @@ return {
         client.server_capabilities.completionProvider = { triggerCharacters = {} }
         local orig_request = client.request
         client.request = function(self, method, params, handler, bufnr)
-            if method ~= 'textDocument/completion' then
+            if method ~= "textDocument/completion" then
                 return orig_request(self, method, params, handler, bufnr)
             end
 
@@ -71,7 +73,7 @@ return {
                 },
             }
 
-            return orig_request(self, 'textDocument/inlineCompletion', inline_params, function(err, result, ctx)
+            return orig_request(self, "textDocument/inlineCompletion", inline_params, function(err, result, ctx)
                 if err or not result or not result.items then
                     handler(err, { isIncomplete = false, items = {} }, ctx)
                     return
@@ -79,10 +81,10 @@ return {
 
                 local items = {}
                 for _, item in ipairs(result.items) do
-                    local label = item.insertText:gsub('^%s+', ''):gsub('%s+$', '')
+                    local label = item.insertText:gsub("^%s+", ""):gsub("%s+$", "")
                     local normalized_text = normalize_indent(item.insertText)
-                    local language = vim.bo[target_bufnr].filetype or vim.bo[target_bufnr].ft or 'code'
-                    local documentation = string.format('```%s\n%s\n```', language, normalized_text)
+                    local language = vim.bo[target_bufnr].filetype or vim.bo[target_bufnr].ft or "code"
+                    local documentation = string.format("```%s\n%s\n```", language, normalized_text)
 
                     table.insert(items, {
                         label = label,
@@ -98,10 +100,10 @@ return {
                         score_offset = 55,
                         detail = item.detail or "Copilot",
                         documentation = {
-                            kind = 'markdown',
+                            kind = "markdown",
                             value = documentation,
                         },
-                        menu = "[Copilot]"
+                        menu = "[Copilot]",
                     })
                 end
 

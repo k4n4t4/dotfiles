@@ -4,7 +4,7 @@ return {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
         config = function()
-            local ts = require("nvim-treesitter")
+            local ts = require "nvim-treesitter"
             ts.install {
                 "awk",
                 "bash",
@@ -34,7 +34,7 @@ return {
                 "vue",
                 "yaml",
             }
-        end
+        end,
     },
 
     -- LSP PLUGINS
@@ -43,11 +43,11 @@ return {
         opts = {
             PATH = "append",
             ui = {
-                border = 'single',
+                border = "single",
                 icons = {
                     package_installed = "✓",
                     package_pending = "➜",
-                    package_uninstalled = "✗"
+                    package_uninstalled = "✗",
                 },
             },
         },
@@ -67,7 +67,7 @@ return {
         },
         event = "VeryLazy",
         config = function()
-            local mason_lspconfig = require("mason-lspconfig")
+            local mason_lspconfig = require "mason-lspconfig"
             mason_lspconfig.setup {}
         end,
     },
@@ -84,7 +84,7 @@ return {
                 automatic_installation = false,
                 handlers = {
                     function(config)
-                        require('mason-nvim-dap').default_setup(config)
+                        require("mason-nvim-dap").default_setup(config)
                     end,
                 },
             }
@@ -101,8 +101,8 @@ return {
         opts = {
             library = {
                 { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-                { path = "snacks.nvim",        words = { "Snacks" } },
-                { path = "lazy.nvim",          words = { "LazyVim" } },
+                { path = "snacks.nvim", words = { "Snacks" } },
+                { path = "lazy.nvim", words = { "LazyVim" } },
             },
         },
     },
@@ -111,24 +111,51 @@ return {
         ft = "java",
     },
 
-
     -- EDITOR PLUGINS
+    { -- formatter
+        "stevearc/conform.nvim",
+        event = "VeryLazy",
+        config = function()
+            local conform = require "conform"
+            conform.setup {
+                formatters_by_ft = {
+                    lua = { "stylua" },
+                    python = { "black" },
+                    rust = { "rustfmt" },
+                    sh = { "shfmt" },
+                    typescript = { "prettierd" },
+                    typescriptreact = { "prettierd" },
+                    javascript = { "prettierd" },
+                    javascriptreact = { "prettierd" },
+                    json = { "prettierd" },
+                    css = { "prettierd" },
+                    scss = { "prettierd" },
+                    html = { "prettierd" },
+                    yaml = { "prettierd" },
+                },
+                format_on_save = {
+                    timeout_ms = 500,
+                    lsp_format = "fallback",
+                },
+            }
+        end,
+    },
     { -- statusline
         "nvim-lualine/lualine.nvim",
         event = "VeryLazy",
         config = require("plugins.config.lualine").config,
     },
     { -- tabuf
-        'akinsho/bufferline.nvim',
+        "akinsho/bufferline.nvim",
         event = "VeryLazy",
         version = "*",
         config = function()
-            require("bufferline").setup({
+            require("bufferline").setup {
                 options = {
                     diagnostics = "nvim_lsp",
                     ---@diagnostic disable-next-line: unused-local
                     diagnostics_indicator = function(count, level, diagnostics_dict, context)
-                        local icon = level:match("error") and " " or "󰀪 "
+                        local icon = level:match "error" and " " or "󰀪 "
                         return " " .. icon .. count
                     end,
                     always_show_bufferline = false,
@@ -139,21 +166,21 @@ return {
                         italic = false,
                     },
                 },
-            })
+            }
         end,
         keys = {
-            { "<M-j>",   "<Cmd>BufferLineCycleNext<CR>", desc = "Next buffer" },
-            { "<M-k>",   "<Cmd>BufferLineCyclePrev<CR>", desc = "Prev buffer" },
-            { "<M-S-j>", "<Cmd>BufferLineMoveNext<CR>",  desc = "Move buffer right" },
-            { "<M-S-k>", "<Cmd>BufferLineMovePrev<CR>",  desc = "Move buffer left" },
-            { "<M-s>",   "<Cmd>BufferLinePick<CR>",      desc = "Pick buffer" },
-            { "<M-]>",   "<Cmd>tabnext<CR>",             desc = "Next tab" },
-            { "<M-[>",   "<Cmd>tabprevious<CR>",         desc = "Prev tab" },
-            { "<M-n>",   "<Cmd>enew<CR>",                desc = "New buffer" },
-            { "<M-S-n>", "<Cmd>tabnew<CR>",              desc = "New tab" },
-            { "<M-x>",   "<Cmd>bdelete<CR>",             desc = "Close buffer" },
-            { "<M-S-x>", "<Cmd>tabclose<CR>",            desc = "Close tab" },
-        }
+            { "<M-j>", "<Cmd>BufferLineCycleNext<CR>", desc = "Next buffer" },
+            { "<M-k>", "<Cmd>BufferLineCyclePrev<CR>", desc = "Prev buffer" },
+            { "<M-S-j>", "<Cmd>BufferLineMoveNext<CR>", desc = "Move buffer right" },
+            { "<M-S-k>", "<Cmd>BufferLineMovePrev<CR>", desc = "Move buffer left" },
+            { "<M-s>", "<Cmd>BufferLinePick<CR>", desc = "Pick buffer" },
+            { "<M-]>", "<Cmd>tabnext<CR>", desc = "Next tab" },
+            { "<M-[>", "<Cmd>tabprevious<CR>", desc = "Prev tab" },
+            { "<M-n>", "<Cmd>enew<CR>", desc = "New buffer" },
+            { "<M-S-n>", "<Cmd>tabnew<CR>", desc = "New tab" },
+            { "<M-x>", "<Cmd>bdelete<CR>", desc = "Close buffer" },
+            { "<M-S-x>", "<Cmd>tabclose<CR>", desc = "Close tab" },
+        },
     },
     { -- notify
         "folke/noice.nvim",
@@ -188,7 +215,7 @@ return {
             {
                 "<leader>?",
                 function()
-                    local wk = require("which-key")
+                    local wk = require "which-key"
                     wk.show { global = false }
                 end,
                 desc = "Buffer Local Keymaps (which-key)",
@@ -196,15 +223,15 @@ return {
         },
     },
     { -- breadcrumbs
-        'Bekaboo/dropbar.nvim',
-        event = 'VeryLazy',
+        "Bekaboo/dropbar.nvim",
+        event = "VeryLazy",
         config = function()
-            local dropbar_api = require('dropbar.api')
+            local dropbar_api = require "dropbar.api"
             local set = vim.keymap.set
-            set('n', '<Leader>;', dropbar_api.pick, { desc = 'Pick symbols in winbar' })
-            set('n', '[;', dropbar_api.goto_context_start, { desc = 'Go to start of current context' })
-            set('n', '];', dropbar_api.select_next_context, { desc = 'Select next context' })
-        end
+            set("n", "<Leader>;", dropbar_api.pick, { desc = "Pick symbols in winbar" })
+            set("n", "[;", dropbar_api.goto_context_start, { desc = "Go to start of current context" })
+            set("n", "];", dropbar_api.select_next_context, { desc = "Select next context" })
+        end,
     },
     { -- debugging
         "mfussenegger/nvim-dap",
@@ -230,36 +257,85 @@ return {
             "DapShowLog",
         },
         keys = {
-            { '<F5>',  function() require('dap').continue() end,          desc = 'DAP Continue' },
-            { '<F10>', function() require('dap').step_over() end,         desc = 'DAP Step Over' },
-            { '<F11>', function() require('dap').step_into() end,         desc = 'DAP Step Into' },
-            { '<F12>', function() require('dap').step_out() end,          desc = 'DAP Step Out' },
-            { '<F9>',  function() require('dap').toggle_breakpoint() end, desc = 'DAP Toggle Breakpoint' },
+            {
+                "<F5>",
+                function()
+                    require("dap").continue()
+                end,
+                desc = "DAP Continue",
+            },
+            {
+                "<F10>",
+                function()
+                    require("dap").step_over()
+                end,
+                desc = "DAP Step Over",
+            },
+            {
+                "<F11>",
+                function()
+                    require("dap").step_into()
+                end,
+                desc = "DAP Step Into",
+            },
+            {
+                "<F12>",
+                function()
+                    require("dap").step_out()
+                end,
+                desc = "DAP Step Out",
+            },
+            {
+                "<F9>",
+                function()
+                    require("dap").toggle_breakpoint()
+                end,
+                desc = "DAP Toggle Breakpoint",
+            },
         },
         config = function()
-            local dap, dapui = require("dap"), require("dapui")
+            local dap, dapui = require "dap", require "dapui"
 
             dapui.setup()
 
-            vim.fn.sign_define('DapBreakpoint', { text = '●', texthl = 'DiagnosticSignError', linehl = '', numhl = '' })
-            vim.fn.sign_define('DapBreakpointCondition', { text = '●', texthl = 'DiagnosticSignWarn', linehl = '', numhl = '' })
-            vim.fn.sign_define('DapStopped', { text = '▶', texthl = 'DiagnosticSignOk', linehl = 'CursorLine', numhl = '' })
+            vim.fn.sign_define(
+                "DapBreakpoint",
+                { text = "●", texthl = "DiagnosticSignError", linehl = "", numhl = "" }
+            )
+            vim.fn.sign_define(
+                "DapBreakpointCondition",
+                { text = "●", texthl = "DiagnosticSignWarn", linehl = "", numhl = "" }
+            )
+            vim.fn.sign_define(
+                "DapStopped",
+                { text = "▶", texthl = "DiagnosticSignOk", linehl = "CursorLine", numhl = "" }
+            )
 
-            dap.listeners.before.attach.dapui_config = function() dapui.open() end
-            dap.listeners.before.launch.dapui_config = function() dapui.open() end
-            dap.listeners.before.event_terminated.dapui_config = function() dapui.close() end
-            dap.listeners.before.event_exited.dapui_config = function() dapui.close() end
+            dap.listeners.before.attach.dapui_config = function()
+                dapui.open()
+            end
+            dap.listeners.before.launch.dapui_config = function()
+                dapui.open()
+            end
+            dap.listeners.before.event_terminated.dapui_config = function()
+                dapui.close()
+            end
+            dap.listeners.before.event_exited.dapui_config = function()
+                dapui.close()
+            end
 
             -- Load all DAP configurations from the lua/plugins/dap directory
-            local path = vim.fn.stdpath("config") .. "/lua/plugins/config/dap"
+            local path = vim.fn.stdpath "config" .. "/lua/plugins/config/dap"
             local handle = vim.uv.fs_scandir(path)
 
             if handle then
                 while true do
                     local name, t = vim.uv.fs_scandir_next(handle)
-                    if not name then break end
+                    if not name then
+                        break
+                    end
                     local file_type = t or vim.uv.fs_stat(path .. "/" .. name).type
-                    if file_type == "file" and name:match("%.lua$") then
+                    if file_type == "file" and name:match "%.lua$" then
                         local lang = name:gsub("%.lua$", "")
                         require("plugins.config.dap." .. lang)
                     end
@@ -270,7 +346,7 @@ return {
     { -- context
         "nvim-treesitter/nvim-treesitter-context",
         dependencies = { "nvim-treesitter/nvim-treesitter" },
-        event = 'VeryLazy',
+        event = "VeryLazy",
         config = function()
             require("treesitter-context").setup { enable = true }
             vim.api.nvim_set_hl(0, "TreesitterContext", { link = "WinSeparator" })
@@ -279,7 +355,7 @@ return {
     { -- transparent
         "k4n4t4/transparent.nvim",
         config = function()
-            local transparent = require("transparent")
+            local transparent = require "transparent"
             transparent.setup { groups_extend = {} }
         end,
     },
@@ -290,7 +366,13 @@ return {
         opts = {},
         keys = {
             ---@diagnostic disable-next-line: undefined-field
-            { "<Leader>t", function() Snacks.picker.todo_comments() end, desc = "Todo List" },
+            {
+                "<Leader>t",
+                function()
+                    Snacks.picker.todo_comments()
+                end,
+                desc = "Todo List",
+            },
         },
     },
     { -- dial
@@ -299,14 +381,70 @@ return {
             "nvim-lua/plenary.nvim",
         },
         keys = {
-            { mode = 'n', "<C-a>",  function() require("dial.map").manipulate("increment", "normal") end,  desc = "Increment" },
-            { mode = 'n', "<C-x>",  function() require("dial.map").manipulate("decrement", "normal") end,  desc = "Decrement" },
-            { mode = 'n', "g<C-a>", function() require("dial.map").manipulate("increment", "gnormal") end, desc = "gIncrement" },
-            { mode = 'n', "g<C-x>", function() require("dial.map").manipulate("decrement", "gnormal") end, desc = "gDecrement" },
-            { mode = 'v', "<C-a>",  function() require("dial.map").manipulate("increment", "visual") end,  desc = "vIncrement" },
-            { mode = 'v', "<C-x>",  function() require("dial.map").manipulate("decrement", "visual") end,  desc = "vDecrement" },
-            { mode = 'v', "g<C-a>", function() require("dial.map").manipulate("increment", "gvisual") end, desc = "gvIncrement" },
-            { mode = 'v', "g<C-x>", function() require("dial.map").manipulate("decrement", "gvisual") end, desc = "gvDecrement" },
+            {
+                mode = "n",
+                "<C-a>",
+                function()
+                    require("dial.map").manipulate("increment", "normal")
+                end,
+                desc = "Increment",
+            },
+            {
+                mode = "n",
+                "<C-x>",
+                function()
+                    require("dial.map").manipulate("decrement", "normal")
+                end,
+                desc = "Decrement",
+            },
+            {
+                mode = "n",
+                "g<C-a>",
+                function()
+                    require("dial.map").manipulate("increment", "gnormal")
+                end,
+                desc = "gIncrement",
+            },
+            {
+                mode = "n",
+                "g<C-x>",
+                function()
+                    require("dial.map").manipulate("decrement", "gnormal")
+                end,
+                desc = "gDecrement",
+            },
+            {
+                mode = "v",
+                "<C-a>",
+                function()
+                    require("dial.map").manipulate("increment", "visual")
+                end,
+                desc = "vIncrement",
+            },
+            {
+                mode = "v",
+                "<C-x>",
+                function()
+                    require("dial.map").manipulate("decrement", "visual")
+                end,
+                desc = "vDecrement",
+            },
+            {
+                mode = "v",
+                "g<C-a>",
+                function()
+                    require("dial.map").manipulate("increment", "gvisual")
+                end,
+                desc = "gvIncrement",
+            },
+            {
+                mode = "v",
+                "g<C-x>",
+                function()
+                    require("dial.map").manipulate("decrement", "gvisual")
+                end,
+                desc = "gvDecrement",
+            },
         },
         config = function()
             local dial = require "dial.config"
@@ -330,7 +468,7 @@ return {
             { "saghen/blink.compat", version = false },
             "rafamadriz/friendly-snippets",
 
-            'brenoprata10/nvim-highlight-colors',
+            "brenoprata10/nvim-highlight-colors",
             "xzbdmw/colorful-menu.nvim",
 
             "Kaiser-Yang/blink-cmp-dictionary",
@@ -341,7 +479,7 @@ return {
         },
         build = function()
             ---@diagnostic disable-next-line: undefined-field
-            require('blink.cmp').build():pwait()
+            require("blink.cmp").build():pwait()
         end,
         event = { "InsertEnter", "CmdLineEnter" },
         config = require("plugins.config.blink_cmp").config,
@@ -386,7 +524,7 @@ return {
         "epwalsh/obsidian.nvim",
         version = "*",
         event = "VeryLazy",
-        dependencies = { "nvim-lua/plenary.nvim", },
+        dependencies = { "nvim-lua/plenary.nvim" },
         config = function()
             local function setup_obsidian()
                 local cwd = vim.fn.getcwd()
@@ -400,7 +538,7 @@ return {
                             },
                         },
                         preferred_link_style = "wiki",
-                        ui = { enable = false, },
+                        ui = { enable = false },
                     }
                 end
             end
@@ -417,7 +555,7 @@ return {
         "MeanderingProgrammer/render-markdown.nvim",
         ft = { "markdown", "Avante" },
         config = function()
-            require('render-markdown').setup {
+            require("render-markdown").setup {
                 completions = { lsp = { enabled = true } },
                 latex = { enabled = false },
                 file_types = { "markdown", "Avante" },

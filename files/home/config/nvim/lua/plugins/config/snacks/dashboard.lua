@@ -9,7 +9,7 @@ local header_text = [[
 ██▄▄▄▄ ████▀ ██   ██   ▀███▀ ██ ██
 ]]
 
-M.preset =  {
+M.preset = {
     header = { header_text, hl = "Comment", align = "center" },
 }
 
