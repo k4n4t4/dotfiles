@@ -11,10 +11,8 @@ return {
                 "bibtex",
                 "css",
                 "dockerfile",
-                "ecma",
                 "fish",
                 "html",
-                "html_tags",
                 "java",
                 "javadoc",
                 "javascript",
@@ -102,7 +100,7 @@ return {
             library = {
                 { path = "${3rd}/luv/library", words = { "vim%.uv" } },
                 { path = "snacks.nvim", words = { "Snacks" } },
-                { path = "lazy.nvim", words = { "LazyVim" } },
+                { path = "lazy.nvim", words = { "Lazy" } },
             },
         },
     },
@@ -127,7 +125,6 @@ return {
                 javascriptreact = { "eslint_d" },
                 css = { "stylelint" },
                 scss = { "stylelint" },
-                html = { "stylelint" },
                 json = { "jsonlint" },
                 yaml = { "yamllint" },
             }
@@ -390,10 +387,10 @@ return {
         event = "VeryLazy",
         opts = {},
         keys = {
-            ---@diagnostic disable-next-line: undefined-field
             {
                 "<Leader>t",
                 function()
+                    ---@diagnostic disable-next-line: undefined-field
                     Snacks.picker.todo_comments()
                 end,
                 desc = "Todo List",

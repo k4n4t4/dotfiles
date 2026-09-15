@@ -211,10 +211,10 @@ return {
                 end,
                 desc = "LSP Workspace Symbols",
             },
-            ---@diagnostic disable-next-line: undefined-field
             {
                 "<Leader>n",
                 function()
+                    ---@diagnostic disable-next-line: undefined-field
                     Snacks.picker.noice()
                 end,
                 desc = "Noice",
