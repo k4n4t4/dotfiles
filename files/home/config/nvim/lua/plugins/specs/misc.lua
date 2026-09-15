@@ -111,8 +111,31 @@ return {
         ft = "java",
     },
 
-    -- EDITOR PLUGINS
-    { -- formatter
+    -- LINTER
+    {
+        "mfussenegger/nvim-lint",
+        event = "VeryLazy",
+        config = function()
+            local lint = require "lint"
+
+            lint.linters_by_ft = {
+                python = { "flake8" },
+                sh = { "shellcheck" },
+                javascript = { "eslint_d" },
+                typescript = { "eslint_d" },
+                typescriptreact = { "eslint_d" },
+                javascriptreact = { "eslint_d" },
+                css = { "stylelint" },
+                scss = { "stylelint" },
+                html = { "stylelint" },
+                json = { "jsonlint" },
+                yaml = { "yamllint" },
+            }
+        end,
+    },
+
+    -- FORMATTER
+    {
         "stevearc/conform.nvim",
         event = "VeryLazy",
         config = function()
@@ -140,6 +163,8 @@ return {
             }
         end,
     },
+
+    -- EDITOR PLUGINS
     { -- statusline
         "nvim-lualine/lualine.nvim",
         event = "VeryLazy",
