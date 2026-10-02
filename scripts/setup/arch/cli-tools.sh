@@ -16,6 +16,6 @@ rustup component add rustfmt
 if ! [ -d "$HOME/.cargo/bin" ]; then
     mkdir -p "$HOME/.cargo/bin"
 fi
-for component in rust-src rust-analyzer rustfmt; do
+for component in rust-analyzer rustfmt; do
     ln -sf "$(rustup which "$component")" "$HOME/.cargo/bin/$component"
 done
