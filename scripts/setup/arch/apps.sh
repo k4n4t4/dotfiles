@@ -1,5 +1,6 @@
 sudo pacman --needed --noconfirm -S zed kitty nautilus mpv firefox thunderbird gimp discord obsidian
 
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-"$HOME/.config"}"
 if ! [ -d "$XDG_CONFIG_HOME" ]; then
     mkdir -p "$XDG_CONFIG_HOME"
 fi
