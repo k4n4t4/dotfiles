@@ -18,3 +18,4 @@ sudo pacman --needed --noconfirm -S fcitx5-im fcitx5-mozc
 sudo pacman --needed --noconfirm -S noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-dejavu ttf-font-awesome
 sudo pacman --needed --noconfirm -S ttf-jetbrains-mono-nerd ttf-firacode-nerd
 sudo pacman --needed --noconfirm -S noctalia
+sudo pacman --needed --noconfirm -S wl-clipboard
