@@ -1,6 +1,6 @@
 # hyprland
 sudo pacman --needed --noconfirm -S hyprland uwsm xdg-utils xdg-desktop-portal-hyprland wl-clipboard
-sudo pacman --needed --noconfirm -S pipewire pipewire-alsa pipewire-pulse wireplumber
+sudo pacman --needed --noconfirm -S pipewire pipewire-jack pipewire-alsa pipewire-pulse wireplumber
 
 
 sudo pacman --needed --noconfirm -S fcitx5-im fcitx5-mozc
