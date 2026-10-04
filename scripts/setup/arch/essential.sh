@@ -1,2 +1,14 @@
-sudo pacman --needed --noconfirm -S linux-firmware efibootmgr dosfstools ntfs-3g base-devel
-sudo pacman --needed --noconfirm -S vim git htop wget curl unzip 7zip less man-db
+# core
+sudo pacman --needed --noconfirm -S \
+    linux-firmware \
+    efibootmgr \
+    base-devel \
+    less \
+    curl \
+    man-db \
+    man-pages
+
+# extra
+sudo pacman --needed --noconfirm -S \
+    vim \
+    git
