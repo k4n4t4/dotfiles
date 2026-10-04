@@ -37,9 +37,12 @@ sudo pacman --needed --noconfirm -S \
     noctalia \
     socat \
     libnotify \
-    mate-polkit \
-    bluez bluez-utils \
-    brightnessctl \
+    bluez \
     power-profiles-daemon \
+    mate-polkit \
     libsecret gnome-keyring seahorse
 sudo systemctl enable bluetooth
+
+# greeter
+sudo pacman --needed --noconfirm -S sddm
+sudo systemctl enable sddm
