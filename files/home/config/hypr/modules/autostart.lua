@@ -11,6 +11,6 @@ hl.env("XDG_SESSION_DESKTOP", "Hyprland")
 hl.env("LIBVA_DRIVER_NAME", "iHD")
 
 hl.on("hyprland.start", function()
-    hl.exec_cmd("uwsm app -- fcitx5 -d")
-    hl.exec_cmd("uwsm app -- noctalia")
+	hl.exec_cmd("uwsm app -- fcitx5 -d")
+	hl.exec_cmd("uwsm app -- noctalia")
 end)
