@@ -14,5 +14,12 @@ return {
             run(server)
         ]],
     },
+    settings = {
+        julia = {
+            format = {
+                ops = true,
+            },
+        },
+    },
     filetypes = { "julia" },
 }

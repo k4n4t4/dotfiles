@@ -145,6 +145,9 @@ return {
         event = "VeryLazy",
         config = function()
             local conform = require "conform"
+            local skip_formatting = {
+                julia = true,
+            }
             conform.setup {
                 formatters_by_ft = {
                     lua = { "stylua" },
@@ -161,10 +164,19 @@ return {
                     html = { "prettierd" },
                     yaml = { "prettierd" },
                 },
-                format_on_save = {
-                    timeout_ms = 500,
-                    lsp_format = "fallback",
-                },
+                format_on_save = function(bufnr)
+                    if skip_formatting[vim.bo[bufnr].filetype] then
+                        return {
+                            timeout_ms = 500,
+                            lsp_format = "never",
+                        }
+                    end
+
+                    return {
+                        timeout_ms = 500,
+                        lsp_format = "fallback",
+                    }
+                end,
             }
         end,
     },
