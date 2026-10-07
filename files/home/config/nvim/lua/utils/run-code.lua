@@ -4,6 +4,9 @@ M.commands = {
     ["python"] = function(file, args)
         return "python " .. file .. (args ~= "" and " " .. args or "")
     end,
+    ["julia"] = function(file, args)
+        return "julia " .. file .. (args ~= "" and " " .. args or "")
+    end,
     ["lua"] = function(file, args)
         return "lua " .. file .. (args ~= "" and " " .. args or "")
     end,
