@@ -25,7 +25,7 @@ hl.config({
 		kb_layout = "us",
 		repeat_rate = 50,
 		repeat_delay = 250,
-		sensitivity = -0.3,
+		sensitivity = 0.8,
 		accel_profile = "flat",
 		touchpad = {
 			disable_while_typing = true,
