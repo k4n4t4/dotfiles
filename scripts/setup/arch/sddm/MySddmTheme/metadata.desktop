@@ -1,0 +1,9 @@
+[SddmGreeterTheme]
+Name=MySddmTheme
+Description=My custom SDDM theme
+Author=kanata
+Type=sddm-theme
+Version=1.0
+MainScript=Main.qml
+ConfigFile=theme.conf
+QtVersion=6
