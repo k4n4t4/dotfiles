@@ -67,6 +67,14 @@ return {
         config = function()
             local mason_lspconfig = require "mason-lspconfig"
             mason_lspconfig.setup {}
+
+            local manual_enable = {
+                "julials",
+            }
+
+            for _, server in ipairs(manual_enable) do
+                vim.lsp.enable(server)
+            end
         end,
     },
     { -- mason-nvim-dap
