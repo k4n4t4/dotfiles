@@ -10,9 +10,7 @@ sudo pacman --needed --noconfirm -S \
     obsidian
 
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-"$HOME/.config"}"
-if ! [ -d "$XDG_CONFIG_HOME" ]; then
-    mkdir -p "$XDG_CONFIG_HOME"
-fi
+mkdir -p "$XDG_CONFIG_HOME"
 
 if ! [ -d /usr/share/applications ]; then
     sudo mkdir -p /usr/share/applications

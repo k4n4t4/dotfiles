@@ -1,14 +1,26 @@
-# GTK theme
-sudo pacman --needed --noconfirm -S nwg-look adw-gtk-theme
-gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3'
+# sddm theme
+SDDM_THEME_NAME="MySddmTheme"
+SDDM_CURSOR_THEME_NAME="MyCursor"
+SDDM_CURSOR_SIZE=32
 
-# cursors
-sudo pacman --needed --noconfirm -S capitaine-cursors
-mkdir -p ~/.config/environment.d
-touch ~/.config/environment.d/cursor.conf
-grep -q '^XCURSOR_THEME=' ~/.config/environment.d/cursor.conf && sed -i 's|^XCURSOR_THEME=.*|XCURSOR_THEME=capitaine-cursors|' ~/.config/environment.d/cursor.conf || echo 'XCURSOR_THEME=capitaine-cursors' >> ~/.config/environment.d/cursor.conf
-grep -q '^XCURSOR_SIZE=' ~/.config/environment.d/cursor.conf && sed -i 's|^XCURSOR_SIZE=.*|XCURSOR_SIZE=36|' ~/.config/environment.d/cursor.conf || echo 'XCURSOR_SIZE=36' >> ~/.config/environment.d/cursor.conf
+if [ -d "$SCRIPTS_DIR/setup/arch/sddm/$SDDM_THEME_NAME" ]; then
+    sudo mkdir -p "/usr/share/sddm/themes"
+    sudo cp -r "$SCRIPTS_DIR/setup/arch/sddm/$SDDM_THEME_NAME" "/usr/share/sddm/themes/"
+fi
 
-# icons
-sudo pacman --needed --noconfirm -S tela-circle-icon-theme-all
-gsettings set org.gnome.desktop.interface icon-theme 'Tela-circle-grey-dark'
+if [ -d "$SCRIPTS_DIR/setup/arch/cursor/$SDDM_CURSOR_THEME_NAME" ]; then
+    sudo mkdir -p "/usr/share/icons"
+    sudo cp -r "$SCRIPTS_DIR/setup/arch/cursor/$SDDM_CURSOR_THEME_NAME" "/usr/share/icons/"
+fi
+
+sudo mkdir -p "/usr/share/icons/default"
+printf '[Icon Theme]\nInherits=%s\n' \
+    "$SDDM_CURSOR_THEME_NAME" |
+    sudo tee "/usr/share/icons/default/index.theme" > /dev/null
+
+sudo mkdir -p "/etc/sddm.conf.d"
+printf '[Theme]\nCurrent=%s\nCursorTheme=%s\nCursorSize=%s\n' \
+    "$SDDM_THEME_NAME" \
+    "$SDDM_CURSOR_THEME_NAME" \
+    "$SDDM_CURSOR_SIZE" |
+    sudo tee "/etc/sddm.conf.d/theme.conf" > /dev/null

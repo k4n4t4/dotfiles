@@ -42,3 +42,7 @@ sudo pacman --needed --noconfirm -S \
     mate-polkit \
     libsecret gnome-keyring seahorse
 sudo systemctl enable bluetooth
+
+# greeter
+sudo pacman --needed --noconfirm -S sddm
+sudo systemctl enable sddm
