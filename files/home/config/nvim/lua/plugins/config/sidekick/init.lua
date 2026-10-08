@@ -36,7 +36,7 @@ end
 
 M.keys = {
     {
-        "<c-a>",
+        "<c-j>",
         function()
             require("sidekick").nes_jump_or_apply()
         end,
@@ -65,11 +65,12 @@ M.keys = {
         mode = { "n", "t", "i", "x" },
     },
     {
-        "<c-s-.>",
+        "<c-,>",
         function()
             require("sidekick.cli").close()
         end,
         desc = "Detach a CLI Session",
+        mode = { "n", "t", "i", "x" },
     },
     {
         "<leader>jc",
