@@ -43,6 +43,7 @@ set({ "n", "o", "x" }, "<S-tab>", "5k", { desc = "Scroll Up" })
 set("n", "<C-S-o>", "<C-i>")
 
 set({ "n", "x" }, "<leader>w", "<C-w><C-w>", { desc = "Switch Window" })
+set("t", "<c-w>", "<C-\\><C-n><C-w>", { desc = "Switch Window" })
 
 set("n", "<leader>H", "<cmd>noh<cr>", { desc = "No hlsearch" })
 
