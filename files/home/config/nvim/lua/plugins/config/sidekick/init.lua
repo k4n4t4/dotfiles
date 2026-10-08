@@ -14,6 +14,15 @@ function M.config()
         },
         cli = {
             watch = true,
+            win = {
+                layout = "right",
+                split = {
+                    width = 0,
+                },
+                config = function(win)
+                    win.opts.split.width = math.floor(vim.o.columns * 0.3)
+                end,
+            },
             mux = {
                 enabled = false,
                 backend = "tmux",
