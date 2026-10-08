@@ -9,8 +9,6 @@ vim.g.maplocalleader = " "
 set({ "n", "x" }, "j", "gj", { desc = "Move Down" })
 set({ "n", "x" }, "k", "gk", { desc = "Move Up" })
 
-set("t", "<esc><esc>", "<C-\\><C-n>", { desc = "Exit Terminal Mode" })
-
 set("x", "J", function()
     if vim.fn.mode(0) == "V" then
         return ":m '>+1<CR>gv=gv"
