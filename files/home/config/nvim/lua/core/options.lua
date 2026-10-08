@@ -37,6 +37,9 @@ vim.opt.undofile = true
 
 -- EDITING SETTINGS
 
+-- autoread
+vim.opt.autoread = true
+
 -- indentation
 vim.opt.expandtab = true
 vim.opt.tabstop = 4

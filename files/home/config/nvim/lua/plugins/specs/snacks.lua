@@ -103,6 +103,29 @@ return {
                             end,
                         })
                         :map "<leader>ut"
+
+                    -- sidekick nes auto update
+                    vim.g.sidekick_nes_auto = false
+                    local nes_auto = function()
+                        if vim.g.sidekick_nes_auto then
+                            require("sidekick.nes").update()
+                        end
+                    end
+                    vim.api.nvim_create_autocmd("ModeChanged", { pattern = "i:n", callback = nes_auto })
+                    vim.api.nvim_create_autocmd("TextChanged", { callback = nes_auto })
+                    vim.api.nvim_create_autocmd("User", { pattern = "SidekickNesDone", callback = nes_auto })
+                    Snacks.toggle
+                        .new({
+                            id = "sidekick_nes_auto",
+                            name = "Sidekick NES Auto",
+                            get = function()
+                                return vim.g.sidekick_nes_auto
+                            end,
+                            set = function(state)
+                                vim.g.sidekick_nes_auto = state
+                            end,
+                        })
+                        :map "<leader>un"
                 end,
             })
         end,

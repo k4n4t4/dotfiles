@@ -117,6 +117,13 @@ return {
         ft = "java",
     },
 
+    -- AI
+    { -- sidekick
+        "folke/sidekick.nvim",
+        config = require("plugins.config.sidekick").config,
+        keys = require("plugins.config.sidekick").keys,
+    },
+
     -- LINTER
     {
         "mfussenegger/nvim-lint",
@@ -525,42 +532,6 @@ return {
         end,
         event = { "InsertEnter", "CmdLineEnter" },
         config = require("plugins.config.blink_cmp").config,
-    },
-    { -- code companion
-        "olimorris/codecompanion.nvim",
-        cmd = {
-            "CodeCompanion",
-            "CodeCompanionActions",
-            "CodeCompanionChat",
-            "CodeCompanionCLI",
-            "CodeCompanionCmd",
-        },
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "nvim-treesitter/nvim-treesitter",
-        },
-        config = function()
-            require("codecompanion").setup {
-                opts = {
-                    log_level = "DEBUG",
-                    language = "Japanese",
-                },
-                interactions = {
-                    chat = {
-                        adapter = {
-                            name = "copilot",
-                            model = "gpt-4o",
-                        },
-                    },
-                    inline = {
-                        adapter = {
-                            name = "copilot",
-                            model = "gpt-4o",
-                        },
-                    },
-                },
-            }
-        end,
     },
     { -- obsidian
         "epwalsh/obsidian.nvim",
