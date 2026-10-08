@@ -27,4 +27,5 @@ sudo pacman --needed --noconfirm -S \
     lldb \
     nodejs \
     npm \
-    rust
+    rust \
+    opencode
