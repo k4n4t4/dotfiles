@@ -178,27 +178,54 @@ do
         }
     end
 
+    local DEFAULT_EVENTS = { "TextChanged", "ModeChanged:i:n" }
+
+    local function parse_events(specs)
+        local rules = {}
+
+        for _, spec in ipairs(specs) do
+            local event, match = spec:match "^(%w+):(.+)$"
+
+            event = event or spec
+
+            if not match then
+                rules[event] = true
+            elseif rules[event] ~= true then
+                rules[event] = rules[event] or {}
+                rules[event][match] = true
+            end
+        end
+
+        return rules
+    end
+
     local function attach(bufnr)
-        vim.api.nvim_clear_autocmds {
-            group = M.group,
-            buf = bufnr,
-            event = { "ModeChanged", "TextChanged" },
-        }
+        local rules = parse_events(vim.g.copilot_nes_events or DEFAULT_EVENTS)
+        local events = vim.tbl_keys(rules)
+
+        vim.api.nvim_clear_autocmds { group = M.group, buf = bufnr, event = events }
 
         local timer = assert(vim.uv.new_timer())
 
-        vim.api.nvim_create_autocmd({ "ModeChanged", "TextChanged" }, {
+        vim.api.nvim_create_autocmd(events, {
             group = M.group,
             buf = bufnr,
             callback = function(e)
-                if e.event == "ModeChanged" and e.match ~= "i:n" then
+                local rule = rules[e.event]
+
+                if rule ~= true and not rule[e.match] then
                     return
                 end
 
                 M.clear(bufnr)
+
+                if not vim.g.copilot_nes_auto then
+                    return
+                end
+
                 timer:stop()
                 timer:start(
-                    300,
+                    vim.g.copilot_nes_request_delay or 100,
                     0,
                     vim.schedule_wrap(function()
                         if vim.api.nvim_buf_is_valid(bufnr) then
@@ -637,23 +664,23 @@ return {
                     return
                 end
 
-                vim.keymap.set("n", "<c-j>", function()
+                vim.keymap.set("n", "<c-n>", function()
                     nes.request_or_move_or_accept(ev.buf, false, true)
                 end, { buffer = ev.buf, desc = "Copilot NES: request or move or accept" })
 
-                vim.keymap.set("n", "<c-s-j>", function()
+                vim.keymap.set("n", "<c-s-n>", function()
                     nes.request_or_move_or_accept(ev.buf, true, true)
                 end, { buffer = ev.buf, desc = "Copilot NES: request or move or accept (previous)" })
 
-                vim.keymap.set("n", "<leader>jr", function()
+                vim.keymap.set("n", "<leader>nr", function()
                     nes.request(ev.buf)
                 end, { buffer = ev.buf, desc = "Copilot NES: request" })
 
-                vim.keymap.set("n", "<leader>ja", function()
+                vim.keymap.set("n", "<leader>na", function()
                     nes.accept_suggestion(ev.buf)
                 end, { buffer = ev.buf, desc = "Copilot NES: accept" })
 
-                vim.keymap.set("n", "<leader>jc", function()
+                vim.keymap.set("n", "<leader>nc", function()
                     nes.clear(ev.buf)
                 end, { buffer = ev.buf, desc = "Copilot NES: clear" })
 

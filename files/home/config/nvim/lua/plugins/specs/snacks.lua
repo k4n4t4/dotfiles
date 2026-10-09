@@ -103,6 +103,18 @@ return {
                             end,
                         })
                         :map "<leader>ut"
+                    Snacks.toggle
+                        .new({
+                            id = "copilot_nes_auto",
+                            name = "Copilot Auto NES",
+                            get = function()
+                                return vim.g.copilot_nes_auto
+                            end,
+                            set = function()
+                                vim.g.copilot_nes_auto = not vim.g.copilot_nes_auto
+                            end,
+                        })
+                        :map "<leader>un"
                 end,
             })
         end,
@@ -212,7 +224,7 @@ return {
                 desc = "LSP Workspace Symbols",
             },
             {
-                "<Leader>n",
+                "<leader>h",
                 function()
                     ---@diagnostic disable-next-line: undefined-field
                     Snacks.picker.noice()
