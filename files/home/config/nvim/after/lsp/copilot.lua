@@ -145,12 +145,24 @@ do
             return
         end
 
+        local scol = byte_col(bufnr, srow, range.start.character)
+        local ecol = byte_col(bufnr, erow, range["end"].character)
+        local display, whole = text, false
+
+        if ecol == 0 and erow > srow then
+            erow = erow - 1
+            ecol = #(vim.api.nvim_buf_get_lines(bufnr, erow, erow + 1, false)[1] or "")
+            display = display:gsub("\n$", "")
+            whole = true
+        end
+
         return {
             srow = srow,
-            scol = byte_col(bufnr, srow, range.start.character),
+            scol = scol,
             erow = erow,
-            ecol = byte_col(bufnr, erow, range["end"].character),
-            text = text,
+            ecol = ecol,
+            text = display,
+            whole = whole,
             command = item.command,
             lsp = { range = range, newText = text },
         }
@@ -182,9 +194,9 @@ do
         cmd(bufnr, "CopilotNESAccept", function()
             M.accept_suggestion(bufnr)
         end, { desc = "Accept the pending Copilot next edit" })
-        cmd(bufnr, "CopilotNESMove", function()
-            M.move_suggestion(bufnr)
-        end, { desc = "Jump to the next Copilot NES below the cursor" })
+        cmd(bufnr, "CopilotNESMove", function(o)
+            M.move_suggestion(bufnr, o.bang)
+        end, { bang = true, desc = "Jump to the next Copilot NES (! for previous)" })
         cmd(bufnr, "CopilotNESClear", function()
             M.clear(bufnr)
         end, { desc = "Clear the pending Copilot next edit" })
@@ -282,7 +294,7 @@ do
 
     function M.render_edit(bufnr, e)
         local old_lines = vim.api.nvim_buf_get_lines(bufnr, e.srow, e.erow + 1, false)
-        local is_insertion = e.srow == e.erow and e.scol == e.ecol
+        local is_insertion = not e.whole and e.srow == e.erow and e.scol == e.ecol
         local is_deletion = e.text == ""
 
         if is_insertion and is_deletion then
@@ -297,7 +309,7 @@ do
                 priority = 200,
                 strict = false,
             })
-            return true
+            return e.srow
         end
 
         local new_lines = vim.split(e.text, "\n", { plain = true })
@@ -308,17 +320,17 @@ do
                 virt_text_pos = "inline",
                 priority = 201,
             })
-            return true
+            return e.srow
         end
 
         if is_insertion and #new_lines > 1 and e.scol == #old_lines[1] and new_lines[1] == "" then
             M.add_virtual_lines(bufnr, e.srow, vim.list_slice(new_lines, 2), false)
-            return true
+            return e.srow
         end
 
         if is_insertion and #new_lines > 1 and e.scol == 0 and new_lines[#new_lines] == "" then
             M.add_virtual_lines(bufnr, e.srow, vim.list_slice(new_lines, 1, #new_lines - 1), true)
-            return true
+            return math.max(e.srow - 1, 0)
         end
 
         local last_old = old_lines[#old_lines] or ""
@@ -336,7 +348,7 @@ do
 
         M.add_virtual_lines(bufnr, e.erow, new_lines, false)
 
-        return true
+        return e.srow
     end
 
     function M.cursor_matches_edit(bufnr, e, cursor_row, cursor_col)
@@ -416,8 +428,10 @@ do
 
                 for _, item in ipairs(result.edits) do
                     local edit = normalize_edit(bufnr, item)
+                    local sign_row = edit and M.render_edit(bufnr, edit)
 
-                    if edit and M.render_edit(bufnr, edit) then
+                    if sign_row then
+                        edit.sign_row = sign_row
                         table.insert(edits, edit)
                     end
                 end
@@ -480,21 +494,42 @@ do
         return state.edits, winid, cursor[1] - 1, cursor[2]
     end
 
-    function M.move_suggestion(bufnr)
-        local edits, winid, row, col = pending(bufnr)
+    function M.accept_or_move(bufnr, backward)
+        local edits, _, row, col = pending(bufnr)
 
         if not edits then
             return
         end
 
         for _, e in ipairs(edits) do
-            if e.srow > row or (e.srow == row and e.scol > col) then
+            if M.cursor_matches_edit(bufnr, e, row, col) then
+                return M.accept_suggestion(bufnr)
+            end
+        end
+
+        M.move_suggestion(bufnr, backward)
+    end
+
+    function M.move_suggestion(bufnr, backward)
+        local edits, winid, row, col = pending(bufnr)
+
+        if not edits then
+            return
+        end
+
+        local step = backward and -1 or 1
+
+        for i = backward and #edits or 1, backward and 1 or #edits, step do
+            local e = edits[i]
+            local d = e.srow == row and e.scol - col or e.srow - row
+
+            if d * step > 0 then
                 vim.api.nvim_win_set_cursor(winid or 0, { e.srow + 1, e.scol })
                 return
             end
         end
 
-        notify("No NES below cursor", vim.log.levels.INFO)
+        notify("No NES " .. (backward and "above" or "below") .. " cursor", vim.log.levels.INFO)
     end
 
     function M.accept_suggestion(bufnr)
@@ -583,5 +618,40 @@ return {
     on_init = function(client)
         setup_completion(client)
         nes.setup(client)
+
+        vim.api.nvim_create_autocmd("LspAttach", {
+            group = nes.group,
+            callback = function(ev)
+                if not (ev.data and ev.data.client_id == client.id) then
+                    return
+                end
+
+                local function map(lhs, fn, desc)
+                    vim.keymap.set("n", lhs, fn, { buffer = ev.buf, desc = desc })
+                end
+
+                map("<c-j>", function()
+                    nes.accept_or_move(ev.buf)
+                end, "Copilot NES: accept or next")
+                map("<c-s-j>", function()
+                    nes.accept_or_move(ev.buf, true)
+                end, "Copilot NES: accept or previous")
+                map("<leader>jr", function()
+                    nes.request(ev.buf, true)
+                end, "Copilot NES: request")
+                map("<leader>ja", function()
+                    nes.accept_suggestion(ev.buf)
+                end, "Copilot NES: accept")
+                map("<leader>jc", function()
+                    nes.clear(ev.buf)
+                end, "Copilot NES: clear")
+                map("]n", function()
+                    nes.move_suggestion(ev.buf)
+                end, "Copilot NES: next")
+                map("[n", function()
+                    nes.move_suggestion(ev.buf, true)
+                end, "Copilot NES: previous")
+            end,
+        })
     end,
 }
