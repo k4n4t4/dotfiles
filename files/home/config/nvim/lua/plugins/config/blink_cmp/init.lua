@@ -77,6 +77,7 @@ function M.config()
                 "obsidian",
                 "obsidian_new",
                 "obsidian_tags",
+                "sidekick_ctx",
             },
             providers = {
                 lsp = {
@@ -164,6 +165,15 @@ function M.config()
                     module = "blink.compat.source",
                     score_offset = 100,
                     opts = { name = "obsidian_tags" },
+                },
+                sidekick_ctx = {
+                    name = "SidekickCtx",
+                    module = "plugins.config.blink_cmp.sidekick",
+                    score_offset = 100,
+                    enabled = function()
+                        return vim.b.sidekick_prompt == true
+                    end,
+                    opts = { name = "sidekick_ctx" },
                 },
             },
         },

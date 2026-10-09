@@ -577,4 +577,11 @@ return {
         end,
         ft = { "markdown" },
     },
+
+    -- AI
+    { -- sidekick
+        "folke/sidekick.nvim",
+        config = require("plugins.config.sidekick").config,
+        keys = require("plugins.config.sidekick").keys,
+    },
 }
