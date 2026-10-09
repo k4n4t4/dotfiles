@@ -32,7 +32,6 @@ local function byte_col(bufnr, row, character)
     return math.min(character, #line)
 end
 
--- Convert inline completion to regular completion
 local function setup_completion(client)
     client.server_capabilities.completionProvider = { triggerCharacters = {} }
     local orig_request = client.request
@@ -147,6 +146,11 @@ do
 
         local scol = byte_col(bufnr, srow, range.start.character)
         local ecol = byte_col(bufnr, erow, range["end"].character)
+
+        if table.concat(vim.api.nvim_buf_get_text(bufnr, srow, scol, erow, ecol, {}), "\n") == text then
+            return
+        end
+
         local display, whole = text, false
 
         if ecol == 0 and erow > srow then
@@ -154,6 +158,12 @@ do
             ecol = #(vim.api.nvim_buf_get_lines(bufnr, erow, erow + 1, false)[1] or "")
             display = display:gsub("\n$", "")
             whole = true
+        elseif srow == erow and scol == 0 and ecol == 0 and srow > 0 and text:sub(-1) == "\n" then
+            srow = srow - 1
+            erow = srow
+            scol = #(vim.api.nvim_buf_get_lines(bufnr, srow, srow + 1, false)[1] or "")
+            ecol = scol
+            display = "\n" .. text:sub(1, -2)
         end
 
         return {
@@ -175,6 +185,8 @@ do
             event = { "ModeChanged", "TextChanged" },
         }
 
+        local timer = assert(vim.uv.new_timer())
+
         vim.api.nvim_create_autocmd({ "ModeChanged", "TextChanged" }, {
             group = M.group,
             buf = bufnr,
@@ -182,14 +194,25 @@ do
                 if e.event == "ModeChanged" and e.match ~= "i:n" then
                     return
                 end
-                M.request(bufnr, false, math.max(0, tonumber(vim.g.copilot_nes_debounce) or 100))
+
+                M.clear(bufnr)
+                timer:stop()
+                timer:start(
+                    300,
+                    0,
+                    vim.schedule_wrap(function()
+                        if vim.api.nvim_buf_is_valid(bufnr) then
+                            M.request(bufnr)
+                        end
+                    end)
+                )
             end,
         })
 
         local cmd = vim.api.nvim_buf_create_user_command
 
         cmd(bufnr, "CopilotNESRequest", function()
-            M.request(bufnr, true)
+            M.request(bufnr)
         end, { desc = "Request a Copilot next edit suggestion" })
         cmd(bufnr, "CopilotNESAccept", function()
             M.accept_suggestion(bufnr)
@@ -246,17 +269,10 @@ do
         M.clear_suggestion(bufnr)
     end
 
-    function M.request(bufnr, manual, delay)
+    function M.request(bufnr)
         local generation = bump(bufnr)
         M.clear_suggestion(bufnr)
-
-        if not delay then
-            return M.request_nes(bufnr, generation, manual)
-        end
-
-        vim.defer_fn(function()
-            M.request_nes(bufnr, generation, manual)
-        end, delay)
+        return M.request_nes(bufnr, generation)
     end
 
     function M.clear_suggestion(bufnr)
@@ -359,7 +375,6 @@ do
                 return true
             end
 
-            -- In normal mode, the cursor cannot always sit after the last character.
             local line = vim.api.nvim_buf_get_lines(bufnr, e.srow, e.srow + 1, false)[1] or ""
 
             return e.scol == #line and #line > 0 and cursor_col == vim.fn.byteidx(line, vim.fn.strchars(line) - 1)
@@ -373,11 +388,10 @@ do
             return false
         end
 
-        -- LSP edit ranges are end-exclusive.
         return not (cursor_row == e.erow and cursor_col >= e.ecol)
     end
 
-    function M.request_nes(bufnr, generation, manual)
+    function M.request_nes(bufnr, generation)
         if is_stale(bufnr, generation) then
             return
         end
@@ -391,9 +405,6 @@ do
         local version = vim.lsp.util.buf_versions[bufnr]
 
         if version == nil then
-            if manual then
-                notify("Buffer version is unavailable", vim.log.levels.WARN)
-            end
             return
         end
 
@@ -403,63 +414,55 @@ do
         params.textDocument.version = version
 
         local ok, request_err = M.client:request("textDocument/copilotInlineEdit", params, function(err, result)
-            vim.schedule(function()
-                if is_stale(bufnr, generation, version) then
-                    return
+            if is_stale(bufnr, generation, version) then
+                return
+            end
+
+            if err then
+                notify("Request failed: " .. vim.inspect(err), vim.log.levels.ERROR)
+                return
+            end
+
+            if type(result) ~= "table" or type(result.edits) ~= "table" or #result.edits == 0 then
+                return
+            end
+
+            M.clear_suggestion(bufnr)
+
+            local edits = {}
+
+            for _, item in ipairs(result.edits) do
+                local edit = normalize_edit(bufnr, item)
+                local sign_row = edit and M.render_edit(bufnr, edit)
+
+                if sign_row then
+                    edit.sign_row = sign_row
+                    table.insert(edits, edit)
                 end
+            end
 
-                if err then
-                    notify("Request failed: " .. vim.inspect(err), vim.log.levels.ERROR)
-                    return
+            if #edits == 0 then
+                return
+            end
+
+            table.sort(edits, function(a, b)
+                if a.srow ~= b.srow then
+                    return a.srow < b.srow
                 end
-
-                if type(result) ~= "table" or type(result.edits) ~= "table" or #result.edits == 0 then
-                    if manual then
-                        notify("No edits returned:\n" .. vim.inspect(result), vim.log.levels.INFO)
-                    end
-                    return
-                end
-
-                M.clear_suggestion(bufnr)
-
-                local edits = {}
-
-                for _, item in ipairs(result.edits) do
-                    local edit = normalize_edit(bufnr, item)
-                    local sign_row = edit and M.render_edit(bufnr, edit)
-
-                    if sign_row then
-                        edit.sign_row = sign_row
-                        table.insert(edits, edit)
-                    end
-                end
-
-                if #edits == 0 then
-                    if manual then
-                        notify("No supported edits:\n" .. vim.inspect(result.edits), vim.log.levels.WARN)
-                    end
-                    return
-                end
-
-                table.sort(edits, function(a, b)
-                    if a.srow ~= b.srow then
-                        return a.srow < b.srow
-                    end
-                    return a.scol < b.scol
-                end)
-
-                M.suggestions[bufnr] = { edits = edits, version = version }
-
-                for _, edit in ipairs(edits) do
-                    vim.api.nvim_buf_set_extmark(bufnr, M.namespace, edit.srow, 0, {
-                        sign_text = " ",
-                        sign_hl_group = "CopilotNesIcon",
-                        priority = 201,
-                        strict = false,
-                    })
-                    M.client:notify("textDocument/didShowInlineEdit", { item = { command = edit.command } })
-                end
+                return a.scol < b.scol
             end)
+
+            M.suggestions[bufnr] = { edits = edits, version = version }
+
+            for _, edit in ipairs(edits) do
+                vim.api.nvim_buf_set_extmark(bufnr, M.namespace, edit.srow, 0, {
+                    sign_text = " ",
+                    sign_hl_group = "CopilotNesIcon",
+                    priority = 201,
+                    strict = false,
+                })
+                M.client:notify("textDocument/didShowInlineEdit", { item = { command = edit.command } })
+            end
         end, bufnr)
 
         if not ok then
@@ -467,31 +470,39 @@ do
         end
     end
 
-    local function pending(bufnr)
+    local function current(bufnr)
         local state = M.suggestions[bufnr]
 
-        if not state or #state.edits == 0 then
-            notify("No pending suggestions", vim.log.levels.INFO)
-            return
+        if state and state.version == vim.lsp.util.buf_versions[bufnr] then
+            return state.edits
         end
+    end
 
-        if state.version ~= vim.lsp.util.buf_versions[bufnr] then
-            M.clear_suggestion(bufnr)
-            return
-        end
+    function M.has_suggestion(bufnr)
+        return current(bufnr) ~= nil
+    end
 
-        local winid = get_win(bufnr)
+    local function pending(bufnr)
+        local edits, winid = current(bufnr), get_win(bufnr)
 
-        if not winid then
+        if not (edits and winid) then
             return
         end
 
         local cursor = vim.api.nvim_win_get_cursor(winid)
 
-        return state.edits, winid, cursor[1] - 1, cursor[2]
+        return edits, winid, cursor[1] - 1, cursor[2]
     end
 
-    function M.accept_or_move(bufnr, backward)
+    function M.request_or_move_or_accept(bufnr, backward, cycle)
+        if not M.has_suggestion(bufnr) then
+            return M.request(bufnr)
+        end
+
+        M.accept_or_move(bufnr, backward, cycle)
+    end
+
+    function M.accept_or_move(bufnr, backward, cycle)
         local edits, _, row, col = pending(bufnr)
 
         if not edits then
@@ -504,10 +515,10 @@ do
             end
         end
 
-        M.move_suggestion(bufnr, backward)
+        M.move_suggestion(bufnr, backward, cycle)
     end
 
-    function M.move_suggestion(bufnr, backward)
+    function M.move_suggestion(bufnr, backward, cycle)
         local edits, winid, row, col = pending(bufnr)
 
         if not edits then
@@ -515,18 +526,23 @@ do
         end
 
         local step = backward and -1 or 1
+        local target
 
         for i = backward and #edits or 1, backward and 1 or #edits, step do
             local e = edits[i]
             local d = e.srow == row and e.scol - col or e.srow - row
 
             if d * step > 0 then
-                vim.api.nvim_win_set_cursor(winid or 0, { e.srow + 1, e.scol })
-                return
+                target = e
+                break
             end
         end
 
-        notify("No NES " .. (backward and "above" or "below") .. " cursor", vim.log.levels.INFO)
+        target = target or (cycle and (backward and edits[#edits] or edits[1]))
+
+        if target then
+            vim.api.nvim_win_set_cursor(winid or 0, { target.srow + 1, target.scol })
+        end
     end
 
     function M.accept_suggestion(bufnr)
@@ -540,9 +556,8 @@ do
 
         for _, e in ipairs(edits) do
             if M.cursor_matches_edit(bufnr, e, row, col) then
-                -- If multiple edits cover this cursor position, do not guess.
+                -- 複数一致したら推測しない
                 if selected then
-                    notify("Multiple edits match this cursor position", vim.log.levels.WARN)
                     return
                 end
 
@@ -551,7 +566,6 @@ do
         end
 
         if not selected then
-            notify("No NES at cursor", vim.log.levels.INFO)
             return
         end
 
@@ -624,15 +638,15 @@ return {
                 end
 
                 vim.keymap.set("n", "<c-j>", function()
-                    nes.accept_or_move(ev.buf)
-                end, { buffer = ev.buf, desc = "Copilot NES: accept or next" })
+                    nes.request_or_move_or_accept(ev.buf, false, true)
+                end, { buffer = ev.buf, desc = "Copilot NES: request or move or accept" })
 
                 vim.keymap.set("n", "<c-s-j>", function()
-                    nes.accept_or_move(ev.buf, true)
-                end, { buffer = ev.buf, desc = "Copilot NES: accept or previous" })
+                    nes.request_or_move_or_accept(ev.buf, true, true)
+                end, { buffer = ev.buf, desc = "Copilot NES: request or move or accept (previous)" })
 
                 vim.keymap.set("n", "<leader>jr", function()
-                    nes.request(ev.buf, true)
+                    nes.request(ev.buf)
                 end, { buffer = ev.buf, desc = "Copilot NES: request" })
 
                 vim.keymap.set("n", "<leader>ja", function()
