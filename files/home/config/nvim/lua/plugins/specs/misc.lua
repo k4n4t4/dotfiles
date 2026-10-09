@@ -526,6 +526,22 @@ return {
         event = { "InsertEnter", "CmdLineEnter" },
         config = require("plugins.config.blink_cmp").config,
     },
+    { -- code companion
+        "olimorris/codecompanion.nvim",
+        cmd = {
+            "CodeCompanion",
+            "CodeCompanionActions",
+            "CodeCompanionChat",
+            "CodeCompanionCLI",
+            "CodeCompanionCmd",
+        },
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-treesitter/nvim-treesitter",
+        },
+        config = require("plugins.config.codecompanion").config,
+        keys = require("plugins.config.codecompanion").keys,
+    },
     { -- obsidian
         "epwalsh/obsidian.nvim",
         version = "*",
@@ -559,12 +575,12 @@ return {
     },
     { -- render markdown
         "MeanderingProgrammer/render-markdown.nvim",
-        ft = { "markdown", "Avante" },
+        ft = { "markdown", "Avante", "codecompanion" },
         config = function()
             require("render-markdown").setup {
                 completions = { lsp = { enabled = true } },
                 latex = { enabled = false },
-                file_types = { "markdown", "Avante" },
+                file_types = { "markdown", "Avante", "codecompanion" },
             }
         end,
     },
@@ -576,12 +592,5 @@ return {
             vim.g.mkdp_filetypes = { "markdown" }
         end,
         ft = { "markdown" },
-    },
-
-    -- AI
-    { -- sidekick
-        "folke/sidekick.nvim",
-        config = require("plugins.config.sidekick").config,
-        keys = require("plugins.config.sidekick").keys,
     },
 }
