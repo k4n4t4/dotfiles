@@ -138,7 +138,7 @@ function M.config()
                 },
                 tools = {
                     opts = {
-                        approval_mode = "auto",
+                        approval_mode = "manual",
                     },
                 },
             },
