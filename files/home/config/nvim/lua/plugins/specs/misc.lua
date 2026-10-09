@@ -548,8 +548,8 @@ return {
                 interactions = {
                     chat = {
                         adapter = {
-                            name = "copilot",
-                            model = "gpt-4o",
+                            name = "opencode",
+                            model = "opencode/big-pickle",
                         },
                     },
                     inline = {
