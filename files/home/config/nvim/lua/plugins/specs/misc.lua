@@ -526,42 +526,6 @@ return {
         event = { "InsertEnter", "CmdLineEnter" },
         config = require("plugins.config.blink_cmp").config,
     },
-    { -- code companion
-        "olimorris/codecompanion.nvim",
-        cmd = {
-            "CodeCompanion",
-            "CodeCompanionActions",
-            "CodeCompanionChat",
-            "CodeCompanionCLI",
-            "CodeCompanionCmd",
-        },
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "nvim-treesitter/nvim-treesitter",
-        },
-        config = function()
-            require("codecompanion").setup {
-                opts = {
-                    log_level = "DEBUG",
-                    language = "Japanese",
-                },
-                interactions = {
-                    chat = {
-                        adapter = {
-                            name = "opencode",
-                            model = "opencode/big-pickle",
-                        },
-                    },
-                    inline = {
-                        adapter = {
-                            name = "copilot",
-                            model = "gpt-4o",
-                        },
-                    },
-                },
-            }
-        end,
-    },
     { -- obsidian
         "epwalsh/obsidian.nvim",
         version = "*",

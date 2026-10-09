@@ -74,7 +74,6 @@ function M.config()
                 "calc",
                 "git",
                 "dictionary",
-                "codecompanion",
                 "obsidian",
                 "obsidian_new",
                 "obsidian_tags",
@@ -147,12 +146,6 @@ function M.config()
                     name = "LazyDev",
                     module = "lazydev.integrations.blink",
                     score_offset = 100,
-                },
-                codecompanion = {
-                    name = "CodeCompanion",
-                    module = "codecompanion.providers.completion.blink",
-                    score_offset = 100,
-                    async = true,
                 },
                 obsidian = {
                     name = "Obsidian",
