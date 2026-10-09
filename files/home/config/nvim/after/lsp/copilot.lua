@@ -96,7 +96,6 @@ local nes
 do
     local M = {}
 
-    M.generations = {}
     M.suggestions = {}
 
     M.client = nil
@@ -104,12 +103,13 @@ do
     M.group = nil
 
     local function bump(bufnr)
-        M.generations[bufnr] = (M.generations[bufnr] or 0) + 1
-        return M.generations[bufnr]
+        local g = (vim.b[bufnr].nes_generation or 0) + 1
+        vim.b[bufnr].nes_generation = g
+        return g
     end
 
     local function is_stale(bufnr, generation, version)
-        if M.generations[bufnr] ~= generation then
+        if not vim.api.nvim_buf_is_valid(bufnr) or vim.b[bufnr].nes_generation ~= generation then
             return true
         end
         return version ~= nil and vim.lsp.util.buf_versions[bufnr] ~= version
@@ -171,13 +171,13 @@ do
     local function attach(bufnr)
         vim.api.nvim_clear_autocmds {
             group = M.group,
-            buffer = bufnr,
+            buf = bufnr,
             event = { "ModeChanged", "TextChanged" },
         }
 
         vim.api.nvim_create_autocmd({ "ModeChanged", "TextChanged" }, {
             group = M.group,
-            buffer = bufnr,
+            buf = bufnr,
             callback = function(e)
                 if e.event == "ModeChanged" and e.match ~= "i:n" then
                     return
@@ -237,7 +237,6 @@ do
             group = M.group,
             callback = function(ev)
                 M.suggestions[ev.buf] = nil
-                M.generations[ev.buf] = nil
             end,
         })
     end
@@ -268,7 +267,6 @@ do
         vim.api.nvim_buf_clear_namespace(bufnr, M.namespace, 0, -1)
 
         M.suggestions[bufnr] = nil
-        vim.b[bufnr].nes_version = nil
     end
 
     function M.add_virtual_lines(bufnr, row, lines, above)
@@ -451,7 +449,6 @@ do
                 end)
 
                 M.suggestions[bufnr] = { edits = edits, version = version }
-                vim.b[bufnr].nes_version = version
 
                 for _, edit in ipairs(edits) do
                     vim.api.nvim_buf_set_extmark(bufnr, M.namespace, edit.srow, 0, {
@@ -626,31 +623,33 @@ return {
                     return
                 end
 
-                local function map(lhs, fn, desc)
-                    vim.keymap.set("n", lhs, fn, { buffer = ev.buf, desc = desc })
-                end
-
-                map("<c-j>", function()
+                vim.keymap.set("n", "<c-j>", function()
                     nes.accept_or_move(ev.buf)
-                end, "Copilot NES: accept or next")
-                map("<c-s-j>", function()
+                end, { buffer = ev.buf, desc = "Copilot NES: accept or next" })
+
+                vim.keymap.set("n", "<c-s-j>", function()
                     nes.accept_or_move(ev.buf, true)
-                end, "Copilot NES: accept or previous")
-                map("<leader>jr", function()
+                end, { buffer = ev.buf, desc = "Copilot NES: accept or previous" })
+
+                vim.keymap.set("n", "<leader>jr", function()
                     nes.request(ev.buf, true)
-                end, "Copilot NES: request")
-                map("<leader>ja", function()
+                end, { buffer = ev.buf, desc = "Copilot NES: request" })
+
+                vim.keymap.set("n", "<leader>ja", function()
                     nes.accept_suggestion(ev.buf)
-                end, "Copilot NES: accept")
-                map("<leader>jc", function()
+                end, { buffer = ev.buf, desc = "Copilot NES: accept" })
+
+                vim.keymap.set("n", "<leader>jc", function()
                     nes.clear(ev.buf)
-                end, "Copilot NES: clear")
-                map("]n", function()
+                end, { buffer = ev.buf, desc = "Copilot NES: clear" })
+
+                vim.keymap.set("n", "]n", function()
                     nes.move_suggestion(ev.buf)
-                end, "Copilot NES: next")
-                map("[n", function()
+                end, { buffer = ev.buf, desc = "Copilot NES: next" })
+
+                vim.keymap.set("n", "[n", function()
                     nes.move_suggestion(ev.buf, true)
-                end, "Copilot NES: previous")
+                end, { buffer = ev.buf, desc = "Copilot NES: previous" })
             end,
         })
     end,
