@@ -82,7 +82,7 @@ M.keys = {
         mode = { "n", "t", "i", "x" },
     },
     {
-        "<leader>jc",
+        "<leader>jS",
         function()
             require("sidekick.cli").select()
         end,
@@ -119,6 +119,56 @@ M.keys = {
         end,
         mode = { "n", "x" },
         desc = "Sidekick Select Prompt",
+    },
+    {
+        "<leader>jj",
+        function()
+            local buf = vim.api.nvim_create_buf(false, true)
+            local width = math.floor(vim.o.columns * 0.6)
+            local height = 5
+
+            vim.api.nvim_buf_set_name(buf, "Sidekick Prompt")
+            vim.bo[buf].buftype = "acwrite"
+            vim.bo[buf].bufhidden = "wipe"
+            vim.bo[buf].filetype = "markdown"
+            vim.b[buf].sidekick_prompt = true
+
+            local win = vim.api.nvim_open_win(buf, true, {
+                relative = "editor",
+                width = width,
+                height = height,
+                row = math.floor((vim.o.lines - height) / 2),
+                col = math.floor((vim.o.columns - width) / 2),
+                style = "minimal",
+                border = "rounded",
+                title = " Sidekick Prompt ",
+            })
+
+            vim.api.nvim_buf_set_lines(buf, 0, -1, false, { "" })
+            vim.cmd.startinsert()
+
+            local function send()
+                local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+                local msg = table.concat(lines, "\n")
+
+                if msg == "" then
+                    return
+                end
+
+                vim.api.nvim_win_close(win, true)
+                require("sidekick.cli").send { msg = msg }
+            end
+
+            vim.keymap.set({ "n", "i" }, "<C-CR>", send, {
+                buffer = buf,
+                desc = "Send prompt to Sidekick",
+            })
+
+            vim.keymap.set("n", "q", function()
+                vim.api.nvim_win_close(win, true)
+            end, { buffer = buf })
+        end,
+        desc = "Sidekick Prompt Input",
     },
 }
 
