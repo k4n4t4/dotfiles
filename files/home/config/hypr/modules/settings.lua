@@ -2,7 +2,7 @@ hl.monitor({
 	output = "",
 	mode = "preferred",
 	position = "auto",
-	scale = "1.0",
+	scale = 1.0,
 	transform = 0,
 })
 
@@ -10,7 +10,7 @@ hl.config({
 	general = {
 		border_size = 2,
 		gaps_in = 4,
-		gaps_out = 10,
+		gaps_out = 4,
 		gaps_workspaces = 0,
 		layout = "scrolling",
 	},
@@ -33,7 +33,7 @@ hl.config({
 		},
 	},
 	decoration = {
-		rounding = 10,
+		rounding = 4,
 		active_opacity = 0.9,
 		fullscreen_opacity = 1.0,
 		inactive_opacity = 0.8,
@@ -60,11 +60,11 @@ hl.curve("ease-out-quint", { type = "bezier", points = { { 0.22, 1.0 }, { 0.36, 
 hl.curve("ease-out-back", { type = "bezier", points = { { 0.34, 1.56 }, { 0.64, 1.0 } } })
 hl.curve("ease-in-out-cubic", { type = "bezier", points = { { 0.65, 0.0 }, { 0.35, 1.0 } } })
 hl.curve("ease-in-out-circ", { type = "bezier", points = { { 0.85, 0.0 }, { 0.15, 1.0 } } })
-hl.animation({ leaf = "windowsIn", enabled = true, speed = 3, bezier = "ease-out-back" })
-hl.animation({ leaf = "windowsOut", enabled = true, speed = 2, bezier = "linear" })
-hl.animation({ leaf = "windowsMove", enabled = true, speed = 2, bezier = "ease-in-out-circ" })
-hl.animation({ leaf = "workspaces", enabled = true, speed = 2, bezier = "ease-in-out-cubic" })
-hl.animation({ leaf = "fade", enabled = true, speed = 5, bezier = "default" })
+hl.animation({ leaf = "windowsIn", enabled = true, speed = 1, bezier = "ease-out-back" })
+hl.animation({ leaf = "windowsOut", enabled = true, speed = 1, bezier = "linear" })
+hl.animation({ leaf = "windowsMove", enabled = true, speed = 1, bezier = "ease-in-out-circ" })
+hl.animation({ leaf = "workspaces", enabled = true, speed = 1, bezier = "ease-in-out-cubic" })
+hl.animation({ leaf = "fade", enabled = true, speed = 1, bezier = "default" })
 
 hl.window_rule({
 	match = {
