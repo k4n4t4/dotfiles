@@ -1,115 +1,258 @@
 local M = {}
 
-local function input(opts, on_submit)
-    local title = opts.title or "Input"
-    local bufname = opts.bufname or title
-    local ft = opts.filetype or "text"
-    local go_back = opts.go_back or false
+local utils_win = require "utils.win"
+local utils_info = require "utils.info"
 
-    local buf = vim.api.nvim_create_buf(false, true)
-    local width = math.floor(vim.o.columns * 0.6)
-    local height = 5
-
-    vim.api.nvim_buf_set_name(buf, bufname)
-    vim.bo[buf].buftype = "acwrite"
-    vim.bo[buf].bufhidden = "wipe"
-    vim.bo[buf].filetype = ft
-
-    local prev_win = vim.api.nvim_get_current_win()
-
-    local win = vim.api.nvim_open_win(buf, true, {
-        relative = "editor",
-        width = width,
-        height = height,
-        row = math.floor((vim.o.lines - height) / 2),
-        col = math.floor((vim.o.columns - width) / 2),
-        style = "minimal",
-        border = "rounded",
-        title = title,
-    })
-
-    local closed = false
-    local function close_input()
-        if closed then
-            return
-        end
-        closed = true
-
-        if vim.api.nvim_win_is_valid(win) then
-            vim.api.nvim_win_close(win, true)
-        end
-    end
-
-    vim.api.nvim_buf_set_lines(buf, 0, -1, false, { "" })
-    vim.cmd.startinsert()
-
-    vim.keymap.set({ "n", "i" }, "<C-CR>", function()
-        local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
-        local msg = table.concat(lines, "\n")
-
-        if vim.trim(msg) == "" then
-            return
-        end
-
-        close_input()
-        on_submit(msg, buf, win)
-        if go_back then
-            vim.api.nvim_set_current_win(prev_win)
-        end
-    end, { buffer = buf, desc = "Submit prompt" })
-
-    vim.keymap.set("n", "q", function()
-        close_input()
-    end, { buffer = buf, desc = "Close prompt" })
+local function default_adapter()
+    local config = require("codecompanion.config").config
+    local adapter = config.interactions.chat.adapter
+    ---@diagnostic disable-next-line: undefined-field
+    return require("codecompanion.adapters").resolve(adapter.name), adapter
 end
 
-local function get_visual(mode)
-    local start_pos = vim.fn.getpos "v"
-    local end_pos = vim.fn.getpos "."
-    local selection_lines = vim.fn.getregion(start_pos, end_pos, {
-        type = mode,
-    })
-
-    if selection_lines and #selection_lines > 0 then
-        if mode == "V" then
-            if start_pos[2] == end_pos[2] then
-                return ("%dL"):format(start_pos[2])
-            else
-                return ("%dL-%dL"):format(start_pos[2], end_pos[2])
-            end
-        else
-            if start_pos[2] == end_pos[2] and start_pos[3] == end_pos[3] then
-                return ("%dL:%dC"):format(start_pos[2], start_pos[3])
-            else
-                return ("%dL:%dC-%dL:%dC"):format(start_pos[2], start_pos[3], end_pos[2], end_pos[3])
-            end
-        end
+local function get_model(chat)
+    local connection = chat and chat.acp_connection
+    local models = connection and connection:get_models()
+    if models and models.currentModelId and models.currentModelId ~= "" then
+        return models.currentModelId
     end
+
+    local _, adapter = default_adapter()
+    ---@diagnostic disable-next-line: undefined-field
+    return adapter.model
+end
+
+local function get_mode(chat)
+    local connection = chat and chat.acp_connection
+    local option = connection and connection:_find_config_option "mode"
+    if option and option.currentValue then
+        return option.currentValue
+    end
+
+    local defaults = (chat and chat.adapter or default_adapter()).defaults
+    return defaults and defaults.session_config_options and defaults.session_config_options.mode
+end
+
+local function toggle_mode(chat)
+    local next_mode = get_mode(chat) == "plan" and "build" or "plan"
+
+    local connection = chat.acp_connection
+    local option = connection and connection:_find_config_option "mode"
+    if option then
+        connection:set_config_option(option.id, next_mode)
+    elseif chat.adapter.defaults and chat.adapter.defaults.session_config_options then
+        chat.adapter.defaults.session_config_options.mode = next_mode
+    end
+
+    return next_mode
+end
+
+local function make_footer(chat, mode)
+    return (get_model(chat) or "") .. " " .. (mode or get_mode(chat) or "")
 end
 
 local function get_location()
-    local mode = vim.fn.mode()
-    local is_visual = mode == "v" or mode == "V" or mode == "\22"
+    local is_visual = utils_info.is_visual()
 
     local source_bufnr = vim.api.nvim_get_current_buf()
     local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(source_bufnr), ":.")
 
-    local location
+    local location = ("@%s"):format(filename)
+
     if is_visual then
-        location = get_visual(mode)
-        location = ("@%s %s"):format(filename, location)
-    else
-        location = ("@%s"):format(filename)
+        local visual = utils_info.get_visual()
+        if not visual then
+            return location
+        end
+
+        if visual.mode == "V" then
+            if visual.start_line == visual.end_line then
+                location = ("%s %dL"):format(location, visual.start_line)
+            else
+                location = ("%s %dL-%dL"):format(location, visual.start_line, visual.end_line)
+            end
+        else
+            if visual.start_line == visual.end_line and visual.start_col == visual.end_col then
+                location = ("%s %dL:%dC"):format(location, visual.start_line, visual.start_col)
+            else
+                location = ("%s %dL:%dC-%dL:%dC"):format(
+                    location,
+                    visual.start_line,
+                    visual.start_col,
+                    visual.end_line,
+                    visual.end_col
+                )
+            end
+        end
     end
 
     return location
 end
 
+local overrides = {}
+
+local function float_send(opts)
+    local is_new = opts.new
+    local with_location = opts.with_location
+
+    local cc = require "codecompanion"
+    local prev_win = vim.api.nvim_get_current_win()
+
+    local chat
+    if is_new then
+        chat = cc.chat { hidden = true, context = {} }
+    else
+        chat = cc.last_chat()
+        if not chat then
+            chat = cc.chat { hidden = true, context = {} }
+            is_new = true
+        end
+    end
+    if not chat then
+        return
+    end
+
+    local location = ""
+    if with_location then
+        location = get_location()
+        chat:add_message {
+            role = "user",
+            content = location .. "\n",
+        }
+        chat:add_buf_message {
+            content = location .. "\n",
+        }
+    end
+
+    local title = ""
+    title = title .. "CodeCompanion"
+    if is_new then
+        title = title .. " (New)"
+    end
+    if with_location then
+        title = title .. " " .. location
+    end
+
+    local footer = make_footer(chat)
+
+    utils_win.float_input {
+        filetype = "codecompanion",
+        win = {
+            title = title,
+            footer = footer,
+            relative = "cursor",
+            row = 1,
+            col = 0,
+            border = "single",
+        },
+        on_create = function(data)
+            overrides[data.buf] = chat
+            vim.api.nvim_create_autocmd("BufWipeout", {
+                buffer = data.buf,
+                callback = function()
+                    overrides[data.buf] = nil
+                end,
+            })
+
+            vim.keymap.set({ "n", "i" }, "<C-CR>", data.submit, { buffer = data.buf, desc = "Submit" })
+            vim.keymap.set({ "n", "i" }, "<S-Tab>", function()
+                local mode = toggle_mode(chat)
+                if vim.api.nvim_win_is_valid(data.win) then
+                    vim.api.nvim_win_set_config(data.win, { title = title, footer = make_footer(chat, mode) })
+                end
+            end, { buffer = data.buf, desc = "Toggle mode" })
+        end,
+        on_submit = function(msg)
+            chat:add_message {
+                role = "user",
+                content = msg,
+            }
+            chat:add_buf_message {
+                content = msg,
+            }
+
+            chat:open()
+            chat:submit()
+
+            vim.api.nvim_set_current_win(prev_win)
+            vim.cmd.stopinsert()
+        end,
+    }
+end
+
 function M.config()
-    require("codecompanion").setup {
+    local group = vim.api.nvim_create_augroup("CodeCompanionStatus", {
+        clear = true,
+    })
+
+    local ns = vim.api.nvim_create_namespace "CodeCompanionStatus"
+    local marks = {}
+
+    local function clear_extmark(ev)
+        local status = marks[ev.data.bufnr]
+        if not status then
+            return
+        end
+
+        if vim.api.nvim_buf_is_valid(status.bufnr) then
+            pcall(vim.api.nvim_buf_del_extmark, status.bufnr, ns, status.mark)
+        end
+
+        marks[ev.data.bufnr] = nil
+    end
+
+    vim.api.nvim_create_autocmd("User", {
+        group = group,
+        pattern = "CodeCompanionChatSubmitted",
+        callback = function(ev)
+            local bufnr = ev.data.bufnr
+            if not bufnr or not vim.api.nvim_buf_is_valid(bufnr) then
+                return
+            end
+
+            clear_extmark(ev)
+            marks[bufnr] = {
+                bufnr = bufnr,
+                mark = vim.api.nvim_buf_set_extmark(bufnr, ns, vim.api.nvim_buf_line_count(bufnr) - 1, 0, {
+                    virt_text = { { " Sending request ...", "Comment" } },
+                    virt_text_pos = "eol",
+                }),
+            }
+        end,
+    })
+
+    vim.api.nvim_create_autocmd("User", {
+        group = group,
+        pattern = { "CodeCompanionRequestStreaming", "CodeCompanionRequestFinished", "CodeCompanionChatStopped" },
+        callback = clear_extmark,
+    })
+
+    local cc = require "codecompanion"
+    local orig_buf_get_chat = cc.buf_get_chat
+    cc.buf_get_chat = function(bufnr)
+        if bufnr == nil or bufnr == 0 then
+            bufnr = vim.api.nvim_get_current_buf()
+        end
+        return overrides[bufnr] or orig_buf_get_chat(bufnr)
+    end
+
+    cc.setup {
         opts = {
             log_level = "DEBUG",
             language = "Japanese",
+        },
+        adapters = {
+            acp = {
+                extend = {
+                    opencode = {
+                        defaults = {
+                            session_config_options = {
+                                mode = "plan",
+                            },
+                        },
+                    },
+                },
+            },
         },
         display = {
             diff = {
@@ -125,6 +268,7 @@ function M.config()
                         number = false,
                         relativenumber = false,
                         signcolumn = "no",
+                        foldcolumn = "0",
                     },
                 },
                 intro_message = "",
@@ -158,8 +302,16 @@ M.keys = {
         function()
             require("codecompanion").toggle()
         end,
-        mode = { "n", "v" },
+        mode = { "n", "x" },
         desc = "Code Companion Toggle",
+    },
+    {
+        "<C-S-j>",
+        function()
+            float_send {}
+        end,
+        mode = { "n", "x" },
+        desc = "Code Companion Float",
     },
     {
         "<Leader>jn",
@@ -218,30 +370,9 @@ M.keys = {
     {
         "<Leader>jj",
         function()
-            local cc = require "codecompanion"
-            local location = get_location()
-
-            input({
-                title = "CodeCompanion Float" .. " " .. location,
-                filetype = "codecompanion",
-                go_back = true,
-            }, function(msg)
-                local chat = cc.last_chat() or cc.chat { hidden = true, context = {} }
-                if not chat then
-                    return
-                end
-
-                chat:add_message {
-                    role = "user",
-                    content = location .. "\n" .. msg,
-                }
-                chat:add_buf_message {
-                    content = location .. "\n" .. msg,
-                }
-
-                chat:open()
-                chat:submit()
-            end)
+            float_send {
+                with_location = true,
+            }
         end,
         desc = "CodeCompanion Float",
         mode = { "n", "x" },
@@ -249,30 +380,10 @@ M.keys = {
     {
         "<Leader>jJ",
         function()
-            local cc = require "codecompanion"
-            local location = get_location()
-
-            input({
-                title = "CodeCompanion Float" .. " " .. location,
-                filetype = "codecompanion",
-                go_back = true,
-            }, function(msg)
-                local chat = cc.chat { hidden = true, context = {} }
-                if not chat then
-                    return
-                end
-
-                chat:add_message {
-                    role = "user",
-                    content = location .. "\n" .. msg,
-                }
-                chat:add_buf_message {
-                    content = location .. "\n" .. msg,
-                }
-
-                chat:open()
-                chat:submit()
-            end)
+            float_send {
+                with_location = true,
+                new = true,
+            }
         end,
         desc = "CodeCompanion Float New",
         mode = { "n", "x" },
