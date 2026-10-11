@@ -202,6 +202,15 @@ local function float_send(opts)
                     overrides[data.buf] = nil
                 end,
             })
+            local adapters = require "codecompanion.adapters"
+            local resolved = adapters.resolve(require("codecompanion.config").interactions.chat.adapter)
+            vim.api.nvim_exec_autocmds(
+                "User",
+                {
+                    pattern = "CodeCompanionChatAdapter",
+                    data = { bufnr = data.buf, adapter = adapters.make_safe(resolved) },
+                }
+            )
 
             vim.keymap.set({ "n", "i" }, "<C-CR>", data.submit, { buffer = data.buf, desc = "Submit" })
             vim.keymap.set({ "n", "i" }, "<S-Tab>", function()
@@ -542,7 +551,7 @@ M.keys = {
         "<Leader>jm",
         function()
             local cc = require "codecompanion"
-            local chat = cc.last_chat()
+            local chat = cc.buf_get_chat(vim.api.nvim_get_current_buf()) or cc.last_chat()
             if not chat then
                 vim.api.nvim_create_autocmd("User", {
                     once = true,
@@ -556,6 +565,7 @@ M.keys = {
                         end, 100)
                     end,
                 })
+                ---@diagnostic disable-next-line: cast-local-type
                 chat = cc.chat { context = {} }
                 return
             end
