@@ -16,7 +16,9 @@ sudo pacman --needed --noconfirm -S \
     github-cli \
     lazygit \
     git-delta \
-    7zip
+    7zip \
+    podman \
+    opencode
 
 # neovim
 sudo pacman --needed --noconfirm -S \
@@ -27,5 +29,4 @@ sudo pacman --needed --noconfirm -S \
     lldb \
     nodejs \
     npm \
-    rust \
-    opencode
+    rust

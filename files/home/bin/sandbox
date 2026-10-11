@@ -1,0 +1,4 @@
+#!/bin/sh
+set -eu
+
+exec unshare --user --map-root-user --mount --pid --fork --kill-child "$@"
