@@ -3,6 +3,10 @@ local M = {}
 local utils_win = require "utils.win"
 local utils_info = require "utils.info"
 
+local pending = setmetatable({}, { __mode = "k" })
+
+M.acp = require "plugins.config.codecompanion.acp"
+
 function M.default_adapter()
     local config = require("codecompanion.config").config
     local adapter = config.interactions.chat.adapter
@@ -23,6 +27,10 @@ function M.get_model(chat)
 end
 
 function M.get_mode(chat)
+    if chat and pending[chat] then
+        return pending[chat]
+    end
+
     local connection = chat and chat.acp_connection
     local option = connection and connection:_find_config_option "mode"
     if option and option.currentValue then
@@ -31,6 +39,11 @@ function M.get_mode(chat)
 
     local defaults = (chat and chat.adapter or M.default_adapter()).defaults
     return defaults and defaults.session_config_options and defaults.session_config_options.mode
+end
+
+function M.get_thought_level(chat)
+    local thought_level = M.acp.current(chat.bufnr, "thought_level")
+    return thought_level and thought_level.value
 end
 
 function M.get_meta(chat)
@@ -52,22 +65,32 @@ end
 
 function M.toggle_mode(chat)
     local next_mode = M.get_mode(chat) == "plan" and "build" or "plan"
+    pending[chat] = next_mode
+    return next_mode
+end
+
+function M.apply_mode(chat)
+    local mode = pending[chat]
+    if not mode then
+        return
+    end
+    pending[chat] = nil
 
     local connection = chat.acp_connection
     local option = connection and connection:_find_config_option "mode"
     if option then
-        connection:set_config_option(option.id, next_mode)
+        connection:set_config_option(option.id, mode)
     elseif chat.adapter.defaults and chat.adapter.defaults.session_config_options then
-        chat.adapter.defaults.session_config_options.mode = next_mode
+        chat.adapter.defaults.session_config_options.mode = mode
     end
-
-    return next_mode
 end
 
 local function make_footer(chat, mode)
     return (M.get_model(chat) or "")
         .. " "
         .. (mode or M.get_mode(chat) or "")
+        .. " "
+        .. (M.get_thought_level(chat) or "")
         .. " "
         .. (M.get_context_items(chat) or 0)
         .. " context items, "
@@ -207,6 +230,13 @@ local function float_send(opts)
 end
 
 function M.config()
+    local Chat = require "codecompanion.interactions.chat"
+    local orig_submit = Chat.submit
+    Chat.submit = function(self, ...)
+        M.apply_mode(self)
+        return orig_submit(self, ...)
+    end
+
     local group = vim.api.nvim_create_augroup("CodeCompanionStatus", {
         clear = true,
     })
@@ -357,7 +387,7 @@ function M.config()
                 },
                 tools = {
                     opts = {
-                        approval_mode = "manual",
+                        approval_mode = "ask",
                     },
                 },
             },
@@ -377,7 +407,7 @@ M.keys = {
         function()
             require("codecompanion").toggle()
         end,
-        mode = { "n", "x" },
+        mode = { "i", "n", "x" },
         desc = "Code Companion Toggle",
     },
     {
@@ -507,6 +537,31 @@ M.keys = {
             require("codecompanion").inline {}
         end,
         desc = "CodeCompanion Inline",
+    },
+    {
+        "<Leader>jm",
+        function()
+            local cc = require "codecompanion"
+            local chat = cc.last_chat()
+            if not chat then
+                vim.api.nvim_create_autocmd("User", {
+                    once = true,
+                    pattern = "CodeCompanionACPSessionPost",
+                    callback = function()
+                        if not chat then
+                            return
+                        end
+                        vim.defer_fn(function()
+                            M.acp.select_session_options(chat)
+                        end, 100)
+                    end,
+                })
+                chat = cc.chat { context = {} }
+                return
+            end
+            M.acp.select_session_options(chat)
+        end,
+        desc = "CodeCompanion ACP Session Options",
     },
 }
 

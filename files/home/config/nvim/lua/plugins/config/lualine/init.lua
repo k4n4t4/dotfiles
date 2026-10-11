@@ -67,6 +67,9 @@ local codecompanion_extension = {
             cc_component(function(cc, chat)
                 return cc.get_mode(chat) or ""
             end),
+            cc_component(function(cc, chat)
+                return cc.get_thought_level(chat) or ""
+            end),
         },
         lualine_c = {},
         lualine_x = {
