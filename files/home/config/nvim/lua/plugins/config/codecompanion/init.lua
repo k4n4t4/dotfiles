@@ -581,6 +581,7 @@ M.keys = {
                         end
                         vim.defer_fn(function()
                             M.acp.select_session_options(chat)
+                            vim.cmd.stopinsert()
                         end, 100)
                     end,
                 })
