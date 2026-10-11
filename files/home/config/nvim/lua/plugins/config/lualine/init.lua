@@ -46,6 +46,45 @@ local function visual_info()
     end
 end
 
+local function cc_component(fn)
+    return function()
+        local chat = require("codecompanion").buf_get_chat(vim.api.nvim_get_current_buf())
+        if not chat then
+            return ""
+        end
+        return fn(require "plugins.config.codecompanion", chat)
+    end
+end
+
+local codecompanion_extension = {
+    filetypes = { "codecompanion" },
+    sections = {
+        lualine_a = { "mode" },
+        lualine_b = {
+            cc_component(function(cc, chat)
+                return cc.get_model(chat) or ""
+            end),
+            cc_component(function(cc, chat)
+                return cc.get_mode(chat) or ""
+            end),
+        },
+        lualine_c = {},
+        lualine_x = {
+            cc_component(function(cc, chat)
+                return cc.get_context_items(chat) .. " context items"
+            end),
+            cc_component(function(cc, chat)
+                return cc.get_cycles(chat) .. " cycles"
+            end),
+            cc_component(function(cc, chat)
+                return cc.get_tokens(chat) .. " tokens"
+            end),
+        },
+        lualine_y = {},
+        lualine_z = { "location" },
+    },
+}
+
 function M.config()
     vim.opt.cmdheight = 0
     vim.opt.laststatus = 3
@@ -60,6 +99,18 @@ function M.config()
     })
     vim.api.nvim_create_autocmd({ "RecordingEnter", "RecordingLeave" }, {
         group = vim.api.nvim_create_augroup("LualineMacroRefresh", { clear = true }),
+        callback = function()
+            require("lualine").refresh()
+        end,
+    })
+    vim.api.nvim_create_autocmd("User", {
+        group = vim.api.nvim_create_augroup("LualineCodeCompanionRefresh", { clear = true }),
+        pattern = {
+            "CodeCompanionChatSubmitted",
+            "CodeCompanionRequestStreaming",
+            "CodeCompanionRequestFinished",
+            "CodeCompanionChatStopped",
+        },
         callback = function()
             require("lualine").refresh()
         end,
@@ -165,7 +216,7 @@ function M.config()
                 "location",
             },
         },
-        extensions = {},
+        extensions = { codecompanion_extension },
     }
 end
 

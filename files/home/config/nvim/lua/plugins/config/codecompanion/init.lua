@@ -352,7 +352,17 @@ M.keys = {
         function()
             float_send {}
         end,
-        mode = { "n", "i", "x" },
+        mode = { "n", "i" },
+        desc = "Code Companion Float",
+    },
+    {
+        "<C-j>",
+        function()
+            float_send {
+                with_location = true,
+            }
+        end,
+        mode = { "x" },
         desc = "Code Companion Float",
     },
     {
@@ -362,7 +372,18 @@ M.keys = {
                 new = true,
             }
         end,
-        mode = { "n", "i", "x" },
+        mode = { "n", "i" },
+        desc = "Code Companion Float",
+    },
+    {
+        "<C-S-j>",
+        function()
+            float_send {
+                with_location = true,
+                new = true,
+            }
+        end,
+        mode = { "x" },
         desc = "Code Companion Float",
     },
     {
