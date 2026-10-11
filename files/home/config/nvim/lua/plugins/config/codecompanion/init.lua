@@ -202,15 +202,23 @@ local function float_send(opts)
                     overrides[data.buf] = nil
                 end,
             })
+            vim.api.nvim_create_autocmd("User", {
+                pattern = { "CodeCompanionChatACPConfigChanged", "CodeCompanionChatModel" },
+                callback = function(ev)
+                    if not vim.api.nvim_win_is_valid(data.win) then
+                        return true
+                    end
+                    if ev.data and ev.data.bufnr == chat.bufnr then
+                        vim.api.nvim_win_set_config(data.win, { title = title, footer = make_footer(chat) })
+                    end
+                end,
+            })
             local adapters = require "codecompanion.adapters"
             local resolved = adapters.resolve(require("codecompanion.config").interactions.chat.adapter)
-            vim.api.nvim_exec_autocmds(
-                "User",
-                {
-                    pattern = "CodeCompanionChatAdapter",
-                    data = { bufnr = data.buf, adapter = adapters.make_safe(resolved) },
-                }
-            )
+            vim.api.nvim_exec_autocmds("User", {
+                pattern = "CodeCompanionChatAdapter",
+                data = { bufnr = data.buf, adapter = adapters.make_safe(resolved) },
+            })
 
             vim.keymap.set({ "n", "i" }, "<C-CR>", data.submit, { buffer = data.buf, desc = "Submit" })
             vim.keymap.set({ "n", "i" }, "<S-Tab>", function()
@@ -244,6 +252,17 @@ function M.config()
     Chat.submit = function(self, ...)
         M.apply_mode(self)
         return orig_submit(self, ...)
+    end
+    local defaults = require "codecompanion.interactions.chat.acp.defaults"
+    local orig_apply = defaults.apply
+    ---@diagnostic disable-next-line: duplicate-set-field
+    defaults.apply = function(adapter, connection)
+        local ret = orig_apply(adapter, connection)
+        local chat = connection.chat
+        if chat then
+            chat:update_metadata()
+        end
+        return ret
     end
 
     local group = vim.api.nvim_create_augroup("CodeCompanionStatus", {
