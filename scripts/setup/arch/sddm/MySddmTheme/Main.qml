@@ -353,6 +353,133 @@ Rectangle {
         }
     }
 
+    component PowerMenu: Rectangle {
+        id: pm
+
+        property alias open: dropdown.visible
+        property var actions: [
+            { name: "Shutdown",  can: sddm.canPowerOff,  run: function() { sddm.powerOff() } },
+            { name: "Reboot",    can: sddm.canReboot,    run: function() { sddm.reboot() } },
+            { name: "Suspend",   can: sddm.canSuspend,   run: function() { sddm.suspend() } },
+            { name: "Hibernate", can: sddm.canHibernate, run: function() { sddm.hibernate() } }
+        ]
+
+        function toggle() { open = !open }
+
+        width: theme.fieldHeight
+        height: theme.fieldHeight
+        radius: height / 2
+        color: theme.field
+        border.width: 1
+        border.color: pmMouse.containsMouse || open ? theme.hover : theme.border
+        z: open ? 300 : 100
+
+        Keys.onPressed: function(event) {
+            if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter || event.key === Qt.Key_Space) {
+                pm.toggle()
+                event.accepted = true
+            } else if (event.key === Qt.Key_Escape) {
+                pm.open = false
+                event.accepted = true
+            }
+        }
+
+        Canvas {
+            id: powerIcon
+            anchors.centerIn: parent
+            width: 18
+            height: 18
+            property color color: pmMouse.containsMouse || pm.open ? theme.text : theme.textDim
+
+            onColorChanged: requestPaint()
+
+            onPaint: {
+                var ctx = getContext("2d")
+                ctx.clearRect(0, 0, width, height)
+                ctx.strokeStyle = color
+                ctx.lineWidth = 2
+                ctx.lineCap = "round"
+
+                ctx.beginPath()
+                ctx.arc(width / 2, height / 2, 6.5, -Math.PI / 2 + 0.6, -Math.PI / 2 - 0.6 + Math.PI * 2)
+                ctx.stroke()
+
+                ctx.beginPath()
+                ctx.moveTo(width / 2, 1.5)
+                ctx.lineTo(width / 2, height / 2 - 1)
+                ctx.stroke()
+            }
+        }
+
+        MouseArea {
+            id: pmMouse
+            anchors.fill: parent
+            hoverEnabled: true
+            cursorShape: Qt.PointingHandCursor
+            onClicked: pm.toggle()
+        }
+
+        Rectangle {
+            id: dropdown
+
+            anchors { right: parent.right; top: parent.bottom; topMargin: 4 }
+            width: 160
+            height: list.count * theme.fieldHeight + 2
+            radius: theme.dropdownRadius
+            color: theme.dropdown
+            border.width: 1
+            border.color: theme.border
+            visible: false
+            clip: true
+
+            ListView {
+                id: list
+                anchors.fill: parent
+                anchors.margins: 1
+                interactive: false
+                model: pm.actions.filter(function(a) { return a.can })
+
+                delegate: Item {
+                    id: pitem
+                    width: list.width
+                    height: theme.fieldHeight
+
+                    readonly property bool first: index === 0
+                    readonly property bool last: index === list.count - 1
+                    readonly property int innerRadius: theme.dropdownRadius - 1
+
+                    Rectangle {
+                        anchors.fill: parent
+                        visible: pitemMouse.containsMouse
+                        color: theme.border
+                        topLeftRadius: pitem.first ? pitem.innerRadius : 0
+                        topRightRadius: pitem.first ? pitem.innerRadius : 0
+                        bottomLeftRadius: pitem.last ? pitem.innerRadius : 0
+                        bottomRightRadius: pitem.last ? pitem.innerRadius : 0
+                    }
+
+                    Text {
+                        anchors { left: parent.left; leftMargin: 17; verticalCenter: parent.verticalCenter }
+                        text: modelData.name
+                        color: theme.text
+                        font.pixelSize: theme.fontSize
+                    }
+
+                    MouseArea {
+                        id: pitemMouse
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: {
+                            pm.open = false
+                            modelData.run()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     TextConstants { id: textConstants }
 
     function login() {
@@ -362,6 +489,7 @@ Rectangle {
     function closeDropdowns() {
         sessionSelector.open = false
         keyboardSelector.open = false
+        powerMenu.open = false
     }
 
     Connections {
@@ -388,7 +516,7 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
         z: 250
-        enabled: sessionSelector.open || keyboardSelector.open
+        enabled: sessionSelector.open || keyboardSelector.open || powerMenu.open
         propagateComposedEvents: true
         onPressed: function(mouse) {
             root.closeDropdowns()
@@ -424,7 +552,7 @@ Rectangle {
 
         property date now: new Date()
 
-        anchors { right: parent.right; rightMargin: 20; verticalCenter: topBar.verticalCenter }
+        anchors { right: parent.right; rightMargin: 20 + theme.fieldHeight + 16; verticalCenter: topBar.verticalCenter }
         width: Math.max(timeText.width, dateText.width)
         height: timeText.height + dateText.height
 
@@ -451,6 +579,14 @@ Rectangle {
             color: theme.textDim
             font.pixelSize: 12
         }
+    }
+
+    PowerMenu {
+        id: powerMenu
+        anchors { right: parent.right; rightMargin: 20; verticalCenter: topBar.verticalCenter }
+
+        KeyNavigation.backtab: loginButton
+        KeyNavigation.tab: username
     }
 
     BlurPanel {
@@ -509,6 +645,7 @@ Rectangle {
                  : theme.accent
 
             KeyNavigation.backtab: keyboardSelector
+            KeyNavigation.tab: powerMenu
 
             Keys.onPressed: function(event) {
                 if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter || event.key === Qt.Key_Space) {
