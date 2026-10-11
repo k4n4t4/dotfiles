@@ -262,6 +262,20 @@ function M.config()
         return overrides[bufnr] or orig_buf_get_chat(bufnr)
     end
 
+    local opencode_sandbox_script = [[
+        cwd=$1; r=/mnt
+        mount -t tmpfs tmpfs $r
+        mkdir -p $r/usr $r/etc $r/proc $r/dev $r/tmp $r/.old
+        mount --rbind /usr $r/usr
+        mount --rbind /etc $r/etc
+        mount --rbind /dev $r/dev
+        mount -t proc proc $r/proc
+        ln -s usr/bin $r/bin; ln -s usr/lib $r/lib; ln -s usr/lib $r/lib64
+        for d in "$@"; do mkdir -p "$r$d"; mount --rbind "$d" "$r$d"; done
+        cd $r; pivot_root . .old; umount -l /.old; cd "$cwd"
+        exec opencode acp
+    ]]
+
     cc.setup {
         opts = {
             log_level = "DEBUG",
@@ -269,15 +283,34 @@ function M.config()
         },
         adapters = {
             acp = {
-                extend = {
-                    opencode = {
+                opencode = function()
+                    return require("codecompanion.adapters").extend("opencode", {
+                        commands = {
+                            default = {
+                                "unshare",
+                                "--user",
+                                "--map-root-user",
+                                "--mount",
+                                "--pid",
+                                "--fork",
+                                "--kill-child",
+                                "sh",
+                                "-c",
+                                opencode_sandbox_script,
+                                "sh",
+                                vim.fn.getcwd(),
+                                vim.env.HOME .. "/.local/share/opencode",
+                                vim.env.HOME .. "/.config/opencode",
+                                "/run/systemd/resolve",
+                            },
+                        },
                         defaults = {
                             session_config_options = {
                                 mode = "plan",
                             },
                         },
-                    },
-                },
+                    })
+                end,
             },
         },
         display = {
