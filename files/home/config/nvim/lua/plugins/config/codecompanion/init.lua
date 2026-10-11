@@ -33,6 +33,23 @@ local function get_mode(chat)
     return defaults and defaults.session_config_options and defaults.session_config_options.mode
 end
 
+local function get_meta(chat)
+    local all = _G.codecompanion_chat_metadata
+    return chat and all and all[chat.bufnr] or {}
+end
+
+local function get_context_items(chat)
+    return get_meta(chat).context_items or 0
+end
+
+local function get_cycles(chat)
+    return get_meta(chat).cycles or 0
+end
+
+local function get_tokens(chat)
+    return get_meta(chat).tokens or 0
+end
+
 local function toggle_mode(chat)
     local next_mode = get_mode(chat) == "plan" and "build" or "plan"
 
@@ -48,7 +65,16 @@ local function toggle_mode(chat)
 end
 
 local function make_footer(chat, mode)
-    return (get_model(chat) or "") .. " " .. (mode or get_mode(chat) or "")
+    return (get_model(chat) or "")
+        .. " "
+        .. (mode or get_mode(chat) or "")
+        .. " "
+        .. (get_context_items(chat) or 0)
+        .. " context items, "
+        .. (get_cycles(chat) or 0)
+        .. " cycles, "
+        .. (get_tokens(chat) or 0)
+        .. " tokens"
 end
 
 local function get_location()
@@ -156,9 +182,9 @@ local function float_send(opts)
 
             vim.keymap.set({ "n", "i" }, "<C-CR>", data.submit, { buffer = data.buf, desc = "Submit" })
             vim.keymap.set({ "n", "i" }, "<S-Tab>", function()
-                local mode = toggle_mode(chat)
+                local next_mode = toggle_mode(chat)
                 if vim.api.nvim_win_is_valid(data.win) then
-                    vim.api.nvim_win_set_config(data.win, { title = title, footer = make_footer(chat, mode) })
+                    vim.api.nvim_win_set_config(data.win, { title = title, footer = make_footer(chat, next_mode) })
                 end
             end, { buffer = data.buf, desc = "Toggle mode" })
         end,
@@ -324,19 +350,19 @@ M.keys = {
     {
         "<C-j>",
         function()
-            float_send {
-                new = true,
-            }
+            float_send {}
         end,
-        mode = { "n", "x" },
+        mode = { "n", "i", "x" },
         desc = "Code Companion Float",
     },
     {
         "<C-S-j>",
         function()
-            float_send {}
+            float_send {
+                new = true,
+            }
         end,
-        mode = { "n", "x" },
+        mode = { "n", "i", "x" },
         desc = "Code Companion Float",
     },
     {
