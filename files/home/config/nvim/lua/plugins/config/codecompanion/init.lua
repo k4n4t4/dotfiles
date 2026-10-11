@@ -276,6 +276,22 @@ function M.config()
         },
         interactions = {
             chat = {
+                keymaps = {
+                    send = {
+                        modes = { n = "<C-CR>", i = "<C-CR>" },
+                        index = 1,
+                        callback = "keymaps.send",
+                        description = "Send",
+                    },
+                    toggle_mode = {
+                        modes = { n = "<S-Tab>" },
+                        description = "Toggle plan/build",
+                        callback = function(chat)
+                            local mode = toggle_mode(chat)
+                            vim.notify("mode: " .. mode)
+                        end,
+                    },
+                },
                 adapter = {
                     name = "opencode",
                     model = "opencode/big-pickle",
@@ -298,12 +314,22 @@ end
 
 M.keys = {
     {
-        "<C-j>",
+        "<C-.>",
         function()
             require("codecompanion").toggle()
         end,
         mode = { "n", "x" },
         desc = "Code Companion Toggle",
+    },
+    {
+        "<C-j>",
+        function()
+            float_send {
+                new = true,
+            }
+        end,
+        mode = { "n", "x" },
+        desc = "Code Companion Float",
     },
     {
         "<C-S-j>",
