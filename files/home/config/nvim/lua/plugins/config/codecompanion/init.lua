@@ -138,9 +138,9 @@ local function get_location()
     return location
 end
 
-local overrides = {}
+M.overrides = {}
 
-local function float_send(opts)
+function M.float_send(opts)
     local is_new = opts.new
     local with_location = opts.with_location
 
@@ -195,11 +195,11 @@ local function float_send(opts)
             border = "single",
         },
         on_create = function(data)
-            overrides[data.buf] = chat
+            M.overrides[data.buf] = chat
             vim.api.nvim_create_autocmd("BufWipeout", {
                 buffer = data.buf,
                 callback = function()
-                    overrides[data.buf] = nil
+                    M.overrides[data.buf] = nil
                 end,
             })
             vim.api.nvim_create_autocmd("User", {
@@ -246,13 +246,17 @@ local function float_send(opts)
     }
 end
 
-function M.config()
+local function override_chat_submit()
     local Chat = require "codecompanion.interactions.chat"
     local orig_submit = Chat.submit
     Chat.submit = function(self, ...)
         M.apply_mode(self)
+
         return orig_submit(self, ...)
     end
+end
+
+local function override_chat_update_metadata()
     local defaults = require "codecompanion.interactions.chat.acp.defaults"
     local orig_apply = defaults.apply
     ---@diagnostic disable-next-line: duplicate-set-field
@@ -264,7 +268,93 @@ function M.config()
         end
         return ret
     end
+end
 
+local function override_acp_request_permission()
+    local rp = require "codecompanion.interactions.chat.acp.request_permission"
+    local orig_confirm = rp.confirm
+    ---@diagnostic disable-next-line: duplicate-set-field
+    rp.confirm = function(chat, request)
+        local function fallback(reason)
+            vim.notify("acp fallback: " .. reason)
+            return orig_confirm(chat, request)
+        end
+        local tc = request.tool_call or {}
+        local c = tc.content and tc.content[1]
+        if tc.kind ~= "edit" or not c or c.type ~= "diff" then
+            return fallback("kind=" .. tostring(tc.kind))
+        end
+
+        local path = (tc.locations and tc.locations[1] and tc.locations[1].path)
+            or vim.fs.joinpath(vim.fn.getcwd(), c.path)
+        local bufnr = vim.fn.bufadd(path)
+        vim.fn.bufload(bufnr)
+        if vim.bo[bufnr].modified then
+            return fallback("buffer modified: " .. path)
+        end
+        local allow, reject
+        for _, o in ipairs(request.options or {}) do
+            if o.kind == "allow_once" then
+                allow = o.optionId
+            elseif o.kind == "reject_once" then
+                reject = o.optionId
+            end
+        end
+        if not (allow and reject) then
+            return fallback "no allow/reject option"
+        end
+        local win = vim.fn.bufwinid(bufnr)
+        if win == -1 then
+            vim.cmd("sbuffer " .. bufnr)
+        else
+            vim.api.nvim_set_current_win(win)
+        end
+
+        local orig = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+        local new = vim.split(c.newText or "", "\n", { plain = true })
+        local from = vim.deepcopy(orig)
+        local to = vim.deepcopy(new)
+        if #orig == 1 and orig[1] == "" then
+            from = { "" }
+            vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { "", "" })
+        end
+        if new[#new] == "" then
+            table.remove(to)
+        end
+
+        require("codecompanion.helpers").show_diff {
+            bufnr = bufnr,
+            inline = true,
+            from_lines = from,
+            to_lines = to,
+            ft = vim.bo[bufnr].filetype,
+            diff_id = math.random(1000000),
+            chat_bufnr = chat.bufnr,
+            keymaps = {
+                on_accept = function()
+                    request.respond(allow, false)
+                    vim.schedule(function()
+                        vim.bo[bufnr].modified = false
+                    end)
+                    vim.defer_fn(function()
+                        vim.api.nvim_buf_call(bufnr, function()
+                            vim.cmd "silent! edit!"
+                        end)
+                    end, 300)
+                end,
+                on_reject = function()
+                    request.respond(reject, false)
+                    vim.schedule(function()
+                        vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, orig)
+                        vim.bo[bufnr].modified = false
+                    end)
+                end,
+            },
+        }
+    end
+end
+
+local function show_status_mark()
     local group = vim.api.nvim_create_augroup("CodeCompanionStatus", {
         clear = true,
     })
@@ -310,31 +400,27 @@ function M.config()
         pattern = { "CodeCompanionRequestStreaming", "CodeCompanionRequestFinished", "CodeCompanionChatStopped" },
         callback = clear_extmark,
     })
+end
 
+local function override_buf_get_chat()
     local cc = require "codecompanion"
     local orig_buf_get_chat = cc.buf_get_chat
     cc.buf_get_chat = function(bufnr)
         if bufnr == nil or bufnr == 0 then
             bufnr = vim.api.nvim_get_current_buf()
         end
-        return overrides[bufnr] or orig_buf_get_chat(bufnr)
+        return M.overrides[bufnr] or orig_buf_get_chat(bufnr)
     end
+end
 
-    local opencode_sandbox_script = [[
-        cwd=$1; r=/mnt
-        mount -t tmpfs tmpfs $r
-        mkdir -p $r/usr $r/etc $r/proc $r/dev $r/tmp $r/.old
-        mount --rbind /usr $r/usr
-        mount --rbind /etc $r/etc
-        mount --rbind /dev $r/dev
-        mount -t proc proc $r/proc
-        ln -s usr/bin $r/bin; ln -s usr/lib $r/lib; ln -s usr/lib $r/lib64
-        for d in "$@"; do mkdir -p "$r$d"; mount --rbind "$d" "$r$d"; done
-        cd $r; pivot_root . .old; umount -l /.old; cd "$cwd"
-        exec opencode acp
-    ]]
+function M.config()
+    override_chat_submit()
+    override_chat_update_metadata()
+    override_acp_request_permission()
+    show_status_mark()
+    override_buf_get_chat()
 
-    cc.setup {
+    require("codecompanion").setup {
         opts = {
             log_level = "DEBUG",
             language = "Japanese",
@@ -354,7 +440,19 @@ function M.config()
                                 "--kill-child",
                                 "sh",
                                 "-c",
-                                opencode_sandbox_script,
+                                [[
+                                    cwd=$1; r=/mnt
+                                    mount -t tmpfs tmpfs $r
+                                    mkdir -p $r/usr $r/etc $r/proc $r/dev $r/tmp $r/.old
+                                    mount --rbind /usr $r/usr
+                                    mount --rbind /etc $r/etc
+                                    mount --rbind /dev $r/dev
+                                    mount -t proc proc $r/proc
+                                    ln -s usr/bin $r/bin; ln -s usr/lib $r/lib; ln -s usr/lib $r/lib64
+                                    for d in "$@"; do mkdir -p "$r$d"; mount --rbind "$d" "$r$d"; done
+                                    cd $r; pivot_root . .old; umount -l /.old; cd "$cwd"
+                                    exec opencode acp
+                                ]],
                                 "sh",
                                 vim.fn.getcwd(),
                                 vim.env.HOME .. "/.local/share/opencode",
@@ -441,7 +539,7 @@ M.keys = {
     {
         "<C-j>",
         function()
-            float_send {}
+            M.float_send {}
         end,
         mode = { "n", "i" },
         desc = "Code Companion Float",
@@ -449,7 +547,7 @@ M.keys = {
     {
         "<C-j>",
         function()
-            float_send {
+            M.float_send {
                 with_location = true,
             }
         end,
@@ -459,7 +557,7 @@ M.keys = {
     {
         "<C-S-j>",
         function()
-            float_send {
+            M.float_send {
                 new = true,
             }
         end,
@@ -469,7 +567,7 @@ M.keys = {
     {
         "<C-S-j>",
         function()
-            float_send {
+            M.float_send {
                 with_location = true,
                 new = true,
             }
@@ -534,7 +632,7 @@ M.keys = {
     {
         "<Leader>jj",
         function()
-            float_send {
+            M.float_send {
                 with_location = true,
             }
         end,
@@ -544,7 +642,7 @@ M.keys = {
     {
         "<Leader>jJ",
         function()
-            float_send {
+            M.float_send {
                 with_location = true,
                 new = true,
             }
