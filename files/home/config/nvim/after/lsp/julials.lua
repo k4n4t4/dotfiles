@@ -1,6 +1,7 @@
 return {
     cmd = {
         "julia",
+        "--project=@.",
         "--startup-file=no",
         "--history-file=no",
         "-e",
