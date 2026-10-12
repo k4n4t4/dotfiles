@@ -5,7 +5,7 @@ M.commands = {
         return "python " .. file .. (args ~= "" and " " .. args or "")
     end,
     ["julia"] = function(file, args)
-        return "julia " .. file .. (args ~= "" and " " .. args or "")
+        return "julia --project=@. " .. file .. (args ~= "" and " " .. args or "")
     end,
     ["lua"] = function(file, args)
         return "lua " .. file .. (args ~= "" and " " .. args or "")
