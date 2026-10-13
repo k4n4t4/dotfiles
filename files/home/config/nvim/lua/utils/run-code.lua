@@ -7,6 +7,9 @@ M.commands = {
     ["julia"] = function(file, args)
         return "julia --project=@. " .. file .. (args ~= "" and " " .. args or "")
     end,
+    ["lean"] = function(file, args)
+        return "lean --run " .. file .. (args ~= "" and " " .. args or "")
+    end,
     ["lua"] = function(file, args)
         return "lua " .. file .. (args ~= "" and " " .. args or "")
     end,
@@ -149,6 +152,16 @@ M.project_markers = {
         files = { "Makefile" },
         cmd = function(root, args)
             return "cd " .. vim.fn.shellescape(root) .. " && make" .. (args ~= "" and " " .. args or "")
+        end,
+    },
+    {
+        files = { "lakefile.lean", "lakefile.toml" },
+        cmd = function(root, args)
+            return "cd "
+                .. vim.fn.shellescape(root)
+                .. " && lake env lean --run "
+                .. vim.fn.shellescape(vim.api.nvim_buf_get_name(0))
+                .. (args ~= "" and " " .. args or "")
         end,
     },
 }
