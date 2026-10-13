@@ -120,9 +120,11 @@ return {
         "Julian/lean.nvim",
         ft = "lean",
         event = { "BufReadPre *.lean", "BufNewFile *.lean" },
-        opts = {
-            mappings = true,
-        },
+        config = function()
+            vim.g.lean_config = {
+                mappings = true,
+            }
+        end,
     },
 
     -- LINTER
