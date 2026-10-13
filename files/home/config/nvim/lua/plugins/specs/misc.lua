@@ -116,6 +116,14 @@ return {
         "mfussenegger/nvim-jdtls",
         ft = "java",
     },
+    { -- lean
+        "Julian/lean.nvim",
+        ft = "lean",
+        event = { "BufReadPre *.lean", "BufNewFile *.lean" },
+        opts = {
+            mappings = true,
+        },
+    },
 
     -- LINTER
     {
