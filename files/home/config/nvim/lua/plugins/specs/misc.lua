@@ -157,6 +157,7 @@ return {
             local conform = require "conform"
             local skip_formatting = {
                 julia = true,
+                jsp = true,
             }
             conform.setup {
                 formatters_by_ft = {
