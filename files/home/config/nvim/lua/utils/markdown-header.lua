@@ -1,9 +1,13 @@
 local M = {}
 
 local defaults = {
-    debounce_ms = 0,
-    render_delay_ms = 0,
+    -- Wait for Neovim to finish its normal TUI redraw before painting OSC 66.
+    debounce_ms = 25,
+    render_delay_ms = 12,
     sizes = { 2, 1.5, 1.17, 1, 0.83, 0.67 },
+    -- Pad the OSC 66 text with same-size spaces to extend its background
+    -- to the right edge of the window. Set false to draw only the title.
+    fill_to_edge = true,
     foregrounds = {
         'RenderMarkdownH1',
         'RenderMarkdownH2',
@@ -13,6 +17,12 @@ local defaults = {
         'RenderMarkdownH6',
     },
     backgrounds = {
+        'RenderMarkdownH1Bg',
+        'RenderMarkdownH2Bg',
+        'RenderMarkdownH3Bg',
+        'RenderMarkdownH4Bg',
+        'RenderMarkdownH5Bg',
+        'RenderMarkdownH6Bg',
     },
     conceallevel = 2,
     require_kitty_env = true,
@@ -201,14 +211,18 @@ local function color_code(value, foreground)
     return ('%d;2;%d;%d;%d'):format(foreground and 38 or 48, r, g, b)
 end
 
+local function highlight_for(name)
+    return name and vim.api.nvim_get_hl(0, { name = name, link = false }) or {}
+end
+
 local function sgr_for(level)
-    local fg_name = opts.foregrounds[level]
-    local bg_name = opts.backgrounds[level]
-    local fg = fg_name and vim.api.nvim_get_hl(0, { name = fg_name, link = false }) or {}
-    local bg = bg_name and vim.api.nvim_get_hl(0, { name = bg_name, link = false }) or {}
+    local fg = highlight_for(opts.foregrounds[level])
+    local bg = highlight_for(opts.backgrounds[level])
     local codes = { '0' }
     local fc = color_code(fg.fg, true)
-    local bc = color_code(bg.bg, false)
+    -- If the foreground group also defines a background, use it unless an
+    -- explicit background group overrides it.
+    local bc = color_code(bg.bg or fg.bg, false)
     if fc then codes[#codes + 1] = fc end
     if bc then codes[#codes + 1] = bc end
     if fg.bold then codes[#codes + 1] = '1' end
@@ -216,6 +230,18 @@ local function sgr_for(level)
     if fg.underline then codes[#codes + 1] = '4' end
     if fg.strikethrough then codes[#codes + 1] = '9' end
     return '\27[' .. table.concat(codes, ';') .. 'm'
+end
+
+local function background_sgr_for(level)
+    local bg = highlight_for(opts.backgrounds[level])
+    if not bg.bg then
+        bg = highlight_for(opts.foregrounds[level])
+    end
+    local bc = color_code(bg.bg, false)
+    if not bc then
+        return nil
+    end
+    return '\27[0;' .. bc .. 'm'
 end
 
 local function truncate_cells(text, max_cells)
@@ -306,9 +332,30 @@ local function render_overlays(visible, current_win, current_buf)
                     and pos.row + height - 1 <= bottom_edge
                 then
                     local available = right_edge - pos.col + 1
-                    local max_cells = height > 1 and math.floor(available / height) or available
+                    -- OSC 66 text at scale `s` occupies `s` terminal columns
+                    -- per ordinary text cell. Keep the padding in the same OSC
+                    -- 66 sequence so the empty area uses the heading's size too.
+                    local cell_span = math.max(1, height)
+                    local max_cells = math.floor(available / cell_span)
                     local title = truncate_cells(heading.title, max_cells)
                     if title ~= '' then
+                        if opts.fill_to_edge then
+                            -- Paint an exact-width background rectangle first.
+                            -- This also covers the last 1..(s-1) columns that
+                            -- cannot be represented by another whole scaled cell.
+                            local bg_sgr = background_sgr_for(heading.level)
+                            if bg_sgr then
+                                for row = pos.row, pos.row + height - 1 do
+                                    parts[#parts + 1] = ('\27[%d;%dH'):format(row, pos.col)
+                                    parts[#parts + 1] = bg_sgr
+                                    parts[#parts + 1] = string.rep(' ', available)
+                                end
+                            end
+
+                            local title_cells = vim.fn.strdisplaywidth(title)
+                            local padding = math.max(0, max_cells - title_cells)
+                            title = title .. string.rep(' ', padding)
+                        end
                         parts[#parts + 1] = ('\27[%d;%dH'):format(pos.row, pos.col)
                         parts[#parts + 1] = sgr_for(heading.level)
                         parts[#parts + 1] = ('\27]66;%s;%s\7'):format(metadata(size), title)
@@ -389,12 +436,17 @@ local function refresh()
         end
     end
 
+    -- Force Neovim to repaint its own grid first. OSC 66 writes directly to
+    -- Kitty and is not part of Neovim's grid, so painting in this same callback
+    -- can race with a pending TUI flush and leave missing/duplicated headings.
     vim.cmd('redraw!')
 
     if render_timer then
         render_timer:stop()
     end
 
+    -- Even when no Markdown window remains, the full redraw above clears the
+    -- previous raw-TTY overlay. Do not leave old headings on screen.
     if #visible == 0 then
         return
     end
@@ -420,6 +472,8 @@ end
 
 local function install_redraw_listener()
     key_ns = key_ns or vim.api.nvim_create_namespace('kitty-markdown-headings-keys')
+    -- Do not replace <C-l> mappings. Listen for the physical key instead, then
+    -- repaint after Neovim's normal redraw and any existing mapping have run.
     vim.on_key(function(key, typed)
         if key == '\12' or typed == '\12' then
             vim.schedule(schedule)
