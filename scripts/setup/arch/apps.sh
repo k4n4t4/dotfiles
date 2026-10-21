@@ -7,6 +7,7 @@ sudo pacman --needed --noconfirm -S \
     thunderbird \
     gimp \
     discord \
+    zettlr \
     obsidian
 
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-"$HOME/.config"}"
