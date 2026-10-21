@@ -5,8 +5,7 @@ local defaults = {
     debounce_ms = 25,
     render_delay_ms = 12,
     sizes = { 2, 1.5, 1.17, 1, 0.83, 0.67 },
-    -- Pad the OSC 66 text with same-size spaces to extend its background
-    -- to the right edge of the window. Set false to draw only the title.
+    file_types = { 'markdown' },
     fill_to_edge = true,
     foregrounds = {
         'RenderMarkdownH1',
@@ -36,6 +35,13 @@ local key_ns
 local opts = vim.deepcopy(defaults)
 local cache = {}
 local last_mark_state = {}
+
+local function supports_filetype(buf)
+    if not vim.api.nvim_buf_is_valid(buf) then
+        return false
+    end
+    return vim.tbl_contains(opts.file_types or {}, vim.bo[buf].filetype)
+end
 
 local function is_kitty()
     if not opts.require_kitty_env then
@@ -188,13 +194,14 @@ local function extra_rows(size)
     return math.max(0, (size.s or 1) - 1)
 end
 
-local function metadata(size)
+local function metadata(size, width)
     local bits = {}
     if size.s then bits[#bits + 1] = ('s=%d'):format(size.s) end
     if size.n then bits[#bits + 1] = ('n=%d'):format(size.n) end
     if size.d then bits[#bits + 1] = ('d=%d'):format(size.d) end
     if size.v then bits[#bits + 1] = ('v=%d'):format(size.v) end
     if size.h then bits[#bits + 1] = ('h=%d'):format(size.h) end
+    if width then bits[#bits + 1] = ('w=%d'):format(width) end
     if #bits == 0 then
         return 's=1'
     end
@@ -271,6 +278,74 @@ local function truncate_cells(text, max_cells)
     return table.concat(out)
 end
 
+-- OSC 66 normally gives each character an s-cell-wide block. For fractional
+-- sizes this leaves visible gaps between characters (e.g. 1.5x text in 2-cell
+-- blocks). Use `w` and send chunks whose target width matches their fractional
+-- scale. `w` is limited to 7 by the Kitty protocol.
+local function split_sized_text(text, size)
+    local numerator = size.n or 1
+    local denominator = size.d or 1
+    local max_text_width = math.max(1, math.floor(7 * denominator / numerator))
+    local chars = {}
+
+    for i = 0, vim.fn.strchars(text) - 1 do
+        local ch = vim.fn.strcharpart(text, i, 1)
+        local width = vim.fn.strdisplaywidth(ch)
+        if width == 0 and #chars > 0 then
+            chars[#chars].text = chars[#chars].text .. ch
+        else
+            chars[#chars + 1] = { text = ch, width = width }
+        end
+    end
+
+    local chunks = {}
+    local first = 1
+    while first <= #chars do
+        local width = 0
+        local best_end, best_width
+        local j = first
+
+        while j <= #chars and width + chars[j].width <= max_text_width do
+            width = width + chars[j].width
+            if (width * numerator) % denominator == 0 then
+                best_end, best_width = j, width
+            end
+            j = j + 1
+        end
+
+        local last
+        if j > #chars then
+            -- Keep a short final fragment together; any rounding gap is only
+            -- at the end of the heading, not between its characters.
+            last, best_width = #chars, width
+        elseif best_end then
+            last = best_end
+        else
+            -- Some wide Unicode characters cannot form an exact fractional
+            -- width on their own. Keep them with nearby text where possible.
+            last = math.max(first, j - 1)
+            best_width = 0
+            for k = first, last do
+                best_width = best_width + chars[k].width
+            end
+        end
+
+        local piece = {}
+        for k = first, last do
+            piece[#piece + 1] = chars[k].text
+        end
+        local cells = math.max(1, math.ceil(best_width * numerator / denominator))
+        chunks[#chunks + 1] = {
+            text = table.concat(piece),
+            width = cells,
+            columns = (size.s or 1) * cells,
+        }
+        first = last + 1
+    end
+
+    return chunks
+end
+
 local function visible_width(win)
     local info = vim.fn.getwininfo(win)[1]
     if not info then
@@ -332,17 +407,21 @@ local function render_overlays(visible, current_win, current_buf)
                     and pos.row + height - 1 <= bottom_edge
                 then
                     local available = right_edge - pos.col + 1
-                    -- OSC 66 text at scale `s` occupies `s` terminal columns
-                    -- per ordinary text cell. Keep the padding in the same OSC
-                    -- 66 sequence so the empty area uses the heading's size too.
-                    local cell_span = math.max(1, height)
-                    local max_cells = math.floor(available / cell_span)
+                    -- A fractional scale (for example s=2, n=3, d=4) still
+                    -- occupies s*w terminal columns. Calculate how much source
+                    -- text can fit in whole w units, conservatively accounting
+                    -- for the per-chunk rounding used below.
+                    local scale_n = size.n or 1
+                    local scale_d = size.d or 1
+                    local width_units = math.floor(available / math.max(1, height))
+                    local max_cells = math.floor(width_units * scale_d / scale_n)
                     local title = truncate_cells(heading.title, max_cells)
                     if title ~= '' then
                         if opts.fill_to_edge then
-                            -- Paint an exact-width background rectangle first.
-                            -- This also covers the last 1..(s-1) columns that
-                            -- cannot be represented by another whole scaled cell.
+                            -- Fill the heading's full background independently
+                            -- of glyph placement; fractional chunks must not be
+                            -- padded with ordinary characters, or they acquire
+                            -- incorrect spacing again.
                             local bg_sgr = background_sgr_for(heading.level)
                             if bg_sgr then
                                 for row = pos.row, pos.row + height - 1 do
@@ -351,14 +430,29 @@ local function render_overlays(visible, current_win, current_buf)
                                     parts[#parts + 1] = string.rep(' ', available)
                                 end
                             end
-
-                            local title_cells = vim.fn.strdisplaywidth(title)
-                            local padding = math.max(0, max_cells - title_cells)
-                            title = title .. string.rep(' ', padding)
                         end
-                        parts[#parts + 1] = ('\27[%d;%dH'):format(pos.row, pos.col)
-                        parts[#parts + 1] = sgr_for(heading.level)
-                        parts[#parts + 1] = ('\27]66;%s;%s\7'):format(metadata(size), title)
+
+                        if size.n and size.d then
+                            -- The fractional font scale is narrower than its
+                            -- integer `s` cell block. Explicit `w` values keep
+                            -- glyphs adjacent instead of leaving a gap per
+                            -- character. Integer scales retain the original
+                            -- single OSC 66 sequence.
+                            local col = pos.col
+                            for _, chunk in ipairs(split_sized_text(title, size)) do
+                                if col + chunk.columns - 1 > right_edge then
+                                    break
+                                end
+                                parts[#parts + 1] = ('\27[%d;%dH'):format(pos.row, col)
+                                parts[#parts + 1] = sgr_for(heading.level)
+                                parts[#parts + 1] = ('\27]66;%s;%s\7'):format(metadata(size, chunk.width), chunk.text)
+                                col = col + chunk.columns
+                            end
+                        else
+                            parts[#parts + 1] = ('\27[%d;%dH'):format(pos.row, pos.col)
+                            parts[#parts + 1] = sgr_for(heading.level)
+                            parts[#parts + 1] = ('\27]66;%s;%s\7'):format(metadata(size), title)
+                        end
                     end
                 end
             end
@@ -376,12 +470,12 @@ local function render_overlays(visible, current_win, current_buf)
     vim.api.nvim_ui_send(table.concat(parts))
 end
 
-local function visible_markdown_windows()
+local function visible_supported_windows()
     local visible = {}
     for _, win in ipairs(vim.api.nvim_list_wins()) do
         if vim.api.nvim_win_is_valid(win) then
             local buf = vim.api.nvim_win_get_buf(win)
-            if vim.bo[buf].filetype == 'markdown' then
+            if supports_filetype(buf) then
                 visible[#visible + 1] = {
                     win = win,
                     buf = buf,
@@ -399,7 +493,7 @@ local function draw_latest()
     end
     local current_win = vim.api.nvim_get_current_win()
     local current_buf = vim.api.nvim_win_get_buf(current_win)
-    local visible = visible_markdown_windows()
+    local visible = visible_supported_windows()
     if #visible > 0 then
         render_overlays(visible, current_win, current_buf)
     end
@@ -418,7 +512,7 @@ local function refresh()
     for _, win in ipairs(vim.api.nvim_list_wins()) do
         if vim.api.nvim_win_is_valid(win) then
             local buf = vim.api.nvim_win_get_buf(win)
-            if vim.bo[buf].filetype == 'markdown' then
+            if supports_filetype(buf) then
                 if vim.wo[win].conceallevel < opts.conceallevel then
                     vim.wo[win].conceallevel = opts.conceallevel
                 end
