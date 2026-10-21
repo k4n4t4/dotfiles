@@ -64,3 +64,7 @@ fi
 if cmd_exists noctalia; then
     dotconf "noctalia" -rct
 fi
+
+if cmd_exists zettlr; then
+    dotconf "zettlr" "Zettlr" -rct
+fi
