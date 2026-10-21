@@ -18,6 +18,7 @@ return {
             image = {
                 enabled = true,
                 math = {
+                    enabled = true,
                     latex = {
                         font_size = "normalsize",
                     },
@@ -283,6 +284,15 @@ return {
                     Snacks.picker.git_status()
                 end,
                 desc = "Git Status",
+            },
+
+            -- image
+            {
+                "<leader>if",
+                function()
+                    Snacks.image.hover()
+                end,
+                desc = "Image Hover",
             },
 
             -- words
