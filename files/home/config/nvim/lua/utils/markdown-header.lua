@@ -2,6 +2,7 @@ local M = {}
 
 local defaults = {
     debounce_ms = 0,
+    render_delay_ms = 0,
     sizes = { 2, 1.5, 1.17, 1, 0.83, 0.67 },
     foregrounds = {
         'RenderMarkdownH1',
@@ -20,6 +21,8 @@ local defaults = {
 local ns
 local group
 local timer
+local render_timer
+local key_ns
 local opts = vim.deepcopy(defaults)
 local cache = {}
 local last_mark_state = {}
@@ -326,6 +329,35 @@ local function render_overlays(visible, current_win, current_buf)
     vim.api.nvim_ui_send(table.concat(parts))
 end
 
+local function visible_markdown_windows()
+    local visible = {}
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+        if vim.api.nvim_win_is_valid(win) then
+            local buf = vim.api.nvim_win_get_buf(win)
+            if vim.bo[buf].filetype == 'markdown' then
+                visible[#visible + 1] = {
+                    win = win,
+                    buf = buf,
+                    headings = read_headings(buf),
+                }
+            end
+        end
+    end
+    return visible
+end
+
+local function draw_latest()
+    if not vim.api.nvim_ui_send or not is_kitty() then
+        return
+    end
+    local current_win = vim.api.nvim_get_current_win()
+    local current_buf = vim.api.nvim_win_get_buf(current_win)
+    local visible = visible_markdown_windows()
+    if #visible > 0 then
+        render_overlays(visible, current_win, current_buf)
+    end
+end
+
 local function refresh()
     if not vim.api.nvim_ui_send or not is_kitty() then
         return
@@ -337,39 +369,62 @@ local function refresh()
     local visible = {}
 
     for _, win in ipairs(vim.api.nvim_list_wins()) do
-        local buf = vim.api.nvim_win_get_buf(win)
-        if vim.bo[buf].filetype == 'markdown' then
-            if vim.wo[win].conceallevel < opts.conceallevel then
-                vim.wo[win].conceallevel = opts.conceallevel
-            end
-            local active_row = buf == current_buf and cursor_row or nil
-            local tick = vim.api.nvim_buf_get_changedtick(buf)
-            local state = last_mark_state[buf]
-            if not state or state.tick ~= tick or state.cursor_row ~= active_row then
+        if vim.api.nvim_win_is_valid(win) then
+            local buf = vim.api.nvim_win_get_buf(win)
+            if vim.bo[buf].filetype == 'markdown' then
+                if vim.wo[win].conceallevel < opts.conceallevel then
+                    vim.wo[win].conceallevel = opts.conceallevel
+                end
+                local active_row = buf == current_buf and cursor_row or nil
+                local tick = vim.api.nvim_buf_get_changedtick(buf)
+                local state = last_mark_state[buf]
+                if not state or state.tick ~= tick or state.cursor_row ~= active_row then
+                    local headings = read_headings(buf)
+                    add_markers(buf, headings, active_row)
+                    last_mark_state[buf] = { tick = tick, cursor_row = active_row }
+                end
                 local headings = read_headings(buf)
-                add_markers(buf, headings, active_row)
-                last_mark_state[buf] = { tick = tick, cursor_row = active_row }
+                visible[#visible + 1] = { win = win, buf = buf, headings = headings }
             end
-            local headings = read_headings(buf)
-            visible[#visible + 1] = { win = win, buf = buf, headings = headings }
         end
+    end
+
+    vim.cmd('redraw!')
+
+    if render_timer then
+        render_timer:stop()
     end
 
     if #visible == 0 then
         return
     end
 
-    vim.cmd('redraw!')
-    render_overlays(visible, current_win, current_buf)
+    if render_timer then
+        render_timer:start(opts.render_delay_ms, 0, vim.schedule_wrap(draw_latest))
+    else
+        vim.defer_fn(draw_latest, opts.render_delay_ms)
+    end
 end
 
 local function schedule()
+    if render_timer then
+        render_timer:stop()
+    end
     if not timer then
         refresh()
         return
     end
     timer:stop()
     timer:start(opts.debounce_ms, 0, vim.schedule_wrap(refresh))
+end
+
+local function install_redraw_listener()
+    key_ns = key_ns or vim.api.nvim_create_namespace('kitty-markdown-headings-keys')
+    vim.on_key(function(key, typed)
+        if key == '\12' or typed == '\12' then
+            vim.schedule(schedule)
+        end
+    end, key_ns)
 end
 
 function M.setup(user_opts)
@@ -382,6 +437,14 @@ function M.setup(user_opts)
     end
     timer = vim.uv.new_timer()
 
+    if render_timer then
+        render_timer:stop()
+        render_timer:close()
+    end
+    render_timer = vim.uv.new_timer()
+
+    install_redraw_listener()
+
     vim.api.nvim_create_autocmd({
         'BufEnter',
         'BufWinEnter',
@@ -393,7 +456,11 @@ function M.setup(user_opts)
         'ModeChanged',
         'WinEnter',
         'WinScrolled',
+        'WinResized',
         'VimResized',
+        'TabEnter',
+        'TabLeave',
+        'WinClosed',
         'ColorScheme',
     }, {
         group = group,
