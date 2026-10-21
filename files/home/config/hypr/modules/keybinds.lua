@@ -17,14 +17,14 @@ hl.bind(MOD .. " + Q", hl.dsp.window.close(), { description = "Close window" })
 hl.bind(MOD .. " + ALT + Q", hl.dsp.window.kill(), { description = "Kill window" })
 hl.bind(MOD .. " + F", hl.dsp.window.float(), { description = "Toggle window floating" })
 hl.bind(MOD .. " + C", function()
-	local window = hl.get_active_window()
-	if not window then
-		return
-	end
+    local window = hl.get_active_window()
+    if not window then
+        return
+    end
 
-	if window.floating then
-		hl.dispatch(hl.dsp.window.center())
-	end
+    if window.floating then
+        hl.dispatch(hl.dsp.window.center())
+    end
 end, { description = "Center window" })
 hl.bind(MOD .. " + M", hl.dsp.window.fullscreen(), { description = "Toggle window fullscreen" })
 hl.bind("F11", hl.dsp.window.fullscreen(), { description = "Toggle window fullscreen" })
@@ -36,80 +36,80 @@ hl.bind(MOD .. " + L", hl.dsp.focus({ direction = "r" }), { description = "Focus
 hl.bind(MOD .. " + K", hl.dsp.focus({ direction = "u" }), { description = "Focus window up" })
 hl.bind(MOD .. " + J", hl.dsp.focus({ direction = "d" }), { description = "Focus window down" })
 hl.bind(MOD .. " + TAB", function()
-	hl.dispatch(hl.dsp.window.cycle_next({ next = true }))
-	hl.dispatch(hl.dsp.window.bring_to_top())
+    hl.dispatch(hl.dsp.window.cycle_next({ next = true }))
+    hl.dispatch(hl.dsp.window.bring_to_top())
 end, { repeating = true, description = "Cycle window next" })
 hl.bind(MOD .. " + SHIFT + H", function()
-	local window = hl.get_active_window()
-	if not window then
-		return
-	end
+    local window = hl.get_active_window()
+    if not window then
+        return
+    end
 
-	if window.floating then
-		hl.dispatch(hl.dsp.window.move({ x = -20, y = 0, relative = true }))
-	else
-		hl.dispatch(hl.dsp.window.swap({ direction = "l" }))
-	end
+    if window.floating then
+        hl.dispatch(hl.dsp.window.move({ x = -20, y = 0, relative = true }))
+    else
+        hl.dispatch(hl.dsp.window.swap({ direction = "l" }))
+    end
 end, { repeating = true, description = "Swap window left" })
 hl.bind(MOD .. " + SHIFT + L", function()
-	local window = hl.get_active_window()
-	if not window then
-		return
-	end
+    local window = hl.get_active_window()
+    if not window then
+        return
+    end
 
-	if window.floating then
-		hl.dispatch(hl.dsp.window.move({ x = 20, y = 0, relative = true }))
-	else
-		hl.dispatch(hl.dsp.window.swap({ direction = "r" }))
-	end
+    if window.floating then
+        hl.dispatch(hl.dsp.window.move({ x = 20, y = 0, relative = true }))
+    else
+        hl.dispatch(hl.dsp.window.swap({ direction = "r" }))
+    end
 end, { repeating = true, description = "Swap window right" })
 hl.bind(MOD .. " + SHIFT + K", function()
-	local window = hl.get_active_window()
-	if not window then
-		return
-	end
+    local window = hl.get_active_window()
+    if not window then
+        return
+    end
 
-	if window.floating then
-		hl.dispatch(hl.dsp.window.move({ x = 0, y = -20, relative = true }))
-	else
-		hl.dispatch(hl.dsp.window.swap({ direction = "u" }))
-	end
+    if window.floating then
+        hl.dispatch(hl.dsp.window.move({ x = 0, y = -20, relative = true }))
+    else
+        hl.dispatch(hl.dsp.window.swap({ direction = "u" }))
+    end
 end, { repeating = true, description = "Swap window up" })
 hl.bind(MOD .. " + SHIFT + J", function()
-	local window = hl.get_active_window()
-	if not window then
-		return
-	end
+    local window = hl.get_active_window()
+    if not window then
+        return
+    end
 
-	if window.floating then
-		hl.dispatch(hl.dsp.window.move({ x = 0, y = 20, relative = true }))
-	else
-		hl.dispatch(hl.dsp.window.swap({ direction = "d" }))
-	end
+    if window.floating then
+        hl.dispatch(hl.dsp.window.move({ x = 0, y = 20, relative = true }))
+    else
+        hl.dispatch(hl.dsp.window.swap({ direction = "d" }))
+    end
 end, { repeating = true, description = "Swap window down" })
 hl.bind(MOD .. " + CTRL + H", hl.dsp.window.move({ direction = "l" }), { description = "Move window left" })
 hl.bind(MOD .. " + CTRL + L", hl.dsp.window.move({ direction = "r" }), { description = "Move window right" })
 hl.bind(MOD .. " + CTRL + K", hl.dsp.window.move({ direction = "u" }), { description = "Move window up" })
 hl.bind(MOD .. " + CTRL + J", hl.dsp.window.move({ direction = "d" }), { description = "Move window down" })
 hl.bind(
-	MOD .. " + ALT + H",
-	hl.dsp.window.resize({ x = -10, y = 0, relative = true }),
-	{ repeating = true, description = "Resize window left" }
+    MOD .. " + ALT + H",
+    hl.dsp.window.resize({ x = -10, y = 0, relative = true }),
+    { repeating = true, description = "Resize window left" }
 )
 hl.bind(
-	MOD .. " + ALT + L",
-	hl.dsp.window.resize({ x = 10, y = 0, relative = true }),
-	{ repeating = true, description = "Resize window right" }
+    MOD .. " + ALT + L",
+    hl.dsp.window.resize({ x = 10, y = 0, relative = true }),
+    { repeating = true, description = "Resize window right" }
 )
 hl.bind(
-	MOD .. " + ALT + K",
-	hl.dsp.window.resize({ x = 0, y = -10, relative = true }),
-	{ repeating = true, description = "Resize window up" }
+    MOD .. " + ALT + K",
+    hl.dsp.window.resize({ x = 0, y = -10, relative = true }),
+    { repeating = true, description = "Resize window up" }
 )
 hl.bind(
-	MOD .. " + ALT + J",
-	hl.dsp.window.resize({ x = 0, y = 10, relative = true }),
-	{ repeating = true, description = "Resize window down" }
+    MOD .. " + ALT + J",
+    hl.dsp.window.resize({ x = 0, y = 10, relative = true }),
+    { repeating = true, description = "Resize window down" }
 )
 
 -----------
@@ -144,18 +144,18 @@ hl.bind("XF86AudioPrev", audio_prev, { description = "Previous media track" })
 
 hl.bind(MOD .. " + A", hl.dsp.submap("Media"), { description = "Media controls" })
 hl.define_submap("Media", function()
-	hl.bind("escape", hl.dsp.submap("reset"), { description = "Exit media controls" })
+    hl.bind("escape", hl.dsp.submap("reset"), { description = "Exit media controls" })
 
-	hl.bind("up", raise_volume, { repeating = true, description = "Raise volume" })
-	hl.bind("k", raise_volume, { repeating = true, description = "Raise volume" })
-	hl.bind("down", lower_volume, { repeating = true, description = "Lower volume" })
-	hl.bind("j", lower_volume, { repeating = true, description = "Lower volume" })
-	hl.bind("return", mute_volume, { description = "Mute volume" })
-	hl.bind("SHIFT + k", raise_mic, { repeating = true, description = "Raise microphone volume" })
-	hl.bind("SHIFT + j", lower_mic, { repeating = true, description = "Lower microphone volume" })
-	hl.bind("SHIFT + return", mute_mic, { description = "Mute microphone" })
-	hl.bind("CTRL + k", brightness_up, { repeating = true, description = "Increase brightness" })
-	hl.bind("CTRL + j", brightness_down, { repeating = true, description = "Decrease brightness" })
+    hl.bind("up", raise_volume, { repeating = true, description = "Raise volume" })
+    hl.bind("k", raise_volume, { repeating = true, description = "Raise volume" })
+    hl.bind("down", lower_volume, { repeating = true, description = "Lower volume" })
+    hl.bind("j", lower_volume, { repeating = true, description = "Lower volume" })
+    hl.bind("return", mute_volume, { description = "Mute volume" })
+    hl.bind("SHIFT + k", raise_mic, { repeating = true, description = "Raise microphone volume" })
+    hl.bind("SHIFT + j", lower_mic, { repeating = true, description = "Lower microphone volume" })
+    hl.bind("SHIFT + return", mute_mic, { description = "Mute microphone" })
+    hl.bind("CTRL + k", brightness_up, { repeating = true, description = "Increase brightness" })
+    hl.bind("CTRL + j", brightness_down, { repeating = true, description = "Decrease brightness" })
 end)
 
 ------------------
@@ -199,68 +199,68 @@ hl.bind("Print", screenshot_region, { description = "Take screenshot of selected
 
 -- Workspace navigation bindings
 for i = 1, 10 do
-	local key = tostring(i % 10)
-	hl.bind(MOD .. " + " .. key, hl.dsp.focus({ workspace = i }), { description = "Focus workspace " .. i })
-	hl.bind(
-		MOD .. " + SHIFT + " .. key,
-		hl.dsp.window.move({ workspace = i }),
-		{ description = "Move window to workspace " .. i }
-	)
+    local key = tostring(i % 10)
+    hl.bind(MOD .. " + " .. key, hl.dsp.focus({ workspace = i }), { description = "Focus workspace " .. i })
+    hl.bind(
+        MOD .. " + SHIFT + " .. key,
+        hl.dsp.window.move({ workspace = i }),
+        { description = "Move window to workspace " .. i }
+    )
 end
 
 hl.bind(MOD .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }), { description = "Cycle workspace next" })
 hl.bind(MOD .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }), { description = "Cycle workspace previous" })
 hl.bind(
-	MOD .. " + bracketright",
-	hl.dsp.focus({ workspace = "+1" }),
-	{ repeating = true, description = "Focus next workspace" }
+    MOD .. " + bracketright",
+    hl.dsp.focus({ workspace = "+1" }),
+    { repeating = true, description = "Focus next workspace" }
 )
 hl.bind(
-	MOD .. " + SHIFT + bracketright",
-	hl.dsp.window.move({ workspace = "+1" }),
-	{ repeating = true, description = "Move window to next workspace" }
+    MOD .. " + SHIFT + bracketright",
+    hl.dsp.window.move({ workspace = "+1" }),
+    { repeating = true, description = "Move window to next workspace" }
 )
 hl.bind(
-	MOD .. " + bracketleft",
-	hl.dsp.focus({ workspace = "-1" }),
-	{ repeating = true, description = "Focus previous workspace" }
+    MOD .. " + bracketleft",
+    hl.dsp.focus({ workspace = "-1" }),
+    { repeating = true, description = "Focus previous workspace" }
 )
 hl.bind(
-	MOD .. " + SHIFT + bracketleft",
-	hl.dsp.window.move({ workspace = "-1" }),
-	{ repeating = true, description = "Move window to previous workspace" }
+    MOD .. " + SHIFT + bracketleft",
+    hl.dsp.window.move({ workspace = "-1" }),
+    { repeating = true, description = "Move window to previous workspace" }
 )
 
 -- Special workspace
 hl.window_rule({
-	match = { workspace = "special:Special" },
-	no_blur = true,
+    match = { workspace = "special:Special" },
+    no_blur = true,
 })
 hl.bind(MOD .. " + S", hl.dsp.workspace.toggle_special("Special"), { description = "Toggle special workspace" })
 hl.bind(
-	MOD .. " + SHIFT + S",
-	hl.dsp.window.move({ workspace = "special:Special" }),
-	{ description = "Move window to special workspace" }
+    MOD .. " + SHIFT + S",
+    hl.dsp.window.move({ workspace = "special:Special" }),
+    { description = "Move window to special workspace" }
 )
 
 local function makeScratchpadToggle(cmd, wsName)
-	return function()
-		if #(hl.get_windows({ workspace = "special:" .. wsName })) > 0 then
-			hl.dispatch(hl.dsp.workspace.toggle_special(wsName))
-		else
-			hl.exec_cmd(cmd, { workspace = "special:" .. wsName })
-		end
-	end
+    return function()
+        if #(hl.get_windows({ workspace = "special:" .. wsName })) > 0 then
+            hl.dispatch(hl.dsp.workspace.toggle_special(wsName))
+        else
+            hl.exec_cmd(cmd, { workspace = "special:" .. wsName })
+        end
+    end
 end
 
 -- Terminal scratchpad
 hl.window_rule({
-	match = { workspace = "special:Terminal" },
-	no_blur = true,
+    match = { workspace = "special:Terminal" },
+    no_blur = true,
 })
 hl.bind(MOD .. " + return", makeScratchpadToggle(terminal, "Terminal"), { description = "Toggle terminal scratchpad" })
 hl.bind(
-	MOD .. " + SHIFT + return",
-	hl.dsp.window.move({ workspace = "special:Terminal" }),
-	{ description = "Move window to terminal scratchpad" }
+    MOD .. " + SHIFT + return",
+    hl.dsp.window.move({ workspace = "special:Terminal" }),
+    { description = "Move window to terminal scratchpad" }
 )
