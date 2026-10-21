@@ -116,11 +116,11 @@ hl.bind(
 -- MEDIA --
 -----------
 
-local raise_volume = hl.dsp.exec_cmd("noctalia msg volume-up")
-local lower_volume = hl.dsp.exec_cmd("noctalia msg volume-down")
+local raise_volume = hl.dsp.exec_cmd("noctalia msg volume-up 1")
+local lower_volume = hl.dsp.exec_cmd("noctalia msg volume-down 1")
 local mute_volume = hl.dsp.exec_cmd("noctalia msg volume-mute")
-local raise_mic = hl.dsp.exec_cmd("noctalia msg mic-volume-up")
-local lower_mic = hl.dsp.exec_cmd("noctalia msg mic-volume-down")
+local raise_mic = hl.dsp.exec_cmd("noctalia msg mic-volume-up 1")
+local lower_mic = hl.dsp.exec_cmd("noctalia msg mic-volume-down 1")
 local mute_mic = hl.dsp.exec_cmd("noctalia msg mic-mute")
 local brightness_up = hl.dsp.exec_cmd("noctalia msg brightness-up")
 local brightness_down = hl.dsp.exec_cmd("noctalia msg brightness-down")
