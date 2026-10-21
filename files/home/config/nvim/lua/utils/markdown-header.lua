@@ -1,7 +1,7 @@
 local M = {}
 
 local defaults = {
-    debounce_ms = 35,
+    debounce_ms = 0,
     sizes = { 2, 1.5, 1.17, 1, 0.83, 0.67 },
     foregrounds = {
         'RenderMarkdownH1',
