@@ -2,5 +2,14 @@
   "darkMode": true,
   "darkModeEditor": "match",
   "alwaysReloadFiles": true,
-  "autoDarkMode": "system"
+  "autoDarkMode": "system",
+  "app": {
+    "openWorkspaces": [
+      "%$HOME%/pers/docs/notes"
+    ]
+  },
+  "editor": {
+    "autoSave": "off",
+    "inputMode": "vim"
+  }
 }
