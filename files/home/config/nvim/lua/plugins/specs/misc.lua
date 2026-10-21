@@ -588,11 +588,30 @@ return {
         "MeanderingProgrammer/render-markdown.nvim",
         ft = { "markdown", "Avante", "codecompanion" },
         config = function()
-            require("render-markdown").setup {
+            local m = require "render-markdown"
+            m.setup {
+                heading = {
+                    enabled = true,
+                    position = 'inline',
+                },
                 completions = { lsp = { enabled = true } },
                 latex = { enabled = false },
                 file_types = { "markdown", "Avante", "codecompanion" },
+                anti_conceal = {
+                    enabled = true,
+                },
+                win_options = {
+                    conceallevel = {
+                        default = 2,
+                        rendered = 3,
+                    },
+                    concealcursor = {
+                        default = "",
+                        rendered = ""
+                    },
+                },
             }
+            require "utils.markdown-header".setup()
         end,
     },
     { -- markdown preview

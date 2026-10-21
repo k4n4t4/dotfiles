@@ -21,11 +21,12 @@ return {
                     enabled = true,
                     latex = {
                         font_size = "normalsize",
+                        packages = { "amsmath", "amssymb", "amsfonts", "amscd", "mathtools" },
                     },
                 },
                 doc = {
                     enabled = true,
-                    inline = false,
+                    inline = true,
                     float = true,
                 },
             },
