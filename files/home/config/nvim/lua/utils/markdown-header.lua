@@ -2,27 +2,20 @@ local M = {}
 
 local defaults = {
     -- Wait for Neovim to finish its normal TUI redraw before painting OSC 66.
-    debounce_ms = 25,
-    render_delay_ms = 12,
+    debounce_ms = 0,
+    render_delay_ms = 0,
     sizes = { 2, 1.5, 1.17, 1, 0.83, 0.67 },
-    file_types = { 'markdown' },
+    file_types = { "markdown" },
     fill_to_edge = true,
     foregrounds = {
-        'RenderMarkdownH1',
-        'RenderMarkdownH2',
-        'RenderMarkdownH3',
-        'RenderMarkdownH4',
-        'RenderMarkdownH5',
-        'RenderMarkdownH6',
+        "RenderMarkdownH1",
+        "RenderMarkdownH2",
+        "RenderMarkdownH3",
+        "RenderMarkdownH4",
+        "RenderMarkdownH5",
+        "RenderMarkdownH6",
     },
-    backgrounds = {
-        'RenderMarkdownH1Bg',
-        'RenderMarkdownH2Bg',
-        'RenderMarkdownH3Bg',
-        'RenderMarkdownH4Bg',
-        'RenderMarkdownH5Bg',
-        'RenderMarkdownH6Bg',
-    },
+    backgrounds = {},
     conceallevel = 2,
     require_kitty_env = true,
 }
@@ -47,27 +40,27 @@ local function is_kitty()
     if not opts.require_kitty_env then
         return true
     end
-    return vim.env.KITTY_WINDOW_ID ~= nil or vim.env.TERM == 'xterm-kitty'
+    return vim.env.KITTY_WINDOW_ID ~= nil or vim.env.TERM == "xterm-kitty"
 end
 
 local function plain_title(text)
-    text = text:gsub('!%[([^%]]*)%](%b())', '%1')
-    text = text:gsub('%[([^%]]+)%](%b())', '%1')
-    text = text:gsub('%[([^%]]+)%]%[[^%]]*%]', '%1')
-    text = text:gsub('`+([^`]-)`+', '%1')
-    text = text:gsub('%*%*(.-)%*%*', '%1')
-    text = text:gsub('__(.-)__', '%1')
-    text = text:gsub('~~(.-)~~', '%1')
-    text = text:gsub('%*(.-)%*', '%1')
-    text = text:gsub('_(.-)_', '%1')
-    text = text:gsub('<[^>]+>', '')
-    text = text:gsub('\\([%p])', '%1')
-    text = text:gsub('[%c]', ' ')
+    text = text:gsub("!%[([^%]]*)%](%b())", "%1")
+    text = text:gsub("%[([^%]]+)%](%b())", "%1")
+    text = text:gsub("%[([^%]]+)%]%[[^%]]*%]", "%1")
+    text = text:gsub("`+([^`]-)`+", "%1")
+    text = text:gsub("%*%*(.-)%*%*", "%1")
+    text = text:gsub("__(.-)__", "%1")
+    text = text:gsub("~~(.-)~~", "%1")
+    text = text:gsub("%*(.-)%*", "%1")
+    text = text:gsub("_(.-)_", "%1")
+    text = text:gsub("<[^>]+>", "")
+    text = text:gsub("\\([%p])", "%1")
+    text = text:gsub("[%c]", " ")
     return vim.trim(text)
 end
 
 local function heading_from_line(line, row)
-    local indent, hashes, spacing, raw = line:match('^(%s*)(#+)([ \t]+)(.*)$')
+    local indent, hashes, spacing, raw = line:match "^(%s*)(#+)([ \t]+)(.*)$"
     if not hashes then
         return nil
     end
@@ -77,13 +70,13 @@ local function heading_from_line(line, row)
         return nil
     end
 
-    local before_closing = raw:match('^(.-)%s+#+%s*$')
+    local before_closing = raw:match "^(.-)%s+#+%s*$"
     if before_closing then
         raw = before_closing
     end
-    raw = raw:gsub('%s+$', '')
+    raw = raw:gsub("%s+$", "")
     local title = plain_title(raw)
-    if title == '' then
+    if title == "" then
         return nil
     end
 
@@ -114,7 +107,7 @@ local function read_headings(buf)
 
     local headings = {}
     local ok, trees = pcall(function()
-        local parser = vim.treesitter.get_parser(buf, 'markdown')
+        local parser = vim.treesitter.get_parser(buf, "markdown")
         if not parser then
             return nil
         end
@@ -126,7 +119,7 @@ local function read_headings(buf)
     end
 
     local function visit(node)
-        if node:type() == 'atx_heading' then
+        if node:type() == "atx_heading" then
             local row = node:start()
             local line = vim.api.nvim_buf_get_lines(buf, row, row + 1, false)[1]
             if line then
@@ -161,10 +154,9 @@ local function size_for(level)
         return { s = 1 }
     end
 
-    if type(scale) ~= 'number' or scale <= 0 or scale > 7 then
+    if type(scale) ~= "number" or scale <= 0 or scale > 7 then
         vim.notify(
-            ('Invalid Kitty heading size for H%d: %s (expected a number > 0 and <= 7)')
-            :format(level, tostring(scale)),
+            ("Invalid Kitty heading size for H%d: %s (expected a number > 0 and <= 7)"):format(level, tostring(scale)),
             vim.log.levels.WARN
         )
         return { s = 1 }
@@ -196,16 +188,28 @@ end
 
 local function metadata(size, width)
     local bits = {}
-    if size.s then bits[#bits + 1] = ('s=%d'):format(size.s) end
-    if size.n then bits[#bits + 1] = ('n=%d'):format(size.n) end
-    if size.d then bits[#bits + 1] = ('d=%d'):format(size.d) end
-    if size.v then bits[#bits + 1] = ('v=%d'):format(size.v) end
-    if size.h then bits[#bits + 1] = ('h=%d'):format(size.h) end
-    if width then bits[#bits + 1] = ('w=%d'):format(width) end
-    if #bits == 0 then
-        return 's=1'
+    if size.s then
+        bits[#bits + 1] = ("s=%d"):format(size.s)
     end
-    return table.concat(bits, ':')
+    if size.n then
+        bits[#bits + 1] = ("n=%d"):format(size.n)
+    end
+    if size.d then
+        bits[#bits + 1] = ("d=%d"):format(size.d)
+    end
+    if size.v then
+        bits[#bits + 1] = ("v=%d"):format(size.v)
+    end
+    if size.h then
+        bits[#bits + 1] = ("h=%d"):format(size.h)
+    end
+    if width then
+        bits[#bits + 1] = ("w=%d"):format(width)
+    end
+    if #bits == 0 then
+        return "s=1"
+    end
+    return table.concat(bits, ":")
 end
 
 local function color_code(value, foreground)
@@ -215,7 +219,7 @@ local function color_code(value, foreground)
     local r = math.floor(value / 65536) % 256
     local g = math.floor(value / 256) % 256
     local b = value % 256
-    return ('%d;2;%d;%d;%d'):format(foreground and 38 or 48, r, g, b)
+    return ("%d;2;%d;%d;%d"):format(foreground and 38 or 48, r, g, b)
 end
 
 local function highlight_for(name)
@@ -225,18 +229,30 @@ end
 local function sgr_for(level)
     local fg = highlight_for(opts.foregrounds[level])
     local bg = highlight_for(opts.backgrounds[level])
-    local codes = { '0' }
+    local codes = { "0" }
     local fc = color_code(fg.fg, true)
     -- If the foreground group also defines a background, use it unless an
     -- explicit background group overrides it.
     local bc = color_code(bg.bg or fg.bg, false)
-    if fc then codes[#codes + 1] = fc end
-    if bc then codes[#codes + 1] = bc end
-    if fg.bold then codes[#codes + 1] = '1' end
-    if fg.italic then codes[#codes + 1] = '3' end
-    if fg.underline then codes[#codes + 1] = '4' end
-    if fg.strikethrough then codes[#codes + 1] = '9' end
-    return '\27[' .. table.concat(codes, ';') .. 'm'
+    if fc then
+        codes[#codes + 1] = fc
+    end
+    if bc then
+        codes[#codes + 1] = bc
+    end
+    if fg.bold then
+        codes[#codes + 1] = "1"
+    end
+    if fg.italic then
+        codes[#codes + 1] = "3"
+    end
+    if fg.underline then
+        codes[#codes + 1] = "4"
+    end
+    if fg.strikethrough then
+        codes[#codes + 1] = "9"
+    end
+    return "\27[" .. table.concat(codes, ";") .. "m"
 end
 
 local function background_sgr_for(level)
@@ -248,12 +264,12 @@ local function background_sgr_for(level)
     if not bc then
         return nil
     end
-    return '\27[0;' .. bc .. 'm'
+    return "\27[0;" .. bc .. "m"
 end
 
 local function truncate_cells(text, max_cells)
     if max_cells <= 0 then
-        return ''
+        return ""
     end
     local total = vim.fn.strdisplaywidth(text)
     if total <= max_cells then
@@ -273,7 +289,7 @@ local function truncate_cells(text, max_cells)
         width = width + w
     end
     if max_cells >= 1 then
-        out[#out + 1] = '…'
+        out[#out + 1] = "…"
     end
     return table.concat(out)
 end
@@ -362,7 +378,7 @@ local function add_markers(buf, headings, cursor_row)
         local rows = extra_rows(size)
         local virt_lines = {}
         for _ = 1, rows do
-            virt_lines[#virt_lines + 1] = { { ' ', 'Normal' } }
+            virt_lines[#virt_lines + 1] = { { " ", "Normal" } }
         end
 
         local mark = {
@@ -371,7 +387,7 @@ local function add_markers(buf, headings, cursor_row)
             priority = 3000,
         }
         if heading.row ~= cursor_row then
-            mark.conceal = ''
+            mark.conceal = ""
         end
         if #virt_lines > 0 then
             mark.virt_lines = virt_lines
@@ -401,11 +417,7 @@ local function render_overlays(visible, current_win, current_buf)
                 local pos = vim.fn.screenpos(win, heading.row + 1, heading.indent_col + 1)
                 local size = size_for(heading.level)
                 local height = size.s or 1
-                if pos.row > 0
-                    and pos.col > 0
-                    and pos.col <= right_edge
-                    and pos.row + height - 1 <= bottom_edge
-                then
+                if pos.row > 0 and pos.col > 0 and pos.col <= right_edge and pos.row + height - 1 <= bottom_edge then
                     local available = right_edge - pos.col + 1
                     -- A fractional scale (for example s=2, n=3, d=4) still
                     -- occupies s*w terminal columns. Calculate how much source
@@ -416,7 +428,7 @@ local function render_overlays(visible, current_win, current_buf)
                     local width_units = math.floor(available / math.max(1, height))
                     local max_cells = math.floor(width_units * scale_d / scale_n)
                     local title = truncate_cells(heading.title, max_cells)
-                    if title ~= '' then
+                    if title ~= "" then
                         if opts.fill_to_edge then
                             -- Fill the heading's full background independently
                             -- of glyph placement; fractional chunks must not be
@@ -425,9 +437,9 @@ local function render_overlays(visible, current_win, current_buf)
                             local bg_sgr = background_sgr_for(heading.level)
                             if bg_sgr then
                                 for row = pos.row, pos.row + height - 1 do
-                                    parts[#parts + 1] = ('\27[%d;%dH'):format(row, pos.col)
+                                    parts[#parts + 1] = ("\27[%d;%dH"):format(row, pos.col)
                                     parts[#parts + 1] = bg_sgr
-                                    parts[#parts + 1] = string.rep(' ', available)
+                                    parts[#parts + 1] = string.rep(" ", available)
                                 end
                             end
                         end
@@ -443,15 +455,15 @@ local function render_overlays(visible, current_win, current_buf)
                                 if col + chunk.columns - 1 > right_edge then
                                     break
                                 end
-                                parts[#parts + 1] = ('\27[%d;%dH'):format(pos.row, col)
+                                parts[#parts + 1] = ("\27[%d;%dH"):format(pos.row, col)
                                 parts[#parts + 1] = sgr_for(heading.level)
-                                parts[#parts + 1] = ('\27]66;%s;%s\7'):format(metadata(size, chunk.width), chunk.text)
+                                parts[#parts + 1] = ("\27]66;%s;%s\7"):format(metadata(size, chunk.width), chunk.text)
                                 col = col + chunk.columns
                             end
                         else
-                            parts[#parts + 1] = ('\27[%d;%dH'):format(pos.row, pos.col)
+                            parts[#parts + 1] = ("\27[%d;%dH"):format(pos.row, pos.col)
                             parts[#parts + 1] = sgr_for(heading.level)
-                            parts[#parts + 1] = ('\27]66;%s;%s\7'):format(metadata(size), title)
+                            parts[#parts + 1] = ("\27]66;%s;%s\7"):format(metadata(size), title)
                         end
                     end
                 end
@@ -463,9 +475,9 @@ local function render_overlays(visible, current_win, current_buf)
         return
     end
 
-    parts[#parts + 1] = '\27[0m'
+    parts[#parts + 1] = "\27[0m"
     if cursor_pos.row > 0 and cursor_pos.col > 0 then
-        parts[#parts + 1] = ('\27[%d;%dH'):format(cursor_pos.row, cursor_pos.col)
+        parts[#parts + 1] = ("\27[%d;%dH"):format(cursor_pos.row, cursor_pos.col)
     end
     vim.api.nvim_ui_send(table.concat(parts))
 end
@@ -533,7 +545,7 @@ local function refresh()
     -- Force Neovim to repaint its own grid first. OSC 66 writes directly to
     -- Kitty and is not part of Neovim's grid, so painting in this same callback
     -- can race with a pending TUI flush and leave missing/duplicated headings.
-    vim.cmd('redraw!')
+    vim.cmd "redraw!"
 
     if render_timer then
         render_timer:stop()
@@ -565,20 +577,20 @@ local function schedule()
 end
 
 local function install_redraw_listener()
-    key_ns = key_ns or vim.api.nvim_create_namespace('kitty-markdown-headings-keys')
+    key_ns = key_ns or vim.api.nvim_create_namespace "kitty-markdown-headings-keys"
     -- Do not replace <C-l> mappings. Listen for the physical key instead, then
     -- repaint after Neovim's normal redraw and any existing mapping have run.
     vim.on_key(function(key, typed)
-        if key == '\12' or typed == '\12' then
+        if key == "\12" or typed == "\12" then
             vim.schedule(schedule)
         end
     end, key_ns)
 end
 
 function M.setup(user_opts)
-    opts = vim.tbl_deep_extend('force', vim.deepcopy(defaults), user_opts or {})
-    ns = ns or vim.api.nvim_create_namespace('kitty-markdown-headings')
-    group = group or vim.api.nvim_create_augroup('KittyMarkdownHeadings', { clear = true })
+    opts = vim.tbl_deep_extend("force", vim.deepcopy(defaults), user_opts or {})
+    ns = ns or vim.api.nvim_create_namespace "kitty-markdown-headings"
+    group = group or vim.api.nvim_create_augroup("KittyMarkdownHeadings", { clear = true })
     if timer then
         timer:stop()
         timer:close()
@@ -594,22 +606,22 @@ function M.setup(user_opts)
     install_redraw_listener()
 
     vim.api.nvim_create_autocmd({
-        'BufEnter',
-        'BufWinEnter',
-        'CursorMoved',
-        'CursorMovedI',
-        'TextChanged',
-        'TextChangedI',
-        'InsertLeave',
-        'ModeChanged',
-        'WinEnter',
-        'WinScrolled',
-        'WinResized',
-        'VimResized',
-        'TabEnter',
-        'TabLeave',
-        'WinClosed',
-        'ColorScheme',
+        "BufEnter",
+        "BufWinEnter",
+        "CursorMoved",
+        "CursorMovedI",
+        "TextChanged",
+        "TextChangedI",
+        "InsertLeave",
+        "ModeChanged",
+        "WinEnter",
+        "WinScrolled",
+        "WinResized",
+        "VimResized",
+        "TabEnter",
+        "TabLeave",
+        "WinClosed",
+        "ColorScheme",
     }, {
         group = group,
         callback = schedule,
