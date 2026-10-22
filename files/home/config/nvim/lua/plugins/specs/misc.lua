@@ -107,8 +107,8 @@ return {
         opts = {
             library = {
                 { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-                { path = "snacks.nvim", words = { "Snacks" } },
-                { path = "lazy.nvim", words = { "Lazy" } },
+                { path = "snacks.nvim",        words = { "Snacks" } },
+                { path = "lazy.nvim",          words = { "Lazy" } },
             },
         },
     },
@@ -222,17 +222,17 @@ return {
             }
         end,
         keys = {
-            { "<M-j>", "<Cmd>BufferLineCycleNext<CR>", desc = "Next buffer" },
-            { "<M-k>", "<Cmd>BufferLineCyclePrev<CR>", desc = "Prev buffer" },
-            { "<M-S-j>", "<Cmd>BufferLineMoveNext<CR>", desc = "Move buffer right" },
-            { "<M-S-k>", "<Cmd>BufferLineMovePrev<CR>", desc = "Move buffer left" },
-            { "<M-s>", "<Cmd>BufferLinePick<CR>", desc = "Pick buffer" },
-            { "<M-]>", "<Cmd>tabnext<CR>", desc = "Next tab" },
-            { "<M-[>", "<Cmd>tabprevious<CR>", desc = "Prev tab" },
-            { "<M-n>", "<Cmd>enew<CR>", desc = "New buffer" },
-            { "<M-S-n>", "<Cmd>tabnew<CR>", desc = "New tab" },
-            { "<M-x>", "<Cmd>bdelete<CR>", desc = "Close buffer" },
-            { "<M-S-x>", "<Cmd>tabclose<CR>", desc = "Close tab" },
+            { "<M-j>",   "<Cmd>BufferLineCycleNext<CR>", desc = "Next buffer" },
+            { "<M-k>",   "<Cmd>BufferLineCyclePrev<CR>", desc = "Prev buffer" },
+            { "<M-S-j>", "<Cmd>BufferLineMoveNext<CR>",  desc = "Move buffer right" },
+            { "<M-S-k>", "<Cmd>BufferLineMovePrev<CR>",  desc = "Move buffer left" },
+            { "<M-s>",   "<Cmd>BufferLinePick<CR>",      desc = "Pick buffer" },
+            { "<M-]>",   "<Cmd>tabnext<CR>",             desc = "Next tab" },
+            { "<M-[>",   "<Cmd>tabprevious<CR>",         desc = "Prev tab" },
+            { "<M-n>",   "<Cmd>enew<CR>",                desc = "New buffer" },
+            { "<M-S-n>", "<Cmd>tabnew<CR>",              desc = "New tab" },
+            { "<M-x>",   "<Cmd>bdelete<CR>",             desc = "Close buffer" },
+            { "<M-S-x>", "<Cmd>tabclose<CR>",            desc = "Close tab" },
         },
     },
     { -- notify
@@ -611,7 +611,6 @@ return {
                     },
                 },
             }
-            require("utils.markdown-header").setup()
         end,
     },
     { -- markdown preview
