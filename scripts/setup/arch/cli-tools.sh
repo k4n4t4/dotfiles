@@ -18,6 +18,7 @@ sudo pacman --needed --noconfirm -S \
     git-delta \
     7zip \
     podman \
+    pandoc-cli \
     opencode
 
 # neovim
