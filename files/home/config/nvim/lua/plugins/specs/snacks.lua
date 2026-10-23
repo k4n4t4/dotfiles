@@ -26,7 +26,7 @@ return {
                 },
                 doc = {
                     enabled = true,
-                    inline = true,
+                    inline = false,
                     float = true,
                 },
             },
