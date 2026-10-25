@@ -98,8 +98,23 @@ return {
     },
     { -- rust
         "mrcjkb/rustaceanvim",
+        ft = "rust",
         version = "^9",
-        lazy = false,
+        config = function()
+            local result = vim.fn.system({ "rustup", "which", "rustc" })
+
+            if vim.v.shell_error ~= 0 then
+                return
+            end
+
+            local rustc = vim.trim(result)
+            if rustc == "" or vim.fn.executable(rustc) ~= 1 then
+                return
+            end
+
+            local bin = vim.fn.fnamemodify(rustc, ":h")
+            vim.env.PATH = bin .. ":" .. vim.env.PATH
+        end,
     },
     { -- lua
         "folke/lazydev.nvim",
