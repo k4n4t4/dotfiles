@@ -208,6 +208,26 @@ return {
     },
 
     -- EDITOR PLUGINS
+    { -- window
+        "folke/edgy.nvim",
+        event = "VeryLazy",
+        opts = function(_, opts)
+            for _, pos in ipairs { "top", "bottom", "left", "right" } do
+                opts[pos] = opts[pos] or {}
+                table.insert(opts[pos], {
+                    ft = "snacks_terminal",
+                    size = { height = 0.4 },
+                    title = "Terminal - %{b:snacks_terminal.id}: %{b:term_title}",
+                    filter = function(_, win)
+                        return vim.w[win].snacks_win
+                            and vim.w[win].snacks_win.position == pos
+                            and vim.w[win].snacks_win.relative == "editor"
+                            and not vim.w[win].trouble_preview
+                    end,
+                })
+            end
+        end,
+    },
     { -- statusline
         "nvim-lualine/lualine.nvim",
         event = "VeryLazy",

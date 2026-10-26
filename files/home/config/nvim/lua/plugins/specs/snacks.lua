@@ -316,14 +316,16 @@ return {
             {
                 "<leader>kk",
                 function()
-                    Snacks.terminal(nil, { win = { position = "bottom" } })
+                    Snacks.terminal.open(nil, {
+                        win = { position = "bottom" },
+                    })
                 end,
                 desc = "Toggle Terminal",
             },
             {
                 "<leader>kf",
                 function()
-                    Snacks.terminal(nil, { win = { position = "float" } })
+                    Snacks.terminal.open(nil, { win = { position = "float" } })
                 end,
                 desc = "Float Terminal",
             },
