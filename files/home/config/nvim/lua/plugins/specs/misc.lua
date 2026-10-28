@@ -625,6 +625,7 @@ return {
         config = function()
             local m = require "render-markdown"
             m.setup {
+                render_modes = { 'n', 'i', 'c', 't' },
                 heading = {
                     enabled = true,
                     position = "inline",
