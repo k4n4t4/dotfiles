@@ -57,3 +57,14 @@ else
         fi
     done
 fi
+sudo systemctl enable nix-daemon.service
+if ! getent group nix-users >/dev/null; then
+    sudo groupadd nix-users
+fi
+if ! id -nG "$USER" | tr ' ' '\n' | grep -qx 'nix-users'; then
+    sudo usermod -aG nix-users "$USER"
+fi
+if ! nix-channel --list | awk '{print $1}' | grep -qx 'nixpkgs'; then
+    nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs
+fi
+nix-channel --update
