@@ -1,7 +1,7 @@
 sudo pacman --needed --noconfirm -S \
     zed \
     kitty \
-    nautilus \
+    nemo \
     mpv \
     firefox \
     thunderbird \
@@ -24,7 +24,7 @@ fi
 
 xdg-settings set default-web-browser firefox.desktop
 xdg-mime default kitty-nvim.desktop text/plain
-xdg-mime default org.gnome.Nautilus.desktop inode/directory
+xdg-mime default nemo.desktop inode/directory
 
 for mime in $(grep ^MimeType= /usr/share/applications/mpv.desktop | cut -d= -f2 | tr ';' ' '); do
     xdg-mime default mpv.desktop "$mime"

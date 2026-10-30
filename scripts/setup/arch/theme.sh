@@ -24,3 +24,7 @@ printf '[Theme]\nCurrent=%s\nCursorTheme=%s\nCursorSize=%s\n' \
     "$CURSOR_THEME_NAME" \
     "$CURSOR_SIZE" |
     sudo tee "/etc/sddm.conf.d/theme.conf" > /dev/null
+
+# gtk theme
+gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita'
+gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'

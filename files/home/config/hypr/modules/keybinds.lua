@@ -163,7 +163,7 @@ end)
 ------------------
 
 local terminal = "uwsm app -- kitty"
-local file_manager = "uwsm app -- nautilus"
+local file_manager = "uwsm app -- nemo"
 local browser = "uwsm app -- firefox"
 local private_browser = "uwsm app -- firefox --private-window"
 local launcher = "noctalia msg panel-toggle launcher"
