@@ -172,6 +172,12 @@ local system_menu = "noctalia msg panel-toggle session"
 local task_manager = "noctalia msg panel-toggle control-center system"
 local lock_screen = "noctalia msg session lock"
 
+-- float
+hl.window_rule({
+    match = { class = "^(nemo)$" },
+    float = true,
+})
+
 hl.bind(MOD .. " + ESCAPE", hl.dsp.exec_cmd(system_menu), { description = "Open system menu" })
 hl.bind(MOD .. " + X", hl.dsp.exec_cmd(lock_screen), { description = "Lock screen" })
 hl.bind(MOD .. " + T", hl.dsp.exec_cmd(terminal), { description = "Open terminal" })
