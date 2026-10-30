@@ -19,9 +19,9 @@ Rectangle {
     QtObject {
         id: theme
         readonly property color background: "#111111"
-        readonly property color accent: "#d0bb00"
-        readonly property color accentHover: "#e0cb10"
-        readonly property color accentPressed: "#b8a300"
+        readonly property color accent: "#cccccc"
+        readonly property color accentHover: "#dddddd"
+        readonly property color accentPressed: "#aaaaaa"
         readonly property color field: "#333333"
         readonly property color dropdown: "#222222"
         readonly property color border: "#444444"
@@ -37,9 +37,9 @@ Rectangle {
         readonly property int fieldHeight: 40
         readonly property int fontSize: 14
         readonly property int inputFontSize: 18
-        readonly property int dropdownRadius: 16
+        readonly property int dropdownRadius: 6
         readonly property int barHeight: 56
-        readonly property int panelRadius: 24
+        readonly property int panelRadius: 8
         readonly property int panelPadding: 30
     }
 
@@ -480,6 +480,44 @@ Rectangle {
         }
     }
 
+    component Battery: Item {
+        id: bat
+        property int level: -1
+        property bool charging: false
+
+        function read(name) {
+            var x = new XMLHttpRequest()
+            x.open("GET", "file:///sys/class/power_supply/BAT0/" + name, false)
+            try { x.send(); return x.responseText.trim() } catch (e) { return "" }
+        }
+
+        function update() {
+            var c = read("capacity")
+            level = c === "" ? -1 : parseInt(c)
+            charging = read("status") === "Charging"
+        }
+
+        visible: level >= 0
+        width: batText.width
+        height: batText.height
+
+        Timer {
+            interval: 30000
+            running: true
+            repeat: true
+            triggeredOnStart: true
+            onTriggered: bat.update()
+        }
+
+        Text {
+            id: batText
+            text: (bat.charging ? "↯ " : "") + bat.level + "%"
+            color: bat.level <= 20 && !bat.charging ? theme.error : theme.text
+            font.pixelSize: 16
+            font.bold: true
+        }
+    }
+
     TextConstants { id: textConstants }
 
     function login() {
@@ -579,6 +617,11 @@ Rectangle {
             color: theme.textDim
             font.pixelSize: 12
         }
+    }
+
+    Battery {
+        id: battery
+        anchors { right: clock.left; rightMargin: 20; verticalCenter: topBar.verticalCenter }
     }
 
     PowerMenu {
