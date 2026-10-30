@@ -4,6 +4,7 @@ dothome "bin" ".local/bin" -r
 dothome "scripts" ".local/bin" -r
 dothome ".profile"
 dotconf "fontconfig" -r
+dotconf "gtk-3.0" -r
 
 if cmd_exists bash; then
     dothome ".bashrc"
