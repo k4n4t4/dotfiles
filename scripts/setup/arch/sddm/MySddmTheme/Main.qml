@@ -480,44 +480,6 @@ Rectangle {
         }
     }
 
-    component Battery: Item {
-        id: bat
-        property int level: -1
-        property bool charging: false
-
-        function read(name) {
-            var x = new XMLHttpRequest()
-            x.open("GET", "file:///sys/class/power_supply/BAT0/" + name, false)
-            try { x.send(); return x.responseText.trim() } catch (e) { return "" }
-        }
-
-        function update() {
-            var c = read("capacity")
-            level = c === "" ? -1 : parseInt(c)
-            charging = read("status") === "Charging"
-        }
-
-        visible: level >= 0
-        width: batText.width
-        height: batText.height
-
-        Timer {
-            interval: 30000
-            running: true
-            repeat: true
-            triggeredOnStart: true
-            onTriggered: bat.update()
-        }
-
-        Text {
-            id: batText
-            text: (bat.charging ? "↯ " : "") + bat.level + "%"
-            color: bat.level <= 20 && !bat.charging ? theme.error : theme.text
-            font.pixelSize: 16
-            font.bold: true
-        }
-    }
-
     TextConstants { id: textConstants }
 
     function login() {
@@ -617,11 +579,6 @@ Rectangle {
             color: theme.textDim
             font.pixelSize: 12
         }
-    }
-
-    Battery {
-        id: battery
-        anchors { right: clock.left; rightMargin: 20; verticalCenter: topBar.verticalCenter }
     }
 
     PowerMenu {
