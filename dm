@@ -2,10 +2,6 @@
 set -eu
 
 
-# Runtime implementation stays in this file. Rule scripts use dot() and the
-# public helpers below; names beginning with '_' are internal.
-# POSIX sh has no local variables: helpers use their own prefix and return
-# strings through <function>_RESULT. dot() isolates per-call state in a subshell.
 
 # Constants
 
@@ -107,8 +103,6 @@ _quote() {
     done
 }
 
-# Option specifications are name:0 (flag) or name:1 (value).
-# Unknown options are errors, not implicit flags.
 _optparser_argc() {
     _optparser_argc_RESULT="$1"
     eval "set -- $2"
@@ -125,8 +119,6 @@ _optparser_argc() {
     return 1
 }
 
-# Normalize options before operands; quote every token before the caller's eval.
-# Supports --name=value, -d1, mixed clusters such as -rd1, and a literal --.
 _optparser() {
     _optparser_RESULT=""
     _optparser__opts=""
@@ -229,7 +221,6 @@ _get_files_recursive() {
             for _get_files_recursive__path in "$1"/* "$1"/.[!.]* "$1"/..?*; do
                 file_exists "$_get_files_recursive__path" || continue
                 _quote "$_get_files_recursive__path"
-                # Treat directory symlinks as leaves; following them can loop.
                 if [ -d "$_get_files_recursive__path" ] &&
                     [ ! -L "$_get_files_recursive__path" ] &&
                     [ "$_get_files_recursive__current_depth" -ne "$_get_files_recursive__DEPTH" ]; then
@@ -244,7 +235,6 @@ _get_files_recursive() {
     done
 }
 
-# Public helpers for rule scripts
 
 cmd_exists() {
     command -v -- "$1" > /dev/null 2>&1
@@ -261,7 +251,6 @@ is_deletable() {
 
 is_linked() {
     [ -L "$2" ] || return 1
-    # -m also resolves a link whose source has since been removed.
     _is_linked__source="$(realpath -m -- "$1")" || return 1
     _is_linked__target="$(realpath -m -- "$2")" || return 1
     [ "$_is_linked__source" = "$_is_linked__target" ]
@@ -367,8 +356,6 @@ _run_script() {
     done
 }
 
-# Template syntax and its AWK interpreter stay together here. A subshell keeps
-# the XDG environment imported for expansion out of subsequent rule scripts.
 _envsubstcp() (
     if [ -f "$_dot__FILES_DIR/home/config/xdg/user-dirs.dirs" ]; then
         set -a
@@ -596,8 +583,6 @@ _dot_msg() {
     fi
 }
 
-# Return 0 for a prepared destination or an intentional skip, 1 on failure.
-# The caller checks _dot_prepare_target_SKIP before writing anything.
 _dot_prepare_target() {
     _dot_prepare_target_SKIP=false
     if file_exists "$2"; then
@@ -741,7 +726,6 @@ _dot_decorate_path() {
             ;;
     esac
 
-    # Symlink contents must not depend on the destination's parent directory.
     case "$_dot_decorate_path_RESULT" in
         ( /* ) : ;;
         ( * ) _dot_decorate_path_RESULT="$PWD/$_dot_decorate_path_RESULT" ;;
@@ -757,7 +741,6 @@ _dot() {
     esac
 }
 
-# Per-rule options and helper scratch variables must not leak into callers.
 dot() (
     _dot__FILES_DIR="$FILES_DIR"
     _dot__TARGET_DIR="$TARGET_DIR"
@@ -853,7 +836,6 @@ dot() (
             _dot "$_dot__FILE" "$_dot__TARGET"
         fi
     elif [ "$SCRIPT_MODE" = uninstall ] && ! $_dot__IS_RECURSIVE; then
-        # The exact rule still identifies a managed link after its source is gone.
         _dot "$_dot__FILE" "$_dot__TARGET"
     else
         _print_error "File not found: $_dot__FILE"
