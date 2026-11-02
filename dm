@@ -2,6 +2,11 @@
 set -eu
 
 
+# Runtime implementation stays in this file. Rule scripts use dot() and the
+# public helpers below; names beginning with '_' are internal.
+# POSIX sh has no local variables: helpers use their own prefix and return
+# strings through <function>_RESULT. dot() isolates per-call state in a subshell.
+
 # Constants
 
 ESC="$(printf "\033")"
@@ -39,13 +44,13 @@ _print_fatal() {
 
 _print_ask() {
     printf "%s" " ${ESC}[33m[ ASK ]${ESC}[90m: ${ESC}[m$*"
+    _print_ask_RESULT=""
     read -r _print_ask_RESULT
 }
 
 _print_run() {
     printf "%s\n" " ${ESC}[35m[ RUN ]${ESC}[90m: ${ESC}[m$*"
     "$@"
-    return $?
 }
 
 _dirname() {
@@ -80,31 +85,6 @@ _dirname() {
     _dirname_RESULT="$1"
 }
 
-_basename() {
-    if [ $# -eq 0 ]; then
-        _print_error "No arguments provided to _basename."
-        return 1
-    fi
-
-    if [ -z "$1" ]; then
-        _basename_RESULT=""
-        return 0
-    fi
-
-    set -- "${1%"${1##*[!/]}"}"
-
-    case "$1" in
-        ( "" )
-            set -- "/"
-            ;;
-        ( */* )
-            set -- "${1##*/}"
-            ;;
-    esac
-
-    _basename_RESULT="$1"
-}
-
 _quote() {
     if [ $# -eq 0 ]; then
         _print_error "No arguments provided to _quote."
@@ -127,6 +107,8 @@ _quote() {
     done
 }
 
+# Option specifications are name:0 (flag) or name:1 (value).
+# Unknown options are errors, not implicit flags.
 _optparser_argc() {
     _optparser_argc_RESULT="$1"
     eval "set -- $2"
@@ -139,11 +121,14 @@ _optparser_argc() {
         esac
         shift
     done
-    _optparser_argc_RESULT=0
-    return 0
+    _print_error "Unknown option: $_optparser_argc_RESULT"
+    return 1
 }
 
+# Normalize options before operands; quote every token before the caller's eval.
+# Supports --name=value, -d1, mixed clusters such as -rd1, and a literal --.
 _optparser() {
+    _optparser_RESULT=""
     _optparser__opts=""
     _optparser__opt_args=""
     _optparser__args=""
@@ -154,21 +139,15 @@ _optparser() {
                 shift
                 break
                 ;;
-            ( ?":"?* )
+            ( ?:0 | ?:1 )
                 _quote "-$1"
                 ;;
-            ( ?*":"?* )
+            ( ?*:0 | ?*:1 )
                 _quote "--$1"
                 ;;
-            ( ? )
-                _quote "-$1:1"
-                ;;
-            ( ?* )
-                _quote "--$1:1"
-                ;;
             ( * )
-                shift
-                continue
+                _print_error "Invalid option specification: $1"
+                return 1
                 ;;
         esac
         _optparser__opts="$_optparser__opts $_quote_RESULT"
@@ -181,54 +160,52 @@ _optparser() {
                 shift
                 break
                 ;;
-            ( "--"?* | "-"? )
+            ( "--"?* )
+                _optparser__option="${1%%=*}"
+                _optparser_argc "$_optparser__option" "$_optparser__opts" || return 1
                 case "$1" in
                     ( "--"?*"="* )
-                        _optparser_RESULT="$1"
+                        if [ "$_optparser_argc_RESULT" -ne 1 ]; then
+                            _print_error "Option does not take a value: $_optparser__option"
+                            return 1
+                        fi
+                        _optparser__value="${1#*=}"
                         shift
-                        set -- "${_optparser_RESULT%%"="*}" "${_optparser_RESULT#*"="}" "$@"
-                        continue
+                        set -- "$_optparser__option" "$_optparser__value" "$@"
                         ;;
                 esac
-                _optparser_argc "$1" "$_optparser__opts"
-                if [ $# -gt "$_optparser_argc_RESULT" ]; then
-                    while [ "$_optparser_argc_RESULT" -ge 0 ]; do
-                        _quote "$1"
-                        _optparser__opt_args="$_optparser__opt_args $_quote_RESULT"
-                        shift
-                        _optparser_argc_RESULT=$((_optparser_argc_RESULT - 1))
-                    done
-                else
-                    shift
-                fi
                 ;;
             ( '-'?* )
-                _optparser_argc "${1%"${1#??}"}" "$_optparser__opts"
-                if [ "$_optparser_argc_RESULT" -eq 1 ]; then
-                    _optparser_RESULT="$1"
+                _optparser__option="${1%"${1#??}"}"
+                _optparser_argc "$_optparser__option" "$_optparser__opts" || return 1
+                _optparser__rest="${1#??}"
+                if [ -n "$_optparser__rest" ]; then
                     shift
-                    set -- "${_optparser_RESULT%"${_optparser_RESULT#??}"}" "${_optparser_RESULT#??}" "$@"
-                    continue
-                fi
-
-                _optparser__short_opts="${1#'-'}"
-                while [ -n "$_optparser__short_opts" ]; do
-                    _optparser_short_opt="-${_optparser__short_opts%"${_optparser__short_opts#?}"}"
-                    _optparser_argc "$_optparser_short_opt" "$_optparser__opts"
-                    if [ "$_optparser_argc_RESULT" -eq 0 ] && [ "$_optparser_short_opt" != '--' ]; then
-                        _quote "$_optparser_short_opt"
-                        _optparser__opt_args="$_optparser__opt_args $_quote_RESULT"
+                    if [ "$_optparser_argc_RESULT" -eq 1 ]; then
+                        set -- "$_optparser__option" "$_optparser__rest" "$@"
+                    else
+                        set -- "$_optparser__option" "-$_optparser__rest" "$@"
                     fi
-                    _optparser__short_opts="${_optparser__short_opts#?}"
-                done
-                shift
+                fi
                 ;;
             ( * )
                 _quote "$1"
                 _optparser__args="$_optparser__args $_quote_RESULT"
                 shift
+                continue
                 ;;
         esac
+
+        if [ $# -le "$_optparser_argc_RESULT" ]; then
+            _print_error "Missing value for option: $1"
+            return 1
+        fi
+        while [ "$_optparser_argc_RESULT" -ge 0 ]; do
+            _quote "$1"
+            _optparser__opt_args="$_optparser__opt_args $_quote_RESULT"
+            shift
+            _optparser_argc_RESULT=$((_optparser_argc_RESULT - 1))
+        done
     done
 
     while [ $# -gt 0 ]; do
@@ -249,58 +226,45 @@ _get_files_recursive() {
         _get_files_recursive__dir_stack=""
         _get_files_recursive__current_depth=$((_get_files_recursive__current_depth + 1))
         while [ $# -gt 0 ]; do
-            for i in "$1"/* "$1"/.*; do
-                _basename "$i"
-                case "$_basename_RESULT" in ( '.' | '..' | '*' | '.*' ) continue ;; esac
-                if [ -d "$i" ] && [ "$_get_files_recursive__current_depth" -ne "$_get_files_recursive__DEPTH" ]; then
-                    _quote "$i"
+            for _get_files_recursive__path in "$1"/* "$1"/.[!.]* "$1"/..?*; do
+                file_exists "$_get_files_recursive__path" || continue
+                _quote "$_get_files_recursive__path"
+                # Treat directory symlinks as leaves; following them can loop.
+                if [ -d "$_get_files_recursive__path" ] &&
+                    [ ! -L "$_get_files_recursive__path" ] &&
+                    [ "$_get_files_recursive__current_depth" -ne "$_get_files_recursive__DEPTH" ]; then
                     _get_files_recursive__dir_stack="$_get_files_recursive__dir_stack $_quote_RESULT"
                 else
-                    _quote "$i"
                     _get_files_recursive_RESULT="$_get_files_recursive_RESULT $_quote_RESULT"
                 fi
             done
             shift
         done
-        eval 'set -- "$@" '"$_get_files_recursive__dir_stack"
+        eval "set -- $_get_files_recursive__dir_stack"
     done
 }
 
-true() {
-    return 0
-}
-
-false() {
-    return 1
-}
+# Public helpers for rule scripts
 
 cmd_exists() {
     command -v -- "$1" > /dev/null 2>&1
 }
 
 file_exists() {
-    if [ -e "$1" ] || [ -L "$1" ]; then
-        return 0
-    else
-        return 1
-    fi
+    [ -e "$1" ] || [ -L "$1" ]
 }
 
 is_deletable() {
     _dirname "$1"
-    if [ -w "$_dirname_RESULT" ] && [ -x "$_dirname_RESULT" ]; then
-        return 0
-    else
-        return 1
-    fi
+    [ -w "$_dirname_RESULT" ] && [ -x "$_dirname_RESULT" ]
 }
 
 is_linked() {
-    if [ -e "$2" ] && [ -L "$2" ] && [ "$1" = "$(realpath "$2")" ]; then
-        return 0
-    else
-        return 1
-    fi
+    [ -L "$2" ] || return 1
+    # -m also resolves a link whose source has since been removed.
+    _is_linked__source="$(realpath -m -- "$1")" || return 1
+    _is_linked__target="$(realpath -m -- "$2")" || return 1
+    [ "$_is_linked__source" = "$_is_linked__target" ]
 }
 
 script_source() {
@@ -309,49 +273,54 @@ script_source() {
 }
 
 script_exists() {
-    if [ -f "$SCRIPTS_DIR/$1.sh" ]; then
-        return 0
-    else
-        return 1
-    fi
+    [ -f "$SCRIPTS_DIR/$1.sh" ]
 }
 
 
 # Sub Commands
 
 _usage() {
-    echo "Usage"
-    echo "    $0 <SUB_COMMANDS> [options...]"
-    echo
-    echo "Sub Commands"
-    echo "    help             show help"
-    echo "    install          install dotfiles"
-    echo "    uninstall        uninstall dotfiles"
-    echo "    check            check dotfiles"
+    cat <<EOF
+Usage: $0 <command> [options...] [scripts...]
+
+Commands:
+    help, h          show help
+    install, i       install dotfiles
+    uninstall, u     remove managed symlinks (keep copied files)
+    check, c         check symlink targets or copied-file existence
+
+Options:
+    -f, --force              remove conflicting destinations before installing
+    -s, --files-path PATH    source root (default: \$FILES_DIR or ./files beside dm)
+    -t, --target-path PATH   destination root (default: \$TARGET_DIR or \$HOME)
+    --                      treat remaining arguments as script names
+
+Scripts are loaded from \$SCRIPTS_DIR (default: ./scripts beside dm).
+common.sh is loaded first when present; the default script is default.sh.
+
+Rule API: dot [options...] SOURCE [TARGET]
+    -r, --recursive         visit directory contents, without following symlinks
+    -d, --depth N           traversal depth (0 or -1: unlimited, default: -1)
+    -f, --force             override the global force setting for this call
+    -c, --copy              copy files; directories are skipped
+    -t, --template          expand templates when copying
+    --files-root PATH      override the source root
+    --target-root PATH     override the destination root
+    --files-prefix PATH    prepend a source subdirectory
+    --target-prefix PATH   prepend a destination subdirectory
+
+Options may follow operands. Short flags may be grouped, e.g. -rct or -rd1.
+Failures and check mismatches return a nonzero status. Accepting a conflict
+prompt skips that entry; existing copies are skipped unless --force is used.
+EOF
 }
 
 _run_script() {
-    case "$SCRIPT_MODE" in
-        ( "install" )
-            _dot() {
-                _dot_link "$@"
-            }
-            ;;
-        ( "uninstall" )
-            _dot() {
-                _dot_unlink "$@"
-            }
-            ;;
-        ( "check" )
-            _dot() {
-                _dot_check "$@"
-            }
-            ;;
-    esac
-
     _optparser \
+        f:0 force:0 \
+        s:1 files-path:1 \
         t:1 target-path:1 \
-        -- "$@"
+        -- "$@" || return 1
     eval "set -- $_optparser_RESULT"
     while [ $# -gt 0 ]; do
         case "$1" in
@@ -374,7 +343,7 @@ _run_script() {
                 shift 1
                 ;;
             ( * )
-                _print_error "Invalid Option."
+                _print_error "Invalid option: $1"
                 return 1
                 ;;
         esac
@@ -398,11 +367,13 @@ _run_script() {
     done
 }
 
-_envsubstcp() {
+# Template syntax and its AWK interpreter stay together here. A subshell keeps
+# the XDG environment imported for expansion out of subsequent rule scripts.
+_envsubstcp() (
     if [ -f "$_dot__FILES_DIR/home/config/xdg/user-dirs.dirs" ]; then
         set -a
         # shellcheck disable=SC1091
-        . "$_dot__FILES_DIR/home/config/xdg/user-dirs.dirs"
+        . "$_dot__FILES_DIR/home/config/xdg/user-dirs.dirs" || return 1
         set +a
     fi
 
@@ -589,20 +560,16 @@ _envsubstcp() {
                 warn(depth " unclosed %?cmd% block(s) at end of input (missing %?%)")
         }
     ' "$1" > "$2"
-}
+)
 
 
 # dot
 
 _dot_ask_continue() {
-    _print_ask "Continue? [Y/n]: "
+    _print_ask "Continue? [Y/n]: " || return 1
     case "$_print_ask_RESULT" in
-        ( [nN] )
-            _dot_ask_continue_RESULT=1
-            ;;
-        ( * )
-            _dot_ask_continue_RESULT=0
-            ;;
+        ( [nN] | [nN][oO] ) return 1 ;;
+        ( * ) return 0 ;;
     esac
 }
 
@@ -629,84 +596,29 @@ _dot_msg() {
     fi
 }
 
-_dot_copy() {
-    if [ -d "$1" ]; then
-        return 0
-    fi
-
-    if file_exists "$2"; then
-        if $_dot__FORCE_MODE; then
-            if ! is_deletable "$2"; then
-                _dot_msg log "$1" "-?-" "$2" "(Not Deletable)"
-                return 0
-            fi
-            if ! _print_run rm -rf -- "$2"; then
-                _dot_msg fatal "$1" "-?-" "$2" "(Faild)"
-                return 1
-            fi
-        else
-            _dot_msg log "$1" "=?=" "$2" "(Already Exist)"
-            return 0
-        fi
-    fi
-
-    _dirname "$2"
-    if ! [ -d "$_dirname_RESULT" ]; then
-        if file_exists "$_dirname_RESULT"; then
-            _print_error "Cannot make directory: $_dirname_RESULT"
-            _dot_ask_continue
-            return "$_dot_ask_continue_RESULT"
-        fi
-        if ! _print_run mkdir -p -- "$_dirname_RESULT"; then
-            _print_fatal "Cannot make directory: $_dirname_RESULT (Faild)"
-            return 1
-        fi
-    fi
-
-    if $_dot__TEMPLATE_MODE; then
-        if _envsubstcp "$1" "$2"; then
-            _dot_msg success "$1" "==>" "$2"
-            return 0
-        else
-            _dot_msg fatal "$1" "==x" "$2" "(Faild)"
-            return 0
-        fi
-    fi
-    if cp -- "$1" "$2"; then
-        _dot_msg success "$1" "==>" "$2"
-        return 0
-    else
-        _dot_msg fatal "$1" "==x" "$2" "(Faild)"
-        return 1
-    fi
-}
-
-_dot_link() {
-    if $_dot__COPY_MODE; then
-        _dot_copy "$@"
-        return 0
-    fi
-
-    if is_linked "$1" "$2"; then
-        _dot_msg log "$1" "<->" "$2" "(Already Linked)"
-        return 0
-    fi
-
+# Return 0 for a prepared destination or an intentional skip, 1 on failure.
+# The caller checks _dot_prepare_target_SKIP before writing anything.
+_dot_prepare_target() {
+    _dot_prepare_target_SKIP=false
     if file_exists "$2"; then
         if $_dot__FORCE_MODE; then
             if ! is_deletable "$2"; then
                 _dot_msg error "$1" "-?-" "$2" "(Not Deletable)"
-                _dot_ask_continue
-                return "$_dot_ask_continue_RESULT"
+                return 1
             fi
             if ! _print_run rm -rf -- "$2"; then
-                _dot_msg fatal "$1" "-?-" "$2" "(Faild)"
+                _dot_msg fatal "$1" "-?-" "$2" "(Failed)"
                 return 1
             fi
         else
-            _dot_msg error "$1" "--x" "$2" "(Already Exist)"
-            _dot_ask_continue
-            return "$_dot_ask_continue_RESULT"
+            if $_dot__COPY_MODE; then
+                _dot_msg log "$1" "=?=" "$2" "(Already Exist)"
+            else
+                _dot_msg error "$1" "--x" "$2" "(Already Exist)"
+                _dot_ask_continue || return 1
+            fi
+            _dot_prepare_target_SKIP=true
+            return 0
         fi
     fi
 
@@ -714,21 +626,57 @@ _dot_link() {
     if ! [ -d "$_dirname_RESULT" ]; then
         if file_exists "$_dirname_RESULT"; then
             _print_error "Cannot make directory: $_dirname_RESULT"
-            _dot_ask_continue
-            return "$_dot_ask_continue_RESULT"
+            _dot_ask_continue || return 1
+            _dot_prepare_target_SKIP=true
+            return 0
         fi
         if ! _print_run mkdir -p -- "$_dirname_RESULT"; then
-            _print_fatal "Cannot make directory: $_dirname_RESULT (Faild)"
+            _print_fatal "Cannot make directory: $_dirname_RESULT (Failed)"
             return 1
         fi
     fi
+    return 0
+}
 
+_dot_copy() {
+    if $_dot__TEMPLATE_MODE; then
+        if ! _envsubstcp "$1" "$2"; then
+            _dot_msg fatal "$1" "==x" "$2" "(Failed)"
+            return 1
+        fi
+    elif ! cp -- "$1" "$2"; then
+        _dot_msg fatal "$1" "==x" "$2" "(Failed)"
+        return 1
+    fi
+    _dot_msg success "$1" "==>" "$2"
+}
+
+_dot_link() {
     if ln -s -- "$1" "$2"; then
         _dot_msg success "$1" "-->" "$2"
-        return 0
     else
-        _dot_msg fatal "$1" "--x" "$2" "(Faild)"
+        _dot_msg fatal "$1" "--x" "$2" "(Failed)"
         return 1
+    fi
+}
+
+_dot_install() {
+    if $_dot__COPY_MODE; then
+        [ ! -d "$1" ] || return 0
+    elif is_linked "$1" "$2"; then
+        _dot_msg log "$1" "<->" "$2" "(Already Linked)"
+        return 0
+    fi
+
+    _dot_prepare_target "$@" || return 1
+    if $_dot_prepare_target_SKIP; then
+        return 0
+    fi
+
+    if $_dot__COPY_MODE; then
+        _dot_copy "$@"
+    else
+        _dot_link "$@"
     fi
 }
 
@@ -751,25 +699,28 @@ _dot_unlink() {
         _dot_msg success "$1" "x-x" "$2"
         return 0
     else
-        _dot_msg fatal "$1" "-?-" "$2" "(Faild)"
+        _dot_msg fatal "$1" "-?-" "$2" "(Failed)"
         return 1
     fi
 }
 
 _dot_check() {
     if $_dot__COPY_MODE; then
+        [ ! -d "$1" ] || return 0
         if file_exists "$2"; then
             _dot_msg log "$1" "=?=" "$2" "(Already Exist)"
         else
             _dot_msg warn "$1" "=?=" "$2" "(Not Exist)"
+            return 1
         fi
         return 0
     fi
 
-    if is_linked "$1" "$2"; then
+    if [ -e "$2" ] && is_linked "$1" "$2"; then
         _dot_msg success "$1" "<->" "$2"
     else
         _dot_msg warn "$1" "-?-" "$2"
+        return 1
     fi
 }
 
@@ -789,32 +740,46 @@ _dot_decorate_path() {
             done
             ;;
     esac
+
+    # Symlink contents must not depend on the destination's parent directory.
+    case "$_dot_decorate_path_RESULT" in
+        ( /* ) : ;;
+        ( * ) _dot_decorate_path_RESULT="$PWD/$_dot_decorate_path_RESULT" ;;
+    esac
 }
 
 _dot() {
-    :
+    case "$SCRIPT_MODE" in
+        ( install ) _dot_install "$@" ;;
+        ( uninstall ) _dot_unlink "$@" ;;
+        ( check ) _dot_check "$@" ;;
+        ( * ) _print_error "Invalid script mode: $SCRIPT_MODE"; return 1 ;;
+    esac
 }
 
-dot() {
+# Per-rule options and helper scratch variables must not leak into callers.
+dot() (
     _dot__FILES_DIR="$FILES_DIR"
     _dot__TARGET_DIR="$TARGET_DIR"
     _dot__FORCE_MODE="$FORCE_MODE"
     _dot__FILES_PREFIX=""
     _dot__TARGET_PREFIX=""
-    _dot__FILE=""
-    _dot__TARGET=""
     _dot__IS_RECURSIVE=false
     _dot__DEPTH=-1
     _dot__COPY_MODE=false
     _dot__TEMPLATE_MODE=false
 
     _optparser \
+        r:0 recursive:0 \
+        f:0 force:0 \
+        c:0 copy:0 \
+        t:0 template:0 \
         d:1 depth:1 \
         files-root:1 \
         target-root:1 \
         files-prefix:1 \
         target-prefix:1 \
-        -- "$@"
+        -- "$@" || return 1
     eval "set -- $_optparser_RESULT"
     while [ $# -gt 0 ]; do
         case "$1" in
@@ -856,6 +821,18 @@ dot() {
         return 1
     fi
 
+    case "$_dot__DEPTH" in
+        ( -1 ) : ;;
+        ( '' | *[!0-9]* )
+            _print_error "Invalid depth: $_dot__DEPTH (expected -1 or a nonnegative integer)"
+            return 1
+            ;;
+    esac
+    if ! [ "$_dot__DEPTH" -ge -1 ] 2>/dev/null; then
+        _print_error "Depth is out of range: $_dot__DEPTH"
+        return 1
+    fi
+
     _dot__FILE="$1"
     _dot__TARGET="${2:-"$1"}"
     _dot_decorate_path "$_dot__FILE" "$_dot__FILES_PREFIX" "$_dot__FILES_DIR"
@@ -869,43 +846,48 @@ dot() {
             _get_files_recursive "$_dot__FILE" "$_dot__DEPTH"
             eval "set -- $_get_files_recursive_RESULT"
             while [ $# -gt 0 ]; do
-                _dot "$1" "$_dot__TARGET/${1#"$_dot__FILE/"}"
+                _dot "$1" "$_dot__TARGET/${1#"$_dot__FILE/"}" || return 1
                 shift
             done
         else
             _dot "$_dot__FILE" "$_dot__TARGET"
         fi
+    elif [ "$SCRIPT_MODE" = uninstall ] && ! $_dot__IS_RECURSIVE; then
+        # The exact rule still identifies a managed link after its source is gone.
+        _dot "$_dot__FILE" "$_dot__TARGET"
     else
         _print_error "File not found: $_dot__FILE"
+        return 1
     fi
-}
+)
 
 
 # Initialization
 
-if ! cmd_exists realpath; then
-    _print_error "The 'realpath' command is required but not found."
-    return 1
-fi
-
-WORK_PATH="$(realpath "$0")"
-_dirname "$WORK_PATH"
-WORK_DIR="$_dirname_RESULT"
-KERNEL_NAME="$(uname -s)"
-PARENT_SHELL="${PARENT_SHELL:-"$(ps -o ppid= -p $$ | xargs -I{} ps -o comm= -p {})"}"
-
-FORCE_MODE=false
-FILES_DIR="${FILES_DIR:-"$WORK_DIR/files"}"
-SCRIPTS_DIR="${SCRIPTS_DIR:-"$WORK_DIR/scripts"}"
-TARGET_DIR="${TARGET_DIR:-"$HOME"}"
-
-case "$KERNEL_NAME" in
-    ( Linux ) : ;;
-    ( * )
-        _print_error "\"$KERNEL_NAME\" is not supported."
+_initialize() {
+    if ! cmd_exists realpath; then
+        _print_error "The 'realpath' command is required but not found."
         return 1
-        ;;
-esac
+    fi
+
+    WORK_PATH="$(realpath -- "$0")" || return 1
+    _dirname "$WORK_PATH"
+    WORK_DIR="$_dirname_RESULT"
+    KERNEL_NAME="$(uname -s)" || return 1
+    case "$KERNEL_NAME" in
+        ( Linux ) : ;;
+        ( * )
+            _print_error "\"$KERNEL_NAME\" is not supported."
+            return 1
+            ;;
+    esac
+
+    PARENT_SHELL="${PARENT_SHELL:-"$(ps -o ppid= -p $$ | xargs -I{} ps -o comm= -p {})"}"
+    FORCE_MODE=false
+    FILES_DIR="${FILES_DIR:-"$WORK_DIR/files"}"
+    SCRIPTS_DIR="${SCRIPTS_DIR:-"$WORK_DIR/scripts"}"
+    TARGET_DIR="${TARGET_DIR:-"$HOME"}"
+}
 
 
 # Main
@@ -914,31 +896,21 @@ main() {
     [ $# -eq 0 ] && set -- help
     case "$1" in
         ( "help" | "h" | "usage" | '-?' | '-h' | '--help' )
-            shift
             _usage
+            return 0
             ;;
-        ( "install" | "i" )
-            shift
-            SCRIPT_MODE="install"
-            _run_script "$@"
-            ;;
-        ( "uninstall" | "u" )
-            shift
-            SCRIPT_MODE="uninstall"
-            _run_script "$@"
-            ;;
-        ( "check" | "c" )
-            shift
-            SCRIPT_MODE="check"
-            _run_script "$@"
-            ;;
+        ( "install" | "i" ) SCRIPT_MODE="install" ;;
+        ( "uninstall" | "u" ) SCRIPT_MODE="uninstall" ;;
+        ( "check" | "c" ) SCRIPT_MODE="check" ;;
         ( * )
             _print_error "Invalid Sub Command: \"$1\""
-            shift
             _usage
             return 1
             ;;
     esac
+    shift
+    _initialize || return 1
+    _run_script "$@"
 }
 
 main "$@"
