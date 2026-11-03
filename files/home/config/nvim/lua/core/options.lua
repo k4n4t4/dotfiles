@@ -129,10 +129,11 @@ vim.opt.fillchars = {
 
 -- cursor
 vim.opt.guicursor = {
-    "n-v-c-sm:block-Cursor",
+    "n-c-sm:block-Cursor",
+    "v:block-blinkon500-blinkoff500-Cursor",
     "i-ci-ve:ver25-Cursor",
     "r-cr-o:hor20-Cursor",
-    "t:block-blinkon500-blinkoff500-TermCursor"
+    "t:block-blinkon500-blinkoff500-TermCursor",
 }
 
 -- diagnostic
