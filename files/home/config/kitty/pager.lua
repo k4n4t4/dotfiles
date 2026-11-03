@@ -41,28 +41,28 @@ vim.opt.undofile    = false
 vim.opt.backup      = false
 vim.opt.writebackup = false
 vim.opt.mouse       = "a"
-vim.opt.title       = true
 vim.opt.clipboard:append "unnamedplus"
-vim.opt.autoread = true
-vim.opt.hidden = true
-vim.opt.confirm = true
-vim.opt.splitbelow = true
-vim.opt.splitright = true
-vim.opt.virtualedit = "block"
-vim.opt.gdefault = false
-vim.opt.whichwrap = "b,s,h,l,~,<,>,[,]"
-vim.opt.backspace = { "indent", "eol", "nostop" }
-vim.opt.nrformats = { "bin", "octal", "hex" }
-vim.opt.showmatch = true
-vim.opt.matchtime = 1
-vim.opt.matchpairs = { "(:)", "{:}", "[:]", "<:>" }
-vim.opt.completeopt = { "menuone", "preview" }
-vim.opt.viewoptions = { "folds", "cursor", "curdir" }
-vim.opt.synmaxcol = 1000
+vim.opt.autoread      = true
+vim.opt.hidden        = true
+vim.opt.confirm       = true
+vim.opt.splitbelow    = true
+vim.opt.splitright    = true
+vim.opt.virtualedit   = "block"
+vim.opt.gdefault      = false
+vim.opt.whichwrap     = "b,s,h,l,~,<,>,[,]"
+vim.opt.backspace     = { "indent", "eol", "nostop" }
+vim.opt.nrformats     = { "bin", "octal", "hex" }
+vim.opt.showmatch     = true
+vim.opt.matchtime     = 1
+vim.opt.matchpairs    = { "(:)", "{:}", "[:]", "<:>" }
+vim.opt.completeopt   = { "menuone", "preview" }
+vim.opt.viewoptions   = { "folds", "cursor", "curdir" }
+vim.opt.synmaxcol     = 1000
 vim.opt.termguicolors = true
-vim.opt.background = "dark"
-vim.opt.scrollback = 100000
-vim.opt.scrolloff = 0
+vim.opt.background    = "dark"
+vim.opt.scrollback    = 100000
+vim.opt.scrolloff     = 0
+vim.opt.title         = true
 
 vim.cmd.highlight { "Normal", "guibg=none", "ctermbg=none" }
 vim.cmd.highlight { "NormalNC", "guibg=none", "ctermbg=none" }
@@ -77,26 +77,38 @@ vim.cmd.highlight { "TabLine", "guibg=none", "ctermbg=none" }
 vim.cmd.highlight { "TabLineFill", "guibg=none", "ctermbg=none" }
 vim.cmd.highlight { "EndOfBuffer", "guibg=none", "ctermbg=none" }
 
+vim.api.nvim_create_autocmd("TextYankPost", {
+    callback = function()
+        vim.hl.on_yank { hlgroup = "Visual", timeout = 150 }
+    end,
+})
 
+for _, k in ipairs({ "i", "a", "I", "A", "o", "O", "c", "C", "s", "S", "R" }) do
+    vim.keymap.set("n", k, "<nop>")
+end
 vim.keymap.set("n", "q", "<cmd>qa!<cr>")
 vim.keymap.set('n', "<ESC>", "<CMD>qa!<CR>")
 vim.keymap.set('t', "<ESC>", "<C-\\><C-N>")
 
 vim.cmd.colorscheme "vim"
 
-local top = tonumber(vim.env.KP_TOP)
-local row = top + tonumber(vim.env.KP_LINE) - 1
-local col = tonumber(vim.env.KP_COL)
-
 vim.api.nvim_create_autocmd("VimEnter", {
     once = true,
     callback = function()
+        local top = tonumber(vim.env.KP_TOP)
+        local row = top + tonumber(vim.env.KP_LINE) - 1
+        local col = tonumber(vim.env.KP_COL)
+
         local tmp = vim.fn.tempname()
 
         vim.cmd.write({ tmp, bang = true })
+
         vim.api.nvim_create_autocmd("TermClose", {
             once = true,
-            callback = function() vim.cmd(("normal! %dGzt%dG%d|"):format(top, row, col)) end,
+            callback = function()
+                vim.cmd(("normal! %dGzt%dG%d|"):format(top, row, col))
+                vim.bo.modifiable = false
+            end,
         })
 
         vim.cmd.terminal("cat " .. vim.fn.shellescape(tmp))
