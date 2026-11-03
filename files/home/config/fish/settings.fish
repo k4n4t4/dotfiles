@@ -35,6 +35,9 @@ set -g fish_pager_color_prefix              white
 set -g fish_pager_color_description         cyan
 set -g fish_pager_color_progress            brwhite
 
+set -g fish_cursor_default block
+set -g fish_cursor_insert line
+
 
 # path
 
