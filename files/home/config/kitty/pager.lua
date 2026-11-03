@@ -83,12 +83,14 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     end,
 })
 
-for _, k in ipairs({ "i", "a", "I", "A", "o", "O", "c", "C", "s", "S", "R" }) do
+for _, k in ipairs({
+    "i", "a", "I", "A", "o", "O", "c", "C", "s", "S", "R",
+    "gi", "gI", "<Insert>", "x", "X", "r", "p", "P", "u", "<C-r>", "J", "~", "<C-a>", "<C-x>", "."
+}) do
     vim.keymap.set("n", k, "<nop>")
 end
 vim.keymap.set("n", "q", "<cmd>qa!<cr>")
 vim.keymap.set('n', "<ESC>", "<CMD>qa!<CR>")
-vim.keymap.set('t', "<ESC>", "<C-\\><C-N>")
 
 vim.cmd.colorscheme "vim"
 
