@@ -1,5 +1,8 @@
 ---@diagnostic disable: undefined-global
 
+
+-- options
+
 vim.opt.eventignore = "FileType"
 vim.opt.loadplugins = false
 vim.opt.number = false
@@ -64,6 +67,11 @@ vim.opt.scrollback    = 100000
 vim.opt.scrolloff     = 0
 vim.opt.title         = true
 
+
+-- color
+
+vim.cmd.colorscheme "vim"
+
 vim.cmd.highlight { "Normal", "guibg=none", "ctermbg=none" }
 vim.cmd.highlight { "NormalNC", "guibg=none", "ctermbg=none" }
 vim.cmd.highlight { "Folded", "guibg=none", "ctermbg=none" }
@@ -77,11 +85,17 @@ vim.cmd.highlight { "TabLine", "guibg=none", "ctermbg=none" }
 vim.cmd.highlight { "TabLineFill", "guibg=none", "ctermbg=none" }
 vim.cmd.highlight { "EndOfBuffer", "guibg=none", "ctermbg=none" }
 
+vim.opt.guicursor = "n-v-c-sm:block-Cursor,i-ci-ve:ver25-Cursor,r-cr-o:hor20-Cursor,t:block-Cursor"
+vim.cmd.highlight { "Cursor", "guifg=#000000", "guibg=#0090ff" }
+
 vim.api.nvim_create_autocmd("TextYankPost", {
     callback = function()
         vim.hl.on_yank { hlgroup = "Visual", timeout = 150 }
     end,
 })
+
+
+-- keymap
 
 for _, k in ipairs({
     "i", "a", "I", "A", "o", "O", "c", "C", "s", "S", "R",
@@ -92,7 +106,8 @@ end
 vim.keymap.set("n", "q", "<cmd>qa!<cr>")
 vim.keymap.set('n', "<ESC>", "<CMD>qa!<CR>")
 
-vim.cmd.colorscheme "vim"
+
+-- initialize
 
 vim.api.nvim_create_autocmd("VimEnter", {
     once = true,
