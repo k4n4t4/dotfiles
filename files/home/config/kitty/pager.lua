@@ -105,7 +105,8 @@ vim.api.nvim_create_autocmd("VimEnter", {
 
         vim.api.nvim_create_autocmd("TermClose", {
             once = true,
-            callback = function()
+            callback = function(e)
+                vim.api.nvim_buf_set_lines(e.buf, -2, -1, false, {})
                 vim.cmd(("normal! %dGzt%dG%d|"):format(top, row, col))
                 vim.bo.modifiable = false
             end,
